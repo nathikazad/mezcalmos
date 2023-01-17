@@ -26,7 +26,6 @@ class CardSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
-      // padding: const EdgeInsets.symmetric(horizontal: 10),
       () => Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
         decoration: BoxDecoration(

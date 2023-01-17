@@ -90,9 +90,10 @@ class Restaurant extends Service {
         Schedule.fromData(restaurantData["details"]["schedule"]);
 
     final PaymentInfo paymentInfo =
-        restaurantData["details"]["paymentInfo"] != null
-            ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
-            : PaymentInfo();
+        // restaurantData["details"]["paymentInfo"] != null
+        //     ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
+        //     :
+        PaymentInfo();
 
     final LanguageType primaryLanguage = restaurantData["details"]?["language"]
                 ?["primary"]

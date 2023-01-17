@@ -104,31 +104,33 @@ class _CopyWithStubImpl$Variables$Query$get_customer_locations<TRes>
 
 class Query$get_customer_locations {
   Query$get_customer_locations({
-    required this.saved_location,
+    required this.customer_saved_location,
     required this.$__typename,
   });
 
   factory Query$get_customer_locations.fromJson(Map<String, dynamic> json) {
-    final l$saved_location = json['saved_location'];
+    final l$customer_saved_location = json['customer_saved_location'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_locations(
-      saved_location: (l$saved_location as List<dynamic>)
-          .map((e) => Query$get_customer_locations$saved_location.fromJson(
-              (e as Map<String, dynamic>)))
+      customer_saved_location: (l$customer_saved_location as List<dynamic>)
+          .map((e) =>
+              Query$get_customer_locations$customer_saved_location.fromJson(
+                  (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$get_customer_locations$saved_location> saved_location;
+  final List<Query$get_customer_locations$customer_saved_location>
+      customer_saved_location;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$saved_location = saved_location;
-    _resultData['saved_location'] =
-        l$saved_location.map((e) => e.toJson()).toList();
+    final l$customer_saved_location = customer_saved_location;
+    _resultData['customer_saved_location'] =
+        l$customer_saved_location.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -136,10 +138,10 @@ class Query$get_customer_locations {
 
   @override
   int get hashCode {
-    final l$saved_location = saved_location;
+    final l$customer_saved_location = customer_saved_location;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$saved_location.map((v) => v)),
+      Object.hashAll(l$customer_saved_location.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -153,15 +155,18 @@ class Query$get_customer_locations {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$saved_location = saved_location;
-    final lOther$saved_location = other.saved_location;
-    if (l$saved_location.length != lOther$saved_location.length) {
+    final l$customer_saved_location = customer_saved_location;
+    final lOther$customer_saved_location = other.customer_saved_location;
+    if (l$customer_saved_location.length !=
+        lOther$customer_saved_location.length) {
       return false;
     }
-    for (int i = 0; i < l$saved_location.length; i++) {
-      final l$saved_location$entry = l$saved_location[i];
-      final lOther$saved_location$entry = lOther$saved_location[i];
-      if (l$saved_location$entry != lOther$saved_location$entry) {
+    for (int i = 0; i < l$customer_saved_location.length; i++) {
+      final l$customer_saved_location$entry = l$customer_saved_location[i];
+      final lOther$customer_saved_location$entry =
+          lOther$customer_saved_location[i];
+      if (l$customer_saved_location$entry !=
+          lOther$customer_saved_location$entry) {
         return false;
       }
     }
@@ -193,14 +198,15 @@ abstract class CopyWith$Query$get_customer_locations<TRes> {
       _CopyWithStubImpl$Query$get_customer_locations;
 
   TRes call({
-    List<Query$get_customer_locations$saved_location>? saved_location,
+    List<Query$get_customer_locations$customer_saved_location>?
+        customer_saved_location,
     String? $__typename,
   });
-  TRes saved_location(
-      Iterable<Query$get_customer_locations$saved_location> Function(
+  TRes customer_saved_location(
+      Iterable<Query$get_customer_locations$customer_saved_location> Function(
               Iterable<
-                  CopyWith$Query$get_customer_locations$saved_location<
-                      Query$get_customer_locations$saved_location>>)
+                  CopyWith$Query$get_customer_locations$customer_saved_location<
+                      Query$get_customer_locations$customer_saved_location>>)
           _fn);
 }
 
@@ -218,27 +224,29 @@ class _CopyWithImpl$Query$get_customer_locations<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? saved_location = _undefined,
+    Object? customer_saved_location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_customer_locations(
-        saved_location: saved_location == _undefined || saved_location == null
-            ? _instance.saved_location
-            : (saved_location
-                as List<Query$get_customer_locations$saved_location>),
+        customer_saved_location: customer_saved_location == _undefined ||
+                customer_saved_location == null
+            ? _instance.customer_saved_location
+            : (customer_saved_location
+                as List<Query$get_customer_locations$customer_saved_location>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes saved_location(
-          Iterable<Query$get_customer_locations$saved_location> Function(
+  TRes customer_saved_location(
+          Iterable<Query$get_customer_locations$customer_saved_location> Function(
                   Iterable<
-                      CopyWith$Query$get_customer_locations$saved_location<
-                          Query$get_customer_locations$saved_location>>)
+                      CopyWith$Query$get_customer_locations$customer_saved_location<
+                          Query$get_customer_locations$customer_saved_location>>)
               _fn) =>
       call(
-          saved_location: _fn(_instance.saved_location
-              .map((e) => CopyWith$Query$get_customer_locations$saved_location(
+          customer_saved_location: _fn(_instance.customer_saved_location.map(
+              (e) =>
+                  CopyWith$Query$get_customer_locations$customer_saved_location(
                     e,
                     (i) => i,
                   ))).toList());
@@ -251,11 +259,12 @@ class _CopyWithStubImpl$Query$get_customer_locations<TRes>
   TRes _res;
 
   call({
-    List<Query$get_customer_locations$saved_location>? saved_location,
+    List<Query$get_customer_locations$customer_saved_location>?
+        customer_saved_location,
     String? $__typename,
   }) =>
       _res;
-  saved_location(_fn) => _res;
+  customer_saved_location(_fn) => _res;
 }
 
 const documentNodeQueryget_customer_locations = DocumentNode(definitions: [
@@ -276,7 +285,7 @@ const documentNodeQueryget_customer_locations = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'saved_location'),
+        name: NameNode(value: 'customer_saved_location'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -458,8 +467,8 @@ extension ClientExtension$Query$get_customer_locations
   }
 }
 
-class Query$get_customer_locations$saved_location {
-  Query$get_customer_locations$saved_location({
+class Query$get_customer_locations$customer_saved_location {
+  Query$get_customer_locations$customer_saved_location({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -468,7 +477,7 @@ class Query$get_customer_locations$saved_location {
     required this.$__typename,
   });
 
-  factory Query$get_customer_locations$saved_location.fromJson(
+  factory Query$get_customer_locations$customer_saved_location.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -476,7 +485,7 @@ class Query$get_customer_locations$saved_location {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Query$get_customer_locations$saved_location(
+    return Query$get_customer_locations$customer_saved_location(
       id: (l$id as int),
       name: (l$name as String),
       location_gps: geographyFromJson(l$location_gps),
@@ -538,7 +547,7 @@ class Query$get_customer_locations$saved_location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_customer_locations$saved_location) ||
+    if (!(other is Query$get_customer_locations$customer_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -576,24 +585,27 @@ class Query$get_customer_locations$saved_location {
   }
 }
 
-extension UtilityExtension$Query$get_customer_locations$saved_location
-    on Query$get_customer_locations$saved_location {
-  CopyWith$Query$get_customer_locations$saved_location<
-          Query$get_customer_locations$saved_location>
-      get copyWith => CopyWith$Query$get_customer_locations$saved_location(
+extension UtilityExtension$Query$get_customer_locations$customer_saved_location
+    on Query$get_customer_locations$customer_saved_location {
+  CopyWith$Query$get_customer_locations$customer_saved_location<
+          Query$get_customer_locations$customer_saved_location>
+      get copyWith =>
+          CopyWith$Query$get_customer_locations$customer_saved_location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_customer_locations$saved_location<TRes> {
-  factory CopyWith$Query$get_customer_locations$saved_location(
-    Query$get_customer_locations$saved_location instance,
-    TRes Function(Query$get_customer_locations$saved_location) then,
-  ) = _CopyWithImpl$Query$get_customer_locations$saved_location;
+abstract class CopyWith$Query$get_customer_locations$customer_saved_location<
+    TRes> {
+  factory CopyWith$Query$get_customer_locations$customer_saved_location(
+    Query$get_customer_locations$customer_saved_location instance,
+    TRes Function(Query$get_customer_locations$customer_saved_location) then,
+  ) = _CopyWithImpl$Query$get_customer_locations$customer_saved_location;
 
-  factory CopyWith$Query$get_customer_locations$saved_location.stub(TRes res) =
-      _CopyWithStubImpl$Query$get_customer_locations$saved_location;
+  factory CopyWith$Query$get_customer_locations$customer_saved_location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_customer_locations$customer_saved_location;
 
   TRes call({
     int? id,
@@ -605,16 +617,18 @@ abstract class CopyWith$Query$get_customer_locations$saved_location<TRes> {
   });
 }
 
-class _CopyWithImpl$Query$get_customer_locations$saved_location<TRes>
-    implements CopyWith$Query$get_customer_locations$saved_location<TRes> {
-  _CopyWithImpl$Query$get_customer_locations$saved_location(
+class _CopyWithImpl$Query$get_customer_locations$customer_saved_location<TRes>
+    implements
+        CopyWith$Query$get_customer_locations$customer_saved_location<TRes> {
+  _CopyWithImpl$Query$get_customer_locations$customer_saved_location(
     this._instance,
     this._then,
   );
 
-  final Query$get_customer_locations$saved_location _instance;
+  final Query$get_customer_locations$customer_saved_location _instance;
 
-  final TRes Function(Query$get_customer_locations$saved_location) _then;
+  final TRes Function(Query$get_customer_locations$customer_saved_location)
+      _then;
 
   static const _undefined = {};
 
@@ -626,7 +640,7 @@ class _CopyWithImpl$Query$get_customer_locations$saved_location<TRes>
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_customer_locations$saved_location(
+      _then(Query$get_customer_locations$customer_saved_location(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -646,9 +660,12 @@ class _CopyWithImpl$Query$get_customer_locations$saved_location<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Query$get_customer_locations$saved_location<TRes>
-    implements CopyWith$Query$get_customer_locations$saved_location<TRes> {
-  _CopyWithStubImpl$Query$get_customer_locations$saved_location(this._res);
+class _CopyWithStubImpl$Query$get_customer_locations$customer_saved_location<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_locations$customer_saved_location<TRes> {
+  _CopyWithStubImpl$Query$get_customer_locations$customer_saved_location(
+      this._res);
 
   TRes _res;
 
@@ -765,34 +782,34 @@ class _CopyWithStubImpl$Variables$Subscription$listen_on_saved_locations<TRes>
 
 class Subscription$listen_on_saved_locations {
   Subscription$listen_on_saved_locations({
-    required this.saved_location,
+    required this.customer_saved_location,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_saved_locations.fromJson(
       Map<String, dynamic> json) {
-    final l$saved_location = json['saved_location'];
+    final l$customer_saved_location = json['customer_saved_location'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_saved_locations(
-      saved_location: (l$saved_location as List<dynamic>)
+      customer_saved_location: (l$customer_saved_location as List<dynamic>)
           .map((e) =>
-              Subscription$listen_on_saved_locations$saved_location.fromJson(
-                  (e as Map<String, dynamic>)))
+              Subscription$listen_on_saved_locations$customer_saved_location
+                  .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Subscription$listen_on_saved_locations$saved_location>
-      saved_location;
+  final List<Subscription$listen_on_saved_locations$customer_saved_location>
+      customer_saved_location;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$saved_location = saved_location;
-    _resultData['saved_location'] =
-        l$saved_location.map((e) => e.toJson()).toList();
+    final l$customer_saved_location = customer_saved_location;
+    _resultData['customer_saved_location'] =
+        l$customer_saved_location.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -800,10 +817,10 @@ class Subscription$listen_on_saved_locations {
 
   @override
   int get hashCode {
-    final l$saved_location = saved_location;
+    final l$customer_saved_location = customer_saved_location;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$saved_location.map((v) => v)),
+      Object.hashAll(l$customer_saved_location.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -817,15 +834,18 @@ class Subscription$listen_on_saved_locations {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$saved_location = saved_location;
-    final lOther$saved_location = other.saved_location;
-    if (l$saved_location.length != lOther$saved_location.length) {
+    final l$customer_saved_location = customer_saved_location;
+    final lOther$customer_saved_location = other.customer_saved_location;
+    if (l$customer_saved_location.length !=
+        lOther$customer_saved_location.length) {
       return false;
     }
-    for (int i = 0; i < l$saved_location.length; i++) {
-      final l$saved_location$entry = l$saved_location[i];
-      final lOther$saved_location$entry = lOther$saved_location[i];
-      if (l$saved_location$entry != lOther$saved_location$entry) {
+    for (int i = 0; i < l$customer_saved_location.length; i++) {
+      final l$customer_saved_location$entry = l$customer_saved_location[i];
+      final lOther$customer_saved_location$entry =
+          lOther$customer_saved_location[i];
+      if (l$customer_saved_location$entry !=
+          lOther$customer_saved_location$entry) {
         return false;
       }
     }
@@ -858,14 +878,15 @@ abstract class CopyWith$Subscription$listen_on_saved_locations<TRes> {
       _CopyWithStubImpl$Subscription$listen_on_saved_locations;
 
   TRes call({
-    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    List<Subscription$listen_on_saved_locations$customer_saved_location>?
+        customer_saved_location,
     String? $__typename,
   });
-  TRes saved_location(
-      Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+  TRes customer_saved_location(
+      Iterable<Subscription$listen_on_saved_locations$customer_saved_location> Function(
               Iterable<
-                  CopyWith$Subscription$listen_on_saved_locations$saved_location<
-                      Subscription$listen_on_saved_locations$saved_location>>)
+                  CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
+                      Subscription$listen_on_saved_locations$customer_saved_location>>)
           _fn);
 }
 
@@ -883,27 +904,28 @@ class _CopyWithImpl$Subscription$listen_on_saved_locations<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? saved_location = _undefined,
+    Object? customer_saved_location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_saved_locations(
-        saved_location: saved_location == _undefined || saved_location == null
-            ? _instance.saved_location
-            : (saved_location
-                as List<Subscription$listen_on_saved_locations$saved_location>),
+        customer_saved_location: customer_saved_location == _undefined ||
+                customer_saved_location == null
+            ? _instance.customer_saved_location
+            : (customer_saved_location as List<
+                Subscription$listen_on_saved_locations$customer_saved_location>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes saved_location(
-          Iterable<Subscription$listen_on_saved_locations$saved_location> Function(
+  TRes customer_saved_location(
+          Iterable<Subscription$listen_on_saved_locations$customer_saved_location> Function(
                   Iterable<
-                      CopyWith$Subscription$listen_on_saved_locations$saved_location<
-                          Subscription$listen_on_saved_locations$saved_location>>)
+                      CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
+                          Subscription$listen_on_saved_locations$customer_saved_location>>)
               _fn) =>
       call(
-          saved_location: _fn(_instance.saved_location.map((e) =>
-              CopyWith$Subscription$listen_on_saved_locations$saved_location(
+          customer_saved_location: _fn(_instance.customer_saved_location.map((e) =>
+              CopyWith$Subscription$listen_on_saved_locations$customer_saved_location(
                 e,
                 (i) => i,
               ))).toList());
@@ -916,11 +938,12 @@ class _CopyWithStubImpl$Subscription$listen_on_saved_locations<TRes>
   TRes _res;
 
   call({
-    List<Subscription$listen_on_saved_locations$saved_location>? saved_location,
+    List<Subscription$listen_on_saved_locations$customer_saved_location>?
+        customer_saved_location,
     String? $__typename,
   }) =>
       _res;
-  saved_location(_fn) => _res;
+  customer_saved_location(_fn) => _res;
 }
 
 const documentNodeSubscriptionlisten_on_saved_locations =
@@ -942,7 +965,7 @@ const documentNodeSubscriptionlisten_on_saved_locations =
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'saved_location'),
+        name: NameNode(value: 'customer_saved_location'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -1093,8 +1116,8 @@ extension ClientExtension$Subscription$listen_on_saved_locations
           this.watchQuery(options);
 }
 
-class Subscription$listen_on_saved_locations$saved_location {
-  Subscription$listen_on_saved_locations$saved_location({
+class Subscription$listen_on_saved_locations$customer_saved_location {
+  Subscription$listen_on_saved_locations$customer_saved_location({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -1103,7 +1126,7 @@ class Subscription$listen_on_saved_locations$saved_location {
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_saved_locations$saved_location.fromJson(
+  factory Subscription$listen_on_saved_locations$customer_saved_location.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -1111,7 +1134,7 @@ class Subscription$listen_on_saved_locations$saved_location {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_saved_locations$saved_location(
+    return Subscription$listen_on_saved_locations$customer_saved_location(
       id: (l$id as int),
       name: (l$name as String),
       location_gps: geographyFromJson(l$location_gps),
@@ -1173,7 +1196,8 @@ class Subscription$listen_on_saved_locations$saved_location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Subscription$listen_on_saved_locations$saved_location) ||
+    if (!(other
+            is Subscription$listen_on_saved_locations$customer_saved_location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1211,27 +1235,29 @@ class Subscription$listen_on_saved_locations$saved_location {
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_saved_locations$saved_location
-    on Subscription$listen_on_saved_locations$saved_location {
-  CopyWith$Subscription$listen_on_saved_locations$saved_location<
-          Subscription$listen_on_saved_locations$saved_location>
+extension UtilityExtension$Subscription$listen_on_saved_locations$customer_saved_location
+    on Subscription$listen_on_saved_locations$customer_saved_location {
+  CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
+          Subscription$listen_on_saved_locations$customer_saved_location>
       get copyWith =>
-          CopyWith$Subscription$listen_on_saved_locations$saved_location(
+          CopyWith$Subscription$listen_on_saved_locations$customer_saved_location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_saved_locations$saved_location<
+abstract class CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
     TRes> {
-  factory CopyWith$Subscription$listen_on_saved_locations$saved_location(
-    Subscription$listen_on_saved_locations$saved_location instance,
-    TRes Function(Subscription$listen_on_saved_locations$saved_location) then,
-  ) = _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location;
+  factory CopyWith$Subscription$listen_on_saved_locations$customer_saved_location(
+    Subscription$listen_on_saved_locations$customer_saved_location instance,
+    TRes Function(
+            Subscription$listen_on_saved_locations$customer_saved_location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_saved_locations$customer_saved_location;
 
-  factory CopyWith$Subscription$listen_on_saved_locations$saved_location.stub(
+  factory CopyWith$Subscription$listen_on_saved_locations$customer_saved_location.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location;
+      _CopyWithStubImpl$Subscription$listen_on_saved_locations$customer_saved_location;
 
   TRes call({
     int? id,
@@ -1243,18 +1269,21 @@ abstract class CopyWith$Subscription$listen_on_saved_locations$saved_location<
   });
 }
 
-class _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location<TRes>
+class _CopyWithImpl$Subscription$listen_on_saved_locations$customer_saved_location<
+        TRes>
     implements
-        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
-  _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location(
+        CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_saved_locations$customer_saved_location(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_saved_locations$saved_location _instance;
+  final Subscription$listen_on_saved_locations$customer_saved_location
+      _instance;
 
-  final TRes Function(Subscription$listen_on_saved_locations$saved_location)
-      _then;
+  final TRes Function(
+      Subscription$listen_on_saved_locations$customer_saved_location) _then;
 
   static const _undefined = {};
 
@@ -1266,7 +1295,7 @@ class _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location<TRes>
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$listen_on_saved_locations$saved_location(
+      _then(Subscription$listen_on_saved_locations$customer_saved_location(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -1286,11 +1315,12 @@ class _CopyWithImpl$Subscription$listen_on_saved_locations$saved_location<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location<
+class _CopyWithStubImpl$Subscription$listen_on_saved_locations$customer_saved_location<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_saved_locations$saved_location<TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_saved_locations$saved_location(
+        CopyWith$Subscription$listen_on_saved_locations$customer_saved_location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_saved_locations$customer_saved_location(
       this._res);
 
   TRes _res;
@@ -1407,31 +1437,34 @@ class _CopyWithStubImpl$Variables$Query$get_saved_location_by_id<TRes>
 
 class Query$get_saved_location_by_id {
   Query$get_saved_location_by_id({
-    this.saved_location_by_pk,
+    this.customer_saved_location_by_pk,
     required this.$__typename,
   });
 
   factory Query$get_saved_location_by_id.fromJson(Map<String, dynamic> json) {
-    final l$saved_location_by_pk = json['saved_location_by_pk'];
+    final l$customer_saved_location_by_pk =
+        json['customer_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
     return Query$get_saved_location_by_id(
-      saved_location_by_pk: l$saved_location_by_pk == null
+      customer_saved_location_by_pk: l$customer_saved_location_by_pk == null
           ? null
-          : Query$get_saved_location_by_id$saved_location_by_pk.fromJson(
-              (l$saved_location_by_pk as Map<String, dynamic>)),
+          : Query$get_saved_location_by_id$customer_saved_location_by_pk
+              .fromJson(
+                  (l$customer_saved_location_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_saved_location_by_id$saved_location_by_pk?
-      saved_location_by_pk;
+  final Query$get_saved_location_by_id$customer_saved_location_by_pk?
+      customer_saved_location_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$saved_location_by_pk = saved_location_by_pk;
-    _resultData['saved_location_by_pk'] = l$saved_location_by_pk?.toJson();
+    final l$customer_saved_location_by_pk = customer_saved_location_by_pk;
+    _resultData['customer_saved_location_by_pk'] =
+        l$customer_saved_location_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1439,10 +1472,10 @@ class Query$get_saved_location_by_id {
 
   @override
   int get hashCode {
-    final l$saved_location_by_pk = saved_location_by_pk;
+    final l$customer_saved_location_by_pk = customer_saved_location_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$saved_location_by_pk,
+      l$customer_saved_location_by_pk,
       l$$__typename,
     ]);
   }
@@ -1456,9 +1489,11 @@ class Query$get_saved_location_by_id {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$saved_location_by_pk = saved_location_by_pk;
-    final lOther$saved_location_by_pk = other.saved_location_by_pk;
-    if (l$saved_location_by_pk != lOther$saved_location_by_pk) {
+    final l$customer_saved_location_by_pk = customer_saved_location_by_pk;
+    final lOther$customer_saved_location_by_pk =
+        other.customer_saved_location_by_pk;
+    if (l$customer_saved_location_by_pk !=
+        lOther$customer_saved_location_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1489,11 +1524,12 @@ abstract class CopyWith$Query$get_saved_location_by_id<TRes> {
       _CopyWithStubImpl$Query$get_saved_location_by_id;
 
   TRes call({
-    Query$get_saved_location_by_id$saved_location_by_pk? saved_location_by_pk,
+    Query$get_saved_location_by_id$customer_saved_location_by_pk?
+        customer_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
-      get saved_location_by_pk;
+  CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<TRes>
+      get customer_saved_location_by_pk;
 }
 
 class _CopyWithImpl$Query$get_saved_location_by_id<TRes>
@@ -1510,26 +1546,29 @@ class _CopyWithImpl$Query$get_saved_location_by_id<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? saved_location_by_pk = _undefined,
+    Object? customer_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_saved_location_by_id(
-        saved_location_by_pk: saved_location_by_pk == _undefined
-            ? _instance.saved_location_by_pk
-            : (saved_location_by_pk
-                as Query$get_saved_location_by_id$saved_location_by_pk?),
+        customer_saved_location_by_pk: customer_saved_location_by_pk ==
+                _undefined
+            ? _instance.customer_saved_location_by_pk
+            : (customer_saved_location_by_pk
+                as Query$get_saved_location_by_id$customer_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
-      get saved_location_by_pk {
-    final local$saved_location_by_pk = _instance.saved_location_by_pk;
-    return local$saved_location_by_pk == null
-        ? CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
-            _then(_instance))
-        : CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
-            local$saved_location_by_pk, (e) => call(saved_location_by_pk: e));
+  CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<TRes>
+      get customer_saved_location_by_pk {
+    final local$customer_saved_location_by_pk =
+        _instance.customer_saved_location_by_pk;
+    return local$customer_saved_location_by_pk == null
+        ? CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk(
+            local$customer_saved_location_by_pk,
+            (e) => call(customer_saved_location_by_pk: e));
   }
 }
 
@@ -1540,14 +1579,15 @@ class _CopyWithStubImpl$Query$get_saved_location_by_id<TRes>
   TRes _res;
 
   call({
-    Query$get_saved_location_by_id$saved_location_by_pk? saved_location_by_pk,
+    Query$get_saved_location_by_id$customer_saved_location_by_pk?
+        customer_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
-      get saved_location_by_pk =>
-          CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
-              _res);
+  CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<TRes>
+      get customer_saved_location_by_pk =>
+          CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk
+              .stub(_res);
 }
 
 const documentNodeQueryget_saved_location_by_id = DocumentNode(definitions: [
@@ -1568,7 +1608,7 @@ const documentNodeQueryget_saved_location_by_id = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'saved_location_by_pk'),
+        name: NameNode(value: 'customer_saved_location_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -1740,8 +1780,8 @@ extension ClientExtension$Query$get_saved_location_by_id
   }
 }
 
-class Query$get_saved_location_by_id$saved_location_by_pk {
-  Query$get_saved_location_by_id$saved_location_by_pk({
+class Query$get_saved_location_by_id$customer_saved_location_by_pk {
+  Query$get_saved_location_by_id$customer_saved_location_by_pk({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -1750,7 +1790,7 @@ class Query$get_saved_location_by_id$saved_location_by_pk {
     required this.$__typename,
   });
 
-  factory Query$get_saved_location_by_id$saved_location_by_pk.fromJson(
+  factory Query$get_saved_location_by_id$customer_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -1758,7 +1798,7 @@ class Query$get_saved_location_by_id$saved_location_by_pk {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Query$get_saved_location_by_id$saved_location_by_pk(
+    return Query$get_saved_location_by_id$customer_saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
       location_gps: geographyFromJson(l$location_gps),
@@ -1820,7 +1860,8 @@ class Query$get_saved_location_by_id$saved_location_by_pk {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$get_saved_location_by_id$saved_location_by_pk) ||
+    if (!(other
+            is Query$get_saved_location_by_id$customer_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1858,27 +1899,28 @@ class Query$get_saved_location_by_id$saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Query$get_saved_location_by_id$saved_location_by_pk
-    on Query$get_saved_location_by_id$saved_location_by_pk {
-  CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<
-          Query$get_saved_location_by_id$saved_location_by_pk>
+extension UtilityExtension$Query$get_saved_location_by_id$customer_saved_location_by_pk
+    on Query$get_saved_location_by_id$customer_saved_location_by_pk {
+  CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<
+          Query$get_saved_location_by_id$customer_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
+          CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<
+abstract class CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Query$get_saved_location_by_id$saved_location_by_pk(
-    Query$get_saved_location_by_id$saved_location_by_pk instance,
-    TRes Function(Query$get_saved_location_by_id$saved_location_by_pk) then,
-  ) = _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk;
+  factory CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk(
+    Query$get_saved_location_by_id$customer_saved_location_by_pk instance,
+    TRes Function(Query$get_saved_location_by_id$customer_saved_location_by_pk)
+        then,
+  ) = _CopyWithImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk;
 
-  factory CopyWith$Query$get_saved_location_by_id$saved_location_by_pk.stub(
+  factory CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk;
+      _CopyWithStubImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk;
 
   TRes call({
     int? id,
@@ -1890,18 +1932,20 @@ abstract class CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<
   });
 }
 
-class _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
+class _CopyWithImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk<
+        TRes>
     implements
-        CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes> {
-  _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk(
+        CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<
+            TRes> {
+  _CopyWithImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Query$get_saved_location_by_id$saved_location_by_pk _instance;
+  final Query$get_saved_location_by_id$customer_saved_location_by_pk _instance;
 
-  final TRes Function(Query$get_saved_location_by_id$saved_location_by_pk)
-      _then;
+  final TRes Function(
+      Query$get_saved_location_by_id$customer_saved_location_by_pk) _then;
 
   static const _undefined = {};
 
@@ -1913,7 +1957,7 @@ class _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_saved_location_by_id$saved_location_by_pk(
+      _then(Query$get_saved_location_by_id$customer_saved_location_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -1933,11 +1977,12 @@ class _CopyWithImpl$Query$get_saved_location_by_id$saved_location_by_pk<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk<
+class _CopyWithStubImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Query$get_saved_location_by_id$saved_location_by_pk<TRes> {
-  _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk(
+        CopyWith$Query$get_saved_location_by_id$customer_saved_location_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Query$get_saved_location_by_id$customer_saved_location_by_pk(
       this._res);
 
   TRes _res;
@@ -1955,7 +2000,7 @@ class _CopyWithStubImpl$Query$get_saved_location_by_id$saved_location_by_pk<
 
 class Variables$Mutation$update_saved_location {
   factory Variables$Mutation$update_saved_location({
-    required Input$saved_location_pk_columns_input location_id,
+    required Input$customer_saved_location_pk_columns_input location_id,
     Geography? gps,
     required String name,
     required bool $default,
@@ -1975,8 +2020,9 @@ class Variables$Mutation$update_saved_location {
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$location_id = data['location_id'];
-    result$data['location_id'] = Input$saved_location_pk_columns_input.fromJson(
-        (l$location_id as Map<String, dynamic>));
+    result$data['location_id'] =
+        Input$customer_saved_location_pk_columns_input.fromJson(
+            (l$location_id as Map<String, dynamic>));
     if (data.containsKey('gps')) {
       final l$gps = data['gps'];
       result$data['gps'] = l$gps == null ? null : geographyFromJson(l$gps);
@@ -1992,8 +2038,8 @@ class Variables$Mutation$update_saved_location {
 
   Map<String, dynamic> _$data;
 
-  Input$saved_location_pk_columns_input get location_id =>
-      (_$data['location_id'] as Input$saved_location_pk_columns_input);
+  Input$customer_saved_location_pk_columns_input get location_id =>
+      (_$data['location_id'] as Input$customer_saved_location_pk_columns_input);
   Geography? get gps => (_$data['gps'] as Geography?);
   String get name => (_$data['name'] as String);
   bool get $default => (_$data['default'] as bool);
@@ -2088,7 +2134,7 @@ abstract class CopyWith$Variables$Mutation$update_saved_location<TRes> {
       _CopyWithStubImpl$Variables$Mutation$update_saved_location;
 
   TRes call({
-    Input$saved_location_pk_columns_input? location_id,
+    Input$customer_saved_location_pk_columns_input? location_id,
     Geography? gps,
     String? name,
     bool? $default,
@@ -2119,7 +2165,8 @@ class _CopyWithImpl$Variables$Mutation$update_saved_location<TRes>
       _then(Variables$Mutation$update_saved_location._({
         ..._instance._$data,
         if (location_id != _undefined && location_id != null)
-          'location_id': (location_id as Input$saved_location_pk_columns_input),
+          'location_id':
+              (location_id as Input$customer_saved_location_pk_columns_input),
         if (gps != _undefined) 'gps': (gps as Geography?),
         if (name != _undefined && name != null) 'name': (name as String),
         if ($default != _undefined && $default != null)
@@ -2136,7 +2183,7 @@ class _CopyWithStubImpl$Variables$Mutation$update_saved_location<TRes>
   TRes _res;
 
   call({
-    Input$saved_location_pk_columns_input? location_id,
+    Input$customer_saved_location_pk_columns_input? location_id,
     Geography? gps,
     String? name,
     bool? $default,
@@ -2147,32 +2194,36 @@ class _CopyWithStubImpl$Variables$Mutation$update_saved_location<TRes>
 
 class Mutation$update_saved_location {
   Mutation$update_saved_location({
-    this.update_saved_location_by_pk,
+    this.update_customer_saved_location_by_pk,
     required this.$__typename,
   });
 
   factory Mutation$update_saved_location.fromJson(Map<String, dynamic> json) {
-    final l$update_saved_location_by_pk = json['update_saved_location_by_pk'];
+    final l$update_customer_saved_location_by_pk =
+        json['update_customer_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
     return Mutation$update_saved_location(
-      update_saved_location_by_pk: l$update_saved_location_by_pk == null
-          ? null
-          : Mutation$update_saved_location$update_saved_location_by_pk.fromJson(
-              (l$update_saved_location_by_pk as Map<String, dynamic>)),
+      update_customer_saved_location_by_pk:
+          l$update_customer_saved_location_by_pk == null
+              ? null
+              : Mutation$update_saved_location$update_customer_saved_location_by_pk
+                  .fromJson((l$update_customer_saved_location_by_pk
+                      as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$update_saved_location$update_saved_location_by_pk?
-      update_saved_location_by_pk;
+  final Mutation$update_saved_location$update_customer_saved_location_by_pk?
+      update_customer_saved_location_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_saved_location_by_pk = update_saved_location_by_pk;
-    _resultData['update_saved_location_by_pk'] =
-        l$update_saved_location_by_pk?.toJson();
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
+    _resultData['update_customer_saved_location_by_pk'] =
+        l$update_customer_saved_location_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2180,10 +2231,11 @@ class Mutation$update_saved_location {
 
   @override
   int get hashCode {
-    final l$update_saved_location_by_pk = update_saved_location_by_pk;
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_saved_location_by_pk,
+      l$update_customer_saved_location_by_pk,
       l$$__typename,
     ]);
   }
@@ -2197,10 +2249,12 @@ class Mutation$update_saved_location {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_saved_location_by_pk = update_saved_location_by_pk;
-    final lOther$update_saved_location_by_pk =
-        other.update_saved_location_by_pk;
-    if (l$update_saved_location_by_pk != lOther$update_saved_location_by_pk) {
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
+    final lOther$update_customer_saved_location_by_pk =
+        other.update_customer_saved_location_by_pk;
+    if (l$update_customer_saved_location_by_pk !=
+        lOther$update_customer_saved_location_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2231,12 +2285,12 @@ abstract class CopyWith$Mutation$update_saved_location<TRes> {
       _CopyWithStubImpl$Mutation$update_saved_location;
 
   TRes call({
-    Mutation$update_saved_location$update_saved_location_by_pk?
-        update_saved_location_by_pk,
+    Mutation$update_saved_location$update_customer_saved_location_by_pk?
+        update_customer_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
-      get update_saved_location_by_pk;
+  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+      TRes> get update_customer_saved_location_by_pk;
 }
 
 class _CopyWithImpl$Mutation$update_saved_location<TRes>
@@ -2253,28 +2307,29 @@ class _CopyWithImpl$Mutation$update_saved_location<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? update_saved_location_by_pk = _undefined,
+    Object? update_customer_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$update_saved_location(
-        update_saved_location_by_pk: update_saved_location_by_pk == _undefined
-            ? _instance.update_saved_location_by_pk
-            : (update_saved_location_by_pk
-                as Mutation$update_saved_location$update_saved_location_by_pk?),
+        update_customer_saved_location_by_pk:
+            update_customer_saved_location_by_pk == _undefined
+                ? _instance.update_customer_saved_location_by_pk
+                : (update_customer_saved_location_by_pk
+                    as Mutation$update_saved_location$update_customer_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
-      get update_saved_location_by_pk {
-    final local$update_saved_location_by_pk =
-        _instance.update_saved_location_by_pk;
-    return local$update_saved_location_by_pk == null
-        ? CopyWith$Mutation$update_saved_location$update_saved_location_by_pk
+  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+      TRes> get update_customer_saved_location_by_pk {
+    final local$update_customer_saved_location_by_pk =
+        _instance.update_customer_saved_location_by_pk;
+    return local$update_customer_saved_location_by_pk == null
+        ? CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk
             .stub(_then(_instance))
-        : CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
-            local$update_saved_location_by_pk,
-            (e) => call(update_saved_location_by_pk: e));
+        : CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+            local$update_customer_saved_location_by_pk,
+            (e) => call(update_customer_saved_location_by_pk: e));
   }
 }
 
@@ -2285,14 +2340,15 @@ class _CopyWithStubImpl$Mutation$update_saved_location<TRes>
   TRes _res;
 
   call({
-    Mutation$update_saved_location$update_saved_location_by_pk?
-        update_saved_location_by_pk,
+    Mutation$update_saved_location$update_customer_saved_location_by_pk?
+        update_customer_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<TRes>
-      get update_saved_location_by_pk =>
-          CopyWith$Mutation$update_saved_location$update_saved_location_by_pk
+  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+          TRes>
+      get update_customer_saved_location_by_pk =>
+          CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk
               .stub(_res);
 }
 
@@ -2304,7 +2360,7 @@ const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'location_id')),
         type: NamedTypeNode(
-          name: NameNode(value: 'saved_location_pk_columns_input'),
+          name: NameNode(value: 'customer_saved_location_pk_columns_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -2350,7 +2406,7 @@ const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_saved_location_by_pk'),
+        name: NameNode(value: 'update_customer_saved_location_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -2529,8 +2585,8 @@ extension ClientExtension$Mutation$update_saved_location
           this.watchMutation(options);
 }
 
-class Mutation$update_saved_location$update_saved_location_by_pk {
-  Mutation$update_saved_location$update_saved_location_by_pk({
+class Mutation$update_saved_location$update_customer_saved_location_by_pk {
+  Mutation$update_saved_location$update_customer_saved_location_by_pk({
     required this.id,
     required this.name,
     required this.location_gps,
@@ -2539,7 +2595,7 @@ class Mutation$update_saved_location$update_saved_location_by_pk {
     required this.$__typename,
   });
 
-  factory Mutation$update_saved_location$update_saved_location_by_pk.fromJson(
+  factory Mutation$update_saved_location$update_customer_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$name = json['name'];
@@ -2547,7 +2603,7 @@ class Mutation$update_saved_location$update_saved_location_by_pk {
     final l$location_text = json['location_text'];
     final l$$default = json['default'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_saved_location$update_saved_location_by_pk(
+    return Mutation$update_saved_location$update_customer_saved_location_by_pk(
       id: (l$id as int),
       name: (l$name as String),
       location_gps: geographyFromJson(l$location_gps),
@@ -2610,7 +2666,7 @@ class Mutation$update_saved_location$update_saved_location_by_pk {
       return true;
     }
     if (!(other
-            is Mutation$update_saved_location$update_saved_location_by_pk) ||
+            is Mutation$update_saved_location$update_customer_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2648,28 +2704,30 @@ class Mutation$update_saved_location$update_saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$update_saved_location$update_saved_location_by_pk
-    on Mutation$update_saved_location$update_saved_location_by_pk {
-  CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
-          Mutation$update_saved_location$update_saved_location_by_pk>
+extension UtilityExtension$Mutation$update_saved_location$update_customer_saved_location_by_pk
+    on Mutation$update_saved_location$update_customer_saved_location_by_pk {
+  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+          Mutation$update_saved_location$update_customer_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
+          CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
+abstract class CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Mutation$update_saved_location$update_saved_location_by_pk(
-    Mutation$update_saved_location$update_saved_location_by_pk instance,
-    TRes Function(Mutation$update_saved_location$update_saved_location_by_pk)
+  factory CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+    Mutation$update_saved_location$update_customer_saved_location_by_pk
+        instance,
+    TRes Function(
+            Mutation$update_saved_location$update_customer_saved_location_by_pk)
         then,
-  ) = _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk;
+  ) = _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk;
 
-  factory CopyWith$Mutation$update_saved_location$update_saved_location_by_pk.stub(
+  factory CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk;
+      _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk;
 
   TRes call({
     int? id,
@@ -2681,20 +2739,22 @@ abstract class CopyWith$Mutation$update_saved_location$update_saved_location_by_
   });
 }
 
-class _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk<
+class _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
+        CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk(
+  _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_saved_location$update_saved_location_by_pk _instance;
+  final Mutation$update_saved_location$update_customer_saved_location_by_pk
+      _instance;
 
   final TRes Function(
-      Mutation$update_saved_location$update_saved_location_by_pk) _then;
+          Mutation$update_saved_location$update_customer_saved_location_by_pk)
+      _then;
 
   static const _undefined = {};
 
@@ -2706,7 +2766,7 @@ class _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk<
     Object? $default = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$update_saved_location$update_saved_location_by_pk(
+      _then(Mutation$update_saved_location$update_customer_saved_location_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         name: name == _undefined || name == null
             ? _instance.name
@@ -2726,12 +2786,12 @@ class _CopyWithImpl$Mutation$update_saved_location$update_saved_location_by_pk<
       ));
 }
 
-class _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk<
+class _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$update_saved_location$update_saved_location_by_pk<
+        CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_saved_location$update_saved_location_by_pk(
+  _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk(
       this._res);
 
   TRes _res;
@@ -2848,32 +2908,36 @@ class _CopyWithStubImpl$Variables$Mutation$delete_saved_location<TRes>
 
 class Mutation$delete_saved_location {
   Mutation$delete_saved_location({
-    this.delete_saved_location_by_pk,
+    this.delete_customer_saved_location_by_pk,
     required this.$__typename,
   });
 
   factory Mutation$delete_saved_location.fromJson(Map<String, dynamic> json) {
-    final l$delete_saved_location_by_pk = json['delete_saved_location_by_pk'];
+    final l$delete_customer_saved_location_by_pk =
+        json['delete_customer_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
     return Mutation$delete_saved_location(
-      delete_saved_location_by_pk: l$delete_saved_location_by_pk == null
-          ? null
-          : Mutation$delete_saved_location$delete_saved_location_by_pk.fromJson(
-              (l$delete_saved_location_by_pk as Map<String, dynamic>)),
+      delete_customer_saved_location_by_pk:
+          l$delete_customer_saved_location_by_pk == null
+              ? null
+              : Mutation$delete_saved_location$delete_customer_saved_location_by_pk
+                  .fromJson((l$delete_customer_saved_location_by_pk
+                      as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$delete_saved_location$delete_saved_location_by_pk?
-      delete_saved_location_by_pk;
+  final Mutation$delete_saved_location$delete_customer_saved_location_by_pk?
+      delete_customer_saved_location_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delete_saved_location_by_pk = delete_saved_location_by_pk;
-    _resultData['delete_saved_location_by_pk'] =
-        l$delete_saved_location_by_pk?.toJson();
+    final l$delete_customer_saved_location_by_pk =
+        delete_customer_saved_location_by_pk;
+    _resultData['delete_customer_saved_location_by_pk'] =
+        l$delete_customer_saved_location_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2881,10 +2945,11 @@ class Mutation$delete_saved_location {
 
   @override
   int get hashCode {
-    final l$delete_saved_location_by_pk = delete_saved_location_by_pk;
+    final l$delete_customer_saved_location_by_pk =
+        delete_customer_saved_location_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$delete_saved_location_by_pk,
+      l$delete_customer_saved_location_by_pk,
       l$$__typename,
     ]);
   }
@@ -2898,10 +2963,12 @@ class Mutation$delete_saved_location {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delete_saved_location_by_pk = delete_saved_location_by_pk;
-    final lOther$delete_saved_location_by_pk =
-        other.delete_saved_location_by_pk;
-    if (l$delete_saved_location_by_pk != lOther$delete_saved_location_by_pk) {
+    final l$delete_customer_saved_location_by_pk =
+        delete_customer_saved_location_by_pk;
+    final lOther$delete_customer_saved_location_by_pk =
+        other.delete_customer_saved_location_by_pk;
+    if (l$delete_customer_saved_location_by_pk !=
+        lOther$delete_customer_saved_location_by_pk) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2932,12 +2999,12 @@ abstract class CopyWith$Mutation$delete_saved_location<TRes> {
       _CopyWithStubImpl$Mutation$delete_saved_location;
 
   TRes call({
-    Mutation$delete_saved_location$delete_saved_location_by_pk?
-        delete_saved_location_by_pk,
+    Mutation$delete_saved_location$delete_customer_saved_location_by_pk?
+        delete_customer_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
-      get delete_saved_location_by_pk;
+  CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
+      TRes> get delete_customer_saved_location_by_pk;
 }
 
 class _CopyWithImpl$Mutation$delete_saved_location<TRes>
@@ -2954,28 +3021,29 @@ class _CopyWithImpl$Mutation$delete_saved_location<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delete_saved_location_by_pk = _undefined,
+    Object? delete_customer_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$delete_saved_location(
-        delete_saved_location_by_pk: delete_saved_location_by_pk == _undefined
-            ? _instance.delete_saved_location_by_pk
-            : (delete_saved_location_by_pk
-                as Mutation$delete_saved_location$delete_saved_location_by_pk?),
+        delete_customer_saved_location_by_pk:
+            delete_customer_saved_location_by_pk == _undefined
+                ? _instance.delete_customer_saved_location_by_pk
+                : (delete_customer_saved_location_by_pk
+                    as Mutation$delete_saved_location$delete_customer_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
-      get delete_saved_location_by_pk {
-    final local$delete_saved_location_by_pk =
-        _instance.delete_saved_location_by_pk;
-    return local$delete_saved_location_by_pk == null
-        ? CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk
+  CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
+      TRes> get delete_customer_saved_location_by_pk {
+    final local$delete_customer_saved_location_by_pk =
+        _instance.delete_customer_saved_location_by_pk;
+    return local$delete_customer_saved_location_by_pk == null
+        ? CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk
             .stub(_then(_instance))
-        : CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
-            local$delete_saved_location_by_pk,
-            (e) => call(delete_saved_location_by_pk: e));
+        : CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
+            local$delete_customer_saved_location_by_pk,
+            (e) => call(delete_customer_saved_location_by_pk: e));
   }
 }
 
@@ -2986,14 +3054,15 @@ class _CopyWithStubImpl$Mutation$delete_saved_location<TRes>
   TRes _res;
 
   call({
-    Mutation$delete_saved_location$delete_saved_location_by_pk?
-        delete_saved_location_by_pk,
+    Mutation$delete_saved_location$delete_customer_saved_location_by_pk?
+        delete_customer_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<TRes>
-      get delete_saved_location_by_pk =>
-          CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk
+  CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
+          TRes>
+      get delete_customer_saved_location_by_pk =>
+          CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk
               .stub(_res);
 }
 
@@ -3015,7 +3084,7 @@ const documentNodeMutationdelete_saved_location = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delete_saved_location_by_pk'),
+        name: NameNode(value: 'delete_customer_saved_location_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -3145,17 +3214,17 @@ extension ClientExtension$Mutation$delete_saved_location
           this.watchMutation(options);
 }
 
-class Mutation$delete_saved_location$delete_saved_location_by_pk {
-  Mutation$delete_saved_location$delete_saved_location_by_pk({
+class Mutation$delete_saved_location$delete_customer_saved_location_by_pk {
+  Mutation$delete_saved_location$delete_customer_saved_location_by_pk({
     required this.name,
     required this.$__typename,
   });
 
-  factory Mutation$delete_saved_location$delete_saved_location_by_pk.fromJson(
+  factory Mutation$delete_saved_location$delete_customer_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$name = json['name'];
     final l$$__typename = json['__typename'];
-    return Mutation$delete_saved_location$delete_saved_location_by_pk(
+    return Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3190,7 +3259,7 @@ class Mutation$delete_saved_location$delete_saved_location_by_pk {
       return true;
     }
     if (!(other
-            is Mutation$delete_saved_location$delete_saved_location_by_pk) ||
+            is Mutation$delete_saved_location$delete_customer_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3208,28 +3277,30 @@ class Mutation$delete_saved_location$delete_saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$delete_saved_location$delete_saved_location_by_pk
-    on Mutation$delete_saved_location$delete_saved_location_by_pk {
-  CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
-          Mutation$delete_saved_location$delete_saved_location_by_pk>
+extension UtilityExtension$Mutation$delete_saved_location$delete_customer_saved_location_by_pk
+    on Mutation$delete_saved_location$delete_customer_saved_location_by_pk {
+  CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
+          Mutation$delete_saved_location$delete_customer_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
+          CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
+abstract class CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk(
-    Mutation$delete_saved_location$delete_saved_location_by_pk instance,
-    TRes Function(Mutation$delete_saved_location$delete_saved_location_by_pk)
+  factory CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
+    Mutation$delete_saved_location$delete_customer_saved_location_by_pk
+        instance,
+    TRes Function(
+            Mutation$delete_saved_location$delete_customer_saved_location_by_pk)
         then,
-  ) = _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk;
+  ) = _CopyWithImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk;
 
-  factory CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk.stub(
+  factory CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk;
+      _CopyWithStubImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk;
 
   TRes call({
     String? name,
@@ -3237,20 +3308,22 @@ abstract class CopyWith$Mutation$delete_saved_location$delete_saved_location_by_
   });
 }
 
-class _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
+class _CopyWithImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
+        CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk(
+  _CopyWithImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$delete_saved_location$delete_saved_location_by_pk _instance;
+  final Mutation$delete_saved_location$delete_customer_saved_location_by_pk
+      _instance;
 
   final TRes Function(
-      Mutation$delete_saved_location$delete_saved_location_by_pk) _then;
+          Mutation$delete_saved_location$delete_customer_saved_location_by_pk)
+      _then;
 
   static const _undefined = {};
 
@@ -3258,7 +3331,7 @@ class _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
     Object? name = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$delete_saved_location$delete_saved_location_by_pk(
+      _then(Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -3268,12 +3341,12 @@ class _CopyWithImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
       ));
 }
 
-class _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk<
+class _CopyWithStubImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$delete_saved_location$delete_saved_location_by_pk<
+        CopyWith$Mutation$delete_saved_location$delete_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_pk(
+  _CopyWithStubImpl$Mutation$delete_saved_location$delete_customer_saved_location_by_pk(
       this._res);
 
   TRes _res;
@@ -3287,7 +3360,8 @@ class _CopyWithStubImpl$Mutation$delete_saved_location$delete_saved_location_by_
 
 class Variables$Mutation$add_saved_location {
   factory Variables$Mutation$add_saved_location(
-          {required Input$saved_location_insert_input saved_location}) =>
+          {required Input$customer_saved_location_insert_input
+              saved_location}) =>
       Variables$Mutation$add_saved_location._({
         r'saved_location': saved_location,
       });
@@ -3298,15 +3372,16 @@ class Variables$Mutation$add_saved_location {
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$saved_location = data['saved_location'];
-    result$data['saved_location'] = Input$saved_location_insert_input.fromJson(
-        (l$saved_location as Map<String, dynamic>));
+    result$data['saved_location'] =
+        Input$customer_saved_location_insert_input.fromJson(
+            (l$saved_location as Map<String, dynamic>));
     return Variables$Mutation$add_saved_location._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Input$saved_location_insert_input get saved_location =>
-      (_$data['saved_location'] as Input$saved_location_insert_input);
+  Input$customer_saved_location_insert_input get saved_location =>
+      (_$data['saved_location'] as Input$customer_saved_location_insert_input);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$saved_location = saved_location;
@@ -3353,7 +3428,7 @@ abstract class CopyWith$Variables$Mutation$add_saved_location<TRes> {
   factory CopyWith$Variables$Mutation$add_saved_location.stub(TRes res) =
       _CopyWithStubImpl$Variables$Mutation$add_saved_location;
 
-  TRes call({Input$saved_location_insert_input? saved_location});
+  TRes call({Input$customer_saved_location_insert_input? saved_location});
 }
 
 class _CopyWithImpl$Variables$Mutation$add_saved_location<TRes>
@@ -3374,7 +3449,7 @@ class _CopyWithImpl$Variables$Mutation$add_saved_location<TRes>
         ..._instance._$data,
         if (saved_location != _undefined && saved_location != null)
           'saved_location':
-              (saved_location as Input$saved_location_insert_input),
+              (saved_location as Input$customer_saved_location_insert_input),
       }));
 }
 
@@ -3384,37 +3459,41 @@ class _CopyWithStubImpl$Variables$Mutation$add_saved_location<TRes>
 
   TRes _res;
 
-  call({Input$saved_location_insert_input? saved_location}) => _res;
+  call({Input$customer_saved_location_insert_input? saved_location}) => _res;
 }
 
 class Mutation$add_saved_location {
   Mutation$add_saved_location({
-    this.insert_saved_location_one,
+    this.insert_customer_saved_location_one,
     required this.$__typename,
   });
 
   factory Mutation$add_saved_location.fromJson(Map<String, dynamic> json) {
-    final l$insert_saved_location_one = json['insert_saved_location_one'];
+    final l$insert_customer_saved_location_one =
+        json['insert_customer_saved_location_one'];
     final l$$__typename = json['__typename'];
     return Mutation$add_saved_location(
-      insert_saved_location_one: l$insert_saved_location_one == null
-          ? null
-          : Mutation$add_saved_location$insert_saved_location_one.fromJson(
-              (l$insert_saved_location_one as Map<String, dynamic>)),
+      insert_customer_saved_location_one:
+          l$insert_customer_saved_location_one == null
+              ? null
+              : Mutation$add_saved_location$insert_customer_saved_location_one
+                  .fromJson((l$insert_customer_saved_location_one
+                      as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$add_saved_location$insert_saved_location_one?
-      insert_saved_location_one;
+  final Mutation$add_saved_location$insert_customer_saved_location_one?
+      insert_customer_saved_location_one;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$insert_saved_location_one = insert_saved_location_one;
-    _resultData['insert_saved_location_one'] =
-        l$insert_saved_location_one?.toJson();
+    final l$insert_customer_saved_location_one =
+        insert_customer_saved_location_one;
+    _resultData['insert_customer_saved_location_one'] =
+        l$insert_customer_saved_location_one?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3422,10 +3501,11 @@ class Mutation$add_saved_location {
 
   @override
   int get hashCode {
-    final l$insert_saved_location_one = insert_saved_location_one;
+    final l$insert_customer_saved_location_one =
+        insert_customer_saved_location_one;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$insert_saved_location_one,
+      l$insert_customer_saved_location_one,
       l$$__typename,
     ]);
   }
@@ -3439,9 +3519,12 @@ class Mutation$add_saved_location {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$insert_saved_location_one = insert_saved_location_one;
-    final lOther$insert_saved_location_one = other.insert_saved_location_one;
-    if (l$insert_saved_location_one != lOther$insert_saved_location_one) {
+    final l$insert_customer_saved_location_one =
+        insert_customer_saved_location_one;
+    final lOther$insert_customer_saved_location_one =
+        other.insert_customer_saved_location_one;
+    if (l$insert_customer_saved_location_one !=
+        lOther$insert_customer_saved_location_one) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3472,12 +3555,12 @@ abstract class CopyWith$Mutation$add_saved_location<TRes> {
       _CopyWithStubImpl$Mutation$add_saved_location;
 
   TRes call({
-    Mutation$add_saved_location$insert_saved_location_one?
-        insert_saved_location_one,
+    Mutation$add_saved_location$insert_customer_saved_location_one?
+        insert_customer_saved_location_one,
     String? $__typename,
   });
-  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
-      get insert_saved_location_one;
+  CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<TRes>
+      get insert_customer_saved_location_one;
 }
 
 class _CopyWithImpl$Mutation$add_saved_location<TRes>
@@ -3494,27 +3577,29 @@ class _CopyWithImpl$Mutation$add_saved_location<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? insert_saved_location_one = _undefined,
+    Object? insert_customer_saved_location_one = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$add_saved_location(
-        insert_saved_location_one: insert_saved_location_one == _undefined
-            ? _instance.insert_saved_location_one
-            : (insert_saved_location_one
-                as Mutation$add_saved_location$insert_saved_location_one?),
+        insert_customer_saved_location_one: insert_customer_saved_location_one ==
+                _undefined
+            ? _instance.insert_customer_saved_location_one
+            : (insert_customer_saved_location_one
+                as Mutation$add_saved_location$insert_customer_saved_location_one?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
-      get insert_saved_location_one {
-    final local$insert_saved_location_one = _instance.insert_saved_location_one;
-    return local$insert_saved_location_one == null
-        ? CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
-            _then(_instance))
-        : CopyWith$Mutation$add_saved_location$insert_saved_location_one(
-            local$insert_saved_location_one,
-            (e) => call(insert_saved_location_one: e));
+  CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<TRes>
+      get insert_customer_saved_location_one {
+    final local$insert_customer_saved_location_one =
+        _instance.insert_customer_saved_location_one;
+    return local$insert_customer_saved_location_one == null
+        ? CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one
+            .stub(_then(_instance))
+        : CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one(
+            local$insert_customer_saved_location_one,
+            (e) => call(insert_customer_saved_location_one: e));
   }
 }
 
@@ -3525,15 +3610,15 @@ class _CopyWithStubImpl$Mutation$add_saved_location<TRes>
   TRes _res;
 
   call({
-    Mutation$add_saved_location$insert_saved_location_one?
-        insert_saved_location_one,
+    Mutation$add_saved_location$insert_customer_saved_location_one?
+        insert_customer_saved_location_one,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes>
-      get insert_saved_location_one =>
-          CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
-              _res);
+  CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<TRes>
+      get insert_customer_saved_location_one =>
+          CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one
+              .stub(_res);
 }
 
 const documentNodeMutationadd_saved_location = DocumentNode(definitions: [
@@ -3544,7 +3629,7 @@ const documentNodeMutationadd_saved_location = DocumentNode(definitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'saved_location')),
         type: NamedTypeNode(
-          name: NameNode(value: 'saved_location_insert_input'),
+          name: NameNode(value: 'customer_saved_location_insert_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -3554,7 +3639,7 @@ const documentNodeMutationadd_saved_location = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'insert_saved_location_one'),
+        name: NameNode(value: 'insert_customer_saved_location_one'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -3682,17 +3767,17 @@ extension ClientExtension$Mutation$add_saved_location on graphql.GraphQLClient {
           this.watchMutation(options);
 }
 
-class Mutation$add_saved_location$insert_saved_location_one {
-  Mutation$add_saved_location$insert_saved_location_one({
+class Mutation$add_saved_location$insert_customer_saved_location_one {
+  Mutation$add_saved_location$insert_customer_saved_location_one({
     required this.id,
     required this.$__typename,
   });
 
-  factory Mutation$add_saved_location$insert_saved_location_one.fromJson(
+  factory Mutation$add_saved_location$insert_customer_saved_location_one.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
-    return Mutation$add_saved_location$insert_saved_location_one(
+    return Mutation$add_saved_location$insert_customer_saved_location_one(
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3726,7 +3811,8 @@ class Mutation$add_saved_location$insert_saved_location_one {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$add_saved_location$insert_saved_location_one) ||
+    if (!(other
+            is Mutation$add_saved_location$insert_customer_saved_location_one) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3744,27 +3830,29 @@ class Mutation$add_saved_location$insert_saved_location_one {
   }
 }
 
-extension UtilityExtension$Mutation$add_saved_location$insert_saved_location_one
-    on Mutation$add_saved_location$insert_saved_location_one {
-  CopyWith$Mutation$add_saved_location$insert_saved_location_one<
-          Mutation$add_saved_location$insert_saved_location_one>
+extension UtilityExtension$Mutation$add_saved_location$insert_customer_saved_location_one
+    on Mutation$add_saved_location$insert_customer_saved_location_one {
+  CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<
+          Mutation$add_saved_location$insert_customer_saved_location_one>
       get copyWith =>
-          CopyWith$Mutation$add_saved_location$insert_saved_location_one(
+          CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$add_saved_location$insert_saved_location_one<
+abstract class CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<
     TRes> {
-  factory CopyWith$Mutation$add_saved_location$insert_saved_location_one(
-    Mutation$add_saved_location$insert_saved_location_one instance,
-    TRes Function(Mutation$add_saved_location$insert_saved_location_one) then,
-  ) = _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one;
+  factory CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one(
+    Mutation$add_saved_location$insert_customer_saved_location_one instance,
+    TRes Function(
+            Mutation$add_saved_location$insert_customer_saved_location_one)
+        then,
+  ) = _CopyWithImpl$Mutation$add_saved_location$insert_customer_saved_location_one;
 
-  factory CopyWith$Mutation$add_saved_location$insert_saved_location_one.stub(
+  factory CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one;
+      _CopyWithStubImpl$Mutation$add_saved_location$insert_customer_saved_location_one;
 
   TRes call({
     int? id,
@@ -3772,18 +3860,21 @@ abstract class CopyWith$Mutation$add_saved_location$insert_saved_location_one<
   });
 }
 
-class _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one<TRes>
+class _CopyWithImpl$Mutation$add_saved_location$insert_customer_saved_location_one<
+        TRes>
     implements
-        CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes> {
-  _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one(
+        CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<
+            TRes> {
+  _CopyWithImpl$Mutation$add_saved_location$insert_customer_saved_location_one(
     this._instance,
     this._then,
   );
 
-  final Mutation$add_saved_location$insert_saved_location_one _instance;
+  final Mutation$add_saved_location$insert_customer_saved_location_one
+      _instance;
 
-  final TRes Function(Mutation$add_saved_location$insert_saved_location_one)
-      _then;
+  final TRes Function(
+      Mutation$add_saved_location$insert_customer_saved_location_one) _then;
 
   static const _undefined = {};
 
@@ -3791,7 +3882,7 @@ class _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one<TRes>
     Object? id = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$add_saved_location$insert_saved_location_one(
+      _then(Mutation$add_saved_location$insert_customer_saved_location_one(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -3799,11 +3890,12 @@ class _CopyWithImpl$Mutation$add_saved_location$insert_saved_location_one<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one<
+class _CopyWithStubImpl$Mutation$add_saved_location$insert_customer_saved_location_one<
         TRes>
     implements
-        CopyWith$Mutation$add_saved_location$insert_saved_location_one<TRes> {
-  _CopyWithStubImpl$Mutation$add_saved_location$insert_saved_location_one(
+        CopyWith$Mutation$add_saved_location$insert_customer_saved_location_one<
+            TRes> {
+  _CopyWithStubImpl$Mutation$add_saved_location$insert_customer_saved_location_one(
       this._res);
 
   TRes _res;

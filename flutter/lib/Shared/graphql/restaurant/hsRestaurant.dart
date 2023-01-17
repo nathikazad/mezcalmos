@@ -33,8 +33,8 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
               : FetchPolicy.networkOnly));
 
   if (response.parsedData != null) {
-    response.parsedData?.restaurant
-        .forEach((Query$getRestaurants$restaurant data) async {
+    response.parsedData?.restaurant_restaurant
+        .forEach((Query$getRestaurants$restaurant_restaurant data) async {
       _restaurants.add(Restaurant(
           userInfo: ServiceInfo(
               hasuraId: data.id,
@@ -132,14 +132,14 @@ Future<Restaurant?> get_restaurant_by_id(
   );
 
   mezDbgPrint("[+] -> id : $id");
-  if (response.hasException) {
-    mezDbgPrint("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
+  if (response.parsedData?.restaurant_restaurant_by_pk == null) {
+    Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
     return null;
   } else if (response.parsedData != null) {
     mezDbgPrint(
-        "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_by_pk?.toJson()} ");
-    final Query$getOneRestaurant$restaurant_by_pk? data =
-        response.parsedData?.restaurant_by_pk!;
+        "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_restaurant_by_pk?.toJson()} ");
+    final Query$getOneRestaurant$restaurant_restaurant_by_pk? data =
+        response.parsedData?.restaurant_restaurant_by_pk!;
     final PaymentInfo paymentInfo = PaymentInfo();
     if (data?.accepted_payments != null) {
       paymentInfo.acceptedPayments =
@@ -192,9 +192,10 @@ Future<LanguageType?> get_restaurant_priamry_lang(int restaurantId) async {
   if (response.hasException) {
     mezDbgPrint(
         "🚨🚨🚨 restuarnt primay lang query errors : ${response.exception}");
-  } else if (response.parsedData?.restaurant_by_pk != null) {
+  } else if (response.parsedData?.restaurant_restaurant_by_pk != null) {
     mezDbgPrint("✅✅✅ restuarnt primay lang query success");
-    return response.parsedData!.restaurant_by_pk!.language_id.toLanguageType();
+    return response.parsedData!.restaurant_restaurant_by_pk!.language_id
+        .toLanguageType();
   }
   return null;
 }
@@ -207,12 +208,14 @@ Future<Schedule?> get_restaurant_schedule(
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$getRestaurantSchedule(id: restaurantId)));
-  if (response.parsedData?.restaurant_by_pk == null) {
+  if (response.parsedData?.restaurant_restaurant_by_pk == null) {
     throw Exception(
         "🚨🚨🚨 restuarnt schedule  query errors : ${response.exception}");
-  } else if (response.parsedData?.restaurant_by_pk?.schedule != null) {
+  } else if (response.parsedData?.restaurant_restaurant_by_pk?.schedule !=
+      null) {
     mezDbgPrint("✅✅✅ restuarnt schedule lang query success");
-    return Schedule.fromData(response.parsedData!.restaurant_by_pk!.schedule!);
+    return Schedule.fromData(
+        response.parsedData!.restaurant_restaurant_by_pk!.schedule!);
   }
   return null;
 }
@@ -229,7 +232,7 @@ Future<Restaurant> update_restaurant_info(
           fetchPolicy: FetchPolicy.networkOnly,
           variables: Variables$Mutation$updateRestaurantInfo(
               id: id,
-              data: Input$restaurant_set_input(
+              data: Input$restaurant_restaurant_set_input(
                   name: restaurant.info.name,
                   image: restaurant.info.image,
                   self_delivery: restaurant.selfDelivery,
@@ -246,8 +249,8 @@ Future<Restaurant> update_restaurant_info(
   } else {
     mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
   }
-  final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
-      response.parsedData!.update_restaurant_by_pk!;
+  final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk data =
+      response.parsedData!.update_restaurant_restaurant_by_pk!;
   mezDbgPrint(
       "Location after saving 📍 ${data.location_gps.latitude}  --  ${data.location_gps.longitude} ");
   return Restaurant(
@@ -285,7 +288,7 @@ Future<bool?> switch_restaurant_self_delivery(
           restauarntId: id, value: value),
     ),
   );
-  if (response.parsedData?.update_restaurant_by_pk == null) {
+  if (response.parsedData?.update_restaurant_restaurant_by_pk == null) {
     throw Exception("🚨🚨🚨 Hasura mut exception =>${response.exception}");
   } else {
     return true;
@@ -303,9 +306,9 @@ Future<double?> get_restaurant_review_average(
           restaurantId: restaurantId),
     ),
   );
-  final Query$get_restaurant_review_average$restaurant_by_pk$reviews_aggregate$aggregate$avg?
-      data =
-      response.parsedData?.restaurant_by_pk!.reviews_aggregate.aggregate?.avg;
+  final Query$get_restaurant_review_average$restaurant_restaurant_by_pk$reviews_aggregate$aggregate$avg?
+      data = response.parsedData?.restaurant_restaurant_by_pk!.reviews_aggregate
+          .aggregate?.avg;
 
   if (data == null) {
     throw Exception(
@@ -326,14 +329,15 @@ Future<List<Review>?> get_restaurant_reviews(
           Variables$Query$get_restaurant_reviews(restaurantId: restaurantId),
     ),
   );
-  final List<Query$get_restaurant_reviews$restaurant_by_pk$reviews>? data =
-      response.parsedData?.restaurant_by_pk?.reviews;
+  final List<Query$get_restaurant_reviews$restaurant_restaurant_by_pk$reviews>?
+      data = response.parsedData?.restaurant_restaurant_by_pk?.reviews;
 
   if (data == null) {
     throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
   } else {
     return data.map(
-        (Query$get_restaurant_reviews$restaurant_by_pk$reviews reviewData) {
+        (Query$get_restaurant_reviews$restaurant_restaurant_by_pk$reviews
+            reviewData) {
       return Review(
           id: reviewData.id,
           rating: reviewData.rating,
@@ -360,14 +364,16 @@ Future<List<Operator>?> get_restaurant_operators(
     ),
   );
   if (!response.hasException &&
-      response.parsedData?.restaurant_by_pk?.restaurant_operators != null) {
+      response.parsedData?.restaurant_restaurant_by_pk?.restaurant_operators !=
+          null) {
     final List<
-            Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators>
-        data = response.parsedData!.restaurant_by_pk!.restaurant_operators;
+            Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators>
+        data =
+        response.parsedData!.restaurant_restaurant_by_pk!.restaurant_operators;
     mezDbgPrint(
         "✅✅ Hasura get operators querry ${response.parsedData?.toJson()} ");
     final List<Operator> ops = data.map(
-        (Query$getRestaurantOperators$restaurant_by_pk$restaurant_operators
+        (Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators
             opData) {
       return Operator(
           state: OperatorState(
@@ -401,11 +407,12 @@ Future<ServiceStatus?> get_restaurant_status(
       variables: Variables$Query$getRestaurantStatus(id: restaurantId),
     ),
   );
-  if (response.parsedData?.restaurant_by_pk == null) {
+  if (response.parsedData?.restaurant_restaurant_by_pk == null) {
     throw Exception(
         "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
   } else {
-    return response.parsedData!.restaurant_by_pk!.open_status.toServiceStatus();
+    return response.parsedData!.restaurant_restaurant_by_pk!.open_status
+        .toServiceStatus();
   }
 }
 
@@ -417,11 +424,11 @@ Future<bool?> get_restaurant_approved({required int restaurantId}) async {
       variables: Variables$Query$getRestaurantAprroved(id: restaurantId),
     ),
   );
-  if (response.parsedData?.restaurant_by_pk == null) {
+  if (response.parsedData?.restaurant_restaurant_by_pk == null) {
     throw Exception(
         "🚨🚨🚨 Getting restaurant $restaurantId status exception \n ${response.exception}");
   } else {
-    return response.parsedData!.restaurant_by_pk!.approved;
+    return response.parsedData!.restaurant_restaurant_by_pk!.approved;
   }
 }
 
@@ -433,19 +440,19 @@ Future<ServiceStatus> update_restaurant_status(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$updateRestaurantInfo(
         id: id,
-        data: Input$restaurant_set_input(
+        data: Input$restaurant_restaurant_set_input(
           open_status: status.toFirebaseFormatString(),
         ),
       ),
     ),
   );
-  if (response.parsedData?.update_restaurant_by_pk == null) {
+  if (response.parsedData?.update_restaurant_restaurant_by_pk == null) {
     throw Exception(
         "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
   } else {
     mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
-    final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
-        response.parsedData!.update_restaurant_by_pk!;
+    final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk
+        data = response.parsedData!.update_restaurant_restaurant_by_pk!;
     return data.open_status.toServiceStatus();
   }
 }
@@ -459,14 +466,14 @@ Future<PaymentInfo?> get_restaurant_payment_info(
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables:
               Variables$Query$getRestaurantPaymentInfo(id: serviceProviderId)));
-  if (res.parsedData?.restaurant_by_pk == null) {
+  if (res.parsedData?.restaurant_restaurant_by_pk == null) {
     throw Exception(
         "🛑 Exception 🛑 Getting payment info for $serviceProviderId ===>${res.exception}");
   }
   mezDbgPrint(
       "✅  payment data ====================> ${res.parsedData?.toJson()}");
-  final Query$getRestaurantPaymentInfo$restaurant_by_pk data =
-      res.parsedData!.restaurant_by_pk!;
+  final Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk data =
+      res.parsedData!.restaurant_restaurant_by_pk!;
   if (data.accepted_payments != null && data.accepted_payments != null) {
     return PaymentInfo(
         acceptedPayments: parseAcceptedPayments(data.accepted_payments),
@@ -514,21 +521,21 @@ Future<PaymentInfo> update_restaurant_payment_info(
       fetchPolicy: FetchPolicy.networkOnly,
       variables: Variables$Mutation$updateRestaurantInfo(
         id: id,
-        data: Input$restaurant_set_input(
+        data: Input$restaurant_restaurant_set_input(
           accepted_payments: paymentInfo.getAcceptedPaymentsJson(),
           stripe_info: paymentInfo.stripe?.toJson(),
         ),
       ),
     ),
   );
-  if (response.parsedData?.update_restaurant_by_pk == null) {
+  if (response.parsedData?.update_restaurant_restaurant_by_pk == null) {
     throw Exception("🚨🚨🚨 Hasura mutation exception =>${response.exception}");
   } else {
     mezDbgPrint(
-        "✅✅✅ Hasura mutation success => ${response.parsedData?.update_restaurant_by_pk?.accepted_payments}");
+        "✅✅✅ Hasura mutation success => ${response.parsedData?.update_restaurant_restaurant_by_pk?.accepted_payments}");
   }
-  final Mutation$updateRestaurantInfo$update_restaurant_by_pk data =
-      response.parsedData!.update_restaurant_by_pk!;
+  final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk data =
+      response.parsedData!.update_restaurant_restaurant_by_pk!;
   return PaymentInfo(
     acceptedPayments: parseAcceptedPayments(data.accepted_payments),
     stripe: parseServiceStripeInfo(data.stripe_info),

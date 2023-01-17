@@ -24,7 +24,7 @@ if(len(sys.argv) > 1):
     
   os.chdir('../../flutter/lib/Shared/graphql')
   os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
-  os.system('flutter pub run build_runner build --delete-conflicting-outputs')
+os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 
 toBeReplaced = """class Input$jsonb_cast_exp {

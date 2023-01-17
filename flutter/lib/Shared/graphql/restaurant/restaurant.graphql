@@ -1,5 +1,5 @@
 query getRestaurants {
-  restaurant {
+  restaurant_restaurant {
     id
     image
     language_id
@@ -35,7 +35,7 @@ query get_restaurant_desc_by_pk($desc_id: Int!) {
 }
 
 query getOneRestaurant($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     id
     firebase_id
     image
@@ -59,35 +59,31 @@ query getOneRestaurant($id: Int!) {
   }
 }
 query getRestaurantStatus($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     open_status
   }
 }
 query getRestaurantSchedule($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     schedule
   }
 }
 query getRestaurantAprroved($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     approved
   }
 }
 query getRestaurantPaymentInfo($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     stripe_info
     accepted_payments
   }
 }
 
-mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
-  update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
-    id
-  }
-}
+
 
 mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
-  update_restaurant_by_pk(
+  update_restaurant_restaurant_by_pk(
     pk_columns: { id: $restauarntId }
     _set: { self_delivery: $value }
   ) {
@@ -96,7 +92,7 @@ mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
   }
 }
 mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
-  update_restaurant_by_pk(
+  update_restaurant_restaurant_by_pk(
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
@@ -104,8 +100,8 @@ mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
   }
 }
 
-mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
-  update_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
+mutation updateRestaurantInfo($id: Int!, $data: restaurant_restaurant_set_input!) {
+  update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
     firebase_id
     image
@@ -128,13 +124,13 @@ mutation updateRestaurantInfo($id: Int!, $data: restaurant_set_input!) {
   }
 }
 query getRestaurantLang($id: Int!) {
-  restaurant_by_pk(id: $id) {
+  restaurant_restaurant_by_pk(id: $id) {
     language_id
   }
 }
 
 subscription GetRestaurants {
-  restaurant {
+  restaurant_restaurant {
     id
     name
     location_text
@@ -212,7 +208,7 @@ query getRestaurantItems($restaurant_id: Int!) {
 }
 # getting operators
 query getRestaurantOperators($restaurantId: Int!) {
-  restaurant_by_pk(id: $restaurantId) {
+  restaurant_restaurant_by_pk(id: $restaurantId) {
     restaurant_operators {
       id
       current_gps
@@ -233,7 +229,7 @@ query getRestaurantOperators($restaurantId: Int!) {
 
 # get average rating
 query get_restaurant_review_average($restaurantId: Int!) {
-  restaurant_by_pk(id: $restaurantId) {
+  restaurant_restaurant_by_pk(id: $restaurantId) {
     reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
       aggregate {
         avg {
@@ -245,7 +241,7 @@ query get_restaurant_review_average($restaurantId: Int!) {
 }
 # get restaurant reviews
 query get_restaurant_reviews($restaurantId: Int!) {
-  restaurant_by_pk(id: $restaurantId) {
+  restaurant_restaurant_by_pk(id: $restaurantId) {
     reviews(where: { from_entity_type: { _eq: "customer" } }) {
       from_entity_id
       from_entity_type

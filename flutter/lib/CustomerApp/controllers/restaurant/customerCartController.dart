@@ -36,7 +36,7 @@ class CustomerCartController extends GetxController {
           .listen((Cart? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.toFirebaseFormattedJson()}");
+              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.restaurant?.paymentInfo?.acceptedPayments.entries}");
           cart.value = event;
           cart.value?.restaurant = event.restaurant;
           _handlerRestaurantId();
@@ -150,6 +150,8 @@ class CustomerCartController extends GetxController {
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
+        "stripePaymentId": stripePaymentId,
+        "stripeFees": cart.value?.stripeFees,
         "customerAppType": "customer",
 
         "customerLocation": cart.value?.toLocation?.toFirebaseFormattedJson() ??
@@ -168,6 +170,7 @@ class CustomerCartController extends GetxController {
         "paymentType": cart.value?.paymentType.toFirebaseFormatString(),
         "notes": cart.value?.notes,
         "restaurantId": cart.value?.restaurant!.info.hasuraId,
+
         "restaurantOrderType": "pickup",
         "tripDistance":
             cart.value?.getRouteInfo?.distance.distanceInMeters ?? 0,

@@ -21,14 +21,14 @@ Future<ServiceLink?> get_service_link_by_id(
     ),
   );
 
-  if (response.parsedData?.service_link == null) {
+  if (response.parsedData?.service_provider_service_link == null) {
     mezDbgPrint(
         "🚨🚨🚨 hasura query service links faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
-  } else if (response.parsedData!.service_link.isEmpty) {
+  } else if (response.parsedData!.service_provider_service_link.isEmpty) {
     throw Exception("No service links found for this service provider");
   } else {
-    final Query$getServiceProviderLinks$service_link data =
-        response.parsedData!.service_link.first;
+    final Query$getServiceProviderLinks$service_provider_service_link data =
+        response.parsedData!.service_provider_service_link.first;
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
         id: data.id,

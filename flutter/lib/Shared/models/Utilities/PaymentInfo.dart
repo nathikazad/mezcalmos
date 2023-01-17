@@ -3,6 +3,7 @@
 // import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
 
 enum PaymentType { Cash, Card, BankTransfer }
@@ -117,40 +118,38 @@ class PaymentInfo {
       this.stripe,
       this.bankInfo});
 
-  factory PaymentInfo.fromData(data) {
-    final Map<PaymentType, bool> acceptedPayments = {
+  factory PaymentInfo.fromData({stripeInfo, acceptedPayments}) {
+    final Map<PaymentType, bool> _acceptedPayments = {
       PaymentType.Card: false,
       PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
-    PaymentType.values.forEach((PaymentType paymentType) {
-      acceptedPayments[paymentType] = data["acceptedPayments"]
-              ?[paymentType.toFirebaseFormatString()] ??
-          false;
+    mezDbgPrint(
+        "🥰🥰🥰🥰🥰🥰🥰🥰 data : =======>$stripeInfo +======== $acceptedPayments");
+    acceptedPayments?.forEach((String key, data) {
+      _acceptedPayments[key.toPaymentType()] = data;
     });
     StripeInfo? stripe;
-    if (acceptedPayments[PaymentType.Card] == true && data["stripe"] != null) {
+    if (_acceptedPayments[PaymentType.Card] == true && stripeInfo != null) {
       final List<String> requis = [];
-      data["stripe"]?["requirements"]?.forEach((req) {
+      stripeInfo?["requirements"]?.forEach((req) {
         requis.add(req.toString());
       });
       stripe = StripeInfo(
-          id: data["stripe"]["id"],
-          status: data["stripe"]["status"].toString().toStripeStatus(),
-          payoutsEnabled: data["stripe"]["payoutsEnabled"] ?? false,
-          detailsSubmitted: data["stripe"]["detailsSubmitted"] ?? false,
-          chargesEnabled: data["stripe"]["chargesEnabled"] ?? false,
-          chargeFeesOnCustomer: data["stripe"]["chargeFeesOnCustomer"] ?? true,
-          email: data["stripe"]["email"],
+          id: stripeInfo["id"],
+          status: stripeInfo["status"].toString().toStripeStatus(),
+          payoutsEnabled: stripeInfo["payoutsEnabled"] ?? false,
+          detailsSubmitted: stripeInfo["detailsSubmitted"] ?? false,
+          chargesEnabled: stripeInfo["chargesEnabled"] ?? false,
+          chargeFeesOnCustomer: stripeInfo["chargeFeesOnCustomer"] ?? true,
+          email: stripeInfo["email"],
           requirements: requis);
     }
-    BankInfo? bankInfo;
-    if (acceptedPayments[PaymentType.BankTransfer] == true &&
-        data["bankInfo"] != null) {
-      bankInfo = BankInfo.fromMap(data["bankInfo"]);
-    }
+
     return PaymentInfo(
-        acceptedPayments: acceptedPayments, stripe: stripe, bankInfo: bankInfo);
+      acceptedPayments: _acceptedPayments,
+      stripe: stripe,
+    );
   }
 
   bool get acceptCard {

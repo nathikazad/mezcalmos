@@ -33,16 +33,26 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     ),
   );
 
-  if (getCartResp.parsedData?.customer_by_pk == null) {
+  if (getCartResp.parsedData?.customer_customer_by_pk == null) {
     throw Exception(
         "[🛑] create_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
   mezDbgPrint(
       "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
 
-  final Query$getCustomerCart$customer_by_pk$cart? cartData =
-      getCartResp.parsedData?.customer_by_pk?.cart;
-  mezDbgPrint("[JJ] Caart_TO_JSON ==> ${cartData?.toJson()}");
+  final Query$getCustomerCart$customer_customer_by_pk$cart? cartData =
+      getCartResp.parsedData?.customer_customer_by_pk?.cart;
+
+  PaymentInfo paymentInfo = PaymentInfo();
+  if (cartData?.restaurant?.stripe_info != null &&
+      cartData?.restaurant?.accepted_payments != null) {
+    paymentInfo = PaymentInfo.fromData(
+        stripeInfo: cartData?.restaurant?.stripe_info!,
+        acceptedPayments: cartData?.restaurant?.accepted_payments!);
+  }
+  // if (data?.stripe_info != null) {
+  //   paymentInfo.stripe = parseServiceStripeInfo(data!.stripe_info);
+  // }
   if (cartData != null) {
     final Cart cart = Cart(
         restaurant: cartData.restaurant != null
@@ -77,7 +87,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                 schedule: cartData.restaurant?.schedule != null
                     ? Schedule.fromData(cartData.restaurant?.schedule)
                     : null,
-                paymentInfo: PaymentInfo(),
+                paymentInfo: paymentInfo,
                 restaurantState: ServiceState(
                   cartData.restaurant!.open_status.toServiceStatus(),
                   cartData.restaurant!.approved,
@@ -90,8 +100,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                     .toLanguageType()
                     .toOpLang())
             : null);
-    cartData.items
-        .forEach((Query$getCustomerCart$customer_by_pk$cart$items cartitem) {
+    cartData.items.forEach(
+        (Query$getCustomerCart$customer_customer_by_pk$cart$items cartitem) {
       final CartItem data = CartItem(
         item: Item(
             startsAt: (cartitem.restaurant_item.special_period_start != null)
@@ -141,7 +151,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
           data.chosenChoices[key] = choices;
         });
         cartitem.restaurant_item.options.forEach(
-            (Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+            (Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options
                 listOfOptions) {
           data.item.options.addAll(_convertOptionFromQuerry(listOfOptions));
         });
@@ -255,14 +265,20 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
     mezDbgPrint(
-        "✅ From stream ============>>>>${cart.parsedData?.customer_by_pk?.cart?.items}");
+        "✅ From stream ============>>>>${cart.parsedData?.customer_customer_by_pk?.cart?.items}");
     final Cart _cartEvent = Cart();
-    final Subscription$listen_on_customer_cart$customer_by_pk$cart? parsedCart =
-        cart.parsedData?.customer_by_pk?.cart;
-    if (cart.parsedData?.customer_by_pk?.cart != null) {
-      final Subscription$listen_on_customer_cart$customer_by_pk$cart$restaurant?
-          _res = cart.parsedData?.customer_by_pk?.cart?.restaurant;
-      if (cart.parsedData?.customer_by_pk?.cart?.restaurant != null) {
+    final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart?
+        parsedCart = cart.parsedData?.customer_customer_by_pk?.cart;
+    if (cart.parsedData?.customer_customer_by_pk?.cart != null) {
+      final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant?
+          _res = cart.parsedData?.customer_customer_by_pk?.cart?.restaurant;
+      PaymentInfo paymentInfo = PaymentInfo();
+      if (_res?.stripe_info != null && _res?.accepted_payments != null) {
+        paymentInfo = PaymentInfo.fromData(
+            stripeInfo: _res?.stripe_info!,
+            acceptedPayments: _res?.accepted_payments!);
+      }
+      if (cart.parsedData?.customer_customer_by_pk?.cart?.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           userInfo: ServiceInfo(
             hasuraId: _res!.id,
@@ -288,7 +304,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
           ),
           schedule:
               _res.schedule != null ? Schedule.fromData(_res.schedule) : null,
-          paymentInfo: PaymentInfo(),
+          paymentInfo: paymentInfo,
           restaurantState: ServiceState(
             _res.open_status.toServiceStatus(),
             _res.approved,
@@ -300,7 +316,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       }
 
       parsedCart!.items.forEach(
-          (Subscription$listen_on_customer_cart$customer_by_pk$cart$items
+          (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items
               cartitem) {
         final CartItem data = CartItem(
           item: Item(
@@ -348,7 +364,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
           });
         }
         cartitem.restaurant_item.options.forEach(
-            (Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+            (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options
                 listOfOptions) {
           data.item.options.addAll(_convertOptionFromStream(listOfOptions));
         });
@@ -437,7 +453,7 @@ Future<int> set_cart_restaurant_id({
 }
 
 List<Option> _convertOptionFromStream(
-    Subscription$listen_on_customer_cart$customer_by_pk$cart$items$restaurant_item$options
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options
         optionsData) {
   final List<Option> options = optionsData.item_options.map((var oneOption) {
     final Option newOption = Option(
@@ -462,10 +478,10 @@ List<Option> _convertOptionFromStream(
 }
 
 List<Option> _convertOptionFromQuerry(
-    Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options
+    Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options
         optionsData) {
   final List<Option> options = optionsData.item_options.map(
-      (Query$getCustomerCart$customer_by_pk$cart$items$restaurant_item$options$item_options
+      (Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options$item_options
           oneOption) {
     final Option newOption = Option(
       id: oneOption.id,

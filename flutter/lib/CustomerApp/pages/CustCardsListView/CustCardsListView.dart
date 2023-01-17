@@ -1,16 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/controllers/CustCardsListViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -29,11 +26,11 @@ class CustCardsListView extends StatefulWidget {
 }
 
 class _CustCardsListViewState extends State<CustCardsListView> {
-  CustomerAuthController controller = Get.find<CustomerAuthController>();
-  StreamSubscription? cardsStream;
-  RxList<CreditCard> cards = RxList([]);
+  CustCardsListViewController viewController = CustCardsListViewController();
+
   @override
   void initState() {
+    viewController.init();
     //   cards.value = controller.customer!.savedCards;
     // TODO: hasura-ch
     // cardsStream = controller.customer?.listen((Customer? event) {
@@ -55,15 +52,19 @@ class _CustCardsListViewState extends State<CustCardsListView> {
             child: Column(
               children: [
                 // cards list
-                Container(
-                  child: Column(
-                    children: List.generate(cards.length,
-                        (int index) => _creditCardCard(cards[index])),
+                if (viewController.stripeInfo.value != null)
+                  Container(
+                    child: Column(
+                      children: List.generate(
+                          viewController.cards.length,
+                          (int index) =>
+                              _creditCardCard(viewController.cards[index])),
+                    ),
                   ),
-                ),
                 MezAddButton(
                   onClick: () async {
-                    await addCardSheet();
+                    await addCardSheet()
+                        .whenComplete(() => viewController.fetchCards());
                   },
                   btnColor: Colors.grey.shade200,
                   title: '${_i18n()["addNew"]}',
@@ -103,12 +104,12 @@ class _CustCardsListViewState extends State<CustCardsListView> {
                     helperText: '${_i18n()["removeDesc"]}',
                     primaryButtonText: '${_i18n()["removeBtn"]}',
                     onYesClick: () async {
-                  await removeCard(cardId: card.id)
-                      .then((ServerResponse response) {
-                    if (!response.success) {
-                      MezSnackbar("Error", response.errorMessage ?? "error");
-                    }
-                    if (response.success) {
+                  await viewController
+                      .deleteCard(cardId: card.id)
+                      .then((bool response) {
+                    if (!response) {
+                      MezSnackbar("Error", "error");
+                    } else {
                       MezRouter.popDialog(closeOverlays: true);
                     }
                   });

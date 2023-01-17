@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
@@ -27,24 +28,26 @@ Future<Customer?> get_customer({required int user_id}) async {
         "[tt] Called :: get_customer_info :: exception :: ${cusInfo.exception}");
   }
 
-  final List<Query$get_customer_info$customer>? _cus =
-      cusInfo.parsedData?.customer;
+  final List<Query$get_customer_info$customer_customer>? _cus =
+      cusInfo.parsedData?.customer_customer;
 
   if (_cus != null && _cus.isNotEmpty) {
     mezDbgPrint(
         "[tt] Called :: get_customer_info :: SUCCESS :: got_customer(${_cus[0].user.name})");
 
-    final Customer ReturnedCus = Customer(
+    final Customer returnedCustomer = Customer(
       appVersion: _cus[0].app_version,
       notificationInfo: _cus[0].notification_token,
     );
+    _cus[0].stripe_info["cards"].forEach((key, data) {
+      returnedCustomer.addCreditCard(CreditCard.fromData(data: data));
+    });
 
     // Adding Saved Locations!
-    _cus[0]
-        .saved_locations
-        .forEach((Query$get_customer_info$customer$saved_locations sLocation) {
+    _cus[0].saved_locations.forEach(
+        (Query$get_customer_info$customer_customer$saved_locations sLocation) {
       mezDbgPrint("[tt] Found new Saved Location ==> ${sLocation.id}");
-      ReturnedCus.addSavedLocation(
+      returnedCustomer.addSavedLocation(
         SavedLocation(
           name: sLocation.name,
           id: sLocation.id,
@@ -59,15 +62,17 @@ Future<Customer?> get_customer({required int user_id}) async {
 
     // TODO : ADD Saved Credit Cards.
 
-    return ReturnedCus;
+    return returnedCustomer;
   } else {
     mezDbgPrint("[tt] No such customer exists :: id($user_id)");
   }
   return null;
 }
 
-Future<Customer?> set_customer_info(
-    {required String app_version, required int user_id}) async {
+Future<Customer?> set_customer_info({
+  required String app_version,
+  required int user_id,
+}) async {
   final QueryResult<Mutation$set_customer_info> _res =
       await _graphClient.mutate$set_customer_info(
     Options$Mutation$set_customer_info(
@@ -127,6 +132,28 @@ Future set_notification_token(
   }
 }
 
+Future<CustStripeInfo> update_customer_stripe_info(
+    {required CustStripeInfo stripeInfo, required int customer_id}) async {
+  final QueryResult<Mutation$set_customer_stripe_info> _res =
+      await _graphClient.mutate$set_customer_stripe_info(
+    Options$Mutation$set_customer_stripe_info(
+      variables: Variables$Mutation$set_customer_stripe_info(
+        user_id: customer_id,
+        stripe_info: stripeInfo.toMap(),
+      ),
+    ),
+  );
+
+  if (_res.parsedData?.update_customer_customer_by_pk?.stripe_info == null) {
+    throw Exception(
+        " 🛑🛑🛑🛑🛑 set_customer_stripe_info :: exception :: ${_res.exception}");
+  } else {
+    mezDbgPrint(" ✅✅✅✅✅ update notif token success");
+    return CustStripeInfo.fromMap(
+        _res.parsedData?.update_customer_customer_by_pk!.stripe_info!);
+  }
+}
+
 Future<List<RestaurantOrder>> get_customer_orders(
     {required int customer_id}) async {
   final List<RestaurantOrder> _ret = [];
@@ -161,7 +188,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
           RestaurantOrder(
             deliveryMode: DeliveryMode.None,
             orderId: _o.id,
-            chatId: _o.chat_id!,
+            chatId: _o.chat_id,
             status: _o.status.toRestaurantOrderStatus(),
             quantity: 1,
             serviceProviderId: _o.restaurant.id,
@@ -191,4 +218,36 @@ Future<List<RestaurantOrder>> get_customer_orders(
     }
   }
   return _ret;
+}
+
+Future<CustStripeInfo?> get_customer_stripe_info(
+    {required int userId, bool withCache = true}) async {
+  final QueryResult<Query$get_customer_stripe_info> res = await _graphClient
+      .query$get_customer_stripe_info(Options$Query$get_customer_stripe_info(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables:
+              Variables$Query$get_customer_stripe_info(customer_id: userId)));
+  if (res.parsedData?.customer_customer.first == null) {
+    throw Exception("🛑 get customer cards exceptions 🛑  =>${res.exception}");
+  }
+  if (res.parsedData?.customer_customer.first.stripe_info != null) {
+    final dynamic? dbCards =
+        res.parsedData!.customer_customer.first.stripe_info?["cards"];
+    mezDbgPrint(
+        "✅ getting cards success =====>${res.parsedData?.customer_customer.first.stripe_info} ");
+
+    final List<CreditCard> cards = [];
+    if (dbCards != null && dbCards.isNotEmpty) {
+      dbCards?.forEach((key, data) {
+        mezDbgPrint(" 🤣 data =======>$data");
+        cards.add(CreditCard.fromData(data: data));
+      });
+    }
+    final CustStripeInfo stripeInfo = CustStripeInfo(
+        id: res.parsedData!.customer_customer.first.stripe_info["id"],
+        cards: cards);
+    return stripeInfo;
+  }
+  return null;
 }
