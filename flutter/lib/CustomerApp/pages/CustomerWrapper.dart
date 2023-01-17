@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/ServicesCard.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
@@ -40,11 +38,11 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   /// AuthController
   AuthController auth = Get.find<AuthController>();
+  CustomerOrderController _orderController =
+      Get.find<CustomerOrderController>();
 
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
-
-  CustomerOrderController? _orderController;
 
   /// appClosedTime
   DateTime? appClosedTime;
@@ -72,11 +70,9 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   void initState() {
     super.initState();
     Get.put(TaxiController(), permanent: true);
-    Get.put(CustomerCartController(), permanent: true);
-    Get.put(CustomerOrderController(), permanent: true);
+    // Get.put(CustomerCartController(), permanent: true);
+    // Get.put(CustomerOrderController(), permanent: true);
 
-    Get.put(LaundryController(), permanent: true);
-    _orderController = Get.find<CustomerOrderController>();
     WidgetsBinding.instance.addObserver(this);
 
     if (Get.find<AuthController>().fireAuthUser != null) {
@@ -271,16 +267,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
-            subtitle: "${_i18n()['laundry']["subtitle"]}",
+            // subtitle: "${_i18n()['laundry']["subtitle"]}",
+            subtitle: "${_i18n()["comingSoon"]}",
             url: "assets/images/customer/laundryService.png",
-            onTap: () {
-              getServiceRoute(
-                  orderType: OrderType.Laundry,
-                  serviceRoute: kLaundriesListRoute,
-                  singleOrderRoute: (int v) {
-                    MezRouter.toNamed<void>(getLaundryOrderRoute(v));
-                  });
-            },
+            // onTap: () {
+            //   getServiceRoute(
+            //       orderType: OrderType.Laundry,
+            //       serviceRoute: kLaundriesListRoute,
+            //       singleOrderRoute: (int v) {
+            //         MezRouter.toNamed<void>(getLaundryOrderRoute(v));
+            //       });
+            // },
           ),
         ),
         Obx(
@@ -308,8 +305,8 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       required String serviceRoute,
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null) {
-      await _orderController?.fetchCustomerOrders();
-      final List<Order> orders = _orderController!.currentOrders
+      await _orderController.fetchCustomerOrders();
+      final List<Order> orders = _orderController.currentOrders
           .where((Order p0) => p0.orderType == orderType)
           .toList();
       if (orders.length == 1) {
@@ -330,26 +327,25 @@ class _CustomerWrapperState extends State<CustomerWrapper>
 
   // when app resumes check if there are current orders and if yes navigate to orders page
   Future<void> _navigateToOrdersIfNecessary() async {
-    await _orderController?.fetchCustomerOrders();
-    if (_orderController?.currentOrders != null &&
-        _orderController?.currentOrders.length == 1) {
+    await _orderController.fetchCustomerOrders();
+    if (_orderController.currentOrders != null &&
+        _orderController.currentOrders.length == 1) {
       // Restaurant
-      if (_orderController?.currentOrders[0].orderType ==
-          OrderType.Restaurant) {
-        popEverythingAndNavigateTo(getRestaurantOrderRoute(
-            _orderController!.currentOrders[0].orderId));
+      if (_orderController.currentOrders[0].orderType == OrderType.Restaurant) {
+        popEverythingAndNavigateTo(
+            getRestaurantOrderRoute(_orderController.currentOrders[0].orderId));
         // Taxi
-      } else if (_orderController?.currentOrders[0].orderType ==
+      } else if (_orderController.currentOrders[0].orderType ==
           OrderType.Taxi) {
         popEverythingAndNavigateTo(
-            getTaxiOrderRoute(_orderController!.currentOrders[0].orderId));
-      } else if (_orderController?.currentOrders[0].orderType ==
+            getTaxiOrderRoute(_orderController.currentOrders[0].orderId));
+      } else if (_orderController.currentOrders[0].orderType ==
           OrderType.Laundry) {
         popEverythingAndNavigateTo(
-            getLaundryOrderRoute(_orderController!.currentOrders[0].orderId));
+            getLaundryOrderRoute(_orderController.currentOrders[0].orderId));
       }
-    } else if (_orderController?.currentOrders != null &&
-        _orderController!.currentOrders.length > 1) {
+    } else if (_orderController.currentOrders != null &&
+        _orderController.currentOrders.length > 1) {
       popEverythingAndNavigateTo(kOrdersRoute);
     }
   }
