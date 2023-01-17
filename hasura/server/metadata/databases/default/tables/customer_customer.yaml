@@ -46,8 +46,9 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - user_id
         - app_version
+        - stripe_info
+        - user_id
       computed_fields:
         - notification_token
       filter:
@@ -76,6 +77,7 @@ update_permissions:
     permission:
       columns:
         - app_version
+        - stripe_info
       filter:
         user_id:
           _eq: X-Hasura-User-Id
