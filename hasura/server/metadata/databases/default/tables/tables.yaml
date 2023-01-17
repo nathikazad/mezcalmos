@@ -31,4 +31,5 @@
 - "!include restaurant_restaurant.yaml"
 - "!include service_provider_post.yaml"
 - "!include service_provider_service_link.yaml"
+- "!include service_provider_store_credit.yaml"
 - "!include service_provider_subscriber.yaml"
