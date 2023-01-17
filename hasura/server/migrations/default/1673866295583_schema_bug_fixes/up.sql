@@ -86,3 +86,14 @@ alter table "restaurant"."restaurant_order_item" rename to "order_item";
 alter view "restaurant"."restaurant_order_public" rename to "order_public";
 
 alter table "restaurant"."restaurant_order" rename to "order";
+
+
+CREATE OR REPLACE FUNCTION public.itemscost(order_row restaurant."order")
+ RETURNS money
+ LANGUAGE sql
+ STABLE
+AS $function$
+    SELECT SUM(quantity * cost_per_one)
+    FROM restaurant.order_item
+    WHERE restaurant_order_id = order_row.id;
+$function$
