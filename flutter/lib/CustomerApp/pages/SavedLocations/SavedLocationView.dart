@@ -9,12 +9,13 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationBody.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -32,6 +33,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
   /// CustomerAuthController
   CustomerAuthController _customerAuthController =
       Get.find<CustomerAuthController>();
+  HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
   /// savedLocations
   List<SavedLocation> savedLocations = <SavedLocation>[];
@@ -55,7 +57,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
     mezDbgPrint(savedLocations);
     mezDbgPrint("==============");
     // then start a listener in case there are changes in /savedLocations db node!
-    hasuraDb.createSubscription(start: () {
+    _hasuraDb.createSubscription(start: () {
       savedLocationsStreamSub = listen_on_customer_locations(
               customer_id: Get.find<AuthController>().user!.hasuraId)
           .listen((List<SavedLocation>? event) {
@@ -69,7 +71,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
       });
     }, cancel: () {
       if (_subscriptionId != null)
-        hasuraDb.cancelSubscription(_subscriptionId!);
+        _hasuraDb.cancelSubscription(_subscriptionId!);
       savedLocationsStreamSub?.cancel();
       savedLocationsStreamSub = null;
     });
@@ -77,7 +79,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
 
   @override
   void dispose() {
-    if (_subscriptionId != null) hasuraDb.cancelSubscription(_subscriptionId!);
+    if (_subscriptionId != null) _hasuraDb.cancelSubscription(_subscriptionId!);
     savedLocationsStreamSub?.cancel();
     savedLocationsStreamSub = null;
     super.dispose();

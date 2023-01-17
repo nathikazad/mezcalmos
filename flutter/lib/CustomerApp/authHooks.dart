@@ -16,17 +16,18 @@ class AuthHooks {
     );
 // TODO : these deletes should not delete stuff that should be Globaly injected (on Signin And SiGnout)
     await Get.delete<Sagora>(force: true);
+
     await Get.delete<CustomerAuthController>(force: true);
-    await Get.delete<CustomerOrderController>(force: true);
+
     await Get.delete<CustomerCartController>(force: true);
     await Get.delete<TaxiController>(force: true);
     //   await Get.delete<RestaurantController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
     await Get.delete<MessageController>(force: true);
-    await Get.delete<ForegroundNotificationsController>(force: true);
-    mezDbgPrint(
-      "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Finished.",
-    );
+    // await Get.delete<ForegroundNotificationsController>(force: true);
+    // mezDbgPrint(
+    //   "[+] CustomerApp::AuthHooks::onSignOutHook -> Callback Finished.",
+    // );
   }
 
   static Future<void> onSignInHook() async {
@@ -38,6 +39,9 @@ class AuthHooks {
       BackgroundNotificationsController(),
       permanent: true,
     );
+    Get.put<ForegroundNotificationsController>(
+        ForegroundNotificationsController(),
+        permanent: true);
 
     /// Put CustomerAuthController
     Get.put<Sagora>(Sagora(), permanent: true);
@@ -46,9 +50,6 @@ class AuthHooks {
     Get.put<CustomerOrderController>(CustomerOrderController(),
         permanent: true);
 
-    Get.put<ForegroundNotificationsController>(
-        ForegroundNotificationsController(),
-        permanent: true);
     //  Get.put<OrderController>(OrderController(), permanent: true);
     Get.put<TaxiController>(TaxiController(), permanent: true);
     //  Get.put<RestaurantController>(RestaurantController(), permanent: true);

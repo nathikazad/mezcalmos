@@ -1998,72 +1998,46 @@ class _CopyWithStubImpl$Query$get_saved_location_by_id$customer_saved_location_b
       _res;
 }
 
-class Variables$Mutation$update_saved_location {
-  factory Variables$Mutation$update_saved_location({
-    required Input$customer_saved_location_pk_columns_input location_id,
-    Geography? gps,
-    required String name,
-    required bool $default,
-    required String address,
+class Variables$Mutation$updateSavedLocation {
+  factory Variables$Mutation$updateSavedLocation({
+    required int id,
+    required Input$customer_saved_location_set_input data,
   }) =>
-      Variables$Mutation$update_saved_location._({
-        r'location_id': location_id,
-        if (gps != null) r'gps': gps,
-        r'name': name,
-        r'default': $default,
-        r'address': address,
+      Variables$Mutation$updateSavedLocation._({
+        r'id': id,
+        r'data': data,
       });
 
-  Variables$Mutation$update_saved_location._(this._$data);
+  Variables$Mutation$updateSavedLocation._(this._$data);
 
-  factory Variables$Mutation$update_saved_location.fromJson(
+  factory Variables$Mutation$updateSavedLocation.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$location_id = data['location_id'];
-    result$data['location_id'] =
-        Input$customer_saved_location_pk_columns_input.fromJson(
-            (l$location_id as Map<String, dynamic>));
-    if (data.containsKey('gps')) {
-      final l$gps = data['gps'];
-      result$data['gps'] = l$gps == null ? null : geographyFromJson(l$gps);
-    }
-    final l$name = data['name'];
-    result$data['name'] = (l$name as String);
-    final l$$default = data['default'];
-    result$data['default'] = (l$$default as bool);
-    final l$address = data['address'];
-    result$data['address'] = (l$address as String);
-    return Variables$Mutation$update_saved_location._(result$data);
+    final l$id = data['id'];
+    result$data['id'] = (l$id as int);
+    final l$data = data['data'];
+    result$data['data'] = Input$customer_saved_location_set_input.fromJson(
+        (l$data as Map<String, dynamic>));
+    return Variables$Mutation$updateSavedLocation._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Input$customer_saved_location_pk_columns_input get location_id =>
-      (_$data['location_id'] as Input$customer_saved_location_pk_columns_input);
-  Geography? get gps => (_$data['gps'] as Geography?);
-  String get name => (_$data['name'] as String);
-  bool get $default => (_$data['default'] as bool);
-  String get address => (_$data['address'] as String);
+  int get id => (_$data['id'] as int);
+  Input$customer_saved_location_set_input get data =>
+      (_$data['data'] as Input$customer_saved_location_set_input);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$location_id = location_id;
-    result$data['location_id'] = l$location_id.toJson();
-    if (_$data.containsKey('gps')) {
-      final l$gps = gps;
-      result$data['gps'] = l$gps == null ? null : geographyToJson(l$gps);
-    }
-    final l$name = name;
-    result$data['name'] = l$name;
-    final l$$default = $default;
-    result$data['default'] = l$$default;
-    final l$address = address;
-    result$data['address'] = l$address;
+    final l$id = id;
+    result$data['id'] = l$id;
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
     return result$data;
   }
 
-  CopyWith$Variables$Mutation$update_saved_location<
-          Variables$Mutation$update_saved_location>
-      get copyWith => CopyWith$Variables$Mutation$update_saved_location(
+  CopyWith$Variables$Mutation$updateSavedLocation<
+          Variables$Mutation$updateSavedLocation>
+      get copyWith => CopyWith$Variables$Mutation$updateSavedLocation(
             this,
             (i) => i,
           );
@@ -2072,36 +2046,18 @@ class Variables$Mutation$update_saved_location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Mutation$update_saved_location) ||
+    if (!(other is Variables$Mutation$updateSavedLocation) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$location_id = location_id;
-    final lOther$location_id = other.location_id;
-    if (l$location_id != lOther$location_id) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
-    final l$gps = gps;
-    final lOther$gps = other.gps;
-    if (_$data.containsKey('gps') != other._$data.containsKey('gps')) {
-      return false;
-    }
-    if (l$gps != lOther$gps) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$$default = $default;
-    final lOther$$default = other.$default;
-    if (l$$default != lOther$$default) {
-      return false;
-    }
-    final l$address = address;
-    final lOther$address = other.address;
-    if (l$address != lOther$address) {
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
       return false;
     }
     return true;
@@ -2109,111 +2065,90 @@ class Variables$Mutation$update_saved_location {
 
   @override
   int get hashCode {
-    final l$location_id = location_id;
-    final l$gps = gps;
-    final l$name = name;
-    final l$$default = $default;
-    final l$address = address;
+    final l$id = id;
+    final l$data = data;
     return Object.hashAll([
-      l$location_id,
-      _$data.containsKey('gps') ? l$gps : const {},
-      l$name,
-      l$$default,
-      l$address,
+      l$id,
+      l$data,
     ]);
   }
 }
 
-abstract class CopyWith$Variables$Mutation$update_saved_location<TRes> {
-  factory CopyWith$Variables$Mutation$update_saved_location(
-    Variables$Mutation$update_saved_location instance,
-    TRes Function(Variables$Mutation$update_saved_location) then,
-  ) = _CopyWithImpl$Variables$Mutation$update_saved_location;
+abstract class CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
+  factory CopyWith$Variables$Mutation$updateSavedLocation(
+    Variables$Mutation$updateSavedLocation instance,
+    TRes Function(Variables$Mutation$updateSavedLocation) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateSavedLocation;
 
-  factory CopyWith$Variables$Mutation$update_saved_location.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$update_saved_location;
+  factory CopyWith$Variables$Mutation$updateSavedLocation.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateSavedLocation;
 
   TRes call({
-    Input$customer_saved_location_pk_columns_input? location_id,
-    Geography? gps,
-    String? name,
-    bool? $default,
-    String? address,
+    int? id,
+    Input$customer_saved_location_set_input? data,
   });
 }
 
-class _CopyWithImpl$Variables$Mutation$update_saved_location<TRes>
-    implements CopyWith$Variables$Mutation$update_saved_location<TRes> {
-  _CopyWithImpl$Variables$Mutation$update_saved_location(
+class _CopyWithImpl$Variables$Mutation$updateSavedLocation<TRes>
+    implements CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateSavedLocation(
     this._instance,
     this._then,
   );
 
-  final Variables$Mutation$update_saved_location _instance;
+  final Variables$Mutation$updateSavedLocation _instance;
 
-  final TRes Function(Variables$Mutation$update_saved_location) _then;
+  final TRes Function(Variables$Mutation$updateSavedLocation) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? location_id = _undefined,
-    Object? gps = _undefined,
-    Object? name = _undefined,
-    Object? $default = _undefined,
-    Object? address = _undefined,
+    Object? id = _undefined,
+    Object? data = _undefined,
   }) =>
-      _then(Variables$Mutation$update_saved_location._({
+      _then(Variables$Mutation$updateSavedLocation._({
         ..._instance._$data,
-        if (location_id != _undefined && location_id != null)
-          'location_id':
-              (location_id as Input$customer_saved_location_pk_columns_input),
-        if (gps != _undefined) 'gps': (gps as Geography?),
-        if (name != _undefined && name != null) 'name': (name as String),
-        if ($default != _undefined && $default != null)
-          'default': ($default as bool),
-        if (address != _undefined && address != null)
-          'address': (address as String),
+        if (id != _undefined && id != null) 'id': (id as int),
+        if (data != _undefined && data != null)
+          'data': (data as Input$customer_saved_location_set_input),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Mutation$update_saved_location<TRes>
-    implements CopyWith$Variables$Mutation$update_saved_location<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$update_saved_location(this._res);
+class _CopyWithStubImpl$Variables$Mutation$updateSavedLocation<TRes>
+    implements CopyWith$Variables$Mutation$updateSavedLocation<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateSavedLocation(this._res);
 
   TRes _res;
 
   call({
-    Input$customer_saved_location_pk_columns_input? location_id,
-    Geography? gps,
-    String? name,
-    bool? $default,
-    String? address,
+    int? id,
+    Input$customer_saved_location_set_input? data,
   }) =>
       _res;
 }
 
-class Mutation$update_saved_location {
-  Mutation$update_saved_location({
+class Mutation$updateSavedLocation {
+  Mutation$updateSavedLocation({
     this.update_customer_saved_location_by_pk,
     required this.$__typename,
   });
 
-  factory Mutation$update_saved_location.fromJson(Map<String, dynamic> json) {
+  factory Mutation$updateSavedLocation.fromJson(Map<String, dynamic> json) {
     final l$update_customer_saved_location_by_pk =
         json['update_customer_saved_location_by_pk'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_saved_location(
+    return Mutation$updateSavedLocation(
       update_customer_saved_location_by_pk:
           l$update_customer_saved_location_by_pk == null
               ? null
-              : Mutation$update_saved_location$update_customer_saved_location_by_pk
+              : Mutation$updateSavedLocation$update_customer_saved_location_by_pk
                   .fromJson((l$update_customer_saved_location_by_pk
                       as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$update_saved_location$update_customer_saved_location_by_pk?
+  final Mutation$updateSavedLocation$update_customer_saved_location_by_pk?
       update_customer_saved_location_by_pk;
 
   final String $__typename;
@@ -2245,7 +2180,7 @@ class Mutation$update_saved_location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$update_saved_location) ||
+    if (!(other is Mutation$updateSavedLocation) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2266,43 +2201,43 @@ class Mutation$update_saved_location {
   }
 }
 
-extension UtilityExtension$Mutation$update_saved_location
-    on Mutation$update_saved_location {
-  CopyWith$Mutation$update_saved_location<Mutation$update_saved_location>
-      get copyWith => CopyWith$Mutation$update_saved_location(
+extension UtilityExtension$Mutation$updateSavedLocation
+    on Mutation$updateSavedLocation {
+  CopyWith$Mutation$updateSavedLocation<Mutation$updateSavedLocation>
+      get copyWith => CopyWith$Mutation$updateSavedLocation(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_saved_location<TRes> {
-  factory CopyWith$Mutation$update_saved_location(
-    Mutation$update_saved_location instance,
-    TRes Function(Mutation$update_saved_location) then,
-  ) = _CopyWithImpl$Mutation$update_saved_location;
+abstract class CopyWith$Mutation$updateSavedLocation<TRes> {
+  factory CopyWith$Mutation$updateSavedLocation(
+    Mutation$updateSavedLocation instance,
+    TRes Function(Mutation$updateSavedLocation) then,
+  ) = _CopyWithImpl$Mutation$updateSavedLocation;
 
-  factory CopyWith$Mutation$update_saved_location.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$update_saved_location;
+  factory CopyWith$Mutation$updateSavedLocation.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateSavedLocation;
 
   TRes call({
-    Mutation$update_saved_location$update_customer_saved_location_by_pk?
+    Mutation$updateSavedLocation$update_customer_saved_location_by_pk?
         update_customer_saved_location_by_pk,
     String? $__typename,
   });
-  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+  CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
       TRes> get update_customer_saved_location_by_pk;
 }
 
-class _CopyWithImpl$Mutation$update_saved_location<TRes>
-    implements CopyWith$Mutation$update_saved_location<TRes> {
-  _CopyWithImpl$Mutation$update_saved_location(
+class _CopyWithImpl$Mutation$updateSavedLocation<TRes>
+    implements CopyWith$Mutation$updateSavedLocation<TRes> {
+  _CopyWithImpl$Mutation$updateSavedLocation(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_saved_location _instance;
+  final Mutation$updateSavedLocation _instance;
 
-  final TRes Function(Mutation$update_saved_location) _then;
+  final TRes Function(Mutation$updateSavedLocation) _then;
 
   static const _undefined = {};
 
@@ -2310,93 +2245,66 @@ class _CopyWithImpl$Mutation$update_saved_location<TRes>
     Object? update_customer_saved_location_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$update_saved_location(
+      _then(Mutation$updateSavedLocation(
         update_customer_saved_location_by_pk:
             update_customer_saved_location_by_pk == _undefined
                 ? _instance.update_customer_saved_location_by_pk
                 : (update_customer_saved_location_by_pk
-                    as Mutation$update_saved_location$update_customer_saved_location_by_pk?),
+                    as Mutation$updateSavedLocation$update_customer_saved_location_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+  CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
       TRes> get update_customer_saved_location_by_pk {
     final local$update_customer_saved_location_by_pk =
         _instance.update_customer_saved_location_by_pk;
     return local$update_customer_saved_location_by_pk == null
-        ? CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk
+        ? CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk
             .stub(_then(_instance))
-        : CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+        : CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
             local$update_customer_saved_location_by_pk,
             (e) => call(update_customer_saved_location_by_pk: e));
   }
 }
 
-class _CopyWithStubImpl$Mutation$update_saved_location<TRes>
-    implements CopyWith$Mutation$update_saved_location<TRes> {
-  _CopyWithStubImpl$Mutation$update_saved_location(this._res);
+class _CopyWithStubImpl$Mutation$updateSavedLocation<TRes>
+    implements CopyWith$Mutation$updateSavedLocation<TRes> {
+  _CopyWithStubImpl$Mutation$updateSavedLocation(this._res);
 
   TRes _res;
 
   call({
-    Mutation$update_saved_location$update_customer_saved_location_by_pk?
+    Mutation$updateSavedLocation$update_customer_saved_location_by_pk?
         update_customer_saved_location_by_pk,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+  CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
           TRes>
       get update_customer_saved_location_by_pk =>
-          CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk
+          CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk
               .stub(_res);
 }
 
-const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
+const documentNodeMutationupdateSavedLocation = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.mutation,
-    name: NameNode(value: 'update_saved_location'),
+    name: NameNode(value: 'updateSavedLocation'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'location_id')),
+        variable: VariableNode(name: NameNode(value: 'id')),
         type: NamedTypeNode(
-          name: NameNode(value: 'customer_saved_location_pk_columns_input'),
+          name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'gps')),
+        variable: VariableNode(name: NameNode(value: 'data')),
         type: NamedTypeNode(
-          name: NameNode(value: 'geography'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'name')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'default')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Boolean'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'address')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
+          name: NameNode(value: 'customer_saved_location_set_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -2411,41 +2319,36 @@ const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
         arguments: [
           ArgumentNode(
             name: NameNode(value: 'pk_columns'),
-            value: VariableNode(name: NameNode(value: 'location_id')),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'id')),
+              )
+            ]),
           ),
           ArgumentNode(
             name: NameNode(value: '_set'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'location_gps'),
-                value: VariableNode(name: NameNode(value: 'gps')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'location_text'),
-                value: VariableNode(name: NameNode(value: 'address')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'default'),
-                value: VariableNode(name: NameNode(value: 'default')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'name'),
-                value: VariableNode(name: NameNode(value: 'name')),
-              ),
-            ]),
+            value: VariableNode(name: NameNode(value: 'data')),
           ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'id'),
+            name: NameNode(value: 'customer_id'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'name'),
+            name: NameNode(value: 'default'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2466,7 +2369,7 @@ const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'default'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2485,27 +2388,27 @@ const documentNodeMutationupdate_saved_location = DocumentNode(definitions: [
     ]),
   ),
 ]);
-Mutation$update_saved_location _parserFn$Mutation$update_saved_location(
+Mutation$updateSavedLocation _parserFn$Mutation$updateSavedLocation(
         Map<String, dynamic> data) =>
-    Mutation$update_saved_location.fromJson(data);
-typedef OnMutationCompleted$Mutation$update_saved_location = FutureOr<void>
+    Mutation$updateSavedLocation.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateSavedLocation = FutureOr<void>
     Function(
   dynamic,
-  Mutation$update_saved_location?,
+  Mutation$updateSavedLocation?,
 );
 
-class Options$Mutation$update_saved_location
-    extends graphql.MutationOptions<Mutation$update_saved_location> {
-  Options$Mutation$update_saved_location({
+class Options$Mutation$updateSavedLocation
+    extends graphql.MutationOptions<Mutation$updateSavedLocation> {
+  Options$Mutation$updateSavedLocation({
     String? operationName,
-    required Variables$Mutation$update_saved_location variables,
+    required Variables$Mutation$updateSavedLocation variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
     Object? optimisticResult,
     graphql.Context? context,
-    OnMutationCompleted$Mutation$update_saved_location? onCompleted,
-    graphql.OnMutationUpdate<Mutation$update_saved_location>? update,
+    OnMutationCompleted$Mutation$updateSavedLocation? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateSavedLocation>? update,
     graphql.OnError? onError,
   })  : onCompletedWithParsed = onCompleted,
         super(
@@ -2522,16 +2425,15 @@ class Options$Mutation$update_saved_location
                     data,
                     data == null
                         ? null
-                        : _parserFn$Mutation$update_saved_location(data),
+                        : _parserFn$Mutation$updateSavedLocation(data),
                   ),
           update: update,
           onError: onError,
-          document: documentNodeMutationupdate_saved_location,
-          parserFn: _parserFn$Mutation$update_saved_location,
+          document: documentNodeMutationupdateSavedLocation,
+          parserFn: _parserFn$Mutation$updateSavedLocation,
         );
 
-  final OnMutationCompleted$Mutation$update_saved_location?
-      onCompletedWithParsed;
+  final OnMutationCompleted$Mutation$updateSavedLocation? onCompletedWithParsed;
 
   @override
   List<Object?> get properties => [
@@ -2542,11 +2444,11 @@ class Options$Mutation$update_saved_location
       ];
 }
 
-class WatchOptions$Mutation$update_saved_location
-    extends graphql.WatchQueryOptions<Mutation$update_saved_location> {
-  WatchOptions$Mutation$update_saved_location({
+class WatchOptions$Mutation$updateSavedLocation
+    extends graphql.WatchQueryOptions<Mutation$updateSavedLocation> {
+  WatchOptions$Mutation$updateSavedLocation({
     String? operationName,
-    required Variables$Mutation$update_saved_location variables,
+    required Variables$Mutation$updateSavedLocation variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -2564,79 +2466,86 @@ class WatchOptions$Mutation$update_saved_location
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeMutationupdate_saved_location,
+          document: documentNodeMutationupdateSavedLocation,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$update_saved_location,
+          parserFn: _parserFn$Mutation$updateSavedLocation,
         );
 }
 
-extension ClientExtension$Mutation$update_saved_location
+extension ClientExtension$Mutation$updateSavedLocation
     on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$update_saved_location>>
-      mutate$update_saved_location(
-              Options$Mutation$update_saved_location options) async =>
+  Future<graphql.QueryResult<Mutation$updateSavedLocation>>
+      mutate$updateSavedLocation(
+              Options$Mutation$updateSavedLocation options) async =>
           await this.mutate(options);
-  graphql.ObservableQuery<Mutation$update_saved_location>
-      watchMutation$update_saved_location(
-              WatchOptions$Mutation$update_saved_location options) =>
+  graphql.ObservableQuery<Mutation$updateSavedLocation>
+      watchMutation$updateSavedLocation(
+              WatchOptions$Mutation$updateSavedLocation options) =>
           this.watchMutation(options);
 }
 
-class Mutation$update_saved_location$update_customer_saved_location_by_pk {
-  Mutation$update_saved_location$update_customer_saved_location_by_pk({
+class Mutation$updateSavedLocation$update_customer_saved_location_by_pk {
+  Mutation$updateSavedLocation$update_customer_saved_location_by_pk({
+    required this.customer_id,
+    required this.$default,
     required this.id,
-    required this.name,
     required this.location_gps,
     required this.location_text,
-    required this.$default,
+    required this.name,
     required this.$__typename,
   });
 
-  factory Mutation$update_saved_location$update_customer_saved_location_by_pk.fromJson(
+  factory Mutation$updateSavedLocation$update_customer_saved_location_by_pk.fromJson(
       Map<String, dynamic> json) {
+    final l$customer_id = json['customer_id'];
+    final l$$default = json['default'];
     final l$id = json['id'];
-    final l$name = json['name'];
     final l$location_gps = json['location_gps'];
     final l$location_text = json['location_text'];
-    final l$$default = json['default'];
+    final l$name = json['name'];
     final l$$__typename = json['__typename'];
-    return Mutation$update_saved_location$update_customer_saved_location_by_pk(
+    return Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
+      customer_id: (l$customer_id as int),
+      $default: (l$$default as bool),
       id: (l$id as int),
-      name: (l$name as String),
       location_gps: geographyFromJson(l$location_gps),
       location_text: (l$location_text as String),
-      $default: (l$$default as bool),
+      name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final int id;
+  final int customer_id;
 
-  final String name;
+  final bool $default;
+
+  final int id;
 
   final Geography location_gps;
 
   final String location_text;
 
-  final bool $default;
+  final String name;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$customer_id = customer_id;
+    _resultData['customer_id'] = l$customer_id;
+    final l$$default = $default;
+    _resultData['default'] = l$$default;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$name = name;
-    _resultData['name'] = l$name;
     final l$location_gps = location_gps;
     _resultData['location_gps'] = geographyToJson(l$location_gps);
     final l$location_text = location_text;
     _resultData['location_text'] = l$location_text;
-    final l$$default = $default;
-    _resultData['default'] = l$$default;
+    final l$name = name;
+    _resultData['name'] = l$name;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2644,18 +2553,20 @@ class Mutation$update_saved_location$update_customer_saved_location_by_pk {
 
   @override
   int get hashCode {
+    final l$customer_id = customer_id;
+    final l$$default = $default;
     final l$id = id;
-    final l$name = name;
     final l$location_gps = location_gps;
     final l$location_text = location_text;
-    final l$$default = $default;
+    final l$name = name;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$customer_id,
+      l$$default,
       l$id,
-      l$name,
       l$location_gps,
       l$location_text,
-      l$$default,
+      l$name,
       l$$__typename,
     ]);
   }
@@ -2666,18 +2577,23 @@ class Mutation$update_saved_location$update_customer_saved_location_by_pk {
       return true;
     }
     if (!(other
-            is Mutation$update_saved_location$update_customer_saved_location_by_pk) ||
+            is Mutation$updateSavedLocation$update_customer_saved_location_by_pk) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$customer_id = customer_id;
+    final lOther$customer_id = other.customer_id;
+    if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$$default = $default;
+    final lOther$$default = other.$default;
+    if (l$$default != lOther$$default) {
       return false;
     }
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
       return false;
     }
     final l$location_gps = location_gps;
@@ -2690,9 +2606,9 @@ class Mutation$update_saved_location$update_customer_saved_location_by_pk {
     if (l$location_text != lOther$location_text) {
       return false;
     }
-    final l$$default = $default;
-    final lOther$$default = other.$default;
-    if (l$$default != lOther$$default) {
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2704,104 +2620,108 @@ class Mutation$update_saved_location$update_customer_saved_location_by_pk {
   }
 }
 
-extension UtilityExtension$Mutation$update_saved_location$update_customer_saved_location_by_pk
-    on Mutation$update_saved_location$update_customer_saved_location_by_pk {
-  CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
-          Mutation$update_saved_location$update_customer_saved_location_by_pk>
+extension UtilityExtension$Mutation$updateSavedLocation$update_customer_saved_location_by_pk
+    on Mutation$updateSavedLocation$update_customer_saved_location_by_pk {
+  CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
+          Mutation$updateSavedLocation$update_customer_saved_location_by_pk>
       get copyWith =>
-          CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+          CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+abstract class CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
     TRes> {
-  factory CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk(
-    Mutation$update_saved_location$update_customer_saved_location_by_pk
-        instance,
+  factory CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
+    Mutation$updateSavedLocation$update_customer_saved_location_by_pk instance,
     TRes Function(
-            Mutation$update_saved_location$update_customer_saved_location_by_pk)
+            Mutation$updateSavedLocation$update_customer_saved_location_by_pk)
         then,
-  ) = _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk;
+  ) = _CopyWithImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk;
 
-  factory CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk.stub(
+  factory CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk;
+      _CopyWithStubImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk;
 
   TRes call({
+    int? customer_id,
+    bool? $default,
     int? id,
-    String? name,
     Geography? location_gps,
     String? location_text,
-    bool? $default,
+    String? name,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+class _CopyWithImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+        CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+  _CopyWithImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
     this._instance,
     this._then,
   );
 
-  final Mutation$update_saved_location$update_customer_saved_location_by_pk
+  final Mutation$updateSavedLocation$update_customer_saved_location_by_pk
       _instance;
 
   final TRes Function(
-          Mutation$update_saved_location$update_customer_saved_location_by_pk)
-      _then;
+      Mutation$updateSavedLocation$update_customer_saved_location_by_pk) _then;
 
   static const _undefined = {};
 
   TRes call({
+    Object? customer_id = _undefined,
+    Object? $default = _undefined,
     Object? id = _undefined,
-    Object? name = _undefined,
     Object? location_gps = _undefined,
     Object? location_text = _undefined,
-    Object? $default = _undefined,
+    Object? name = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$update_saved_location$update_customer_saved_location_by_pk(
+      _then(Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
+        customer_id: customer_id == _undefined || customer_id == null
+            ? _instance.customer_id
+            : (customer_id as int),
+        $default: $default == _undefined || $default == null
+            ? _instance.$default
+            : ($default as bool),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
         location_gps: location_gps == _undefined || location_gps == null
             ? _instance.location_gps
             : (location_gps as Geography),
         location_text: location_text == _undefined || location_text == null
             ? _instance.location_text
             : (location_text as String),
-        $default: $default == _undefined || $default == null
-            ? _instance.$default
-            : ($default as bool),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+class _CopyWithStubImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
         TRes>
     implements
-        CopyWith$Mutation$update_saved_location$update_customer_saved_location_by_pk<
+        CopyWith$Mutation$updateSavedLocation$update_customer_saved_location_by_pk<
             TRes> {
-  _CopyWithStubImpl$Mutation$update_saved_location$update_customer_saved_location_by_pk(
+  _CopyWithStubImpl$Mutation$updateSavedLocation$update_customer_saved_location_by_pk(
       this._res);
 
   TRes _res;
 
   call({
+    int? customer_id,
+    bool? $default,
     int? id,
-    String? name,
     Geography? location_gps,
     String? location_text,
-    bool? $default,
+    String? name,
     String? $__typename,
   }) =>
       _res;

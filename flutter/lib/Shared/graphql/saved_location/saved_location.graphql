@@ -37,15 +37,14 @@ query get_saved_location_by_id($location_id: Int!){
 
 
 # Update Location by pk.
-mutation update_saved_location($location_id: customer_saved_location_pk_columns_input!, $gps: geography, $name: String!, $default: Boolean!, $address: String!)
-{
-  update_customer_saved_location_by_pk(pk_columns: $location_id, _set :{ location_gps: $gps, location_text: $address, default: $default, name : $name })
-  {
-      id,
-      name,
-      location_gps,
-      location_text,
-      default
+mutation updateSavedLocation($id: Int!, $data: customer_saved_location_set_input!) {
+  update_customer_saved_location_by_pk(pk_columns: {id: $id}, _set: $data) {
+    customer_id
+    default
+    id
+    location_gps
+    location_text
+    name
   }
 }
 

@@ -3,18 +3,16 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CustomerOrderController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
-  ForegroundNotificationsController _fbNotificationsController =
-      Get.find<ForegroundNotificationsController>();
+  // ForegroundNotificationsController _fbNotificationsController =
+  //     Get.find<ForegroundNotificationsController>();
   RxList<Order> currentOrders = <Order>[].obs;
   RxList<Order> pastOrders = <Order>[].obs;
 
@@ -69,22 +67,22 @@ class CustomerOrderController extends GetxController {
     }
   }
 
-  void clearOrderNotifications(int? orderId) {
-    mezDbgPrint("oooo id ==> $orderId");
-    _fbNotificationsController
-        .notifications()
-        .where((Notification notification) {
-      mezDbgPrint("oooo2 id ==> ${notification.orderId}");
+  // void clearOrderNotifications(int? orderId) {
+  //   mezDbgPrint("oooo id ==> $orderId");
+  //   _fbNotificationsController
+  //       .notifications()
+  //       .where((Notification notification) {
+  //     mezDbgPrint("oooo2 id ==> ${notification.orderId}");
 
-      return (notification.notificationType ==
-                  NotificationType.OrderStatusChange ||
-              notification.notificationType ==
-                  NotificationType.NewCounterOffer) &&
-          notification.orderId == orderId;
-    }).forEach((Notification notification) {
-      _fbNotificationsController.removeNotification(notification.id);
-    });
-  }
+  //     return (notification.notificationType ==
+  //                 NotificationType.OrderStatusChange ||
+  //             notification.notificationType ==
+  //                 NotificationType.NewCounterOffer) &&
+  //         notification.orderId == orderId;
+  //   }).forEach((Notification notification) {
+  //     _fbNotificationsController.removeNotification(notification.id);
+  //   });
+  // }
 
   @override
   Future<void> onClose() async {
