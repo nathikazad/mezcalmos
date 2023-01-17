@@ -212,11 +212,11 @@ class CustCartViewController {
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
     try {
-      final String? stripePaymentId =
-          await acceptPaymentByCardChoice(getCardChoice);
+      // final String? stripePaymentId =
+      //     await acceptPaymentByCardChoice(getCardChoice);
 
       final ServerResponse _serverResponse =
-          await cartController.checkout(stripePaymentId: stripePaymentId);
+          await cartController.checkout(stripePaymentId: null);
 
       mezDbgPrint("datatatatataat => ${_serverResponse.data}");
 
@@ -289,7 +289,6 @@ class CustCartViewController {
               paymentAmount: cart.totalCost,
               card: card.value!);
           break;
-        
       }
     }
     return stripePaymentId;
