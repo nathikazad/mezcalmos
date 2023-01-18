@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
@@ -233,17 +234,19 @@ class CartItem {
   int? idInCart;
   Item item;
   int quantity;
+  Map<String, List<Choice>> chosenChoices = <String, List<Choice>>{};
 
   String? notes;
+  CartItem({
+    required this.restaurantId,
+    this.idInCart,
+    required this.item,
+    required this.quantity,
+    this.notes,
+  });
   //optionId and list of choices for that option
-  Map<int, List<Choice>> chosenChoices = <int, List<Choice>>{};
+
   //  selected_options = Map<Int, List<int>>
-  CartItem(this.item, this.restaurantId,
-      {this.idInCart, this.quantity = 1, this.notes}) {
-    item.options.forEach((Option option) {
-      chosenChoices[option.id] = <Choice>[];
-    });
-  }
 
   factory CartItem.fromData({
     required itemData,
@@ -252,8 +255,8 @@ class CartItem {
     required int itemIdInCart,
   }) {
     final CartItem cartItem = CartItem(
-      item,
-      restaurant.info.hasuraId,
+      item: item,
+      restaurantId: restaurant.info.hasuraId,
       idInCart: itemIdInCart,
       quantity: itemData["quantity"],
       notes: itemData["notes"],
@@ -290,14 +293,15 @@ class CartItem {
   Map<String, Map<String, dynamic>> selectedOptionsToJson() {
     final Map<String, Map<String, dynamic>> json = {};
 
-    chosenChoices.forEach((int optionId, List<Choice> choices) {
-      final List<Map<String, dynamic>> data = [];
+    chosenChoices.forEach((String optionId, List<Choice> choices) {
+      final Map<String, dynamic> data = {};
       choices.forEach((Choice choice) {
-        data.add(choice.toJson());
+        data[choice.id.toString()] = choice.toJson();
       });
       json[optionId.toString()] = <String, dynamic>{
         "choices": data,
-        "optionName": item.findOption(optionId)?.name.toFirebaseFormat()
+        "optionName":
+            item.findOption(int.parse(optionId))?.name.toFirebaseFormat()
       };
       // json["chosenChoices"][optionId]["optionName"] =
       //     item.findOption(optionId)?.name.toFirebaseFormat();
@@ -338,28 +342,27 @@ class CartItem {
 
   factory CartItem.clone(CartItem cartItem) {
     final CartItem newCartItem = CartItem(
-      cartItem.item,
-      cartItem.restaurantId,
+      item: cartItem.item,
+      restaurantId: cartItem.restaurantId,
       idInCart: cartItem.idInCart,
       quantity: cartItem.quantity,
       notes: cartItem.notes,
     );
-    cartItem.chosenChoices.forEach((int optionId, List<Choice> choices) {
-      newCartItem.chosenChoices[optionId] = <Choice>[...choices]; // hard copy
-    });
+    newCartItem.chosenChoices = cartItem.chosenChoices;
+
     return newCartItem;
   }
 
   void setNewChoices(
-      {required int optionId, required List<Choice> newChoices}) {
+      {required String optionId, required List<Choice> newChoices}) {
     chosenChoices[optionId] = newChoices;
   }
 
   num costPerOne() {
     num costPerOne = item.cost;
     // if(chosenChoices.length > item.options
-    chosenChoices.forEach((int optionId, List<Choice> choices) {
-      final Option? option = item.findOption(optionId);
+    chosenChoices.forEach((String optionId, List<Choice> choices) {
+      final Option? option = item.findOption(int.parse(optionId));
       if (option != null) {
         if (choices.length > option.freeChoice) {
           costPerOne +=

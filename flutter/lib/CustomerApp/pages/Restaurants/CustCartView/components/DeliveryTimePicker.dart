@@ -197,7 +197,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         }
       });
     } else {
-      mezDbgPrint("[OPS] Restaurant have no schedule!");
+      mezDbgPrint(
+          "[OPS] Restaurant have no schedule!=>${widget.viewCartController.cart.restaurant?.toJson()}}");
     }
   }
 

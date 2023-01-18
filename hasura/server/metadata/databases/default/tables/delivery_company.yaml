@@ -1,0 +1,25 @@
+table:
+  name: company
+  schema: delivery
+object_relationships:
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+array_relationships:
+  - name: delivery_drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+          service_provider_type: delivery_company_type
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+  - name: delivery_operators
+    using:
+      foreign_key_constraint_on:
+        column: delivery_company_id
+        table:
+          name: operator
+          schema: delivery

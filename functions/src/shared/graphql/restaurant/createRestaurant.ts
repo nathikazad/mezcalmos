@@ -13,7 +13,7 @@ export async function createRestaurant(
   let chain = getHasura();
 
   let response = await chain.mutation({
-    insert_restaurant_one: [{
+    insert_restaurant_restaurant_one: [{
       object: {
         name: restaurant.name,
         
@@ -42,7 +42,7 @@ export async function createRestaurant(
   });
   console.log("response: ", response);
 
-  if(response.insert_restaurant_one == null) {
+  if(response.insert_restaurant_restaurant_one == null) {
     throw new HttpsError(
       "internal",
       "restaurant creation error"
@@ -51,15 +51,15 @@ export async function createRestaurant(
   
   
   // Generating 3 links/Qr
-  let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"providerId": response.insert_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
-  let customerLinks : IDeepLink|null = await generateDeepLink("Customer", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "publicLink"})
-  let deliveryLinks : IDeepLink|null = await generateDeepLink("Delivery", {"providerType":"restaurant", "providerId": response.insert_restaurant_one.id, "deepLinkType": "addDriver"})
+  let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"providerId": response.insert_restaurant_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
+  let customerLinks : IDeepLink|null = await generateDeepLink("Customer", {"providerType":"restaurant", "providerId": response.insert_restaurant_restaurant_one.id, "deepLinkType": "publicLink"})
+  let deliveryLinks : IDeepLink|null = await generateDeepLink("Delivery", {"providerType":"restaurant", "providerId": response.insert_restaurant_restaurant_one.id, "deepLinkType": "addDriver"})
 
   chain.mutation({
-    insert_service_link_one: [{
+    insert_service_provider_service_link_one: [{
       object: {
-        service_provider_id : response.insert_restaurant_one.id,
-        service_provider_type : response.insert_restaurant_one.service_provider_type,
+        service_provider_id : response.insert_restaurant_restaurant_one.id,
+        service_provider_type : response.insert_restaurant_restaurant_one.service_provider_type,
         customer_deep_link : customerLinks?.url,
         customer_qr_image_link : customerLinks?.urlQr,
         driver_deep_link : deliveryLinks?.url,
@@ -85,5 +85,5 @@ export async function createRestaurant(
       }]
     });
   }
-  restaurant.restaurantId = response.insert_restaurant_one.id
+  restaurant.restaurantId = response.insert_restaurant_restaurant_one.id
 }

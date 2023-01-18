@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
@@ -35,7 +34,7 @@ Future<void> change_user_language({
   required int userId,
   required LanguageType language,
 }) async {
-  QueryResult<Mutation$changeUserLanguage> _res =
+  final QueryResult<Mutation$changeUserLanguage> _res =
       await _db.graphQLClient.mutate$changeUserLanguage(
     Options$Mutation$changeUserLanguage(
       variables: Variables$Mutation$changeUserLanguage(
@@ -60,7 +59,7 @@ Future<void> change_username({
   required int userId,
   required String name,
 }) async {
-  QueryResult<Mutation$changeUserName> _res =
+  final QueryResult<Mutation$changeUserName> _res =
       await _db.graphQLClient.mutate$changeUserName(
     Options$Mutation$changeUserName(
       variables: Variables$Mutation$changeUserName(

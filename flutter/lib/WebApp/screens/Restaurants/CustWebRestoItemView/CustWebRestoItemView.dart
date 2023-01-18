@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 // import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
@@ -19,6 +20,7 @@ import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRestoItemView/compon
 // import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRestoItemView/components/restaurantItemViewForMobile.dart';
 import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/WebApp/widgets/endWebSideBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
@@ -29,8 +31,6 @@ import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 import '../../../../Shared/controllers/restaurantsInfoController.dart';
-
-enum ViewItemScreenMode { AddItemMode, EditItemMode }
 
 class CustWebRestoItemView extends StatefulWidget {
   const CustWebRestoItemView({Key? key}) : super(key: key);
@@ -45,14 +45,13 @@ class _CustWebRestoItemViewState extends State<CustWebRestoItemView> {
   Restaurant? currentRestaurant;
 
   MezWebSideBarController mezWebSideBarController = MezWebSideBarController();
+  CustItemViewController custItemViewController = CustItemViewController();
 
   ViewDrawerType viewType = ViewDrawerType.myOrder;
 
   @override
   void initState() {
-    mezDbgPrint(
-        "===========> this is the mode ${QR.params['mode'].toString()} <=============");
-    _getRestaurant();
+    // _getRestaurant();
     super.initState();
   }
 
@@ -65,89 +64,81 @@ class _CustWebRestoItemViewState extends State<CustWebRestoItemView> {
       //     permanent: true);
       // RestaurantController restaurantCartController =
       //     Get.find<RestaurantController>();
-      mode = QR.params['mode'].toString() == "add" || QR.params['mode'] == null
-          ? ViewItemScreenMode.AddItemMode
-          : ViewItemScreenMode.EditItemMode;
+
       mezDbgPrint("===========> this is the mode ${mode} <=============");
-      if (mode == ViewItemScreenMode.AddItemMode) {
-        get_restaurant_by_id(
-                id: int.parse(QR.params['id'].toString()), withCache: false)
-            .then((Restaurant? rest) {
-          setState(() {
-            currentRestaurant = rest;
-          });
-        });
 
-        get_one_item_by_id(int.parse("${QR.params['itemId'].toString()}"))
-            .then((Item? _item) {
-          if (_item != null) {
-            mezDbgPrint("[66] Got Item ==> |item : ${_item.id}|");
-            cartItem.value =
-                CartItem(_item, int.parse(QR.params['id'].toString()));
-          } else {
-            mezDbgPrint("[66] Failed getting Item ==> |item|");
-          }
-        });
-        //  mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
-        mezDbgPrint("CartValue =--> ${cartItem.value}");
-        // Get.find<RestaurantsInfoController>()
-        //     .getRestaurant(int.parse(QR.params['id'].toString()))
-        //     .then((value) {
-        //   if (value != null) {
-        //     setState(() {
-        //       currentRestaurant = value;
-        //       var item = value.findItemById(id: QR.params['itemId'].toString());
+      currentRestaurant = custItemViewController.restaurant.value;
 
-        //       cartItem.value =
-        //           CartItem(item!, int.parse(QR.params['id'].toString()));
+      // get_one_item_by_id(int.parse("${QR.params['itemId'].toString()}"))
+      //     .then((Item? _item) {
+      //   if (_item != null) {
+      //     mezDbgPrint("[66] Got Item ==> |item : ${_item.id}|");
+      //TODO: change the hard coded quantity
+      cartItem.value = custItemViewController.cartItem.value;
+      // } else {
+      //   mezDbgPrint("[66] Failed getting Item ==> |item|");
+      // }
+      //  });
+      //  mezDbgPrint("IS SPECIAL ITEM==========>>>>$isSpecial");
+      mezDbgPrint("CartValue =--> ${cartItem.value}");
+      // Get.find<RestaurantsInfoController>()
+      //     .getRestaurant(int.parse(QR.params['id'].toString()))
+      //     .then((value) {
+      //   if (value != null) {
+      //     setState(() {
+      //       currentRestaurant = value;
+      //       var item = value.findItemById(id: QR.params['itemId'].toString());
 
-        //       if (item != null) {
-        //         print("this is another test ${item.toJson()}");
-        //       } else {
-        //         // QR.to("/404");
-        //       }
-        //     });
-        //   } else {
-        //     //QR.to("/404");
-        //   }
-        // });
-      } else if (QR.params['mode'].toString() == "edit") {
-        // mezDbgPrint(
-        //     "👋===========> this is the mode ${mode}  and the id is ${QR.params['idInCart'].toString()}<=============");
-        // Get.find<RestaurantController>()
-        //     .cart
-        //     .value
-        //     .cartItems
-        //     .forEach((element) {
-        //   mezDbgPrint("this is the id of the item ${element.idInCart}");
-        // });
-        // try {
-        //   CartItem? x = Get.find<RestaurantController>()
-        //       .cart
-        //       .value
-        //       .cartItems
-        //       .firstWhere((CartItem item) {
-        //     return item.idInCart == "${QR.params['idInCart'].toString()}";
-        //   });
-        //   mezDbgPrint(
-        //       "🛒🛒🛒🛒🛒🛒🛒🛒 x value is ${x.toFirebaseFunctionFormattedJson()}");
-        //   mezDbgPrint(
-        //       "the lengeth of this shit is ${Get.find<RestaurantController>().cart.value.cartItems.length}");
-        //   cartItem.value = CartItem.clone(x);
+      //       cartItem.value =
+      //           CartItem(item!, int.parse(QR.params['id'].toString()));
 
-        //   Get.find<RestaurantsInfoController>()
-        //       .getRestaurant(cartItem.value!.restaurantId)
-        //       .then((Restaurant? value) {
-        //     setState(() {
-        //       currentRestaurant = value;
-        //     });
-        //   });
-        // } catch (e) {
-        //   mezDbgPrint("this is a problem here happen e ${e.toString()}");
-        //   //QR.to("/404");
-        // }
-      }
-      cartItem.refresh();
+      //       if (item != null) {
+      //         print("this is another test ${item.toJson()}");
+      //       } else {
+      //         // QR.to("/404");
+      //       }
+      //     });
+      //   } else {
+      //     //QR.to("/404");
+      //   }
+      // });
+
+      // mezDbgPrint(
+      //     "👋===========> this is the mode ${mode}  and the id is ${QR.params['idInCart'].toString()}<=============");
+      // Get.find<RestaurantController>()
+      //     .cart
+      //     .value
+      //     .cartItems
+      //     .forEach((element) {
+      //   mezDbgPrint("this is the id of the item ${element.idInCart}");
+      // });
+      // try {
+      //   CartItem? x = Get.find<RestaurantController>()
+      //       .cart
+      //       .value
+      //       .cartItems
+      //       .firstWhere((CartItem item) {
+      //     return item.idInCart == "${QR.params['idInCart'].toString()}";
+      //   });
+      //   mezDbgPrint(
+      //       "🛒🛒🛒🛒🛒🛒🛒🛒 x value is ${x.toFirebaseFunctionFormattedJson()}");
+      //   mezDbgPrint(
+      //       "the lengeth of this shit is ${Get.find<RestaurantController>().cart.value.cartItems.length}");
+      //   cartItem.value = CartItem.clone(x);
+
+      //   Get.find<RestaurantsInfoController>()
+      //       .getRestaurant(cartItem.value!.restaurantId)
+      //       .then((Restaurant? value) {
+      //     setState(() {
+      //       currentRestaurant = value;
+      //     });
+      //   });
+      // } catch (e) {
+      //   mezDbgPrint("this is a problem here happen e ${e.toString()}");
+      //   //QR.to("/404");
+      // }
+      // }
+
       var xLang = QR.params["lang"].toString().contains("es")
           ? LanguageType.ES
           : LanguageType.EN;
@@ -165,7 +156,23 @@ class _CustWebRestoItemViewState extends State<CustWebRestoItemView> {
     print("the restaurant id is ${QR.params['itemId'].toString()}");
     // s=re
     return FutureBuilder<bool>(
-        future: setupFirebase(launchMode: typeMode.toLaunchMode()),
+        future: setupFirebase(
+            launchMode: typeMode.toLaunchMode(),
+            func: () async {
+              await Get.put<CustomerCartController>(
+                CustomerCartController(),
+                permanent: true,
+              );
+              custItemViewController.init(
+                  itemId: int.parse(QR.params['itemId'].toString()),
+                  itemIdInCart: null,
+                  restaurantId: int.parse(QR.params['id'].toString()),
+                  mode: QR.params['mode'].toString() != "edit"
+                      ? ViewItemScreenMode.AddItemMode
+                      : ViewItemScreenMode.EditItemMode);
+              mezDbgPrint(
+                  "this is the value of items ${custItemViewController.restaurant.value?.toJson()}");
+            }),
         builder: (context, snapShot) {
           final GlobalKey<ScaffoldState> _key = GlobalKey();
           if (snapShot.hasData && snapShot.data == true) {
@@ -191,27 +198,26 @@ class _CustWebRestoItemViewState extends State<CustWebRestoItemView> {
                         //     mezWebSideBarController: mezWebSideBarController);
                       } else {
                         return Scaffold(
-                          appBar: WebAppBarComponent(
-                            mezWebSideBarController: mezWebSideBarController,
-                            automaticallyGetBack:
-                                (MezCalmosResizer.isMobile(context) ||
-                                        MezCalmosResizer.isSmallMobile(context))
-                                    ? false
-                                    : true,
-                            type: _authcontroller.fireAuthUser?.uid != null
-                                ? WebAppBarType.WithCartActionButton.obs
-                                : WebAppBarType.WithSignInActionButton.obs,
-                          ),
+                          // appBar: WebAppBarComponent(
+                          //   mezWebSideBarController: mezWebSideBarController,
+                          //   automaticallyGetBack:
+                          //       (MezCalmosResizer.isMobile(context) ||
+                          //               MezCalmosResizer.isSmallMobile(context))
+                          //           ? false
+                          //           : true,
+                          //   type: _authcontroller.fireAuthUser?.uid != null
+                          //       ? WebAppBarType.WithCartActionButton.obs
+                          //       : WebAppBarType.WithSignInActionButton.obs,
+                          // ),
                           body: RestaurantItemViewForDesktop(
-                              viewItemScreenMode: mode,
-                              cartItem: cartItem,
-                              currentRestaurant: currentRestaurant.obs,
-                              mezWebSideBarController: mezWebSideBarController),
+                              mezWebSideBarController: mezWebSideBarController,
+                              custItemViewController: custItemViewController),
                         );
                       }
                     }),
                   )
                 : Scaffold(
+                    backgroundColor: Colors.red,
                     body: Center(
                       child: MezLoaderWidget(),
                     ),

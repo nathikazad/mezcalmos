@@ -101,15 +101,15 @@ class _CustWebRestaurantListViewState extends State<CustWebRestaurantListView> {
               bottomNavigationBar: MezBottomBar(),
               appBar: InstallAppBarComponent(),
               body: Scaffold(
-                  appBar: WebAppBarComponent(
-                      mezWebSideBarController: mezWebSideBarController,
-                      automaticallyGetBack: false,
-                      type: Get.find<AuthController>().isUserSignedIn != false
-                          ? WebAppBarType.WithCartActionButton.obs
-                          : WebAppBarType.WithSignInActionButton.obs),
+                  // appBar: WebAppBarComponent(
+                  //     mezWebSideBarController: mezWebSideBarController,
+                  //     automaticallyGetBack: false,
+                  //     type: Get.find<AuthController>().isUserSignedIn != false
+                  //         ? WebAppBarType.WithCartActionButton.obs
+                  //         : WebAppBarType.WithSignInActionButton.obs),
                   body: ListRestauBody(
-                    viewController: viewController,
-                  )),
+                viewController: viewController,
+              )),
             )
           : Scaffold(
               body: Center(child: MezLoaderWidget()),

@@ -1,0 +1,93 @@
+table:
+  name: order_item
+  schema: restaurant
+object_relationships:
+  - name: order
+    using:
+      foreign_key_constraint_on: restaurant_order_id
+  - name: restaurant_item
+    using:
+      foreign_key_constraint_on: restaurant_item_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter:
+        order:
+          customer_id:
+            _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter:
+        order:
+          delivery:
+            delivery_driver:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - unavailable
+        - id
+        - quantity
+        - restaurant_item_id
+        - restaurant_order_id
+        - review_id
+        - in_json
+        - cost_per_one
+        - notes
+      filter:
+        order:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - review_id
+      filter:
+        order:
+          customer_id:
+            _eq: X-Hasura-User-Id
+      check: null

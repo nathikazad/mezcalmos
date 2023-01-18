@@ -1,5 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:collection/collection.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
@@ -9,7 +12,7 @@ class Customer {
   String? appVersion;
   dynamic notificationInfo;
   SavedLocations savedLocations = <SavedLocation>[];
-  List<CreditCard> savedCards = <CreditCard>[];
+  CustStripeInfo? stripeInfo;
   dynamic data;
   SavedLocation? get defaultLocation => savedLocations.firstWhereOrNull(
       (SavedLocation savedLocation) => savedLocation.defaultLocation);
@@ -17,6 +20,7 @@ class Customer {
   Customer({
     this.appVersion,
     this.notificationInfo,
+    this.stripeInfo,
   });
 
   void addSavedLocation(SavedLocation loc) {
@@ -24,7 +28,7 @@ class Customer {
   }
 
   void addCreditCard(CreditCard card) {
-    savedCards.add(card);
+    stripeInfo?.cards.add(card);
   }
 
   Map<String, dynamic> toJson() {
@@ -93,7 +97,7 @@ class SavedLocation {
 
   Map<String, dynamic> toFirebaseFormattedJson() {
     final Map<String, dynamic> json = (location != null)
-        ? location!.toFirebaseFormattedJson()
+        ? location.toFirebaseFormattedJson()
         : <String, dynamic>{};
 
     json["name"] = name;
@@ -118,12 +122,42 @@ class CreditCard {
       required this.expMonth,
       required this.last4});
 
-  factory CreditCard.fromData({required String id, required data}) {
+  factory CreditCard.fromData({required data}) {
     return CreditCard(
-        id: id,
+        id: data["id"],
         brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
         expYear: data["expYear"],
         expMonth: data["expMonth"],
         last4: data["last4"]);
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'brand': brand.toFirebaseFormatString(),
+      'expMonth': expMonth,
+      'expYear': expYear,
+      'last4': last4,
+    };
+  }
+
+  @override
+  bool operator ==(covariant CreditCard other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.brand == brand &&
+        other.expMonth == expMonth &&
+        other.expYear == expYear &&
+        other.last4 == last4;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        brand.hashCode ^
+        expMonth.hashCode ^
+        expYear.hashCode ^
+        last4.hashCode;
   }
 }

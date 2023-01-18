@@ -1,0 +1,58 @@
+table:
+  name: order_public
+  schema: restaurant
+array_relationships:
+  - name: restaurant_operators
+    using:
+      manual_configuration:
+        column_mapping:
+          restaurant_id: restaurant_id
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: restaurant
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - customer_id
+        - restaurant_id
+        - review_id
+        - status
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - restaurant_id
+        - review_id
+        - status
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - customer_id
+        - restaurant_id
+        - review_id
+        - status
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - customer_id
+        - restaurant_id
+        - review_id
+        - status
+        - actual_food_ready_time
+        - estimated_food_ready_time
+        - order_time
+      filter: {}

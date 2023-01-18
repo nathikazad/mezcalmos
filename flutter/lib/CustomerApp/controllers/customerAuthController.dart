@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 // import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
@@ -75,7 +74,7 @@ class CustomerAuthController extends GetxController {
       //   unawaited(saveNotificationToken());
       // }
     }
-    // ignore: always_specify_types, unawaited_futures
+    //  ignore: always_specify_types, unawaited_futures
     get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
       mezDbgPrint(
           "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
@@ -148,20 +147,20 @@ class CustomerAuthController extends GetxController {
     return MainUserInfo.fromData(data.value);
   }
 
-  Future<void> getCards() async {
-    mezDbgPrint(
-        "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(customerCardsNode(_authController.fireAuthUser!.uid))
-        .get()
-        // ignore: avoid_annotating_with_dynamic
-        .then((dynamic value) {
-      value.value.forEach((key, value) {
-        customer?.savedCards.add(CreditCard.fromData(id: key, data: value));
-      });
-    });
-  }
+  // Future<void> getCards() async {
+  //   mezDbgPrint(
+  //       "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
+  //   await _databaseHelper.firebaseDatabase
+  //       .ref()
+  //       .child(customerCardsNode(_authController.fireAuthUser!.uid))
+  //       .get()
+  //       // ignore: avoid_annotating_with_dynamic
+  //       .then((dynamic value) {
+  //     value.value.forEach((key, value) {
+  //       customer?.savedCards.add(CreditCard.fromData(id: key, data: value));
+  //     });
+  //   });
+  // }
 
   @override
   Future<void> onClose() async {

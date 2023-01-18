@@ -11,7 +11,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant
-          schema: public
+          schema: restaurant
 array_relationships:
   - name: translations
     using:

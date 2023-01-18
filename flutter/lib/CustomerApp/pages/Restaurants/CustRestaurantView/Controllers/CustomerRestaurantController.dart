@@ -80,6 +80,8 @@ class CustomerRestaurantController {
   Future<void> webInit({required int id, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
     this.restaurant.value = await get_restaurant_by_id(id: id);
+    mezDbgPrint(
+        "the restaurant value is  ${restaurant.value} 🌯🌯🌯🌯🌯🌯🌯🌯");
     await _getShippingPrice();
     final List<Category>? _cats =
         await get_restaurant_categories_by_id(restaurant.value!.info.hasuraId);
@@ -191,7 +193,7 @@ class CustomerRestaurantController {
     final SplayTreeMap<DateTime, List<Item>> sortedMap =
         SplayTreeMap<DateTime, List<Item>>.from(data,
             (DateTime a, DateTime b) => a.toLocal().compareTo(b.toLocal()));
-    mezDbgPrint("[66] - getGroupedSpecials ===>${sortedMap.length}");
+
     return sortedMap;
   }
 

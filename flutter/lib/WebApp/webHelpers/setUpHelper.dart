@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 // import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
@@ -33,8 +34,6 @@ Future<bool> putControllers() async {
         .first
         .then((value) {
       mezDbgPrint("]]]]]]]]]] the langController is intailized ]]]]]]]]]]]]");
-
-      areAllIntilized.add(value);
     });
   }
 
@@ -42,7 +41,7 @@ Future<bool> putControllers() async {
   await Get.put(AppLifeCycleController());
   await Get.put(HasuraDb(typeMode.toLaunchMode()), permanent: true);
   mezDbgPrint("]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
-  areAllIntilized.add(true);
+
 //  }
   // if (!Get.isRegistered<AuthController>()) {
 
@@ -50,27 +49,24 @@ Future<bool> putControllers() async {
     AuthController(signInCallback, signOutCallback),
     permanent: true,
   );
-
-  mezDbgPrint(
-      "]]]]]]]]]] the RestaurantsInfoController is intailized ]]]]]]]]]]]]");
-  areAllIntilized.add(true);
+  await Get.put<CustomerCartController>(
+    CustomerCartController(),
+    permanent: true,
+  );
 
   if (!Get.isRegistered<AppLifeCycleController>()) {
     await Get.put<AppLifeCycleController>(
       AppLifeCycleController(),
       permanent: true,
     );
-    mezDbgPrint(
-        "]]]]]]]]]] the AppLifeCycleController is intailized ]]]]]]]]]]]]");
+
     areAllIntilized.add(true);
   }
-  // if (!Get.isRegistered<LaundryController>()) {
-  //   await Get.put<LaundryController>(
-  //     LaundryController(),
-  //     permanent: true,
-  //   );
+  // if (!Get.isRegistered<CustomerCartController>()) {
+
+  // }
   //   mezDbgPrint("]]]]]]]]]] the LaundryController is intailized ]]]]]]]]]]]]");
-  //   areAllIntilized.add(true);
+
   // }
 
   // if (!Get.isRegistered<MezWebSideBarController>()) {
@@ -199,8 +195,8 @@ Future<bool> setupFirebase(
   }
   //func?.call();
   //final bool isItailized =
-  return await putControllers().then((value) {
-    func?.call();
+  return await putControllers().then((value) async {
+    await func?.call();
     return value;
   });
   // return isItailized;

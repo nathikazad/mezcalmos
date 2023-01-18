@@ -4,7 +4,6 @@ import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpPaymentsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
@@ -79,9 +78,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                   editInfoController: editInfoController,
                 ),
                 //
-                ROpPaymentPage(
-                  editInfoController: editInfoController,
-                ),
+
                 ROpReviewsView(restId: restaurantID!),
 
                 // OperatorsListView(restaurantId: restaurantID!),

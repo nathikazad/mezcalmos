@@ -108,6 +108,8 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
   }
 
   Future<void> _handleAddButton() async {
+    mezDbgPrint(
+        "YES EDIT CLICKEDDDD =========>>>>>>${widget.viewController.currentMode}");
     if (auth.fireAuthUser == null) {
       dialogRequiredSignIn();
     } else {
@@ -117,14 +119,24 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
         } else if (widget.viewController.differentRestaurantIds()) {
           await _overriteCart();
         } else {
-          await widget.viewController
-              .handleAddItem()
-              .whenComplete(() => MezRouter.toNamed(kCartRoute));
+          try {
+            await widget.viewController
+                .handleAddItem()
+                .whenComplete(() => MezRouter.toNamed(kCartRoute));
+          } catch (e, stk) {
+            mezDbgPrint(e);
+            mezDbgPrint(stk);
+          }
         }
       } else {
-        await widget.viewController
-            .handleEditItem()
-            .whenComplete(() => MezRouter.toNamed(kCartRoute));
+        try {
+          await widget.viewController
+              .handleEditItem()
+              .whenComplete(() => MezRouter.toNamed(kCartRoute));
+        } catch (e, stk) {
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        }
       }
     }
   }

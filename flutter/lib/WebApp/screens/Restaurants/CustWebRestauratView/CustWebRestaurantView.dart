@@ -76,17 +76,17 @@ class _CustWebRestaurantViewState extends State<CustWebRestaurantView> {
                     return ViewRestaurantScreenFroMobile();
                   } else {
                     return Scaffold(
-                        appBar: WebAppBarComponent(
-                          mezWebSideBarController: mezWebSideBarController,
-                          automaticallyGetBack:
-                              (MezCalmosResizer.isMobile(context) ||
-                                      MezCalmosResizer.isSmallMobile(context))
-                                  ? false
-                                  : true,
-                          type: _authcontroller.fireAuthUser?.uid != null
-                              ? WebAppBarType.WithCartActionButton.obs
-                              : WebAppBarType.WithSignInActionButton.obs,
-                        ),
+                        // appBar: WebAppBarComponent(
+                        //   mezWebSideBarController: mezWebSideBarController,
+                        //   automaticallyGetBack:
+                        //       (MezCalmosResizer.isMobile(context) ||
+                        //               MezCalmosResizer.isSmallMobile(context))
+                        //           ? false
+                        //           : true,
+                        //   type: _authcontroller.fireAuthUser?.uid != null
+                        //       ? WebAppBarType.WithCartActionButton.obs
+                        //       : WebAppBarType.WithSignInActionButton.obs,
+                        // ),
                         body: ViewRestaurantScreenFroDesktop());
                   }
                 },

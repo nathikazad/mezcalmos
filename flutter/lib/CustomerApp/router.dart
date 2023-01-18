@@ -1,18 +1,18 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/CustomerApp/pages/Cards/CardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
 import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
@@ -26,7 +26,8 @@ const String kTaxiRequestRoute = '/taxiRequest';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
-const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
+const String kViewRestaurantItemRoute =
+    '/items/:restaurantId/:itemId/:cartItemId';
 const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
@@ -163,7 +164,7 @@ class XRouter {
         ),
         // Laundry routes
         GetPage(name: kLaundriesListRoute, page: () => LaundriesListView()),
-        GetPage(name: kSavedCards, page: () => SavedCardsListView()),
+        GetPage(name: kSavedCards, page: () => CustCardsListView()),
 
         GetPage(
           name: kLaundryOrderRequest,

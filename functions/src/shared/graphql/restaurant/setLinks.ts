@@ -8,7 +8,7 @@ export async function insertServiceLink(serviceLink: ServiceLink) {
   let chain = getHasura();
 
   let response = await chain.mutation({
-    insert_service_link_one: [
+    insert_service_provider_service_link_one: [
       {
         object: {
           service_provider_id: serviceLink.service_provider_id,
@@ -27,7 +27,7 @@ export async function insertServiceLink(serviceLink: ServiceLink) {
   });
   console.log("response set operator links: ", response);
 
-  if (response.insert_service_link_one == null) {
+  if (response.insert_service_provider_service_link_one == null) {
     throw new HttpsError("internal", "restaurant creation error");
   }
 }
@@ -37,7 +37,7 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
   let chain = getHasura();
 
   let response = await chain.mutation({
-    update_service_link_by_pk: [
+    update_service_provider_service_link_by_pk: [
       {
         pk_columns: { id: serviceLink.id! },
         _set: {
@@ -53,7 +53,7 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
   });
   console.log("response set operator links: ", response);
 
-  if (response.update_service_link_by_pk == null) {
+  if (response.update_service_provider_service_link_by_pk == null) {
     throw new HttpsError("internal", "restaurant creation error");
   }
 }export async function updateDriverLink(serviceLink: ServiceLink) {
@@ -62,7 +62,7 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
   let chain = getHasura();
 
   let response = await chain.mutation({
-    update_service_link_by_pk: [
+    update_service_provider_service_link_by_pk: [
       {
         pk_columns: { id: serviceLink.id! },
         _set: {
@@ -78,7 +78,7 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
   });
   console.log("response set operator links: ", response);
 
-  if (response.update_service_link_by_pk == null) {
+  if (response.update_service_provider_service_link_by_pk == null) {
     throw new HttpsError("internal", "restaurant creation error");
   }
 }

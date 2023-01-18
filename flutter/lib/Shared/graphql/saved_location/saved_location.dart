@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/__generated/saved_location.graphql.dart';
-import 'package:mezcalmos/Shared/graphql/saved_location/__generated/saved_locations.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -19,27 +18,27 @@ final HasuraDb hasuraDb = Get.find<HasuraDb>();
 /// [customer_id] is the user's hasuraId
 Future<List<SavedLocation>> get_customer_locations(
     {required int customer_id}) async {
-  final Query$getCustomerLocations? _customer_saved_locations =
-      hasuraDb.graphQLClient.readQuery$getCustomerLocations(
+  final Query$get_customer_locations? _customer_saved_locations =
+      hasuraDb.graphQLClient.readQuery$get_customer_locations(
           variables:
-              Variables$Query$getCustomerLocations(customer_id: customer_id));
+              Variables$Query$get_customer_locations(customer_id: customer_id));
 
-  final List<SavedLocation> locations =
-      _customer_saved_locations?.saved_location
-              .map(
-                (Query$getCustomerLocations$saved_location location) =>
-                    SavedLocation(
-                  name: location.name,
-                  defaultLocation: location.$default,
-                  id: location.id,
-                  location: LocModel.Location(
-                    location.location_text,
-                    location.location_gps.toLocationData(),
-                  ),
-                ),
-              )
-              .toList() ??
-          [];
+  final List<SavedLocation> locations = _customer_saved_locations
+          ?.customer_saved_location
+          .map(
+            (Query$get_customer_locations$customer_saved_location location) =>
+                SavedLocation(
+              name: location.name,
+              defaultLocation: location.$default,
+              id: location.id,
+              location: LocModel.Location(
+                location.location_text,
+                location.location_gps.toLocationData(),
+              ),
+            ),
+          )
+          .toList() ??
+      [];
 
   return locations;
 }
@@ -61,8 +60,9 @@ Stream<List<SavedLocation>?> listen_on_customer_locations(
       return null;
     } else {
       final List<SavedLocation> ls = [];
-      locations_res.parsedData?.saved_location.forEach(
-          (Subscription$listen_on_saved_locations$saved_location location) {
+      locations_res.parsedData?.customer_saved_location.forEach(
+          (Subscription$listen_on_saved_locations$customer_saved_location
+              location) {
         ls.add(
           SavedLocation(
             name: location.name,
@@ -82,11 +82,12 @@ Stream<List<SavedLocation>?> listen_on_customer_locations(
 
 /// Get one Customer's specific SavedLocation using a location's pk.
 Future<SavedLocation?> get_saved_location({required int location_id}) async {
-  final Query$getSavedLocation$saved_location_by_pk? _saved_location = hasuraDb
-      .graphQLClient
-      .readQuery$getSavedLocation(
-          variables: Variables$Query$getSavedLocation(location_id: location_id))
-      ?.saved_location_by_pk;
+  final Query$get_saved_location_by_id$customer_saved_location_by_pk?
+      _saved_location = hasuraDb.graphQLClient
+          .readQuery$get_saved_location_by_id(
+              variables: Variables$Query$get_saved_location_by_id(
+                  location_id: location_id))
+          ?.customer_saved_location_by_pk;
 
   return _saved_location != null
       ? SavedLocation(
@@ -108,12 +109,12 @@ Future<ServerResponse> update_saved_location(
     final Geography? _location_gps =
         saved_location.location.position.toGeography();
     if (_location_gps != null) {
-      final QueryResult<Mutation$updateSavedLocation> _location_update =
-          await hasuraDb.graphQLClient.mutate$updateSavedLocation(
-        Options$Mutation$updateSavedLocation(
-          variables: Variables$Mutation$updateSavedLocation(
-            location_id:
-                Input$saved_location_pk_columns_input(id: saved_location.id!),
+      final QueryResult<Mutation$update_saved_location> _location_update =
+          await hasuraDb.graphQLClient.mutate$update_saved_location(
+        Options$Mutation$update_saved_location(
+          variables: Variables$Mutation$update_saved_location(
+            location_id: Input$customer_saved_location_pk_columns_input(
+                id: saved_location.id!),
             $default: saved_location.defaultLocation,
             address: saved_location.location.address,
             name: saved_location.name,
@@ -143,10 +144,10 @@ Future<ServerResponse> update_saved_location(
 /// delete a specific Customer's SavedLocation using the location's pk.
 Future<ServerResponse> delete_saved_location(
     {required int saved_location_id}) async {
-  final QueryResult<Mutation$deleteSavedLocation> _location_delete =
-      await hasuraDb.graphQLClient.mutate$deleteSavedLocation(
-    Options$Mutation$deleteSavedLocation(
-      variables: Variables$Mutation$deleteSavedLocation(
+  final QueryResult<Mutation$delete_saved_location> _location_delete =
+      await hasuraDb.graphQLClient.mutate$delete_saved_location(
+    Options$Mutation$delete_saved_location(
+      variables: Variables$Mutation$delete_saved_location(
         location_id: saved_location_id,
       ),
     ),
@@ -170,11 +171,11 @@ Future<ServerResponse> add_saved_location(
   final Geography? _location_gps = Geography(
       saved_location.location.latitude, saved_location.location.longitude);
   if (_location_gps != null) {
-    final QueryResult<Mutation$addSavedLocation> _location_add =
-        await hasuraDb.graphQLClient.mutate$addSavedLocation(
-      Options$Mutation$addSavedLocation(
-        variables: Variables$Mutation$addSavedLocation(
-          saved_location: Input$saved_location_insert_input(
+    final QueryResult<Mutation$add_saved_location> _location_add =
+        await hasuraDb.graphQLClient.mutate$add_saved_location(
+      Options$Mutation$add_saved_location(
+        variables: Variables$Mutation$add_saved_location(
+          saved_location: Input$customer_saved_location_insert_input(
             customer_id: customer_id,
             $default: saved_location.defaultLocation,
             location_gps: _location_gps,

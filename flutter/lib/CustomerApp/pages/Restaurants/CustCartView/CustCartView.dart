@@ -44,6 +44,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomerAppBar(

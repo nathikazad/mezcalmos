@@ -62,10 +62,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
               .forEach((String key, value) {
             final List<Choice> choices = [];
             _restauItem.optionNames[key] = {
-              LanguageType.EN: value['name']
-                  [userLanguage.toFirebaseFormatString()],
-              LanguageType.ES: value['name']
-                  [userLanguage.toFirebaseFormatString()]
+              LanguageType.EN: value['optionName']["en"],
+              LanguageType.ES: value['optionName']["es"]
             };
 
             value['choices'].forEach((key, value) {
@@ -203,12 +201,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           "[544D] item.in_json ===> ${item.in_json['selected_options']}");
       (item.in_json['selected_options'] as Map<String, dynamic>)
           .forEach((String key, value) {
-        mezDbgPrint("KEy ===> $key");
-        mezDbgPrint("value ===> $value");
         final List<Choice> choices = [];
         _restauItem.optionNames[key] = {
-          LanguageType.EN: value['name'][userLanguage.toFirebaseFormatString()],
-          LanguageType.ES: value['name'][userLanguage.toFirebaseFormatString()]
+          LanguageType.EN: value['optionName']["en"],
+          LanguageType.ES: value['optionName']["es"]
         };
 
         value['choices'].forEach((key, value) {
@@ -226,7 +222,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
           );
         });
 
-        // _restauItem.chosenChoices[key] = choices;
+        _restauItem.chosenChoices[key] = choices;
       });
     }
     items.add(_restauItem);

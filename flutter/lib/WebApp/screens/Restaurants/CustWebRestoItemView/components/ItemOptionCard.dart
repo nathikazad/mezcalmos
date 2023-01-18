@@ -295,14 +295,14 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     mezDbgPrint("Adding for last timee ========>");
     widget.cartItem.value!.chosenChoices[optionId]!.removeLast();
     widget.cartItem.value!.setNewChoices(
-        optionId: int.parse(optionId),
+        optionId: optionId,
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
   void addNewChoice(Choice choice) {
     mezDbgPrint("Adding for first time ========>");
     widget.cartItem.value!.setNewChoices(
-        optionId: int.parse(optionId),
+        optionId: optionId,
         newChoices: widget.cartItem.value!.chosenChoices[optionId]! + [choice]);
   }
 
@@ -313,7 +313,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
           widget.cartItem.value!.chosenChoices[optionId]!.toList();
       newChoices.remove(choice);
       widget.cartItem.value!
-          .setNewChoices(optionId: int.parse(optionId), newChoices: newChoices);
+          .setNewChoices(optionId: optionId, newChoices: newChoices);
     }
   }
 }

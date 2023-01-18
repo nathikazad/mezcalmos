@@ -1,0 +1,218 @@
+table:
+  name: item
+  schema: restaurant
+object_relationships:
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: name
+    using:
+      foreign_key_constraint_on: name_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          restaurant_id: id
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+array_relationships:
+  - name: options
+    using:
+      foreign_key_constraint_on:
+        column: item_id
+        table:
+          name: item_option_map
+          schema: restaurant
+insert_permissions:
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - available
+        - category_id
+        - cost
+        - description_id
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - id
+        - image
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - id
+        - image
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - id
+        - image
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - id
+        - image
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - id
+        - image
+        - item_type
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter: {}
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - image
+        - name_id
+        - position
+        - special_period_end
+        - special_period_start
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - archived
+        - available
+        - category_id
+        - cost
+        - description_id
+        - image
+        - name_id
+        - position
+        - restaurant_id
+        - special_period_end
+        - special_period_start
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: mez_admin
+    permission:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

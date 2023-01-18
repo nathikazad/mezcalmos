@@ -56,8 +56,11 @@ class _ViewRestaurantScreenFroDesktopState
   void initState() {
     mezDbgPrint(
         "]]]]]]]]]] the RestaurantController is intailized ]]]]]]]]]]]]");
-    customerRestaurantController.webInit(
-        id: int.parse(QR.params["id"].toString()), vsync: this);
+    customerRestaurantController
+        .webInit(id: int.parse(QR.params["id"].toString()), vsync: this)
+        .then((value) {
+      _getRestaurantItemsValue();
+    });
 
     itemKeys.assign(999999, "info");
     itemKeys[999999] = RectGetter.createGlobalKey();
@@ -152,7 +155,7 @@ class _ViewRestaurantScreenFroDesktopState
       // });
 
     } else {
-      QR.to("/404");
+      // QR.to("/404");
     }
   }
 

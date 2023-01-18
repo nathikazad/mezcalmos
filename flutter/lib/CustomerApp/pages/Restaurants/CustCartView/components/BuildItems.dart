@@ -132,11 +132,12 @@ class CartItemsBuilder extends StatelessWidget {
 
   List<Widget> buildChoices(CartItem cartItem) {
     final List<Widget> viewWidgets = [];
-    cartItem.chosenChoices.forEach((int key, List<Choice> value) {
+    cartItem.chosenChoices.forEach((String key, List<Choice> value) {
+      mezDbgPrint(
+          "From get option names 📥📥📥📥📥 ======>${int.parse(key)} \n ${cartItem.item.findOption(int.parse(key))?.name} ");
       viewWidgets.add(ItemChosenChoiceComponent(
           choices: value,
-          optionName:
-              cartItem.item.findOption(key)?.name ?? <LanguageType, String>{}));
+          optionName: cartItem.item.getOptionName(int.parse(key))));
     });
     return viewWidgets;
   }
