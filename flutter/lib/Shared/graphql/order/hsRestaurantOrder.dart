@@ -88,6 +88,10 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         }
         items.add(_restauItem);
       });
+      StripeOrderPaymentInfo? _paymentInfo;
+      if (orderData.stripe_info != null) {
+        _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+      }
 
       final RestaurantOrder res = RestaurantOrder(
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
@@ -154,15 +158,13 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         to: Location(orderData.to_location_address!,
             orderData.to_location_gps!.toLocationData()),
         itemsCost: orderData.items_cost ?? 0,
+        totalCost: orderData.total_cost,
         shippingCost: orderData.delivery_cost,
         deliveryMode: DeliveryMode.ForwardedToMezCalmos,
       );
 
       res.items = items;
-      if (orderData.stripe_info != null) {
-        res.stripePaymentInfo =
-            StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
-      }
+      res.stripePaymentInfo = _paymentInfo;
       return res;
     }
     return null;
@@ -232,7 +234,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     }
     items.add(_restauItem);
   });
-
+  StripeOrderPaymentInfo? _paymentInfo;
+  if (orderData.stripe_info != null) {
+    _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+  }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
@@ -314,15 +319,13 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     to: Location(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
     itemsCost: orderData.items_cost ?? 0,
+    totalCost: orderData.total_cost,
     shippingCost: orderData.delivery_cost,
     deliveryMode: DeliveryMode.ForwardedToMezCalmos,
   );
 
   res.items = items;
-  if (orderData.stripe_info != null) {
-    res.stripePaymentInfo =
-        StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
-  }
+  res.stripePaymentInfo = _paymentInfo;
   return res;
 }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -49,7 +50,7 @@ Future<void> signOut() async {
     mezDbgPrint("AuthController: Sign out function");
     mezDbgPrint("AuthController: Sign out callbacks finished");
     await fireAuth.FirebaseAuth.instance.signOut();
-    Get.find<AuthController>().user = null;
+    Get.find<AuthController>().setUserInfo = null;
     Get.appUpdate();
     mezDbgPrint("AuthController: Sign out finished");
   } catch (e) {

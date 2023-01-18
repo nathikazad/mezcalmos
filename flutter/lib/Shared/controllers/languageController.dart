@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 //import 'dart:io' show Platform;
@@ -77,12 +78,7 @@ class LanguageController extends GetxController {
       if (Get.find<AuthController>().user != null) {
         Get.find<AuthController>().user!.language = language;
 
-        mezDbgPrint(
-            "[=] INSIDE (if (Get.find<AuthController>().user != null)) ==> language $language");
-        // we need that because in case user clicked change lang from SideMenu , we really don't
-        // need to execute that one because there is no user SIgnedIn yet!
-        // we have to make some kind of queue that will handle stuff once the user SignedIn.
-        await Get.find<AuthController>().changeLanguage(language);
+        unawaited(Get.find<AuthController>().changeLanguage(language));
         _userLanguageKey.value = language;
       } else {
         mezDbgPrint("[=] INSIDE (else)");

@@ -24,10 +24,13 @@ import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.d
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
+const String kUserWelcomeRoute = '/welcome';
 const String kHomeRoute = '/';
 const String kSplashRoute = '/splash';
 const String kSignInRouteRequired = '/sign_in/required';
@@ -40,6 +43,7 @@ const String kMessagesRoute = '/messages/:chatId';
 const String kMultiLanguagesRoute = '/multiLanguage/:id';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
+const String kUserNewProfile = '/profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
@@ -208,5 +212,7 @@ class SharedRouter {
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
     GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),
     GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
+    GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
+    GetPage(name: kUserNewProfile, page: () => UserProfileView()),
   ];
 }

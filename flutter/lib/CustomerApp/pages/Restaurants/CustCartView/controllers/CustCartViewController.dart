@@ -114,8 +114,10 @@ class CustCartViewController {
     final CustStripeInfo? data = await get_customer_stripe_info(
         userId: Get.find<AuthController>().hasuraUserId!, withCache: false);
     mezDbgPrint("Data from controller ==========>>> 😛${data?.toJson()}");
-    custStripeInfo.value = data!;
-    custStripeInfo.value?.cards = data.cards;
+    if (data != null) {
+      custStripeInfo.value = data;
+      custStripeInfo.value?.cards = data.cards;
+    }
 
     // cardsListener = Get.find<CustomerAuthController>()
     //     .customer
@@ -212,11 +214,12 @@ class CustCartViewController {
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
     try {
-      // final String? stripePaymentId =
-      //     await acceptPaymentByCardChoice(getCardChoice);
-
+      final String? stripePaymentId =
+          await acceptPaymentByCardChoice(getCardChoice);
+      mezDbgPrint(
+          "✅ Stripe payment id ====================>>>$stripePaymentId");
       final ServerResponse _serverResponse =
-          await cartController.checkout(stripePaymentId: null);
+          await cartController.checkout(stripePaymentId: stripePaymentId);
 
       mezDbgPrint("datatatatataat => ${_serverResponse.data}");
 

@@ -199,8 +199,6 @@
                             "editLocationDialogButton": "EDIT",
                             "addLocationDialogSkip": "Skip"
                         }
-                       
-                     
                     },
                     "ViewCartScreen": {
                         "notesTitle": "Notes",
@@ -770,6 +768,32 @@
                     "noNotifTitle": "No notifications yet !",
                     "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
+            },
+            "UserWelcomeView" : {
+                "title" : "Happy to see you made it 👋 ",
+                "subtitle" : "Complete your profile by setting your picture and name !",
+                "nameTitle" : "What should we call you ?",
+                "save" :  "Save my information",
+                "hint" : "Type your name",
+                "imageHint" : "Your face, your profile"
+
+            },
+            "UserProfileView": {
+                "profile": "Profile",
+                "name" : "Name",
+                "save" :  "Save my information",
+                "edit" : "Edit my information",
+                "hint" : "Type your name",
+                "imageHint" : "Your face, your profile",
+                "mustSetUserNameError": "Please enter your first name.",
+                "mustSetUserImgError": "Please upload an image.",
+                "nameMustBeLettersOnly": "Your first name must only have letters.",
+                "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
+                "deleteAccount": "Delete Account",
+                "deleteTitle": "Confirm account deletion !",
+                "deletePrBtn": "Yes, delete !",
+                "deleteScBtn": "Cancel",
+                "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
             },
             "UserProfileScreen": {
                 "UserProfileScreen": {
@@ -1801,7 +1825,7 @@
                 "noRevDesc": "Once you receive feedback it will be displayed here."
             },
             "ROpOrderView": {
-                "schTitle" : "Scheduled for",
+                "schTitle": "Scheduled for",
                 "cancelOrder": "Cancel order",
                 "orderItems": "Order Items",
                 "components": {
@@ -1839,7 +1863,7 @@
                         "deliveryMinTimes": "Minimum 5 miutes delivery time"
                     },
                     "ROpDriverCard": {
-                        "driver" :"Driver",
+                        "driver": "Driver",
                         "noDriver": "No driver assigned yet",
                         "set": "Set",
                         "selfDelivery": "Self delivery",
@@ -2095,7 +2119,7 @@
                 }
             }
         },
-        "notificationHandler" : {
+        "notificationHandler": {
             "onTheWayTitle": "On the Way",
             "onTheWayBody": "Your order is on the way",
             "deliveredTitle": "Delivered",
@@ -2104,8 +2128,8 @@
             "newOrderBody": "You got a new order",
             "canceledOrderTitle": "Order cancelled",
             "canceledOrderBody": "Your order has been cancelled",
-            "atPickupTitle" : "Driver is here",
-            "atPickupBody" : "Your driver arrived at pickup location"
+            "atPickupTitle": "Driver is here",
+            "atPickupBody": "Your driver arrived at pickup location"
         }
     },
     "General": {

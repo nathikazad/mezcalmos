@@ -795,6 +795,32 @@
                     "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
                 }
             },
+            "UserWelcomeView" : {
+                "title" : "Feliz de ver que lo hiciste 👋",
+                "subtitle" : "¡Complete su perfil configurando su imagen y nombre!",
+                "nameTitle" : "Como deberíamos llamarte ?",
+                "save" :  "Guardar mi información",
+                "hint" : "Escriba su nombre",
+                "imageHint" : "Tu cara, tu perfil"
+
+            },
+            "UserProfileView": {
+                "profile": "Perfil",
+                "imageHint" : "Tu cara, tu perfil",
+                "name" : "Nombre",
+                "save" :  "Guardar mi información",
+                "edit" : "Editar mi información",
+                "hint" : "Escriba su nombre",
+                "mustSetUserNameError": "Por favor, introduzca su nombre de pila.",
+                "mustSetUserImgError": "Sube una imagen.",
+                "nameMustBeLettersOnly": "Your first name must only have letters.",
+                "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
+                "deleteAccount": "Borrar cuenta",
+                "deleteTitle": "¡Confirme la eliminación de la cuenta!",
+                "deletePrBtn": "¡Sí, eliminar!",
+                "deleteScBtn": "Cancelar",
+                "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
+            },
             "UserProfileScreen": {
                 "UserProfileScreen": {
                     "mustSetUserNameError": "Por favor, ponga su primer nombre.",
