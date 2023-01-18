@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/TextInputHelper.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/components/UserProfileImage.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
+import 'package:mezcalmos/Shared/pages/userProfileViews(new)/components/UserProfileImage.dart';
+import 'package:mezcalmos/Shared/pages/userProfileViews(new)/controllers/UserProfileViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 

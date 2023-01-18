@@ -11,6 +11,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
+enum UserProfileViewMode { Editing, FirstTime, None }
+
 class UserProfileViewController {
   // instances //
   AuthController _authController = Get.find<AuthController>();
@@ -21,11 +23,11 @@ class UserProfileViewController {
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
-  final RxBool editMode = RxBool(false);
-  final RxBool welcomeMode = RxBool(false);
+  Rx<UserProfileViewMode> mode = Rx(UserProfileViewMode.None);
 
 // getters //
   UserInfo? get user => _authController.user;
+  bool get isEditingInfo => mode == UserProfileViewMode.Editing;
   bool get isInfoSet {
     return (newImageFile.value != null || newImageUrl.value != null) &&
         name.value.isNotEmpty &&
@@ -42,13 +44,13 @@ class UserProfileViewController {
   }
   // methods //
 
-  void init() {
+  void initProfileView() {
     name.value = user?.name ?? "";
     newImageUrl.value = user?.image;
   }
 
-  void switchEditMode() {
-    editMode.value = !editMode.value;
+  void switchMode(UserProfileViewMode mode) {
+    this.mode.value = mode;
   }
 
   Future<void> setInfo() async {
@@ -58,9 +60,9 @@ class UserProfileViewController {
 
     await _authController.updateUserProfile();
 
-    if (editMode.isTrue) {
-      switchEditMode();
-    } else if (welcomeMode.isTrue) {
+    if (mode == UserProfileViewMode.Editing) {
+      switchMode(UserProfileViewMode.None);
+    } else if (mode == UserProfileViewMode.FirstTime) {
       MezRouter.back();
     }
   }
@@ -73,30 +75,24 @@ class UserProfileViewController {
   }
 
   Future<void> editImage(context) async {
-    if (1 == 2) {
-      final imPicker.ImageSource? _from =
-          await imagePickerChoiceDialog(context);
+    final imPicker.ImageSource? _from = await imagePickerChoiceDialog(context);
 
-      if (_from != null) {
-        imageLoading.value = true;
+    if (_from != null) {
+      imageLoading.value = true;
 
-        final imPicker.XFile? _res =
-            await imagePicker(picker: _imagePicker, source: _from);
+      final imPicker.XFile? _res =
+          await imagePicker(picker: _imagePicker, source: _from);
 
-        try {
-          if (_res != null) {
-            newImageFile.value = File(_res.path);
-          }
-          imageLoading.value = false;
-        } catch (e) {
-          imageLoading.value = false;
-          mezDbgPrint(
-              "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
+      try {
+        if (_res != null) {
+          newImageFile.value = File(_res.path);
         }
+        imageLoading.value = false;
+      } catch (e) {
+        imageLoading.value = false;
+        mezDbgPrint(
+            "[+] MEZEXCEPTION => ERROR HAPPEND WHILE BROWING - SELECTING THE IMAGE !\nMore Details :\n$e ");
       }
-    } else {
-      newImageUrl.value =
-          "https://unsplash.com/photos/RGKdWJOUFH0/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mnx8Z2lybHxlbnwwfHx8fDE2NzQwNTEyNjg&force=true";
     }
   }
 

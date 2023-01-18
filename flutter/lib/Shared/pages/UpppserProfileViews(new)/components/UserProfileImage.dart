@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
+import 'package:mezcalmos/Shared/pages/userProfileViews(new)/controllers/UserProfileViewController.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["UserProfileView"];

@@ -5,8 +5,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/components/UserProfileImage.dart';
-import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/controllers/UserProfileViewController.dart';
+import 'package:mezcalmos/Shared/pages/UpppserProfileViews(new)/controllers/UserProfileViewController.dart';
+import 'package:mezcalmos/Shared/pages/userProfileViews(new)/components/UserProfileImage.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
@@ -26,7 +26,7 @@ class _UserProfileViewState extends State<UserProfileView> {
 
   @override
   void initState() {
-    viewController.init();
+    viewController.initProfileView();
     super.initState();
   }
 
@@ -34,13 +34,10 @@ class _UserProfileViewState extends State<UserProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
-        if (viewController.editMode.isTrue) {
-          viewController.switchEditMode();
-        } else
-          MezRouter.back();
+        _handleBackClick();
       }, title: "${_i18n()["profile"]}"),
       bottomSheet: Obx(
-        () => (viewController.editMode.isTrue)
+        () => (viewController.isEditingInfo)
             ? MezButton(
                 enabled: viewController.isInfoSet,
                 borderRadius: 0,
@@ -79,6 +76,14 @@ class _UserProfileViewState extends State<UserProfileView> {
         ),
       ),
     );
+  }
+
+  void _handleBackClick() {
+    if (viewController.mode == UserProfileViewMode.Editing) {
+      viewController.switchMode(UserProfileViewMode.None);
+    } else if (viewController.mode == UserProfileViewMode.FirstTime) {
+      MezRouter.back();
+    }
   }
 
   Widget _editAndDeleteBtns(BuildContext context) {
