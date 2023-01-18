@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/old/customerApp/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';

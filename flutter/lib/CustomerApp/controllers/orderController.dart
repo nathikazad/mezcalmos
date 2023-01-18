@@ -67,23 +67,6 @@ class CustomerOrderController extends GetxController {
     }
   }
 
-  // void clearOrderNotifications(int? orderId) {
-  //   mezDbgPrint("oooo id ==> $orderId");
-  //   _fbNotificationsController
-  //       .notifications()
-  //       .where((Notification notification) {
-  //     mezDbgPrint("oooo2 id ==> ${notification.orderId}");
-
-  //     return (notification.notificationType ==
-  //                 NotificationType.OrderStatusChange ||
-  //             notification.notificationType ==
-  //                 NotificationType.NewCounterOffer) &&
-  //         notification.orderId == orderId;
-  //   }).forEach((Notification notification) {
-  //     _fbNotificationsController.removeNotification(notification.id);
-  //   });
-  // }
-
   @override
   Future<void> onClose() async {
     print("[+] OrderController::onClose ---------> Was invoked !");

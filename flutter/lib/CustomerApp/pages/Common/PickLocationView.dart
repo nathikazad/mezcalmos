@@ -6,19 +6,18 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/SaveLocationDailog.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
@@ -133,30 +132,19 @@ class _PickLocationViewState extends State<PickLocationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => ButtonComponent(
-          canClick: !showScreenLoading &&
+        () => MezButton(
+          height: 70,
+          enabled: !showScreenLoading &&
               locationPickerController.location.value != null &&
               locationPickerController.isMapReady,
-          function: (showScreenLoading ||
+          onClick: (showScreenLoading ||
                   locationPickerController.location.value == null ||
                   !locationPickerController.isMapReady)
               ? null
               : () async {
                   await onPickButtonClick(context);
                 },
-          widget: Center(
-            child: (showScreenLoading || !locationPickerController.isMapReady)
-                ? CircularProgressIndicator(
-                    color: Colors.white,
-                  )
-                : Text(
-                    _i18n()["pickLocation"],
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(color: Colors.white, fontSize: 12.sp),
-                  ),
-          ),
+          label: " ${_i18n()["pickLocation"]},",
         ),
       ),
       resizeToAvoidBottomInset: false,

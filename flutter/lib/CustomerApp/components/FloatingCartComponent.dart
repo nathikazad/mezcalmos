@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -9,11 +9,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 
 class FloatingCartComponent extends StatelessWidget {
   const FloatingCartComponent({Key? key}) : super(key: key);
-  static final AuthController _authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => _authController.isUserSignedIn &&
+      () => Get.find<AuthController>().isUserSignedIn &&
               Get.find<CustomerCartController>().cart.value != null &&
               Get.find<CustomerCartController>().cart.value!.cartItems.length >
                   0

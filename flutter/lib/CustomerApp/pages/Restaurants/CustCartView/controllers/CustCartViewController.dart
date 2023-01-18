@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';

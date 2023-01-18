@@ -66,14 +66,6 @@ class CustomerAuthController extends GetxController {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       unawaited(saveNotificationToken());
     }
-    //  ignore: always_specify_types, unawaited_futures
-    // get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
-    //   mezDbgPrint(
-    //       "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
-    //   if (value == null) {
-    //     create_customer_cart();
-    //   }
-    // });
   }
 
   Future<void> saveNotificationToken() async {
@@ -139,21 +131,6 @@ class CustomerAuthController extends GetxController {
         await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
     return MainUserInfo.fromData(data.value);
   }
-
-  // Future<void> getCards() async {
-  //   mezDbgPrint(
-  //       "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
-  //   await _databaseHelper.firebaseDatabase
-  //       .ref()
-  //       .child(customerCardsNode(_authController.fireAuthUser!.uid))
-  //       .get()
-  //       // ignore: avoid_annotating_with_dynamic
-  //       .then((dynamic value) {
-  //     value.value.forEach((key, value) {
-  //       customer?.savedCards.add(CreditCard.fromData(id: key, data: value));
-  //     });
-  //   });
-  // }
 
   @override
   Future<void> onClose() async {

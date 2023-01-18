@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
-import 'package:mezcalmos/CustomerApp/components/ButtonComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/components/SavedLocationIsEmpty.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/controllers/CustSavedLocationsViewController.dart';
@@ -9,7 +8,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:sizer/sizer.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -93,16 +92,12 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         title: "${_i18n()["title"]}",
         autoBack: true,
       ),
-      bottomNavigationBar: ButtonComponent(
-        canClick: true,
-        widget: Center(
-          child: Text(
-            "${_i18n()["addNewLoc"]}",
-            style:
-                txt.headline1!.copyWith(color: Colors.white, fontSize: 12.sp),
-          ),
-        ),
-        function: () {
+      bottomNavigationBar: MezButton(
+        borderRadius: 0,
+        height: 70,
+        label: "${_i18n()["addNewLoc"]}",
+        onClick: () async {
+          // ignore: unawaited_futures
           MezRouter.toNamed<void>(kPickLocationRoute, arguments: false);
         },
       ),
