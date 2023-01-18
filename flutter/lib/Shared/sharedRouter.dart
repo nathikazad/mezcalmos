@@ -24,8 +24,8 @@ import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.d
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
-import 'package:mezcalmos/Shared/pages/userProfileViews(new)/UserProfileView.dart';
-import 'package:mezcalmos/Shared/pages/userProfileViews(new)/UserWelcomeView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
