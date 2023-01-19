@@ -1,2 +1,2 @@
-- "!include public_restaurant_orders_by_date.yaml"
-- "!include public_restaurant_orders_by_month.yaml"
+- "!include restaurant_orders_by_date.yaml"
+- "!include restaurant_orders_by_month.yaml"

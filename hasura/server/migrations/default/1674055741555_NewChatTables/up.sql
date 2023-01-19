@@ -8,7 +8,7 @@ CREATE TABLE "public"."mez_admin_chat" ("user_id" integer NOT NULL, "app_type" t
 alter table "public"."chat_participant" drop constraint "chat_participant_app_type_id_fkey",
   add constraint "chat_participant_app_type_id_fkey"
   foreign key ("app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update cascade on delete restrict;
 
 alter table "public"."direct_chat" rename column "user_id_1" to "user_id1";
