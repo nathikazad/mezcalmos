@@ -107,7 +107,7 @@ class OrderSummaryCard extends StatelessWidget {
                           style: txt.bodyText2,
                         ),
                         Text(
-                          order.refundAmount!.toPriceString(),
+                          "-" + order.refundAmount!.toPriceString(),
                           style: txt.bodyText2,
                         ),
                       ],

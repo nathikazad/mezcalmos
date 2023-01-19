@@ -105,6 +105,23 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         quantity: 1,
         deliveryOrderId: orderData.delivery_id,
         serviceProviderId: orderData.restaurant.id,
+        review: (orderData.review != null)
+            ? Review(
+                comment: orderData.review!.note,
+                rating: orderData.review!.rating,
+                toEntityId: orderData.review!.to_entity_id,
+                customer: UserInfo(
+                  name: orderData.review?.customer?.user.name,
+                  image: orderData.review?.customer?.user.image,
+                  hasuraId: orderData.review!.customer!.user.id,
+                ),
+                toEntityType:
+                    orderData.review!.to_entity_type.toServiceProviderType(),
+                fromEntityId: orderData.review!.from_entity_id,
+                fromEntityType:
+                    orderData.review!.from_entity_type.toServiceProviderType(),
+                reviewTime: DateTime.parse(orderData.review!.created_at))
+            : null,
         routeInformation: (orderData.delivery?.trip_polyline != null &&
                 orderData.delivery?.trip_polyline != null &&
                 orderData.delivery?.trip_polyline != null)
@@ -160,6 +177,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         itemsCost: orderData.items_cost ?? 0,
         totalCost: orderData.total_cost,
         shippingCost: orderData.delivery_cost,
+        refundAmount: orderData.refund_amount,
         deliveryMode: DeliveryMode.ForwardedToMezCalmos,
       );
 
@@ -189,7 +207,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
   mezDbgPrint(
-      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.delivery?.delivery_driver}");
+      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.total_cost}");
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(
@@ -321,6 +339,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     itemsCost: orderData.items_cost ?? 0,
     totalCost: orderData.total_cost,
     shippingCost: orderData.delivery_cost,
+    refundAmount: orderData.refund_amount,
     deliveryMode: DeliveryMode.ForwardedToMezCalmos,
   );
 
