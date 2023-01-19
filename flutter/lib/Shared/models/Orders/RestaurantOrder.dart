@@ -70,6 +70,7 @@ class RestaurantOrder extends DeliverableOrder {
       required ServiceInfo restaurant,
       required super.customer,
       required super.to,
+     
       this.estimatedFoodReadyTime,
       super.dropoffDriver,
       this.deliveryTime,

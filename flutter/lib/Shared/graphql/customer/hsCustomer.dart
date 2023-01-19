@@ -39,9 +39,11 @@ Future<Customer?> get_customer({required int user_id}) async {
       appVersion: _cus[0].app_version,
       notificationInfo: _cus[0].notification_token,
     );
-    _cus[0].stripe_info["cards"].forEach((key, data) {
-      returnedCustomer.addCreditCard(CreditCard.fromData(data: data));
-    });
+    if (_cus[0].stripe_info != null) {
+      _cus[0].stripe_info["cards"].forEach((key, data) {
+        returnedCustomer.addCreditCard(CreditCard.fromData(data: data));
+      });
+    }
 
     // Adding Saved Locations!
     _cus[0].saved_locations.forEach(
@@ -228,7 +230,7 @@ Future<CustStripeInfo?> get_customer_stripe_info(
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables:
               Variables$Query$get_customer_stripe_info(customer_id: userId)));
-  if (res.parsedData?.customer_customer.first == null) {
+  if (res.parsedData?.customer_customer == null) {
     throw Exception("🛑 get customer cards exceptions 🛑  =>${res.exception}");
   }
   if (res.parsedData?.customer_customer.first.stripe_info != null) {

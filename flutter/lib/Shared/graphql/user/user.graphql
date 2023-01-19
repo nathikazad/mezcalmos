@@ -67,3 +67,13 @@ mutation changeUserLanguage($id: user_pk_columns_input!, $language: String!)
   	language_id
   }
 }
+mutation updateUserInfo($userId : Int!,$data : user_set_input) {
+  update_user_by_pk(pk_columns: {id: $userId}, _set: $data) {
+    
+    image
+    name
+    language_id
+    id
+    firebase_id
+  }
+}

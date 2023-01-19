@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -114,8 +114,10 @@ class CustCartViewController {
     final CustStripeInfo? data = await get_customer_stripe_info(
         userId: Get.find<AuthController>().hasuraUserId!, withCache: false);
     mezDbgPrint("Data from controller ==========>>> 😛${data?.toJson()}");
-    custStripeInfo.value = data!;
-    custStripeInfo.value?.cards = data.cards;
+    if (data != null) {
+      custStripeInfo.value = data;
+      custStripeInfo.value?.cards = data.cards;
+    }
 
     // cardsListener = Get.find<CustomerAuthController>()
     //     .customer
@@ -214,7 +216,8 @@ class CustCartViewController {
     try {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(getCardChoice);
-
+      mezDbgPrint(
+          "✅ Stripe payment id ====================>>>$stripePaymentId");
       final ServerResponse _serverResponse =
           await cartController.checkout(stripePaymentId: stripePaymentId);
 

@@ -101,20 +101,19 @@ class _ROpDrawerState extends State<ROpDrawer> {
                       ),
                     ),
                     _languageSwitcher(),
-                    if (restaurantOpAuthController
-                            .operator.value?.isWaitingToBeApprovedByOwner ==
-                        true)
-                      _navigationLink(
-                        onClick: () async {
-                          await Get.find<AuthController>().signOut();
-                        },
-                        icon: Icons.alternate_email,
-                        titleWidget: Text(
-                          '${_i18n()["logout"]}',
-                          style: Get.textTheme.bodyText1
-                              ?.copyWith(color: Colors.red),
-                        ),
+
+                    _navigationLink(
+                      onClick: () async {
+                        await Get.find<AuthController>().signOut();
+                      },
+                      iconColor: Colors.red,
+                      icon: Icons.logout,
+                      titleWidget: Text(
+                        '${_i18n()["logout"]}',
+                        style: Get.textTheme.bodyText1
+                            ?.copyWith(color: Colors.red),
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -240,6 +239,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
   Widget _navigationLink(
       {required IconData icon,
+      Color? iconColor,
       required Widget titleWidget,
       void Function()? onClick}) {
     return InkWell(
@@ -253,7 +253,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             ),
             Icon(
               icon,
-              color: Colors.grey.shade400,
+              color: iconColor ?? Colors.grey.shade400,
               size: 25,
             ),
             SizedBox(

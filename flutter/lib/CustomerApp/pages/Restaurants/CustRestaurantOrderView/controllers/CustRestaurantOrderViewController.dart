@@ -104,8 +104,8 @@ class CustRestaurantOrderViewController {
       mGoogleMapController.decodeAndAddPolyline(
           encodedPolylineString: order.value!.routeInformation!.polyline);
 
-    await mGoogleMapController.animateAndUpdateBounds(
-        shouldFitPolylineInBound: order.value!.routeInformation != null);
+    // await mGoogleMapController.animateAndUpdateBounds(
+    //     shouldFitPolylineInBound: order.value?.routeInformation != null);
   }
 
   void updateMapIfDeliveryPhase(RestaurantOrderStatus status) {
@@ -226,10 +226,7 @@ class CustRestaurantOrderViewController {
       print(response.data);
 
       final ServerResponse res = ServerResponse.fromJson(response.data);
-      if (res.success) {
-        // await fetchCart();
-        // await Get.find<OrderController>().fetchCustomerOrders();
-      }
+
       return res;
     } catch (e) {
       return ServerResponse(ResponseStatus.Error,

@@ -6,6 +6,7 @@ import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
@@ -66,6 +67,7 @@ class SavedLocation {
   int? id;
   LocModel.Location location;
   bool defaultLocation;
+  
 
   SavedLocation(
       {required this.name,
@@ -114,21 +116,24 @@ class CreditCard {
   num expMonth;
   num expYear;
   String last4;
+  Map<ServiceProviderType, Map<int, String>>? idsWithServiceProvider;
 
-  CreditCard(
-      {required this.id,
-      required this.brand,
-      required this.expYear,
-      required this.expMonth,
-      required this.last4});
+  CreditCard({
+    required this.id,
+    required this.brand,
+    required this.expYear,
+    required this.expMonth,
+    required this.last4,
+  });
 
   factory CreditCard.fromData({required data}) {
     return CreditCard(
-        id: data["id"],
-        brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
-        expYear: data["expYear"],
-        expMonth: data["expMonth"],
-        last4: data["last4"]);
+      id: data["id"],
+      brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
+      expYear: data["expYear"],
+      expMonth: data["expMonth"],
+      last4: data["last4"],
+    );
   }
 
   Map<String, dynamic> toMap() {

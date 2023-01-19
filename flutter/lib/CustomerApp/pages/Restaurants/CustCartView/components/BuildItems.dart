@@ -39,7 +39,6 @@ class CartItemsBuilder extends StatelessWidget {
                 <Widget>[], (List<Widget> children, CartItem cartItem) {
               // final Rx<num> counter = cartItem.totalCost().obs;
               children.add(Container(
-                margin: const EdgeInsets.all(5),
                 child: MyExpansionPanelComponent(
                   child: Flexible(
                       child: ItemInformationCart(
@@ -77,6 +76,7 @@ class CartItemsBuilder extends StatelessWidget {
               return children;
             }),
           ),
+          SizedBox(height: 25),
         ],
       ),
     );

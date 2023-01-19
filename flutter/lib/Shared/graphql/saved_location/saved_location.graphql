@@ -1,69 +1,79 @@
 # Get all customer's saved location using fk.
 query get_customer_locations($customer_id: Int!) {
-  customer_saved_location(where:{customer_id : {_eq: $customer_id}})
-  {
-    id,
-    name,
-    location_gps,
-    location_text,
+  customer_saved_location(where: { customer_id: { _eq: $customer_id } }) {
+    id
+    name
+    location_gps
+    location_text
     default
   }
 }
 
 # listen on all customer's saved locations
 subscription listen_on_saved_locations($customer_id: Int!) {
-  customer_saved_location(where:{customer_id : {_eq: $customer_id}})
-  {
-    id,
-    name,
-    location_gps,
-    location_text,
+  customer_saved_location(where: { customer_id: { _eq: $customer_id } }) {
+    id
+    name
+    location_gps
+    location_text
     default
   }
 }
-
 
 # Get a specific saved_location using pk.
-query get_saved_location_by_id($location_id: Int!){
-  customer_saved_location_by_pk(id: $location_id)
-  {
-    id,
-    name,
-    location_gps,
-    location_text,
+query get_saved_location_by_id($location_id: Int!) {
+  customer_saved_location_by_pk(id: $location_id) {
+    id
+    name
+    location_gps
+    location_text
     default
   }
 }
 
-
 # Update Location by pk.
-mutation update_saved_location($location_id: customer_saved_location_pk_columns_input!, $gps: geography, $name: String!, $default: Boolean!, $address: String!)
-{
-  update_customer_saved_location_by_pk(pk_columns: $location_id, _set :{ location_gps: $gps, location_text: $address, default: $default, name : $name })
-  {
-      id,
-      name,
-      location_gps,
-      location_text,
-      default
+mutation updateSavedLocation(
+  $id: Int!
+  $data: customer_saved_location_set_input!
+) {
+  update_customer_saved_location_by_pk(pk_columns: { id: $id }, _set: $data) {
+    customer_id
+    default
+    id
+    location_gps
+    location_text
+    name
+  }
+}
+# set default location
+mutation setDefaultLocation($userId: Int!, $defaultLocId: Int!) {
+  update_customer_saved_location(
+    where: { customer_id: { _eq: $userId }, default: { _eq: true } }
+    _set: { default: false }
+  ) {
+    affected_rows
+  }
+  update_customer_saved_location_by_pk(
+    pk_columns: { id: $defaultLocId }
+    _set: { default: true }
+  ) {
+    default
+    id
   }
 }
 
 # delete a specific Location by pk
-mutation delete_saved_location($location_id: Int!)
-{
-    delete_customer_saved_location_by_pk(id: $location_id)
-    {
-        name 
-    }
+mutation delete_saved_location($location_id: Int!) {
+  delete_customer_saved_location_by_pk(id: $location_id) {
+    name
+  }
 }
 
-
 # Insert a new Saved_Location
-mutation add_saved_location($saved_location: customer_saved_location_insert_input!)
-{
- 	  insert_customer_saved_location_one(object:$saved_location)
-    {
-        id
-    }
+mutation add_saved_location(
+  $saved_location: customer_saved_location_insert_input!
+) {
+  insert_customer_saved_location_one(object: $saved_location) {
+    id
+  }
 }

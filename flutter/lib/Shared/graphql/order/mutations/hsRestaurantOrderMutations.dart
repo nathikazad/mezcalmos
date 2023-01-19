@@ -5,12 +5,16 @@ import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.grap
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 Future<void> set_food_est_ready_time(
-    {required int orderId, required DateTime time}) async {
+    {required int orderId,
+    required int deliveryOrderId,
+    required DateTime time}) async {
   final QueryResult<Mutation$setRestaurantOrderEstFoodReadyTime> response =
       await _hasuraDb.graphQLClient.mutate$setRestaurantOrderEstFoodReadyTime(
     Options$Mutation$setRestaurantOrderEstFoodReadyTime(
       variables: Variables$Mutation$setRestaurantOrderEstFoodReadyTime(
-          orderId: orderId, time: time.toUtc().toString()),
+          orderId: orderId,
+          time: time.toUtc().toString(),
+          deliveryOrderId: deliveryOrderId),
     ),
   );
   if (response.parsedData?.update_restaurant_order_by_pk == null) {

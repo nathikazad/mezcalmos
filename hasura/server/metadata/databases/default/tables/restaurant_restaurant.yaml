@@ -57,6 +57,7 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
         - firebase_id
@@ -69,6 +70,8 @@ select_permissions:
         - open_status
         - schedule
         - self_delivery
+        - service_provider_type
+        - stripe_info
       filter: {}
   - role: customer
     permission:

@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class MezDateTimePickerController {
   // main variables //
@@ -24,6 +24,7 @@ class MezDateTimePickerController {
   RxnInt maxMinutes = RxnInt();
   RxnInt minHours = RxnInt();
   RxnInt minMinutes = RxnInt();
+  bool fixed7days = false;
 
   bool get _isToday {
     return pickedDate.value!.day == DateTime.now().day &&
@@ -43,7 +44,9 @@ class MezDateTimePickerController {
     required int numberOfdays,
     required Schedule schedule,
     PeriodOfTime? initPeriod,
+    bool? fixed7days,
   }) {
+    this.fixed7days = fixed7days ?? false;
     numberOfDaysInterval = numberOfdays;
     serviceSchedule = schedule;
 
@@ -134,13 +137,13 @@ class MezDateTimePickerController {
 
   /// Constructing a list of DateTime based on schedule
   List<DateTime> _constructDateChoices() {
-    final List<DateTime> dates = [pickedDate.value!];
+    final List<DateTime> dates = [];
 
-    for (int i = 1; i < numberOfDaysInterval; i++) {
+    for (int i = 0; i < numberOfDaysInterval; i++) {
       final DateTime newDate = DateTime(
-        pickedDate.value!.year,
-        pickedDate.value!.month,
-        pickedDate.value!.day + i,
+        fixed7days ? DateTime.now().year : pickedDate.value!.year,
+        fixed7days ? DateTime.now().month : pickedDate.value!.month,
+        fixed7days ? DateTime.now().day + i : pickedDate.value!.day + i,
       );
       mezDbgPrint(_getServiceDates().toString());
       if (_getServiceDates()

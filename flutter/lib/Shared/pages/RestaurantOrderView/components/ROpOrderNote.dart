@@ -18,7 +18,7 @@ class ROpOrderNote extends StatelessWidget {
   Widget build(BuildContext context) {
     if (orderNote != null && orderNote!.isNotEmpty) {
       return Card(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 25),
         child: Container(
           padding: const EdgeInsets.all(8),
           width: double.infinity,

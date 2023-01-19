@@ -1,5 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;

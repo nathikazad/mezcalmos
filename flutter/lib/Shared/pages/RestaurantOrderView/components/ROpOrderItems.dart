@@ -193,14 +193,14 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                 ),
             ],
           ),
-          if (widget.order.inProcess())
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Theme(data: context.theme, child: Divider()),
-                _unAvailableBtn(),
-              ],
-            ),
+          // if (widget.order.inProcess())
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Theme(data: context.theme, child: Divider()),
+          //       _unAvailableBtn(),
+          //     ],
+          //   ),
         ],
       ),
     );

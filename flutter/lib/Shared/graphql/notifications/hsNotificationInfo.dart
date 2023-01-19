@@ -35,7 +35,8 @@ Future<void> update_notif_info(
               ),
               id: notificationInfo.id!)));
   if (res.parsedData?.update_notification_info_by_pk == null) {
-    throw Exception("🚨 update notif token failed =>${res.exception}");
+    throw Exception(
+        "🚨 update notif token ${notificationInfo.id} failed =>${res.parsedData?.toJson()}");
   }
 }
 
