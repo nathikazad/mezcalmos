@@ -37,7 +37,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.schedule,
+                      Icons.schedule_rounded,
                       color: Colors.black,
                       size: 18,
                     ),

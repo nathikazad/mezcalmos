@@ -28,10 +28,15 @@ mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
 }
 
 query getCustomerCart($customer_id: Int!) {
-  customer_by_pk(user_id: $customer_id) {
+  customer_customer_by_pk(user_id: $customer_id) {
     cart {
       restaurant {
         id
+        stripe_info
+        accepted_payments
+        
+        
+
         firebase_id
         image
         language_id
@@ -103,6 +108,7 @@ query getCustomerCart($customer_id: Int!) {
           position
           category_id
           available
+          image
           restaurant_id
           special_period_end
           special_period_start
@@ -128,12 +134,14 @@ mutation create_customer_cart($cart: restaurant_cart_insert_input!) {
 }
 
 subscription listen_on_customer_cart($customer_id: Int!) {
-  customer_by_pk(user_id: $customer_id) {
+  customer_customer_by_pk(user_id: $customer_id) {
     cart {
       restaurant_id
       restaurant {
         id
         firebase_id
+        stripe_info
+        accepted_payments
         image
         language_id
         description_id
@@ -187,6 +195,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
             }
           }
           item_type
+          image
           id
           name {
             translations {

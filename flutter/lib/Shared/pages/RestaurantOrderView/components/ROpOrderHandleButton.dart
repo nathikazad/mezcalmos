@@ -23,7 +23,7 @@ class _ROpOrderHandleButtonState extends State<ROpOrderHandleButton> {
   Widget build(BuildContext context) {
     if (_showBtn) {
       return Container(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 25),
         child: MezButton(
           onClick: handleClick,
           label: getBtnTitle!,

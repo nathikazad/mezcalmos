@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -29,7 +31,8 @@ class CustCartViewController {
   CustomerCartController cartController = Get.find<CustomerCartController>();
 
   // Obs variables //
-  RxList<CreditCard> customerCards = RxList([]);
+  Rxn<CustStripeInfo> custStripeInfo = Rxn();
+  List<CreditCard>? get customerCards => custStripeInfo.value?.cards;
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.Location> orderToLocation = Rxn();
 
@@ -66,8 +69,9 @@ class CustCartViewController {
     unawaited(get_delivery_cost(serviceProviderId: 1, withCache: false)
         .then((DeliveryCost? value) => _mezDeliveryCost.value = value));
 
-    if (customerAuthController.customer?.savedCards.isNotEmpty == true)
-      savedCardChoice = customerAuthController.customer?.savedCards.first;
+    if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
+      savedCardChoice =
+          customerAuthController.customer?.stripeInfo?.cards.first;
     orderToLocation.value =
         customerAuthController.customer?.defaultLocation?.location;
     if (orderToLocation.value != null) {
@@ -78,32 +82,43 @@ class CustCartViewController {
       cart.deliveryTime = cart.cartPeriod?.start;
     }
     //
-    _addAndListenToCustomerCards();
+    await _setDefaultOptions();
+    await getCustomerCards();
     await _addingValusToOptions();
     pickerChoice.value = options.first;
   }
 
-  Future<void> _addingValusToOptions() async {
+  Future<void> _setDefaultOptions() async {
     options.add({PickerChoice.Cash: null});
-    if (cart.restaurant?.acceptPayment(PaymentType.BankTransfer) == true) {
-      options.add({PickerChoice.BankTransfer: null});
-    }
     if (await isApplePaySupported()) {
       options.add({PickerChoice.ApplePay: null});
     }
     if (await isGooglePaySupported()) {
       options.add({PickerChoice.GooglePay: null});
     }
-    customerCards.forEach((CreditCard element) {
+  }
+
+  Future<void> _addingValusToOptions() async {
+    if (cart.restaurant?.acceptPayment(PaymentType.BankTransfer) == true) {
+      options.add({PickerChoice.BankTransfer: null});
+    }
+
+    customerCards?.forEach((CreditCard element) {
       options.add({PickerChoice.SavedCard: element});
     });
     options.add({PickerChoice.NewCard: null});
   }
 
-  void _addAndListenToCustomerCards() {
+  Future<void> getCustomerCards() async {
     // TODO: hasura-ch
-    // customerCards.value =
-    //     Get.find<CustomerAuthController>().customer.value!.savedCards;
+    final CustStripeInfo? data = await get_customer_stripe_info(
+        userId: Get.find<AuthController>().hasuraUserId!, withCache: false);
+    mezDbgPrint("Data from controller ==========>>> 😛${data?.toJson()}");
+    if (data != null) {
+      custStripeInfo.value = data;
+      custStripeInfo.value?.cards = data.cards;
+    }
+
     // cardsListener = Get.find<CustomerAuthController>()
     //     .customer
     //     .stream
@@ -111,14 +126,14 @@ class CustCartViewController {
     //   if (event != null) {
     //     customerCards.clear();
     //     customerCards.value.addAll(event.savedCards);
-    //     if (customerCards.isEmpty) {
-    //       options.removeWhere((PaymentOption element) =>
-    //           element.entries.first.key == PickerChoice.SavedCard);
-    //     }
-    //     if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
-    //         customerCards.isEmpty) {
-    //       pickerChoice.value = options.first;
-    //     }
+    if (custStripeInfo.value?.cards.isEmpty == true) {
+      options.removeWhere((PaymentOption element) =>
+          element.entries.first.key == PickerChoice.SavedCard);
+    }
+    if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
+        custStripeInfo.value?.cards.isEmpty == true) {
+      pickerChoice.value = options.first;
+    }
     //   }
     // });
   }
@@ -127,7 +142,7 @@ class CustCartViewController {
     options.removeWhere((PaymentOption element) =>
         element.entries.first.key == PickerChoice.SavedCard);
 
-    customerCards.forEach((CreditCard element) {
+    customerCards?.forEach((CreditCard element) {
       options.add({PickerChoice.SavedCard: element});
     });
 
@@ -142,11 +157,8 @@ class CustCartViewController {
       {required PaymentType paymentType, CreditCard? card}) {
     mezDbgPrint(
         "Switching on restControlller =========>>>>>${paymentType.toNormalString()}");
-    cart.paymentType = paymentType;
-  }
-
-  Future<void> _getCustomerCards() async {
-    //await Get.find<CustomerAuthController>().getCards();
+    _cartRxn.value?.paymentType = paymentType;
+    _cartRxn.refresh();
   }
 
   // methods
@@ -171,11 +183,12 @@ class CustCartViewController {
       case PickerChoice.NewCard:
         final String? newCardId = await addCardSheet();
         if (newCardId != null) {
-          await Future.delayed(Duration(milliseconds: 2), () {});
+          await getCustomerCards();
           _updateListWithNewCard();
-
+          mezDbgPrint(
+              "Before first wheeeeereeee =========>${customerCards?.length}");
           final CreditCard? newCard = customerCards
-              .firstWhere((CreditCard element) => element.id == newCardId);
+              ?.firstWhere((CreditCard element) => element.id == newCardId);
 
           if (newCard != null) {
             card.value = newCard;
@@ -203,7 +216,8 @@ class CustCartViewController {
     try {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(getCardChoice);
-
+      mezDbgPrint(
+          "✅ Stripe payment id ====================>>>$stripePaymentId");
       final ServerResponse _serverResponse =
           await cartController.checkout(stripePaymentId: stripePaymentId);
 
@@ -297,11 +311,15 @@ class CustCartViewController {
     return cart.restaurant?.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true ||
         cart.restaurant?.paymentInfo
-                ?.acceptedPayments[PaymentType.BankTransfer] ==
-            true;
+                    ?.acceptedPayments[PaymentType.BankTransfer] ==
+                true &&
+            custStripeInfo.value != null;
   }
 
   bool get showFees {
+    mezDbgPrint("payment tyyype =====>${cart.paymentType.name}");
+    mezDbgPrint(
+        "payment tyyype =====>${cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer}");
     return cart.paymentType == PaymentType.Card &&
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }

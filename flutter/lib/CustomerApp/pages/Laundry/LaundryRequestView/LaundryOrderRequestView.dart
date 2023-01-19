@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/CustomerApp/controllers/laundry/LaundryController.dart';
+import 'package:mezcalmos/old/customerApp/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';

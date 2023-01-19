@@ -1,6 +1,6 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/CustomerApp/pages/Cards/CardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
@@ -13,7 +13,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/SavedLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -160,7 +160,7 @@ class XRouter {
         ),
         // Laundry routes
         GetPage(name: kLaundriesListRoute, page: () => LaundriesListView()),
-        GetPage(name: kSavedCards, page: () => SavedCardsListView()),
+        GetPage(name: kSavedCards, page: () => CustCardsListView()),
 
         GetPage(
           name: kLaundryOrderRequest,

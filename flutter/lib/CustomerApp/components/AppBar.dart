@@ -7,11 +7,13 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
-class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomerAppBar extends GetWidget<AuthController>
+    implements PreferredSizeWidget {
   final String? title;
   final bool? autoBack;
   final AppBarLeftButtonType leftBtnType;
@@ -209,20 +211,22 @@ class CustomerAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget getAppbarIconsButton() {
-    return Row(
-      children: [
-        SizedBox(
-          width: 5,
-        ),
-        if (!Get.find<AuthController>().isUserSignedIn) _noUserButton(),
-        if (Get.find<AuthController>().isUserSignedIn)
-          _notificationAppBarIcon(),
-        if (Get.find<AuthController>().isUserSignedIn && showPastOrders)
-          _ordersAppBarIcon(),
-        SizedBox(
-          width: 10,
-        ),
-      ],
+    mezDbgPrint(
+        "👋👋👋👋👋 No user icon state =======>>>>>> ${Get.find<AuthController>().isUserSignedIn}");
+    return Obx(
+      () => Row(
+        children: [
+          SizedBox(
+            width: 5,
+          ),
+          if (controller.user == null) _noUserButton(),
+          if (controller.user != null) _notificationAppBarIcon(),
+          if (controller.user != null && showPastOrders) _ordersAppBarIcon(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -43,8 +42,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Column(
+    return Obx(
+      () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -148,6 +147,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                             onTap: () {
                               widget.viewCartController.cart.deliveryTime =
                                   null;
+                              widget.viewCartController.cartController.cart
+                                  .refresh();
                             },
                             child: Ink(
                               padding: const EdgeInsets.all(3),
@@ -184,6 +185,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           isDismissible: true,
           builder: (BuildContext ctx) {
             return MezDateTimePicker(
+              fixed7days: true,
               startDate: widget.viewCartController.cart.deliveryTime?.toLocal(),
               periodOfTime: widget.viewCartController.cart.cartPeriod,
               numberOfDaysInterval:
@@ -194,6 +196,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           }).then((DateTime? value) {
         if (value != null) {
           widget.viewCartController.cart.deliveryTime = value;
+          widget.viewCartController.cartController.cart.refresh();
         }
       });
     } else {

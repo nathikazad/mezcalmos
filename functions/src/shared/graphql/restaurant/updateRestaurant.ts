@@ -11,7 +11,7 @@ export async function updateRestaurantStripe(restaurant: Restaurant) {
         );
     }
     let response = await chain.mutation({
-        update_restaurant_by_pk: [{
+        update_restaurant_restaurant_by_pk: [{
             pk_columns: {
                 id: restaurant.restaurantId
             },
@@ -24,7 +24,7 @@ export async function updateRestaurantStripe(restaurant: Restaurant) {
             stripe_info:[{}, true]
         }]
     });
-    if(!(response.update_restaurant_by_pk)) {
+    if(!(response.update_restaurant_restaurant_by_pk)) {
         throw new HttpsError(
           "internal",
           "restaurant update error"

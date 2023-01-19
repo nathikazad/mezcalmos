@@ -26,7 +26,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
   // GET RIGHT LEADING
-  Widget _getRightLeading() {
+  Widget? _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
         return _BackButtonAppBar(
@@ -34,9 +34,8 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         );
       case AppBarLeftButtonType.Menu:
         return _MenuButtonAppBar();
-      case AppBarLeftButtonType.Lang:
-        return _LangSwitcherBtn();
     }
+    return null;
   }
 
   // INIT ORDERS ICON
@@ -80,8 +79,9 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
         for (int i = 0; i < actionIcons.length; i++) ...<Widget>[
           actionIcons[i]
         ],
+        if (leftBtnType == AppBarLeftButtonType.Lang) _LangSwitcherBtn(),
         SizedBox(
-          width: 5,
+          width: 8,
         )
       ],
       // titleSpacing: 20,

@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.grap
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -87,6 +88,10 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         }
         items.add(_restauItem);
       });
+      StripeOrderPaymentInfo? _paymentInfo;
+      if (orderData.stripe_info != null) {
+        _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+      }
 
       final RestaurantOrder res = RestaurantOrder(
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
@@ -153,11 +158,13 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         to: Location(orderData.to_location_address!,
             orderData.to_location_gps!.toLocationData()),
         itemsCost: orderData.items_cost ?? 0,
+        totalCost: orderData.total_cost,
         shippingCost: orderData.delivery_cost,
         deliveryMode: DeliveryMode.ForwardedToMezCalmos,
       );
 
       res.items = items;
+      res.stripePaymentInfo = _paymentInfo;
       return res;
     }
     return null;
@@ -227,7 +234,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     }
     items.add(_restauItem);
   });
-
+  StripeOrderPaymentInfo? _paymentInfo;
+  if (orderData.stripe_info != null) {
+    _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
+  }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
@@ -309,11 +319,13 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     to: Location(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
     itemsCost: orderData.items_cost ?? 0,
+    totalCost: orderData.total_cost,
     shippingCost: orderData.delivery_cost,
     deliveryMode: DeliveryMode.ForwardedToMezCalmos,
   );
 
   res.items = items;
+  res.stripePaymentInfo = _paymentInfo;
   return res;
 }
 

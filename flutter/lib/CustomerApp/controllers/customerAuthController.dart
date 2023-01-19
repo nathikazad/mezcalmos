@@ -8,12 +8,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
-import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
+import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -68,14 +66,6 @@ class CustomerAuthController extends GetxController {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       unawaited(saveNotificationToken());
     }
-    //  ignore: always_specify_types, unawaited_futures
-    get_customer_cart(customerId: _authController.hasuraUserId!).then((value) {
-      mezDbgPrint(
-          "Customer Auth controller -CART-LEN-  ${value?.cartItems.length}");
-      if (value == null) {
-        create_customer_cart();
-      }
-    });
   }
 
   Future<void> saveNotificationToken() async {
@@ -115,11 +105,13 @@ class CustomerAuthController extends GetxController {
   }
 
   void editLocation(SavedLocation savedLocation) {
-    update_saved_location(saved_location: savedLocation);
+    update_saved_location(savedLocation: savedLocation);
   }
 
   void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    update_saved_location(saved_location: newDefaultLocation);
+    set_default_location(
+        userId: _authController.hasuraUserId!,
+        defaultLocationId: newDefaultLocation.id!);
   }
 
   void deleteLocation(SavedLocation savedLocation) {
@@ -139,21 +131,6 @@ class CustomerAuthController extends GetxController {
     final DataSnapshot data =
         await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
     return MainUserInfo.fromData(data.value);
-  }
-
-  Future<void> getCards() async {
-    mezDbgPrint(
-        "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(customerCardsNode(_authController.fireAuthUser!.uid))
-        .get()
-        // ignore: avoid_annotating_with_dynamic
-        .then((dynamic value) {
-      value.value.forEach((key, value) {
-        customer?.savedCards.add(CreditCard.fromData(id: key, data: value));
-      });
-    });
   }
 
   @override

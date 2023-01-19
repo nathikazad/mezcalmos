@@ -1,0 +1,188 @@
+table:
+  name: order
+  schema: restaurant
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: delivery
+    using:
+      foreign_key_constraint_on: delivery_id
+  - name: restaurant
+    using:
+      foreign_key_constraint_on: restaurant_id
+  - name: review
+    using:
+      foreign_key_constraint_on: review_id
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: restaurant_order_id
+        table:
+          name: order_item
+          schema: restaurant
+computed_fields:
+  - name: in_process
+    definition:
+      function:
+        name: in_process
+        schema: public
+  - name: items_cost
+    definition:
+      function:
+        name: itemscost
+        schema: public
+  - name: total_cost
+    definition:
+      function:
+        name: totalcost
+        schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - actual_food_ready_time
+        - cancellation_time
+        - chat_id
+        - customer_app_type
+        - customer_id
+        - delivery_cost
+        - delivery_id
+        - estimated_food_ready_time
+        - firebase_id
+        - id
+        - notes
+        - order_time
+        - order_type
+        - payment_type
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - scheduled_time
+        - status
+        - stripe_fees
+        - stripe_info
+        - tax
+        - to_location_address
+        - to_location_gps
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+      filter:
+        delivery:
+          delivery_driver:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - actual_food_ready_time
+        - cancellation_time
+        - chat_id
+        - customer_app_type
+        - customer_id
+        - delivery_cost
+        - delivery_id
+        - estimated_food_ready_time
+        - firebase_id
+        - id
+        - notes
+        - order_time
+        - order_type
+        - payment_type
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - status
+        - tax
+        - to_location_address
+        - to_location_gps
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - actual_food_ready_time
+        - cancellation_time
+        - chat_id
+        - customer_app_type
+        - customer_id
+        - delivery_cost
+        - delivery_id
+        - estimated_food_ready_time
+        - firebase_id
+        - id
+        - notes
+        - order_time
+        - order_type
+        - payment_type
+        - refund_amount
+        - restaurant_id
+        - review_id
+        - scheduled_time
+        - status
+        - stripe_fees
+        - stripe_info
+        - tax
+        - to_location_address
+        - to_location_gps
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: customer
+    permission:
+      columns:
+        - review_id
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_food_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - estimated_food_ready_time
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

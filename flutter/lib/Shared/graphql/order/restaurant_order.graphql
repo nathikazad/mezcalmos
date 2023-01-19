@@ -4,6 +4,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+    stripe_info
 
     restaurant {
       id
@@ -123,6 +124,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+    stripe_info
     restaurant {
       id
       firebase_id
@@ -293,6 +295,7 @@ query get_restaurant_past_orders($restaurantId: Int!) {
 
 mutation setRestaurantOrderEstFoodReadyTime(
   $orderId: Int!
+  $deliveryOrderId: Int!
   $time: timestamptz!
 ) {
   update_restaurant_order_by_pk(
@@ -301,6 +304,9 @@ mutation setRestaurantOrderEstFoodReadyTime(
   ) {
     estimated_food_ready_time
   }
+   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
+    estimated_package_ready_time
+   }
 }
 mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
   update_restaurant_order_by_pk(

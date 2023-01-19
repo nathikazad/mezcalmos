@@ -41,7 +41,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomerAppBar(
@@ -51,6 +50,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       body: Obx(() {
         if (viewController.cart.cartItems.length > 0) {
           return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -58,53 +58,41 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   CartItemsBuilder(
                     viewController: viewController,
                   ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 25,
+                  ),
+                  child: DeliveryTimePicker(viewCartController: viewController),
+                ),
+                _deliveryLocation(),
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  child: PaymentMethodPicker(
+                    viewCartController: viewController,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text("${_i18n()['notesTitle']}",
+                      style: Get.textTheme.bodyText1),
+                ),
                 SizedBox(
                   height: 15,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          bottom: 15,
-                        ),
-                        child: DeliveryTimePicker(
-                            viewCartController: viewController),
-                      ),
-                      _deliveryLocation(),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        child: PaymentMethodPicker(
-                          viewCartController: viewController,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text("${_i18n()['notesTitle']}",
-                            style: Get.textTheme.bodyText1),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      _notesComponent(context),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      CardSummaryCard(
-                        controller: viewController,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                    ],
-                  ),
+                _notesComponent(context),
+                SizedBox(
+                  height: 25,
+                ),
+                CardSummaryCard(
+                  controller: viewController,
+                ),
+                SizedBox(
+                  height: 30,
                 ),
               ],
             ),

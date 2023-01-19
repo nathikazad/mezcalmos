@@ -173,6 +173,8 @@ class ROpOptionViewController {
     final Option newOption = Option(
       id: editMode.value ? editableOption.value!.id : Random().nextInt(15),
       optionType: optionType.value,
+      minimumChoice: 0,
+      maximumChoice: _getMachChoices(),
       name: {
         primaryLang.value: prOptionName.text,
         secondaryLang.value: scOptionName.text,
@@ -238,5 +240,18 @@ class ROpOptionViewController {
 
   bool get isSecondValid {
     return scOptionName.text.removeAllWhitespace.isNotEmpty;
+  }
+
+  num _getMachChoices() {
+    switch (optionType.value) {
+      case OptionType.ChooseOne:
+        return 1;
+
+      case OptionType.ChooseMany:
+        return optionChoices.length;
+
+      default:
+        return 1;
+    }
   }
 }
