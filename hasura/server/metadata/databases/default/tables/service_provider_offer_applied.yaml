@@ -1,0 +1,22 @@
+table:
+  name: offer_applied
+  schema: service_provider
+object_relationships:
+  - name: offer
+    using:
+      manual_configuration:
+        column_mapping:
+          offer_id: id
+        insertion_order: null
+        remote_table:
+          name: offer
+          schema: service_provider
+  - name: restaurant_order
+    using:
+      manual_configuration:
+        column_mapping:
+          order_id: id
+        insertion_order: null
+        remote_table:
+          name: order
+          schema: restaurant

@@ -1,0 +1,13 @@
+table:
+  name: offer
+  schema: service_provider
+object_relationships:
+  - name: name
+    using:
+      manual_configuration:
+        column_mapping:
+          name_id: id
+        insertion_order: null
+        remote_table:
+          name: translation
+          schema: public

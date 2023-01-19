@@ -20,6 +20,10 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
+import { applyDiscount } from "./applyOffer";
+import { updateOffersApplied } from "../shared/graphql/offer/updateOffer";
+import { updateStoreCredit } from "../shared/graphql/offer/updateStoreCredit";
+import { DiscountType, ServiceProviderType } from "../shared/models/Services/Service";
 
 export interface CheckoutRequest {
   customerAppType: AppType,
@@ -35,6 +39,7 @@ export interface CheckoutRequest {
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
+  couponCode?: string
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
@@ -44,6 +49,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
   console.log("\n\n[+] checkoutRequest ==> \n\n", checkoutRequest);
   console.log("\n\n[+] restaurantId ==> \n\n", checkoutRequest.restaurantId);
+
+  let appliedOffers = await applyDiscount(customerId, checkoutRequest.couponCode);
+
   let restaurantPromise = getRestaurant(checkoutRequest.restaurantId);
   let customerCartPromise = getCart(customerId);
   let customerPromise = getCustomer(customerId);
@@ -105,7 +113,15 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     if(checkoutRequest.paymentType == PaymentType.Card) {
       updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
     }
-
+    updateOffersApplied(orderResponse.restaurantOrder.orderId!, appliedOffers);
+    for(let offerId in appliedOffers) {
+      if(appliedOffers[offerId].discountType == DiscountType.StoreCredit) {
+        updateStoreCredit(customerCart.restaurantId!, ServiceProviderType.Restaurant, customerId,
+          appliedOffers[offerId].discountAmount
+        );
+      }
+    }
+    
     return <ServerResponse> {
       status: ServerResponseStatus.Success,
       orderId: orderResponse.restaurantOrder.orderId

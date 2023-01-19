@@ -1,1 +1,0 @@
-CREATE TABLE "service_provider"."store_credit" ("customer_id" integer NOT NULL, "service_provider_type" text NOT NULL DEFAULT 'restaurant', "service_provider_id" integer NOT NULL, "credit" money NOT NULL DEFAULT 0, PRIMARY KEY ("customer_id","service_provider_type","service_provider_id") );

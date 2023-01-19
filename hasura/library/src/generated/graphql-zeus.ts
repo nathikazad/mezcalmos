@@ -4211,12 +4211,21 @@ delete_restaurant_restaurant_by_pk?: [{	id:number},ValueTypes["restaurant_restau
 delete_review?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["review_bool_exp"]},ValueTypes["review_mutation_response"]],
 delete_review_by_pk?: [{	id:number},ValueTypes["review"]],
+delete_service_provider_offer?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer_mutation_response"]],
+delete_service_provider_offer_applied?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied_mutation_response"]],
+delete_service_provider_offer_applied_by_pk?: [{	offer_id:number,	order_id:number,	service_provider_type:string},ValueTypes["service_provider_offer_applied"]],
+delete_service_provider_offer_by_pk?: [{	id:number},ValueTypes["service_provider_offer"]],
 delete_service_provider_post?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_post_bool_exp"]},ValueTypes["service_provider_post_mutation_response"]],
 delete_service_provider_post_by_pk?: [{	id:number},ValueTypes["service_provider_post"]],
 delete_service_provider_service_link?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_service_link_bool_exp"]},ValueTypes["service_provider_service_link_mutation_response"]],
 delete_service_provider_service_link_by_pk?: [{	id:number},ValueTypes["service_provider_service_link"]],
+delete_service_provider_store_credit?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit_mutation_response"]],
+delete_service_provider_store_credit_by_pk?: [{	customer_id:number,	service_provider_id:number,	service_provider_type:string},ValueTypes["service_provider_store_credit"]],
 delete_service_provider_subscriber?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_subscriber_bool_exp"]},ValueTypes["service_provider_subscriber_mutation_response"]],
 delete_service_provider_subscriber_by_pk?: [{	id:number},ValueTypes["service_provider_subscriber"]],
@@ -4393,6 +4402,18 @@ insert_review?: [{	/** the rows to be inserted */
 insert_review_one?: [{	/** the row to be inserted */
 	object:ValueTypes["review_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["review_on_conflict"]},ValueTypes["review"]],
+insert_service_provider_offer?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_offer_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_offer_on_conflict"]},ValueTypes["service_provider_offer_mutation_response"]],
+insert_service_provider_offer_applied?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_offer_applied_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_offer_applied_on_conflict"]},ValueTypes["service_provider_offer_applied_mutation_response"]],
+insert_service_provider_offer_applied_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_offer_applied_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_offer_applied_on_conflict"]},ValueTypes["service_provider_offer_applied"]],
+insert_service_provider_offer_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_offer_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_offer_on_conflict"]},ValueTypes["service_provider_offer"]],
 insert_service_provider_post?: [{	/** the rows to be inserted */
 	objects:ValueTypes["service_provider_post_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_post_on_conflict"]},ValueTypes["service_provider_post_mutation_response"]],
@@ -4405,6 +4426,12 @@ insert_service_provider_service_link?: [{	/** the rows to be inserted */
 insert_service_provider_service_link_one?: [{	/** the row to be inserted */
 	object:ValueTypes["service_provider_service_link_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_service_link_on_conflict"]},ValueTypes["service_provider_service_link"]],
+insert_service_provider_store_credit?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_store_credit_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_store_credit_on_conflict"]},ValueTypes["service_provider_store_credit_mutation_response"]],
+insert_service_provider_store_credit_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_store_credit_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_store_credit_on_conflict"]},ValueTypes["service_provider_store_credit"]],
 insert_service_provider_subscriber?: [{	/** the rows to be inserted */
 	objects:ValueTypes["service_provider_subscriber_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_subscriber_on_conflict"]},ValueTypes["service_provider_subscriber_mutation_response"]],
@@ -4719,6 +4746,36 @@ update_review_by_pk?: [{	/** increments the numeric columns with given value of 
 	_set?:ValueTypes["review_set_input"],	pk_columns:ValueTypes["review_pk_columns_input"]},ValueTypes["review"]],
 update_review_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["review_updates"][]},ValueTypes["review_mutation_response"]],
+update_service_provider_offer?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_offer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_offer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_offer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_offer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_offer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer_mutation_response"]],
+update_service_provider_offer_applied?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_applied_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_applied_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied_mutation_response"]],
+update_service_provider_offer_applied_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_applied_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_applied_set_input"],	pk_columns:ValueTypes["service_provider_offer_applied_pk_columns_input"]},ValueTypes["service_provider_offer_applied"]],
+update_service_provider_offer_applied_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_offer_applied_updates"][]},ValueTypes["service_provider_offer_applied_mutation_response"]],
+update_service_provider_offer_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_offer_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_offer_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_offer_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_offer_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_offer_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_set_input"],	pk_columns:ValueTypes["service_provider_offer_pk_columns_input"]},ValueTypes["service_provider_offer"]],
+update_service_provider_offer_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_offer_updates"][]},ValueTypes["service_provider_offer_mutation_response"]],
 update_service_provider_post?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
 	_append?:ValueTypes["service_provider_post_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 	_delete_at_path?:ValueTypes["service_provider_post_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
@@ -4749,6 +4806,15 @@ update_service_provider_service_link_by_pk?: [{	/** increments the numeric colum
 	_set?:ValueTypes["service_provider_service_link_set_input"],	pk_columns:ValueTypes["service_provider_service_link_pk_columns_input"]},ValueTypes["service_provider_service_link"]],
 update_service_provider_service_link_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_provider_service_link_updates"][]},ValueTypes["service_provider_service_link_mutation_response"]],
+update_service_provider_store_credit?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_store_credit_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_store_credit_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit_mutation_response"]],
+update_service_provider_store_credit_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_store_credit_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_store_credit_set_input"],	pk_columns:ValueTypes["service_provider_store_credit_pk_columns_input"]},ValueTypes["service_provider_store_credit"]],
+update_service_provider_store_credit_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_store_credit_updates"][]},ValueTypes["service_provider_store_credit_mutation_response"]],
 update_service_provider_subscriber?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["service_provider_subscriber_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_subscriber_set_input"],	/** filter the rows which have to be updated */
@@ -5333,6 +5399,32 @@ review_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 review_by_pk?: [{	id:number},ValueTypes["review"]],
+service_provider_offer?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer"]],
+service_provider_offer_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer_aggregate"]],
+service_provider_offer_applied?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_applied_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_applied_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied"]],
+service_provider_offer_applied_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_applied_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_applied_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied_aggregate"]],
+service_provider_offer_applied_by_pk?: [{	offer_id:number,	order_id:number,	service_provider_type:string},ValueTypes["service_provider_offer_applied"]],
+service_provider_offer_by_pk?: [{	id:number},ValueTypes["service_provider_offer"]],
 service_provider_post?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_post_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5359,6 +5451,19 @@ service_provider_service_link_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["service_provider_service_link_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["service_provider_service_link_bool_exp"]},ValueTypes["service_provider_service_link_aggregate"]],
 service_provider_service_link_by_pk?: [{	id:number},ValueTypes["service_provider_service_link"]],
+service_provider_store_credit?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_store_credit_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_store_credit_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit"]],
+service_provider_store_credit_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_store_credit_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_store_credit_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit_aggregate"]],
+service_provider_store_credit_by_pk?: [{	customer_id:number,	service_provider_id:number,	service_provider_type:string},ValueTypes["service_provider_store_credit"]],
 service_provider_subscriber?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_subscriber_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5420,6 +5525,7 @@ user_by_pk?: [{	id:number},ValueTypes["user"]],
 	/** An object relationship */
 	customer?:ValueTypes["customer_customer"],
 	customer_id?:true,
+	discount_value?:true,
 items?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_cart_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5461,6 +5567,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	/** aggregate avg on columns */
 ["restaurant_cart_avg_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -5472,6 +5579,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	cost?:ValueTypes["money_comparison_exp"],
 	customer?:ValueTypes["customer_customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
+	discount_value?:ValueTypes["money_comparison_exp"],
 	items?:ValueTypes["restaurant_cart_item_bool_exp"],
 	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -5482,12 +5590,14 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	/** input type for incrementing numeric columns in table "restaurant.cart" */
 ["restaurant_cart_inc_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** input type for inserting data into table "restaurant.cart" */
 ["restaurant_cart_insert_input"]: {
 	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	items?:ValueTypes["restaurant_cart_item_arr_rel_insert_input"],
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
 	restaurant_id?:number
@@ -5843,12 +5953,14 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** aggregate max on columns */
 ["restaurant_cart_max_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["restaurant_cart_min_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -5877,6 +5989,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost?:ValueTypes["order_by"],
 	customer?:ValueTypes["customer_customer_order_by"],
 	customer_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
 	restaurant_id?:ValueTypes["order_by"]
@@ -5890,23 +6003,27 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** input type for updating data in table "restaurant.cart" */
 ["restaurant_cart_set_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** aggregate stddev on columns */
 ["restaurant_cart_stddev_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["restaurant_cart_stddev_pop_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["restaurant_cart_stddev_samp_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -5920,11 +6037,13 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_cart_stream_cursor_value_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** aggregate sum on columns */
 ["restaurant_cart_sum_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -5940,18 +6059,21 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** aggregate var_pop on columns */
 ["restaurant_cart_var_pop_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["restaurant_cart_var_samp_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["restaurant_cart_variance_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -8613,6 +8735,7 @@ All fields are combined with a logical 'AND'. */
 	delivery?:ValueTypes["delivery_order"],
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -8720,6 +8843,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -8734,6 +8858,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -8756,6 +8881,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:ValueTypes["delivery_order_bool_exp"],
 	delivery_cost?:ValueTypes["money_comparison_exp"],
 	delivery_id?:ValueTypes["Int_comparison_exp"],
+	discount_value?:ValueTypes["money_comparison_exp"],
 	estimated_food_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -8814,6 +8940,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	discount_value?:ValueTypes["money"],
 	id?:number,
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
@@ -8833,6 +8960,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:ValueTypes["delivery_order_obj_rel_insert_input"],
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -9264,6 +9392,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -9291,6 +9420,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -9317,6 +9447,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -9344,6 +9475,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -9393,6 +9525,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery?:ValueTypes["delivery_order_order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -9649,6 +9782,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -9678,6 +9812,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9692,6 +9827,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9705,6 +9841,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9719,6 +9856,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9732,6 +9870,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9746,6 +9885,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9769,6 +9909,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -9798,6 +9939,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9812,6 +9954,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9845,6 +9988,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9859,6 +10003,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9872,6 +10017,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9886,6 +10032,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9899,6 +10046,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9913,6 +10061,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -10694,6 +10843,515 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	rating?:ValueTypes["order_by"],
 	to_entity_id?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "service_provider.offer" */
+["service_provider_offer"]: AliasType<{
+	coupon_code?:true,
+details?: [{	/** JSON select path */
+	path?:string},true],
+	id?:true,
+	/** An object relationship */
+	name?:ValueTypes["translation"],
+	name_id?:true,
+	offer_type?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+	status?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider.offer" */
+["service_provider_offer_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_offer_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_offer"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider.offer" */
+["service_provider_offer_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_offer_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_offer_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_offer_max_fields"],
+	min?:ValueTypes["service_provider_offer_min_fields"],
+	stddev?:ValueTypes["service_provider_offer_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_offer_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_offer_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_offer_sum_fields"],
+	var_pop?:ValueTypes["service_provider_offer_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_offer_var_samp_fields"],
+	variance?:ValueTypes["service_provider_offer_variance_fields"],
+		__typename?: true
+}>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_offer_append_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:ValueTypes["jsonb"]
+};
+	/** columns and relationships of "service_provider.offer_applied" */
+["service_provider_offer_applied"]: AliasType<{
+	loss?:true,
+	/** An object relationship */
+	offer?:ValueTypes["service_provider_offer"],
+	offer_id?:true,
+	order_id?:true,
+	/** An object relationship */
+	restaurant_order?:ValueTypes["restaurant_order"],
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider.offer_applied" */
+["service_provider_offer_applied_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_offer_applied_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_offer_applied"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider.offer_applied" */
+["service_provider_offer_applied_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_offer_applied_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_offer_applied_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_offer_applied_max_fields"],
+	min?:ValueTypes["service_provider_offer_applied_min_fields"],
+	stddev?:ValueTypes["service_provider_offer_applied_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_offer_applied_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_offer_applied_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_offer_applied_sum_fields"],
+	var_pop?:ValueTypes["service_provider_offer_applied_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_offer_applied_var_samp_fields"],
+	variance?:ValueTypes["service_provider_offer_applied_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_offer_applied_avg_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"service_provider.offer_applied". All fields are combined with a logical 'AND'. */
+["service_provider_offer_applied_bool_exp"]: {
+	_and?:ValueTypes["service_provider_offer_applied_bool_exp"][],
+	_not?:ValueTypes["service_provider_offer_applied_bool_exp"],
+	_or?:ValueTypes["service_provider_offer_applied_bool_exp"][],
+	loss?:ValueTypes["money_comparison_exp"],
+	offer?:ValueTypes["service_provider_offer_bool_exp"],
+	offer_id?:ValueTypes["Int_comparison_exp"],
+	order_id?:ValueTypes["Int_comparison_exp"],
+	restaurant_order?:ValueTypes["restaurant_order_bool_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider.offer_applied" */
+["service_provider_offer_applied_constraint"]:service_provider_offer_applied_constraint;
+	/** input type for incrementing numeric columns in table "service_provider.offer_applied" */
+["service_provider_offer_applied_inc_input"]: {
+	loss?:ValueTypes["money"],
+	offer_id?:number,
+	order_id?:number
+};
+	/** input type for inserting data into table "service_provider.offer_applied" */
+["service_provider_offer_applied_insert_input"]: {
+	loss?:ValueTypes["money"],
+	offer?:ValueTypes["service_provider_offer_obj_rel_insert_input"],
+	offer_id?:number,
+	order_id?:number,
+	restaurant_order?:ValueTypes["restaurant_order_obj_rel_insert_input"],
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["service_provider_offer_applied_max_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_offer_applied_min_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider.offer_applied" */
+["service_provider_offer_applied_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_offer_applied"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "service_provider.offer_applied" */
+["service_provider_offer_applied_on_conflict"]: {
+	constraint:ValueTypes["service_provider_offer_applied_constraint"],
+	update_columns:ValueTypes["service_provider_offer_applied_update_column"][],
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider.offer_applied". */
+["service_provider_offer_applied_order_by"]: {
+	loss?:ValueTypes["order_by"],
+	offer?:ValueTypes["service_provider_offer_order_by"],
+	offer_id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	restaurant_order?:ValueTypes["restaurant_order_order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider.offer_applied */
+["service_provider_offer_applied_pk_columns_input"]: {
+	offer_id:number,
+	order_id:number,
+	service_provider_type:string
+};
+	/** select columns of table "service_provider.offer_applied" */
+["service_provider_offer_applied_select_column"]:service_provider_offer_applied_select_column;
+	/** input type for updating data in table "service_provider.offer_applied" */
+["service_provider_offer_applied_set_input"]: {
+	loss?:ValueTypes["money"],
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_offer_applied_stddev_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_offer_applied_stddev_pop_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_offer_applied_stddev_samp_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_offer_applied" */
+["service_provider_offer_applied_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_offer_applied_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_offer_applied_stream_cursor_value_input"]: {
+	loss?:ValueTypes["money"],
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate sum on columns */
+["service_provider_offer_applied_sum_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider.offer_applied" */
+["service_provider_offer_applied_update_column"]:service_provider_offer_applied_update_column;
+	["service_provider_offer_applied_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_applied_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_applied_set_input"],
+	where:ValueTypes["service_provider_offer_applied_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_offer_applied_var_pop_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_offer_applied_var_samp_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_offer_applied_variance_fields"]: AliasType<{
+	loss?:true,
+	offer_id?:true,
+	order_id?:true,
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_offer_avg_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "service_provider.offer". All fields are combined with a logical 'AND'. */
+["service_provider_offer_bool_exp"]: {
+	_and?:ValueTypes["service_provider_offer_bool_exp"][],
+	_not?:ValueTypes["service_provider_offer_bool_exp"],
+	_or?:ValueTypes["service_provider_offer_bool_exp"][],
+	coupon_code?:ValueTypes["String_comparison_exp"],
+	details?:ValueTypes["jsonb_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	name?:ValueTypes["translation_bool_exp"],
+	name_id?:ValueTypes["Int_comparison_exp"],
+	offer_type?:ValueTypes["String_comparison_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"],
+	status?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider.offer" */
+["service_provider_offer_constraint"]:service_provider_offer_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_offer_delete_at_path_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_offer_delete_elem_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_offer_delete_key_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string
+};
+	/** input type for incrementing numeric columns in table "service_provider.offer" */
+["service_provider_offer_inc_input"]: {
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "service_provider.offer" */
+["service_provider_offer_insert_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:ValueTypes["jsonb"],
+	id?:number,
+	name?:ValueTypes["translation_obj_rel_insert_input"],
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+};
+	/** aggregate max on columns */
+["service_provider_offer_max_fields"]: AliasType<{
+	coupon_code?:true,
+	id?:true,
+	name_id?:true,
+	offer_type?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+	status?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_offer_min_fields"]: AliasType<{
+	coupon_code?:true,
+	id?:true,
+	name_id?:true,
+	offer_type?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+	status?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider.offer" */
+["service_provider_offer_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_offer"],
+		__typename?: true
+}>;
+	/** input type for inserting object relation for remote table "service_provider.offer" */
+["service_provider_offer_obj_rel_insert_input"]: {
+	data:ValueTypes["service_provider_offer_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_offer_on_conflict"]
+};
+	/** on_conflict condition type for table "service_provider.offer" */
+["service_provider_offer_on_conflict"]: {
+	constraint:ValueTypes["service_provider_offer_constraint"],
+	update_columns:ValueTypes["service_provider_offer_update_column"][],
+	where?:ValueTypes["service_provider_offer_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider.offer". */
+["service_provider_offer_order_by"]: {
+	coupon_code?:ValueTypes["order_by"],
+	details?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	name?:ValueTypes["translation_order_by"],
+	name_id?:ValueTypes["order_by"],
+	offer_type?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider.offer */
+["service_provider_offer_pk_columns_input"]: {
+	id:number
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_offer_prepend_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:ValueTypes["jsonb"]
+};
+	/** select columns of table "service_provider.offer" */
+["service_provider_offer_select_column"]:service_provider_offer_select_column;
+	/** input type for updating data in table "service_provider.offer" */
+["service_provider_offer_set_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:ValueTypes["jsonb"],
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_offer_stddev_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_offer_stddev_pop_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_offer_stddev_samp_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_offer" */
+["service_provider_offer_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_offer_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_offer_stream_cursor_value_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:ValueTypes["jsonb"],
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+};
+	/** aggregate sum on columns */
+["service_provider_offer_sum_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider.offer" */
+["service_provider_offer_update_column"]:service_provider_offer_update_column;
+	["service_provider_offer_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_offer_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_offer_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_offer_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_offer_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_offer_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_offer_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_offer_set_input"],
+	where:ValueTypes["service_provider_offer_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_offer_var_pop_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_offer_var_samp_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_offer_variance_fields"]: AliasType<{
+	id?:true,
+	name_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "service_provider.post" */
 ["service_provider_post"]: AliasType<{
 comments?: [{	/** JSON select path */
@@ -10702,6 +11360,7 @@ comments?: [{	/** JSON select path */
 	image?:true,
 likes?: [{	/** JSON select path */
 	path?:string},true],
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	/** An object relationship */
@@ -10751,6 +11410,7 @@ count?: [{	columns?:ValueTypes["service_provider_post_select_column"][],	distinc
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
 	likes?:ValueTypes["jsonb_comparison_exp"],
+	link?:ValueTypes["String_comparison_exp"],
 	message?:ValueTypes["String_comparison_exp"],
 	posted_on?:ValueTypes["timestamptz_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -10786,6 +11446,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
@@ -10796,6 +11457,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_post_max_fields"]: AliasType<{
 	id?:true,
 	image?:true,
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	service_provider_id?:true,
@@ -10806,6 +11468,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_post_min_fields"]: AliasType<{
 	id?:true,
 	image?:true,
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	service_provider_id?:true,
@@ -10832,6 +11495,7 @@ end). throws an error if top level container is not an array */
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
 	likes?:ValueTypes["order_by"],
+	link?:ValueTypes["order_by"],
 	message?:ValueTypes["order_by"],
 	posted_on?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
@@ -10855,6 +11519,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	service_provider_id?:number,
@@ -10891,6 +11556,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	service_provider_id?:number,
@@ -11157,6 +11823,192 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	/** aggregate variance on columns */
 ["service_provider_service_link_variance_fields"]: AliasType<{
 	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** columns and relationships of "service_provider.store_credit" */
+["service_provider_store_credit"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider.store_credit" */
+["service_provider_store_credit_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_store_credit_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_store_credit"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider.store_credit" */
+["service_provider_store_credit_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_store_credit_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_store_credit_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_store_credit_max_fields"],
+	min?:ValueTypes["service_provider_store_credit_min_fields"],
+	stddev?:ValueTypes["service_provider_store_credit_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_store_credit_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_store_credit_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_store_credit_sum_fields"],
+	var_pop?:ValueTypes["service_provider_store_credit_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_store_credit_var_samp_fields"],
+	variance?:ValueTypes["service_provider_store_credit_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_store_credit_avg_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"service_provider.store_credit". All fields are combined with a logical 'AND'. */
+["service_provider_store_credit_bool_exp"]: {
+	_and?:ValueTypes["service_provider_store_credit_bool_exp"][],
+	_not?:ValueTypes["service_provider_store_credit_bool_exp"],
+	_or?:ValueTypes["service_provider_store_credit_bool_exp"][],
+	credit?:ValueTypes["money_comparison_exp"],
+	customer_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider.store_credit" */
+["service_provider_store_credit_constraint"]:service_provider_store_credit_constraint;
+	/** input type for incrementing numeric columns in table "service_provider.store_credit" */
+["service_provider_store_credit_inc_input"]: {
+	credit?:ValueTypes["money"],
+	customer_id?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "service_provider.store_credit" */
+["service_provider_store_credit_insert_input"]: {
+	credit?:ValueTypes["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["service_provider_store_credit_max_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_store_credit_min_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider.store_credit" */
+["service_provider_store_credit_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_store_credit"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "service_provider.store_credit" */
+["service_provider_store_credit_on_conflict"]: {
+	constraint:ValueTypes["service_provider_store_credit_constraint"],
+	update_columns:ValueTypes["service_provider_store_credit_update_column"][],
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider.store_credit". */
+["service_provider_store_credit_order_by"]: {
+	credit?:ValueTypes["order_by"],
+	customer_id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider.store_credit */
+["service_provider_store_credit_pk_columns_input"]: {
+	customer_id:number,
+	service_provider_id:number,
+	service_provider_type:string
+};
+	/** select columns of table "service_provider.store_credit" */
+["service_provider_store_credit_select_column"]:service_provider_store_credit_select_column;
+	/** input type for updating data in table "service_provider.store_credit" */
+["service_provider_store_credit_set_input"]: {
+	credit?:ValueTypes["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_store_credit_stddev_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_store_credit_stddev_pop_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_store_credit_stddev_samp_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_store_credit" */
+["service_provider_store_credit_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_store_credit_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_store_credit_stream_cursor_value_input"]: {
+	credit?:ValueTypes["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate sum on columns */
+["service_provider_store_credit_sum_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider.store_credit" */
+["service_provider_store_credit_update_column"]:service_provider_store_credit_update_column;
+	["service_provider_store_credit_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_store_credit_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_store_credit_set_input"],
+	where:ValueTypes["service_provider_store_credit_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_store_credit_var_pop_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_store_credit_var_samp_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_store_credit_variance_fields"]: AliasType<{
+	credit?:true,
+	customer_id?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
@@ -11876,6 +12728,40 @@ review_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["review_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+service_provider_offer?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer"]],
+service_provider_offer_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer_aggregate"]],
+service_provider_offer_applied?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_applied_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_applied_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied"]],
+service_provider_offer_applied_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_offer_applied_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_offer_applied_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied_aggregate"]],
+service_provider_offer_applied_by_pk?: [{	offer_id:number,	order_id:number,	service_provider_type:string},ValueTypes["service_provider_offer_applied"]],
+service_provider_offer_applied_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_offer_applied_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_applied_bool_exp"]},ValueTypes["service_provider_offer_applied"]],
+service_provider_offer_by_pk?: [{	id:number},ValueTypes["service_provider_offer"]],
+service_provider_offer_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_offer_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_offer_bool_exp"]},ValueTypes["service_provider_offer"]],
 service_provider_post?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_post_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -11910,6 +12796,23 @@ service_provider_service_link_stream?: [{	/** maximum number of rows returned in
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["service_provider_service_link_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["service_provider_service_link_bool_exp"]},ValueTypes["service_provider_service_link"]],
+service_provider_store_credit?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_store_credit_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_store_credit_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit"]],
+service_provider_store_credit_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_store_credit_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_store_credit_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit_aggregate"]],
+service_provider_store_credit_by_pk?: [{	customer_id:number,	service_provider_id:number,	service_provider_type:string},ValueTypes["service_provider_store_credit"]],
+service_provider_store_credit_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_store_credit_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_store_credit_bool_exp"]},ValueTypes["service_provider_store_credit"]],
 service_provider_subscriber?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_subscriber_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -16841,6 +17744,14 @@ cancelledByServiceProvider */
 	delete_review?:PartialObjects["review_mutation_response"],
 			/** delete single row from the table: "review" */
 	delete_review_by_pk?:PartialObjects["review"],
+			/** delete data from the table: "service_provider.offer" */
+	delete_service_provider_offer?:PartialObjects["service_provider_offer_mutation_response"],
+			/** delete data from the table: "service_provider.offer_applied" */
+	delete_service_provider_offer_applied?:PartialObjects["service_provider_offer_applied_mutation_response"],
+			/** delete single row from the table: "service_provider.offer_applied" */
+	delete_service_provider_offer_applied_by_pk?:PartialObjects["service_provider_offer_applied"],
+			/** delete single row from the table: "service_provider.offer" */
+	delete_service_provider_offer_by_pk?:PartialObjects["service_provider_offer"],
 			/** delete data from the table: "service_provider.post" */
 	delete_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** delete single row from the table: "service_provider.post" */
@@ -16849,6 +17760,10 @@ cancelledByServiceProvider */
 	delete_service_provider_service_link?:PartialObjects["service_provider_service_link_mutation_response"],
 			/** delete single row from the table: "service_provider.service_link" */
 	delete_service_provider_service_link_by_pk?:PartialObjects["service_provider_service_link"],
+			/** delete data from the table: "service_provider.store_credit" */
+	delete_service_provider_store_credit?:PartialObjects["service_provider_store_credit_mutation_response"],
+			/** delete single row from the table: "service_provider.store_credit" */
+	delete_service_provider_store_credit_by_pk?:PartialObjects["service_provider_store_credit"],
 			/** delete data from the table: "service_provider.subscriber" */
 	delete_service_provider_subscriber?:PartialObjects["service_provider_subscriber_mutation_response"],
 			/** delete single row from the table: "service_provider.subscriber" */
@@ -16977,6 +17892,14 @@ cancelledByServiceProvider */
 	insert_review?:PartialObjects["review_mutation_response"],
 			/** insert a single row into the table: "review" */
 	insert_review_one?:PartialObjects["review"],
+			/** insert data into the table: "service_provider.offer" */
+	insert_service_provider_offer?:PartialObjects["service_provider_offer_mutation_response"],
+			/** insert data into the table: "service_provider.offer_applied" */
+	insert_service_provider_offer_applied?:PartialObjects["service_provider_offer_applied_mutation_response"],
+			/** insert a single row into the table: "service_provider.offer_applied" */
+	insert_service_provider_offer_applied_one?:PartialObjects["service_provider_offer_applied"],
+			/** insert a single row into the table: "service_provider.offer" */
+	insert_service_provider_offer_one?:PartialObjects["service_provider_offer"],
 			/** insert data into the table: "service_provider.post" */
 	insert_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** insert a single row into the table: "service_provider.post" */
@@ -16985,6 +17908,10 @@ cancelledByServiceProvider */
 	insert_service_provider_service_link?:PartialObjects["service_provider_service_link_mutation_response"],
 			/** insert a single row into the table: "service_provider.service_link" */
 	insert_service_provider_service_link_one?:PartialObjects["service_provider_service_link"],
+			/** insert data into the table: "service_provider.store_credit" */
+	insert_service_provider_store_credit?:PartialObjects["service_provider_store_credit_mutation_response"],
+			/** insert a single row into the table: "service_provider.store_credit" */
+	insert_service_provider_store_credit_one?:PartialObjects["service_provider_store_credit"],
 			/** insert data into the table: "service_provider.subscriber" */
 	insert_service_provider_subscriber?:PartialObjects["service_provider_subscriber_mutation_response"],
 			/** insert a single row into the table: "service_provider.subscriber" */
@@ -17165,6 +18092,18 @@ cancelledByServiceProvider */
 	update_review_by_pk?:PartialObjects["review"],
 			/** update multiples rows of table: "review" */
 	update_review_many?:(PartialObjects["review_mutation_response"] | undefined)[],
+			/** update data of the table: "service_provider.offer" */
+	update_service_provider_offer?:PartialObjects["service_provider_offer_mutation_response"],
+			/** update data of the table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied?:PartialObjects["service_provider_offer_applied_mutation_response"],
+			/** update single row of the table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied_by_pk?:PartialObjects["service_provider_offer_applied"],
+			/** update multiples rows of table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied_many?:(PartialObjects["service_provider_offer_applied_mutation_response"] | undefined)[],
+			/** update single row of the table: "service_provider.offer" */
+	update_service_provider_offer_by_pk?:PartialObjects["service_provider_offer"],
+			/** update multiples rows of table: "service_provider.offer" */
+	update_service_provider_offer_many?:(PartialObjects["service_provider_offer_mutation_response"] | undefined)[],
 			/** update data of the table: "service_provider.post" */
 	update_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** update single row of the table: "service_provider.post" */
@@ -17177,6 +18116,12 @@ cancelledByServiceProvider */
 	update_service_provider_service_link_by_pk?:PartialObjects["service_provider_service_link"],
 			/** update multiples rows of table: "service_provider.service_link" */
 	update_service_provider_service_link_many?:(PartialObjects["service_provider_service_link_mutation_response"] | undefined)[],
+			/** update data of the table: "service_provider.store_credit" */
+	update_service_provider_store_credit?:PartialObjects["service_provider_store_credit_mutation_response"],
+			/** update single row of the table: "service_provider.store_credit" */
+	update_service_provider_store_credit_by_pk?:PartialObjects["service_provider_store_credit"],
+			/** update multiples rows of table: "service_provider.store_credit" */
+	update_service_provider_store_credit_many?:(PartialObjects["service_provider_store_credit_mutation_response"] | undefined)[],
 			/** update data of the table: "service_provider.subscriber" */
 	update_service_provider_subscriber?:PartialObjects["service_provider_subscriber_mutation_response"],
 			/** update single row of the table: "service_provider.subscriber" */
@@ -17550,6 +18495,18 @@ cancelledByServiceProvider */
 	review_aggregate?:PartialObjects["review_aggregate"],
 			/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:PartialObjects["review"],
+			/** fetch data from the table: "service_provider.offer" */
+	service_provider_offer?:PartialObjects["service_provider_offer"][],
+			/** fetch aggregated fields from the table: "service_provider.offer" */
+	service_provider_offer_aggregate?:PartialObjects["service_provider_offer_aggregate"],
+			/** fetch data from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied?:PartialObjects["service_provider_offer_applied"][],
+			/** fetch aggregated fields from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied_aggregate?:PartialObjects["service_provider_offer_applied_aggregate"],
+			/** fetch data from the table: "service_provider.offer_applied" using primary key columns */
+	service_provider_offer_applied_by_pk?:PartialObjects["service_provider_offer_applied"],
+			/** fetch data from the table: "service_provider.offer" using primary key columns */
+	service_provider_offer_by_pk?:PartialObjects["service_provider_offer"],
 			/** fetch data from the table: "service_provider.post" */
 	service_provider_post?:PartialObjects["service_provider_post"][],
 			/** fetch aggregated fields from the table: "service_provider.post" */
@@ -17562,6 +18519,12 @@ cancelledByServiceProvider */
 	service_provider_service_link_aggregate?:PartialObjects["service_provider_service_link_aggregate"],
 			/** fetch data from the table: "service_provider.service_link" using primary key columns */
 	service_provider_service_link_by_pk?:PartialObjects["service_provider_service_link"],
+			/** fetch data from the table: "service_provider.store_credit" */
+	service_provider_store_credit?:PartialObjects["service_provider_store_credit"][],
+			/** fetch aggregated fields from the table: "service_provider.store_credit" */
+	service_provider_store_credit_aggregate?:PartialObjects["service_provider_store_credit_aggregate"],
+			/** fetch data from the table: "service_provider.store_credit" using primary key columns */
+	service_provider_store_credit_by_pk?:PartialObjects["service_provider_store_credit"],
 			/** fetch data from the table: "service_provider.subscriber" */
 	service_provider_subscriber?:PartialObjects["service_provider_subscriber"][],
 			/** fetch aggregated fields from the table: "service_provider.subscriber" */
@@ -17595,6 +18558,7 @@ cancelledByServiceProvider */
 			/** An object relationship */
 	customer?:PartialObjects["customer_customer"],
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			/** An array relationship */
 	items?:PartialObjects["restaurant_cart_item"][],
 			/** An aggregate relationship */
@@ -17628,6 +18592,7 @@ cancelledByServiceProvider */
 ["restaurant_cart_avg_fields"]: {
 		__typename?: "restaurant_cart_avg_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** Boolean expression to filter rows from the table "restaurant.cart". All fields are combined with a logical 'AND'. */
@@ -17638,6 +18603,7 @@ cancelledByServiceProvider */
 	cost?:PartialObjects["money_comparison_exp"],
 	customer?:PartialObjects["customer_customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
+	discount_value?:PartialObjects["money_comparison_exp"],
 	items?:PartialObjects["restaurant_cart_item_bool_exp"],
 	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -17648,12 +18614,14 @@ cancelledByServiceProvider */
 	/** input type for incrementing numeric columns in table "restaurant.cart" */
 ["restaurant_cart_inc_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** input type for inserting data into table "restaurant.cart" */
 ["restaurant_cart_insert_input"]: {
 	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	items?:PartialObjects["restaurant_cart_item_arr_rel_insert_input"],
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
 	restaurant_id?:number
@@ -18010,12 +18978,14 @@ cancelledByServiceProvider */
 ["restaurant_cart_max_fields"]: {
 		__typename?: "restaurant_cart_max_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** aggregate min on columns */
 ["restaurant_cart_min_fields"]: {
 		__typename?: "restaurant_cart_min_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** response of any mutation on the table "restaurant.cart" */
@@ -18043,6 +19013,7 @@ cancelledByServiceProvider */
 	cost?:PartialObjects["order_by"],
 	customer?:PartialObjects["customer_customer_order_by"],
 	customer_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
 	restaurant_id?:PartialObjects["order_by"]
@@ -18056,24 +19027,28 @@ cancelledByServiceProvider */
 	/** input type for updating data in table "restaurant.cart" */
 ["restaurant_cart_set_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** aggregate stddev on columns */
 ["restaurant_cart_stddev_fields"]: {
 		__typename?: "restaurant_cart_stddev_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["restaurant_cart_stddev_pop_fields"]: {
 		__typename?: "restaurant_cart_stddev_pop_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["restaurant_cart_stddev_samp_fields"]: {
 		__typename?: "restaurant_cart_stddev_samp_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** Streaming cursor of the table "restaurant_cart" */
@@ -18086,12 +19061,14 @@ cancelledByServiceProvider */
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_cart_stream_cursor_value_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** aggregate sum on columns */
 ["restaurant_cart_sum_fields"]: {
 		__typename?: "restaurant_cart_sum_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** update columns of table "restaurant.cart" */
@@ -18107,18 +19084,21 @@ cancelledByServiceProvider */
 ["restaurant_cart_var_pop_fields"]: {
 		__typename?: "restaurant_cart_var_pop_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate var_samp on columns */
 ["restaurant_cart_var_samp_fields"]: {
 		__typename?: "restaurant_cart_var_samp_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate variance on columns */
 ["restaurant_cart_variance_fields"]: {
 		__typename?: "restaurant_cart_variance_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** columns and relationships of "restaurant.category" */
@@ -20724,6 +21704,7 @@ All fields are combined with a logical 'AND'. */
 	delivery?:PartialObjects["delivery_order"],
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -20826,6 +21807,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -20839,6 +21821,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -20861,6 +21844,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_bool_exp"],
 	delivery_cost?:PartialObjects["money_comparison_exp"],
 	delivery_id?:PartialObjects["Int_comparison_exp"],
+	discount_value?:PartialObjects["money_comparison_exp"],
 	estimated_food_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -20919,6 +21903,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	discount_value?:PartialObjects["money"],
 	id?:number,
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
@@ -20938,6 +21923,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_obj_rel_insert_input"],
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -21369,6 +22355,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -21395,6 +22382,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21422,6 +22410,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -21448,6 +22437,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21497,6 +22487,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21745,6 +22736,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -21775,6 +22767,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -21788,6 +22781,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21802,6 +22796,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -21815,6 +22810,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21829,6 +22825,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -21842,6 +22839,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21865,6 +22863,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -21895,6 +22894,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			discount_value?:PartialObjects["money"],
 			id?:number,
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
@@ -21908,6 +22908,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21942,6 +22943,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -21955,6 +22957,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21969,6 +22972,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -21982,6 +22986,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -21996,6 +23001,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -22009,6 +23015,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -22747,6 +23754,521 @@ the end). throws an error if top level container is not an array */
 	rating?:PartialObjects["order_by"],
 	to_entity_id?:PartialObjects["order_by"]
 },
+	/** columns and relationships of "service_provider.offer" */
+["service_provider_offer"]: {
+		__typename?: "service_provider_offer";
+			coupon_code?:string,
+			/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"],
+			id?:number,
+			/** An object relationship */
+	name?:PartialObjects["translation"],
+			name_id?:number,
+			offer_type?:string,
+			service_provider_id?:number,
+			service_provider_type?:string,
+			status?:string
+	},
+	/** aggregated selection of "service_provider.offer" */
+["service_provider_offer_aggregate"]: {
+		__typename?: "service_provider_offer_aggregate";
+			aggregate?:PartialObjects["service_provider_offer_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_offer"][]
+	},
+	/** aggregate fields of "service_provider.offer" */
+["service_provider_offer_aggregate_fields"]: {
+		__typename?: "service_provider_offer_aggregate_fields";
+			avg?:PartialObjects["service_provider_offer_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_offer_max_fields"],
+			min?:PartialObjects["service_provider_offer_min_fields"],
+			stddev?:PartialObjects["service_provider_offer_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_offer_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_offer_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_offer_sum_fields"],
+			var_pop?:PartialObjects["service_provider_offer_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_offer_var_samp_fields"],
+			variance?:PartialObjects["service_provider_offer_variance_fields"]
+	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_offer_append_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"]
+},
+	/** columns and relationships of "service_provider.offer_applied" */
+["service_provider_offer_applied"]: {
+		__typename?: "service_provider_offer_applied";
+			loss?:PartialObjects["money"],
+			/** An object relationship */
+	offer?:PartialObjects["service_provider_offer"],
+			offer_id?:number,
+			order_id?:number,
+			/** An object relationship */
+	restaurant_order?:PartialObjects["restaurant_order"],
+			service_provider_type?:string
+	},
+	/** aggregated selection of "service_provider.offer_applied" */
+["service_provider_offer_applied_aggregate"]: {
+		__typename?: "service_provider_offer_applied_aggregate";
+			aggregate?:PartialObjects["service_provider_offer_applied_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_offer_applied"][]
+	},
+	/** aggregate fields of "service_provider.offer_applied" */
+["service_provider_offer_applied_aggregate_fields"]: {
+		__typename?: "service_provider_offer_applied_aggregate_fields";
+			avg?:PartialObjects["service_provider_offer_applied_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_offer_applied_max_fields"],
+			min?:PartialObjects["service_provider_offer_applied_min_fields"],
+			stddev?:PartialObjects["service_provider_offer_applied_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_offer_applied_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_offer_applied_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_offer_applied_sum_fields"],
+			var_pop?:PartialObjects["service_provider_offer_applied_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_offer_applied_var_samp_fields"],
+			variance?:PartialObjects["service_provider_offer_applied_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["service_provider_offer_applied_avg_fields"]: {
+		__typename?: "service_provider_offer_applied_avg_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** Boolean expression to filter rows from the table
+"service_provider.offer_applied". All fields are combined with a logical 'AND'. */
+["service_provider_offer_applied_bool_exp"]: {
+	_and?:PartialObjects["service_provider_offer_applied_bool_exp"][],
+	_not?:PartialObjects["service_provider_offer_applied_bool_exp"],
+	_or?:PartialObjects["service_provider_offer_applied_bool_exp"][],
+	loss?:PartialObjects["money_comparison_exp"],
+	offer?:PartialObjects["service_provider_offer_bool_exp"],
+	offer_id?:PartialObjects["Int_comparison_exp"],
+	order_id?:PartialObjects["Int_comparison_exp"],
+	restaurant_order?:PartialObjects["restaurant_order_bool_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider.offer_applied" */
+["service_provider_offer_applied_constraint"]:service_provider_offer_applied_constraint,
+	/** input type for incrementing numeric columns in table "service_provider.offer_applied" */
+["service_provider_offer_applied_inc_input"]: {
+	loss?:PartialObjects["money"],
+	offer_id?:number,
+	order_id?:number
+},
+	/** input type for inserting data into table "service_provider.offer_applied" */
+["service_provider_offer_applied_insert_input"]: {
+	loss?:PartialObjects["money"],
+	offer?:PartialObjects["service_provider_offer_obj_rel_insert_input"],
+	offer_id?:number,
+	order_id?:number,
+	restaurant_order?:PartialObjects["restaurant_order_obj_rel_insert_input"],
+	service_provider_type?:string
+},
+	/** aggregate max on columns */
+["service_provider_offer_applied_max_fields"]: {
+		__typename?: "service_provider_offer_applied_max_fields";
+			loss?:PartialObjects["money"],
+			offer_id?:number,
+			order_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["service_provider_offer_applied_min_fields"]: {
+		__typename?: "service_provider_offer_applied_min_fields";
+			loss?:PartialObjects["money"],
+			offer_id?:number,
+			order_id?:number,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "service_provider.offer_applied" */
+["service_provider_offer_applied_mutation_response"]: {
+		__typename?: "service_provider_offer_applied_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_offer_applied"][]
+	},
+	/** on_conflict condition type for table "service_provider.offer_applied" */
+["service_provider_offer_applied_on_conflict"]: {
+	constraint:PartialObjects["service_provider_offer_applied_constraint"],
+	update_columns:PartialObjects["service_provider_offer_applied_update_column"][],
+	where?:PartialObjects["service_provider_offer_applied_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider.offer_applied". */
+["service_provider_offer_applied_order_by"]: {
+	loss?:PartialObjects["order_by"],
+	offer?:PartialObjects["service_provider_offer_order_by"],
+	offer_id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	restaurant_order?:PartialObjects["restaurant_order_order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider.offer_applied */
+["service_provider_offer_applied_pk_columns_input"]: {
+	offer_id:number,
+	order_id:number,
+	service_provider_type:string
+},
+	/** select columns of table "service_provider.offer_applied" */
+["service_provider_offer_applied_select_column"]:service_provider_offer_applied_select_column,
+	/** input type for updating data in table "service_provider.offer_applied" */
+["service_provider_offer_applied_set_input"]: {
+	loss?:PartialObjects["money"],
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_offer_applied_stddev_fields"]: {
+		__typename?: "service_provider_offer_applied_stddev_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_offer_applied_stddev_pop_fields"]: {
+		__typename?: "service_provider_offer_applied_stddev_pop_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_offer_applied_stddev_samp_fields"]: {
+		__typename?: "service_provider_offer_applied_stddev_samp_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_offer_applied" */
+["service_provider_offer_applied_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_offer_applied_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_offer_applied_stream_cursor_value_input"]: {
+	loss?:PartialObjects["money"],
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["service_provider_offer_applied_sum_fields"]: {
+		__typename?: "service_provider_offer_applied_sum_fields";
+			loss?:PartialObjects["money"],
+			offer_id?:number,
+			order_id?:number
+	},
+	/** update columns of table "service_provider.offer_applied" */
+["service_provider_offer_applied_update_column"]:service_provider_offer_applied_update_column,
+	["service_provider_offer_applied_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_offer_applied_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_offer_applied_set_input"],
+	where:PartialObjects["service_provider_offer_applied_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_offer_applied_var_pop_fields"]: {
+		__typename?: "service_provider_offer_applied_var_pop_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_offer_applied_var_samp_fields"]: {
+		__typename?: "service_provider_offer_applied_var_samp_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_offer_applied_variance_fields"]: {
+		__typename?: "service_provider_offer_applied_variance_fields";
+			loss?:number,
+			offer_id?:number,
+			order_id?:number
+	},
+	/** aggregate avg on columns */
+["service_provider_offer_avg_fields"]: {
+		__typename?: "service_provider_offer_avg_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** Boolean expression to filter rows from the table "service_provider.offer". All fields are combined with a logical 'AND'. */
+["service_provider_offer_bool_exp"]: {
+	_and?:PartialObjects["service_provider_offer_bool_exp"][],
+	_not?:PartialObjects["service_provider_offer_bool_exp"],
+	_or?:PartialObjects["service_provider_offer_bool_exp"][],
+	coupon_code?:PartialObjects["String_comparison_exp"],
+	details?:PartialObjects["jsonb_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	name?:PartialObjects["translation_bool_exp"],
+	name_id?:PartialObjects["Int_comparison_exp"],
+	offer_type?:PartialObjects["String_comparison_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"],
+	status?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider.offer" */
+["service_provider_offer_constraint"]:service_provider_offer_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_offer_delete_at_path_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_offer_delete_elem_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_offer_delete_key_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string
+},
+	/** input type for incrementing numeric columns in table "service_provider.offer" */
+["service_provider_offer_inc_input"]: {
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+},
+	/** input type for inserting data into table "service_provider.offer" */
+["service_provider_offer_insert_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"],
+	id?:number,
+	name?:PartialObjects["translation_obj_rel_insert_input"],
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+},
+	/** aggregate max on columns */
+["service_provider_offer_max_fields"]: {
+		__typename?: "service_provider_offer_max_fields";
+			coupon_code?:string,
+			id?:number,
+			name_id?:number,
+			offer_type?:string,
+			service_provider_id?:number,
+			service_provider_type?:string,
+			status?:string
+	},
+	/** aggregate min on columns */
+["service_provider_offer_min_fields"]: {
+		__typename?: "service_provider_offer_min_fields";
+			coupon_code?:string,
+			id?:number,
+			name_id?:number,
+			offer_type?:string,
+			service_provider_id?:number,
+			service_provider_type?:string,
+			status?:string
+	},
+	/** response of any mutation on the table "service_provider.offer" */
+["service_provider_offer_mutation_response"]: {
+		__typename?: "service_provider_offer_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_offer"][]
+	},
+	/** input type for inserting object relation for remote table "service_provider.offer" */
+["service_provider_offer_obj_rel_insert_input"]: {
+	data:PartialObjects["service_provider_offer_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["service_provider_offer_on_conflict"]
+},
+	/** on_conflict condition type for table "service_provider.offer" */
+["service_provider_offer_on_conflict"]: {
+	constraint:PartialObjects["service_provider_offer_constraint"],
+	update_columns:PartialObjects["service_provider_offer_update_column"][],
+	where?:PartialObjects["service_provider_offer_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider.offer". */
+["service_provider_offer_order_by"]: {
+	coupon_code?:PartialObjects["order_by"],
+	details?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	name?:PartialObjects["translation_order_by"],
+	name_id?:PartialObjects["order_by"],
+	offer_type?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider.offer */
+["service_provider_offer_pk_columns_input"]: {
+	id:number
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_offer_prepend_input"]: {
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"]
+},
+	/** select columns of table "service_provider.offer" */
+["service_provider_offer_select_column"]:service_provider_offer_select_column,
+	/** input type for updating data in table "service_provider.offer" */
+["service_provider_offer_set_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"],
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_offer_stddev_fields"]: {
+		__typename?: "service_provider_offer_stddev_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_offer_stddev_pop_fields"]: {
+		__typename?: "service_provider_offer_stddev_pop_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_offer_stddev_samp_fields"]: {
+		__typename?: "service_provider_offer_stddev_samp_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_offer" */
+["service_provider_offer_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_offer_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_offer_stream_cursor_value_input"]: {
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:PartialObjects["jsonb"],
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+},
+	/** aggregate sum on columns */
+["service_provider_offer_sum_fields"]: {
+		__typename?: "service_provider_offer_sum_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** update columns of table "service_provider.offer" */
+["service_provider_offer_update_column"]:service_provider_offer_update_column,
+	["service_provider_offer_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["service_provider_offer_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["service_provider_offer_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["service_provider_offer_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["service_provider_offer_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_offer_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["service_provider_offer_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_offer_set_input"],
+	where:PartialObjects["service_provider_offer_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_offer_var_pop_fields"]: {
+		__typename?: "service_provider_offer_var_pop_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_offer_var_samp_fields"]: {
+		__typename?: "service_provider_offer_var_samp_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_offer_variance_fields"]: {
+		__typename?: "service_provider_offer_variance_fields";
+			id?:number,
+			name_id?:number,
+			service_provider_id?:number
+	},
 	/** columns and relationships of "service_provider.post" */
 ["service_provider_post"]: {
 		__typename?: "service_provider_post";
@@ -22754,6 +24276,7 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			image?:string,
 			likes?:PartialObjects["jsonb"],
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			/** An object relationship */
@@ -22802,6 +24325,7 @@ the end). throws an error if top level container is not an array */
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
 	likes?:PartialObjects["jsonb_comparison_exp"],
+	link?:PartialObjects["String_comparison_exp"],
 	message?:PartialObjects["String_comparison_exp"],
 	posted_on?:PartialObjects["timestamptz_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -22837,6 +24361,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
@@ -22848,6 +24373,7 @@ end). throws an error if top level container is not an array */
 		__typename?: "service_provider_post_max_fields";
 			id?:number,
 			image?:string,
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			service_provider_id?:number,
@@ -22858,6 +24384,7 @@ end). throws an error if top level container is not an array */
 		__typename?: "service_provider_post_min_fields";
 			id?:number,
 			image?:string,
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			service_provider_id?:number,
@@ -22883,6 +24410,7 @@ end). throws an error if top level container is not an array */
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
 	likes?:PartialObjects["order_by"],
+	link?:PartialObjects["order_by"],
 	message?:PartialObjects["order_by"],
 	posted_on?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
@@ -22906,6 +24434,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	service_provider_id?:number,
@@ -22942,6 +24471,7 @@ end). throws an error if top level container is not an array */
 	id?:number,
 	image?:string,
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	service_provider_id?:number,
@@ -23209,6 +24739,192 @@ the end). throws an error if top level container is not an array */
 ["service_provider_service_link_variance_fields"]: {
 		__typename?: "service_provider_service_link_variance_fields";
 			id?:number,
+			service_provider_id?:number
+	},
+	/** columns and relationships of "service_provider.store_credit" */
+["service_provider_store_credit"]: {
+		__typename?: "service_provider_store_credit";
+			credit?:PartialObjects["money"],
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregated selection of "service_provider.store_credit" */
+["service_provider_store_credit_aggregate"]: {
+		__typename?: "service_provider_store_credit_aggregate";
+			aggregate?:PartialObjects["service_provider_store_credit_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_store_credit"][]
+	},
+	/** aggregate fields of "service_provider.store_credit" */
+["service_provider_store_credit_aggregate_fields"]: {
+		__typename?: "service_provider_store_credit_aggregate_fields";
+			avg?:PartialObjects["service_provider_store_credit_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_store_credit_max_fields"],
+			min?:PartialObjects["service_provider_store_credit_min_fields"],
+			stddev?:PartialObjects["service_provider_store_credit_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_store_credit_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_store_credit_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_store_credit_sum_fields"],
+			var_pop?:PartialObjects["service_provider_store_credit_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_store_credit_var_samp_fields"],
+			variance?:PartialObjects["service_provider_store_credit_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["service_provider_store_credit_avg_fields"]: {
+		__typename?: "service_provider_store_credit_avg_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Boolean expression to filter rows from the table
+"service_provider.store_credit". All fields are combined with a logical 'AND'. */
+["service_provider_store_credit_bool_exp"]: {
+	_and?:PartialObjects["service_provider_store_credit_bool_exp"][],
+	_not?:PartialObjects["service_provider_store_credit_bool_exp"],
+	_or?:PartialObjects["service_provider_store_credit_bool_exp"][],
+	credit?:PartialObjects["money_comparison_exp"],
+	customer_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider.store_credit" */
+["service_provider_store_credit_constraint"]:service_provider_store_credit_constraint,
+	/** input type for incrementing numeric columns in table "service_provider.store_credit" */
+["service_provider_store_credit_inc_input"]: {
+	credit?:PartialObjects["money"],
+	customer_id?:number,
+	service_provider_id?:number
+},
+	/** input type for inserting data into table "service_provider.store_credit" */
+["service_provider_store_credit_insert_input"]: {
+	credit?:PartialObjects["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate max on columns */
+["service_provider_store_credit_max_fields"]: {
+		__typename?: "service_provider_store_credit_max_fields";
+			credit?:PartialObjects["money"],
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["service_provider_store_credit_min_fields"]: {
+		__typename?: "service_provider_store_credit_min_fields";
+			credit?:PartialObjects["money"],
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "service_provider.store_credit" */
+["service_provider_store_credit_mutation_response"]: {
+		__typename?: "service_provider_store_credit_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_store_credit"][]
+	},
+	/** on_conflict condition type for table "service_provider.store_credit" */
+["service_provider_store_credit_on_conflict"]: {
+	constraint:PartialObjects["service_provider_store_credit_constraint"],
+	update_columns:PartialObjects["service_provider_store_credit_update_column"][],
+	where?:PartialObjects["service_provider_store_credit_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider.store_credit". */
+["service_provider_store_credit_order_by"]: {
+	credit?:PartialObjects["order_by"],
+	customer_id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider.store_credit */
+["service_provider_store_credit_pk_columns_input"]: {
+	customer_id:number,
+	service_provider_id:number,
+	service_provider_type:string
+},
+	/** select columns of table "service_provider.store_credit" */
+["service_provider_store_credit_select_column"]:service_provider_store_credit_select_column,
+	/** input type for updating data in table "service_provider.store_credit" */
+["service_provider_store_credit_set_input"]: {
+	credit?:PartialObjects["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_store_credit_stddev_fields"]: {
+		__typename?: "service_provider_store_credit_stddev_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_store_credit_stddev_pop_fields"]: {
+		__typename?: "service_provider_store_credit_stddev_pop_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_store_credit_stddev_samp_fields"]: {
+		__typename?: "service_provider_store_credit_stddev_samp_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_store_credit" */
+["service_provider_store_credit_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_store_credit_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_store_credit_stream_cursor_value_input"]: {
+	credit?:PartialObjects["money"],
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["service_provider_store_credit_sum_fields"]: {
+		__typename?: "service_provider_store_credit_sum_fields";
+			credit?:PartialObjects["money"],
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** update columns of table "service_provider.store_credit" */
+["service_provider_store_credit_update_column"]:service_provider_store_credit_update_column,
+	["service_provider_store_credit_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_store_credit_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_store_credit_set_input"],
+	where:PartialObjects["service_provider_store_credit_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_store_credit_var_pop_fields"]: {
+		__typename?: "service_provider_store_credit_var_pop_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_store_credit_var_samp_fields"]: {
+		__typename?: "service_provider_store_credit_var_samp_fields";
+			credit?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_store_credit_variance_fields"]: {
+		__typename?: "service_provider_store_credit_variance_fields";
+			credit?:number,
+			customer_id?:number,
 			service_provider_id?:number
 	},
 	/** columns and relationships of "service_provider.subscriber" */
@@ -23673,6 +25389,22 @@ All fields are combined with a logical 'AND'. */
 	review_by_pk?:PartialObjects["review"],
 			/** fetch data from the table in a streaming manner: "review" */
 	review_stream?:PartialObjects["review"][],
+			/** fetch data from the table: "service_provider.offer" */
+	service_provider_offer?:PartialObjects["service_provider_offer"][],
+			/** fetch aggregated fields from the table: "service_provider.offer" */
+	service_provider_offer_aggregate?:PartialObjects["service_provider_offer_aggregate"],
+			/** fetch data from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied?:PartialObjects["service_provider_offer_applied"][],
+			/** fetch aggregated fields from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied_aggregate?:PartialObjects["service_provider_offer_applied_aggregate"],
+			/** fetch data from the table: "service_provider.offer_applied" using primary key columns */
+	service_provider_offer_applied_by_pk?:PartialObjects["service_provider_offer_applied"],
+			/** fetch data from the table in a streaming manner: "service_provider.offer_applied" */
+	service_provider_offer_applied_stream?:PartialObjects["service_provider_offer_applied"][],
+			/** fetch data from the table: "service_provider.offer" using primary key columns */
+	service_provider_offer_by_pk?:PartialObjects["service_provider_offer"],
+			/** fetch data from the table in a streaming manner: "service_provider.offer" */
+	service_provider_offer_stream?:PartialObjects["service_provider_offer"][],
 			/** fetch data from the table: "service_provider.post" */
 	service_provider_post?:PartialObjects["service_provider_post"][],
 			/** fetch aggregated fields from the table: "service_provider.post" */
@@ -23689,6 +25421,14 @@ All fields are combined with a logical 'AND'. */
 	service_provider_service_link_by_pk?:PartialObjects["service_provider_service_link"],
 			/** fetch data from the table in a streaming manner: "service_provider.service_link" */
 	service_provider_service_link_stream?:PartialObjects["service_provider_service_link"][],
+			/** fetch data from the table: "service_provider.store_credit" */
+	service_provider_store_credit?:PartialObjects["service_provider_store_credit"][],
+			/** fetch aggregated fields from the table: "service_provider.store_credit" */
+	service_provider_store_credit_aggregate?:PartialObjects["service_provider_store_credit_aggregate"],
+			/** fetch data from the table: "service_provider.store_credit" using primary key columns */
+	service_provider_store_credit_by_pk?:PartialObjects["service_provider_store_credit"],
+			/** fetch data from the table in a streaming manner: "service_provider.store_credit" */
+	service_provider_store_credit_stream?:PartialObjects["service_provider_store_credit"][],
 			/** fetch data from the table: "service_provider.subscriber" */
 	service_provider_subscriber?:PartialObjects["service_provider_subscriber"][],
 			/** fetch aggregated fields from the table: "service_provider.subscriber" */
@@ -24521,7 +26261,7 @@ export type chat = {
 	chat_participants_aggregate:chat_participant_aggregate,
 	creation_time:timestamptz,
 	id:number,
-	messages:jsonb
+	messages?:jsonb
 }
 
 /** aggregated selection of "chat" */
@@ -29291,6 +31031,14 @@ export type mutation_root = {
 	delete_review?:review_mutation_response,
 	/** delete single row from the table: "review" */
 	delete_review_by_pk?:review,
+	/** delete data from the table: "service_provider.offer" */
+	delete_service_provider_offer?:service_provider_offer_mutation_response,
+	/** delete data from the table: "service_provider.offer_applied" */
+	delete_service_provider_offer_applied?:service_provider_offer_applied_mutation_response,
+	/** delete single row from the table: "service_provider.offer_applied" */
+	delete_service_provider_offer_applied_by_pk?:service_provider_offer_applied,
+	/** delete single row from the table: "service_provider.offer" */
+	delete_service_provider_offer_by_pk?:service_provider_offer,
 	/** delete data from the table: "service_provider.post" */
 	delete_service_provider_post?:service_provider_post_mutation_response,
 	/** delete single row from the table: "service_provider.post" */
@@ -29299,6 +31047,10 @@ export type mutation_root = {
 	delete_service_provider_service_link?:service_provider_service_link_mutation_response,
 	/** delete single row from the table: "service_provider.service_link" */
 	delete_service_provider_service_link_by_pk?:service_provider_service_link,
+	/** delete data from the table: "service_provider.store_credit" */
+	delete_service_provider_store_credit?:service_provider_store_credit_mutation_response,
+	/** delete single row from the table: "service_provider.store_credit" */
+	delete_service_provider_store_credit_by_pk?:service_provider_store_credit,
 	/** delete data from the table: "service_provider.subscriber" */
 	delete_service_provider_subscriber?:service_provider_subscriber_mutation_response,
 	/** delete single row from the table: "service_provider.subscriber" */
@@ -29427,6 +31179,14 @@ export type mutation_root = {
 	insert_review?:review_mutation_response,
 	/** insert a single row into the table: "review" */
 	insert_review_one?:review,
+	/** insert data into the table: "service_provider.offer" */
+	insert_service_provider_offer?:service_provider_offer_mutation_response,
+	/** insert data into the table: "service_provider.offer_applied" */
+	insert_service_provider_offer_applied?:service_provider_offer_applied_mutation_response,
+	/** insert a single row into the table: "service_provider.offer_applied" */
+	insert_service_provider_offer_applied_one?:service_provider_offer_applied,
+	/** insert a single row into the table: "service_provider.offer" */
+	insert_service_provider_offer_one?:service_provider_offer,
 	/** insert data into the table: "service_provider.post" */
 	insert_service_provider_post?:service_provider_post_mutation_response,
 	/** insert a single row into the table: "service_provider.post" */
@@ -29435,6 +31195,10 @@ export type mutation_root = {
 	insert_service_provider_service_link?:service_provider_service_link_mutation_response,
 	/** insert a single row into the table: "service_provider.service_link" */
 	insert_service_provider_service_link_one?:service_provider_service_link,
+	/** insert data into the table: "service_provider.store_credit" */
+	insert_service_provider_store_credit?:service_provider_store_credit_mutation_response,
+	/** insert a single row into the table: "service_provider.store_credit" */
+	insert_service_provider_store_credit_one?:service_provider_store_credit,
 	/** insert data into the table: "service_provider.subscriber" */
 	insert_service_provider_subscriber?:service_provider_subscriber_mutation_response,
 	/** insert a single row into the table: "service_provider.subscriber" */
@@ -29615,6 +31379,18 @@ export type mutation_root = {
 	update_review_by_pk?:review,
 	/** update multiples rows of table: "review" */
 	update_review_many?:(review_mutation_response | undefined)[],
+	/** update data of the table: "service_provider.offer" */
+	update_service_provider_offer?:service_provider_offer_mutation_response,
+	/** update data of the table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied?:service_provider_offer_applied_mutation_response,
+	/** update single row of the table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied_by_pk?:service_provider_offer_applied,
+	/** update multiples rows of table: "service_provider.offer_applied" */
+	update_service_provider_offer_applied_many?:(service_provider_offer_applied_mutation_response | undefined)[],
+	/** update single row of the table: "service_provider.offer" */
+	update_service_provider_offer_by_pk?:service_provider_offer,
+	/** update multiples rows of table: "service_provider.offer" */
+	update_service_provider_offer_many?:(service_provider_offer_mutation_response | undefined)[],
 	/** update data of the table: "service_provider.post" */
 	update_service_provider_post?:service_provider_post_mutation_response,
 	/** update single row of the table: "service_provider.post" */
@@ -29627,6 +31403,12 @@ export type mutation_root = {
 	update_service_provider_service_link_by_pk?:service_provider_service_link,
 	/** update multiples rows of table: "service_provider.service_link" */
 	update_service_provider_service_link_many?:(service_provider_service_link_mutation_response | undefined)[],
+	/** update data of the table: "service_provider.store_credit" */
+	update_service_provider_store_credit?:service_provider_store_credit_mutation_response,
+	/** update single row of the table: "service_provider.store_credit" */
+	update_service_provider_store_credit_by_pk?:service_provider_store_credit,
+	/** update multiples rows of table: "service_provider.store_credit" */
+	update_service_provider_store_credit_many?:(service_provider_store_credit_mutation_response | undefined)[],
 	/** update data of the table: "service_provider.subscriber" */
 	update_service_provider_subscriber?:service_provider_subscriber_mutation_response,
 	/** update single row of the table: "service_provider.subscriber" */
@@ -30051,6 +31833,18 @@ export type query_root = {
 	review_aggregate:review_aggregate,
 	/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:review,
+	/** fetch data from the table: "service_provider.offer" */
+	service_provider_offer:service_provider_offer[],
+	/** fetch aggregated fields from the table: "service_provider.offer" */
+	service_provider_offer_aggregate:service_provider_offer_aggregate,
+	/** fetch data from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied:service_provider_offer_applied[],
+	/** fetch aggregated fields from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied_aggregate:service_provider_offer_applied_aggregate,
+	/** fetch data from the table: "service_provider.offer_applied" using primary key columns */
+	service_provider_offer_applied_by_pk?:service_provider_offer_applied,
+	/** fetch data from the table: "service_provider.offer" using primary key columns */
+	service_provider_offer_by_pk?:service_provider_offer,
 	/** fetch data from the table: "service_provider.post" */
 	service_provider_post:service_provider_post[],
 	/** fetch aggregated fields from the table: "service_provider.post" */
@@ -30063,6 +31857,12 @@ export type query_root = {
 	service_provider_service_link_aggregate:service_provider_service_link_aggregate,
 	/** fetch data from the table: "service_provider.service_link" using primary key columns */
 	service_provider_service_link_by_pk?:service_provider_service_link,
+	/** fetch data from the table: "service_provider.store_credit" */
+	service_provider_store_credit:service_provider_store_credit[],
+	/** fetch aggregated fields from the table: "service_provider.store_credit" */
+	service_provider_store_credit_aggregate:service_provider_store_credit_aggregate,
+	/** fetch data from the table: "service_provider.store_credit" using primary key columns */
+	service_provider_store_credit_by_pk?:service_provider_store_credit,
 	/** fetch data from the table: "service_provider.subscriber" */
 	service_provider_subscriber:service_provider_subscriber[],
 	/** fetch aggregated fields from the table: "service_provider.subscriber" */
@@ -30097,6 +31897,7 @@ export type restaurant_cart = {
 	/** An object relationship */
 	customer:customer_customer,
 	customer_id:number,
+	discount_value:money,
 	/** An array relationship */
 	items:restaurant_cart_item[],
 	/** An aggregate relationship */
@@ -30133,6 +31934,7 @@ export type restaurant_cart_aggregate_fields = {
 export type restaurant_cart_avg_fields = {
 	__typename?: "restaurant_cart_avg_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30144,6 +31946,7 @@ export type restaurant_cart_bool_exp = {
 	cost?:money_comparison_exp,
 	customer?:customer_customer_bool_exp,
 	customer_id?:Int_comparison_exp,
+	discount_value?:money_comparison_exp,
 	items?:restaurant_cart_item_bool_exp,
 	items_aggregate?:restaurant_cart_item_aggregate_bool_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -30158,6 +31961,7 @@ export enum restaurant_cart_constraint {
 /** input type for incrementing numeric columns in table "restaurant.cart" */
 export type restaurant_cart_inc_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -30165,6 +31969,7 @@ export type restaurant_cart_inc_input = {
 export type restaurant_cart_insert_input = {
 		customer?:customer_customer_obj_rel_insert_input,
 	customer_id?:number,
+	discount_value?:money,
 	items?:restaurant_cart_item_arr_rel_insert_input,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
 	restaurant_id?:number
@@ -30582,6 +32387,7 @@ export type restaurant_cart_item_variance_order_by = {
 export type restaurant_cart_max_fields = {
 	__typename?: "restaurant_cart_max_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -30589,6 +32395,7 @@ export type restaurant_cart_max_fields = {
 export type restaurant_cart_min_fields = {
 	__typename?: "restaurant_cart_min_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -30620,6 +32427,7 @@ export type restaurant_cart_order_by = {
 		cost?:order_by,
 	customer?:customer_customer_order_by,
 	customer_id?:order_by,
+	discount_value?:order_by,
 	items_aggregate?:restaurant_cart_item_aggregate_order_by,
 	restaurant?:restaurant_restaurant_order_by,
 	restaurant_id?:order_by
@@ -30633,12 +32441,14 @@ export type restaurant_cart_pk_columns_input = {
 /** select columns of table "restaurant.cart" */
 export enum restaurant_cart_select_column {
 	customer_id = "customer_id",
+	discount_value = "discount_value",
 	restaurant_id = "restaurant_id"
 }
 
 /** input type for updating data in table "restaurant.cart" */
 export type restaurant_cart_set_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -30646,6 +32456,7 @@ export type restaurant_cart_set_input = {
 export type restaurant_cart_stddev_fields = {
 	__typename?: "restaurant_cart_stddev_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30653,6 +32464,7 @@ export type restaurant_cart_stddev_fields = {
 export type restaurant_cart_stddev_pop_fields = {
 	__typename?: "restaurant_cart_stddev_pop_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30660,6 +32472,7 @@ export type restaurant_cart_stddev_pop_fields = {
 export type restaurant_cart_stddev_samp_fields = {
 	__typename?: "restaurant_cart_stddev_samp_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30674,6 +32487,7 @@ export type restaurant_cart_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type restaurant_cart_stream_cursor_value_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -30681,12 +32495,14 @@ export type restaurant_cart_stream_cursor_value_input = {
 export type restaurant_cart_sum_fields = {
 	__typename?: "restaurant_cart_sum_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
 /** update columns of table "restaurant.cart" */
 export enum restaurant_cart_update_column {
 	customer_id = "customer_id",
+	discount_value = "discount_value",
 	restaurant_id = "restaurant_id"
 }
 
@@ -30702,6 +32518,7 @@ export type restaurant_cart_updates = {
 export type restaurant_cart_var_pop_fields = {
 	__typename?: "restaurant_cart_var_pop_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30709,6 +32526,7 @@ export type restaurant_cart_var_pop_fields = {
 export type restaurant_cart_var_samp_fields = {
 	__typename?: "restaurant_cart_var_samp_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -30716,6 +32534,7 @@ export type restaurant_cart_var_samp_fields = {
 export type restaurant_cart_variance_fields = {
 	__typename?: "restaurant_cart_variance_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -33767,6 +35586,7 @@ export type restaurant_order = {
 	delivery?:delivery_order,
 	delivery_cost:money,
 	delivery_id?:number,
+	discount_value:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id:number,
@@ -33877,6 +35697,7 @@ export type restaurant_order_avg_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -33891,6 +35712,7 @@ export type restaurant_order_avg_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -33914,6 +35736,7 @@ export type restaurant_order_bool_exp = {
 	delivery?:delivery_order_bool_exp,
 	delivery_cost?:money_comparison_exp,
 	delivery_id?:Int_comparison_exp,
+	discount_value?:money_comparison_exp,
 	estimated_food_ready_time?:timestamptz_comparison_exp,
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -33981,6 +35804,7 @@ export type restaurant_order_inc_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	id?:number,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -34001,6 +35825,7 @@ export type restaurant_order_insert_input = {
 	delivery?:delivery_order_obj_rel_insert_input,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -34504,6 +36329,7 @@ export type restaurant_order_max_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -34531,6 +36357,7 @@ export type restaurant_order_max_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -34559,6 +36386,7 @@ export type restaurant_order_min_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -34586,6 +36414,7 @@ export type restaurant_order_min_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -34639,6 +36468,7 @@ export type restaurant_order_order_by = {
 	delivery?:delivery_order_order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -34919,6 +36749,7 @@ export enum restaurant_order_select_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
+	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -34947,6 +36778,7 @@ export type restaurant_order_set_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -34978,6 +36810,7 @@ export type restaurant_order_stddev_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -34992,6 +36825,7 @@ export type restaurant_order_stddev_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35007,6 +36841,7 @@ export type restaurant_order_stddev_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -35021,6 +36856,7 @@ export type restaurant_order_stddev_pop_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35036,6 +36872,7 @@ export type restaurant_order_stddev_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -35050,6 +36887,7 @@ export type restaurant_order_stddev_samp_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35075,6 +36913,7 @@ export type restaurant_order_stream_cursor_value_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -35106,6 +36945,7 @@ export type restaurant_order_sum_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	id?:number,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -35120,6 +36960,7 @@ export type restaurant_order_sum_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35137,6 +36978,7 @@ export enum restaurant_order_update_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
+	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -35182,6 +37024,7 @@ export type restaurant_order_var_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -35196,6 +37039,7 @@ export type restaurant_order_var_pop_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35211,6 +37055,7 @@ export type restaurant_order_var_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -35225,6 +37070,7 @@ export type restaurant_order_var_samp_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35240,6 +37086,7 @@ export type restaurant_order_variance_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -35254,6 +37101,7 @@ export type restaurant_order_variance_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -36123,6 +37971,613 @@ export type review_variance_order_by = {
 	to_entity_id?:order_by
 }
 
+/** columns and relationships of "service_provider.offer" */
+export type service_provider_offer = {
+	__typename?: "service_provider_offer",
+	coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details:jsonb,
+	id:number,
+	/** An object relationship */
+	name?:translation,
+	name_id:number,
+	offer_type:string,
+	service_provider_id:number,
+	service_provider_type:string,
+	status:string
+}
+
+/** aggregated selection of "service_provider.offer" */
+export type service_provider_offer_aggregate = {
+	__typename?: "service_provider_offer_aggregate",
+	aggregate?:service_provider_offer_aggregate_fields,
+	nodes:service_provider_offer[]
+}
+
+/** aggregate fields of "service_provider.offer" */
+export type service_provider_offer_aggregate_fields = {
+	__typename?: "service_provider_offer_aggregate_fields",
+	avg?:service_provider_offer_avg_fields,
+	count:number,
+	max?:service_provider_offer_max_fields,
+	min?:service_provider_offer_min_fields,
+	stddev?:service_provider_offer_stddev_fields,
+	stddev_pop?:service_provider_offer_stddev_pop_fields,
+	stddev_samp?:service_provider_offer_stddev_samp_fields,
+	sum?:service_provider_offer_sum_fields,
+	var_pop?:service_provider_offer_var_pop_fields,
+	var_samp?:service_provider_offer_var_samp_fields,
+	variance?:service_provider_offer_variance_fields
+}
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_offer_append_input = {
+		/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:jsonb
+}
+
+/** columns and relationships of "service_provider.offer_applied" */
+export type service_provider_offer_applied = {
+	__typename?: "service_provider_offer_applied",
+	loss:money,
+	/** An object relationship */
+	offer?:service_provider_offer,
+	offer_id:number,
+	order_id:number,
+	/** An object relationship */
+	restaurant_order?:restaurant_order,
+	service_provider_type:string
+}
+
+/** aggregated selection of "service_provider.offer_applied" */
+export type service_provider_offer_applied_aggregate = {
+	__typename?: "service_provider_offer_applied_aggregate",
+	aggregate?:service_provider_offer_applied_aggregate_fields,
+	nodes:service_provider_offer_applied[]
+}
+
+/** aggregate fields of "service_provider.offer_applied" */
+export type service_provider_offer_applied_aggregate_fields = {
+	__typename?: "service_provider_offer_applied_aggregate_fields",
+	avg?:service_provider_offer_applied_avg_fields,
+	count:number,
+	max?:service_provider_offer_applied_max_fields,
+	min?:service_provider_offer_applied_min_fields,
+	stddev?:service_provider_offer_applied_stddev_fields,
+	stddev_pop?:service_provider_offer_applied_stddev_pop_fields,
+	stddev_samp?:service_provider_offer_applied_stddev_samp_fields,
+	sum?:service_provider_offer_applied_sum_fields,
+	var_pop?:service_provider_offer_applied_var_pop_fields,
+	var_samp?:service_provider_offer_applied_var_samp_fields,
+	variance?:service_provider_offer_applied_variance_fields
+}
+
+/** aggregate avg on columns */
+export type service_provider_offer_applied_avg_fields = {
+	__typename?: "service_provider_offer_applied_avg_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** Boolean expression to filter rows from the table
+"service_provider.offer_applied". All fields are combined with a logical 'AND'. */
+export type service_provider_offer_applied_bool_exp = {
+		_and?:service_provider_offer_applied_bool_exp[],
+	_not?:service_provider_offer_applied_bool_exp,
+	_or?:service_provider_offer_applied_bool_exp[],
+	loss?:money_comparison_exp,
+	offer?:service_provider_offer_bool_exp,
+	offer_id?:Int_comparison_exp,
+	order_id?:Int_comparison_exp,
+	restaurant_order?:restaurant_order_bool_exp,
+	service_provider_type?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider.offer_applied" */
+export enum service_provider_offer_applied_constraint {
+	offer_applied_pkey = "offer_applied_pkey"
+}
+
+/** input type for incrementing numeric columns in table "service_provider.offer_applied" */
+export type service_provider_offer_applied_inc_input = {
+		loss?:money,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** input type for inserting data into table "service_provider.offer_applied" */
+export type service_provider_offer_applied_insert_input = {
+		loss?:money,
+	offer?:service_provider_offer_obj_rel_insert_input,
+	offer_id?:number,
+	order_id?:number,
+	restaurant_order?:restaurant_order_obj_rel_insert_input,
+	service_provider_type?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_offer_applied_max_fields = {
+	__typename?: "service_provider_offer_applied_max_fields",
+	loss?:money,
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_offer_applied_min_fields = {
+	__typename?: "service_provider_offer_applied_min_fields",
+	loss?:money,
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "service_provider.offer_applied" */
+export type service_provider_offer_applied_mutation_response = {
+	__typename?: "service_provider_offer_applied_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_offer_applied[]
+}
+
+/** on_conflict condition type for table "service_provider.offer_applied" */
+export type service_provider_offer_applied_on_conflict = {
+		constraint:service_provider_offer_applied_constraint,
+	update_columns:service_provider_offer_applied_update_column[],
+	where?:service_provider_offer_applied_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider.offer_applied". */
+export type service_provider_offer_applied_order_by = {
+		loss?:order_by,
+	offer?:service_provider_offer_order_by,
+	offer_id?:order_by,
+	order_id?:order_by,
+	restaurant_order?:restaurant_order_order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: service_provider.offer_applied */
+export type service_provider_offer_applied_pk_columns_input = {
+		offer_id:number,
+	order_id:number,
+	service_provider_type:string
+}
+
+/** select columns of table "service_provider.offer_applied" */
+export enum service_provider_offer_applied_select_column {
+	loss = "loss",
+	offer_id = "offer_id",
+	order_id = "order_id",
+	service_provider_type = "service_provider_type"
+}
+
+/** input type for updating data in table "service_provider.offer_applied" */
+export type service_provider_offer_applied_set_input = {
+		loss?:money,
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_offer_applied_stddev_fields = {
+	__typename?: "service_provider_offer_applied_stddev_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_offer_applied_stddev_pop_fields = {
+	__typename?: "service_provider_offer_applied_stddev_pop_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_offer_applied_stddev_samp_fields = {
+	__typename?: "service_provider_offer_applied_stddev_samp_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_offer_applied" */
+export type service_provider_offer_applied_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_offer_applied_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_offer_applied_stream_cursor_value_input = {
+		loss?:money,
+	offer_id?:number,
+	order_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_offer_applied_sum_fields = {
+	__typename?: "service_provider_offer_applied_sum_fields",
+	loss?:money,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** update columns of table "service_provider.offer_applied" */
+export enum service_provider_offer_applied_update_column {
+	loss = "loss",
+	offer_id = "offer_id",
+	order_id = "order_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type service_provider_offer_applied_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_offer_applied_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_offer_applied_set_input,
+	where:service_provider_offer_applied_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_offer_applied_var_pop_fields = {
+	__typename?: "service_provider_offer_applied_var_pop_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_offer_applied_var_samp_fields = {
+	__typename?: "service_provider_offer_applied_var_samp_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_offer_applied_variance_fields = {
+	__typename?: "service_provider_offer_applied_variance_fields",
+	loss?:number,
+	offer_id?:number,
+	order_id?:number
+}
+
+/** aggregate avg on columns */
+export type service_provider_offer_avg_fields = {
+	__typename?: "service_provider_offer_avg_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** Boolean expression to filter rows from the table "service_provider.offer". All fields are combined with a logical 'AND'. */
+export type service_provider_offer_bool_exp = {
+		_and?:service_provider_offer_bool_exp[],
+	_not?:service_provider_offer_bool_exp,
+	_or?:service_provider_offer_bool_exp[],
+	coupon_code?:String_comparison_exp,
+	details?:jsonb_comparison_exp,
+	id?:Int_comparison_exp,
+	name?:translation_bool_exp,
+	name_id?:Int_comparison_exp,
+	offer_type?:String_comparison_exp,
+	service_provider_id?:Int_comparison_exp,
+	service_provider_type?:String_comparison_exp,
+	status?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider.offer" */
+export enum service_provider_offer_constraint {
+	offer_pkey = "offer_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type service_provider_offer_delete_at_path_input = {
+		/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type service_provider_offer_delete_elem_input = {
+		/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type service_provider_offer_delete_key_input = {
+		/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:string
+}
+
+/** input type for incrementing numeric columns in table "service_provider.offer" */
+export type service_provider_offer_inc_input = {
+		id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** input type for inserting data into table "service_provider.offer" */
+export type service_provider_offer_insert_input = {
+		coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:jsonb,
+	id?:number,
+	name?:translation_obj_rel_insert_input,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_offer_max_fields = {
+	__typename?: "service_provider_offer_max_fields",
+	coupon_code?:string,
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_offer_min_fields = {
+	__typename?: "service_provider_offer_min_fields",
+	coupon_code?:string,
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+}
+
+/** response of any mutation on the table "service_provider.offer" */
+export type service_provider_offer_mutation_response = {
+	__typename?: "service_provider_offer_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_offer[]
+}
+
+/** input type for inserting object relation for remote table "service_provider.offer" */
+export type service_provider_offer_obj_rel_insert_input = {
+		data:service_provider_offer_insert_input,
+	/** upsert condition */
+	on_conflict?:service_provider_offer_on_conflict
+}
+
+/** on_conflict condition type for table "service_provider.offer" */
+export type service_provider_offer_on_conflict = {
+		constraint:service_provider_offer_constraint,
+	update_columns:service_provider_offer_update_column[],
+	where?:service_provider_offer_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider.offer". */
+export type service_provider_offer_order_by = {
+		coupon_code?:order_by,
+	details?:order_by,
+	id?:order_by,
+	name?:translation_order_by,
+	name_id?:order_by,
+	offer_type?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by,
+	status?:order_by
+}
+
+/** primary key columns input for table: service_provider.offer */
+export type service_provider_offer_pk_columns_input = {
+		id:number
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_offer_prepend_input = {
+		/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:jsonb
+}
+
+/** select columns of table "service_provider.offer" */
+export enum service_provider_offer_select_column {
+	coupon_code = "coupon_code",
+	details = "details",
+	id = "id",
+	name_id = "name_id",
+	offer_type = "offer_type",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type",
+	status = "status"
+}
+
+/** input type for updating data in table "service_provider.offer" */
+export type service_provider_offer_set_input = {
+		coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:jsonb,
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_offer_stddev_fields = {
+	__typename?: "service_provider_offer_stddev_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_offer_stddev_pop_fields = {
+	__typename?: "service_provider_offer_stddev_pop_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_offer_stddev_samp_fields = {
+	__typename?: "service_provider_offer_stddev_samp_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_offer" */
+export type service_provider_offer_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_offer_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_offer_stream_cursor_value_input = {
+		coupon_code?:string,
+	/** { "offerForOrder":"any_order/first_order "offerForItems":
+"particular_items/particular_categories",
+"discountType":"flat_amount/percentage/another_same/store_credit",
+"discountValue":<numeric>, "items": Array<items-ids>, "categories":
+Array<category-ids>, "another_same_discount: percentage
+validity_range_start:date_time validity_range_end:date_time weekly_repeat:
+boolean coupon_reusable: boolean } */
+	details?:jsonb,
+	id?:number,
+	name_id?:number,
+	offer_type?:string,
+	service_provider_id?:number,
+	service_provider_type?:string,
+	status?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_offer_sum_fields = {
+	__typename?: "service_provider_offer_sum_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** update columns of table "service_provider.offer" */
+export enum service_provider_offer_update_column {
+	coupon_code = "coupon_code",
+	details = "details",
+	id = "id",
+	name_id = "name_id",
+	offer_type = "offer_type",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type",
+	status = "status"
+}
+
+export type service_provider_offer_updates = {
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:service_provider_offer_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:service_provider_offer_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:service_provider_offer_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:service_provider_offer_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_offer_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:service_provider_offer_prepend_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_offer_set_input,
+	where:service_provider_offer_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_offer_var_pop_fields = {
+	__typename?: "service_provider_offer_var_pop_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_offer_var_samp_fields = {
+	__typename?: "service_provider_offer_var_samp_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_offer_variance_fields = {
+	__typename?: "service_provider_offer_variance_fields",
+	id?:number,
+	name_id?:number,
+	service_provider_id?:number
+}
+
 /** columns and relationships of "service_provider.post" */
 export type service_provider_post = {
 	__typename?: "service_provider_post",
@@ -36130,6 +38585,7 @@ export type service_provider_post = {
 	id:number,
 	image?:string,
 	likes?:jsonb,
+	link?:string,
 	message:string,
 	posted_on:timestamptz,
 	/** An object relationship */
@@ -36183,6 +38639,7 @@ export type service_provider_post_bool_exp = {
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
 	likes?:jsonb_comparison_exp,
+	link?:String_comparison_exp,
 	message?:String_comparison_exp,
 	posted_on?:timestamptz_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -36226,6 +38683,7 @@ export type service_provider_post_insert_input = {
 	id?:number,
 	image?:string,
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
@@ -36238,6 +38696,7 @@ export type service_provider_post_max_fields = {
 	__typename?: "service_provider_post_max_fields",
 	id?:number,
 	image?:string,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -36249,6 +38708,7 @@ export type service_provider_post_min_fields = {
 	__typename?: "service_provider_post_min_fields",
 	id?:number,
 	image?:string,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -36277,6 +38737,7 @@ export type service_provider_post_order_by = {
 	id?:order_by,
 	image?:order_by,
 	likes?:order_by,
+	link?:order_by,
 	message?:order_by,
 	posted_on?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
@@ -36301,6 +38762,7 @@ export enum service_provider_post_select_column {
 	id = "id",
 	image = "image",
 	likes = "likes",
+	link = "link",
 	message = "message",
 	posted_on = "posted_on",
 	service_provider_id = "service_provider_id",
@@ -36313,6 +38775,7 @@ export type service_provider_post_set_input = {
 	id?:number,
 	image?:string,
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -36354,6 +38817,7 @@ export type service_provider_post_stream_cursor_value_input = {
 	id?:number,
 	image?:string,
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -36373,6 +38837,7 @@ export enum service_provider_post_update_column {
 	id = "id",
 	image = "image",
 	likes = "likes",
+	link = "link",
 	message = "message",
 	posted_on = "posted_on",
 	service_provider_id = "service_provider_id",
@@ -36686,6 +39151,231 @@ export type service_provider_service_link_var_samp_fields = {
 export type service_provider_service_link_variance_fields = {
 	__typename?: "service_provider_service_link_variance_fields",
 	id?:number,
+	service_provider_id?:number
+}
+
+/** columns and relationships of "service_provider.store_credit" */
+export type service_provider_store_credit = {
+	__typename?: "service_provider_store_credit",
+	credit:money,
+	customer_id:number,
+	service_provider_id:number,
+	service_provider_type:string
+}
+
+/** aggregated selection of "service_provider.store_credit" */
+export type service_provider_store_credit_aggregate = {
+	__typename?: "service_provider_store_credit_aggregate",
+	aggregate?:service_provider_store_credit_aggregate_fields,
+	nodes:service_provider_store_credit[]
+}
+
+/** aggregate fields of "service_provider.store_credit" */
+export type service_provider_store_credit_aggregate_fields = {
+	__typename?: "service_provider_store_credit_aggregate_fields",
+	avg?:service_provider_store_credit_avg_fields,
+	count:number,
+	max?:service_provider_store_credit_max_fields,
+	min?:service_provider_store_credit_min_fields,
+	stddev?:service_provider_store_credit_stddev_fields,
+	stddev_pop?:service_provider_store_credit_stddev_pop_fields,
+	stddev_samp?:service_provider_store_credit_stddev_samp_fields,
+	sum?:service_provider_store_credit_sum_fields,
+	var_pop?:service_provider_store_credit_var_pop_fields,
+	var_samp?:service_provider_store_credit_var_samp_fields,
+	variance?:service_provider_store_credit_variance_fields
+}
+
+/** aggregate avg on columns */
+export type service_provider_store_credit_avg_fields = {
+	__typename?: "service_provider_store_credit_avg_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Boolean expression to filter rows from the table
+"service_provider.store_credit". All fields are combined with a logical 'AND'. */
+export type service_provider_store_credit_bool_exp = {
+		_and?:service_provider_store_credit_bool_exp[],
+	_not?:service_provider_store_credit_bool_exp,
+	_or?:service_provider_store_credit_bool_exp[],
+	credit?:money_comparison_exp,
+	customer_id?:Int_comparison_exp,
+	service_provider_id?:Int_comparison_exp,
+	service_provider_type?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider.store_credit" */
+export enum service_provider_store_credit_constraint {
+	store_credit_pkey = "store_credit_pkey"
+}
+
+/** input type for incrementing numeric columns in table "service_provider.store_credit" */
+export type service_provider_store_credit_inc_input = {
+		credit?:money,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** input type for inserting data into table "service_provider.store_credit" */
+export type service_provider_store_credit_insert_input = {
+		credit?:money,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_store_credit_max_fields = {
+	__typename?: "service_provider_store_credit_max_fields",
+	credit?:money,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_store_credit_min_fields = {
+	__typename?: "service_provider_store_credit_min_fields",
+	credit?:money,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "service_provider.store_credit" */
+export type service_provider_store_credit_mutation_response = {
+	__typename?: "service_provider_store_credit_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_store_credit[]
+}
+
+/** on_conflict condition type for table "service_provider.store_credit" */
+export type service_provider_store_credit_on_conflict = {
+		constraint:service_provider_store_credit_constraint,
+	update_columns:service_provider_store_credit_update_column[],
+	where?:service_provider_store_credit_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider.store_credit". */
+export type service_provider_store_credit_order_by = {
+		credit?:order_by,
+	customer_id?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: service_provider.store_credit */
+export type service_provider_store_credit_pk_columns_input = {
+		customer_id:number,
+	service_provider_id:number,
+	service_provider_type:string
+}
+
+/** select columns of table "service_provider.store_credit" */
+export enum service_provider_store_credit_select_column {
+	credit = "credit",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+/** input type for updating data in table "service_provider.store_credit" */
+export type service_provider_store_credit_set_input = {
+		credit?:money,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_store_credit_stddev_fields = {
+	__typename?: "service_provider_store_credit_stddev_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_store_credit_stddev_pop_fields = {
+	__typename?: "service_provider_store_credit_stddev_pop_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_store_credit_stddev_samp_fields = {
+	__typename?: "service_provider_store_credit_stddev_samp_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_store_credit" */
+export type service_provider_store_credit_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_store_credit_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_store_credit_stream_cursor_value_input = {
+		credit?:money,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_store_credit_sum_fields = {
+	__typename?: "service_provider_store_credit_sum_fields",
+	credit?:money,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** update columns of table "service_provider.store_credit" */
+export enum service_provider_store_credit_update_column {
+	credit = "credit",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type service_provider_store_credit_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_store_credit_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_store_credit_set_input,
+	where:service_provider_store_credit_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_store_credit_var_pop_fields = {
+	__typename?: "service_provider_store_credit_var_pop_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_store_credit_var_samp_fields = {
+	__typename?: "service_provider_store_credit_var_samp_fields",
+	credit?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_store_credit_variance_fields = {
+	__typename?: "service_provider_store_credit_variance_fields",
+	credit?:number,
+	customer_id?:number,
 	service_provider_id?:number
 }
 
@@ -37194,6 +39884,22 @@ export type subscription_root = {
 	review_by_pk?:review,
 	/** fetch data from the table in a streaming manner: "review" */
 	review_stream:review[],
+	/** fetch data from the table: "service_provider.offer" */
+	service_provider_offer:service_provider_offer[],
+	/** fetch aggregated fields from the table: "service_provider.offer" */
+	service_provider_offer_aggregate:service_provider_offer_aggregate,
+	/** fetch data from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied:service_provider_offer_applied[],
+	/** fetch aggregated fields from the table: "service_provider.offer_applied" */
+	service_provider_offer_applied_aggregate:service_provider_offer_applied_aggregate,
+	/** fetch data from the table: "service_provider.offer_applied" using primary key columns */
+	service_provider_offer_applied_by_pk?:service_provider_offer_applied,
+	/** fetch data from the table in a streaming manner: "service_provider.offer_applied" */
+	service_provider_offer_applied_stream:service_provider_offer_applied[],
+	/** fetch data from the table: "service_provider.offer" using primary key columns */
+	service_provider_offer_by_pk?:service_provider_offer,
+	/** fetch data from the table in a streaming manner: "service_provider.offer" */
+	service_provider_offer_stream:service_provider_offer[],
 	/** fetch data from the table: "service_provider.post" */
 	service_provider_post:service_provider_post[],
 	/** fetch aggregated fields from the table: "service_provider.post" */
@@ -37210,6 +39916,14 @@ export type subscription_root = {
 	service_provider_service_link_by_pk?:service_provider_service_link,
 	/** fetch data from the table in a streaming manner: "service_provider.service_link" */
 	service_provider_service_link_stream:service_provider_service_link[],
+	/** fetch data from the table: "service_provider.store_credit" */
+	service_provider_store_credit:service_provider_store_credit[],
+	/** fetch aggregated fields from the table: "service_provider.store_credit" */
+	service_provider_store_credit_aggregate:service_provider_store_credit_aggregate,
+	/** fetch data from the table: "service_provider.store_credit" using primary key columns */
+	service_provider_store_credit_by_pk?:service_provider_store_credit,
+	/** fetch data from the table in a streaming manner: "service_provider.store_credit" */
+	service_provider_store_credit_stream:service_provider_store_credit[],
 	/** fetch data from the table: "service_provider.subscriber" */
 	service_provider_subscriber:service_provider_subscriber[],
 	/** fetch aggregated fields from the table: "service_provider.subscriber" */
@@ -48175,6 +50889,50 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_service_provider_offer:{
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_offer_applied:{
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_offer_applied_by_pk:{
+			offer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_offer_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_service_provider_post:{
 			where:{
 				type:"service_provider_post_bool_exp",
@@ -48202,6 +50960,34 @@ export const AllTypesProps: Record<string,any> = {
 		delete_service_provider_service_link_by_pk:{
 			id:{
 				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_store_credit:{
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_store_credit_by_pk:{
+			customer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -49037,6 +51823,62 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		insert_service_provider_offer:{
+			objects:{
+				type:"service_provider_offer_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_offer_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_offer_applied:{
+			objects:{
+				type:"service_provider_offer_applied_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_offer_applied_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_offer_applied_one:{
+			object:{
+				type:"service_provider_offer_applied_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_offer_applied_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_offer_one:{
+			object:{
+				type:"service_provider_offer_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_offer_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		insert_service_provider_post:{
 			objects:{
 				type:"service_provider_post_insert_input",
@@ -49088,6 +51930,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"service_provider_service_link_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_store_credit:{
+			objects:{
+				type:"service_provider_store_credit_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_store_credit_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_store_credit_one:{
+			object:{
+				type:"service_provider_store_credit_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_store_credit_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -50725,6 +53595,162 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_service_provider_offer:{
+			_append:{
+				type:"service_provider_offer_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_offer_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_offer_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_offer_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"service_provider_offer_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_offer_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_offer_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_offer_applied:{
+			_inc:{
+				type:"service_provider_offer_applied_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_offer_applied_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_offer_applied_by_pk:{
+			_inc:{
+				type:"service_provider_offer_applied_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_offer_applied_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_offer_applied_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_offer_applied_many:{
+			updates:{
+				type:"service_provider_offer_applied_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_service_provider_offer_by_pk:{
+			_append:{
+				type:"service_provider_offer_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_offer_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_offer_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_offer_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"service_provider_offer_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_offer_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_offer_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_offer_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_offer_many:{
+			updates:{
+				type:"service_provider_offer_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
 		update_service_provider_post:{
 			_append:{
 				type:"service_provider_post_append_input",
@@ -50876,6 +53902,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_service_provider_service_link_many:{
 			updates:{
 				type:"service_provider_service_link_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_service_provider_store_credit:{
+			_inc:{
+				type:"service_provider_store_credit_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_store_credit_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_store_credit_by_pk:{
+			_inc:{
+				type:"service_provider_store_credit_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_store_credit_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_store_credit_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_store_credit_many:{
+			updates:{
+				type:"service_provider_store_credit_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -53333,6 +56407,162 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		service_provider_offer:{
+			distinct_on:{
+				type:"service_provider_offer_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_aggregate:{
+			distinct_on:{
+				type:"service_provider_offer_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied:{
+			distinct_on:{
+				type:"service_provider_offer_applied_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_applied_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied_aggregate:{
+			distinct_on:{
+				type:"service_provider_offer_applied_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_applied_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied_by_pk:{
+			offer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_offer_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		service_provider_post:{
 			distinct_on:{
 				type:"service_provider_post_select_column",
@@ -53472,6 +56702,90 @@ export const AllTypesProps: Record<string,any> = {
 		service_provider_service_link_by_pk:{
 			id:{
 				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_store_credit:{
+			distinct_on:{
+				type:"service_provider_store_credit_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_store_credit_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_store_credit_aggregate:{
+			distinct_on:{
+				type:"service_provider_store_credit_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_store_credit_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_store_credit_by_pk:{
+			customer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -53891,6 +57205,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items:{
 			type:"restaurant_cart_item_bool_exp",
 			array:false,
@@ -53924,6 +57244,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_id:{
 			type:"Int",
 			array:false,
@@ -53940,6 +57266,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		customer_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -54861,6 +58193,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items_aggregate:{
 			type:"restaurant_cart_item_aggregate_order_by",
 			array:false,
@@ -54896,6 +58234,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_id:{
 			type:"Int",
 			array:false,
@@ -54920,6 +58264,12 @@ export const AllTypesProps: Record<string,any> = {
 	restaurant_cart_stream_cursor_value_input:{
 		customer_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -62012,6 +65362,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -62124,6 +65480,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -62323,6 +65685,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -62417,6 +65785,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -63622,6 +66996,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		estimated_food_ready_time:{
 			type:"order_by",
 			array:false,
@@ -63751,6 +67131,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -63937,6 +67323,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -64540,6 +67932,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		estimated_food_ready_time:{
 			type:"timestamptz",
 			array:false,
@@ -64668,6 +68066,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -64730,6 +68134,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -64787,6 +68197,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -64882,6 +68298,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -65014,6 +68436,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -65127,6 +68555,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -65189,6 +68623,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -65246,6 +68686,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -67364,6 +70810,784 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	service_provider_offer:{
+		details:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_offer_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_offer_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_offer_append_input:{
+		details:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_offer_applied_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_offer_applied_bool_exp:{
+		_and:{
+			type:"service_provider_offer_applied_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_offer_applied_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_offer_applied_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		loss:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer:{
+			type:"service_provider_offer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant_order:{
+			type:"restaurant_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_constraint: "enum",
+	service_provider_offer_applied_inc_input:{
+		loss:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_insert_input:{
+		loss:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer:{
+			type:"service_provider_offer_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant_order:{
+			type:"restaurant_order_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_on_conflict:{
+		constraint:{
+			type:"service_provider_offer_applied_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_offer_applied_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_offer_applied_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_order_by:{
+		loss:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer:{
+			type:"service_provider_offer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant_order:{
+			type:"restaurant_order_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_pk_columns_input:{
+		offer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_offer_applied_select_column: "enum",
+	service_provider_offer_applied_set_input:{
+		loss:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_offer_applied_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_stream_cursor_value_input:{
+		loss:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_applied_update_column: "enum",
+	service_provider_offer_applied_updates:{
+		_inc:{
+			type:"service_provider_offer_applied_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_offer_applied_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_offer_applied_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_offer_bool_exp:{
+		_and:{
+			type:"service_provider_offer_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_offer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_offer_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		coupon_code:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		details:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_constraint: "enum",
+	service_provider_offer_delete_at_path_input:{
+		details:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_offer_delete_elem_input:{
+		details:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_delete_key_input:{
+		details:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_inc_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_insert_input:{
+		coupon_code:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		details:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_obj_rel_insert_input:{
+		data:{
+			type:"service_provider_offer_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"service_provider_offer_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_on_conflict:{
+		constraint:{
+			type:"service_provider_offer_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_offer_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_offer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_order_by:{
+		coupon_code:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		details:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_offer_prepend_input:{
+		details:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_select_column: "enum",
+	service_provider_offer_set_input:{
+		coupon_code:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		details:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_offer_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_stream_cursor_value_input:{
+		coupon_code:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		details:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		offer_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_offer_update_column: "enum",
+	service_provider_offer_updates:{
+		_append:{
+			type:"service_provider_offer_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"service_provider_offer_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"service_provider_offer_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"service_provider_offer_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_inc:{
+			type:"service_provider_offer_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"service_provider_offer_prepend_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_offer_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_offer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	service_provider_post:{
 		comments:{
 			path:{
@@ -67451,6 +71675,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		likes:{
 			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		link:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67568,6 +71798,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		message:{
 			type:"String",
 			array:false,
@@ -67639,6 +71875,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		likes:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		link:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -67723,6 +71965,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		message:{
 			type:"String",
 			array:false,
@@ -67783,6 +72031,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		likes:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		link:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -68269,6 +72523,267 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		where:{
 			type:"service_provider_service_link_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_store_credit_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_store_credit_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_store_credit_bool_exp:{
+		_and:{
+			type:"service_provider_store_credit_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_store_credit_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_store_credit_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		credit:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_constraint: "enum",
+	service_provider_store_credit_inc_input:{
+		credit:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_insert_input:{
+		credit:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_on_conflict:{
+		constraint:{
+			type:"service_provider_store_credit_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_store_credit_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_store_credit_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_order_by:{
+		credit:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_pk_columns_input:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_store_credit_select_column: "enum",
+	service_provider_store_credit_set_input:{
+		credit:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_store_credit_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_stream_cursor_value_input:{
+		credit:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_store_credit_update_column: "enum",
+	service_provider_store_credit_updates:{
+		_inc:{
+			type:"service_provider_store_credit_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_store_credit_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_store_credit_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -71288,6 +75803,202 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		service_provider_offer:{
+			distinct_on:{
+				type:"service_provider_offer_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_aggregate:{
+			distinct_on:{
+				type:"service_provider_offer_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied:{
+			distinct_on:{
+				type:"service_provider_offer_applied_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_applied_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied_aggregate:{
+			distinct_on:{
+				type:"service_provider_offer_applied_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_offer_applied_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_applied_by_pk:{
+			offer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_offer_applied_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_offer_applied_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_applied_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_offer_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_offer_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_offer_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_offer_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		service_provider_post:{
 			distinct_on:{
 				type:"service_provider_post_select_column",
@@ -71467,6 +76178,110 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"service_provider_service_link_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_store_credit:{
+			distinct_on:{
+				type:"service_provider_store_credit_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_store_credit_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_store_credit_aggregate:{
+			distinct_on:{
+				type:"service_provider_store_credit_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_store_credit_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_store_credit_by_pk:{
+			customer_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			service_provider_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_store_credit_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_store_credit_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_store_credit_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -74410,10 +79225,16 @@ export const ReturnTypes: Record<string,any> = {
 		delete_restaurant_restaurant_by_pk:"restaurant_restaurant",
 		delete_review:"review_mutation_response",
 		delete_review_by_pk:"review",
+		delete_service_provider_offer:"service_provider_offer_mutation_response",
+		delete_service_provider_offer_applied:"service_provider_offer_applied_mutation_response",
+		delete_service_provider_offer_applied_by_pk:"service_provider_offer_applied",
+		delete_service_provider_offer_by_pk:"service_provider_offer",
 		delete_service_provider_post:"service_provider_post_mutation_response",
 		delete_service_provider_post_by_pk:"service_provider_post",
 		delete_service_provider_service_link:"service_provider_service_link_mutation_response",
 		delete_service_provider_service_link_by_pk:"service_provider_service_link",
+		delete_service_provider_store_credit:"service_provider_store_credit_mutation_response",
+		delete_service_provider_store_credit_by_pk:"service_provider_store_credit",
 		delete_service_provider_subscriber:"service_provider_subscriber_mutation_response",
 		delete_service_provider_subscriber_by_pk:"service_provider_subscriber",
 		delete_translation:"translation_mutation_response",
@@ -74478,10 +79299,16 @@ export const ReturnTypes: Record<string,any> = {
 		insert_restaurant_restaurant_one:"restaurant_restaurant",
 		insert_review:"review_mutation_response",
 		insert_review_one:"review",
+		insert_service_provider_offer:"service_provider_offer_mutation_response",
+		insert_service_provider_offer_applied:"service_provider_offer_applied_mutation_response",
+		insert_service_provider_offer_applied_one:"service_provider_offer_applied",
+		insert_service_provider_offer_one:"service_provider_offer",
 		insert_service_provider_post:"service_provider_post_mutation_response",
 		insert_service_provider_post_one:"service_provider_post",
 		insert_service_provider_service_link:"service_provider_service_link_mutation_response",
 		insert_service_provider_service_link_one:"service_provider_service_link",
+		insert_service_provider_store_credit:"service_provider_store_credit_mutation_response",
+		insert_service_provider_store_credit_one:"service_provider_store_credit",
 		insert_service_provider_subscriber:"service_provider_subscriber_mutation_response",
 		insert_service_provider_subscriber_one:"service_provider_subscriber",
 		insert_translation:"translation_mutation_response",
@@ -74572,12 +79399,21 @@ export const ReturnTypes: Record<string,any> = {
 		update_review:"review_mutation_response",
 		update_review_by_pk:"review",
 		update_review_many:"review_mutation_response",
+		update_service_provider_offer:"service_provider_offer_mutation_response",
+		update_service_provider_offer_applied:"service_provider_offer_applied_mutation_response",
+		update_service_provider_offer_applied_by_pk:"service_provider_offer_applied",
+		update_service_provider_offer_applied_many:"service_provider_offer_applied_mutation_response",
+		update_service_provider_offer_by_pk:"service_provider_offer",
+		update_service_provider_offer_many:"service_provider_offer_mutation_response",
 		update_service_provider_post:"service_provider_post_mutation_response",
 		update_service_provider_post_by_pk:"service_provider_post",
 		update_service_provider_post_many:"service_provider_post_mutation_response",
 		update_service_provider_service_link:"service_provider_service_link_mutation_response",
 		update_service_provider_service_link_by_pk:"service_provider_service_link",
 		update_service_provider_service_link_many:"service_provider_service_link_mutation_response",
+		update_service_provider_store_credit:"service_provider_store_credit_mutation_response",
+		update_service_provider_store_credit_by_pk:"service_provider_store_credit",
+		update_service_provider_store_credit_many:"service_provider_store_credit_mutation_response",
 		update_service_provider_subscriber:"service_provider_subscriber_mutation_response",
 		update_service_provider_subscriber_by_pk:"service_provider_subscriber",
 		update_service_provider_subscriber_many:"service_provider_subscriber_mutation_response",
@@ -74745,12 +79581,21 @@ export const ReturnTypes: Record<string,any> = {
 		review:"review",
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
+		service_provider_offer:"service_provider_offer",
+		service_provider_offer_aggregate:"service_provider_offer_aggregate",
+		service_provider_offer_applied:"service_provider_offer_applied",
+		service_provider_offer_applied_aggregate:"service_provider_offer_applied_aggregate",
+		service_provider_offer_applied_by_pk:"service_provider_offer_applied",
+		service_provider_offer_by_pk:"service_provider_offer",
 		service_provider_post:"service_provider_post",
 		service_provider_post_aggregate:"service_provider_post_aggregate",
 		service_provider_post_by_pk:"service_provider_post",
 		service_provider_service_link:"service_provider_service_link",
 		service_provider_service_link_aggregate:"service_provider_service_link_aggregate",
 		service_provider_service_link_by_pk:"service_provider_service_link",
+		service_provider_store_credit:"service_provider_store_credit",
+		service_provider_store_credit_aggregate:"service_provider_store_credit_aggregate",
+		service_provider_store_credit_by_pk:"service_provider_store_credit",
 		service_provider_subscriber:"service_provider_subscriber",
 		service_provider_subscriber_aggregate:"service_provider_subscriber_aggregate",
 		service_provider_subscriber_by_pk:"service_provider_subscriber",
@@ -74768,6 +79613,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		customer:"customer_customer",
 		customer_id:"Int",
+		discount_value:"money",
 		items:"restaurant_cart_item",
 		items_aggregate:"restaurant_cart_item_aggregate",
 		restaurant:"restaurant_restaurant",
@@ -74792,6 +79638,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_avg_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_item:{
@@ -74900,10 +79747,12 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_max_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_min_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_mutation_response:{
@@ -74912,30 +79761,37 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_stddev_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_stddev_pop_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_stddev_samp_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_sum_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_var_pop_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_var_samp_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_variance_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_category:{
@@ -75705,6 +80561,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery:"delivery_order",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -75752,6 +80609,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -75883,6 +80741,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -75907,6 +80766,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -76022,6 +80882,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76034,6 +80895,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76046,6 +80908,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76058,6 +80921,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		discount_value:"money",
 		id:"Int",
 		refund_amount:"money",
 		restaurant_id:"Int",
@@ -76070,6 +80934,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76082,6 +80947,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76094,6 +80960,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -76305,11 +81172,183 @@ export const ReturnTypes: Record<string,any> = {
 		rating:"Float",
 		to_entity_id:"Float"
 	},
+	service_provider_offer:{
+		coupon_code:"String",
+		details:"jsonb",
+		id:"Int",
+		name:"translation",
+		name_id:"Int",
+		offer_type:"String",
+		service_provider_id:"Int",
+		service_provider_type:"String",
+		status:"String"
+	},
+	service_provider_offer_aggregate:{
+		aggregate:"service_provider_offer_aggregate_fields",
+		nodes:"service_provider_offer"
+	},
+	service_provider_offer_aggregate_fields:{
+		avg:"service_provider_offer_avg_fields",
+		count:"Int",
+		max:"service_provider_offer_max_fields",
+		min:"service_provider_offer_min_fields",
+		stddev:"service_provider_offer_stddev_fields",
+		stddev_pop:"service_provider_offer_stddev_pop_fields",
+		stddev_samp:"service_provider_offer_stddev_samp_fields",
+		sum:"service_provider_offer_sum_fields",
+		var_pop:"service_provider_offer_var_pop_fields",
+		var_samp:"service_provider_offer_var_samp_fields",
+		variance:"service_provider_offer_variance_fields"
+	},
+	service_provider_offer_applied:{
+		loss:"money",
+		offer:"service_provider_offer",
+		offer_id:"Int",
+		order_id:"Int",
+		restaurant_order:"restaurant_order",
+		service_provider_type:"String"
+	},
+	service_provider_offer_applied_aggregate:{
+		aggregate:"service_provider_offer_applied_aggregate_fields",
+		nodes:"service_provider_offer_applied"
+	},
+	service_provider_offer_applied_aggregate_fields:{
+		avg:"service_provider_offer_applied_avg_fields",
+		count:"Int",
+		max:"service_provider_offer_applied_max_fields",
+		min:"service_provider_offer_applied_min_fields",
+		stddev:"service_provider_offer_applied_stddev_fields",
+		stddev_pop:"service_provider_offer_applied_stddev_pop_fields",
+		stddev_samp:"service_provider_offer_applied_stddev_samp_fields",
+		sum:"service_provider_offer_applied_sum_fields",
+		var_pop:"service_provider_offer_applied_var_pop_fields",
+		var_samp:"service_provider_offer_applied_var_samp_fields",
+		variance:"service_provider_offer_applied_variance_fields"
+	},
+	service_provider_offer_applied_avg_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_max_fields:{
+		loss:"money",
+		offer_id:"Int",
+		order_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_offer_applied_min_fields:{
+		loss:"money",
+		offer_id:"Int",
+		order_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_offer_applied_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_offer_applied"
+	},
+	service_provider_offer_applied_stddev_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_stddev_pop_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_stddev_samp_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_sum_fields:{
+		loss:"money",
+		offer_id:"Int",
+		order_id:"Int"
+	},
+	service_provider_offer_applied_var_pop_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_var_samp_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_applied_variance_fields:{
+		loss:"Float",
+		offer_id:"Float",
+		order_id:"Float"
+	},
+	service_provider_offer_avg_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_max_fields:{
+		coupon_code:"String",
+		id:"Int",
+		name_id:"Int",
+		offer_type:"String",
+		service_provider_id:"Int",
+		service_provider_type:"String",
+		status:"String"
+	},
+	service_provider_offer_min_fields:{
+		coupon_code:"String",
+		id:"Int",
+		name_id:"Int",
+		offer_type:"String",
+		service_provider_id:"Int",
+		service_provider_type:"String",
+		status:"String"
+	},
+	service_provider_offer_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_offer"
+	},
+	service_provider_offer_stddev_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_stddev_pop_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_stddev_samp_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_sum_fields:{
+		id:"Int",
+		name_id:"Int",
+		service_provider_id:"Int"
+	},
+	service_provider_offer_var_pop_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_var_samp_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_offer_variance_fields:{
+		id:"Float",
+		name_id:"Float",
+		service_provider_id:"Float"
+	},
 	service_provider_post:{
 		comments:"jsonb",
 		id:"Int",
 		image:"String",
 		likes:"jsonb",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		restaurant:"restaurant_restaurant",
@@ -76340,6 +81379,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_post_max_fields:{
 		id:"Int",
 		image:"String",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		service_provider_id:"Int",
@@ -76348,6 +81388,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_post_min_fields:{
 		id:"Int",
 		image:"String",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		service_provider_id:"Int",
@@ -76470,6 +81511,85 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	service_provider_service_link_variance_fields:{
 		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit:{
+		credit:"money",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_store_credit_aggregate:{
+		aggregate:"service_provider_store_credit_aggregate_fields",
+		nodes:"service_provider_store_credit"
+	},
+	service_provider_store_credit_aggregate_fields:{
+		avg:"service_provider_store_credit_avg_fields",
+		count:"Int",
+		max:"service_provider_store_credit_max_fields",
+		min:"service_provider_store_credit_min_fields",
+		stddev:"service_provider_store_credit_stddev_fields",
+		stddev_pop:"service_provider_store_credit_stddev_pop_fields",
+		stddev_samp:"service_provider_store_credit_stddev_samp_fields",
+		sum:"service_provider_store_credit_sum_fields",
+		var_pop:"service_provider_store_credit_var_pop_fields",
+		var_samp:"service_provider_store_credit_var_samp_fields",
+		variance:"service_provider_store_credit_variance_fields"
+	},
+	service_provider_store_credit_avg_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_max_fields:{
+		credit:"money",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_store_credit_min_fields:{
+		credit:"money",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_store_credit_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_store_credit"
+	},
+	service_provider_store_credit_stddev_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_stddev_pop_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_stddev_samp_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_sum_fields:{
+		credit:"money",
+		customer_id:"Int",
+		service_provider_id:"Int"
+	},
+	service_provider_store_credit_var_pop_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_var_samp_fields:{
+		credit:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_store_credit_variance_fields:{
+		credit:"Float",
+		customer_id:"Float",
 		service_provider_id:"Float"
 	},
 	service_provider_subscriber:{
@@ -76665,6 +81785,14 @@ export const ReturnTypes: Record<string,any> = {
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
 		review_stream:"review",
+		service_provider_offer:"service_provider_offer",
+		service_provider_offer_aggregate:"service_provider_offer_aggregate",
+		service_provider_offer_applied:"service_provider_offer_applied",
+		service_provider_offer_applied_aggregate:"service_provider_offer_applied_aggregate",
+		service_provider_offer_applied_by_pk:"service_provider_offer_applied",
+		service_provider_offer_applied_stream:"service_provider_offer_applied",
+		service_provider_offer_by_pk:"service_provider_offer",
+		service_provider_offer_stream:"service_provider_offer",
 		service_provider_post:"service_provider_post",
 		service_provider_post_aggregate:"service_provider_post_aggregate",
 		service_provider_post_by_pk:"service_provider_post",
@@ -76673,6 +81801,10 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_service_link_aggregate:"service_provider_service_link_aggregate",
 		service_provider_service_link_by_pk:"service_provider_service_link",
 		service_provider_service_link_stream:"service_provider_service_link",
+		service_provider_store_credit:"service_provider_store_credit",
+		service_provider_store_credit_aggregate:"service_provider_store_credit_aggregate",
+		service_provider_store_credit_by_pk:"service_provider_store_credit",
+		service_provider_store_credit_stream:"service_provider_store_credit",
 		service_provider_subscriber:"service_provider_subscriber",
 		service_provider_subscriber_aggregate:"service_provider_subscriber_aggregate",
 		service_provider_subscriber_by_pk:"service_provider_subscriber",
@@ -77410,4 +82542,4 @@ subscription: ZeusSelect<ValueTypes["subscription_root"]>()
 };
   
 
-export const Gql = Chain('https://mez-staging.hasura.app/v1/graphql')
+export const Gql = Chain('http://localhost:8080/v1/graphql')

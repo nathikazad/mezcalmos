@@ -15,6 +15,7 @@ export async function getCart(customerId: number): Promise<Cart> {
         }, {
             restaurant_id: true,
             cost: true,
+            discount_value: true,
             items: [{}, {
                 id: true,
                 restaurant_item_id: true,
@@ -29,6 +30,7 @@ export async function getCart(customerId: number): Promise<Cart> {
                         }], 
                     }, 
                     image: true,
+                    category_id: true,
                 }              
             }]
         }]
@@ -52,7 +54,8 @@ export async function getCart(customerId: number): Promise<Cart> {
             quantity: i.quantity,
             itemId: i.restaurant_item_id,
             name : i.restaurant_item.name,
-            image : i.restaurant_item.image
+            image : i.restaurant_item.image,
+            categoryId: i.restaurant_item.category_id
         }
     })
     return {
@@ -60,5 +63,6 @@ export async function getCart(customerId: number): Promise<Cart> {
         restaurantId: response.restaurant_cart[0].restaurant_id,
         cost: response.restaurant_cart[0].cost,
         items,
+        discountValue: response.restaurant_cart[0].discount_value
     }
 }

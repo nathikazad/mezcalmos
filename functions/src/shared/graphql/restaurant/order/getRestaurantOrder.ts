@@ -213,12 +213,84 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
   })
 }
 
-export async function getCustomerRestaurantOrders(customerId: number): Promise<RestaurantOrder[]> {
+export async function getCustomerAllRestaurantOrders(customerId: number): Promise<RestaurantOrder[]> {
   let chain = getHasura();
 
   let response =  await chain.query({
     restaurant_order: [{
       where: {
+        customer_id: {
+          _eq: customerId
+        }
+      }
+    }, {
+      id: true,
+      restaurant_id: true,
+      order_type: true,
+      status: true,
+      payment_type: true,
+      customer_id: true,
+      to_location_gps: true,
+      order_time: true,
+      customer_app_type: true,
+      delivery_cost: true,
+      items: [{}, {
+        id: true,
+        restaurant_item_id: true,
+        quantity: true,
+        cost_per_one: true,
+        restaurant_item : {
+          name : {
+            translations :  [{} , {
+              language_id : true,
+              value : true
+            }], 
+          },
+          image : true,
+        } 
+      }],
+    }]
+  });
+  return response.restaurant_order.map((o) => {
+    let items: OrderItem[] = o.items.map((i) => {
+      return {
+        name: i.restaurant_item.name,
+        orderItemId: i.id,
+        itemId: i.restaurant_item_id,
+        quantity: i.quantity,
+        costPerOne: i.cost_per_one
+      }
+    })
+    return {
+      orderId: o.id,
+      customerId: o.customer_id,
+      restaurantId: o.restaurant_id,
+      paymentType: o.payment_type as PaymentType,
+      toLocation: {
+        lat: o.to_location_gps.coordinates[1],
+        lng: o.to_location_gps.coordinates[0],
+      },
+      orderTime: o.order_time,
+      status: o.status as RestaurantOrderStatus,
+      orderType: o.order_type as RestaurantOrderType,
+      customerAppType: o.customer_app_type as AppType,
+      deliveryCost: o.delivery_cost,
+      items
+    }
+  })
+}
+
+export async function getCustomerRestaurantOrders(customerId: number, restaurantId: number): Promise<RestaurantOrder[]> {
+  let chain = getHasura();
+
+  let response =  await chain.query({
+    restaurant_order: [{
+      where: {
+        _and: [{
+          restaurant_id: {
+            _eq: restaurantId
+          }
+        }],
         customer_id: {
           _eq: customerId
         }

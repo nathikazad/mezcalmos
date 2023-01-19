@@ -8,7 +8,7 @@ import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
-import { getCustomerRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
+import { getCustomerAllRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
 import { RestaurantOrderStatus } from '../../shared/models/Services/Restaurant/RestaurantOrder';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
@@ -127,7 +127,7 @@ export interface RemoveCardDetails {
 export async function removeCard(userId: number, removeCardDetails: RemoveCardDetails) {
 
   //Restaurant order
-  let restaurantOrders = await getCustomerRestaurantOrders(userId);
+  let restaurantOrders = await getCustomerAllRestaurantOrders(userId);
   restaurantOrders.filter((o) => ((o.status != RestaurantOrderStatus.Delivered) 
     && (o.status != RestaurantOrderStatus.CancelledByAdmin)
     && (o.status != RestaurantOrderStatus.CancelledByCustomer)
