@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpCategoryItems.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialsComponent.dart';
@@ -8,6 +9,7 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -60,15 +62,26 @@ class _ROpMenuViewState extends State<ROpMenuView>
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
-          AppBarLeftButtonType.Back,
-          onClick: handleBack,
-          showLeftBtn:
-              viewController.reOrderMode.isTrue || widget.canGoBack == true,
-          title: '${_i18n()["menu"]}',
-          showNotifications: true,
-          tabBar: _tabBar(),
+        appBar: PreferredSize(
+          preferredSize: Size(double.infinity, kToolbarHeight * 2),
+          child: Obx(
+            () => mezcalmosAppBar(
+              !widget.canGoBack && viewController.reOrderMode.isFalse
+                  ? AppBarLeftButtonType.Menu
+                  : AppBarLeftButtonType.Back,
+              onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
+                  ? null
+                  : handleBack,
+              showLeftBtn: viewController.reOrderMode.isTrue ||
+                  widget.canGoBack == false,
+              title: '${_i18n()["menu"]}',
+              showNotifications: true,
+              tabBar: _tabBar(),
+            ),
+          ),
         ),
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: ROpDrawer(),
         body: Obx(
           () {
             if (viewController.pageLoaded.value) {

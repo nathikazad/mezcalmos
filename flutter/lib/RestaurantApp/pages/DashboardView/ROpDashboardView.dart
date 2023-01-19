@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
+import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpInfoPage.dart';
@@ -9,6 +10,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePag
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AnimatedSlider/AnimatedSliderController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
@@ -63,6 +65,8 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
         if (editInfoController.restaurant.value != null) {
           return Scaffold(
             appBar: _getAppBar(),
+            key: Get.find<SideMenuDrawerController>().getNewKey(),
+            drawer: ROpDrawer(),
             body: PageView(
               physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
@@ -108,19 +112,26 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
           : Size.fromHeight(kToolbarHeight * 2),
       child: Obx(
         () => ROpAppBar(
-          leftBtnType: AppBarLeftButtonType.Back,
-          canGoBack:
-              widget.canGoBack || editInfoController.cuurentPage.value != 0,
-          onClick: () {
-            if (_pageController.page != 0) {
-              _pageController.animateToPage(0,
-                  duration: Duration(milliseconds: 1), curve: Curves.easeIn);
-              editInfoController.cuurentPage.value = 0;
-              editInfoController.tabsViewViewController?.showTabs.value = true;
-            } else {
-              MezRouter.back();
-            }
-          },
+          leftBtnType:
+              !widget.canGoBack && editInfoController.cuurentPage.value == 0
+                  ? AppBarLeftButtonType.Menu
+                  : AppBarLeftButtonType.Back,
+          canGoBack: true,
+          onClick: !widget.canGoBack &&
+                  editInfoController.cuurentPage.value == 0
+              ? null
+              : () {
+                  if (_pageController.page != 0) {
+                    _pageController.animateToPage(0,
+                        duration: Duration(milliseconds: 1),
+                        curve: Curves.easeIn);
+                    editInfoController.cuurentPage.value = 0;
+                    editInfoController.tabsViewViewController?.showTabs.value =
+                        true;
+                  } else {
+                    MezRouter.back();
+                  }
+                },
           title: editInfoController.getPageTitle(),
           bottom: (editInfoController.isApproved.isFalse)
               ? PreferredSize(
