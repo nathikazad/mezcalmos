@@ -185,7 +185,7 @@ List<Choice> parse_choices(
       (Query$getOptionById$restaurant_option_by_pk$choices$option_choices
           choice) {
     return Choice(
-        id: choice.id.toString(),
+        id: choice.id,
         available: choice.available,
         nameId: choice.name.id,
         name: toLanguageMap(translations: choice.name.translations),

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/BottomBarComponents.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/RecreateOrderBtn.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/TaxiApp/constants/assets.dart';
 import 'package:sizer/sizer.dart';
@@ -86,16 +84,16 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Decrease the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    final Order? order = Get.find<OrderController>()
-                        .hasOrderOfType(typeToCheck: OrderType.Taxi);
-                    if (order != null) {
-                      taxiController.updateRideCost(
-                        orderId: order.orderId,
-                        cost:
-                            widget.order.value!.toTaxiRequest().estimatedPrice -
-                                5,
-                      );
-                    }
+                    // final Order? order = Get.find<OrderController>()
+                    //     .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                    // if (order != null) {
+                    //   taxiController.updateRideCost(
+                    //     orderId: order.orderId,
+                    //     cost:
+                    //         widget.order.value!.toTaxiRequest().estimatedPrice -
+                    //             5,
+                    //   );
+                    // }
                   },
                   icon: Icon(
                     Icons.remove_circle_outline,
@@ -123,16 +121,16 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
                   tooltip: 'Increase the price',
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    final Order? order = Get.find<OrderController>()
-                        .hasOrderOfType(typeToCheck: OrderType.Taxi);
-                    if (order != null) {
-                      taxiController.updateRideCost(
-                        orderId: order.orderId,
-                        cost:
-                            widget.order.value!.toTaxiRequest().estimatedPrice +
-                                5,
-                      );
-                    }
+                    // final Order? order = Get.find<OrderController>()
+                    //     .hasOrderOfType(typeToCheck: OrderType.Taxi);
+                    // if (order != null) {
+                    //   taxiController.updateRideCost(
+                    //     orderId: order.orderId,
+                    //     cost:
+                    //         widget.order.value!.toTaxiRequest().estimatedPrice +
+                    //             5,
+                    //   );
+                    // }
                   },
                   icon: Icon(
                     Icons.add_circle_outline,
@@ -247,12 +245,12 @@ class _TaxiOrderBottomBarState extends State<TaxiOrderBottomBar> {
             incrementDecrementPrice(),
             VerticalDivider(),
             getHowManyDriverReadTheOrder(),
-            if (orderController
-                .hasNewAdminMessageNotification(widget.order.value!.orderId))
-              VerticalDivider(),
-            if (orderController
-                .hasNewAdminMessageNotification(widget.order.value!.orderId))
-              messageBtn(order: widget.order)
+            // if (orderController
+            //     .hasNewAdminMessageNotification(widget.order.value!.orderId))
+            //   VerticalDivider(),
+            // if (orderController
+            //     .hasNewAdminMessageNotification(widget.order.value!.orderId))
+            //   messageBtn(order: widget.order)
           ],
         );
         break;

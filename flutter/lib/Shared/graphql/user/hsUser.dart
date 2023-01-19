@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/user/__generated/user.graphql.dart';
@@ -35,7 +34,7 @@ Future<void> change_user_language({
   required int userId,
   required LanguageType language,
 }) async {
-  QueryResult<Mutation$changeUserLanguage> _res =
+  final QueryResult<Mutation$changeUserLanguage> _res =
       await _db.graphQLClient.mutate$changeUserLanguage(
     Options$Mutation$changeUserLanguage(
       variables: Variables$Mutation$changeUserLanguage(
@@ -56,11 +55,11 @@ Future<void> change_user_language({
   }
 }
 
-Future<void> change_username({
+Future<String> change_username({
   required int userId,
   required String name,
 }) async {
-  QueryResult<Mutation$changeUserName> _res =
+  final QueryResult<Mutation$changeUserName> _res =
       await _db.graphQLClient.mutate$changeUserName(
     Options$Mutation$changeUserName(
       variables: Variables$Mutation$changeUserName(
@@ -70,14 +69,11 @@ Future<void> change_username({
     ),
   );
 
-  if (_res.hasException) {
-    mezDbgPrint(
-        "[ERROR] CALLED :: change_username :: EXCEPTION :: ${_res.exception}");
-  } else {
-    mezDbgPrint("[SUCCESS] CALLED :: change_username :: DATA :: ${_res.data}");
-
-    // Get.find<LanguageController>().setLanguage(language);
+  if (_res.parsedData?.update_user_by_pk?.name == null) {
+    throw Exception(
+        "[🛑] CALLED :: change_username :: EXCEPTION :: ${_res.exception}");
   }
+  return _res.parsedData!.update_user_by_pk!.name!;
 }
 
 Future<void> change_user_img({
@@ -97,7 +93,7 @@ Future<void> change_user_img({
       ),
     );
   } else {
-    await _db.graphQLClient.mutate$changeUserBigImg(
+    _res = await _db.graphQLClient.mutate$changeUserBigImg(
       Options$Mutation$changeUserBigImg(
         variables: Variables$Mutation$changeUserBigImg(
           id: Input$user_pk_columns_input(id: userId),
@@ -107,12 +103,54 @@ Future<void> change_user_img({
     );
   }
 
-  if (_res?.hasException != false) {
+  if (_res.hasException != false) {
     mezDbgPrint(
-        "[ERROR] CALLED :: change_user_img :: EXCEPTION || NULL :: ${_res?.exception}");
+        "[ERROR] CALLED :: change_user_img :: EXCEPTION || NULL :: ${_res.exception}");
   } else {
-    mezDbgPrint("[SUCCESS] CALLED :: change_user_img :: DATA :: ${_res!.data}");
+    mezDbgPrint("[SUCCESS] CALLED :: change_user_img :: DATA :: ${_res.data}");
 
     // Get.find<LanguageController>().setLanguage(language);
   }
+}
+
+Future<String> set_user_image(
+    {required String imageUrl, required int userId}) async {
+  final QueryResult<Mutation$changeUserImg> _res =
+      await _db.graphQLClient.mutate$changeUserImg(
+    Options$Mutation$changeUserImg(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Mutation$changeUserImg(
+        id: Input$user_pk_columns_input(id: userId),
+        img: imageUrl,
+      ),
+    ),
+  );
+  if (_res.parsedData?.update_user_by_pk?.image == null) {
+    throw Exception("🛑 setting user image exception ==>${_res.exception}");
+  }
+  return _res.parsedData!.update_user_by_pk!.image!;
+}
+
+Future<UserInfo> update_user_info(
+    {required int userId, required UserInfo userInfo}) async {
+  final QueryResult<Mutation$updateUserInfo> res =
+      await _db.graphQLClient.mutate$updateUserInfo(
+    Options$Mutation$updateUserInfo(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$updateUserInfo(
+        userId: userId,
+        data: Input$user_set_input(
+          image: userInfo.image,
+          name: userInfo.name,
+        ),
+      ),
+    ),
+  );
+  if (res.parsedData?.update_user_by_pk == null) {
+    throw Exception("🛑 update user info exceptions ===< ${res.exception}");
+  }
+  return UserInfo(
+      hasuraId: res.parsedData!.update_user_by_pk!.id,
+      name: res.parsedData!.update_user_by_pk!.name,
+      image: res.parsedData!.update_user_by_pk!.image);
 }

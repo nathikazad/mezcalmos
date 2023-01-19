@@ -1,11 +1,10 @@
-import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 
 class Laundry extends Service {
   LaundryCosts laundryCosts;
@@ -38,9 +37,10 @@ class Laundry extends Service {
         Schedule.fromData(laundryData["details"]["schedule"]);
 
     final PaymentInfo paymentInfo =
-        laundryData["details"]["paymentInfo"] != null
-            ? PaymentInfo.fromData(laundryData["details"]["paymentInfo"])
-            : PaymentInfo();
+        // laundryData["details"]["paymentInfo"] != null
+        //     ? PaymentInfo.fromData(laundryData["details"]["paymentInfo"])
+        //     :
+        PaymentInfo();
 
     final LaundryCosts laundryCosts =
         LaundryCosts.fromData(laundryData["details"]["costs"]);
@@ -177,12 +177,7 @@ class LaundryCostLineItem {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final bool Function(dynamic e1, dynamic e2) mapEquals =
-        const DeepCollectionEquality().equals;
 
-    return other is LaundryCostLineItem &&
-        other.id == id &&
-        mapEquals(other.name, name) &&
-        other.cost == cost;
+    return other is LaundryCostLineItem && other.id == id && other.cost == cost;
   }
 }

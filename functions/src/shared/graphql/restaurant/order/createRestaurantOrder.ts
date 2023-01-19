@@ -1,10 +1,14 @@
 import { HttpsError } from "firebase-functions/v1/auth";
+import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
+import { AppType } from "../../../models/Generic/Generic";
+import { OrderType } from "../../../models/Generic/Order";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, tripDuration?: number, tripDistance?: number , tripPolyline?: string)
+
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant,checkoutReq : CheckoutRequest)
   : Promise<{ restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder }> {
 
   let chain = getHasura();
@@ -12,14 +16,13 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
     return {
       participant_id: v.userId,
-      app_type_id: "restaurant"
+      app_type_id: AppType.RestaurantApp
     };
   });
-
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
-       
+       scheduled_time: restaurantOrder.scheduledTime,
         customer_id: restaurantOrder.customerId,
         restaurant_id: restaurantOrder.restaurantId,
         customer_app_type: restaurantOrder.customerAppType,
@@ -41,6 +44,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
         delivery: {
           data: {
             customer_id: restaurantOrder.customerId,
+            order_type: OrderType.Restaurant,
             dropoff_gps: JSON.stringify({
               "type": "Point",
               "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
@@ -51,9 +55,9 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
               "coordinates": [restaurant.location.lng, restaurant.location.lat ],
             }),
             pickup_address: restaurant.location.address,
+            schedule_time: restaurantOrder.scheduledTime,
             chat_with_customer: {
               data: {
-                chat_info: JSON.stringify({}),
                 chat_participants: {
                   data: [{
                     participant_id: restaurantOrder.customerId,
@@ -64,7 +68,6 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             },
             chat_with_service_provider: {
               data: {
-                chat_info: JSON.stringify({}),
                 chat_participants: {
                   data: restaurantOperatorsDetails
                 }
@@ -72,13 +75,15 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             },
             payment_type: restaurantOrder.paymentType,
             delivery_cost: restaurantOrder.deliveryCost,
+          
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
             service_provider_type: "restaurant",
+            
             scheduled_time: restaurantOrder.scheduledTime,
-            trip_distance: tripDistance,
-            trip_duration: tripDuration,
-            trip_polyline: tripPolyline,
+            trip_distance: checkoutReq.tripDistance,
+            trip_duration: checkoutReq.tripDuration,
+            trip_polyline: checkoutReq.tripPolyline,
             package_cost: restaurantOrder.itemsCost
           }
         },
@@ -131,18 +136,27 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   }
   restaurantOrder.orderId = response.insert_restaurant_order_one.id;
   restaurantOrder.chatId = response.insert_restaurant_order_one.chat_id;
+  restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
   let deliveryOrder: DeliveryOrder = {
     deliveryId: response.insert_restaurant_order_one.delivery.id,
+    orderType: OrderType.Restaurant,
     pickupLocation: restaurant.location,
     dropoffLocation: restaurantOrder.toLocation,
+    
     chatWithServiceProviderId: response.insert_restaurant_order_one.delivery.chat_with_service_provider_id,
     chatWithCustomerId: response.insert_restaurant_order_one.delivery.chat_with_customer_id,
     paymentType: restaurantOrder.paymentType,
     status: DeliveryOrderStatus.OrderReceived,
     customerId: restaurantOrder.customerId,
+    
     deliveryCost: restaurantOrder.deliveryCost,
     packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
     orderTime: response.insert_restaurant_order_one.order_time,
+    
+    tripDistance : checkoutReq.tripDistance,
+    tripDuration : checkoutReq.tripDuration,
+    tripPolyline : checkoutReq.tripPolyline,
+  
   }
 
   return { restaurantOrder, deliveryOrder };

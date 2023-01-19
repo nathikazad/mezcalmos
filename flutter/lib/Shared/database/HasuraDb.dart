@@ -97,7 +97,7 @@ class HasuraDb {
     mezDbgPrint(
         "🥶🥶🥶 Hasura DB Links 🥶🥶🥶 \n hasuraDbLink : $hasuraDbLink \n hasuraDbSocketLink : $hasuraDbSocketLink ");
     Map<String, String> headers = <String, String>{
-      "x-hasura-admin-secret": "myadminsecretkey"
+      //"x-hasura-admin-secret": "myadminsecretkey"
     };
     gqClient.HttpLink _httpLink =
         gqClient.HttpLink(hasuraDbLink, defaultHeaders: headers);
@@ -255,9 +255,9 @@ class HasuraDb {
   }
 
   void cancelAllSubscriptions() {
-    hasuraSubscriptions.forEach(
-        (String subscriptionId, HasuraSubscription hasuraSubscription) {
-      cancelSubscription(subscriptionId);
+    final List<String> keysToRemove = hasuraSubscriptions.keys.toList();
+    keysToRemove.forEach((String subId) {
+      cancelSubscription(subId);
     });
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/MezIcons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,12 +16,11 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Taxi"]["components"]["BottomBarComponents"];
 
-final OrderController orderController = Get.find<OrderController>();
+//final OrderController orderController = Get.find<OrderController>();
 
 Widget verticalSeparator() {
   return VerticalDivider(width: 1, color: Colors.grey.shade300);
@@ -213,21 +212,21 @@ Widget messageBtn({required Rxn<TaxiOrder> order, EdgeInsets? margin}) {
                   size: 30,
                 ),
               ),
-              orderController.hasNewMessageNotification(order.value!.orderId)
-                  ? Positioned(
-                      top: 0,
-                      right: 0,
-                      child: Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+              // orderController.hasNewMessageNotification(order.value!.orderId)
+              //     ? Positioned(
+              //         top: 0,
+              //         right: 0,
+              //         child: Container(
+              //           height: 10,
+              //           width: 10,
+              //           decoration: BoxDecoration(
+              //             color: Colors.red,
+              //             shape: BoxShape.circle,
+              //             border: Border.all(color: Colors.white),
+              //           ),
+              //         ),
+              //       )
+              //     : SizedBox(),
             ],
           ),
         ),

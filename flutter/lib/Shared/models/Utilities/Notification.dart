@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 enum NotificationType {
   NewMessage,
@@ -9,7 +8,9 @@ enum NotificationType {
   NewOrder,
   NewCounterOffer,
   AssignDriver,
+  DriverApproved,
   OperatorApproved,
+  NewDriver,
   Call
 }
 
@@ -63,7 +64,13 @@ class Notification {
   String? linkText;
   NotificationType notificationType;
   NotificationAction notificationAction;
-  int? get chatId => int.tryParse(variableParams['chatId']);
+  int? get chatId {
+    if (variableParams['chatId'] != null) {
+      return int.tryParse(variableParams['chatId']);
+    }
+    return null;
+  }
+
   int? get orderId => int.tryParse(variableParams['orderId']);
   String? get orderType => variableParams['orderType'];
   Notification(
@@ -78,9 +85,7 @@ class Notification {
       required this.linkUrl,
       required this.notificationType,
       required this.notificationAction,
-      this.linkText}) {
-    mezDbgPrint("variableParams ==> $variableParams");
-  }
+      this.linkText}) {}
 
   String get formattedTime =>
       DateFormat('HH:mm').format(timestamp.toLocal()).toString();

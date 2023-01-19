@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -14,7 +15,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['Shared']['widgets']["MezSideMenu"];
@@ -90,7 +90,7 @@ class MezSideMenu extends GetWidget<AuthController> {
           onClick: () {
             _drawerController.closeMenu();
             if (controller.isUserSignedIn) {
-              MezRouter.toNamed<void>(kUserProfile);
+              MezRouter.toNamed<void>(kUserNewProfile);
             } else
               MezRouter.toNamed<void>(kSignInRouteOptional);
           },
@@ -217,7 +217,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                       color: primaryBlueColor,
                     )
                   : CachedNetworkImage(
-                      imageUrl: controller.user!.image!,
+                      imageUrl: controller.user!.image,
                       fit: BoxFit.cover,
                       imageBuilder: (BuildContext context,
                               ImageProvider<Object> imageProvider) =>

@@ -6,13 +6,13 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 class RestaurantOperatorCard extends StatelessWidget {
   const RestaurantOperatorCard(
       {super.key, required this.op, required this.viewController});
-  final RestaurantOperator op;
+  final Operator op;
   final OperatorsViewController viewController;
 
   @override

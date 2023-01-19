@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/CustomerApp/controllers/taxi/TaxiController.dart';
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/CustomerApp/models/TaxiRequest.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/components/LocationSearchBar.dart';

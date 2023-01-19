@@ -1,15 +1,14 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/__generated/delivery_driver.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCompanyType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -39,22 +38,20 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
     final List<DeliveryDriver> drivers =
         data.map((Query$getDriversByServiceId$delivery_driver driverData) {
       return DeliveryDriver(
-        driverLocation: driverData.current_location?.toLatLng(),
-        type: driverData.delivery_driver_type.toDeliveryDriverType(),
-        deliveryDriverState: DeliveryDriverState(
-            status: driverData.status.toAgentStatus(),
-            online: driverData.online,
-            deliveryCompanyId: driverData.delivery_company_id.toString(),
-            deliveryCompanyType:
-                driverData.delivery_company_type.toDeliveryCompanyType()),
-        deliveryDriverId: driverData.id,
-        driverInfo: DeliveryDriverUserInfo(
-          hasuraId: driverData.id,
-          image: driverData.user.image,
-          language: driverData.user.language_id.toString().toLanguageType(),
-          name: driverData.user.name,
-        ),
-      );
+          deliveryDriverState: DeliveryDriverState(
+              status: driverData.status.toAgentStatus(),
+              online: driverData.online,
+              deliveryCompanyId: driverData.delivery_company_id.toString(),
+              deliveryCompanyType:
+                  driverData.delivery_company_type.toDeliveryCompanyType()),
+          deliveryDriverId: driverData.id,
+          driverInfo: DeliveryDriverUserInfo(
+            hasuraId: driverData.user.id,
+            image: driverData.user.image,
+            language: driverData.user.language_id.toString().toLanguageType(),
+            name: driverData.user.name,
+          ),
+          type: DeliveryDriverType.Delivery_driver);
     }).toList();
     return drivers;
   }
@@ -64,6 +61,8 @@ Future<DeliveryDriver?> get_driver_by_user_id(
     {required int userId, bool withCache = true}) async {
   final QueryResult<Query$getDriversByUserId> response = await _db.graphQLClient
       .query$getDriversByUserId(Options$Query$getDriversByUserId(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
           variables: Variables$Query$getDriversByUserId(userId: userId)));
 
   if (response.parsedData?.delivery_driver == null) {
@@ -76,21 +75,19 @@ Future<DeliveryDriver?> get_driver_by_user_id(
         response.parsedData!.delivery_driver;
     if (data.isNotEmpty) {
       return DeliveryDriver(
-        type: data.first.delivery_driver_type.toDeliveryDriverType(),
-        deliveryDriverState: DeliveryDriverState(
-            status: data.first.status.toAgentStatus(),
-            online: data.first.online,
-            deliveryCompanyId: data.first.delivery_company_id.toString(),
-            deliveryCompanyType:
-                data.first.delivery_company_type.toDeliveryCompanyType()),
-        deliveryDriverId: data.first.id,
-        driverInfo: DeliveryDriverUserInfo(
-          hasuraId: data.first.id,
-          image: data.first.user.image,
-          language: data.first.user.language_id.toString().toLanguageType(),
-          name: data.first.user.name,
-        ),
-      );
+          deliveryDriverState: DeliveryDriverState(
+              status: data.first.status.toAgentStatus(),
+              online: data.first.online,
+              deliveryCompanyId: data.first.delivery_company_id.toString(),
+              deliveryCompanyType:
+                  data.first.delivery_company_type.toDeliveryCompanyType()),
+          deliveryDriverId: data.first.id,
+          driverInfo: DeliveryDriverUserInfo(
+              hasuraId: data.first.user.id,
+              image: data.first.user.image,
+              language: data.first.user.language_id.toString().toLanguageType(),
+              name: data.first.user.name),
+          type: DeliveryDriverType.Delivery_driver);
     }
   }
   return null;
@@ -139,6 +136,55 @@ Future<bool?> update_driver_status_by_id(
   }
 }
 
+Future<bool?> switch_driver_online_status_by_id(
+    {required int driverId,
+    required bool online,
+    bool withCache = true}) async {
+  final QueryResult<Mutation$updateDeliveryDriverById> response =
+      await _db.graphQLClient.mutate$updateDeliveryDriverById(
+          Options$Mutation$updateDeliveryDriverById(
+    fetchPolicy: FetchPolicy.networkOnly,
+    variables: Variables$Mutation$updateDeliveryDriverById(
+        driverId: driverId,
+        driverData: Input$delivery_driver_set_input(online: online)),
+  ));
+
+  if (response.parsedData?.update_delivery_driver_by_pk == null) {
+    throw Exception(
+        " 🚨🚨 Updating driver  $driverId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    mezDbgPrint(
+        "Updating driver mutation ✅✅ ===>${response.parsedData?.update_delivery_driver_by_pk}");
+    final bool data = response.parsedData!.update_delivery_driver_by_pk!.online;
+    return data;
+  }
+}
+
+Future<Geography?> update_driver_location_by_id(
+    {required int driverId,
+    required double lat,
+    required double long,
+    bool withCache = true}) async {
+  final QueryResult<Mutation$updateDriverLocation> response = await _db
+      .graphQLClient
+      .mutate$updateDriverLocation(Options$Mutation$updateDriverLocation(
+    variables: Variables$Mutation$updateDriverLocation(
+        driverId: driverId,
+        data: Input$delivery_driver_set_input(
+            current_location: Geography(lat, long))),
+  ));
+
+  if (response.parsedData?.update_delivery_driver_by_pk?.current_location ==
+      null) {
+    throw Exception(
+        " 🚨🚨 Updating driver  $driverId exceptions 🚨🚨 \n ${response.exception}");
+  } else {
+    final Mutation$updateDriverLocation$update_delivery_driver_by_pk data =
+        response.parsedData!.update_delivery_driver_by_pk!;
+    return data.current_location;
+  }
+}
+
 Future<bool?> delete_delivery_driver_by_id(
     {required int driverId, bool withCache = true}) async {
   final QueryResult<Mutation$deleteDriverById> response =
@@ -156,4 +202,20 @@ Future<bool?> delete_delivery_driver_by_id(
         "Deleting driver mutation ✅✅ ===>${response.parsedData?.delete_delivery_driver_by_pk}");
     return true;
   }
+}
+
+Stream<AgentStatus> listen_driver_status({required int driverId}) {
+  return _db.graphQLClient
+      .subscribe$driverStatusStream(Options$Subscription$driverStatusStream(
+          variables:
+              Variables$Subscription$driverStatusStream(userId: driverId)))
+      .map((QueryResult<Subscription$driverStatusStream> event) {
+    if (event.parsedData?.delivery_driver == null ||
+        event.parsedData!.delivery_driver.isEmpty) {
+      throw Exception(
+          "🚨🚨 Stream on operator status exceptions =>${event.exception}");
+    } else {
+      return event.parsedData!.delivery_driver.first.status.toAgentStatus();
+    }
+  });
 }

@@ -1,18 +1,19 @@
 import 'package:get/get.dart'; // getX
-import 'package:mezcalmos/CustomerApp/pages/Cards/CardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustomerWrapper.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/LaundriesListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/LaundryCurrentOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/LaundryOrderRequestView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/SingleLaundry/SingleLaundryScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Orders/ListOrdersScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ListRestaurantsScreen/ListRestaurantsScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewCartScreen/ViewCartScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewItemScreen/ViewItemScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/CustomerRestaurantView.dart';
-import 'package:mezcalmos/CustomerApp/pages/SavedLocations/SavedLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/CustCartView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -24,7 +25,8 @@ const String kTaxiRequestRoute = '/taxiRequest';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
-const String kViewRestaurantItemRoute = '/items/:restaurantId/:itemId';
+const String kViewRestaurantItemRoute =
+    '/items/:restaurantId/:itemId/:cartItemId';
 const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
@@ -39,7 +41,9 @@ const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
 
-String getRestaurantRoute(int restaurantId) {
+String getRestaurantRoute(
+  int restaurantId,
+) {
   return kRestaurantRoute.replaceFirst(
       ":restaurantId", restaurantId.toString());
 }
@@ -48,9 +52,9 @@ String getSingleLaundryRoute(String laundryId) {
   return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
 }
 
-String getItemRoute(String restaurantId, int itemId) {
+String getItemRoute(int restaurantId, int itemId) {
   return kViewRestaurantItemRoute
-      .replaceFirst(":restaurantId", restaurantId)
+      .replaceFirst(":restaurantId", "$restaurantId")
       .replaceFirst(":itemId", itemId.toString());
 }
 
@@ -80,11 +84,11 @@ class XRouter {
         // restaurant Routes
         GetPage(
           name: kOrdersRoute,
-          page: () => ListOrdersScreen(),
+          page: () => CustomerOrdersListView(),
         ),
         GetPage(
           name: kRestaurantsRoute,
-          page: () => ListRestaurantsScreen(),
+          page: () => CustRestaurantListView(),
         ),
         GetPage(
           name: kRestaurantRoute,
@@ -95,7 +99,7 @@ class XRouter {
         ),
         GetPage(
           name: kViewRestaurantItemRoute,
-          page: () => ViewItemScreen(
+          page: () => CustItemView(
             viewItemScreenMode: ViewItemScreenMode.AddItemMode,
           ),
           transitionDuration: Duration(milliseconds: 500),
@@ -103,15 +107,15 @@ class XRouter {
         ),
         GetPage(
           name: kCartItemRoute,
-          page: () => ViewItemScreen(
-              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          page: () =>
+              CustItemView(viewItemScreenMode: ViewItemScreenMode.EditItemMode),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),
         GetPage(
           name: kCartItemRoute,
-          page: () => ViewItemScreen(
-              viewItemScreenMode: ViewItemScreenMode.EditItemMode),
+          page: () =>
+              CustItemView(viewItemScreenMode: ViewItemScreenMode.EditItemMode),
           transitionDuration: Duration(milliseconds: 500),
           transition: Transition.rightToLeft,
         ),
@@ -156,7 +160,7 @@ class XRouter {
         ),
         // Laundry routes
         GetPage(name: kLaundriesListRoute, page: () => LaundriesListView()),
-        GetPage(name: kSavedCards, page: () => SavedCardsListView()),
+        GetPage(name: kSavedCards, page: () => CustCardsListView()),
 
         GetPage(
           name: kLaundryOrderRequest,

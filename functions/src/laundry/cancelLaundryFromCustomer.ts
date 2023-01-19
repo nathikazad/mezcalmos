@@ -4,13 +4,13 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { finishOrder } from "./helper";
 import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-import { DeliveryAdmin } from "../shared/models/DeliveryAdmin";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 // import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import * as laundryNodes from "../shared/databaseNodes/services/laundry";
+import { DeliveryAdmin } from "../shared/models/Generic/Delivery";
 
 // Customer Canceling
 export async function cancelFromCustomer(userId: string, data: any) {
@@ -59,7 +59,7 @@ export async function cancelFromCustomer(userId: string, data: any) {
 
   deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
     let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    laundryNodes.laundryOperators(order.serviceProviderId!).once('value').then((snapshot) => {
+    laundryNodes.laundryOperators(order.serviceProviderId!.toString()).once('value').then((snapshot) => {
       let laundryOperators: Record<string, boolean> = snapshot.val();
       notifyOthersCancelledOrder(deliveryAdmins, parseInt(orderId), order, laundryOperators);
     });

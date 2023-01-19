@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
@@ -18,12 +17,12 @@ class DeliveryCostSettingViewController {
   RxBool isEditing = RxBool(false);
   RxnNum previewCost = RxnNum();
   late int serviceProviderId;
-  late DeliveryServiceType serviceProviderType;
+  late ServiceProviderType serviceProviderType;
 
   // inti //
   Future<void> init(
       {required int serviceProviderId,
-      required DeliveryServiceType serviceProviderType}) async {
+      required ServiceProviderType serviceProviderType}) async {
     this.serviceProviderId = serviceProviderId;
     this.serviceProviderType = serviceProviderType;
     try {

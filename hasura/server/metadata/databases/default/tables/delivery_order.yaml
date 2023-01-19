@@ -1,0 +1,359 @@
+table:
+  name: order
+  schema: delivery
+object_relationships:
+  - name: chat_with_customer
+    using:
+      foreign_key_constraint_on: chat_with_customer_id
+  - name: chat_with_service_provider
+    using:
+      foreign_key_constraint_on: chat_with_service_provider_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: customer_review_by_driver
+    using:
+      foreign_key_constraint_on: customer_review_by_driver_id
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
+  - name: delivery_driver
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_driver_id: id
+          delivery_driver_type: delivery_driver_type
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+  - name: delivery_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_driver_id: id
+          delivery_driver_type: delivery_driver_type
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: delivery
+  - name: driver_review_by_customer
+    using:
+      foreign_key_constraint_on: driver_review_by_customer_id
+  - name: driver_review_by_service_provider
+    using:
+      foreign_key_constraint_on: driver_review_by_service_provider_id
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+  - name: restaurant_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_driver_id: id
+          delivery_driver_type: delivery_driver_type
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: restaurant
+  - name: restaurant_order
+    using:
+      foreign_key_constraint_on:
+        column: delivery_id
+        table:
+          name: order
+          schema: restaurant
+  - name: service_provider_review_by_driver
+    using:
+      foreign_key_constraint_on: service_provider_review_by_driver_id
+computed_fields:
+  - name: in_process
+    definition:
+      function:
+        name: delivery_in_process
+        schema: public
+  - name: notification_token
+    definition:
+      function:
+        name: delivery_notification_token
+        schema: public
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - current_gps
+        - dropoff_gps
+        - pickup_gps
+        - chat_with_customer_id
+        - chat_with_service_provider_id
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_driver_id
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - id
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - delivery_cost
+        - package_cost
+        - dropoff_address
+        - order_type
+        - payment_type
+        - pickup_address
+        - schedule_time
+        - trip_polyline
+        - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
+        - actual_delivered_time
+        - actual_package_ready_time
+        - cancellation_time
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - order_time
+        - trip_distance
+        - trip_duration
+        - status
+        - service_provider_type
+        - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
+        - actual_delivered_time
+        - actual_package_ready_time
+        - cancellation_time
+        - chat_with_customer_id
+        - chat_with_service_provider_id
+        - current_gps
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_cost
+        - delivery_driver_id
+        - delivery_driver_type
+        - direction
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - dropoff_address
+        - dropoff_gps
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - id
+        - order_time
+        - order_type
+        - package_cost
+        - payment_type
+        - pickup_address
+        - pickup_gps
+        - schedule_time
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - service_provider_type
+        - status
+        - trip_distance
+        - trip_duration
+        - trip_polyline
+      computed_fields:
+        - in_process
+      filter:
+        delivery_driver:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - pickup_gps
+        - pickup_address
+        - dropoff_gps
+        - dropoff_address
+        - delivery_driver_type
+        - delivery_driver_id
+        - chat_with_service_provider_id
+        - chat_with_customer_id
+        - payment_type
+        - estimated_package_ready_time
+        - actual_package_ready_time
+        - estimated_arrival_at_pickup_time
+        - actual_arrival_at_pickup_time
+        - estimated_arrival_at_dropoff_time
+        - actual_arrival_at_dropoff_time
+        - actual_delivered_time
+        - status
+        - driver_review_by_service_provider_id
+        - driver_review_by_customer_id
+        - service_provider_review_by_driver_id
+        - customer_review_by_driver_id
+        - customer_id
+        - service_provider_id
+        - service_provider_type
+        - trip_polyline
+        - delivery_cost
+        - package_cost
+        - current_gps
+        - trip_distance
+        - trip_duration
+        - order_time
+        - cancellation_time
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - current_gps
+        - dropoff_gps
+        - pickup_gps
+        - chat_with_customer_id
+        - chat_with_service_provider_id
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_driver_id
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - id
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - delivery_cost
+        - package_cost
+        - dropoff_address
+        - payment_type
+        - pickup_address
+        - service_provider_type
+        - trip_polyline
+        - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
+        - actual_delivered_time
+        - actual_package_ready_time
+        - cancellation_time
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - trip_distance
+        - trip_duration
+        - status
+        - delivery_driver_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - current_gps
+        - dropoff_gps
+        - pickup_gps
+        - chat_with_customer_id
+        - chat_with_service_provider_id
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_driver_id
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - id
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - delivery_cost
+        - package_cost
+        - dropoff_address
+        - order_type
+        - payment_type
+        - pickup_address
+        - schedule_time
+        - trip_polyline
+        - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
+        - actual_delivered_time
+        - actual_package_ready_time
+        - cancellation_time
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - order_time
+        - trip_distance
+        - trip_duration
+        - status
+        - service_provider_type
+        - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: delivery_driver
+    permission:
+      columns:
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+      filter:
+        delivery_driver:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: delivery_operator
+    permission:
+      columns:
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+      filter:
+        delivery_operator:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_package_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

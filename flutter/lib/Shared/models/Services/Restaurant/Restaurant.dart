@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -35,7 +35,7 @@ class Restaurant extends Service {
 
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
-  List<RestaurantOperator> operators = [];
+  List<Operator> operators = [];
   List<Review> reviews = <Review>[];
   num? rate;
   bool selfDelivery;
@@ -90,9 +90,10 @@ class Restaurant extends Service {
         Schedule.fromData(restaurantData["details"]["schedule"]);
 
     final PaymentInfo paymentInfo =
-        restaurantData["details"]["paymentInfo"] != null
-            ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
-            : PaymentInfo();
+        // restaurantData["details"]["paymentInfo"] != null
+        //     ? PaymentInfo.fromData(restaurantData["details"]["paymentInfo"])
+        //     :
+        PaymentInfo();
 
     final LanguageType primaryLanguage = restaurantData["details"]?["language"]
                 ?["primary"]
@@ -176,6 +177,8 @@ class Restaurant extends Service {
                     .isAtSameMomentAs(DateTime.now().toLocal())))
         .toList();
   }
+
+  int get restaurantId => info.hasuraId;
 
   List<Category> get getAvailableCategories {
     List<Category> categories = _categories
@@ -324,9 +327,7 @@ class Restaurant extends Service {
   }
 
   bool isOpen() {
-// TODO:544D-HASURA
-    return true;
-    // return state.isOpen && (schedule?.isOpen() ?? true);
+    return state.isOpen && (schedule?.isOpen() ?? true);
   }
 
   Restaurant copyWith({

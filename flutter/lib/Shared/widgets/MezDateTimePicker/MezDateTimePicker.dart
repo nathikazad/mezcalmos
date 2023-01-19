@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -8,7 +9,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezDateTimePicker/Controllers/MezDateTimePickerController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -22,6 +22,7 @@ class MezDateTimePicker extends StatefulWidget {
       required this.numberOfDaysInterval,
       required this.serviceSchedule,
       this.title,
+      this.fixed7days = false,
       this.periodOfTime,
       this.confirmBtnText})
       : super(key: key);
@@ -31,6 +32,7 @@ class MezDateTimePicker extends StatefulWidget {
   final int numberOfDaysInterval;
   final Schedule serviceSchedule;
   final String? title;
+  final bool fixed7days;
   final String? confirmBtnText;
 
   @override
@@ -43,6 +45,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
   void initState() {
     _controller.init(
         initialDate: widget.startDate,
+        fixed7days: widget.fixed7days,
         numberOfdays: widget.numberOfDaysInterval,
         initPeriod: widget.periodOfTime,
         schedule: widget.serviceSchedule);
@@ -52,7 +55,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

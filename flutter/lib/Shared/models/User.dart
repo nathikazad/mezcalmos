@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -73,6 +74,20 @@ class UserInfo {
   //       image: image ?? _image,
   //       language: language ?? this.language);
   // }
+
+  UserInfo clone({
+    String? name,
+    String? image,
+    LanguageType? language,
+  }) {
+    return UserInfo(
+      firebaseId: firebaseId,
+      hasuraId: hasuraId,
+      name: name ?? _name,
+      image: image ?? _image,
+      language: language ?? this.language,
+    );
+  }
 }
 
 class MainUserInfo {

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -7,14 +7,12 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
-import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
-import 'package:mezcalmos/Shared/graphql/saved_location/saved_location.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
+import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class CustomerAuthController extends GetxController {
   Rxn<Customer> _customer = Rxn<Customer>();
@@ -51,9 +49,14 @@ class CustomerAuthController extends GetxController {
     if (_cus == null) {
       _cus = await set_customer_info(
           app_version: _appVersion, user_id: _authController.hasuraUserId!);
-      mezDbgPrint("[]9090] : setting customr :: result :: $_cus! ");
     }
+    _cus?.savedLocations = await get_customer_locations(
+        customer_id: _authController.hasuraUserId!);
+
     _customer.value = _cus;
+    _customer.value?.savedLocations = _cus?.savedLocations ?? [];
+    mezDbgPrint(
+        "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
     print("[+] Customer currently using App v$_appVersion");
     await set_customer_app_version(
@@ -61,18 +64,40 @@ class CustomerAuthController extends GetxController {
     // setting device notification
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null)
-      await set_notification_token(
-        token: deviceNotificationToken,
-        customer_id: _authController.hasuraUserId!,
-      );
-    // ignore: always_specify_types, unawaited_futures
-    getCustomerCart(customerId: _authController.hasuraUserId!).then((value) {
-      mezDbgPrint("[JJ] -CART-LEN-  ${value?.cartItems.length}");
-      if (value == null) {
-        create_customer_cart();
+    if (deviceNotificationToken != null) {
+      mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
+      unawaited(saveNotificationToken());
+    }
+  }
+
+  Future<void> saveNotificationToken() async {
+    final String? deviceNotificationToken =
+        await _notificationsController.getToken();
+    final NotificationInfo? notifInfo =
+        await get_notif_info(userId: _authController.hasuraUserId!);
+
+    try {
+      if (notifInfo != null &&
+          deviceNotificationToken != null &&
+          notifInfo.token != deviceNotificationToken) {
+        // ignore: unawaited_futures
+        update_notif_info(
+            notificationInfo: NotificationInfo(
+                userId: _authController.hasuraUserId!,
+                appType: "customer",
+                id: notifInfo.id,
+                token: deviceNotificationToken));
+      } else if (deviceNotificationToken != null && notifInfo == null) {
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: _authController.hasuraUserId!,
+            token: deviceNotificationToken,
+            appType: "customer");
       }
-    });
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void saveNewLocation(SavedLocation savedLocation) {
@@ -82,11 +107,16 @@ class CustomerAuthController extends GetxController {
   }
 
   void editLocation(SavedLocation savedLocation) {
-    update_saved_location(saved_location: savedLocation);
+    update_saved_location(savedLocation: savedLocation);
   }
 
-  void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    update_saved_location(saved_location: newDefaultLocation);
+  Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {
+    await set_default_location(
+        userId: _authController.hasuraUserId!,
+        defaultLocationId: newDefaultLocation.id!);
+    unawaited(get_customer_locations(customer_id: _authController.hasuraUserId!)
+        .then((List<SavedLocation> value) =>
+            _customer.value?.savedLocations = value));
   }
 
   void deleteLocation(SavedLocation savedLocation) {
@@ -100,27 +130,6 @@ class CustomerAuthController extends GetxController {
     return customer?.savedLocations.firstWhere((SavedLocation savedLocation) {
       return savedLocation.id == locationId;
     }, orElse: null).location;
-  }
-
-  Future<MainUserInfo> getUserInfoById(String id) async {
-    final DataSnapshot data =
-        await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
-    return MainUserInfo.fromData(data.value);
-  }
-
-  Future<void> getCards() async {
-    mezDbgPrint(
-        "Cards value ==========>>>>${customerCardsNode(_authController.fireAuthUser!.uid)}");
-    await _databaseHelper.firebaseDatabase
-        .ref()
-        .child(customerCardsNode(_authController.fireAuthUser!.uid))
-        .get()
-        // ignore: avoid_annotating_with_dynamic
-        .then((dynamic value) {
-      value.value.forEach((key, value) {
-        customer?.savedCards.add(CreditCard.fromData(id: key, data: value));
-      });
-    });
   }
 
   @override

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
@@ -13,7 +14,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 enum PickLocationMode { AddNewLocation, EditLocation, NonLoggedInPick }
 
@@ -49,7 +49,7 @@ class _PickLocationViewState extends State<PickLocationView> {
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
       currentLatLng = Get.arguments as LatLng;
-      mezDbgPrint(currentLatLng);
+      mezDbgPrint("Current latlng from recent route =>>>>>$currentLatLng");
       geoCodeAndSetLocation(currentLatLng!);
     } else {
       mezDbgPrint("Iniiit");

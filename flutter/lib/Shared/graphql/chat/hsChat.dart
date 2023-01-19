@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -62,20 +64,25 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     ),
   );
 
-  mezDbgPrint("[666] ${_chat.parsedData?.chat_by_pk}");
+  mezDbgPrint(
+      "[666] ${Get.find<SettingsController>().appType.toNormalString()} ");
   mezDbgPrint("[666] ${_chat.data}");
   if (_chat.hasException || _chat.parsedData?.chat_by_pk == null) {
     mezDbgPrint("[+] called get_chat_info :: Exception :: ${_chat.exception}");
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
-    mezDbgPrint("Messages ===> ${_chat.parsedData!.chat_by_pk!.messages}");
+    mezDbgPrint(
+        " 📥📥📥 Chat info ===> ${_chat.parsedData!.chat_by_pk!.chat_info}");
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
-        chatTite: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        chatTite: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatTitle'],
-        chatImg: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        chatImg: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatImage'],
-        parentlink: _chat.parsedData!.chat_by_pk!.chat_info!['CustomerApp']
+        parentlink: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
             ['parentLink'],
       ),
       creationTime:
@@ -124,8 +131,8 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
           (QueryResult<Subscription$listen_on_chat_messages> event) {
     mezDbgPrint("Event from Chat::Messages 🚀🚀🚀 $event");
     final List<Message> msgs = [];
-    final List<dynamic> chatMsgs = event.parsedData?.chat_by_pk?.messages;
-    chatMsgs.forEach((_msg) {
+    final List<dynamic>? chatMsgs = event.parsedData?.chat_by_pk?.messages;
+    chatMsgs?.forEach((_msg) {
       final Map<String, dynamic> msg =
           _msg as Map<String, dynamic>; //mapFromJson(_msg as String);
       msgs.add(

@@ -11,20 +11,20 @@ class Geography {
 Geography geographyFromJson(data) {
   final List<dynamic> coordinates = data["coordinates"];
 
-  return Geography(
-    double.parse(coordinates[1].toString()),
-    double.parse(coordinates[0].toString()),
-  );
+  return Geography(double.parse(coordinates[1].toString()),
+      double.parse(coordinates[0].toString()));
 }
 
-dynamic geographyToJson(Geography geography) => <String, dynamic>{
-      "type": "Point",
-      "crs": {
-        "type": "name",
-        "properties": {"name": "urn:ogc:def:crs:EPSG::4326"}
-      },
-      "coordinates": [geography.latitude, geography.longitude]
-    };
+dynamic geographyToJson(Geography geography) {
+  return <String, dynamic>{
+    "type": "Point",
+    "crs": {
+      "type": "name",
+      "properties": {"name": "urn:ogc:def:crs:EPSG::4326"}
+    },
+    "coordinates": [geography.longitude, geography.latitude]
+  };
+}
 
 double moneyFromJson(String data) {
   final String str = data.split('\$').last.replaceAll(",", "");

@@ -1,7 +1,30 @@
 #!/usr/bin/env python3
-
-from sys import argv
+# python3 getSchema.py dl-stage-schema
+# OR
+# python3 getSchema.py dl-local-schema
 import os
+import sys
+
+if(len(sys.argv) > 1):
+  output = os.popen('npm list -g graphql-zeus').read()
+  if 'zeus' not in output:
+    print('zeus not installed')
+    os.system('npm install -g graphql-zeus@2.8.6')
+  else:
+    print('zeus installed')
+  if os.path.exists("schema.graphql"): 
+    os.remove("schema.graphql")
+  if os.path.exists("schema.graphql.dart"):
+    os.remove("schema.graphql.dart")
+  os.chdir('../../../../hasura/library')
+  if(sys.argv[1] == 'dl-local-schema'):
+    os.system('npm run generate-gql-client')
+  else:
+    os.system('npm run generate-gql-client-staging')
+    
+  os.chdir('../../flutter/lib/Shared/graphql')
+  os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
+os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 #download
 

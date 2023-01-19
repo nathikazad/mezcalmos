@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/firebaseNodes/restaurantNodes.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/serviceProviderNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/Operators/RestaurantOperator.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -41,14 +41,14 @@ class RestaurantsInfoController extends GetxController {
     });
   }
 
-  Future<RestaurantOperator?> getOperatorById(String id) async {
+  Future<Operator?> getOperatorById(String id) async {
     final DataSnapshot data = await _databaseHelper.firebaseDatabase
         .ref()
         .child(operatorAuthNode(operatorType: OperatorType.Restaurant, uid: id))
         .get();
 
     if (data.exists) {
-      final RestaurantOperator op = RestaurantOperator.fromData(id, data.value);
+      final Operator op = Operator.fromData(id, data.value);
       return op;
     }
     return null;

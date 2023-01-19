@@ -105,10 +105,11 @@ extension parseDateTime on DateTime {
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
     final DateFormat formatLongDay = DateFormat.MMMd(userLangCode);
-    final DateFormat formatDay = DateFormat.E(userLangCode);
+    final DateFormat formatDay = DateFormat.EEEE(userLangCode);
+    final DateFormat formatMonth = DateFormat.MMMd(userLangCode);
 
-    if (cDate.difference(toLocal()).inDays < 7) {
-      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(toLocal())}";
+    if (cDate.difference(toLocal()).inDays.abs() < 7) {
+      return "${formatDay.format(toLocal()).replaceFirst(".", "")}, ${formatMonth.format(toLocal()).replaceFirst(".", "")} ${DateFormat("hh:mm a").format(toLocal())}";
     } else {
       return "${formatLongDay.format(toLocal())} ${DateFormat("hh:mm a").format(toLocal())}";
     }

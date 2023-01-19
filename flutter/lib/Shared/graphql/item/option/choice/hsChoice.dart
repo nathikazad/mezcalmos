@@ -26,7 +26,7 @@ Future<Choice?> get_choice_by_id(int choiceId) async {
     final Query$getChoiceById$restaurant_choice_by_pk data =
         response.parsedData!.restaurant_choice_by_pk!;
     final Choice choice = Choice(
-        id: data.id.toString(),
+        id: data.id,
         nameId: data.name.id,
         name: toLanguageMap(translations: data.name.translations),
         cost: data.cost);

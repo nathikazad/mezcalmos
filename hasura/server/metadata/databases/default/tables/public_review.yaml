@@ -11,7 +11,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: customer
-          schema: public
+          schema: customer
 insert_permissions:
   - role: customer
     permission:
@@ -67,12 +67,13 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - created_at
         - from_entity_id
+        - from_entity_type
         - id
+        - note
         - rating
         - to_entity_id
-        - from_entity_type
-        - note
         - to_entity_type
       filter: {}
   - role: delivery_driver

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
+import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -25,9 +27,9 @@ class AuthController extends GetxController {
   RxnInt _hasuraUserId = RxnInt();
   int? get hasuraUserId => _hasuraUserId.value;
 
-  UserInfo? _userInfo;
-  UserInfo? get user => _userInfo;
-  set user(UserInfo? _u) => _userInfo = _u;
+  Rxn<UserInfo> _userInfo = Rxn();
+  UserInfo? get user => _userInfo.value;
+  void set setUserInfo(UserInfo? _u) => _userInfo.value = _u;
 
   StreamController<fireAuth.User?> _authStateStreamController =
       StreamController<fireAuth.User?>.broadcast();
@@ -101,9 +103,10 @@ class AuthController extends GetxController {
     mezDbgPrint(
         "[777] fetchingUser Info from hasure using firebaseid : ${fireAuthUser?.uid} \n hasura id : $hasuraUserId ");
 
-    _userInfo = await get_user_by_hasura_id(hasuraId: _hasuraUserId.value!);
+    _userInfo.value =
+        await get_user_by_hasura_id(hasuraId: _hasuraUserId.value!);
     mezDbgPrint(
-        "[77] =====> fetchUserInfoFromHasura:: userInfo ===> ${_userInfo?.toFirebaseFormatJson()}");
+        "[77] =====> fetchUserInfoFromHasura:: userInfo ===> ${_userInfo.value?.toFirebaseFormatJson()}");
   }
 
   bool isDisplayNameSet() {
@@ -145,6 +148,17 @@ class AuthController extends GetxController {
     required File imageFile,
     bool isCompressed = false,
   }) async {
+    File compressedFile = imageFile;
+    if (isCompressed == false) {
+      // this holds userImgBytes of the original
+      final Uint8List originalBytes = await imageFile.readAsBytes();
+      // this is the bytes of our compressed image .
+      final Uint8List _compressedVersion =
+          await compressImageBytes(originalBytes);
+      // Get the actual File compressed
+      compressedFile = await writeFileFromBytesAndReturnIt(
+          filePath: imageFile.path, imgBytes: _compressedVersion);
+    }
     String _uploadedImgUrl;
     final List<String> splitted = imageFile.path.split('.');
     final String imgPath =
@@ -152,7 +166,7 @@ class AuthController extends GetxController {
     try {
       await firebase_storage.FirebaseStorage.instance
           .ref(imgPath)
-          .putFile(imageFile);
+          .putFile(compressedFile);
     } on firebase_core.FirebaseException catch (e) {
       mezDbgPrint(e.message.toString());
     } finally {
@@ -187,23 +201,20 @@ class AuthController extends GetxController {
 
   Future<void> editUserProfile(String? name, String? compressedImageUrl) async {
     if (name != null) {
-      // TODO: set hasura name
-      // await _databaseHelper.firebaseDatabase
-      //     .ref()
-      //     .child(userInfoNode(fireAuthUser!.uid))
-      //     .child('name')
-      //     .set(name);
       await change_username(userId: user!.hasuraId, name: name);
     }
     if (compressedImageUrl != null && compressedImageUrl.isURL) {
       // TODO: set hasura compressed_image
-      // await _databaseHelper.firebaseDatabase
-      //     .ref()
-      //     .child(userInfoNode(fireAuthUser!.uid))
-      //     .child('image')
-      //     .set(compressedImageUrl);
+
       await change_user_img(userId: user!.hasuraId, img: compressedImageUrl);
     }
+  }
+
+  Future<void> updateUserProfile() async {
+    mezDbgPrint(
+        "👋 updating user info payload ==>${_userInfo.value?.toFirebaseFormatJson()}");
+    _userInfo.value = await update_user_info(
+        userId: hasuraUserId!, userInfo: _userInfo.value!);
   }
 
   Future<void> signOut() async {

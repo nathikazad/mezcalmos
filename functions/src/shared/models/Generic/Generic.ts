@@ -7,13 +7,6 @@ export interface Location {
   address?: string;
 }
 
-// export interface GPS {
-//   type: string;
-//   coordinates: [number, number];
-// }
-
-
-
 export interface Review {
   rating: number,
   fromEntityId: number,
@@ -28,24 +21,28 @@ export enum Language {
 }
 
 export enum AppType {
-  CustomerWeb = "customer_web",
-  CustomerMobile = "customer_mobile",
+  Customer = "customer",
   RestaurantApp = "restaurant",
   DeliveryApp = "delivery",
   DeliveryAdmin = "delivery_admin",
   MezAdmin = "mez_admin"
 }
+export const ChatInfoAppName: Record<AppType, string> = {
+  [AppType.Customer]: "CustomerApp",
+  [AppType.DeliveryAdmin]: "DeliveryAdminApp",
+  [AppType.DeliveryApp]: "DeliveryApp",
+  [AppType.MezAdmin]: "MezAdminApp",
+  [AppType.RestaurantApp]: "RestaurantApp"
+}
 
 export const AppParticipant: Record<AppType, ParticipantType> = {
-  [AppType.CustomerMobile]: ParticipantType.Customer,
-  [AppType.CustomerWeb]: ParticipantType.Customer,
+  [AppType.Customer]: ParticipantType.Customer,
   [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
   [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
   [AppType.MezAdmin]: ParticipantType.MezAdmin,
   [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
 }
 
-// export type NotificationInfo = Record<TokenType, string>;
 export interface NotificationInfo {
   token: string;
   AppTypeId: AppType;

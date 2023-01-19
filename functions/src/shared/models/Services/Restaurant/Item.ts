@@ -19,7 +19,6 @@ export interface Item {
   archived: boolean;
   cost: number;
   options?: Array<Option>;
-  // image: string;
 }
 
 export interface Option {

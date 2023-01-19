@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../../models/Generic/Delivery";
 
 export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
   
@@ -16,6 +16,8 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
           id: true,
           firebase_id: true,
           language_id: true,
+          image: true,
+          name: true
         },
         notification_token: true
       }]
@@ -31,7 +33,9 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
       user: {
         id:  response.restaurant_operator_by_pk.user.id,
         firebaseId: response.restaurant_operator_by_pk.user.firebase_id,
-        language: response.restaurant_operator_by_pk.user.language_id as Language
+        language: response.restaurant_operator_by_pk.user.language_id as Language,
+        image: response.restaurant_operator_by_pk.user.image,
+        name: response.restaurant_operator_by_pk.user.name
       },
       notificationInfo: (response.restaurant_operator_by_pk.notification_token) ? {
         AppTypeId: AppType.RestaurantApp,
@@ -52,7 +56,9 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         online: true,
         user: {
           firebase_id: true,
-          language_id: true
+          language_id: true,
+          image: true,
+          name: true
         },
         notification_token: true,
       }]
@@ -73,7 +79,9 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
       user: {
         id: response.delivery_driver_by_pk.user_id,
         firebaseId: response.delivery_driver_by_pk.user.firebase_id,
-        language: response.delivery_driver_by_pk.user.language_id as Language
+        language: response.delivery_driver_by_pk.user.language_id as Language,
+        image: response.delivery_driver_by_pk.user.image,
+        name: response.delivery_driver_by_pk.user.name
       },
       notificationInfo: (response.delivery_driver_by_pk.notification_token) ? {
         AppTypeId: AppType.DeliveryApp,

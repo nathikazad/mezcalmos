@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
-import { PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus } from "../../models/Services/Delivery/DeliveryOrder";
+import { OrderType, PaymentType } from "../../models/Generic/Order";
+import { DeliveryCompanyType, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -21,10 +21,14 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         status: true,
         customer_id: true,
         delivery_cost: true,
+        service_provider_type: true,
+        service_provider_id : true,
         package_cost: true,
         order_time: true,
         delivery_driver_type: true,
         delivery_driver_id: true,
+       
+        order_type: true,
         delivery_driver: {
           id: true,
           delivery_company_type: true,
@@ -55,6 +59,8 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   }
   let delivery: DeliveryOrder = {
     deliveryId: deliveryId,
+    serviceProviderId : response.delivery_order_by_pk.service_provider_id,
+    orderType: response.delivery_order_by_pk.order_type as OrderType,
     pickupLocation: {
       lat: response.delivery_order_by_pk.pickup_gps.coordinates[1],
       lng: response.delivery_order_by_pk.pickup_gps.coordinates[0],
@@ -73,7 +79,8 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryCost: response.delivery_order_by_pk.delivery_cost,
     packageCost: response.delivery_order_by_pk.package_cost,
     orderTime: response.delivery_order_by_pk.order_time,
-    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType
+    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType,
+    serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
   }
   if(!(response.delivery_order_by_pk.delivery_driver_id)) {
     return delivery;
@@ -115,7 +122,75 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       } : undefined,
       deliveryDriverType: DeliveryDriverType.RestaurantOperator
     }
-  } //else if(response.delivery_order_by_pk.delivery_operator) {
-  // }
+  }
   return delivery;
+}
+
+export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
+  let chain = getHasura();
+
+  let response = await chain.query({
+    delivery_order: [{
+      where: {
+        service_provider_type: {
+          _eq: DeliveryCompanyType.DeliveryCompany,
+        }
+      }
+    }, {
+      id: true,
+      pickup_gps: true,
+      dropoff_gps: true,
+      chat_with_customer_id: true,
+      payment_type: true,
+      status: true,
+      customer_id: true,
+      delivery_cost: true,
+      order_time: true,
+      order_type: true,
+      delivery_driver: {
+        delivery_driver_type: true,
+        user: {
+          firebase_id: true,
+          id: true,
+          language_id: true,
+        },
+        notification_token: true,
+      }
+    }]
+  });
+
+  return response.delivery_order.map((d) => {
+    let delivery: DeliveryOrder = {
+      deliveryId: d.id,
+      pickupLocation: {
+        lat: d.pickup_gps.coordinates[1],
+        lng: d.pickup_gps.coordinates[0],
+      },
+      dropoffLocation: {
+        lat: d.dropoff_gps.coordinates[1],
+        lng: d.dropoff_gps.coordinates[0],
+      },
+      chatWithCustomerId: d.chat_with_customer_id,
+      paymentType: d.payment_type as PaymentType,
+      status: d.status as DeliveryOrderStatus,
+      customerId: d.customer_id,
+      deliveryCost: d.delivery_cost,
+      orderTime: d.order_time,
+      orderType: d.order_type as OrderType,
+      deliveryDriver: (d.delivery_driver) ? {
+        userId: d.delivery_driver.user.id,
+        deliveryDriverType: d.delivery_driver.delivery_driver_type as DeliveryDriverType,
+        user: {
+          id: d.delivery_driver.user.id,
+          firebaseId: d.delivery_driver.user.firebase_id,
+          language: d.delivery_driver.user.language_id as Language
+        },
+        notificationInfo: (d.delivery_driver.notification_token) ? {
+          AppTypeId: AppType.DeliveryApp,
+          token: d.delivery_driver.notification_token as string
+        } : undefined,
+      }: undefined
+    }
+    return delivery;
+  })
 }

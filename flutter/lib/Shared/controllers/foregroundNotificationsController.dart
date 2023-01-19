@@ -66,19 +66,21 @@ class ForegroundNotificationsController extends GetxController {
               _displayNotificationsStreamController.add(_notification);
               break;
             case NotificationAction.ShowSnackbarOnlyIfNotOnPage:
-              if (!alreadyOnLinkPage) {
-                _displayNotificationsStreamController.add(_notification);
-              }
+              //   if (!alreadyOnLinkPage) {
+              _displayNotificationsStreamController.add(_notification);
+              //  }
               break;
           }
 
-          if (!alreadyOnLinkPage) {
-            notifications.add(_notification);
-          } else {
-            removeNotification(_notification.id);
-          }
-        } on StateError {
+          // if (!alreadyOnLinkPage) {
+          notifications.add(_notification);
+          // } else {
+          //   removeNotification(_notification.id);
+          // }
+        } catch (e, stk) {
           mezDbgPrint("Invalid notification");
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
         }
       });
     });
@@ -137,5 +139,20 @@ class ForegroundNotificationsController extends GetxController {
     _notificationNodeAddListener?.cancel();
     _notificationNodeRemoveListener?.cancel();
     super.onClose();
+  }
+
+  bool hasNewMessageNotification(int chatId) {
+    mezDbgPrint("🥸 chatId ==========>>>$chatId");
+    notifications().forEach((Notification n) {
+      mezDbgPrint(n.chatId);
+    });
+    mezDbgPrint(
+        "Final value ===>${notifications().where((Notification notification) => notification.notificationType == NotificationType.NewMessage && notification.chatId == chatId).toList().isNotEmpty}");
+    return notifications()
+        .where((Notification notification) =>
+            notification.notificationType == NotificationType.NewMessage &&
+            notification.chatId == chatId)
+        .toList()
+        .isNotEmpty;
   }
 }

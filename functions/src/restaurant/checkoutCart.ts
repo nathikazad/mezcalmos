@@ -10,7 +10,7 @@ import { checkCart } from "../shared/graphql/restaurant/cart/checkCart";
 import { clearCart } from "../shared/graphql/restaurant/cart/clearCart";
 import { setOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { getCart } from "../shared/graphql/restaurant/cart/getCart";
-import { getCustomer } from "../shared/graphql/restaurant/customer/getCustomer";
+import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -19,6 +19,7 @@ import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
+import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
 export interface CheckoutRequest {
   customerAppType: AppType,
@@ -31,8 +32,9 @@ export interface CheckoutRequest {
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
-  selfDelivery: boolean,
-  scheduledTime?: string
+  scheduledTime?: string,
+  stripePaymentId?: string,
+  stripeFees?: number,
 }
 
 export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
@@ -63,8 +65,10 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
+    itemsCost : customerCart.cost,
     deliveryCost: checkoutRequest.deliveryCost,
-    scheduledTime: checkoutRequest.scheduledTime
+    scheduledTime: checkoutRequest.scheduledTime,
+    
   }
 
   console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
@@ -75,18 +79,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     //   order = (await updateOrderIdAndFetchPaymentInfo(orderId, order, data.stripePaymentId, data.stripeFees)) as RestaurantOrder
     // }
 
-    let orderResponse = await createRestaurantOrder(
-      restaurantOrder,
-      restaurant,
-      checkoutRequest.tripDuration,
-      checkoutRequest.tripDistance,
-      checkoutRequest.tripPolyline
-    );
-   
-
-    console.log("[544D] DELIVERY-ORDER ==> ", orderResponse.deliveryOrder);
-    // clear user cart 
-    clearCart(customerId);
+    let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
+ 
     console.log(customer);
     setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
@@ -94,14 +88,24 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(orderResponse.restaurantOrder.orderId!, restaurant);
 
-    if(!(checkoutRequest.selfDelivery)) {
+    if(!(restaurant.selfDelivery)) {
       let assignDetails: AssignCompanyDetails = {
         deliveryCompanyId: 1,
         restaurantOrderId: orderResponse.restaurantOrder.orderId!
       }
       await assignDeliveryCompany(0, assignDetails)
     }
-
+    let paymentDetails: PaymentDetails = {
+      orderId: orderResponse.restaurantOrder.orderId!,
+      orderType: OrderType.Restaurant,
+      serviceProviderId: checkoutRequest.restaurantId
+    }
+    if(checkoutRequest.paymentType == PaymentType.Card) {
+     await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
+    }
+   
+    // clear user cart 
+    clearCart(customerId);
     return <ServerResponse> {
       status: ServerResponseStatus.Success,
       orderId: orderResponse.restaurantOrder.orderId
@@ -166,7 +170,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restau
     linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
   mezAdmins.forEach((m) => {
-      pushNotification(m.user?.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
   });
 }
 

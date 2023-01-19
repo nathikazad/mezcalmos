@@ -1,8 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { DeliveryOrder } from "../../models/Services/Delivery/DeliveryOrder";
+import { DeliveryOrder } from "../../models/Generic/Delivery";
+import { AppType } from "../../models/Generic/Generic";
 
-export async function deleteDeliveryChatMessages(deliveryOrder: DeliveryOrder/*, deliveryDriver: DeliveryDriver*/) {
+export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: DeliveryOrder/*, deliveryDriver: DeliveryDriver*/) {
   let chain = getHasura();
 
   if(deliveryOrder.chatWithServiceProviderId == undefined) {
@@ -11,7 +12,7 @@ export async function deleteDeliveryChatMessages(deliveryOrder: DeliveryOrder/*,
       "No delivery chat with restaurant id"
     );
   }
-  chain.mutation({
+  await chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
         id: deliveryOrder.chatWithCustomerId
@@ -21,10 +22,27 @@ export async function deleteDeliveryChatMessages(deliveryOrder: DeliveryOrder/*,
       }
     }, {
       id: true,
+    }],
+    delete_chat_participant: [{
+      where: {
+        _and: [{
+          chat_id: {
+            _eq: deliveryOrder.chatWithCustomerId
+          },
+        },{
+          app_type_id: {
+            _eq: AppType.DeliveryApp
+          } 
+        }]
+        
+      }
+    }, {
+      affected_rows: true
     }]
   });
 
-  chain.mutation({
+  // let response = await 
+  await chain.mutation({
     update_chat_by_pk: [{
       pk_columns: {
         id: deliveryOrder.chatWithServiceProviderId
@@ -34,7 +52,22 @@ export async function deleteDeliveryChatMessages(deliveryOrder: DeliveryOrder/*,
       }
     }, {
       id: true,
+    }],
+    delete_chat_participant: [{
+      where: {
+        _and: [{
+          chat_id: {
+            _eq: deliveryOrder.chatWithServiceProviderId
+          },
+        },{
+          app_type_id: {
+            _eq: AppType.DeliveryApp
+          } 
+        }]
+        
+      }
+    }, {
+      affected_rows: true
     }]
   });
-
 }

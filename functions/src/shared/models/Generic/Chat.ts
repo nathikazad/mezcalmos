@@ -107,7 +107,7 @@ export interface CallNotificationForQueue extends NotificationForQueue {
 }
 
 export interface ParticipantAgoraDetails {
-  uid: number,
+  // uid: number,
   token: string,
   expirationTime: string
 }

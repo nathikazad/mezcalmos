@@ -11,73 +11,50 @@ mutation addItemToCart($item: restaurant_cart_item_insert_input!) {
   }
 }
 
-
-
 # Remove Item from Cart
-mutation removeItemFromCart($item_id : Int!)
-{
-  delete_restaurant_cart_item_by_pk(id: $item_id)
-  {
-  	id,
+mutation removeItemFromCart($item_id: Int!) {
+  delete_restaurant_cart_item_by_pk(id: $item_id) {
+    id
   }
 }
 
-
-
-
-mutation set_cart_restaurant_id($restaurant_id : Int! , $customer_id: Int!)
-{
-  update_restaurant_cart_by_pk(pk_columns : {customer_id : $customer_id} , _set :{restaurant_id :$restaurant_id})
-  {
-    restaurant {
-       	id
-    		firebase_id
-    		image
-    		language_id
-    		description_id
-    		location_gps
-    		location_text
-    		name
-        self_delivery
-    		#schedule_id
-    		schedule
-    		description {
-      	translations {
-        		language_id
-        		value
-      		}
-    		}
-    		approved
-    		open_status 
-      } 
+mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
+  update_restaurant_cart_by_pk(
+    pk_columns: { customer_id: $customer_id }
+    _set: { restaurant_id: $restaurant_id }
+  ) {
+    restaurant_id
   }
 }
-
-
 
 query getCustomerCart($customer_id: Int!) {
-  customer_by_pk(user_id: $customer_id) {
+  customer_customer_by_pk(user_id: $customer_id) {
     cart {
       restaurant {
-       	id
-    		firebase_id
-    		image
-    		language_id
-    		description_id
-    		location_gps
-    		location_text
-    		name
+        id
+        stripe_info
+        accepted_payments
+        
+        
+
+        firebase_id
+        image
+        language_id
+        description_id
+        location_gps
+        location_text
+        name
         self_delivery
-    		#schedule_id
-    		schedule
-    		description {
-      	translations {
-        		language_id
-        		value
-      		}
-    		}
-    		approved
-    		open_status 
+        #schedule_id
+        schedule
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        approved
+        open_status
       }
       items {
         id
@@ -86,191 +63,186 @@ query getCustomerCart($customer_id: Int!) {
           item_type
           name {
             translations {
-              language_id,
+              language_id
               value
             }
           }
           description {
             translations {
-              language_id,
+              language_id
               value
             }
-          },
-          position,
-          category_id,
-          available,
-          restaurant_id,
-          special_period_end,
-          special_period_start,
-          archived,
+          }
+          options {
+            item_options {
+              id
+              free_choice
+              cost_per_extra
+              option_type
+              position
+              maximum_choice
+              minimum_choice
+              name {
+                id
+                translations {
+                  language_id
+                  value
+                }
+              }
+              choices {
+                option_choices {
+                  available
+                  cost
+                  id
+                  name {
+                    id
+                    translations {
+                      language_id
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
+          position
+          category_id
+          available
+          image
+          restaurant_id
+          special_period_end
+          special_period_start
+          archived
           cost
         }
         cost_per_one
         id
         note
         quantity
+        selected_options
       }
     }
   }
 }
 
-
 # Create a customer Cart
-mutation create_customer_cart($cart : restaurant_cart_insert_input!) {
-  insert_restaurant_cart_one(object : $cart) {
-    customer_id,
-    restaurant_id,
+mutation create_customer_cart($cart: restaurant_cart_insert_input!) {
+  insert_restaurant_cart_one(object: $cart) {
+    customer_id
+    restaurant_id
   }
 }
 
-
 subscription listen_on_customer_cart($customer_id: Int!) {
-  customer_by_pk(user_id: $customer_id) {
+  customer_customer_by_pk(user_id: $customer_id) {
     cart {
-      restaurant_id,
+      restaurant_id
       restaurant {
-       	id
-    		firebase_id
-    		image
-    		language_id
-    		description_id
-    		location_gps
-    		location_text
-    		name
+        id
+        firebase_id
+        stripe_info
+        accepted_payments
+        image
+        language_id
+        description_id
+        location_gps
+        location_text
+        name
         self_delivery
-    		#schedule_id
-    		schedule
-    		description {
-      	translations {
-        		language_id
-        		value
-      		}
-    		}
-    		approved
-    		open_status 
+        #schedule_id
+        schedule
+        description {
+          translations {
+            language_id
+            value
+          }
+        }
+        approved
+        open_status
       }
       items {
         restaurant_item {
+          options {
+            item_options {
+              id
+              free_choice
+              cost_per_extra
+              option_type
+              position
+              maximum_choice
+              minimum_choice
+              name {
+                id
+                translations {
+                  language_id
+                  value
+                }
+              }
+              choices {
+                option_choices {
+                  available
+                  cost
+                  id
+                  name {
+                    id
+                    translations {
+                      language_id
+                      value
+                    }
+                  }
+                }
+              }
+            }
+          }
           item_type
+          image
+          id
           name {
             translations {
-              language_id,
+              language_id
               value
             }
           }
           description {
             translations {
-              language_id,
+              language_id
               value
             }
-          },
-          position,
-          category_id,
-          available,
-          restaurant_id,
-          special_period_end,
-          special_period_start,
-          archived,
+          }
+          position
+          category_id
+          available
+          restaurant_id
+          special_period_end
+          special_period_start
+          archived
           cost
         }
         cost_per_one
         id
         note
         quantity
+        selected_options
       }
     }
   }
 }
 
-
 # Remove all items from Cart by customerId.
-mutation clearCart($customer_id : Int!)
-{
-  delete_restaurant_cart_item(where : {customer_id: {_eq:  $customer_id }})
-  {
-    affected_rows
-  },
-  
-	update_restaurant_cart(where : {customer_id: {_eq:  $customer_id }} , _set: {restaurant_id : null})
-  {
-    affected_rows
-  },
-}
-
-
-# increment/decrement Item quantity.
-mutation update_item_quantity($customer_id : Int!, $item_id: Int!, $quantity :Int!)
-{
-  update_restaurant_cart_item( where: { id : {_eq: $item_id }, _and :{customer_id : {_eq : $customer_id}}}, _set : {quantity: $quantity})
-  {
+mutation clearCart($customer_id: Int!) {
+  delete_restaurant_cart_item(where: { customer_id: { _eq: $customer_id } }) {
     affected_rows
   }
 }
 
-
-
-mutation updateCart($customer_id : Int!, $restaurant_id : Int , $items : [restaurant_cart_item_insert_input!]!)
-{
-  # Update Cart's restaurant id
-  update_restaurant_cart(where: {customer_id: {_eq: $customer_id}}, _set: {restaurant_id: $restaurant_id}) {
-    returning {
-      restaurant {
-       	id
-    		firebase_id
-    		image
-    		language_id
-    		description_id
-    		location_gps
-    		location_text
-    		name
-    		schedule
-    		description {
-      	translations {
-        		language_id
-        		value
-      		}
-    		}
-    		approved
-    		open_status 
-      }
-  	}
-  },
-
-  # We delete all cart's Items
-  delete_restaurant_cart_item(where: {customer_id: {_eq: $customer_id}}) {
-    affected_rows
-  },
-  
-  # We Insert new list of items
-  insert_restaurant_cart_item(objects: $items) {
-    returning {
-         restaurant_item {
-          item_type
-          name {
-            translations {
-              language_id,
-              value
-            }
-          }
-          description {
-            translations {
-              language_id,
-              value
-            }
-          },
-          position,
-          category_id,
-          available,
-          restaurant_id,
-          special_period_end,
-          special_period_start,
-          archived,
-          cost
-        },
-        cost_per_one
-        id
-        note
-        quantity
-      }
-  	}
+mutation updateRestaurantCartItem(
+  $itemId: Int!
+  $itemData: restaurant_cart_item_set_input
+) {
+  update_restaurant_cart_item_by_pk(
+    pk_columns: { id: $itemId }
+    _set: $itemData
+  ) {
+    id
+  }
 }

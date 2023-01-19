@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -132,7 +133,7 @@ class _WrapperState extends State<Wrapper> {
   void redirectIfUserInfosNotSet() {
     if ((!Get.find<AuthController>().isDisplayNameSet() ||
             !Get.find<AuthController>().isUserImgSet()) &&
-        !isCurrentRoute(kUserProfile)) {
+        !isCurrentRoute(kUserWelcomeRoute)) {
       /* KEEEP THIS HERE FOR FUTURE REFRENCE
         We have so far 3 Scenarios here : 
         - The Current route is kOtpConfirmRoute :
@@ -156,7 +157,7 @@ class _WrapperState extends State<Wrapper> {
           kHomeRoute, ModalRoute.withName(kWrapperRoute));
 
       // then we push kUserProfile on top of kHomeRoute
-      MezRouter.toNamed<void>(kUserProfile);
+      MezRouter.toNamed<void>(kUserWelcomeRoute);
       // now the Nav Stack is correct and looks like this :  wrapper > kHomeRoute > kUserProfile
     } else {
       // if user has all infos set and a successfull SignIn then we proceed with the usual.

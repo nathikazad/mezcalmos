@@ -1,14 +1,15 @@
 import { PaymentType } from '../../Generic/Order';
-// import { CustomerInfo, UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { AppType, Language, Location } from '../../Generic/Generic';
-// import { Restaurant } from './Restaurant';
-// import { Delivery } from '../../Generic/Delivery';
+import { Restaurant } from './Restaurant';
+import { OrderStripeInfo } from '../../../../utilities/stripe/model';
+import { DeliveryOrderStatus } from '../../Generic/Delivery';
 
 export interface RestaurantOrder {
   orderId?: number;
   customerId: number;
   restaurantId: number;
+  
   paymentType: PaymentType;
   toLocation: Location;
   estimatedFoodReadyTime?: string;
@@ -30,9 +31,8 @@ export interface RestaurantOrder {
   totalCost?: number;
   chatId?: number;
   scheduledTime?: string;
-
-  // customer?: CustomerInfo;
-  // delivery?: Delivery;
+  restaurant?: Restaurant;
+  stripeInfo?: OrderStripeInfo;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -76,29 +76,6 @@ export enum RestaurantOrderType {
   Delivery = "delivery",
 }
 
-// interface ConstructRestaurantOrderParameters {
-//   cart: Cart,
-//   customer: UserInfo,
-//   restaurant: UserInfo,
-//   stripeFees: number
-// }
-// export function constructRestaurantOrder(
-//   params: ConstructRestaurantOrderParameters): RestaurantOrder {
-//   return <RestaurantOrder>{
-//     ...params.cart,
-//     customer: params.customer,
-//     restaurant: params.restaurant,
-//     orderType: OrderType.Restaurant,
-//     status: RestaurantOrderStatus.OrderReceived,
-//     orderTime: (new Date()).toISOString(),
-//     dropOffShippingCost: params.cart.shippingCost,
-//     totalCostBeforeShipping: params.cart.cost - params.cart.shippingCost - params.stripeFees,
-//     totalCost: params.cart.cost,
-//     refundAmount: 0,
-//     costToCustomer: params.cart.cost
-//   }
-// }
-
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||
     status == RestaurantOrderStatus.CancelledByCustomer ||
@@ -106,7 +83,7 @@ export function orderInProcess(status: RestaurantOrderStatus): boolean {
 }
 
 export interface NewRestaurantOrderNotification extends OrderNotification {
-  restaurant: {
+  restaurant?: {
     name: string,
     image: string,
     id: number
@@ -115,4 +92,5 @@ export interface NewRestaurantOrderNotification extends OrderNotification {
 
 export interface RestaurantOrderStatusChangeNotification extends OrderNotification {
   status: RestaurantOrderStatus
+  deliveryOrderStatus: DeliveryOrderStatus
 }

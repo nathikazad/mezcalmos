@@ -1,0 +1,32 @@
+table:
+  name: subscriber
+  schema: public
+object_relationships:
+  - name: customer
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_id: user_id
+        insertion_order: null
+        remote_table:
+          name: customer
+          schema: customer
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          customer_id: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public

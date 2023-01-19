@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-
-import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -17,9 +14,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class DeliveryCostSettingView extends StatefulWidget {
-  const DeliveryCostSettingView({this.isTab = false, Key? key})
-      : super(key: key);
-  final bool isTab;
+  const DeliveryCostSettingView({
+    Key? key,
+  }) : super(key: key);
+
   @override
   State<DeliveryCostSettingView> createState() =>
       _DeliveryCostSettingViewState();
@@ -29,19 +27,12 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   DeliveryCostSettingViewController viewController =
       DeliveryCostSettingViewController();
   int? serviceProviderId;
-  DeliveryServiceType? serviceProviderType;
+  ServiceProviderType? serviceProviderType;
   @override
   void initState() {
-    mezDbgPrint(
-      "[AAA] DeliveryCostSettingView :: PARAMS  ${Get.parameters['providerType']}",
-    );
-
-    if (Get.parameters['providerId'] != null &&
-        Get.parameters['providerType'] != null) {
-      serviceProviderId = int.tryParse(Get.parameters['providerId']!);
-      serviceProviderType =
-          Get.parameters['providerType']!.toDeliveryProviderType();
-    }
+    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderType =
+        Get.arguments["serviceProviderType"] as ServiceProviderType;
 
     // provide service provider id and service Provider type
     if (serviceProviderId != null && serviceProviderType != null) {
@@ -62,10 +53,8 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.isTab
-          ? null
-          : mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "Delivery Cost"),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          onClick: MezRouter.back, title: "Delivery Cost"),
       body: Column(
         children: [
           Expanded(
@@ -79,20 +68,28 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _costComponent(
-                            controller: viewController.freeKmRange,
-                            suffixTitle: 'Km',
-                            title: 'Free Delivery range'),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Within this distance, the customer won’t be charged for the delivery.",
-                          style: Get.textTheme.bodyText2,
-                        ),
-                        Divider(
-                          height: 35,
-                        ),
+                        if (serviceProviderType != null &&
+                            serviceProviderType ==
+                                ServiceProviderType.Restaurant)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _costComponent(
+                                  controller: viewController.freeKmRange,
+                                  suffixTitle: 'Km',
+                                  title: 'Free Delivery range'),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Within this distance, the customer won’t be charged for the delivery.",
+                                style: Get.textTheme.bodyText2,
+                              ),
+                              Divider(
+                                height: 35,
+                              ),
+                            ],
+                          ),
                         _costComponent(
                             controller: viewController.minCost,
                             suffixTitle: '\$',

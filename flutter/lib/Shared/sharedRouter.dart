@@ -16,14 +16,21 @@ import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissi
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
+import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
+import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
 
 // Routes Keys.
 const String kWrapperRoute = '/wrapper';
+const String kUserWelcomeRoute = '/welcome';
 const String kHomeRoute = '/';
 const String kSplashRoute = '/splash';
 const String kSignInRouteRequired = '/sign_in/required';
@@ -36,12 +43,18 @@ const String kMessagesRoute = '/messages/:chatId';
 const String kMultiLanguagesRoute = '/multiLanguage/:id';
 const String kUnauthorizedRoute = '/unauthorized';
 const String kUserProfile = '/user_profile';
+const String kUserNewProfile = '/profile';
 const String kPickToLocation = '/pick_to_location';
 const String kNotificationsRoute = '/notifications';
 const String kAppNeedsUpdate = '/needs_update';
 const String kAgoraCallScreen = '/agora';
 // const String kInAppReview = '/in-app_review';
 const String kPickLocationWithoutAuth = "/pick_location/noAuth";
+const String kPickDriver = "/pickDriver/:orderId";
+const String kDriversList = "/driversList/:serviceProviderId";
+const String kServicePayments = "/servicePayments/:ServiceProviderId";
+const String kOperatorsList = "/operatorsList/:serviceProviderId";
+const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
@@ -55,7 +68,8 @@ String getMessagesRoute({
   ParticipantType recipientType = ParticipantType.Customer,
   String? recipientId,
 }) {
-  String mainUrl = kMessagesRoute.replaceFirst(":chatId", chatId.toString());
+  final String mainUrl =
+      kMessagesRoute.replaceFirst(":chatId", chatId.toString());
 
   // if (recipientId != null)
   //   mainUrl += "?recipientId=$recipientId";
@@ -85,6 +99,57 @@ bool routeMatch(String routeA, String routeB) {
 
 bool isCurrentRoute(String route) {
   return routeMatch(route, Get.currentRoute);
+}
+
+// shared navigation methods //
+void navigateToPickDriver(
+    {required int deliveryOrderId, required bool showForwardButton}) {
+  final String route = kPickDriver.replaceFirst(":orderId", "$deliveryOrderId");
+  MezRouter.toNamed(kPickDriver, arguments: {
+    "showForwardButton": showForwardButton,
+  });
+}
+
+void navigateToDrivers(
+    {required int serviceProviderId,
+    required ServiceProviderType controllerType}) {
+  final String route =
+      kDriversList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": controllerType,
+    "showAppBar": true,
+  });
+}
+
+void navigateToOperators(
+    {required int serviceProviderId,
+    required ServiceProviderType controllerType}) {
+  final String route =
+      kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": controllerType,
+    "showAppBar": true,
+  });
+}
+
+void navigateToDeliveryCost(
+    {required int serviceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route =
+      kDeliveryCost.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
+}
+
+void navigateToServicePayments(
+    {required int ServiceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route =
+      kServicePayments.replaceFirst(":ServiceProviderId", "$ServiceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
 }
 
 // GetX based Router (For navigating)
@@ -146,5 +211,13 @@ class SharedRouter {
         name: kPickLocationEdit,
         page: () => PickLocationView(PickLocationMode.EditLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
+    GetPage(name: kPickDriver, page: () => PickDriverView()),
+    GetPage(name: kDriversList, page: () => DriversListView()),
+    // GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
+    GetPage(name: kOperatorsList, page: () => OperatorsListView()),
+    GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),
+    GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
+    GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
+    GetPage(name: kUserNewProfile, page: () => UserProfileView()),
   ];
 }

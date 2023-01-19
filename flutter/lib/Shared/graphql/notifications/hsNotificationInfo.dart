@@ -1,8 +1,9 @@
 import 'package:get/instance_manager.dart';
-import 'package:graphql/src/core/query_result.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/__generated/notification_info.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
@@ -34,17 +35,21 @@ Future<void> update_notif_info(
               ),
               id: notificationInfo.id!)));
   if (res.parsedData?.update_notification_info_by_pk == null) {
-    throw Exception("🚨 update notif token failed =>${res.exception}");
+    throw Exception(
+        "🚨 update notif token ${notificationInfo.id} failed =>${res.parsedData?.toJson()}");
   }
 }
 
 Future<NotificationInfo?> get_notif_info({required int userId}) async {
   final QueryResult<Query$getNotifInfoByUserId> res = await _db.graphQLClient
       .query$getNotifInfoByUserId(Options$Query$getNotifInfoByUserId(
+          fetchPolicy: FetchPolicy.noCache,
           variables: Variables$Query$getNotifInfoByUserId(userId: userId)));
   if (res.parsedData?.notification_info == null) {
     throw Exception("🚨 insert notif token failed =>${res.exception}");
   }
+  mezDbgPrint(
+      "😉 Get notif token ===>\n ${res.parsedData!.notification_info.length}");
   final List<Query$getNotifInfoByUserId$notification_info> data =
       res.parsedData!.notification_info;
   if (data.isNotEmpty) {

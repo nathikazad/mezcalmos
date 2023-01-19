@@ -4,6 +4,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+    stripe_info
+
     restaurant {
       id
       firebase_id
@@ -50,12 +52,11 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     to_location_address
     estimated_food_ready_time
     actual_food_ready_time
-    stripe_payment_id
     refund_amount
     delivery_id
     status
     review_id
-        review {
+    review {
       created_at
       from_entity_id
       from_entity_type
@@ -66,7 +67,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       to_entity_type
       customer {
         user {
-           id
+          id
           image
           name
         }
@@ -90,14 +91,29 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     chat_id
     delivery_cost
     delivery {
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
+      trip_polyline
+      trip_distance
+      trip_duration
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
+      chat_with_service_provider_id
+      chat_with_customer_id
       cancellation_time
       current_gps
 
       delivery_cost
+
+      delivery_driver {
+        current_location
+
+        user {
+          id
+          image
+          name
+          firebase_id
+          language_id
+        }
+      }
     }
   }
 }
@@ -106,6 +122,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     id
     notes
     scheduled_time
+    stripe_info
     restaurant {
       id
       firebase_id
@@ -152,12 +169,11 @@ query get_restaurant_order_by_id($order_id: Int!) {
     to_location_address
     estimated_food_ready_time
     actual_food_ready_time
-    stripe_payment_id
     refund_amount
     delivery_id
     status
     review_id
-        review {
+    review {
       created_at
       from_entity_id
       from_entity_type
@@ -192,14 +208,29 @@ query get_restaurant_order_by_id($order_id: Int!) {
     }
     delivery_cost
     delivery {
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
+      trip_polyline
+      trip_distance
+      trip_duration
+      chat_with_service_provider_id
+      chat_with_customer_id
+      id
+    estimated_arrival_at_dropoff_time
+    estimated_arrival_at_pickup_time
       cancellation_time
       current_gps
 
       delivery_cost
+      delivery_driver {
+        current_location
+
+        user {
+          id
+          image
+          name
+          firebase_id
+          language_id
+        }
+      }
     }
   }
 }
@@ -258,13 +289,26 @@ query get_restaurant_past_orders($restaurantId: Int!) {
   }
 }
 
-mutation setRestaurantOrderEstFoodReadyTime($orderId: Int!, $time: timestamptz!) {
-  update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {estimated_food_ready_time: $time}) {
+mutation setRestaurantOrderEstFoodReadyTime(
+  $orderId: Int!
+  $deliveryOrderId: Int!
+  $time: timestamptz!
+) {
+  update_restaurant_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { estimated_food_ready_time: $time }
+  ) {
     estimated_food_ready_time
   }
+   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
+    estimated_package_ready_time
+   }
 }
 mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
-  update_restaurant_order_by_pk(pk_columns: {id: $orderId}, _set: {review_id: $reviewId}) {
+  update_restaurant_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { review_id: $reviewId }
+  ) {
     review_id
     review {
       created_at

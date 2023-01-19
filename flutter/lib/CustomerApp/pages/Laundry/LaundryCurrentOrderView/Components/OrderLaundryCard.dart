@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class OrderLaundryCard extends StatelessWidget {
   const OrderLaundryCard({Key? key, required this.order}) : super(key: key);
@@ -61,18 +60,18 @@ class OrderLaundryCard extends StatelessWidget {
                     )
                   ],
                 )),
-            Obx(
-              () => MessageButton(
-                showRedDot: Get.find<OrderController>()
-                    .orderHaveNewMessageNotifications(order.orderId),
-                onTap: () {
-                  MezRouter.toNamed<void>(getMessagesRoute(
-                      orderId: order.orderId,
-                      chatId: order.orderId,
-                      orderType: OrderType.Laundry,
-                      recipientType: ParticipantType.DeliveryAdmin));
-                },
-              ),
+            MessageButton(
+              onTap: () {
+                MezRouter.toNamed(
+                  getMessagesRoute(
+                    chatId: order.chatId,
+                    recipientType: ParticipantType.Laundry,
+                    orderType: OrderType.Restaurant,
+                    orderId: order.orderId,
+                  ),
+                );
+              },
+              chatId: order.chatId,
             ),
           ],
         ),
@@ -99,24 +98,24 @@ class OrderLaundryCard extends StatelessWidget {
               color: primaryBlueColor,
             ),
           ),
-          Obx(
-            () => Get.find<OrderController>()
-                    .orderHaveNewMessageNotifications(order.orderId)
-                ? Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      width: 13,
-                      height: 13,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: const Color(0xfff6efff), width: 2),
-                          color: const Color(0xffff0000)),
-                    ),
-                  )
-                : Container(),
-          )
+          // Obx(
+          //   () => Get.find<OrderController>()
+          //           .orderHaveNewMessageNotifications(order.orderId)
+          //       ? Positioned(
+          //           right: 0,
+          //           top: 0,
+          //           child: Container(
+          //             width: 13,
+          //             height: 13,
+          //             decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 border: Border.all(
+          //                     color: const Color(0xfff6efff), width: 2),
+          //                 color: const Color(0xffff0000)),
+          //           ),
+          //         )
+          //       : Container(),
+          // )
         ],
       ),
     );

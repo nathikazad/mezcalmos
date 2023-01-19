@@ -7,7 +7,7 @@ insert_permissions:
       check:
         _and:
           - app_type_id:
-              _eq: customer_mobile
+              _eq: customer
           - user_id:
               _eq: X-Hasura-User-Id
       columns:
@@ -54,11 +54,39 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - app_type_id
+        - id
         - token
         - user_id
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+  - role: delivery_driver
+    permission:
+      columns:
+        - id
+        - user_id
+        - app_type_id
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: delivery
+          - user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - id
+        - user_id
+        - app_type_id
+        - token
+      filter:
+        _and:
+          - app_type_id:
+              _eq: restaurant
+          - user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: customer
     permission:
@@ -67,7 +95,7 @@ update_permissions:
       filter:
         _and:
           - app_type_id:
-              _eq: customer_mobile
+              _eq: customer
           - user_id:
               _eq: X-Hasura-User-Id
       check: null
