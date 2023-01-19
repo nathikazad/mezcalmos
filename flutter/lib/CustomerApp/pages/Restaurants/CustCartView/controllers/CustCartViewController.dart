@@ -61,7 +61,7 @@ class CustCartViewController {
   RxBool isShippingSet = RxBool(false);
   num _orderDistanceInKm = 0;
 
-  Cart get cart => cartController.cart.value!;
+  Cart get cart => cartController.cart.value ?? Cart();
   Rxn<Cart> get _cartRxn => cartController.cart;
   num get getOrderDistance => _orderDistanceInKm;
   // init //

@@ -80,9 +80,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     // }
 
     let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
-    
-    // clear user cart 
-    clearCart(customerId);
+ 
     console.log(customer);
     setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
@@ -105,7 +103,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     if(checkoutRequest.paymentType == PaymentType.Card) {
      await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
     }
-
+   
+    // clear user cart 
+    clearCart(customerId);
     return <ServerResponse> {
       status: ServerResponseStatus.Success,
       orderId: orderResponse.restaurantOrder.orderId
