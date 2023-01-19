@@ -88,6 +88,7 @@ class CustItemViewController {
           return item.idInCart == itemIdInCart;
         });
         cartItem.value = CartItem.clone(_item);
+        notesController.text = cartItem.value?.notes ?? "";
         final Item? freshItem =
             await get_one_item_by_id(cartItem.value!.item.id!);
         cartItem.value!.item = freshItem!;
