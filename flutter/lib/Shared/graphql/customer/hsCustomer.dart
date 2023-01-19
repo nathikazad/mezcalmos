@@ -227,7 +227,7 @@ Future<CustStripeInfo?> get_customer_stripe_info(
   final QueryResult<Query$get_customer_stripe_info> res = await _graphClient
       .query$get_customer_stripe_info(Options$Query$get_customer_stripe_info(
           fetchPolicy:
-              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables:
               Variables$Query$get_customer_stripe_info(customer_id: userId)));
   if (res.parsedData?.customer_customer == null) {
@@ -242,7 +242,6 @@ Future<CustStripeInfo?> get_customer_stripe_info(
     final List<CreditCard> cards = [];
     if (dbCards != null && dbCards.isNotEmpty) {
       dbCards?.forEach((key, data) {
-        mezDbgPrint(" 🤣 data =======>$data");
         cards.add(CreditCard.fromData(data: data));
       });
     }

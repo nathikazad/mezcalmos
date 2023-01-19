@@ -110,13 +110,14 @@ class CustItemViewController {
 
   // handling items and cart methods //
   Future<void> handleEditItem() async {
+    cartItem.value!.notes = notesController.text;
     mezDbgPrint(
         "Handle Editting ===================>${cartItem.value!.idInCart!}");
     await cartController?.updateCartItem(cartItem.value!);
   }
 
   Future<int?> handleAddItem() async {
-    // todo
+    cartItem.value!.notes = notesController.text;
     return await cartController?.addCartItem(cartItem.value!);
   }
 
