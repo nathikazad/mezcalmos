@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
@@ -8,12 +7,10 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/graphql/saved_location/hsSavedLocation.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
@@ -52,9 +49,14 @@ class CustomerAuthController extends GetxController {
     if (_cus == null) {
       _cus = await set_customer_info(
           app_version: _appVersion, user_id: _authController.hasuraUserId!);
-      mezDbgPrint("[]9090] : setting customr :: result :: $_cus! ");
     }
+    _cus?.savedLocations = await get_customer_locations(
+        customer_id: _authController.hasuraUserId!);
+
     _customer.value = _cus;
+    _customer.value?.savedLocations = _cus?.savedLocations ?? [];
+    mezDbgPrint(
+        "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
     print("[+] Customer currently using App v$_appVersion");
     await set_customer_app_version(
@@ -108,10 +110,12 @@ class CustomerAuthController extends GetxController {
     update_saved_location(savedLocation: savedLocation);
   }
 
-  void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    set_default_location(
+  Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {
+    await set_default_location(
         userId: _authController.hasuraUserId!,
         defaultLocationId: newDefaultLocation.id!);
+    _customer.value?.savedLocations = await get_customer_locations(
+        customer_id: _authController.hasuraUserId!);
   }
 
   void deleteLocation(SavedLocation savedLocation) {
@@ -125,12 +129,6 @@ class CustomerAuthController extends GetxController {
     return customer?.savedLocations.firstWhere((SavedLocation savedLocation) {
       return savedLocation.id == locationId;
     }, orElse: null).location;
-  }
-
-  Future<MainUserInfo> getUserInfoById(String id) async {
-    final DataSnapshot data =
-        await _databaseHelper.firebaseDatabase.ref(userInfoNode(id)).get();
-    return MainUserInfo.fromData(data.value);
   }
 
   @override

@@ -72,30 +72,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       dropDownListValue = listOfSavedLoacations.firstWhereOrNull(
               (SavedLocation element) => element.defaultLocation) ??
           pickLocationPlaceholder;
-    } else {
-      // TODO:544D-HASURA
-      listOfSavedLoacations.add(
-        SavedLocation(
-          name: "TestLocation",
-          id: 1,
-          location: locModel.Location(
-            "Morocco, Agadir",
-            Location.LocationData.fromMap(
-              {"latitude": 15.9999, "longitude": -97.01992},
-            ),
-          ),
-        ),
-      );
-      // final SavedLocation passedInLocation = SavedLocation(
-      //   name: widget.passedInLocation!.address,
-      //   location: widget.passedInLocation,
-      //   id: 'new',
-      // );
-
-      // dropDownListValue = passedInLocation;
-
-    }
-    if (listOfSavedLoacations.isNotEmpty) {
+    } else if (listOfSavedLoacations.isNotEmpty) {
       setState(() {
         dropDownListValue = listOfSavedLoacations.first;
       });
@@ -119,6 +96,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
   void getSavedLocation() {
     customerAuthController.customer?.savedLocations.forEach(
       (SavedLocation element) {
+        mezDbgPrint(
+            "Getting Saved location elmemmemememmet ✅🛑======>${element.defaultLocation}");
         listOfSavedLoacations.add(element);
       },
     );

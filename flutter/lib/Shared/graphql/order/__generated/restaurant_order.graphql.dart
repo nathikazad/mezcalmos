@@ -949,28 +949,14 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'actual_delivered_time'),
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'actual_package_ready_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_pickup_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_dropoff_time'),
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -4632,10 +4618,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.trip_polyline,
     this.trip_distance,
     this.trip_duration,
-    this.actual_delivered_time,
-    this.actual_package_ready_time,
-    this.actual_arrival_at_pickup_time,
-    this.actual_arrival_at_dropoff_time,
+    this.estimated_arrival_at_dropoff_time,
+    this.estimated_arrival_at_pickup_time,
     this.chat_with_service_provider_id,
     required this.chat_with_customer_id,
     this.cancellation_time,
@@ -4650,12 +4634,10 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$trip_polyline = json['trip_polyline'];
     final l$trip_distance = json['trip_distance'];
     final l$trip_duration = json['trip_duration'];
-    final l$actual_delivered_time = json['actual_delivered_time'];
-    final l$actual_package_ready_time = json['actual_package_ready_time'];
-    final l$actual_arrival_at_pickup_time =
-        json['actual_arrival_at_pickup_time'];
-    final l$actual_arrival_at_dropoff_time =
-        json['actual_arrival_at_dropoff_time'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
@@ -4668,12 +4650,10 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       trip_polyline: (l$trip_polyline as String?),
       trip_distance: (l$trip_distance as int?),
       trip_duration: (l$trip_duration as int?),
-      actual_delivered_time: (l$actual_delivered_time as String?),
-      actual_package_ready_time: (l$actual_package_ready_time as String?),
-      actual_arrival_at_pickup_time:
-          (l$actual_arrival_at_pickup_time as String?),
-      actual_arrival_at_dropoff_time:
-          (l$actual_arrival_at_dropoff_time as String?),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       cancellation_time: (l$cancellation_time as String?),
@@ -4694,13 +4674,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   final int? trip_duration;
 
-  final String? actual_delivered_time;
+  final String? estimated_arrival_at_dropoff_time;
 
-  final String? actual_package_ready_time;
-
-  final String? actual_arrival_at_pickup_time;
-
-  final String? actual_arrival_at_dropoff_time;
+  final String? estimated_arrival_at_pickup_time;
 
   final int? chat_with_service_provider_id;
 
@@ -4725,16 +4701,13 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     _resultData['trip_distance'] = l$trip_distance;
     final l$trip_duration = trip_duration;
     _resultData['trip_duration'] = l$trip_duration;
-    final l$actual_delivered_time = actual_delivered_time;
-    _resultData['actual_delivered_time'] = l$actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    _resultData['actual_package_ready_time'] = l$actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    _resultData['actual_arrival_at_pickup_time'] =
-        l$actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    _resultData['actual_arrival_at_dropoff_time'] =
-        l$actual_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
@@ -4759,10 +4732,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$trip_polyline = trip_polyline;
     final l$trip_distance = trip_distance;
     final l$trip_duration = trip_duration;
-    final l$actual_delivered_time = actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$cancellation_time = cancellation_time;
@@ -4774,10 +4746,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       l$trip_polyline,
       l$trip_distance,
       l$trip_duration,
-      l$actual_delivered_time,
-      l$actual_package_ready_time,
-      l$actual_arrival_at_pickup_time,
-      l$actual_arrival_at_dropoff_time,
+      l$estimated_arrival_at_dropoff_time,
+      l$estimated_arrival_at_pickup_time,
       l$chat_with_service_provider_id,
       l$chat_with_customer_id,
       l$cancellation_time,
@@ -4813,28 +4783,19 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     if (l$trip_duration != lOther$trip_duration) {
       return false;
     }
-    final l$actual_delivered_time = actual_delivered_time;
-    final lOther$actual_delivered_time = other.actual_delivered_time;
-    if (l$actual_delivered_time != lOther$actual_delivered_time) {
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final lOther$actual_package_ready_time = other.actual_package_ready_time;
-    if (l$actual_package_ready_time != lOther$actual_package_ready_time) {
-      return false;
-    }
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final lOther$actual_arrival_at_pickup_time =
-        other.actual_arrival_at_pickup_time;
-    if (l$actual_arrival_at_pickup_time !=
-        lOther$actual_arrival_at_pickup_time) {
-      return false;
-    }
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final lOther$actual_arrival_at_dropoff_time =
-        other.actual_arrival_at_dropoff_time;
-    if (l$actual_arrival_at_dropoff_time !=
-        lOther$actual_arrival_at_dropoff_time) {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
       return false;
     }
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -4907,10 +4868,8 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? trip_polyline,
     int? trip_distance,
     int? trip_duration,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     String? cancellation_time,
@@ -4947,10 +4906,8 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? trip_polyline = _undefined,
     Object? trip_distance = _undefined,
     Object? trip_duration = _undefined,
-    Object? actual_delivered_time = _undefined,
-    Object? actual_package_ready_time = _undefined,
-    Object? actual_arrival_at_pickup_time = _undefined,
-    Object? actual_arrival_at_dropoff_time = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
+    Object? estimated_arrival_at_pickup_time = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? cancellation_time = _undefined,
@@ -4970,20 +4927,14 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         trip_duration: trip_duration == _undefined
             ? _instance.trip_duration
             : (trip_duration as int?),
-        actual_delivered_time: actual_delivered_time == _undefined
-            ? _instance.actual_delivered_time
-            : (actual_delivered_time as String?),
-        actual_package_ready_time: actual_package_ready_time == _undefined
-            ? _instance.actual_package_ready_time
-            : (actual_package_ready_time as String?),
-        actual_arrival_at_pickup_time:
-            actual_arrival_at_pickup_time == _undefined
-                ? _instance.actual_arrival_at_pickup_time
-                : (actual_arrival_at_pickup_time as String?),
-        actual_arrival_at_dropoff_time:
-            actual_arrival_at_dropoff_time == _undefined
-                ? _instance.actual_arrival_at_dropoff_time
-                : (actual_arrival_at_dropoff_time as String?),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
         chat_with_service_provider_id:
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
@@ -5034,10 +4985,8 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? trip_polyline,
     int? trip_distance,
     int? trip_duration,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     String? cancellation_time,
@@ -6412,28 +6361,14 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'actual_delivered_time'),
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'actual_package_ready_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_pickup_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'actual_arrival_at_dropoff_time'),
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -10077,10 +10012,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     this.chat_with_service_provider_id,
     required this.chat_with_customer_id,
     required this.id,
-    this.actual_delivered_time,
-    this.actual_package_ready_time,
-    this.actual_arrival_at_pickup_time,
-    this.actual_arrival_at_dropoff_time,
+    this.estimated_arrival_at_dropoff_time,
+    this.estimated_arrival_at_pickup_time,
     this.cancellation_time,
     this.current_gps,
     required this.delivery_cost,
@@ -10097,12 +10030,10 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
         json['chat_with_service_provider_id'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$id = json['id'];
-    final l$actual_delivered_time = json['actual_delivered_time'];
-    final l$actual_package_ready_time = json['actual_package_ready_time'];
-    final l$actual_arrival_at_pickup_time =
-        json['actual_arrival_at_pickup_time'];
-    final l$actual_arrival_at_dropoff_time =
-        json['actual_arrival_at_dropoff_time'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
     final l$cancellation_time = json['cancellation_time'];
     final l$current_gps = json['current_gps'];
     final l$delivery_cost = json['delivery_cost'];
@@ -10115,12 +10046,10 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       id: (l$id as int),
-      actual_delivered_time: (l$actual_delivered_time as String?),
-      actual_package_ready_time: (l$actual_package_ready_time as String?),
-      actual_arrival_at_pickup_time:
-          (l$actual_arrival_at_pickup_time as String?),
-      actual_arrival_at_dropoff_time:
-          (l$actual_arrival_at_dropoff_time as String?),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       current_gps:
           l$current_gps == null ? null : geographyFromJson(l$current_gps),
@@ -10145,13 +10074,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
 
   final int id;
 
-  final String? actual_delivered_time;
+  final String? estimated_arrival_at_dropoff_time;
 
-  final String? actual_package_ready_time;
-
-  final String? actual_arrival_at_pickup_time;
-
-  final String? actual_arrival_at_dropoff_time;
+  final String? estimated_arrival_at_pickup_time;
 
   final String? cancellation_time;
 
@@ -10179,16 +10104,13 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$actual_delivered_time = actual_delivered_time;
-    _resultData['actual_delivered_time'] = l$actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    _resultData['actual_package_ready_time'] = l$actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    _resultData['actual_arrival_at_pickup_time'] =
-        l$actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    _resultData['actual_arrival_at_dropoff_time'] =
-        l$actual_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
     final l$cancellation_time = cancellation_time;
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$current_gps = current_gps;
@@ -10211,10 +10133,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$id = id;
-    final l$actual_delivered_time = actual_delivered_time;
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$cancellation_time = cancellation_time;
     final l$current_gps = current_gps;
     final l$delivery_cost = delivery_cost;
@@ -10227,10 +10148,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       l$chat_with_service_provider_id,
       l$chat_with_customer_id,
       l$id,
-      l$actual_delivered_time,
-      l$actual_package_ready_time,
-      l$actual_arrival_at_pickup_time,
-      l$actual_arrival_at_dropoff_time,
+      l$estimated_arrival_at_dropoff_time,
+      l$estimated_arrival_at_pickup_time,
       l$cancellation_time,
       l$current_gps,
       l$delivery_cost,
@@ -10281,28 +10200,19 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$actual_delivered_time = actual_delivered_time;
-    final lOther$actual_delivered_time = other.actual_delivered_time;
-    if (l$actual_delivered_time != lOther$actual_delivered_time) {
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
-    final l$actual_package_ready_time = actual_package_ready_time;
-    final lOther$actual_package_ready_time = other.actual_package_ready_time;
-    if (l$actual_package_ready_time != lOther$actual_package_ready_time) {
-      return false;
-    }
-    final l$actual_arrival_at_pickup_time = actual_arrival_at_pickup_time;
-    final lOther$actual_arrival_at_pickup_time =
-        other.actual_arrival_at_pickup_time;
-    if (l$actual_arrival_at_pickup_time !=
-        lOther$actual_arrival_at_pickup_time) {
-      return false;
-    }
-    final l$actual_arrival_at_dropoff_time = actual_arrival_at_dropoff_time;
-    final lOther$actual_arrival_at_dropoff_time =
-        other.actual_arrival_at_dropoff_time;
-    if (l$actual_arrival_at_dropoff_time !=
-        lOther$actual_arrival_at_dropoff_time) {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
       return false;
     }
     final l$cancellation_time = cancellation_time;
@@ -10365,10 +10275,8 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     int? id,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
     Geography? current_gps,
     double? delivery_cost,
@@ -10405,10 +10313,8 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
     Object? chat_with_service_provider_id = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? id = _undefined,
-    Object? actual_delivered_time = _undefined,
-    Object? actual_package_ready_time = _undefined,
-    Object? actual_arrival_at_pickup_time = _undefined,
-    Object? actual_arrival_at_dropoff_time = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
+    Object? estimated_arrival_at_pickup_time = _undefined,
     Object? cancellation_time = _undefined,
     Object? current_gps = _undefined,
     Object? delivery_cost = _undefined,
@@ -10434,20 +10340,14 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
                 ? _instance.chat_with_customer_id
                 : (chat_with_customer_id as int),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        actual_delivered_time: actual_delivered_time == _undefined
-            ? _instance.actual_delivered_time
-            : (actual_delivered_time as String?),
-        actual_package_ready_time: actual_package_ready_time == _undefined
-            ? _instance.actual_package_ready_time
-            : (actual_package_ready_time as String?),
-        actual_arrival_at_pickup_time:
-            actual_arrival_at_pickup_time == _undefined
-                ? _instance.actual_arrival_at_pickup_time
-                : (actual_arrival_at_pickup_time as String?),
-        actual_arrival_at_dropoff_time:
-            actual_arrival_at_dropoff_time == _undefined
-                ? _instance.actual_arrival_at_dropoff_time
-                : (actual_arrival_at_dropoff_time as String?),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
         cancellation_time: cancellation_time == _undefined
             ? _instance.cancellation_time
             : (cancellation_time as String?),
@@ -10493,10 +10393,8 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     int? id,
-    String? actual_delivered_time,
-    String? actual_package_ready_time,
-    String? actual_arrival_at_pickup_time,
-    String? actual_arrival_at_dropoff_time,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
     Geography? current_gps,
     double? delivery_cost,

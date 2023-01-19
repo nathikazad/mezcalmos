@@ -67,16 +67,20 @@ class CustCartViewController {
   // init //
   Future<void> init() async {
     unawaited(get_delivery_cost(serviceProviderId: 1, withCache: false)
-        .then((DeliveryCost? value) => _mezDeliveryCost.value = value));
+        .then((DeliveryCost? value) => _mezDeliveryCost.value = value)
+        .whenComplete(() {
+      orderToLocation.value =
+          customerAuthController.customer?.defaultLocation?.location;
+      if (orderToLocation.value != null) {
+        cart.toLocation = orderToLocation.value;
+
+        unawaited(updateShippingPrice());
+      }
+    }));
 
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
       savedCardChoice =
           customerAuthController.customer?.stripeInfo?.cards.first;
-    orderToLocation.value =
-        customerAuthController.customer?.defaultLocation?.location;
-    if (orderToLocation.value != null) {
-      cart.toLocation = orderToLocation.value;
-    }
 
     if (cart.cartPeriod != null) {
       cart.deliveryTime = cart.cartPeriod?.start;

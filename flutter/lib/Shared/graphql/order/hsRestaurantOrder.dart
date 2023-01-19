@@ -101,6 +101,16 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
             ? DateTime.tryParse(orderData.estimated_food_ready_time!)
             : null,
+        estimatedDropoffAtCustomerTime:
+            (orderData.delivery?.estimated_arrival_at_dropoff_time != null)
+                ? DateTime.tryParse(
+                    orderData.delivery!.estimated_arrival_at_dropoff_time!)
+                : null,
+        estimatedPickupFromServiceProviderTime:
+            (orderData.delivery?.estimated_arrival_at_pickup_time != null)
+                ? DateTime.tryParse(
+                    orderData.delivery!.estimated_arrival_at_pickup_time!)
+                : null,
         status: orderData.status.toRestaurantOrderStatus(),
         quantity: 1,
         deliveryOrderId: orderData.delivery_id,
@@ -268,6 +278,16 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
         ? DateTime.tryParse(orderData.estimated_food_ready_time!)
         : null,
+    estimatedDropoffAtCustomerTime:
+        (orderData.delivery?.estimated_arrival_at_dropoff_time != null)
+            ? DateTime.tryParse(
+                orderData.delivery!.estimated_arrival_at_dropoff_time!)
+            : null,
+    estimatedPickupFromServiceProviderTime:
+        (orderData.delivery?.estimated_arrival_at_pickup_time != null)
+            ? DateTime.tryParse(
+                orderData.delivery!.estimated_arrival_at_pickup_time!)
+            : null,
     status: orderData.status.toRestaurantOrderStatus(),
     quantity: 1,
     routeInformation: (orderData.delivery?.trip_polyline != null &&
