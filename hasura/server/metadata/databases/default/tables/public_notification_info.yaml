@@ -95,7 +95,7 @@ update_permissions:
       filter:
         _and:
           - app_type_id:
-              _eq: customer_mobile
+              _eq: customer
           - user_id:
               _eq: X-Hasura-User-Id
       check: null

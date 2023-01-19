@@ -2727,6 +2727,874 @@ class _CopyWithStubImpl$Mutation$updateSavedLocation$update_customer_saved_locat
       _res;
 }
 
+class Variables$Mutation$setDefaultLocation {
+  factory Variables$Mutation$setDefaultLocation({
+    required int userId,
+    required int defaultLocId,
+  }) =>
+      Variables$Mutation$setDefaultLocation._({
+        r'userId': userId,
+        r'defaultLocId': defaultLocId,
+      });
+
+  Variables$Mutation$setDefaultLocation._(this._$data);
+
+  factory Variables$Mutation$setDefaultLocation.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$userId = data['userId'];
+    result$data['userId'] = (l$userId as int);
+    final l$defaultLocId = data['defaultLocId'];
+    result$data['defaultLocId'] = (l$defaultLocId as int);
+    return Variables$Mutation$setDefaultLocation._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get userId => (_$data['userId'] as int);
+  int get defaultLocId => (_$data['defaultLocId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$userId = userId;
+    result$data['userId'] = l$userId;
+    final l$defaultLocId = defaultLocId;
+    result$data['defaultLocId'] = l$defaultLocId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$setDefaultLocation<
+          Variables$Mutation$setDefaultLocation>
+      get copyWith => CopyWith$Variables$Mutation$setDefaultLocation(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$setDefaultLocation) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$userId = userId;
+    final lOther$userId = other.userId;
+    if (l$userId != lOther$userId) {
+      return false;
+    }
+    final l$defaultLocId = defaultLocId;
+    final lOther$defaultLocId = other.defaultLocId;
+    if (l$defaultLocId != lOther$defaultLocId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$userId = userId;
+    final l$defaultLocId = defaultLocId;
+    return Object.hashAll([
+      l$userId,
+      l$defaultLocId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$setDefaultLocation<TRes> {
+  factory CopyWith$Variables$Mutation$setDefaultLocation(
+    Variables$Mutation$setDefaultLocation instance,
+    TRes Function(Variables$Mutation$setDefaultLocation) then,
+  ) = _CopyWithImpl$Variables$Mutation$setDefaultLocation;
+
+  factory CopyWith$Variables$Mutation$setDefaultLocation.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$setDefaultLocation;
+
+  TRes call({
+    int? userId,
+    int? defaultLocId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$setDefaultLocation<TRes>
+    implements CopyWith$Variables$Mutation$setDefaultLocation<TRes> {
+  _CopyWithImpl$Variables$Mutation$setDefaultLocation(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$setDefaultLocation _instance;
+
+  final TRes Function(Variables$Mutation$setDefaultLocation) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? userId = _undefined,
+    Object? defaultLocId = _undefined,
+  }) =>
+      _then(Variables$Mutation$setDefaultLocation._({
+        ..._instance._$data,
+        if (userId != _undefined && userId != null) 'userId': (userId as int),
+        if (defaultLocId != _undefined && defaultLocId != null)
+          'defaultLocId': (defaultLocId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$setDefaultLocation<TRes>
+    implements CopyWith$Variables$Mutation$setDefaultLocation<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$setDefaultLocation(this._res);
+
+  TRes _res;
+
+  call({
+    int? userId,
+    int? defaultLocId,
+  }) =>
+      _res;
+}
+
+class Mutation$setDefaultLocation {
+  Mutation$setDefaultLocation({
+    this.update_customer_saved_location,
+    this.update_customer_saved_location_by_pk,
+    required this.$__typename,
+  });
+
+  factory Mutation$setDefaultLocation.fromJson(Map<String, dynamic> json) {
+    final l$update_customer_saved_location =
+        json['update_customer_saved_location'];
+    final l$update_customer_saved_location_by_pk =
+        json['update_customer_saved_location_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setDefaultLocation(
+      update_customer_saved_location: l$update_customer_saved_location == null
+          ? null
+          : Mutation$setDefaultLocation$update_customer_saved_location.fromJson(
+              (l$update_customer_saved_location as Map<String, dynamic>)),
+      update_customer_saved_location_by_pk:
+          l$update_customer_saved_location_by_pk == null
+              ? null
+              : Mutation$setDefaultLocation$update_customer_saved_location_by_pk
+                  .fromJson((l$update_customer_saved_location_by_pk
+                      as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$setDefaultLocation$update_customer_saved_location?
+      update_customer_saved_location;
+
+  final Mutation$setDefaultLocation$update_customer_saved_location_by_pk?
+      update_customer_saved_location_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_customer_saved_location = update_customer_saved_location;
+    _resultData['update_customer_saved_location'] =
+        l$update_customer_saved_location?.toJson();
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
+    _resultData['update_customer_saved_location_by_pk'] =
+        l$update_customer_saved_location_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_customer_saved_location = update_customer_saved_location;
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_customer_saved_location,
+      l$update_customer_saved_location_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$setDefaultLocation) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_customer_saved_location = update_customer_saved_location;
+    final lOther$update_customer_saved_location =
+        other.update_customer_saved_location;
+    if (l$update_customer_saved_location !=
+        lOther$update_customer_saved_location) {
+      return false;
+    }
+    final l$update_customer_saved_location_by_pk =
+        update_customer_saved_location_by_pk;
+    final lOther$update_customer_saved_location_by_pk =
+        other.update_customer_saved_location_by_pk;
+    if (l$update_customer_saved_location_by_pk !=
+        lOther$update_customer_saved_location_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setDefaultLocation
+    on Mutation$setDefaultLocation {
+  CopyWith$Mutation$setDefaultLocation<Mutation$setDefaultLocation>
+      get copyWith => CopyWith$Mutation$setDefaultLocation(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setDefaultLocation<TRes> {
+  factory CopyWith$Mutation$setDefaultLocation(
+    Mutation$setDefaultLocation instance,
+    TRes Function(Mutation$setDefaultLocation) then,
+  ) = _CopyWithImpl$Mutation$setDefaultLocation;
+
+  factory CopyWith$Mutation$setDefaultLocation.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$setDefaultLocation;
+
+  TRes call({
+    Mutation$setDefaultLocation$update_customer_saved_location?
+        update_customer_saved_location,
+    Mutation$setDefaultLocation$update_customer_saved_location_by_pk?
+        update_customer_saved_location_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<TRes>
+      get update_customer_saved_location;
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+      TRes> get update_customer_saved_location_by_pk;
+}
+
+class _CopyWithImpl$Mutation$setDefaultLocation<TRes>
+    implements CopyWith$Mutation$setDefaultLocation<TRes> {
+  _CopyWithImpl$Mutation$setDefaultLocation(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setDefaultLocation _instance;
+
+  final TRes Function(Mutation$setDefaultLocation) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_customer_saved_location = _undefined,
+    Object? update_customer_saved_location_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setDefaultLocation(
+        update_customer_saved_location: update_customer_saved_location ==
+                _undefined
+            ? _instance.update_customer_saved_location
+            : (update_customer_saved_location
+                as Mutation$setDefaultLocation$update_customer_saved_location?),
+        update_customer_saved_location_by_pk:
+            update_customer_saved_location_by_pk == _undefined
+                ? _instance.update_customer_saved_location_by_pk
+                : (update_customer_saved_location_by_pk
+                    as Mutation$setDefaultLocation$update_customer_saved_location_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<TRes>
+      get update_customer_saved_location {
+    final local$update_customer_saved_location =
+        _instance.update_customer_saved_location;
+    return local$update_customer_saved_location == null
+        ? CopyWith$Mutation$setDefaultLocation$update_customer_saved_location
+            .stub(_then(_instance))
+        : CopyWith$Mutation$setDefaultLocation$update_customer_saved_location(
+            local$update_customer_saved_location,
+            (e) => call(update_customer_saved_location: e));
+  }
+
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+      TRes> get update_customer_saved_location_by_pk {
+    final local$update_customer_saved_location_by_pk =
+        _instance.update_customer_saved_location_by_pk;
+    return local$update_customer_saved_location_by_pk == null
+        ? CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+            local$update_customer_saved_location_by_pk,
+            (e) => call(update_customer_saved_location_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$setDefaultLocation<TRes>
+    implements CopyWith$Mutation$setDefaultLocation<TRes> {
+  _CopyWithStubImpl$Mutation$setDefaultLocation(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$setDefaultLocation$update_customer_saved_location?
+        update_customer_saved_location,
+    Mutation$setDefaultLocation$update_customer_saved_location_by_pk?
+        update_customer_saved_location_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<TRes>
+      get update_customer_saved_location =>
+          CopyWith$Mutation$setDefaultLocation$update_customer_saved_location
+              .stub(_res);
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+          TRes>
+      get update_customer_saved_location_by_pk =>
+          CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk
+              .stub(_res);
+}
+
+const documentNodeMutationsetDefaultLocation = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'setDefaultLocation'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'userId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'defaultLocId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_customer_saved_location'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'customer_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'userId')),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'default'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: BooleanValueNode(value: true),
+                  )
+                ]),
+              ),
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'default'),
+                value: BooleanValueNode(value: false),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      FieldNode(
+        name: NameNode(value: 'update_customer_saved_location_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'pk_columns'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'id'),
+                value: VariableNode(name: NameNode(value: 'defaultLocId')),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'default'),
+                value: BooleanValueNode(value: true),
+              )
+            ]),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'default'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$setDefaultLocation _parserFn$Mutation$setDefaultLocation(
+        Map<String, dynamic> data) =>
+    Mutation$setDefaultLocation.fromJson(data);
+typedef OnMutationCompleted$Mutation$setDefaultLocation = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$setDefaultLocation?,
+);
+
+class Options$Mutation$setDefaultLocation
+    extends graphql.MutationOptions<Mutation$setDefaultLocation> {
+  Options$Mutation$setDefaultLocation({
+    String? operationName,
+    required Variables$Mutation$setDefaultLocation variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$setDefaultLocation? onCompleted,
+    graphql.OnMutationUpdate<Mutation$setDefaultLocation>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$setDefaultLocation(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationsetDefaultLocation,
+          parserFn: _parserFn$Mutation$setDefaultLocation,
+        );
+
+  final OnMutationCompleted$Mutation$setDefaultLocation? onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$setDefaultLocation
+    extends graphql.WatchQueryOptions<Mutation$setDefaultLocation> {
+  WatchOptions$Mutation$setDefaultLocation({
+    String? operationName,
+    required Variables$Mutation$setDefaultLocation variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationsetDefaultLocation,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$setDefaultLocation,
+        );
+}
+
+extension ClientExtension$Mutation$setDefaultLocation on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$setDefaultLocation>>
+      mutate$setDefaultLocation(
+              Options$Mutation$setDefaultLocation options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$setDefaultLocation>
+      watchMutation$setDefaultLocation(
+              WatchOptions$Mutation$setDefaultLocation options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$setDefaultLocation$update_customer_saved_location {
+  Mutation$setDefaultLocation$update_customer_saved_location({
+    required this.affected_rows,
+    required this.$__typename,
+  });
+
+  factory Mutation$setDefaultLocation$update_customer_saved_location.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setDefaultLocation$update_customer_saved_location(
+      affected_rows: (l$affected_rows as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$setDefaultLocation$update_customer_saved_location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setDefaultLocation$update_customer_saved_location
+    on Mutation$setDefaultLocation$update_customer_saved_location {
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<
+          Mutation$setDefaultLocation$update_customer_saved_location>
+      get copyWith =>
+          CopyWith$Mutation$setDefaultLocation$update_customer_saved_location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<
+    TRes> {
+  factory CopyWith$Mutation$setDefaultLocation$update_customer_saved_location(
+    Mutation$setDefaultLocation$update_customer_saved_location instance,
+    TRes Function(Mutation$setDefaultLocation$update_customer_saved_location)
+        then,
+  ) = _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location;
+
+  factory CopyWith$Mutation$setDefaultLocation$update_customer_saved_location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location;
+
+  TRes call({
+    int? affected_rows,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location<
+        TRes>
+    implements
+        CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<
+            TRes> {
+  _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setDefaultLocation$update_customer_saved_location _instance;
+
+  final TRes Function(
+      Mutation$setDefaultLocation$update_customer_saved_location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setDefaultLocation$update_customer_saved_location(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location<
+        TRes>
+    implements
+        CopyWith$Mutation$setDefaultLocation$update_customer_saved_location<
+            TRes> {
+  _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$setDefaultLocation$update_customer_saved_location_by_pk {
+  Mutation$setDefaultLocation$update_customer_saved_location_by_pk({
+    required this.$default,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$setDefaultLocation$update_customer_saved_location_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$$default = json['default'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+      $default: (l$$default as bool),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool $default;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$$default = $default;
+    _resultData['default'] = l$$default;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$$default = $default;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$$default,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$setDefaultLocation$update_customer_saved_location_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$$default = $default;
+    final lOther$$default = other.$default;
+    if (l$$default != lOther$$default) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$setDefaultLocation$update_customer_saved_location_by_pk
+    on Mutation$setDefaultLocation$update_customer_saved_location_by_pk {
+  CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+          Mutation$setDefaultLocation$update_customer_saved_location_by_pk>
+      get copyWith =>
+          CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+    TRes> {
+  factory CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+    Mutation$setDefaultLocation$update_customer_saved_location_by_pk instance,
+    TRes Function(
+            Mutation$setDefaultLocation$update_customer_saved_location_by_pk)
+        then,
+  ) = _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk;
+
+  factory CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk;
+
+  TRes call({
+    bool? $default,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+            TRes> {
+  _CopyWithImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$setDefaultLocation$update_customer_saved_location_by_pk
+      _instance;
+
+  final TRes Function(
+      Mutation$setDefaultLocation$update_customer_saved_location_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? $default = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+        $default: $default == _undefined || $default == null
+            ? _instance.$default
+            : ($default as bool),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+        TRes>
+    implements
+        CopyWith$Mutation$setDefaultLocation$update_customer_saved_location_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Mutation$setDefaultLocation$update_customer_saved_location_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? $default,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Mutation$delete_saved_location {
   factory Variables$Mutation$delete_saved_location(
           {required int location_id}) =>

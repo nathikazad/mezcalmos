@@ -109,8 +109,9 @@ class CustomerAuthController extends GetxController {
   }
 
   void setAsDefaultLocation(SavedLocation newDefaultLocation) {
-    newDefaultLocation.defaultLocation = !newDefaultLocation.defaultLocation;
-    update_saved_location(savedLocation: newDefaultLocation);
+    set_default_location(
+        userId: _authController.hasuraUserId!,
+        defaultLocationId: newDefaultLocation.id!);
   }
 
   void deleteLocation(SavedLocation savedLocation) {

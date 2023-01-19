@@ -18,13 +18,16 @@ final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 /// [customer_id] is the user's hasuraId
 Future<List<SavedLocation>> get_customer_locations(
     {required int customer_id}) async {
-  final Query$get_customer_locations? _customer_saved_locations =
-      _hasuraDb.graphQLClient.readQuery$get_customer_locations(
-          variables:
-              Variables$Query$get_customer_locations(customer_id: customer_id));
-
-  final List<SavedLocation> locations = _customer_saved_locations
-          ?.customer_saved_location
+  final QueryResult<Query$get_customer_locations> res = await _hasuraDb
+      .graphQLClient
+      .query$get_customer_locations(Options$Query$get_customer_locations(
+          variables: Variables$Query$get_customer_locations(
+              customer_id: customer_id)));
+  if (res.parsedData?.customer_saved_location == null) {
+    throw Exception(
+        "🛑 Exceptions getting saved locations ===> ${res.exception}");
+  }
+  final List<SavedLocation> locations = res.parsedData?.customer_saved_location
           .map(
             (Query$get_customer_locations$customer_saved_location location) =>
                 SavedLocation(
@@ -39,7 +42,7 @@ Future<List<SavedLocation>> get_customer_locations(
           )
           .toList() ??
       [];
-
+  locations.sort((SavedLocation a, SavedLocation b) => a.id!.compareTo(b.id!));
   return locations;
 }
 
@@ -75,6 +78,8 @@ Stream<List<SavedLocation>?> listen_on_customer_locations(
           ),
         );
       });
+      ls.sort((SavedLocation a, SavedLocation b) => a.id!.compareTo(b.id!));
+
       return ls;
     }
   });
@@ -176,4 +181,17 @@ Future<ServerResponse> add_saved_location(
     ResponseStatus.Error,
     errorMessage: "Error : saved_location.location.position is null!",
   );
+}
+
+Future<void> set_default_location(
+    {required int userId, required int defaultLocationId}) async {
+  final QueryResult<Mutation$setDefaultLocation> res = await _hasuraDb
+      .graphQLClient
+      .mutate$setDefaultLocation(Options$Mutation$setDefaultLocation(
+          variables: Variables$Mutation$setDefaultLocation(
+              userId: userId, defaultLocId: defaultLocationId)));
+  if (res.parsedData?.update_customer_saved_location == null) {
+    throw Exception(
+        " 🛑 Setting default location exceptions ===> ${res.exception}");
+  }
 }
