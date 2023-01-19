@@ -114,8 +114,9 @@ class CustomerAuthController extends GetxController {
     await set_default_location(
         userId: _authController.hasuraUserId!,
         defaultLocationId: newDefaultLocation.id!);
-    _customer.value?.savedLocations = await get_customer_locations(
-        customer_id: _authController.hasuraUserId!);
+    unawaited(get_customer_locations(customer_id: _authController.hasuraUserId!)
+        .then((List<SavedLocation> value) =>
+            _customer.value?.savedLocations = value));
   }
 
   void deleteLocation(SavedLocation savedLocation) {
