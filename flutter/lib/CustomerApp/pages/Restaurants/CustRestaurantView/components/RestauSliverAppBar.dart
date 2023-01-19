@@ -36,7 +36,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColorLight,
           elevation: 0.4,
           centerTitle: true,
-          expandedHeight: 350,
+          expandedHeight: (controller.showInfo.isFalse) ? 350 : 270,
           leadingWidth: 35,
           automaticallyImplyLeading: false,
           bottom: getBottom,
@@ -451,6 +451,9 @@ class RestaurantSliverAppBar extends StatelessWidget {
     }
     if (controller.showMenuTabs || controller.showSpecialTabs) {
       pad = pad + 60;
+    }
+    if (controller.showInfo.isTrue) {
+      pad = 12;
     }
 
     return pad;

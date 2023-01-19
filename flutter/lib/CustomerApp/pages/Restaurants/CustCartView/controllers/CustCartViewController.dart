@@ -119,13 +119,6 @@ class CustCartViewController {
       custStripeInfo.value?.cards = data.cards;
     }
 
-    // cardsListener = Get.find<CustomerAuthController>()
-    //     .customer
-    //     .stream
-    //     .listen((Customer? event) {
-    //   if (event != null) {
-    //     customerCards.clear();
-    //     customerCards.value.addAll(event.savedCards);
     if (custStripeInfo.value?.cards.isEmpty == true) {
       options.removeWhere((PaymentOption element) =>
           element.entries.first.key == PickerChoice.SavedCard);
@@ -317,39 +310,33 @@ class CustCartViewController {
   }
 
   bool get showFees {
-    mezDbgPrint("payment tyyype =====>${cart.paymentType.name}");
-    mezDbgPrint(
-        "payment tyyype =====>${cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer}");
     return cart.paymentType == PaymentType.Card &&
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }
 
   bool get canOrder {
-    return true;
-    // TODO : Hasura-ch
-    // cart.value.toLocation != null &&
-    //     _orderDistanceInKm <= 10 &&
-    //     isShippingSet.isTrue &&
-    //     validTime &&
-    //     cart.value.shippingCost != null &&
-    //     (associatedRestaurant?.isOpen() ?? false);
+    return cart.toLocation != null &&
+        _orderDistanceInKm <= 10 &&
+        isShippingSet.isTrue &&
+        validTime &&
+        cart.shippingCost != null &&
+        (cart.restaurant?.isOpen() ?? false);
   }
 
-//   void checkCartPeriod() {
-//     if (cart.value.cartPeriod != null &&
-//         cart.value.cartPeriod!.end
-//             .toLocal()
-//             .isBefore(DateTime.now().toLocal())) {
-//       final List<CartItem> specialITems = cart.value.cartItems
-//           .where((CartItem element) => element.isSpecial)
-//           .toList();
-//       specialITems.forEach((CartItem element) {
-//         if (element.item.endsAt!.toLocal().isBefore(DateTime.now().toLocal())) {
-//           cart.value.cartItems.remove(element);
-//         }
-//       });
-//     }
-//   }
+  void checkCartPeriod() {
+    if (cart.cartPeriod != null &&
+        cart.cartPeriod!.end.toLocal().isBefore(DateTime.now().toLocal())) {
+      final List<CartItem> specialITems = cart.cartItems
+          .where((CartItem element) => element.isSpecial)
+          .toList();
+      specialITems.forEach((CartItem element) {
+        if (element.item.endsAt!.toLocal().isBefore(DateTime.now().toLocal())) {
+          cart.cartItems.remove(element);
+        }
+      });
+    }
+  }
+
   Future<void> deleteItem(int itemId) async {
     await cartController.deleteCartItem(itemId);
   }
@@ -379,6 +366,7 @@ class CustCartViewController {
             _cartRxn.refresh();
           } else {
             cart.shippingCost = shippingCost.ceil();
+            _cartRxn.refresh();
           }
           cart.setRouteInformation = MapHelper.RouteInformation(
             polyline: routeInfo.encodedPolyLine,

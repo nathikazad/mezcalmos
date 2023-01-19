@@ -103,7 +103,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       serviceProviderId: checkoutRequest.restaurantId
     }
     if(checkoutRequest.paymentType == PaymentType.Card) {
-      updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
+     await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
     }
 
     return <ServerResponse> {
