@@ -1,9 +1,8 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/MezAdminApp/models/DeliveryOrder.dart';
-import 'package:mezcalmos/MezAdminApp/pages/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/DeliveryCostSetter.dart';
 import 'package:mezcalmos/MezAdminApp/pages/HomeScreen.dart';
+import 'package:mezcalmos/MezAdminApp/pages/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/PastDeliveryOrdersList.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceProvidersListScreen.dart';
@@ -49,18 +48,6 @@ class XRouter {
         ),
       ] +
       SharedRouter.sharedRoutes;
-}
-
-String getDeliveryCostScreenRoute(
-    int? providerId, DeliveryServiceType? providerType) {
-  String _rt = kDeliveryCostSettingScreen;
-  if (providerId != null) {
-    _rt = kDeliveryCostSettingScreen.replaceFirst(
-        ':providerId', providerId.toString());
-    if (providerType != null)
-      _rt = _rt.replaceFirst(':providerType', providerType.toHasuraString());
-  }
-  return _rt;
 }
 
 String currentDeliveryOrderInfoRoute(int orderId) {

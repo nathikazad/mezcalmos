@@ -80,9 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             // Drivers ---------
             CompanyDriversScreen(),
             // Cost
-            DeliveryCostSettingView(
-              isTab: true,
-            ),
+            DeliveryCostSettingView(),
             // company profile
             ServiceProfileScreen(),
           ],

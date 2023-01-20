@@ -1,16 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/orderController.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -34,14 +33,14 @@ class _DeliveryDriversListState extends State<DeliveryDriversList> {
   void initState() {
     mezDbgPrint("[PARAMS] ===> ${Get.parameters}");
     if (Get.parameters['orderId'] != null) {
-      int? orderId = int.tryParse(Get.parameters['orderId']!);
+      final int? orderId = int.tryParse(Get.parameters['orderId']!);
       if (orderId != null) {
         order = Get.find<OrderController>().getOrder(orderId);
         if (order != null) {
           get_drivers_by_service_provider_id(
                   serviceProviderId:
                       _operatorAuthController.deliveryOperator!.companyId)
-              .then((value) {
+              .then((List<DeliveryDriver>? value) {
             mezDbgPrint("[AAA] GOT drivers list === len ===> ${value?.length}");
             if (value != null) _drivers.assignAll(value);
             initMap();
@@ -98,8 +97,8 @@ class _DeliveryDriversListState extends State<DeliveryDriversList> {
       );
 
       mapController.addOrUpdateUserMarker(
-        customImgHttpUrl: order?.moreInfo.serviceProviderImage,
-        markerId: order?.serviceProviderId?.toString(),
+        // customImgHttpUrl: order?.moreInfo.serviceProviderImage,
+        // markerId: order?.serviceProviderId?.toString(),
         latLng: LatLng(
           order!.pickupLocation.position.latitude!,
           order!.pickupLocation.position.longitude!,
@@ -144,7 +143,7 @@ class _DeliveryDriversListState extends State<DeliveryDriversList> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: _drivers.map<Widget>((d) {
+                children: _drivers.map<Widget>((DeliveryDriver d) {
                   return _noDriverYet(d);
                   // Container(
                   //   padding: EdgeInsets.all(5),

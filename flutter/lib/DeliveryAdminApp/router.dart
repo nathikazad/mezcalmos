@@ -1,16 +1,11 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/DeliveryAdminWrapper.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/DeliveryCostSetter.dart';
+import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Drivers/DeliveryDriversList.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Drivers/CompanyDriversScreen.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/HomeScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/CurrentDeliveryOrdersList.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/PastDeliveryOrdersList.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/ServiceProfile/ServiceProfile.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Unauthorized.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryDriverType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersList = "/currentDeliveryOrders";
@@ -20,7 +15,6 @@ const String kPastOrdersList = "/pastDeliveryOrders";
 const String kPastDeliveryOrderInfoRoute = '/pastDeliveryOrders/:orderId';
 const String kDeliveryDriversList = '/deliveryDriversList/:orderId';
 const String kNotAuthorizedOperator = "/unauthorized";
-const String kDeliveryCostSetter = "/deliveryCostSetter";
 // const String kCompanyDriversScreen = "/companyDriversScreen";
 // const String kServiceProfileScreen = "/serviceProfileScreen";
 
@@ -43,20 +37,20 @@ class XRouter {
           name: kPastOrdersList,
           page: () => PastDeliveryOrdersList(),
         ),
-        GetPage(
-          name: kCurrentDeliveryOrderInfoRoute,
-          page: () => ViewRestaurantOrderScreen(),
-        ),
-        GetPage(
-          name: kPastDeliveryOrderInfoRoute,
-          page: () => ViewRestaurantOrderScreen(),
-        ),
+        // GetPage(
+        //   name: kCurrentDeliveryOrderInfoRoute,
+        //   page: () => ViewRestaurantOrderScreen(),
+        // ),
+        // GetPage(
+        //   name: kPastDeliveryOrderInfoRoute,
+        //   page: () => ViewRestaurantOrderScreen(),
+        // ),
         GetPage(
           name: kNotAuthorizedOperator,
           page: () => UnauthorizedDeliveryOperator(),
         ),
         GetPage(name: kDeliveryDriversList, page: () => DeliveryDriversList()),
-        GetPage(name: kDeliveryCostSetter, page: () => DeliveryCostSetter()),
+
         // GetPage(name: kCompanyDriversScreen, page: () => CompanyDriversScreen())
       ] +
       SharedRouter.sharedRoutes;

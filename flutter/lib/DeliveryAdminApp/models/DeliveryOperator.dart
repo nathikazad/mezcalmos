@@ -1,5 +1,6 @@
 import 'package:location/location.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryDriverType.dart';
 
 class DeliveryOperator {
   // for testing now

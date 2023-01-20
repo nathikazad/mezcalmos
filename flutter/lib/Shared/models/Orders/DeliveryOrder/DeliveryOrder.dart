@@ -1,7 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryAction.dart';
-import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -169,4 +169,13 @@ class DeliveryOrder {
         status == DeliveryOrderStatus.CancelledByDeliverer ||
         status == DeliveryOrderStatus.CancelledByServiceProvider;
   }
+
+  bool get isInProcess => <DeliveryOrderStatus>[
+        DeliveryOrderStatus.AtPickup,
+        DeliveryOrderStatus.AtDropoff,
+        DeliveryOrderStatus.OnTheWayToDropoff,
+        DeliveryOrderStatus.PackageReady,
+        DeliveryOrderStatus.OnTheWayToDropoff
+      ].contains(status);
+  num get totalCost => packageCost + deliveryCost;
 }

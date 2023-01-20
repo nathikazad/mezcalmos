@@ -1,18 +1,17 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOperator.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/__generated/delivery_operator.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryDriverType.dart';
 
 final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 Future<DeliveryOperator?> get_delivery_operator({required int userId}) async {
   DeliveryOperator? _operator;
 
-  QueryResult<Query$get_delivery_operator_by_id> _res =
+  final QueryResult<Query$get_delivery_operator_by_id> _res =
       await _hasuraDb.graphQLClient.query$get_delivery_operator_by_id(
     Options$Query$get_delivery_operator_by_id(
       variables: Variables$Query$get_delivery_operator_by_id(
@@ -55,7 +54,7 @@ Future<DeliveryOperator?> get_delivery_operator({required int userId}) async {
 }
 
 Future<void> bann_delivery_driver(int driverId) async {
-  QueryResult<Mutation$bannDeliveryDriver> result =
+  final QueryResult<Mutation$bannDeliveryDriver> result =
       await _hasuraDb.graphQLClient.mutate$bannDeliveryDriver(
     Options$Mutation$bannDeliveryDriver(
       variables: Variables$Mutation$bannDeliveryDriver(driverId: driverId),

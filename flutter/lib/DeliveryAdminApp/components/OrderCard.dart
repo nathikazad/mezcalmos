@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -86,8 +86,9 @@ class DeliveryOrderCard extends StatelessWidget {
   Widget _getOrderWidget() {
     // if (order.orderType == OrderType.Restaurant) {
     switch (order.status) {
-      case DeliveryOrderStatus.cancelledByServiceProvider:
-      case DeliveryOrderStatus.cancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByServiceProvider:
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -101,7 +102,7 @@ class DeliveryOrderCard extends StatelessWidget {
             ),
           ),
         );
-      case DeliveryOrderStatus.delivered:
+      case DeliveryOrderStatus.Delivered:
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -115,7 +116,7 @@ class DeliveryOrderCard extends StatelessWidget {
             ),
           ),
         );
-      case DeliveryOrderStatus.onTheWayToDropoff:
+      case DeliveryOrderStatus.OnTheWayToDropoff:
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -129,7 +130,7 @@ class DeliveryOrderCard extends StatelessWidget {
             ),
           ),
         );
-      case DeliveryOrderStatus.packageReady:
+      case DeliveryOrderStatus.PackageReady:
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -143,7 +144,7 @@ class DeliveryOrderCard extends StatelessWidget {
             ),
           ),
         );
-      case DeliveryOrderStatus.orderReceived:
+      case DeliveryOrderStatus.OrderReceived:
         // if ((order).isScheduled()) {
         //   return Container(
         //     padding: const EdgeInsets.all(8),

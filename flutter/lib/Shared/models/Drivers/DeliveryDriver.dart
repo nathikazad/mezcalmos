@@ -88,7 +88,7 @@ class DeliveryDriver {
             : DateTime.parse(deliveryDriverData['location']['lastUpdateTime']);
 
     return DeliveryDriver(
-      deliveryDriverId: int.parse(deliveryDriverId),
+      deliveryDriverId: deliveryDriverId,
       deliveryDriverState: deliveryDriverState,
       driverLocation: driverLocation,
       lastLocationUpdateTime: lastLocationUpdateTime,

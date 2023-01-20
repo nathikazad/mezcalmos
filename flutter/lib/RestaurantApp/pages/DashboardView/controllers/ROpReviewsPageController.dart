@@ -15,7 +15,6 @@ class ROpReviewsViewController {
   ROpReviewsViewController();
 
 // instances and streams subscriptions
-  late RestaurantInfoController restaurantInfoController;
 
   // state variables
 
