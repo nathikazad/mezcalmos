@@ -2,7 +2,7 @@
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/HomeScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrderxxx/DvCompanyOrderView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrder/DvCompanyOrderView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/Unauthorized.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
