@@ -23,19 +23,14 @@ class DeliveryOpAuthController extends GetxController {
   RxnInt _companyId = RxnInt();
   int? get companyId => _companyId.value;
 
-  OperatorState? get restaurantOperatorState => operator.value?.state;
-  Stream<Operator?> get operatorInfoStream => operator.stream;
 
-  StreamSubscription? _restaurantOperatorNodeListener;
-  StreamSubscription<MainUserInfo>? _userInfoStreamListener;
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
 
-  bool _checkedAppVersion = false;
-  String? _previousStateValue = "init";
+
 
   @override
   void onInit() {
@@ -111,8 +106,7 @@ class DeliveryOpAuthController extends GetxController {
       _appLifeCycleController.removeCallbackIdOfState(
           Material.AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
 
-    _restaurantOperatorNodeListener?.cancel();
-    _restaurantOperatorNodeListener = null;
+    
     super.onClose();
   }
 }
