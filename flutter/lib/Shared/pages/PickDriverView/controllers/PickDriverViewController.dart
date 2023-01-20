@@ -29,7 +29,7 @@ class PickDriverController {
       mezDbgPrint(stk);
     }
     if (order.value != null) {
-      serviceProviderId = order.value?.serviceInfo.hasuraId;
+      serviceProviderId = order.value?.deliveryCompany.hasuraId;
       await _getDrivers();
     }
   }

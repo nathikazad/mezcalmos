@@ -148,10 +148,10 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         status: response.delivery_operator[0].status as DeliveryOperatorStatus,
         owner: response.delivery_operator[0].owner,
         appVersion: response.delivery_operator[0].app_version,
-        currentGPS: {
+        currentGPS: (response.delivery_operator[0].current_gps) ?{
             lat: response.delivery_operator[0].current_gps.coordinates[1],
             lng: response.delivery_operator[0].current_gps.coordinates[0]
-        },
+        } : undefined,
         notificationInfo: (response.delivery_operator[0].notification_token) ? <NotificationInfo>{
             AppTypeId: AppType.DeliveryAdmin,
             token: response.delivery_operator[0].notification_token

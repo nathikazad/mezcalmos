@@ -105,7 +105,7 @@ bool isCurrentRoute(String route) {
 void navigateToPickDriver(
     {required int deliveryOrderId, required bool showForwardButton}) {
   final String route = kPickDriver.replaceFirst(":orderId", "$deliveryOrderId");
-  MezRouter.toNamed(kPickDriver, arguments: {
+  MezRouter.toNamed(route, arguments: {
     "showForwardButton": showForwardButton,
   });
 }

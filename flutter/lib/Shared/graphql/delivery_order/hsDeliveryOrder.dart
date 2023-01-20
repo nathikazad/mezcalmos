@@ -6,11 +6,13 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -32,18 +34,18 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
           (QueryResult<Subscription$listen_on_driver_order> event) {
     final Subscription$listen_on_driver_order$delivery_order_by_pk orderData =
         event.parsedData!.delivery_order_by_pk!;
-
+    StripeOrderPaymentInfo? _paymentInfo;
+    if (orderData.restaurant_order?.stripe_info != null) {
+      _paymentInfo = StripeOrderPaymentInfo.fromJson(
+          orderData.restaurant_order!.stripe_info);
+    }
     return DeliveryOrder(
         id: orderData.id,
+        stripeOrderPaymentInfo: _paymentInfo,
         driverAssigned: orderData.delivery_driver != null,
         serviceOrderId: orderData.restaurant_order?.id,
-        // TODO MONTASSARE handle other service providers
-        serviceInfo: ServiceInfo(
-            hasuraId: orderData.restaurant!.id,
-            image: orderData.restaurant!.image,
-            location: Location(orderData.restaurant!.location_text,
-                orderData.restaurant!.location_gps.toLocationData()),
-            name: orderData.restaurant!.name),
+        deliveryCompany: _getDeliveryCompany(orderData)!,
+        serviceInfo: _getServiceInfo(orderData)!,
         customerInfo: UserInfo(
             hasuraId: orderData.customer.user.id,
             image: orderData.customer.user.image,
@@ -59,6 +61,12 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
                     orderData.trip_distance!),
                 polyline: orderData.trip_polyline!)
             : null,
+        driverInfo: (orderData.delivery_driver != null)
+            ? UserInfo(
+                hasuraId: orderData.delivery_driver!.user.id,
+                name: orderData.delivery_driver!.user.name,
+                image: orderData.delivery_driver!.user.image)
+            : null,
         driverLocation: (orderData.delivery_driver != null &&
                 orderData.delivery_driver?.current_location != null)
             ? LatLng(orderData.delivery_driver!.current_location!.latitude,
@@ -73,10 +81,9 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
             (orderData.estimated_arrival_at_dropoff_time != null)
                 ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
                 : null,
-        estimatedArrivalAtPickupTime:
-            (orderData.estimated_arrival_at_pickup_time != null)
-                ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
-                : null,
+        estimatedArrivalAtPickupTime: (orderData.estimated_arrival_at_pickup_time != null)
+            ? DateTime.parse(orderData.estimated_arrival_at_pickup_time!)
+            : null,
         estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
             ? DateTime.parse(orderData.estimated_package_ready_time!)
             : null,
@@ -105,18 +112,18 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
 
   final Query$get_driver_order$delivery_order_by_pk orderData =
       response.parsedData!.delivery_order_by_pk!;
-
+  StripeOrderPaymentInfo? _paymentInfo;
+  if (orderData.restaurant_order?.stripe_info != null) {
+    _paymentInfo = StripeOrderPaymentInfo.fromJson(
+        orderData.restaurant_order!.stripe_info);
+  }
   return DeliveryOrder(
       id: orderData.id,
+      stripeOrderPaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
       driverAssigned: orderData.delivery_driver != null,
-      // TODO MONTASSARE handle other service providers
-      serviceInfo: ServiceInfo(
-          hasuraId: orderData.restaurant!.id,
-          image: orderData.restaurant!.image,
-          location: Location(orderData.restaurant!.location_text,
-              orderData.restaurant!.location_gps.toLocationData()),
-          name: orderData.restaurant!.name),
+      deliveryCompany: _getDeliveryCompany(orderData)!,
+      serviceInfo: _getServiceInfo(orderData)!,
       customerInfo: UserInfo(
           hasuraId: orderData.customer.user.id,
           image: orderData.customer.user.image,
@@ -133,6 +140,12 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
               polyline: orderData.trip_polyline!)
           : null,
       orderTime: DateTime.parse(orderData.order_time),
+      driverInfo: (orderData.delivery_driver != null)
+          ? UserInfo(
+              hasuraId: orderData.delivery_driver!.user.id,
+              name: orderData.delivery_driver!.user.name,
+              image: orderData.delivery_driver!.user.image)
+          : null,
       estimatedArrivalAtDropoffTime:
           (orderData.estimated_arrival_at_dropoff_time != null)
               ? DateTime.parse(orderData.estimated_arrival_at_dropoff_time!)
@@ -159,6 +172,43 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
       paymentType: orderData.payment_type.toPaymentType());
+}
+
+UserInfo? _getDeliveryCompany<T>(orderData) {
+  final ServiceProviderType serviceProviderType =
+      orderData!.service_provider_type.toString().toServiceProviderType();
+  switch (serviceProviderType) {
+    case ServiceProviderType.Delivery_company:
+      return UserInfo(
+          hasuraId: orderData.delivery_company!.id,
+          name: orderData.delivery_company!.name,
+          image: orderData.delivery_company!.image);
+    case ServiceProviderType.Restaurant:
+      return UserInfo(
+          hasuraId: orderData.restaurant!.id,
+          name: orderData.restaurant!.name,
+          image: orderData.restaurant!.image);
+
+    default:
+  }
+  return null;
+}
+
+ServiceInfo? _getServiceInfo(orderData) {
+  final OrderType orderType = orderData.order_type.toString().toOrderType();
+  switch (orderType) {
+    case OrderType.Restaurant:
+      return ServiceInfo(
+          location: Location.fromHasura(
+              orderData.restaurant_order!.restaurant.location_gps,
+              orderData.restaurant_order!.restaurant.location_text),
+          hasuraId: orderData.restaurant_order!.restaurant.id,
+          image: orderData.restaurant_order!.restaurant.image,
+          name: orderData.restaurant_order!.restaurant.name);
+
+    default:
+  }
+  return null;
 }
 
 Stream<List<MinimalOrder>?> listen_on_current_driver_orders(

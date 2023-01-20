@@ -8,6 +8,13 @@ query get_driver_order($orderId: Int!) {
     chat_with_customer_id
     chat_with_service_provider_id
     current_gps
+    delivery_company {
+      id
+      image
+      name
+      service_provider_type
+    }
+
     customer_id
     customer_review_by_driver_id
     delivery_cost
@@ -17,14 +24,25 @@ query get_driver_order($orderId: Int!) {
     estimated_arrival_at_pickup_time
     estimated_package_ready_time
     id
+
     restaurant_order {
       id
+      stripe_info
+      restaurant {
+        firebase_id
+        id
+        image
+        name
+        location_gps
+        location_text
+      }
     }
     order_time
     package_cost
     payment_type
     pickup_address
     pickup_gps
+    order_type
     restaurant {
       id
       firebase_id
@@ -38,6 +56,12 @@ query get_driver_order($orderId: Int!) {
     service_provider_id
     delivery_driver {
       current_location
+
+      user {
+        name
+        image
+        id
+      }
     }
     service_provider_review_by_driver_id
     service_provider_type
@@ -67,14 +91,36 @@ subscription listen_on_driver_order($orderId: Int!) {
     chat_with_service_provider_id
     delivery_driver {
       current_location
+      user {
+        name
+        image
+        id
+      }
     }
     restaurant_order {
       id
+      stripe_info
+      restaurant {
+        firebase_id
+        id
+        image
+        name
+        location_gps
+        location_text
+      }
     }
     current_gps
     customer_id
     customer_review_by_driver_id
     delivery_cost
+    delivery_company {
+      id
+      image
+      name
+      service_provider_type
+    }
+    order_type
+
     dropoff_address
     dropoff_gps
     estimated_arrival_at_dropoff_time
@@ -207,7 +253,10 @@ query get_inprocess_driver_orders($driverId: Int!) {
 }
 subscription listen_delivery_company_current_orders($companyId: Int!) {
   delivery_order(
-    where: { delivery_company: { id: { _eq: $companyId } }, in_process: { _eq: true } }
+    where: {
+      delivery_company: { id: { _eq: $companyId } }
+      in_process: { _eq: true }
+    }
   ) {
     id
     order_time
@@ -235,7 +284,10 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
 }
 query get_delivery_company_past_orders($companyId: Int!) {
   delivery_order(
-    where: { delivery_company: { id: { _eq: $companyId } }, in_process: { _eq: false } }
+    where: {
+      delivery_company: { id: { _eq: $companyId } }
+      in_process: { _eq: false }
+    }
   ) {
     id
     order_time
@@ -264,7 +316,7 @@ query get_delivery_company_past_orders($companyId: Int!) {
 query get_delivery_company_inprocess_orders($companyId: Int!) {
   delivery_order(
     where: {
-       delivery_company: { id: { _eq: $companyId } }
+      delivery_company: { id: { _eq: $companyId } }
       in_process: { _eq: false }
     }
   ) {

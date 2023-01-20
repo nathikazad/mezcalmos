@@ -327,6 +327,49 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_company'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'customer_id'),
             alias: null,
             arguments: [],
@@ -403,6 +446,70 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'stripe_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'restaurant'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location_gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location_text'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -441,6 +548,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
           ),
           FieldNode(
             name: NameNode(value: 'pickup_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_type'),
             alias: null,
             arguments: [],
             directives: [],
@@ -536,6 +650,42 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
@@ -777,6 +927,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.chat_with_customer_id,
     this.chat_with_service_provider_id,
     this.current_gps,
+    this.delivery_company,
     required this.customer_id,
     this.customer_review_by_driver_id,
     required this.delivery_cost,
@@ -792,6 +943,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.payment_type,
     required this.pickup_address,
     required this.pickup_gps,
+    required this.order_type,
     this.restaurant,
     this.service_provider_id,
     this.delivery_driver,
@@ -818,6 +970,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$current_gps = json['current_gps'];
+    final l$delivery_company = json['delivery_company'];
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
     final l$delivery_cost = json['delivery_cost'];
@@ -835,6 +988,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$payment_type = json['payment_type'];
     final l$pickup_address = json['pickup_address'];
     final l$pickup_gps = json['pickup_gps'];
+    final l$order_type = json['order_type'];
     final l$restaurant = json['restaurant'];
     final l$service_provider_id = json['service_provider_id'];
     final l$delivery_driver = json['delivery_driver'];
@@ -859,6 +1013,10 @@ class Query$get_driver_order$delivery_order_by_pk {
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       current_gps:
           l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_company: l$delivery_company == null
+          ? null
+          : Query$get_driver_order$delivery_order_by_pk$delivery_company
+              .fromJson((l$delivery_company as Map<String, dynamic>)),
       customer_id: (l$customer_id as int),
       customer_review_by_driver_id: (l$customer_review_by_driver_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
@@ -879,6 +1037,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       payment_type: (l$payment_type as String),
       pickup_address: (l$pickup_address as String),
       pickup_gps: geographyFromJson(l$pickup_gps),
+      order_type: (l$order_type as String),
       restaurant: l$restaurant == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant.fromJson(
@@ -917,6 +1076,9 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   final Geography? current_gps;
 
+  final Query$get_driver_order$delivery_order_by_pk$delivery_company?
+      delivery_company;
+
   final int customer_id;
 
   final int? customer_review_by_driver_id;
@@ -947,6 +1109,8 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String pickup_address;
 
   final Geography pickup_gps;
+
+  final String order_type;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant;
 
@@ -993,6 +1157,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$current_gps = current_gps;
     _resultData['current_gps'] =
         l$current_gps == null ? null : geographyToJson(l$current_gps);
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$customer_id = customer_id;
     _resultData['customer_id'] = l$customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
@@ -1028,6 +1194,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     _resultData['pickup_address'] = l$pickup_address;
     final l$pickup_gps = pickup_gps;
     _resultData['pickup_gps'] = geographyToJson(l$pickup_gps);
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$service_provider_id = service_provider_id;
@@ -1065,6 +1233,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$current_gps = current_gps;
+    final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
     final l$delivery_cost = delivery_cost;
@@ -1081,6 +1250,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$payment_type = payment_type;
     final l$pickup_address = pickup_address;
     final l$pickup_gps = pickup_gps;
+    final l$order_type = order_type;
     final l$restaurant = restaurant;
     final l$service_provider_id = service_provider_id;
     final l$delivery_driver = delivery_driver;
@@ -1102,6 +1272,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$chat_with_customer_id,
       l$chat_with_service_provider_id,
       l$current_gps,
+      l$delivery_company,
       l$customer_id,
       l$customer_review_by_driver_id,
       l$delivery_cost,
@@ -1117,6 +1288,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$payment_type,
       l$pickup_address,
       l$pickup_gps,
+      l$order_type,
       l$restaurant,
       l$service_provider_id,
       l$delivery_driver,
@@ -1184,6 +1356,11 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$current_gps = current_gps;
     final lOther$current_gps = other.current_gps;
     if (l$current_gps != lOther$current_gps) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company != lOther$delivery_company) {
       return false;
     }
     final l$customer_id = customer_id;
@@ -1266,6 +1443,11 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$pickup_gps = pickup_gps;
     final lOther$pickup_gps = other.pickup_gps;
     if (l$pickup_gps != lOther$pickup_gps) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$restaurant = restaurant;
@@ -1358,6 +1540,8 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     int? chat_with_customer_id,
     int? chat_with_service_provider_id,
     Geography? current_gps,
+    Query$get_driver_order$delivery_order_by_pk$delivery_company?
+        delivery_company,
     int? customer_id,
     int? customer_review_by_driver_id,
     double? delivery_cost,
@@ -1374,6 +1558,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? payment_type,
     String? pickup_address,
     Geography? pickup_gps,
+    String? order_type,
     Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant,
     int? service_provider_id,
     Query$get_driver_order$delivery_order_by_pk$delivery_driver?
@@ -1387,6 +1572,8 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     Query$get_driver_order$delivery_order_by_pk$customer? customer,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<TRes>
+      get delivery_company;
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order<TRes>
       get restaurant_order;
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
@@ -1419,6 +1606,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? chat_with_customer_id = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? current_gps = _undefined,
+    Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
     Object? delivery_cost = _undefined,
@@ -1434,6 +1622,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? payment_type = _undefined,
     Object? pickup_address = _undefined,
     Object? pickup_gps = _undefined,
+    Object? order_type = _undefined,
     Object? restaurant = _undefined,
     Object? service_provider_id = _undefined,
     Object? delivery_driver = _undefined,
@@ -1475,6 +1664,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         current_gps: current_gps == _undefined
             ? _instance.current_gps
             : (current_gps as Geography?),
+        delivery_company: delivery_company == _undefined
+            ? _instance.delivery_company
+            : (delivery_company
+                as Query$get_driver_order$delivery_order_by_pk$delivery_company?),
         customer_id: customer_id == _undefined || customer_id == null
             ? _instance.customer_id
             : (customer_id as int),
@@ -1522,6 +1715,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         pickup_gps: pickup_gps == _undefined || pickup_gps == null
             ? _instance.pickup_gps
             : (pickup_gps as Geography),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant
@@ -1560,6 +1756,16 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<TRes>
+      get delivery_company {
+    final local$delivery_company = _instance.delivery_company;
+    return local$delivery_company == null
+        ? CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company
+            .stub(_then(_instance))
+        : CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company(
+            local$delivery_company, (e) => call(delivery_company: e));
+  }
+
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order<TRes>
       get restaurant_order {
     final local$restaurant_order = _instance.restaurant_order;
@@ -1613,6 +1819,8 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     int? chat_with_customer_id,
     int? chat_with_service_provider_id,
     Geography? current_gps,
+    Query$get_driver_order$delivery_order_by_pk$delivery_company?
+        delivery_company,
     int? customer_id,
     int? customer_review_by_driver_id,
     double? delivery_cost,
@@ -1629,6 +1837,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? payment_type,
     String? pickup_address,
     Geography? pickup_gps,
+    String? order_type,
     Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant,
     int? service_provider_id,
     Query$get_driver_order$delivery_order_by_pk$delivery_driver?
@@ -1643,6 +1852,10 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<TRes>
+      get delivery_company =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company
+              .stub(_res);
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order<TRes>
       get restaurant_order =>
           CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order
@@ -1661,23 +1874,38 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
               _res);
 }
 
-class Query$get_driver_order$delivery_order_by_pk$restaurant_order {
-  Query$get_driver_order$delivery_order_by_pk$restaurant_order({
+class Query$get_driver_order$delivery_order_by_pk$delivery_company {
+  Query$get_driver_order$delivery_order_by_pk$delivery_company({
     required this.id,
+    required this.image,
+    required this.name,
+    required this.service_provider_type,
     required this.$__typename,
   });
 
-  factory Query$get_driver_order$delivery_order_by_pk$restaurant_order.fromJson(
+  factory Query$get_driver_order$delivery_order_by_pk$delivery_company.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
-    return Query$get_driver_order$delivery_order_by_pk$restaurant_order(
+    return Query$get_driver_order$delivery_order_by_pk$delivery_company(
       id: (l$id as int),
+      image: (l$image as String),
+      name: (l$name as String),
+      service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
+
+  final String image;
+
+  final String name;
+
+  final String service_provider_type;
 
   final String $__typename;
 
@@ -1685,6 +1913,12 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1693,9 +1927,209 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order {
   @override
   int get hashCode {
     final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$image,
+      l$name,
+      l$service_provider_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$delivery_company
+    on Query$get_driver_order$delivery_order_by_pk$delivery_company {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+          Query$get_driver_order$delivery_order_by_pk$delivery_company>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company(
+    Query$get_driver_order$delivery_order_by_pk$delivery_company instance,
+    TRes Function(Query$get_driver_order$delivery_order_by_pk$delivery_company)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company;
+
+  TRes call({
+    int? id,
+    String? image,
+    String? name,
+    String? service_provider_type,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$delivery_company _instance;
+
+  final TRes Function(
+      Query$get_driver_order$delivery_order_by_pk$delivery_company) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_driver_order$delivery_order_by_pk$delivery_company(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_company<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    String? name,
+    String? service_provider_type,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$get_driver_order$delivery_order_by_pk$restaurant_order {
+  Query$get_driver_order$delivery_order_by_pk$restaurant_order({
+    required this.id,
+    this.stripe_info,
+    required this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$restaurant_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_info = json['stripe_info'];
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$restaurant_order(
+      id: (l$id as int),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
+      restaurant:
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? stripe_info;
+
+  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_info = stripe_info;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_info,
+      l$restaurant,
       l$$__typename,
     ]);
   }
@@ -1713,6 +2147,16 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1749,8 +2193,13 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_o
 
   TRes call({
     int? id,
+    dynamic? stripe_info,
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant?
+        restaurant,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+      TRes> get restaurant;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order<
@@ -1772,14 +2221,29 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
 
   TRes call({
     Object? id = _undefined,
+    Object? stripe_info = _undefined,
+    Object? restaurant = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_driver_order$delivery_order_by_pk$restaurant_order(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
+        restaurant: restaurant == _undefined || restaurant == null
+            ? _instance.restaurant
+            : (restaurant
+                as Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+        local$restaurant, (e) => call(restaurant: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order<
@@ -1794,6 +2258,257 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_o
 
   call({
     int? id,
+    dynamic? stripe_info,
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant?
+        restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+              .stub(_res);
+}
+
+class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
+  Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant({
+    this.firebase_id,
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.location_gps,
+    required this.location_text,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$firebase_id = json['firebase_id'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+      firebase_id: (l$firebase_id as String?),
+      id: (l$id as int),
+      image: (l$image as String),
+      name: (l$name as String),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? firebase_id;
+
+  final int id;
+
+  final String image;
+
+  final String name;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$firebase_id = firebase_id;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$firebase_id,
+      l$id,
+      l$image,
+      l$name,
+      l$location_gps,
+      l$location_text,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+    on Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+        instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant;
+
+  TRes call({
+    String? firebase_id,
+    int? id,
+    String? image,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+      _instance;
+
+  final TRes Function(
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? firebase_id = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? firebase_id,
+    int? id,
+    String? image,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
     String? $__typename,
   }) =>
       _res;
@@ -2075,22 +2790,28 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<
 class Query$get_driver_order$delivery_order_by_pk$delivery_driver {
   Query$get_driver_order$delivery_order_by_pk$delivery_driver({
     this.current_location,
+    required this.user,
     required this.$__typename,
   });
 
   factory Query$get_driver_order$delivery_order_by_pk$delivery_driver.fromJson(
       Map<String, dynamic> json) {
     final l$current_location = json['current_location'];
+    final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$delivery_driver(
       current_location: l$current_location == null
           ? null
           : geographyFromJson(l$current_location),
+      user: Query$get_driver_order$delivery_order_by_pk$delivery_driver$user
+          .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography? current_location;
+
+  final Query$get_driver_order$delivery_order_by_pk$delivery_driver$user user;
 
   final String $__typename;
 
@@ -2099,6 +2820,8 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_driver {
     final l$current_location = current_location;
     _resultData['current_location'] =
         l$current_location == null ? null : geographyToJson(l$current_location);
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2107,9 +2830,11 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_driver {
   @override
   int get hashCode {
     final l$current_location = current_location;
+    final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$current_location,
+      l$user,
       l$$__typename,
     ]);
   }
@@ -2127,6 +2852,11 @@ class Query$get_driver_order$delivery_order_by_pk$delivery_driver {
     final l$current_location = current_location;
     final lOther$current_location = other.current_location;
     if (l$current_location != lOther$current_location) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2163,8 +2893,11 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_dri
 
   TRes call({
     Geography? current_location,
+    Query$get_driver_order$delivery_order_by_pk$delivery_driver$user? user,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver<
@@ -2186,16 +2919,27 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver<
 
   TRes call({
     Object? current_location = _undefined,
+    Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_driver_order$delivery_order_by_pk$delivery_driver(
         current_location: current_location == _undefined
             ? _instance.current_location
             : (current_location as Geography?),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Query$get_driver_order$delivery_order_by_pk$delivery_driver$user),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+        local$user, (e) => call(user: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver<
@@ -2210,6 +2954,188 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_dri
 
   call({
     Geography? current_location,
+    Query$get_driver_order$delivery_order_by_pk$delivery_driver$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+          TRes>
+      get user =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user
+              .stub(_res);
+}
+
+class Query$get_driver_order$delivery_order_by_pk$delivery_driver$user {
+  Query$get_driver_order$delivery_order_by_pk$delivery_driver$user({
+    this.name,
+    this.image,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$delivery_driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$delivery_driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user
+    on Query$get_driver_order$delivery_order_by_pk$delivery_driver$user {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+          Query$get_driver_order$delivery_order_by_pk$delivery_driver$user>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+    Query$get_driver_order$delivery_order_by_pk$delivery_driver$user instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$delivery_driver$user)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$delivery_driver$user
+      _instance;
+
+  final TRes Function(
+      Query$get_driver_order$delivery_order_by_pk$delivery_driver$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$delivery_driver$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    int? id,
     String? $__typename,
   }) =>
       _res;
@@ -2898,6 +3824,42 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -2918,6 +3880,70 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 arguments: [],
                 directives: [],
                 selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'stripe_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'restaurant'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location_gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location_text'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
@@ -2951,6 +3977,56 @@ const documentNodeSubscriptionlisten_on_driver_order =
           ),
           FieldNode(
             name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'order_type'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3321,6 +4397,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     required this.customer_id,
     this.customer_review_by_driver_id,
     required this.delivery_cost,
+    this.delivery_company,
+    required this.order_type,
     required this.dropoff_address,
     required this.dropoff_gps,
     this.estimated_arrival_at_dropoff_time,
@@ -3362,6 +4440,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
     final l$delivery_cost = json['delivery_cost'];
+    final l$delivery_company = json['delivery_company'];
+    final l$order_type = json['order_type'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$estimated_arrival_at_dropoff_time =
@@ -3409,6 +4489,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       customer_id: (l$customer_id as int),
       customer_review_by_driver_id: (l$customer_review_by_driver_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
+      delivery_company: l$delivery_company == null
+          ? null
+          : Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+              .fromJson((l$delivery_company as Map<String, dynamic>)),
+      order_type: (l$order_type as String),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       estimated_arrival_at_dropoff_time:
@@ -3468,6 +4553,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final int? customer_review_by_driver_id;
 
   final double delivery_cost;
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
+      delivery_company;
+
+  final String order_type;
 
   final String dropoff_address;
 
@@ -3546,6 +4636,10 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
         l$customer_review_by_driver_id;
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$delivery_company = delivery_company;
+    _resultData['delivery_company'] = l$delivery_company?.toJson();
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -3612,6 +4706,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
     final l$delivery_cost = delivery_cost;
+    final l$delivery_company = delivery_company;
+    final l$order_type = order_type;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     final l$estimated_arrival_at_dropoff_time =
@@ -3649,6 +4745,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$customer_id,
       l$customer_review_by_driver_id,
       l$delivery_cost,
+      l$delivery_company,
+      l$order_type,
       l$dropoff_address,
       l$dropoff_gps,
       l$estimated_arrival_at_dropoff_time,
@@ -3752,6 +4850,16 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$delivery_cost = delivery_cost;
     final lOther$delivery_cost = other.delivery_cost;
     if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$delivery_company = delivery_company;
+    final lOther$delivery_company = other.delivery_company;
+    if (l$delivery_company != lOther$delivery_company) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -3911,6 +5019,9 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? customer_id,
     int? customer_review_by_driver_id,
     double? delivery_cost,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
+        delivery_company,
+    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -3938,6 +5049,8 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       TRes> get delivery_driver;
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order<
       TRes> get restaurant_order;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+      TRes> get delivery_company;
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant<
       TRes> get restaurant;
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$customer<
@@ -3975,6 +5088,8 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
     Object? delivery_cost = _undefined,
+    Object? delivery_company = _undefined,
+    Object? order_type = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
     Object? estimated_arrival_at_dropoff_time = _undefined,
@@ -4043,6 +5158,13 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
+        delivery_company: delivery_company == _undefined
+            ? _instance.delivery_company
+            : (delivery_company
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -4131,6 +5253,16 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
             local$restaurant_order, (e) => call(restaurant_order: e));
   }
 
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+      TRes> get delivery_company {
+    final local$delivery_company = _instance.delivery_company;
+    return local$delivery_company == null
+        ? CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+            local$delivery_company, (e) => call(delivery_company: e));
+  }
+
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant<
       TRes> get restaurant {
     final local$restaurant = _instance.restaurant;
@@ -4175,6 +5307,9 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? customer_id,
     int? customer_review_by_driver_id,
     double? delivery_cost,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
+        delivery_company,
+    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -4209,6 +5344,11 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
       get restaurant_order =>
           CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order
               .stub(_res);
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+          TRes>
+      get delivery_company =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+              .stub(_res);
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant<
           TRes>
       get restaurant =>
@@ -4224,22 +5364,30 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
   Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver({
     this.current_location,
+    required this.user,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver.fromJson(
       Map<String, dynamic> json) {
     final l$current_location = json['current_location'];
+    final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver(
       current_location: l$current_location == null
           ? null
           : geographyFromJson(l$current_location),
+      user:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+              .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography? current_location;
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+      user;
 
   final String $__typename;
 
@@ -4248,6 +5396,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
     final l$current_location = current_location;
     _resultData['current_location'] =
         l$current_location == null ? null : geographyToJson(l$current_location);
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -4256,9 +5406,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
   @override
   int get hashCode {
     final l$current_location = current_location;
+    final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$current_location,
+      l$user,
       l$$__typename,
     ]);
   }
@@ -4276,6 +5428,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver {
     final l$current_location = current_location;
     final lOther$current_location = other.current_location;
     if (l$current_location != lOther$current_location) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -4314,8 +5471,12 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
 
   TRes call({
     Geography? current_location,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user?
+        user,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver<
@@ -4339,6 +5500,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
 
   TRes call({
     Object? current_location = _undefined,
+    Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -4346,10 +5508,20 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$del
         current_location: current_location == _undefined
             ? _instance.current_location
             : (current_location as Geography?),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+        local$user, (e) => call(user: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver<
@@ -4364,26 +5536,43 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
   call({
     Geography? current_location,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user?
+        user,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+          TRes>
+      get user =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+              .stub(_res);
 }
 
-class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order {
-  Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order({
+class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user({
+    this.name,
+    this.image,
     required this.id,
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order.fromJson(
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user.fromJson(
       Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order(
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? name;
+
+  final String? image;
 
   final int id;
 
@@ -4391,6 +5580,10 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order 
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$$__typename = $__typename;
@@ -4400,10 +5593,197 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order 
 
   @override
   int get hashCode {
+    final l$name = name;
+    final l$image = image;
     final l$id = id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$name,
+      l$image,
       l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order({
+    required this.id,
+    this.stripe_info,
+    required this.restaurant,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_info = json['stripe_info'];
+    final l$restaurant = json['restaurant'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order(
+      id: (l$id as int),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
+      restaurant:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+              .fromJson((l$restaurant as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final dynamic? stripe_info;
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+      restaurant;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
+    final l$restaurant = restaurant;
+    _resultData['restaurant'] = l$restaurant.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_info = stripe_info;
+    final l$restaurant = restaurant;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_info,
+      l$restaurant,
       l$$__typename,
     ]);
   }
@@ -4421,6 +5801,16 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order 
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$restaurant = restaurant;
+    final lOther$restaurant = other.restaurant;
+    if (l$restaurant != lOther$restaurant) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -4459,8 +5849,13 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
 
   TRes call({
     int? id,
+    dynamic? stripe_info,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant?
+        restaurant,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+      TRes> get restaurant;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order<
@@ -4484,15 +5879,30 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
 
   TRes call({
     Object? id = _undefined,
+    Object? stripe_info = _undefined,
+    Object? restaurant = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
+        restaurant: restaurant == _undefined || restaurant == null
+            ? _instance.restaurant
+            : (restaurant
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+      TRes> get restaurant {
+    final local$restaurant = _instance.restaurant;
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+        local$restaurant, (e) => call(restaurant: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order<
@@ -4507,6 +5917,461 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
   call({
     int? id,
+    dynamic? stripe_info,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant?
+        restaurant,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+          TRes>
+      get restaurant =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant({
+    this.firebase_id,
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.location_gps,
+    required this.location_text,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant.fromJson(
+      Map<String, dynamic> json) {
+    final l$firebase_id = json['firebase_id'];
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$location_gps = json['location_gps'];
+    final l$location_text = json['location_text'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+      firebase_id: (l$firebase_id as String?),
+      id: (l$id as int),
+      image: (l$image as String),
+      name: (l$name as String),
+      location_gps: geographyFromJson(l$location_gps),
+      location_text: (l$location_text as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? firebase_id;
+
+  final int id;
+
+  final String image;
+
+  final String name;
+
+  final Geography location_gps;
+
+  final String location_text;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location_gps = location_gps;
+    _resultData['location_gps'] = geographyToJson(l$location_gps);
+    final l$location_text = location_text;
+    _resultData['location_text'] = l$location_text;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$firebase_id = firebase_id;
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$location_gps = location_gps;
+    final l$location_text = location_text;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$firebase_id,
+      l$id,
+      l$image,
+      l$name,
+      l$location_gps,
+      l$location_text,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location_gps = location_gps;
+    final lOther$location_gps = other.location_gps;
+    if (l$location_gps != lOther$location_gps) {
+      return false;
+    }
+    final l$location_text = location_text;
+    final lOther$location_text = other.location_text;
+    if (l$location_text != lOther$location_text) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant;
+
+  TRes call({
+    String? firebase_id,
+    int? id,
+    String? image,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? firebase_id = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? location_gps = _undefined,
+    Object? location_text = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location_gps: location_gps == _undefined || location_gps == null
+            ? _instance.location_gps
+            : (location_gps as Geography),
+        location_text: location_text == _undefined || location_text == null
+            ? _instance.location_text
+            : (location_text as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? firebase_id,
+    int? id,
+    String? image,
+    String? name,
+    Geography? location_gps,
+    String? location_text,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company({
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.service_provider_type,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+      id: (l$id as int),
+      image: (l$image as String),
+      name: (l$name as String),
+      service_provider_type: (l$service_provider_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String image;
+
+  final String name;
+
+  final String service_provider_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$service_provider_type = service_provider_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$name,
+      l$service_provider_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company;
+
+  TRes call({
+    int? id,
+    String? image,
+    String? name,
+    String? service_provider_type,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    String? name,
+    String? service_provider_type,
     String? $__typename,
   }) =>
       _res;

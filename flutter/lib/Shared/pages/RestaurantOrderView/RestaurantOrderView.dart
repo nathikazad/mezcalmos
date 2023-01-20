@@ -88,11 +88,14 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 Container(
                     margin: const EdgeInsets.only(bottom: 25),
                     child: OrderDeliveryLocation(
-                        order: viewController.order.value!)),
+                        address: viewController.order.value!.to.address)),
                 Container(
                     margin: const EdgeInsets.only(bottom: 25),
-                    child:
-                        OrderPaymentMethod(order: viewController.order.value!)),
+                    child: OrderPaymentMethod(
+                      stripeOrderPaymentInfo:
+                          viewController.order.value!.stripePaymentInfo,
+                      paymentType: viewController.order.value!.paymentType,
+                    )),
                 if (viewController.order.value!.review != null)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

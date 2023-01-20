@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -10,12 +11,15 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 class DeliveryOrder {
   int id;
   ServiceProviderType? serviceProviderType;
+  UserInfo deliveryCompany;
+  UserInfo? driverInfo;
   int? serviceOrderId;
   ServiceInfo serviceInfo;
   UserInfo customerInfo;
   DeliveryDirection deliveryDirection;
   DeliveryOrderStatus status;
   RouteInformation? routeInformation;
+  StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   DateTime orderTime;
   num deliveryCost;
   num packageCost;
@@ -28,10 +32,10 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtDropoffTime;
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
-  String? stripePaymentId;
   bool driverAssigned;
   DeliveryOrder({
     required this.id,
+    required this.deliveryCompany,
     required this.serviceInfo,
     required this.customerInfo,
     required this.driverLocation,
@@ -47,18 +51,21 @@ class DeliveryOrder {
     required this.chatWithCustomerId,
     required this.chatWithServiceProviderId,
     required this.paymentType,
+    required this.driverInfo,
+    required this.stripeOrderPaymentInfo,
     this.estimatedArrivalAtDropoffTime,
     this.serviceOrderId,
     this.driverAssigned = false,
     this.estimatedArrivalAtPickupTime,
     this.estimatedPackageReadyTime,
-    this.stripePaymentId,
   });
 
   DeliveryOrder copyWith({
     int? id,
     ServiceInfo? serviceInfo,
     UserInfo? customerInfo,
+    UserInfo? deliveryCompany,
+    UserInfo? driverInfo,
     ServiceProviderType? serviceProviderType,
     DeliveryDirection? deliveryDirection,
     RouteInformation? routeInformation,
@@ -79,7 +86,10 @@ class DeliveryOrder {
     return DeliveryOrder(
       id: id ?? this.id,
       serviceInfo: serviceInfo ?? this.serviceInfo,
+      driverInfo: driverInfo ?? this.driverInfo,
       status: status ?? status,
+      stripeOrderPaymentInfo: stripeOrderPaymentInfo,
+      deliveryCompany: deliveryCompany ?? this.deliveryCompany,
       driverLocation: driverLocation ?? this.driverLocation,
       serviceProviderType: serviceProviderType ?? this.serviceProviderType,
       customerInfo: customerInfo ?? this.customerInfo,
@@ -100,13 +110,12 @@ class DeliveryOrder {
           estimatedArrivalAtPickupTime ?? this.estimatedArrivalAtPickupTime,
       estimatedPackageReadyTime:
           estimatedPackageReadyTime ?? this.estimatedPackageReadyTime,
-      stripePaymentId: stripePaymentId ?? this.stripePaymentId,
     );
   }
 
   @override
   String toString() {
-    return 'DeliveryOrder(id: $id, serviceInfo: $serviceInfo, customerInfo: $customerInfo, deliveryDirection: $deliveryDirection, routeInformation: $routeInformation, orderTime: $orderTime, deliveryCost: $deliveryCost, packageCost: $packageCost, pickupLocation: $pickupLocation, dropoffLocation: $dropoffLocation, chatWithCustomerId: $chatWithCustomerId, chatWithServiceProviderId: $chatWithServiceProviderId, paymentType: $paymentType, estimatedArrivalAtDropoffTime: $estimatedArrivalAtDropoffTime, estimatedArrivalAtPickupTime: $estimatedArrivalAtPickupTime, estimatedPackageReadyTime: $estimatedPackageReadyTime, stripePaymentId: $stripePaymentId)';
+    return 'DeliveryOrder(id: $id, serviceInfo: $serviceInfo, customerInfo: $customerInfo, deliveryDirection: $deliveryDirection, routeInformation: $routeInformation, orderTime: $orderTime, deliveryCost: $deliveryCost, packageCost: $packageCost, pickupLocation: $pickupLocation, dropoffLocation: $dropoffLocation, chatWithCustomerId: $chatWithCustomerId, chatWithServiceProviderId: $chatWithServiceProviderId, paymentType: $paymentType, estimatedArrivalAtDropoffTime: $estimatedArrivalAtDropoffTime, estimatedArrivalAtPickupTime: $estimatedArrivalAtPickupTime, estimatedPackageReadyTime: $estimatedPackageReadyTime, )';
   }
 
   @override
@@ -128,8 +137,7 @@ class DeliveryOrder {
         other.paymentType == paymentType &&
         other.estimatedArrivalAtDropoffTime == estimatedArrivalAtDropoffTime &&
         other.estimatedArrivalAtPickupTime == estimatedArrivalAtPickupTime &&
-        other.estimatedPackageReadyTime == estimatedPackageReadyTime &&
-        other.stripePaymentId == stripePaymentId;
+        other.estimatedPackageReadyTime == estimatedPackageReadyTime;
   }
 
   @override
@@ -149,8 +157,7 @@ class DeliveryOrder {
         paymentType.hashCode ^
         estimatedArrivalAtDropoffTime.hashCode ^
         estimatedArrivalAtPickupTime.hashCode ^
-        estimatedPackageReadyTime.hashCode ^
-        stripePaymentId.hashCode;
+        estimatedPackageReadyTime.hashCode;
   }
 
   bool inProcess() {

@@ -8,7 +8,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrdersItemsCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/notesWidget.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -22,6 +21,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
@@ -149,11 +149,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               margin: EdgeInsets.zero,
                             ),
                             OrderDeliveryLocation(
-                              order: viewController.order.value!,
+                              address: viewController.order.value!.to.address,
                               margin: const EdgeInsets.only(top: 20),
                             ),
                             OrderPaymentMethod(
-                              order: viewController.order.value!,
+                              stripeOrderPaymentInfo:
+                                  viewController.order.value!.stripePaymentInfo,
+                              paymentType:
+                                  viewController.order.value!.paymentType,
                               margin: const EdgeInsets.only(top: 20),
                             ),
                             if (viewController.order.value!.review != null)
@@ -175,11 +178,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                           viewController.order.value!.review!),
                                 ],
                               ),
-                            viewController.order.value?.notes == null ||
-                                    viewController.order.value!.notes!.length <=
-                                        0
-                                ? Container()
-                                : notesWidget(viewController.order),
+                            OrderNoteCard(
+                                note: viewController.order.value!.notes),
                             OrderSummaryCard(
                               order: viewController.order.value!,
                             ),

@@ -80,11 +80,23 @@ select_permissions:
     permission:
       columns:
         - id
+        - stripe_info
       filter:
         delivery:
           delivery_driver:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - stripe_info
+      filter:
+        delivery:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
