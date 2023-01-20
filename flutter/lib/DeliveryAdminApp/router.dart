@@ -2,19 +2,18 @@
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/HomeScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrder/DvCompanyOrderView.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrder/DvSingleOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersList = "/currentDeliveryOrders";
 const String kDeliveryOpHomeScreen = '/home';
 
 const String kNotAuthorizedOperator = "/unauthorized";
-const String kDeliveryOrderRoute = "/:orderId";
 const String kOrderView = "/:orderId";
 
-// String getDvCompanyOrderRoute(int orderId) {
-//   return kDeliveryOrderRoute.replaceFirst(":orderId", "$orderId");
-// }
+String getDvCompanyOrderRoute(int orderId) {
+  return kOrderView.replaceFirst(":orderId", "$orderId");
+}
 
 class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
@@ -24,7 +23,7 @@ class XRouter {
           page: () => DeliveryAdminWrapper(),
         ),
         GetPage(
-          name: kNotAuthorizedOperator,
+          name: kOrderView,
           page: () => DvCompanyOrderView(),
         ),
         // GetPage(

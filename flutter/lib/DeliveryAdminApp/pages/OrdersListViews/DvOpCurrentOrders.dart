@@ -128,8 +128,8 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     return MinimalOrderCard(
                       order: viewController.currentOrders[index],
                       onTap: () {
-                        // MezRouter.toNamed(getDvCompanyOrderRoute(
-                        //     viewController.currentOrders[index].id));
+                        MezRouter.toNamed(getDvCompanyOrderRoute(
+                            viewController.currentOrders[index].id));
                       },
                     );
                   }),
