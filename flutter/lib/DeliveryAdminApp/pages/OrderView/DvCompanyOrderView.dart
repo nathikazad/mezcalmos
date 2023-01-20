@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrder/controllers/DvCompanyOrderViewController.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/controllers/DvCompanyOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -18,7 +18,7 @@ class DvCompanyOrderView extends StatefulWidget {
 }
 
 class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
-  DvCompanyOrderViewcontroller viewController = DvCompanyOrderViewcontroller();
+  DvCompanyOrderViewController viewController = DvCompanyOrderViewController();
 
   @override
   void initState() {

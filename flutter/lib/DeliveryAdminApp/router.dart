@@ -2,7 +2,6 @@
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/HomeScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/SingleOrder/DvSingleOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersList = "/currentDeliveryOrders";
@@ -21,10 +20,6 @@ class XRouter {
         GetPage(
           name: kHomeRoute,
           page: () => DeliveryAdminWrapper(),
-        ),
-        GetPage(
-          name: kOrderView,
-          page: () => DvCompanyOrderView(),
         ),
         // GetPage(
         //   name: kOrderView,
