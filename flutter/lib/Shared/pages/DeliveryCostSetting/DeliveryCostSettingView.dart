@@ -16,8 +16,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class DeliveryCostSettingView extends StatefulWidget {
   const DeliveryCostSettingView({
     Key? key,
+    this.serviceProviderId,
+    this.serviceProviderType,
+    this.showAppBar = true,
   }) : super(key: key);
-
+  final int? serviceProviderId;
+  final bool showAppBar;
+  final ServiceProviderType? serviceProviderType;
   @override
   State<DeliveryCostSettingView> createState() =>
       _DeliveryCostSettingViewState();
@@ -30,8 +35,9 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   ServiceProviderType? serviceProviderType;
   @override
   void initState() {
-    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-    serviceProviderType =
+    serviceProviderId = widget.serviceProviderId ??
+        int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderType = widget.serviceProviderType ??
         Get.arguments["serviceProviderType"] as ServiceProviderType;
 
     // provide service provider id and service Provider type
@@ -50,89 +56,111 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
     super.dispose();
   }
 
+  bool get asTab =>
+      widget.serviceProviderId != null && widget.serviceProviderType != null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Delivery Cost"),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+      appBar: widget.showAppBar
+          ? mezcalmosAppBar(AppBarLeftButtonType.Back,
+              onClick: MezRouter.back, title: "Delivery Cost")
+          : null,
+      bottomSheet: asTab
+          ? null
+          : MezButton(
+              label: 'Save',
+              borderRadius: 0,
+              withGradient: true,
+              height: 70,
+              onClick: () async {
+                await viewController.saveDeliveryCost().then((bool? value) {
+                  if (value == true) {
+                    return Get.snackbar(
+                        'Saved', 'Delivery cost have been saved',
+                        backgroundColor: Colors.black,
+                        colorText: Colors.white,
+                        shouldIconPulse: false,
+                        icon: Icon(
+                          Icons.check_circle,
+                          color: Colors.green,
+                        ));
+                  }
+                });
+              },
+            ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-                    child: Column(
+                  if (serviceProviderType != null &&
+                      serviceProviderType == ServiceProviderType.Restaurant)
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (serviceProviderType != null &&
-                            serviceProviderType ==
-                                ServiceProviderType.Restaurant)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _costComponent(
-                                  controller: viewController.freeKmRange,
-                                  suffixTitle: 'Km',
-                                  title: 'Free Delivery range'),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                "Within this distance, the customer won’t be charged for the delivery.",
-                                style: Get.textTheme.bodyText2,
-                              ),
-                              Divider(
-                                height: 35,
-                              ),
-                            ],
-                          ),
                         _costComponent(
-                            controller: viewController.minCost,
-                            suffixTitle: '\$',
-                            title: 'Minimum cost'),
+                            controller: viewController.freeKmRange,
+                            suffixTitle: 'Km',
+                            title: 'Free Delivery range'),
                         const SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
-                        _costComponent(
-                            controller: viewController.costPerKm,
-                            suffixTitle: '\$/Km',
-                            title: 'Cost per km'),
+                        Text(
+                          "Within this distance, the customer won’t be charged for the delivery.",
+                          style: Get.textTheme.bodyText2,
+                        ),
+                        Divider(
+                          height: 35,
+                        ),
                       ],
                     ),
-                  ),
+                  _costComponent(
+                      controller: viewController.minCost,
+                      suffixTitle: '\$',
+                      title: 'Minimum cost'),
                   const SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
-                  _previewWidget()
+                  _costComponent(
+                      controller: viewController.costPerKm,
+                      suffixTitle: '\$/Km',
+                      title: 'Cost per km'),
                 ],
               ),
             ),
-          ),
-          MezButton(
-            label: 'Save',
-            borderRadius: 0,
-            withGradient: true,
-            height: 70,
-            onClick: () async {
-              await viewController.saveDeliveryCost().then((bool? value) {
-                if (value == true) {
-                  return Get.snackbar('Saved', 'Delivery cost have been saved',
-                      backgroundColor: Colors.black,
-                      colorText: Colors.white,
-                      shouldIconPulse: false,
-                      icon: Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ));
-                }
-              });
-            },
-          )
-        ],
+            _previewWidget(),
+            if (asTab)
+              Container(
+                margin: const EdgeInsets.all(18),
+                child: MezButton(
+                  label: 'Save',
+                  borderRadius: 15,
+                  withGradient: true,
+                  height: 70,
+                  onClick: () async {
+                    await viewController.saveDeliveryCost().then((bool? value) {
+                      if (value == true) {
+                        return Get.snackbar(
+                            'Saved', 'Delivery cost have been saved',
+                            backgroundColor: Colors.black,
+                            colorText: Colors.white,
+                            shouldIconPulse: false,
+                            icon: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            ));
+                      }
+                    });
+                  },
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -140,6 +168,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   Widget _previewWidget() {
     return Container(
       color: secondaryLightBlueColor,
+      margin: EdgeInsets.only(top: 25),
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -108,6 +108,19 @@ select_permissions:
         delivery_drivers:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - firebase_id
+        - id
+        - image
+        - language_id
+        - location_gps
+        - location_text
+        - name
+        - open_status
+        - service_provider_type
+      filter: {}
   - role: mez_admin
     permission:
       columns:

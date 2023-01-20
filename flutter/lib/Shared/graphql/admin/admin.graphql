@@ -31,7 +31,7 @@ query get_admin_info($admin_id : Int!) {
 }
 
 mutation set_service_status($id : Int! , $status: String!) {
-  update_restaurant(where:{id  : {_eq: $id}}, _set :{open_status : $status})
+  update_restaurant_restaurant(where:{id  : {_eq: $id}}, _set :{open_status : $status})
   {
     returning {
       open_status

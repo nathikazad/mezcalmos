@@ -23,7 +23,7 @@ class MyParser extends gqClient.ResponseParser {
   }
 
   @override
-  gqClient.Response parseResponse(dynamic body) {
+  gqClient.Response parseResponse(Map<String, dynamic> body) {
     mezDbgPrint("[parseResponse] ==> $body");
     return super.parseResponse(body);
   }
@@ -111,19 +111,14 @@ class HasuraDb {
       );
       tokenSnapshot = hasuraAuthToken;
       logToken(hasuraAuthToken);
-      //  stdout.write("[MZL]  TOKKEN : $hasuraAuthToken");
-      // hasuraAuthToken.characters.forEach((String c) {
-      //   std(c);
-      // });
-      //   print("[MZL] ✅ TOKKEN ✅: $hasuraAuthToken");
-      // print("[MZL] …..")
-      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
-      // headers = <String, String>{
-      //   'Authorization': 'Bearer $hasuraAuthToken',
-      //   'x-hasura-role': _getRoleBasedOnApp()
-      // };
+      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+
+      headers = <String, String>{
+        'Authorization': 'Bearer $hasuraAuthToken',
+        'x-hasura-role': _getRoleBasedOnApp()
+      };
       mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
       mezDbgPrint("headers ===> ${headers.toString()}");
       final gqClient.AuthLink _authLink =

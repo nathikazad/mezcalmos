@@ -45,17 +45,16 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
+        - deleted
         - id
+        - big_image
+        - email
         - firebase_id
-        - name
         - image
         - language_id
-        - deleted
-        - email
+        - name
         - phone
-        - big_image
       filter: {}
-      limit: 1
   - role: mez_admin
     permission:
       columns:

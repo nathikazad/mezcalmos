@@ -2,6 +2,16 @@ table:
   name: cost
   schema: delivery
 object_relationships:
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
   - name: restaurant
     using:
       manual_configuration:
@@ -13,6 +23,20 @@ object_relationships:
           name: restaurant
           schema: restaurant
 insert_permissions:
+  - role: delivery_operator
+    permission:
+      check:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - service_provider_id
+        - service_provider_type
   - role: restaurant_operator
     permission:
       check:
@@ -50,6 +74,21 @@ select_permissions:
         - service_provider_id
         - service_provider_type
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - cost_per_km
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - service_provider_type
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -79,6 +118,23 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

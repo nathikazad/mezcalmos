@@ -26,25 +26,6 @@ if(len(sys.argv) > 1):
   os.system('cp ../../../../hasura/library/src/generated/schema.graphql ./')
 os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
-#download
-
-if argv.__len__() >= 2 and argv[1] == 'download':
-  print("[~] Downloading new [schema.graphql] from localhost!")
-  output = os.popen('npm list -g graphqurl').read()
-  if 'graphqurl' not in output:
-    print('graphqurl not installed')
-    os.system('npm install -g graphqurl')
-  else:
-    print('graphqurl installed')
-  if os.path.exists("schema.graphql"): 
-    os.remove("schema.graphql")
-  if os.path.exists("schema.graphql.dart"):
-    os.remove("schema.graphql.dart")
-  os.system('gq http://localhost:8080/v1/graphql -H "X-Hasura-Admin-Secret: myadminsecretkey" --introspect > schema.graphql')
-
-
-
-os.system('flutter pub run build_runner build --delete-conflicting-outputs')
 
 toBeReplaced = """class Input$jsonb_cast_exp {
   factory Input$jsonb_cast_exp({Input$String_comparison_exp? String}) =>

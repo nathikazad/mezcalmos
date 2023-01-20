@@ -300,3 +300,106 @@ Future<DateTime?> dv_update_est_dropoff_time(
   return DateTime.parse(res.parsedData!.update_delivery_order_by_pk!
       .estimated_arrival_at_dropoff_time!);
 }
+// company //
+
+Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
+    {required int companyId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_delivery_company_current_orders(
+    Options$Subscription$listen_delivery_company_current_orders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Subscription$listen_delivery_company_current_orders(
+          companyId: companyId),
+    ),
+  )
+      .map<List<MinimalOrder>?>(
+          (QueryResult<Subscription$listen_delivery_company_current_orders>
+              event) {
+    final List<
+            Subscription$listen_delivery_company_current_orders$delivery_order>?
+        ordersData = event.parsedData?.delivery_order;
+    if (ordersData != null) {
+      final List<MinimalOrder> orders = ordersData.map(
+          (Subscription$listen_delivery_company_current_orders$delivery_order
+              orderData) {
+        return MinimalOrder(
+            id: orderData.id,
+            toAdress: orderData.dropoff_address,
+            orderTime: DateTime.parse(orderData.order_time),
+            customerName: orderData.customer.user.name!,
+            customerImage: orderData.customer.user.image,
+            status:
+                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+            totalCost: orderData.package_cost);
+      }).toList();
+      return orders;
+    }
+    return null;
+  });
+}
+
+Future<List<MinimalOrder>?> get_dvcompany_current_orders(
+    {required int companyId}) async {
+  final QueryResult<Query$get_delivery_company_inprocess_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$get_delivery_company_inprocess_orders(
+    Options$Query$get_delivery_company_inprocess_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$get_delivery_company_inprocess_orders(
+          companyId: companyId),
+    ),
+  );
+  if (queryResult.parsedData?.delivery_order != null) {
+    final List<Query$get_delivery_company_inprocess_orders$delivery_order>
+        ordersData = queryResult.parsedData!.delivery_order;
+
+    final List<MinimalOrder> orders = ordersData.map(
+        (Query$get_delivery_company_inprocess_orders$delivery_order orderData) {
+      return MinimalOrder(
+          id: orderData.id,
+          toAdress: orderData.dropoff_address,
+          orderTime: DateTime.parse(orderData.order_time),
+          customerName: orderData.customer.user.name!,
+          customerImage: orderData.customer.user.image,
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          totalCost: orderData.package_cost);
+    }).toList();
+    return orders;
+  } else {
+    throw Exception(
+        "🚨 Getting min orders exceptions \n ${queryResult.exception}");
+  }
+}
+
+Future<List<MinimalOrder>?> get_dvcompany_past_orders(
+    {required int companyId}) async {
+  final QueryResult<Query$get_delivery_company_past_orders> queryResult =
+      await _hasuraDb.graphQLClient.query$get_delivery_company_past_orders(
+    Options$Query$get_delivery_company_past_orders(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Query$get_delivery_company_past_orders(
+          companyId: companyId),
+    ),
+  );
+  if (queryResult.parsedData?.delivery_order != null) {
+    final List<Query$get_delivery_company_past_orders$delivery_order>
+        ordersData = queryResult.parsedData!.delivery_order;
+
+    final List<MinimalOrder> orders = ordersData
+        .map((Query$get_delivery_company_past_orders$delivery_order orderData) {
+      return MinimalOrder(
+          id: orderData.id,
+          toAdress: orderData.dropoff_address,
+          orderTime: DateTime.parse(orderData.order_time),
+          customerName: orderData.customer.user.name!,
+          customerImage: orderData.customer.user.image,
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          totalCost: orderData.package_cost);
+    }).toList();
+    return orders;
+  } else {
+    throw Exception(
+        "🚨 Getting min orders exceptions \n ${queryResult.exception}");
+  }
+}

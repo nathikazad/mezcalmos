@@ -72,13 +72,7 @@ class OrderController extends GetxController {
         "orderType": orderType.toHasuraString(),
         "deliveryDriverType": driverType.toFirebaseFormatString(),
         "changeDriver": changedDriver,
-        "operatorType": Get.find<DeliveryOperatorAuthController>()
-            .deliveryOperator!
-            .type
-            .toHasuraString(),
-        "deliveryCompanyId": Get.find<DeliveryOperatorAuthController>()
-            .deliveryOperator!
-            .companyId,
+        "deliveryCompanyId": Get.find<DeliveryOpAuthController>().companyId,
       };
 
       mezDbgPrint(_payload);

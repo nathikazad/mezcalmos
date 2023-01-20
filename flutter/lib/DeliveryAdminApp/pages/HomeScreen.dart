@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/components/BottomNavBar.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Drivers/CompanyDriversScreen.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/Orders/CurrentDeliveryOrdersList.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/ServiceProfile/ServiceProfile.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
@@ -18,40 +20,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late final TabController _tabController;
-  String title = "Orders";
+
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
-
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        switch (_tabController.index) {
-          case 0:
-            setState(() {
-              title = "Orders";
-            });
-            break;
-
-          case 1:
-            setState(() {
-              title = "Drivers";
-            });
-            break;
-          case 2:
-            setState(() {
-              title = "Delivery Cost";
-            });
-            break;
-          case 3:
-            setState(() {
-              title = "Service Profile";
-            });
-            break;
-          default:
-            break;
-        }
-      }
-    });
     super.initState();
   }
 
@@ -65,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             DeliveryOpBottomNavBar(tabController: _tabController),
         appBar: mezcalmosAppBar(
           AppBarLeftButtonType.Menu,
-          title: title,
           showNotifications: true,
           autoBack: false,
         ),
@@ -75,12 +46,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           controller: _tabController,
           children: [
             // CURENT ORDERS TAB
-            ListDeliveryOrdersTabView(),
+            DvOpCurrentOrdersListView(
+              canGoBack: false,
+            ),
 
             // Drivers ---------
-            CompanyDriversScreen(),
+            ServiceDriversListView(
+              serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
+              serviceProviderType: ServiceProviderType.Delivery_company,
+              showAppBar: false,
+            ),
             // Cost
-            DeliveryCostSettingView(),
+            DeliveryCostSettingView(
+              serviceProviderId: Get.find<DeliveryOpAuthController>().companyId,
+              serviceProviderType: ServiceProviderType.Delivery_company,
+              showAppBar: false,
+            ),
             // company profile
             ServiceProfileScreen(),
           ],

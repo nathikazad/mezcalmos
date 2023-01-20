@@ -80,7 +80,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
                         restaurantOpAuthController
-                                .operator.value?.state.restaurantId !=
+                                .operator.value?.state.serviceProviderId !=
                             null)
                       _operatorNavLinks(),
                     _navigationLink(

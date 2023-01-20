@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp.old/pages/OperatorsView/Components/RestaurantOpCard.dart';
-import 'package:mezcalmos/DeliveryAdminApp.old/pages/OperatorsView/Controllers/OperatorsViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
@@ -23,7 +22,7 @@ class _OperatorsViewState extends State<OperatorsView> {
   void initState() {
     restID = Get.parameters["restaurantId"];
     if (restID != null) {
-      viewController.init(restaurantId: restID!);
+      viewController.init(serviceProviderId: restID!);
     } else {
       Get.back();
     }

@@ -1,11 +1,20 @@
+// ignore_for_file: unawaited_futures, inference_failure_on_function_invocation
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
-import 'package:mezcalmos/DeliveryAdminApp/models/DeliveryOperator.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 class DeliveryAdminWrapper extends StatefulWidget {
   const DeliveryAdminWrapper({super.key});
@@ -15,55 +24,65 @@ class DeliveryAdminWrapper extends StatefulWidget {
 }
 
 class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
-  DeliveryOperatorAuthController _adminAuthController =
-      Get.find<DeliveryOperatorAuthController>();
+  Operator? restaurantOperator;
+
+  DeliveryOpAuthController deliveryOpAuthController =
+      Get.find<DeliveryOpAuthController>();
+  StreamSubscription<MezNotification.Notification>?
+      _notificationsStreamListener;
   @override
   void initState() {
-    Future<void>.microtask(() {
-      final DeliveryOperator? _operator = _adminAuthController.deliveryOperator;
-      if (_operator != null) {
-        mezDbgPrint("+ Operator is not null ==> ${_operator.status}");
-        handleAuthorization(_operator.status);
-      } else {
-        mezDbgPrint("+ Operator is null!");
+    mezDbgPrint("RestaurantWrapper::init state");
 
-        _adminAuthController.operatorStream.first.then((DeliveryOperator? _op) {
-          mezDbgPrint("+ Operator :: from :: OpStream :: ${_op?.status}!");
-          handleAuthorization(_op?.status);
-        });
-      }
-    });
-    // final String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    // _notificationsStreamListener = initializeShowNotificationsListener();
-    // Get.find<ForegroundNotificationsController>()
-    //     .startListeningForNotificationsFromFirebase(
-    //   adminNotificationsNode(userId),
-    //   deliveryAdminNotificationHandler,
-    // );
+    deliveryOpAuthController.setupDeliveryOperator().then((_) => handleState());
+
+    _setupNotifications();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+  Future<void> handleState() async {
+    mezDbgPrint(
+        "🫡 Start routing process 🫡 =>${deliveryOpAuthController.operator.value?.toJson()}");
+
+    if (deliveryOpAuthController.operator.value == null) {
+      // MezRouter.toNamed(kCreateRestaurant);
+    } else if (deliveryOpAuthController
+        .operator.value!.isWaitingToBeApprovedByOwner) {
+      //  MezRouter.toNamed(kOpUnauth);
+    } else {
+      MezRouter.toNamed(kDeliveryOpHomeScreen);
+    }
   }
 
-  void handleAuthorization(String? status) {
-    switch (status) {
-      case "approved":
-        if (MezRouter.currentRoute()?.name == kNotAuthorizedOperator)
-          MezRouter.offNamed(kDeliveryOpHomeScreen);
-        else
-          MezRouter.toNamed(kDeliveryOpHomeScreen);
-        break;
-      default:
-        MezRouter.toNamed(kNotAuthorizedOperator);
-    }
+  void _setupNotifications() {
+    // if (Get.find<AuthController>().isUserSignedIn) {
+    //   mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
+    //   _notificationsStreamListener?.cancel();
+    //   _notificationsStreamListener = initializeShowNotificationsListener();
+    //   Get.find<ForegroundNotificationsController>()
+    //       .startListeningForNotificationsFromFirebase(
+    //           operatorNotificationsNode(
+    //               uid: Get.find<AuthController>().fireAuthUser!.uid,
+    //               operatorType: OperatorType.Restaurant),
+    //           );
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: MezLogoAnimation(centered: true));
+    return Scaffold(
+        key: Get.find<SideMenuDrawerController>().getNewKey(),
+        drawer: MezSideMenu(),
+        backgroundColor: Colors.white,
+        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+            onClick: () => Get.find<SideMenuDrawerController>().openMenu()),
+        body: MezLogoAnimation(centered: true));
+  }
+
+  @override
+  void dispose() {
+    _notificationsStreamListener?.cancel();
+    _notificationsStreamListener = null;
+    super.dispose();
   }
 }

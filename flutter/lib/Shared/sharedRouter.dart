@@ -18,7 +18,7 @@ import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
-import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
@@ -212,7 +212,7 @@ class SharedRouter {
         page: () => PickLocationView(PickLocationMode.EditLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
-    GetPage(name: kDriversList, page: () => DriversListView()),
+    GetPage(name: kDriversList, page: () => ServiceDriversListView()),
     // GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
     GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),

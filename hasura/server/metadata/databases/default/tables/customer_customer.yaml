@@ -68,6 +68,13 @@ select_permissions:
           delivery_driver:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - app_version
+        - service_provider_type
+        - user_id
+      filter: {}
   - role: restaurant_operator
     permission:
       columns:

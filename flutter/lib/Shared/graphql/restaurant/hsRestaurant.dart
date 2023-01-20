@@ -379,7 +379,7 @@ Future<List<Operator>?> get_restaurant_operators(
           state: OperatorState(
               owner: opData.owner,
               operatorState: opData.status.toAgentStatus(),
-              restaurantId: restaurantId),
+              serviceProviderId: restaurantId),
           info: UserInfo(
               hasuraId: opData.user.id,
               firebaseId: opData.user.firebase_id,

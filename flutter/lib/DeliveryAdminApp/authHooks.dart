@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/controllers/messageController.dart';
 class AuthHooks {
   static Future<void> onSignOutHook() async {
     await Get.delete<OrderController>(force: true);
-    await Get.delete<DeliveryOperatorAuthController>(force: true);
+    await Get.delete<DeliveryOpAuthController>(force: true);
     await Get.delete<MessageController>(force: true);
     await Get.delete<ForegroundNotificationsController>(force: true);
     await Get.delete<BackgroundNotificationsController>(force: true);
@@ -22,8 +22,8 @@ class AuthHooks {
         ForegroundNotificationsController(),
         permanent: true);
     Get.put<MessageController>(MessageController(), permanent: true);
-    Get.put<DeliveryOperatorAuthController>(
-      DeliveryOperatorAuthController(),
+    Get.put<DeliveryOpAuthController>(
+      DeliveryOpAuthController(),
       permanent: true,
     );
     Get.put<OrderController>(

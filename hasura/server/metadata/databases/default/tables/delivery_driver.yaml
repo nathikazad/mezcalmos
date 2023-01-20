@@ -67,6 +67,26 @@ select_permissions:
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - current_location
+        - online
+        - delivery_company_id
+        - id
+        - notification_info_id
+        - user_id
+        - app_version
+        - delivery_driver_type
+        - status
+        - delivery_company_type
+      computed_fields:
+        - notification_token
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

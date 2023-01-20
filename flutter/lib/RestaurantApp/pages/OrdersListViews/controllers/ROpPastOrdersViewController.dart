@@ -37,23 +37,5 @@ class ROpPastOrdersController {
         await get_past_restaurant_orders(restaurantId: restaurantId) ?? [];
   }
 
-  // Future<void> _fetchServiceStatus(int restaurantId) async {
-  //   _serviceStatus.value =
-  //       await get_restaurant_status(restaurantId: restaurantId);
-  // }
-
-  // Future<void> turnOffOrders() async {
-  //   _serviceStatus.value = await update_restaurant_status(
-  //       id: restaurantId, status: ServiceStatus.Closed_temporarily);
-  // }
-
-  // Future<void> turnOnOrders() async {
-  //   _serviceStatus.value = await update_restaurant_status(
-  //       id: restaurantId, status: ServiceStatus.Open);
-  // }
-
-  void dispose() {
-    // currentOrdersListener?.cancel();
-    // currentOrdersListener = null;
-  }
+  void dispose() {}
 }
