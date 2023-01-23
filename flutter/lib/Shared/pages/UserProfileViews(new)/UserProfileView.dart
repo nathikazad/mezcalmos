@@ -70,7 +70,7 @@ class _UserProfileViewState extends State<UserProfileView> {
                 height: 25,
               ),
               if (!viewController.isEditingInfo) _editAndDeleteBtns(context),
-              if (!viewController.isEditingInfo) _userNameInput()
+              if (viewController.isEditingInfo) _userNameInput()
             ],
           ),
         ),
@@ -81,7 +81,7 @@ class _UserProfileViewState extends State<UserProfileView> {
   void _handleBackClick() {
     if (viewController.mode == UserProfileViewMode.Editing) {
       viewController.switchMode(UserProfileViewMode.None);
-    } else if (viewController.mode == UserProfileViewMode.FirstTime) {
+    } else {
       MezRouter.back();
     }
   }

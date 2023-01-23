@@ -67,7 +67,6 @@ class SavedLocation {
   int? id;
   LocModel.Location location;
   bool defaultLocation;
-  
 
   SavedLocation(
       {required this.name,

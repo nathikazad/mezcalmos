@@ -18,7 +18,7 @@ class CustItemViewController {
   // instances //
   AuthController _auth = Get.find<AuthController>();
   TextEditingController notesController = TextEditingController();
-  CustomerCartController cartController = Get.find<CustomerCartController>();
+  CustomerCartController? cartController;
 
   // state variables //
   Rxn<Restaurant> restaurant = Rxn();
@@ -28,7 +28,7 @@ class CustItemViewController {
   int? itemRestaurantId;
   int? currentItemId;
   // getters //
-  Rxn<Cart> get cart => cartController.cart;
+  Rxn<Cart> get cart => cartController?.cart ?? Rxn();
 
   /// hasData means the cartItem and restaurant values are not null
   bool get hasData => restaurant.value != null && cartItem.value != null;
@@ -56,12 +56,15 @@ class CustItemViewController {
     currentMode = mode;
     itemRestaurantId = restaurantId;
     currentItemId = itemId;
-    if (cart.value == null) {
+    if (Get.find<AuthController>().isUserSignedIn) {
+      cartController = Get.find<CustomerCartController>();
+    }
+    if (cartController != null && cart.value == null) {
       await create_customer_cart(restaurant_id: restaurantId);
     }
     // check and update cart restaurant id to current item restaurant if no cart items are there
-    if (shouldUpdateRestaurantId()) {
-      await cartController.setCartRestaurantId(restaurantId!);
+    if (cartController != null && shouldUpdateRestaurantId()) {
+      await cartController!.setCartRestaurantId(restaurantId!);
     }
 
     // init add mode
@@ -85,6 +88,7 @@ class CustItemViewController {
           return item.idInCart == itemIdInCart;
         });
         cartItem.value = CartItem.clone(_item);
+        notesController.text = cartItem.value?.notes ?? "";
         final Item? freshItem =
             await get_one_item_by_id(cartItem.value!.item.id!);
         cartItem.value!.item = freshItem!;
@@ -107,14 +111,15 @@ class CustItemViewController {
 
   // handling items and cart methods //
   Future<void> handleEditItem() async {
+    cartItem.value!.notes = notesController.text;
     mezDbgPrint(
         "Handle Editting ===================>${cartItem.value!.idInCart!}");
-    await cartController.updateCartItem(cartItem.value!);
+    await cartController?.updateCartItem(cartItem.value!);
   }
 
   Future<int?> handleAddItem() async {
-    // todo
-    return await cartController.addCartItem(cartItem.value!);
+    cartItem.value!.notes = notesController.text;
+    return await cartController?.addCartItem(cartItem.value!);
   }
 
   //  helpers //

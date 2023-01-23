@@ -65,7 +65,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
-    itemsCost : customerCart.cost,
+    itemsCost: customerCart.cost,
+    notes: checkoutRequest.notes,
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime,
     
@@ -80,9 +81,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     // }
 
     let orderResponse = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
-    
-    // clear user cart 
-    clearCart(customerId);
+ 
     console.log(customer);
     setOrderChatInfo(restaurantOrder, restaurant, orderResponse.deliveryOrder, customer);
 
@@ -103,9 +102,11 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       serviceProviderId: checkoutRequest.restaurantId
     }
     if(checkoutRequest.paymentType == PaymentType.Card) {
-      updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
+     await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
     }
-
+   
+    // clear user cart 
+    clearCart(customerId);
     return <ServerResponse> {
       status: ServerResponseStatus.Success,
       orderId: orderResponse.restaurantOrder.orderId
