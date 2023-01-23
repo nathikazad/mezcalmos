@@ -88,7 +88,6 @@ class CustItemViewController {
           return item.idInCart == itemIdInCart;
         });
         cartItem.value = CartItem.clone(_item);
-        notesController.text = cartItem.value?.notes ?? "";
         final Item? freshItem =
             await get_one_item_by_id(cartItem.value!.item.id!);
         cartItem.value!.item = freshItem!;
@@ -111,14 +110,13 @@ class CustItemViewController {
 
   // handling items and cart methods //
   Future<void> handleEditItem() async {
-    cartItem.value!.notes = notesController.text;
     mezDbgPrint(
         "Handle Editting ===================>${cartItem.value!.idInCart!}");
     await cartController?.updateCartItem(cartItem.value!);
   }
 
   Future<int?> handleAddItem() async {
-    cartItem.value!.notes = notesController.text;
+    // todo
     return await cartController?.addCartItem(cartItem.value!);
   }
 

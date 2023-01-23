@@ -8,32 +8,6 @@ import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
-// Future<RestaurantOperatorState?> get_operator_state(
-//     {required int operatorId, bool withCache = true}) async {
-//   final QueryResult<Query$getOperatorRestaurantInfo> response =
-//       await _db.graphQLClient.query$getOperatorRestaurantInfo(
-//     Options$Query$getOperatorRestaurantInfo(
-//       fetchPolicy:
-//           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-//       variables: Variables$Query$getOperatorRestaurantInfo(userId: operatorId),
-//     ),
-//   );
-//   if (response.hasException) {
-//     throw Exception("get opertor restaurant id error ${response.exception}");
-//   } else {
-//     final List<Query$getOperatorRestaurantInfo$restaurant_operator>? data =
-//         response.parsedData?.restaurant_operator;
-//     if (data?.isNotEmpty ?? false) {
-//       mezDbgPrint("👊👊👊 ${data?.first.toJson()}");
-//       final RestaurantOperatorState state = RestaurantOperatorState(
-//           restaurantId: data!.first.restaurant_id,
-//           owner: data.first.owner,
-//           operatorState: data.first.status.toAgentStatus());
-//       return state;
-//     }
-//   }
-//   return null;
-// }
 Future<Operator?> get_restaurant_operator({required int userId}) async {
   final QueryResult<Query$getOperatorByUserId> res = await _db.graphQLClient
       .query$getOperatorByUserId(Options$Query$getOperatorByUserId(
@@ -50,7 +24,7 @@ Future<Operator?> get_restaurant_operator({required int userId}) async {
         state: OperatorState(
             operatorState: data.status.toAgentStatus(),
             owner: data.owner,
-            restaurantId: data.restaurant_id),
+            serviceProviderId: data.restaurant_id),
         info: UserInfo(
             hasuraId: data.user_id,
             firebaseId: data.user.firebase_id,

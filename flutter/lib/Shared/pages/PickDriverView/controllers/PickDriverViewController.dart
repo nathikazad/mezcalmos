@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/models/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -29,7 +29,7 @@ class PickDriverController {
       mezDbgPrint(stk);
     }
     if (order.value != null) {
-      serviceProviderId = order.value?.serviceInfo.hasuraId;
+      serviceProviderId = order.value?.deliveryCompany.hasuraId;
       await _getDrivers();
     }
   }

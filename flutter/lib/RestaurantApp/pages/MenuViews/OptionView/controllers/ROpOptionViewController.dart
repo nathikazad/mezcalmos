@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -17,7 +16,6 @@ enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
 class ROpOptionViewController {
   // instances //
-  late RestaurantInfoController restaurantInfoController;
 
   // Text inputs //
   TextEditingController prOptionName = TextEditingController();

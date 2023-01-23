@@ -26,6 +26,7 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
           Variables$Query$getDriversByServiceId(serviceId: serviceProviderId),
     ),
   );
+  mezDbgPrint(" 🚨🚨 Getting drivers of service $serviceProviderId ");
   if (response.parsedData?.delivery_driver == null) {
     throw Exception(
         " 🚨🚨 Getting drivers of service $serviceProviderId exceptions 🚨🚨 \n ${response.exception}");
@@ -45,10 +46,12 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
                   driverData.delivery_company_type.toDeliveryCompanyType()),
           deliveryDriverId: driverData.id,
           driverInfo: DeliveryDriverUserInfo(
-              hasuraId: driverData.user.id,
-              image: driverData.user.image,
-              language: driverData.user.language_id.toString().toLanguageType(),
-              name: driverData.user.name));
+            hasuraId: driverData.user.id,
+            image: driverData.user.image,
+            language: driverData.user.language_id.toString().toLanguageType(),
+            name: driverData.user.name,
+          ),
+          type: DeliveryDriverType.Delivery_driver);
     }).toList();
     return drivers;
   }
@@ -83,7 +86,8 @@ Future<DeliveryDriver?> get_driver_by_user_id(
               hasuraId: data.first.user.id,
               image: data.first.user.image,
               language: data.first.user.language_id.toString().toLanguageType(),
-              name: data.first.user.name));
+              name: data.first.user.name),
+          type: DeliveryDriverType.Delivery_driver);
     }
   }
   return null;

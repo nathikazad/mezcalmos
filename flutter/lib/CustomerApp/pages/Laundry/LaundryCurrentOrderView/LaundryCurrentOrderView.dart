@@ -23,8 +23,6 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
-import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
@@ -156,15 +154,15 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
 
                             LaundryOrderNoteComponent(order: order.value!),
 
-                            OrderDeliveryLocation(
-                              order: order.value!,
-                              margin: const EdgeInsets.only(bottom: 20),
-                              titleTextStyle: Get.textTheme.bodyText1,
-                            ),
-                            OrderPaymentMethod(
-                              order: order.value!,
-                              margin: const EdgeInsets.only(bottom: 20),
-                            ),
+                            // OrderDeliveryLocation(
+                            //   order: order.value!,
+                            //   margin: const EdgeInsets.only(bottom: 20),
+                            //   titleTextStyle: Get.textTheme.bodyText1,
+                            // ),
+                            // OrderPaymentMethod(
+                            //   order: order.value!,
+                            //   margin: const EdgeInsets.only(bottom: 20),
+                            // ),
 
                             OrderSummaryCard(
                               order: order.value!,

@@ -292,9 +292,12 @@ class MGoogleMapController {
   }
 
   void decodeAndAddPolyline({required String encodedPolylineString}) {
-    addPolyline(MapHelper.loadUpPolyline(encodedPolylineString)
+    List<PointLatLng> pts = MapHelper.loadUpPolyline(encodedPolylineString)
         .map<PointLatLng>((LatLng e) => PointLatLng(e.latitude, e.longitude))
-        .toList());
+        .toList();
+    mezDbgPrint("[AAA] First cords of polyline => ${pts.first}");
+    mezDbgPrint("[AAA] Last cords of polyline => ${pts.last}");
+    addPolyline(pts);
   }
 
   void removeMarkerById(String? markerId) {

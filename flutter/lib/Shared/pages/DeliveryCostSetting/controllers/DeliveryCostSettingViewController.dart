@@ -52,6 +52,7 @@ class DeliveryCostSettingViewController {
   }
 
   DeliveryCost _constructDeliveryCost() {
+    mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
         serviceProviderType: serviceProviderType,

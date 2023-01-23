@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:graphql/client.dart';
+import 'package:graphql/client.dart' as gqClient;
 import 'package:jaguar_jwt/jaguar_jwt.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -15,11 +15,31 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart'
     show logLongString, logToken, mezDbgPrint;
 
-class HasuraDb {
-  late GraphQLClient _graphQLClient;
-  GraphQLClient get graphQLClient => _graphQLClient;
+class MyParser extends gqClient.ResponseParser {
+  @override
+  gqClient.ErrorLocation parseLocation(Map<String, dynamic> location) {
+    mezDbgPrint("[parseLocation] ==> $location");
+    return super.parseLocation(location);
+  }
 
-  WebSocketLink? _wsLink;
+  @override
+  gqClient.Response parseResponse(Map<String, dynamic> body) {
+    mezDbgPrint("[parseResponse] ==> $body");
+    return super.parseResponse(body);
+  }
+
+  @override
+  gqClient.GraphQLError parseError(Map<String, dynamic> error) {
+    mezDbgPrint("[parseError] ===> $error");
+    return super.parseError(error);
+  }
+}
+
+class HasuraDb {
+  late gqClient.GraphQLClient _graphQLClient;
+  gqClient.GraphQLClient get graphQLClient => _graphQLClient;
+  String? tokenSnapshot;
+  gqClient.WebSocketLink? _wsLink;
   AppLaunchMode appLaunchMode;
   // FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
   HasuraDb(this.appLaunchMode) {
@@ -63,7 +83,6 @@ class HasuraDb {
         hasuraDbLink = hasuraProdLink;
         hasuraDbSocketLink =
             hasuraProdLink.replaceAll("https", "wss"); // hasuraSta
-
         break;
       case AppLaunchMode.stage:
         hasuraDbLink = hasuraStageLink;
@@ -72,7 +91,7 @@ class HasuraDb {
         break;
       case AppLaunchMode.dev:
         hasuraDbLink = hasuraDevLink;
-        hasuraDbSocketLink = hasuraStageLink.replaceAll("http", "ws"); //
+        hasuraDbSocketLink = hasuraDevLink.replaceAll("http", "ws"); //
         break;
     }
     mezDbgPrint(
@@ -80,8 +99,9 @@ class HasuraDb {
     Map<String, String> headers = <String, String>{
       //"x-hasura-admin-secret": "myadminsecretkey"
     };
-    HttpLink _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
-    Link _link = _httpLink;
+    gqClient.HttpLink _httpLink =
+        gqClient.HttpLink(hasuraDbLink, defaultHeaders: headers);
+    gqClient.Link _link = _httpLink;
 
     if (fireAuth.FirebaseAuth.instance.currentUser != null) {
       mezDbgPrint("[777] USER-> ${fireAuth.FirebaseAuth.instance.currentUser}");
@@ -89,23 +109,21 @@ class HasuraDb {
         fireAuth.FirebaseAuth.instance.currentUser!,
         appLaunchMode == AppLaunchMode.dev,
       );
+      tokenSnapshot = hasuraAuthToken;
       logToken(hasuraAuthToken);
-      //  stdout.write("[MZL]  TOKKEN : $hasuraAuthToken");
-      // hasuraAuthToken.characters.forEach((String c) {
-      //   std(c);
-      // });
-      //   print("[MZL] ✅ TOKKEN ✅: $hasuraAuthToken");
-      // print("[MZL] …..")
-      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+
+      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',
         'x-hasura-role': _getRoleBasedOnApp()
       };
-      final AuthLink _authLink =
-          AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
-      _httpLink = HttpLink(hasuraDbLink, defaultHeaders: headers);
+      mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
+      mezDbgPrint("headers ===> ${headers.toString()}");
+      final gqClient.AuthLink _authLink =
+          gqClient.AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
+      _httpLink = gqClient.HttpLink(hasuraDbLink, defaultHeaders: headers);
       _link = _authLink.concat(_httpLink);
 
       expirationTime = JwtDecoder.decode(hasuraAuthToken)["exp"];
@@ -114,9 +132,10 @@ class HasuraDb {
       expirationTime = null;
       cancelJWTExpirationCheckTimer();
     }
-    _wsLink = WebSocketLink(hasuraDbSocketLink,
-        config: SocketClientConfig(
+    _wsLink = gqClient.WebSocketLink(hasuraDbSocketLink,
+        config: gqClient.SocketClientConfig(
           autoReconnect: true,
+          parser: MyParser(),
           inactivityTimeout: Duration(seconds: 30),
           initialPayload: () async {
             return {
@@ -125,11 +144,11 @@ class HasuraDb {
           },
         ));
 
-    _link = Link.split(
-        (Request request) => request.isSubscription, _wsLink!, _link);
+    _link = gqClient.Link.split(
+        (gqClient.Request request) => request.isSubscription, _wsLink!, _link);
 
-    _graphQLClient = GraphQLClient(
-      cache: GraphQLCache(),
+    _graphQLClient = gqClient.GraphQLClient(
+      cache: gqClient.GraphQLCache(),
       link: _link,
     );
   }
@@ -176,13 +195,16 @@ class HasuraDb {
     switch (appType) {
       case AppType.CustomerApp:
         return "customer";
-      case AppType.DeliveryAdminApp:
-        return "mez_admin";
+      // case AppType.DeliveryAdminApp:
+      //   return "mez_admin";
       case AppType.DeliveryApp:
         return "delivery_driver";
       case AppType.RestaurantApp:
         return "restaurant_operator";
-
+      case AppType.DeliveryAdminApp:
+        return "delivery_operator";
+      case AppType.MezAdminApp:
+        return "mez_admin";
       default:
         return "customer";
     }

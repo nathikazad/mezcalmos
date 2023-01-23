@@ -65,8 +65,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderType: checkoutRequest.restaurantOrderType,
     customerAppType: checkoutRequest.customerAppType,
     items: customerCart.items,
-    itemsCost: customerCart.cost,
-    notes: checkoutRequest.notes,
+    itemsCost : customerCart.cost,
     deliveryCost: checkoutRequest.deliveryCost,
     scheduledTime: checkoutRequest.scheduledTime,
     

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
@@ -18,6 +16,7 @@ import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dar
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -45,8 +44,6 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
 
   @override
   void dispose() {
-    Get.delete<RestaurantInfoController>(force: true);
-
     super.dispose();
   }
 

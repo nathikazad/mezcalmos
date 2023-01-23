@@ -25,11 +25,6 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
       ROpTabsViewViewController();
   @override
   void initState() {
-    // Future.microtask(() {
-    //   if (opAuthController.restaurantId != null) {
-    //     Get.put(RestaurantInfoController(), permanent: false);
-    //   }
-    // });
     super.initState();
   }
 

@@ -21,14 +21,9 @@ class CustCardsListViewController {
 
   Future<void> fetchCards() async {
     try {
-      final CustStripeInfo? data = await get_customer_stripe_info(
+      stripeInfo.value = await get_customer_stripe_info(
           userId: _authController.hasuraUserId!, withCache: false);
-
-      if (data != null) {
-        stripeInfo.value = data;
-        stripeInfo.value?.cards = data.cards;
-        stripeInfo.refresh();
-      }
+      stripeInfo.refresh();
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);

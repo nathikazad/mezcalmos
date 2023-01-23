@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -10,8 +9,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 
 class OrderDeliveryLocation extends StatelessWidget {
   const OrderDeliveryLocation(
-      {super.key, required this.order, this.margin, this.titleTextStyle});
-  final Order order;
+      {super.key, required this.address, this.margin, this.titleTextStyle});
+  final String address;
   final EdgeInsets? margin;
   final TextStyle? titleTextStyle;
 
@@ -46,7 +45,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                   Flexible(
                     fit: FlexFit.tight,
                     child: Text(
-                      order.to.address,
+                      address,
                       style: Get.textTheme.bodyText1,
                       maxLines: 1,
                     ),

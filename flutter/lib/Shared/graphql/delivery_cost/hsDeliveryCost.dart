@@ -71,8 +71,7 @@ Future<int?> add_delivery_cost({required DeliveryCost deliveryCost}) async {
           variables: Variables$Mutation$addDeliveryCost(
               deliveryCost: Input$delivery_cost_insert_input(
     service_provider_id: deliveryCost.serviceProviderId,
-    service_provider_type:
-        deliveryCost.serviceProviderType.toFirebaseFormatString(),
+    service_provider_type: deliveryCost.serviceProviderType.toFirebaseFormatString(),
     free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
     free_delivery_minimum_cost: deliveryCost.freeDeliveryMinimumCost,
     minimum_cost: deliveryCost.minimumCost,
