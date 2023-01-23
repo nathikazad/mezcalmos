@@ -7,11 +7,11 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileController.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/userProfile/components/UserProfileForDesktop.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 

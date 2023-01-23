@@ -223,8 +223,10 @@ class CustCartViewController {
     }
   }
 
-  Future<void> checkoutActionButton() async {
+  Future<void> checkoutActionButton(
+      {required Function(String id) naviCallBack}) async {
     cart.notes = noteText.text;
+    pickerChoice.value = {PickerChoice.Cash: null};
     try {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(getCardChoice);
@@ -235,11 +237,7 @@ class CustCartViewController {
       mezDbgPrint("datatatatataat => ${_serverResponse.data}");
 
       if (_serverResponse.success) {
-        popEverythingAndNavigateTo(
-          getRestaurantOrderRoute(
-            _serverResponse.data["orderId"],
-          ),
-        );
+        naviCallBack.call(_serverResponse.data["orderId"].toString());
       } else {
         print(_serverResponse);
         if (_serverResponse.errorCode == "serverError") {

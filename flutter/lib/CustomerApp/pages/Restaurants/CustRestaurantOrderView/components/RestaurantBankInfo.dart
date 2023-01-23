@@ -14,8 +14,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 //
 
 class RestaurantBankInfoCard extends StatefulWidget {
-  const RestaurantBankInfoCard({super.key, required this.restaurantId});
+  RestaurantBankInfoCard(
+      {super.key, required this.restaurantId, this.isWebVersion});
   final int restaurantId;
+  bool? isWebVersion = false;
 
   @override
   State<RestaurantBankInfoCard> createState() => _RestaurantBankInfoCardState();
@@ -35,6 +37,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Obx(() {
       if (restaurant.value != null &&
           restaurant.value!.paymentInfo?.bankInfo != null) {
@@ -50,7 +53,8 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   alignment: Alignment.center,
                   child: Text(
                     '${_i18n()["title"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: txt.bodyText1?.copyWith(
+                        fontSize: widget.isWebVersion == true ? 16 : null),
                   ),
                 ),
                 const SizedBox(
@@ -69,8 +73,10 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${_i18n()["bankName"]}',
-                                    style: Get.textTheme.bodyText1?.copyWith(
-                                      fontSize: 10.sp,
+                                    style: txt.bodyText1?.copyWith(
+                                      fontSize: widget.isWebVersion == true
+                                          ? 16
+                                          : 10.sp,
                                     )),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.bankName ??
@@ -84,7 +90,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                         text: restaurant.value!.paymentInfo
                                             ?.bankInfo?.bankName
                                             .toString()))
-                                    .then((_) => _copiedSnackBar());
+                                    .then((_) => _copiedSnackBar(txt));
                               },
                               iconSize: 20,
                               icon: Icons.copy_rounded),
@@ -103,8 +109,10 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               children: [
                                 Text(
                                   '${_i18n()["accountNumber"]}',
-                                  style: Get.textTheme.bodyText1
-                                      ?.copyWith(fontSize: 10.sp),
+                                  style: txt.bodyText1?.copyWith(
+                                      fontSize: widget.isWebVersion == true
+                                          ? 16
+                                          : 10.sp),
                                 ),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
                                         ?.accountNumber
@@ -119,7 +127,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                                         text: restaurant.value!.paymentInfo
                                             ?.bankInfo?.accountNumber
                                             .toString()))
-                                    .then((_) => _copiedSnackBar());
+                                    .then((_) => _copiedSnackBar(txt));
                               },
                               iconSize: 20,
                               icon: Icons.copy_rounded),
@@ -159,7 +167,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
     });
   }
 
-  SnackbarController _copiedSnackBar() {
+  SnackbarController _copiedSnackBar(TextTheme txt) {
     return Get.snackbar("", "",
         snackStyle: SnackStyle.FLOATING,
         titleText: Row(
@@ -170,7 +178,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
             const SizedBox(width: 5),
             Text(
               "Copied",
-              style: Get.textTheme.bodyText1,
+              style: txt.bodyText1,
             ),
           ],
         ),

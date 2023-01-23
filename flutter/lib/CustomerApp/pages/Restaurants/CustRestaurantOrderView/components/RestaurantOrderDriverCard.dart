@@ -39,7 +39,8 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: txt.bodyText1
+                  ?.copyWith(fontSize: isWebVersion == true ? 16 : null),
             ),
           ),
           SizedBox(
@@ -114,7 +115,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 3),
             child: Text(
               '${_i18n()["driver"]}',
-              style: Get.textTheme.bodyText1,
+              style: txt.bodyText1,
             ),
           ),
           SizedBox(
@@ -156,7 +157,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                     children: [
                       Text(
                         order.restaurant.name,
-                        style: Get.textTheme.bodyText1,
+                        style: txt.bodyText1,
                       ),
                       const SizedBox(
                         height: 5,

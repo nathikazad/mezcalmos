@@ -17,10 +17,9 @@ import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
 class CustomerCartController extends GetxController {
 // instances //
   HasuraDb _hasuraDb = Get.find<HasuraDb>();
-  AuthController _auth = Get.isRegistered<AuthController>()
-      ? Get.find<AuthController>()
-      : Get.put<AuthController>(
-          AuthController(signInCallback, signOutCallback));
+  AuthController _auth = Get.find<AuthController>();
+  // : Get.put<AuthController>(
+  //     AuthController(signInCallback, signOutCallback));
   Rxn<Cart> cart = Rxn<Cart>();
   // streams //
   StreamSubscription<Cart?>? cartStream;

@@ -8,12 +8,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
 class CustomerInprocessOrdersList extends StatelessWidget {
-  const CustomerInprocessOrdersList({
-    Key? key,
-    required this.txt,
-    required this.viewController,
-  }) : super(key: key);
-
+  CustomerInprocessOrdersList(
+      {Key? key,
+      required this.txt,
+      required this.viewController,
+      this.isWebVersion})
+      : super(key: key);
+  bool? isWebVersion = false;
   final TextTheme txt;
   final CustomerOrdersListViewController viewController;
 
@@ -30,7 +31,8 @@ class CustomerInprocessOrdersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
-                style: txt.headline3,
+                style: txt.headline3
+                    ?.copyWith(fontSize: isWebVersion == true ? 16 : null),
               ),
             ),
             ListView.builder(
@@ -41,6 +43,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 itemCount: viewController.currentOrders().length,
                 itemBuilder: (BuildContext context, int index) {
                   return CustomerOrderCard(
+                      isWebVersion: isWebVersion,
                       order: viewController.currentOrders[index]);
                 }),
             const SizedBox(height: 10)

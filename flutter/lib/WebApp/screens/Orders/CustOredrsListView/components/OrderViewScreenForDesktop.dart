@@ -1,11 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter_platform_interface/google_maps_flutter_platform_interface.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderStatusCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrdersItemsCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/notesWidget.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,9 +26,12 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 import 'package:mezcalmos/WebApp/routes/MessagesScreen.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
@@ -45,6 +58,8 @@ class OrderViewScreenFordesktop extends StatefulWidget {
 class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
   final MGoogleMapController mapController = MGoogleMapController(
       enableMezSmartPointer: true, imagePath: aLocationPicker, isWeb: true);
+  CustRestaurantOrderViewController viewController =
+      CustRestaurantOrderViewController();
 
   /// order
   Rxn<RestaurantOrder> order = Rxn<RestaurantOrder>();
@@ -90,6 +105,9 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
 
   @override
   void initState() {
+    final int orderId = int.parse(QR.params['orderId'].toString());
+    if (QR.params['orderId'] == null) QR.back();
+    viewController.init(orderId: orderId);
     super.initState();
     // _itializeController();
 
@@ -122,6 +140,14 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     // });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewController.dispose();
+    _orderListener?.cancel();
+    _orderListener = null;
+    super.dispose();
   }
 
   _itializeController() async {
@@ -289,29 +315,147 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
   }
 
   @override
-  void dispose() {
-    _orderListener?.cancel();
-    _orderListener = null;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final txt = Theme.of(context).textTheme;
-    return Scaffold();
+    return Scaffold(
+      body: Obx(() {
+        if (viewController.order.value != null) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      MezCalmosResizer.getWepPageHorizontalPadding(context),
+                  vertical: kToolbarHeight / 2),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                          child: Column(
+                        children: [
+                          OrderStatusCard(
+                            order: viewController.order.value!,
+                            ordersStates: viewController.order.value!.status,
+                            isWebversion: true,
+                          ),
+                          // if (viewController.order.value!.paymentType ==
+                          //     PaymentType.BankTransfer)
+                          //   RestaurantBankInfoCard(
+                          //       isWebVersion: true,
+                          //       restaurantId:
+                          //           viewController.order.value!.restaurantId),
+                          if (viewController.order.value!.inProcess())
+                            CustomerRestaurantOrderEst(
+                                order: viewController.order.value!),
+
+                          RestaurantOrderDriverCard(
+                            order: viewController.order.value!,
+                            isWebVersion: true,
+                          ),
+
+                          if (viewController.order.value!.inDeliveryPhase())
+                            ..._mapWidget,
+                          OrderRestaurantCard(
+                              isWebVersion: true,
+                              order: viewController.order.value!),
+
+                          OrderItemsCard(
+                            order: viewController.order.value!,
+                            isWebVersion: true,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 25),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '${_i18n()["deliveryDet"]}',
+                              style: txt.bodyText1?.copyWith(fontSize: 16),
+                            ),
+                          ),
+                          OrderDeliveryLocation(
+                            order: viewController.order.value!,
+                            margin: const EdgeInsets.only(top: 20),
+                            isWebVersion: true,
+                          ),
+                          OrderPaymentMethod(
+                            order: viewController.order.value!,
+                            margin: const EdgeInsets.only(top: 20),
+                            isWebVersion: true,
+                          ),
+                        ],
+                      )),
+                      SizedBox(
+                        width: MezCalmosResizer.getWepPageHorizontalPadding(
+                                context) /
+                            2,
+                      ),
+                      Expanded(
+                          child: Column(
+                        children: [
+                          if (viewController.order.value!.review != null)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "Review : ",
+                                  style: txt.bodyText1?.copyWith(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                ReviewCard(
+                                  review: viewController.order.value!.review!,
+                                  isWebVersion: true,
+                                ),
+                              ],
+                            ),
+                          viewController.order.value?.notes == null ||
+                                  viewController.order.value!.notes!.length <= 0
+                              ? Container()
+                              : notesWidget(viewController.order, context,
+                                  isWebVersion: true),
+                          OrderSummaryCard(
+                            order: viewController.order.value!,
+                            isWebVersion: true,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          OrderFooterCard(
+                            order: viewController.order.value!,
+                            isWebVersion: true,
+                            cancelOrderFunction: viewController.cancelOrder,
+                          )
+                        ],
+                      ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
+        } else {
+          return Container();
+        }
+      }),
+    );
     // return Obx(
     //   () => (order.value != null)
     //       ? SingleChildScrollView(
     //           child: Padding(
-    //           padding: EdgeInsets.symmetric(
-    //               horizontal:
-    //                   MezCalmosResizer.getWepPageHorizontalPadding(context),
-    //               vertical: kToolbarHeight / 2),
+    // padding: EdgeInsets.symmetric(
+    //     horizontal:
+    //         MezCalmosResizer.getWepPageHorizontalPadding(context),
+    //     vertical: kToolbarHeight / 2),
     //           child: Column(
     //             children: [
     //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.start,
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    // mainAxisAlignment: MainAxisAlignment.start,
+    // crossAxisAlignment: CrossAxisAlignment.start,
     //                 children: [
     //                   Expanded(
     //                       child: Container(
@@ -319,9 +463,9 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     //                       crossAxisAlignment: CrossAxisAlignment.start,
     //                       children: [
     //                         _buildStatusCard(order: order),
-    //                         SizedBox(
-    //                           height: 20,
-    //                         ),
+    // SizedBox(
+    //   height: 20,
+    // ),
     //                         // CustomerRestaurantOrderEst(
     //                         //   order: order.value!,
     //                         //   isWebVersion: true,
@@ -361,11 +505,11 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
     //                       ],
     //                     ),
     //                   )),
-    //                   SizedBox(
-    //                     width: MezCalmosResizer.getWepPageHorizontalPadding(
-    //                             context) /
-    //                         2,
-    //                   ),
+    // SizedBox(
+    //   width: MezCalmosResizer.getWepPageHorizontalPadding(
+    //           context) /
+    //       2,
+    // ),
     //                   Expanded(
     //                       child: Container(
     //                     child: Column(

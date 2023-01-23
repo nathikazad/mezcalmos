@@ -30,6 +30,7 @@ class OrderRestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Column(
       children: [
         SizedBox(
@@ -40,7 +41,8 @@ class OrderRestaurantCard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 3),
           child: Text(
             '${_i18n()["restaurant"]}',
-            style: Get.textTheme.bodyText1,
+            style: txt.bodyText1
+                ?.copyWith(fontSize: isWebVersion == true ? 18 : null),
           ),
         ),
         SizedBox(
@@ -67,7 +69,7 @@ class OrderRestaurantCard extends StatelessWidget {
                       children: [
                         Text(
                           order.restaurant.name,
-                          style: Get.textTheme.bodyText1!.copyWith(
+                          style: txt.bodyText1!.copyWith(
                               fontSize: (isWebVersion == true) ? 16 : null,
                               fontWeight: (isWebVersion == true)
                                   ? FontWeight.w700
@@ -91,7 +93,7 @@ class OrderRestaurantCard extends StatelessWidget {
                               fit: FlexFit.tight,
                               child: Text(
                                 order.restaurant.location.address,
-                                style: Get.textTheme.bodyText2!.copyWith(
+                                style: txt.bodyText2!.copyWith(
                                     fontSize:
                                         (isWebVersion == true) ? 14 : null,
                                     color: (isWebVersion == true)
@@ -105,29 +107,27 @@ class OrderRestaurantCard extends StatelessWidget {
                         ),
                       ],
                     )),
-                Obx(
-                  () => MessageButton(
-                      chatId: order.chatId,
-                      onTap: () {
-                        if (navigateMsgCallback == null) {
-                          // mezDbgPrint("[log] PUSHING TO => ${getMessagesRoute(
-                          //   chatId: order.orderId,
-                          //   orderId: order.orderId,
-                          //   recipientType: ParticipantType.Restaurant,
-                          // )}");
-                          MezRouter.toNamed(
-                            getMessagesRoute(
-                              chatId: order.chatId,
-                              recipientType: ParticipantType.RestaurantOperator,
-                              orderType: OrderType.Restaurant,
-                              orderId: order.orderId,
-                            ),
-                          );
-                        } else {
-                          navigateMsgCallback!.call();
-                        }
-                      }),
-                )
+                MessageButton(
+                    chatId: order.chatId,
+                    onTap: () {
+                      if (navigateMsgCallback == null) {
+                        // mezDbgPrint("[log] PUSHING TO => ${getMessagesRoute(
+                        //   chatId: order.orderId,
+                        //   orderId: order.orderId,
+                        //   recipientType: ParticipantType.Restaurant,
+                        // )}");
+                        MezRouter.toNamed(
+                          getMessagesRoute(
+                            chatId: order.chatId,
+                            recipientType: ParticipantType.RestaurantOperator,
+                            orderType: OrderType.Restaurant,
+                            orderId: order.orderId,
+                          ),
+                        );
+                      } else {
+                        navigateMsgCallback!.call();
+                      }
+                    }),
               ],
             ),
           ),

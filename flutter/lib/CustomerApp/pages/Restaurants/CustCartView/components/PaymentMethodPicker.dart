@@ -15,9 +15,11 @@ dynamic _i18n() =>
 
 //
 class PaymentMethodPicker extends StatefulWidget {
-  const PaymentMethodPicker({Key? key, required this.viewCartController})
+  PaymentMethodPicker(
+      {Key? key, this.isWebVersion, required this.viewCartController})
       : super(key: key);
   final CustCartViewController viewCartController;
+  bool? isWebVersion = false;
 
   @override
   State<PaymentMethodPicker> createState() => _PaymentMethodPickerState();
@@ -36,6 +38,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Builder(
       builder: (BuildContext context) {
         if (widget.viewCartController.showPaymentPicker) {
@@ -45,7 +48,8 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
               children: [
                 Text(
                   '${_i18n()["paymentMethod"]}',
-                  style: Get.textTheme.bodyText1,
+                  style: txt.bodyText1?.copyWith(
+                      fontSize: widget.isWebVersion == true ? 16 : null),
                 ),
                 SizedBox(
                   height: 10,
@@ -109,9 +113,11 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                             PickerChoice.SavedCard)
                                         ? value.entries.first.value!.brand.name
                                         : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                    style: Get.textTheme.bodyText2?.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    )),
+                                    style: txt.bodyText2?.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: widget.isWebVersion == true
+                                            ? 16
+                                            : null)),
                                 if (value.entries.first.value != null)
                                   Container(
                                     margin: EdgeInsets.only(left: 5),
@@ -119,7 +125,11 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                         "•" * 12 +
                                             value.entries.first.value!.last4
                                                 .toString(),
-                                        style: Get.textTheme.bodyText2),
+                                        style: txt.bodyText2?.copyWith(
+                                            fontSize:
+                                                widget.isWebVersion == true
+                                                    ? 16
+                                                    : null)),
                                   ),
                               ],
                             ));
@@ -157,8 +167,8 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
       case PickerChoice.GooglePay:
         return Image.asset(
           aGpay,
-          width: 14.w,
-          height: 4.h,
+          width: widget.isWebVersion == true ? 25 : 14.w,
+          height: widget.isWebVersion == true ? 25 : 4.h,
         );
     }
   }

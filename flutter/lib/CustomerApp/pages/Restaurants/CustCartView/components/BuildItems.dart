@@ -36,9 +36,11 @@ class CartItemsBuilder extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          CartItemsHeader(
-            viewController: viewController,
-          ),
+          isWebVersion == false
+              ? CartItemsHeader(
+                  viewController: viewController,
+                )
+              : Container(),
           SizedBox(height: 10),
           Column(
             children: viewController.cart.cartItems.fold<List<Widget>>(
@@ -49,6 +51,7 @@ class CartItemsBuilder extends StatelessWidget {
                 child: MyExpansionPanelComponent(
                   child: Flexible(
                       child: ItemInformationCart(
+                    isWebVersion: isWebVersion,
                     item: cartItem,
                     showImage: viewController.showItemsImages,
                     imageUrl: cartItem.item.image,

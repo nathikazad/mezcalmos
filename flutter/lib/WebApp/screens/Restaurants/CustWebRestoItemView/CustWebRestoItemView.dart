@@ -18,15 +18,15 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRestoItemView/components/restauarntItemViewForDesktop.dart';
 // import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRestoItemView/components/restaurantItemViewForMobile.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/WebApp/widgets/endWebSideBar.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
-import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';
 
@@ -159,10 +159,6 @@ class _CustWebRestoItemViewState extends State<CustWebRestoItemView> {
         future: setupFirebase(
             launchMode: typeMode.toLaunchMode(),
             func: () async {
-              await Get.put<CustomerCartController>(
-                CustomerCartController(),
-                permanent: true,
-              );
               custItemViewController.init(
                   itemId: int.parse(QR.params['itemId'].toString()),
                   itemIdInCart: null,

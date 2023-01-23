@@ -1,7 +1,7 @@
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/WebApp/routes/Deferred_loader.dart';
-import 'package:mezcalmos/WebApp/screens/messages/MessagingScreenForWeb.dart'
+import 'package:mezcalmos/WebApp/screens/Messages/MessagingScreenForWeb.dart'
     deferred as messagingScreen;
 import 'package:qlevar_router/qlevar_router.dart';
 

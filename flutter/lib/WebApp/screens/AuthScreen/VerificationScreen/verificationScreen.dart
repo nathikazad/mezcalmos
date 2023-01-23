@@ -8,12 +8,12 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/authScreen/verificationScreen/components/VerificationScreenMobile.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 

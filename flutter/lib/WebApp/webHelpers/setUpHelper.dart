@@ -43,14 +43,9 @@ Future<bool> putControllers() async {
   mezDbgPrint("]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
 
 //  }
-  // if (!Get.isRegistered<AuthController>()) {
 
   await Get.put<AuthController>(
     AuthController(signInCallback, signOutCallback),
-    permanent: true,
-  );
-  await Get.put<CustomerCartController>(
-    CustomerCartController(),
     permanent: true,
   );
 
@@ -62,35 +57,6 @@ Future<bool> putControllers() async {
 
     areAllIntilized.add(true);
   }
-  // if (!Get.isRegistered<CustomerCartController>()) {
-
-  // }
-  //   mezDbgPrint("]]]]]]]]]] the LaundryController is intailized ]]]]]]]]]]]]");
-
-  // }
-
-  // if (!Get.isRegistered<MezWebSideBarController>()) {
-  //   await Get.put<MezWebSideBarController>(
-  //     MezWebSideBarController(),
-  //     permanent: true,
-  //   );
-  // if (!Get.isRegistered<ForegroundNotificationsController>()) {
-  //   await Get.put<ForegroundNotificationsController>(
-  //       ForegroundNotificationsController(isWebVersion: true),
-  //       permanent: true);
-  // }
-  //   mezDbgPrint(
-  //       "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
-  //   areAllIntilized.add(true);
-  // }
-
-  // if (Get.find<AuthController>().isUserSignedIn) {
-  //   await AuthHooks.onSignInHook().then((value) {
-  //     mezDbgPrint(
-  //         "]]]]]]]]]] the MezWebSideBarController is intailized ]]]]]]]]]]]]");
-  //     areAllIntilized.add(true);
-  //   });
-  // }
 
   x.complete(areAllIntilized);
   var isItailized = false;
@@ -195,6 +161,7 @@ Future<bool> setupFirebase(
   }
   //func?.call();
   //final bool isItailized =
+
   return await putControllers().then((value) async {
     await func?.call();
     return value;

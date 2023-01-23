@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/WebApp/routes/AppRoutes.dart';
+import 'package:mezcalmos/WebApp/routes/appRoutes.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webAppTheme.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';

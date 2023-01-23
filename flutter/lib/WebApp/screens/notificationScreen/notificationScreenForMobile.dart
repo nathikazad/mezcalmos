@@ -8,7 +8,7 @@ import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/notificationScreen/notificationPopUpWidget.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 
 class NotificationScreenForMobile extends StatelessWidget {

@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/WebApp/webHelpers/WebNotificationHelper.dart';
 import 'package:sizer/sizer.dart';
 
 class ViewCartScreen extends StatefulWidget {
@@ -44,7 +45,6 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomerAppBar(
@@ -191,7 +191,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                         ?.toFirebaseFormattedJson());
                     if (viewController.canOrder &&
                         !viewController.clickedCheckout.value) {
-                      await viewController.checkoutActionButton();
+                      await viewController.checkoutActionButton(
+                          naviCallBack: (String id) {
+                        popEverythingAndNavigateTo(
+                          getRestaurantOrderRoute(
+                            id,
+                          ),
+                        );
+                      });
                     }
                   },
           );

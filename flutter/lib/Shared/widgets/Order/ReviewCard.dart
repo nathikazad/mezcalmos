@@ -8,8 +8,9 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 class ReviewCard extends StatefulWidget {
-  const ReviewCard({super.key, required this.review});
+  ReviewCard({super.key, required this.review, this.isWebVersion});
   final Review review;
+  bool? isWebVersion = false;
 
   @override
   State<ReviewCard> createState() => _ReviewCardState();
@@ -23,6 +24,7 @@ class _ReviewCardState extends State<ReviewCard> {
 
   @override
   Widget build(BuildContext context) {
+    final txt = Theme.of(context).textTheme;
     return Card(
       elevation: 0.3,
       margin: const EdgeInsets.only(bottom: 8),
@@ -49,11 +51,15 @@ class _ReviewCardState extends State<ReviewCard> {
                       children: [
                         Text(
                           widget.review.customer?.name ?? "",
-                          style: Get.textTheme.bodyText1,
+                          style: txt.bodyText1?.copyWith(
+                              fontSize:
+                                  widget.isWebVersion == true ? 16 : null),
                         ),
                         Text(
                           widget.review.reviewTime.timeAgo().toLowerCase(),
-                          style: Get.textTheme.subtitle1,
+                          style: txt.subtitle1?.copyWith(
+                              fontSize:
+                                  widget.isWebVersion == true ? 14 : null),
                         ),
                       ],
                     )),
@@ -74,7 +80,8 @@ class _ReviewCardState extends State<ReviewCard> {
             ),
             Text(
               widget.review.comment?.inCaps ?? "",
-              style: Get.textTheme.bodyText2,
+              style: txt.bodyText2
+                  ?.copyWith(fontSize: widget.isWebVersion == true ? 15 : null),
             ),
           ],
         ),

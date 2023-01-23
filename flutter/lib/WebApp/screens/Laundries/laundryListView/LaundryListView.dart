@@ -9,12 +9,12 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Laundries/laundryListView/components/laundryListViewForMobile.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
-import 'package:mezcalmos/WebApp/webHelpers/changeLagWithParams.dart';
+import 'package:mezcalmos/WebApp/webHelpers/ChangeLagWithParams.dart';
 import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
 
 import 'package:qlevar_router/qlevar_router.dart';

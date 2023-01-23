@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Orders/components/routeHandler.dart';
 
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 // import 'package:mezcalmos/Shared/helpers/LaundryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -23,6 +25,7 @@ import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   CustomerOrderCard({Key? key, required this.order, this.isWebVersion})
@@ -42,21 +45,36 @@ class CustomerOrderCard extends StatelessWidget {
               QR.navigator.replaceAll("/orders/${order.orderId}");
               // QR.toName("orders/${order.orderId}");
             } else {
-              // handleRouting(order);
+              handleRouting();
             }
           },
           primaryBodyContent: _getRightBody(),
           cardTitle: _getServiceProvider()?.name ?? "",
           cardStatus: _getOrderStatus(),
-          // cardTime: Text(
-          //   order.orderTime.getOrderTime().inCaps,
-          //   maxLines: 1,
-          // ),
           cardTime: Text(
-            "    ",
+            getOrderTime(order.orderTime).inCaps,
+            maxLines: 1,
+            style: isWebVersion == true ? TextStyle(fontSize: 16) : null,
           ),
           rightImage: _rightImage()),
     );
+  }
+
+  String getOrderTime(DateTime cDate) {
+    var enDatesFuture = initializeDateFormatting('en', null);
+    Future.wait([
+      enDatesFuture,
+    ]);
+    final String userLangCode = "es_MX";
+    //   Get.find<LanguageController>().userLanguageKey.toLanguageCode();
+    final DateFormat formatLongDay = DateFormat.MMMd(userLangCode);
+    final DateFormat formatDay = DateFormat.E(userLangCode);
+
+    if (cDate.difference(cDate.toLocal()).inDays.abs() < 7) {
+      return "${formatDay.format(cDate.toLocal()).replaceFirst(".", "")}, ${DateFormat("hh:mm a").format(cDate.toLocal())}";
+    } else {
+      return "${formatLongDay.format(cDate.toLocal())} ${DateFormat("hh:mm a").format(cDate.toLocal())}";
+    }
   }
 
   Widget _rightImage() {

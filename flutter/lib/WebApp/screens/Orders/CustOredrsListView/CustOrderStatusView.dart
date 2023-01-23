@@ -16,27 +16,27 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/screens/Orders/CustOredrsListView/components/OrderViewScreenForDesktop.dart';
 import 'package:mezcalmos/WebApp/screens/Orders/CustOredrsListView/components/OrderViewScreenForMobile.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
 import 'package:mezcalmos/WebApp/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/WebApp/widgets/SideWebBarWidget/SideWebBarWidget.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
-class CustOredrsListView extends StatefulWidget {
-  CustOredrsListView({Key? key}) : super(key: key);
+class CustOrderStatusView extends StatefulWidget {
+  CustOrderStatusView({Key? key}) : super(key: key);
 
   @override
-  State<CustOredrsListView> createState() => _CustOredrsListViewState();
+  State<CustOrderStatusView> createState() => _CustOredrsListViewState();
 }
 
-class _CustOredrsListViewState extends State<CustOredrsListView> {
+class _CustOredrsListViewState extends State<CustOrderStatusView> {
   final MezWebSideBarController mezWebSideBarController =
       MezWebSideBarController();
   @override
@@ -66,17 +66,17 @@ class _CustOredrsListViewState extends State<CustOredrsListView> {
                     appBar: InstallAppBarComponent(),
                     bottomNavigationBar: MezBottomBar(),
                     body: Scaffold(
-                      appBar: WebAppBarComponent(
-                        mezWebSideBarController: mezWebSideBarController,
-                        automaticallyGetBack:
-                            (MezCalmosResizer.isMobile(context) ||
-                                    MezCalmosResizer.isSmallMobile(context))
-                                ? false
-                                : true,
-                        type: _authcontroller.fireAuthUser?.uid != null
-                            ? WebAppBarType.WithCartActionButton.obs
-                            : WebAppBarType.WithSignInActionButton.obs,
-                      ),
+                      // appBar: WebAppBarComponent(
+                      //   mezWebSideBarController: mezWebSideBarController,
+                      //   automaticallyGetBack:
+                      //       (MezCalmosResizer.isMobile(context) ||
+                      //               MezCalmosResizer.isSmallMobile(context))
+                      //           ? false
+                      //           : true,
+                      //   type: _authcontroller.fireAuthUser?.uid != null
+                      //       ? WebAppBarType.WithCartActionButton.obs
+                      //       : WebAppBarType.WithSignInActionButton.obs,
+                      // ),
                       // body: Scaffold(),
                       body: (MezCalmosResizer.isMobile(context) ||
                               MezCalmosResizer.isSmallMobile(context))

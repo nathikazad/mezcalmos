@@ -6,13 +6,17 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart' as c;
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/BuildItems.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/PaymentMethodPicker.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
 
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -20,6 +24,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart' as t;
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/authScreen/components/MezButtonWidget.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
@@ -41,10 +46,13 @@ class EndWebSideBar extends StatefulWidget {
 
 class _EndWebSideBarState extends State<EndWebSideBar> {
   Rx<ViewDrawerType> viewType = ViewDrawerType.myOrder.obs;
-  CustCartViewController viewController = CustCartViewController();
+
+  late CustCartViewController viewController;
 
   @override
   void initState() {
+    Get.put<CustomerCartController>(CustomerCartController(), permanent: true);
+    viewController = CustCartViewController();
     viewController.init();
     // TODO: implement initState
     super.initState();
@@ -69,55 +77,52 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
         width: widget.isMobileScreen == true ? Get.width : 350,
         height: Get.height,
         color: Colors.white,
-        child: Obx(
-          () => viewController.cart.cartItems.length > 0
-              ? Scaffold(
-                  appBar: AppBar(
-                      backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
-                      leading: Obx(
-                        () => IconButton(
-                          onPressed: () {
-                            if (viewType.value == ViewDrawerType.myOrder) {
-                              mezDbgPrint("this is myOrders");
-                              if (widget.isMobileScreen == true) {
-                                QR.back();
-                              } else {
-                                Navigator.of(context).pop();
-                              }
-                            } else {
-                              mezDbgPrint("this is pickloaction");
-                              viewType.value = ViewDrawerType.myOrder;
-                            }
-                          },
-                          icon: Icon(
-                            (viewType == ViewDrawerType.myOrder)
-                                ? Icons.close
-                                : Icons.arrow_back,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
-                  body: Obx(() =>
-                      _buildBodyWidget(context: context, viewType: viewType)))
-              : Scaffold(
-                  appBar: AppBar(
-                    leading: IconButton(
-                        onPressed: () {
-                          if (widget.isMobileScreen == true) {
-                            QR.back();
-                          } else {
-                            Get.find<MezWebSideBarController>()
-                                .closeWebEndDrawer();
-                          }
-                        },
-                        icon: Icon(Icons.close)),
+        child: Scaffold(
+            appBar: AppBar(
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                leading: Obx(
+                  () => IconButton(
+                    onPressed: () {
+                      if (viewType.value == ViewDrawerType.myOrder) {
+                        mezDbgPrint("this is myOrders");
+                        if (widget.isMobileScreen == true) {
+                          QR.back();
+                        } else {
+                          Navigator.of(context).pop();
+                        }
+                      } else {
+                        mezDbgPrint("this is pickloaction");
+                        viewType.value = ViewDrawerType.myOrder;
+                      }
+                    },
+                    icon: Icon(
+                      (viewType == ViewDrawerType.myOrder)
+                          ? Icons.close
+                          : Icons.arrow_back,
+                      color: Colors.black,
+                    ),
                   ),
-                  body: Center(
-                    child: Text("Cart is empty...!"),
-                  ),
-                ),
-        ));
+                )),
+            body: Obx(
+                () => _buildBodyWidget(context: context, viewType: viewType)))
+        // : Scaffold(
+        //     appBar: AppBar(
+        //       leading: IconButton(
+        //           onPressed: () {
+        //             if (widget.isMobileScreen == true) {
+        //               QR.back();
+        //             } else {
+        //               Get.find<MezWebSideBarController>()
+        //                   .closeWebEndDrawer();
+        //             }
+        //           },
+        //           icon: Icon(Icons.close)),
+        //     ),
+        //     body: Center(
+        //       child: Text("Cart is empty...!"),
+        //     ),
+        //   ),
+        );
   }
 
   Widget _buildBodyWidget(
@@ -125,6 +130,7 @@ class _EndWebSideBarState extends State<EndWebSideBar> {
     if (viewType == ViewDrawerType.myOrder) {
       return ViewCartScreenForWeb(
         type: viewType.value,
+        viewController: viewController,
         onChanged: (value) {
           viewType.value = value;
         },
@@ -188,31 +194,31 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
     super.initState();
     mezDbgPrint(
         "Cart items =====================>>>${widget.viewController.cart.cartItems}");
-    if (Get.find<CustomerAuthController>().customer?.savedCards == null)
-      savedCardChoice =
-          Get.find<CustomerAuthController>().customer!.savedCards.first;
-    orderToLocation =
-        Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
-    if (orderToLocation != null) {
-      _restaurantController.cart.value.toLocation = orderToLocation;
-    }
-    try {
-      _restaurantController
-          .updateShippingPrice()
-          .then((bool value) => _restaurantController.cart.refresh());
-    } catch (e) {
-      mezDbgPrint("this is a huge problem =========== ${e.toString()}");
-    }
+    // if (widget.viewController.savedCards == null)
+    //   savedCardChoice =
+    //       Get.find<CustomerAuthController>().customer!.savedCards.first;
+    // orderToLocation =
+    //     Get.find<CustomerAuthController>().customer!.defaultLocation?.location;
+    // if (orderToLocation != null) {
+    //   _restaurantController.cart.value.toLocation = orderToLocation;
+    // }
+    // try {
+    //   _restaurantController
+    //       .updateShippingPrice()
+    //       .then((bool value) => _restaurantController.cart.refresh());
+    // } catch (e) {
+    //   mezDbgPrint("this is a huge problem =========== ${e.toString()}");
+    // }
 
-    // check if cart empty
-    // if yes redirect to home page
+    // // check if cart empty
+    // // if yes redirect to home page
 
-    if (_restaurantController.cart.value.cartPeriod != null) {
-      _restaurantController.cart.value.deliveryTime =
-          _restaurantController.cart.value.cartPeriod?.start;
-    }
-    mezDbgPrint(
-        "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
+    // if (_restaurantController.cart.value.cartPeriod != null) {
+    //   _restaurantController.cart.value.deliveryTime =
+    //       _restaurantController.cart.value.cartPeriod?.start;
+    // }
+    // mezDbgPrint(
+    //     "item is special ===== ${_restaurantController.cart.value.cartItems.first.isSpecial}");
   }
 
   @override
@@ -235,7 +241,7 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
       body: Container(
         child: SingleChildScrollView(
           child: Obx(
-            () => _restaurantController.cart.value.cartItems.length > 0
+            () => widget.viewController.cart.cartItems.length > 0
                 ? Column(
                     children: [
                       Container(
@@ -261,9 +267,18 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
                       ),
                       _buildItemExpentionPanelWidget(),
                       SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
-                      _buildSummaryAndLoactionPicker(),
+                      _deliveryLocation(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: PaymentMethodPicker(
+                          isWebVersion: true,
+                          viewCartController: widget.viewController,
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),
@@ -289,7 +304,53 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
   Widget _buildItemExpentionPanelWidget() {
     // this will be for the expenssion panel widget
     return CartItemsBuilder(
+      viewController: widget.viewController,
       isWebVersion: true,
+    );
+  }
+
+  Widget _deliveryLocation() {
+    final txt = Theme.of(context).textTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "${Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Restaurants"]["ViewCartScreen"]["components"]["OrderSummaryCard"]["deliveryLocation"]}",
+            style: txt.bodyText1!.copyWith(fontSize: 16),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        const SizedBox(height: 10),
+        DropDownLocationList(
+          webRedrectionCallback: () async {
+            mezDbgPrint("this is in side this EndwebSideBar");
+            setState(() {
+              mezDbgPrint("====== widget.type ${widget.type}");
+              widget.type = ViewDrawerType.pickLocationView;
+              widget.onChanged!.call(widget.type);
+              mezDbgPrint("====== widget.type ${widget.type}");
+            });
+            return null;
+          },
+          isWebVersion: true,
+          onValueChangeCallback: ({Location? location}) {
+            if (location != null && location.isValidLocation()) {
+              widget.viewController.cart.toLocation = location;
+
+              // ignore: unawaited_futures
+              widget.viewController.updateShippingPrice();
+              mezDbgPrint(
+                  "Should update cart location 🥸🥸🥸 ===> ${widget.viewController.cart.toLocation}");
+            }
+          },
+          bgColor: Colors.white,
+          checkDistance: true,
+          serviceProviderLocation:
+              widget.viewController.cart.restaurant?.info.location,
+        ),
+      ],
     );
   }
 
@@ -299,73 +360,76 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
       setState(() {
         orderToLocation = location;
       });
-      _restaurantController.cart.value.toLocation = location;
-      _restaurantController
+      widget.viewController.cart.toLocation = location;
+
+      widget.viewController
           .updateShippingPrice()
-          .then((bool value) => _restaurantController.cart.refresh());
+          .then((bool value) => widget.viewController.cart);
     }
   }
 
   Widget _buildSummaryAndLoactionPicker() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: OrderSummaryCard(
-        isWebWidget: true,
-        setLocationCallBack: ({Location? location}) {
-          mezDbgPrint("this is a test inside _setLocationCallback");
-          // --
-          if (location != null && location.isValidLocation()) {
-            setState(() {
-              orderToLocation = location;
-            });
-            _restaurantController.cart.value.toLocation = location;
-            _restaurantController
-                .updateShippingPrice()
-                .then((bool value) => _restaurantController.cart.refresh());
-          }
-        },
-        controller: _restaurantController,
-        pickerWidget: Container(
-          child: Column(
-            children: [
-              Divider(
-                thickness: 1,
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "${_i18n1()["deliveryLocation"]} :",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromRGBO(73, 73, 73, 1)),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-              const SizedBox(height: 10),
-              DropDownLocationList(
-                webRedrectionCallback: () async {
-                  mezDbgPrint("this is in side this EndwebSideBar");
-                  setState(() {
-                    mezDbgPrint("====== widget.type ${widget.type}");
-                    widget.type = ViewDrawerType.pickLocationView;
-                    widget.onChanged!.call(widget.type);
-                    mezDbgPrint("====== widget.type ${widget.type}");
-                  });
-                  return null;
-                },
-                isWebVersion: true,
-                onValueChangeCallback: _setLocationCallback,
-                bgColor: Color.fromRGBO(240, 242, 255, 1),
-                checkDistance: true,
-                serviceProviderLocation:
-                    _restaurantController.cart.value.restaurant?.info.location,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Container();
+    // return Container(
+    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+    //   child: OrderSummaryCard(
+    //     order: widget.viewController.o,
+    //     isWebWidget: true,
+    //     setLocationCallBack: ({Location? location}) {
+    //       mezDbgPrint("this is a test inside _setLocationCallback");
+    //       // --
+    //       if (location != null && location.isValidLocation()) {
+    //         setState(() {
+    //           orderToLocation = location;
+    //         });
+    //         _restaurantController.cart.value.toLocation = location;
+    //         _restaurantController
+    //             .updateShippingPrice()
+    //             .then((bool value) => _restaurantController.cart.refresh());
+    //       }
+    //     },
+    //     controller: _restaurantController,
+    //     pickerWidget: Container(
+    //       child: Column(
+    //         children: [
+    //           Divider(
+    //             thickness: 1,
+    //           ),
+    //           Container(
+    //             alignment: Alignment.centerLeft,
+    //             child: Text(
+    //               "${_i18n1()["deliveryLocation"]} :",
+    //               style: GoogleFonts.montserrat(
+    //                   fontSize: 13,
+    //                   fontWeight: FontWeight.w500,
+    //                   color: Color.fromRGBO(73, 73, 73, 1)),
+    //               textAlign: TextAlign.left,
+    //             ),
+    //           ),
+    //           const SizedBox(height: 10),
+    //           DropDownLocationList(
+    //             webRedrectionCallback: () async {
+    //               mezDbgPrint("this is in side this EndwebSideBar");
+    //               setState(() {
+    //                 mezDbgPrint("====== widget.type ${widget.type}");
+    //                 widget.type = ViewDrawerType.pickLocationView;
+    //                 widget.onChanged!.call(widget.type);
+    //                 mezDbgPrint("====== widget.type ${widget.type}");
+    //               });
+    //               return null;
+    //             },
+    //             isWebVersion: true,
+    //             onValueChangeCallback: _setLocationCallback,
+    //             bgColor: Color.fromRGBO(240, 242, 255, 1),
+    //             checkDistance: true,
+    //             serviceProviderLocation:
+    //                 widget.viewController.cart.restaurant?.info.location,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Widget _buildNoteWidget(TextEditingController noteTextController) {
@@ -409,109 +473,109 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
   }
 
   /// returns stripePaymentId
-  Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
-    String? stripePaymentId;
+  // Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
+  //   String? stripePaymentId;
 
-    //viewCartController.getCardChoice
-    if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
-      switch (choice) {
-        case CardChoice.ApplePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
-              serviceProviderId: _restaurantController
-                  .cart.value.restaurant!.info.hasuraId
-                  .toString(),
-              orderType: OrderType.Restaurant,
-              paymentAmount: _restaurantController.cart.value.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithApplePay(
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName:
-                  _restaurantController.cart.value.restaurant!.info.name);
-          break;
-        case CardChoice.GooglePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
-              serviceProviderId: _restaurantController
-                  .cart.value.restaurant!.info.hasuraId
-                  .toString(),
-              orderType: OrderType.Restaurant,
-              paymentAmount: _restaurantController.cart.value.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithGooglePay(
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName:
-                  _restaurantController.cart.value.restaurant!.info.name);
-          break;
-        case CardChoice.SavedCard:
-          stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId: _restaurantController
-                  .cart.value.restaurant!.info.hasuraId
-                  .toString(),
-              paymentAmount: _restaurantController.cart.value.totalCost,
-              card: viewCartController.card.value!);
-          break;
-      }
-    }
-    return stripePaymentId;
-  }
+  //   //viewCartController.getCardChoice
+  //   if (_restaurantController.cart.value.paymentType == PaymentType.Card) {
+  //     switch (choice) {
+  //       case CardChoice.ApplePay:
+  //         final ServerResponse paymentIntentResponse = await getPaymentIntent(
+  //             customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+  //             serviceProviderId: _restaurantController
+  //                 .cart.value.restaurant!.info.hasuraId
+  //                 .toString(),
+  //             orderType: OrderType.Restaurant,
+  //             paymentAmount: _restaurantController.cart.value.totalCost);
+  //         stripePaymentId = extractPaymentIdFromIntent(
+  //             paymentIntentResponse.data['paymentIntent'].toString());
+  //         await acceptPaymentWithApplePay(
+  //             paymentAmount: _restaurantController.cart.value.totalCost,
+  //             paymentIntentData: paymentIntentResponse.data,
+  //             merchantName:
+  //                 _restaurantController.cart.value.restaurant!.info.name);
+  //         break;
+  //       case CardChoice.GooglePay:
+  //         final ServerResponse paymentIntentResponse = await getPaymentIntent(
+  //             customerId: Get.find<AuthController>().user!.hasuraId.toString(),
+  //             serviceProviderId: _restaurantController
+  //                 .cart.value.restaurant!.info.hasuraId
+  //                 .toString(),
+  //             orderType: OrderType.Restaurant,
+  //             paymentAmount: _restaurantController.cart.value.totalCost);
+  //         stripePaymentId = extractPaymentIdFromIntent(
+  //             paymentIntentResponse.data['paymentIntent'].toString());
+  //         await acceptPaymentWithGooglePay(
+  //             paymentAmount: _restaurantController.cart.value.totalCost,
+  //             paymentIntentData: paymentIntentResponse.data,
+  //             merchantName:
+  //                 _restaurantController.cart.value.restaurant!.info.name);
+  //         break;
+  //       case CardChoice.SavedCard:
+  //         stripePaymentId = await acceptPaymentWithSavedCard(
+  //             serviceProviderId: _restaurantController
+  //                 .cart.value.restaurant!.info.hasuraId
+  //                 .toString(),
+  //             paymentAmount: _restaurantController.cart.value.totalCost,
+  //             card: viewCartController.card.value!);
+  //         break;
+  //     }
+  //   }
+  //   return stripePaymentId;
+  // }
 
-  Future<bool> checkoutActionButton() async {
-    viewCartController.pickerChoice.value = {PickerChoice.Cash: null};
-    mezDbgPrint(
-        "checkout func called ${viewCartController.getCardChoice.toString()}");
-    _restaurantController.cart.value.toLocation = orderToLocation;
-    _restaurantController.cart.value.notes = _textEditingController.text;
-    try {
-      if (_restaurantController.getOrderDistance <= 1000000) {
-        final String? stripePaymentId =
-            await acceptPaymentByCardChoice(viewCartController.getCardChoice);
+  // Future<bool> checkoutActionButton() async {
+  //   viewCartController.pickerChoice.value = {PickerChoice.Cash: null};
+  //   mezDbgPrint(
+  //       "checkout func called ${viewCartController.getCardChoice.toString()}");
+  //   _restaurantController.cart.value.toLocation = orderToLocation;
+  //   _restaurantController.cart.value.notes = _textEditingController.text;
+  //   try {
+  //     if (_restaurantController.getOrderDistance <= 1000000) {
+  //       final String? stripePaymentId =
+  //           await acceptPaymentByCardChoice(viewCartController.getCardChoice);
 
-        final ServerResponse _serverResponse = await _restaurantController
-            .checkout(stripePaymentId: stripePaymentId);
+  //       final ServerResponse _serverResponse = await _restaurantController
+  //           .checkout(stripePaymentId: stripePaymentId);
 
-        if (_serverResponse.success) {
-          mezDbgPrint(
-              "navigate to orders by id screen ${_serverResponse.data["orderId"]} and route will be  orders/${_serverResponse.data["orderId"]}");
-          var xQroute = QR.currentPath;
-          var params = QR.currentPath.split("?");
-          await QR.navigator.replaceAll(
-              "orders/${_serverResponse.data["orderId"]}?${params[1]}");
-          _restaurantController.clearCart();
+  //       if (_serverResponse.success) {
+  //         mezDbgPrint(
+  //             "navigate to orders by id screen ${_serverResponse.data["orderId"]} and route will be  orders/${_serverResponse.data["orderId"]}");
+  //         var xQroute = QR.currentPath;
+  //         var params = QR.currentPath.split("?");
+  //         await QR.navigator.replaceAll(
+  //             "orders/${_serverResponse.data["orderId"]}?${params[1]}");
+  //         _restaurantController.clearCart();
 
-          // popEverythingAndNavigateTo(
-          //     getRestaurantOrderRoute(_serverResponse.data["orderId"]));
-          return true;
-        } else {
-          print(_serverResponse);
-          if (_serverResponse.errorCode == "serverError") {
-            // do something
-          } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-            // do something
-          } else if (_serverResponse.errorCode == "restaurantClosed") {
-            // do something
-          } else {
-            // do something
-          }
-        }
-      } else {
-        MezSnackbar(
-          '${_i18n()["ops"]}',
-          '${_i18n()["distanceError"]}',
-        );
-      }
-      return false;
-    } catch (e, s) {
-      mezDbgPrint(
-        "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
-      );
-      return false;
-    }
-  }
+  //         // popEverythingAndNavigateTo(
+  //         //     getRestaurantOrderRoute(_serverResponse.data["orderId"]));
+  //         return true;
+  //       } else {
+  //         print(_serverResponse);
+  //         if (_serverResponse.errorCode == "serverError") {
+  //           // do something
+  //         } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
+  //           // do something
+  //         } else if (_serverResponse.errorCode == "restaurantClosed") {
+  //           // do something
+  //         } else {
+  //           // do something
+  //         }
+  //       }
+  //     } else {
+  //       MezSnackbar(
+  //         '${_i18n()["ops"]}',
+  //         '${_i18n()["distanceError"]}',
+  //       );
+  //     }
+  //     return false;
+  //   } catch (e, s) {
+  //     mezDbgPrint(
+  //       "Error happened during generating order's routeInfos / Stripe payment ===> #$e\n\nStackTrace ==> #$s",
+  //     );
+  //     return false;
+  //   }
+  // }
 
   /// order now button
 
@@ -529,34 +593,47 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
       ),
       child: MezButton(
         btnMargin: const EdgeInsets.symmetric(horizontal: 0),
-        onPress: () async {
-          mezDbgPrint("==================?>tis is atest");
+        onPress: widget.viewController.clickedCheckout.value
+            ? null
+            : () async {
+                mezDbgPrint(widget.viewController.cart.toLocation
+                    ?.toFirebaseFormattedJson());
+                if (widget.viewController.canOrder &&
+                    !widget.viewController.clickedCheckout.value) {
+                  await widget.viewController.checkoutActionButton(
+                      naviCallBack: (String id) {
+                    QR.to("/orders/${id}");
+                  });
+                }
+              },
+        //  () async {
+        //   mezDbgPrint("==================?>tis is atest");
 
-          viewCartController.clickedCheckout.value = true;
-          final bool _isCheckoutFailed = !(await checkoutActionButton());
-          if (_isCheckoutFailed) {
-            viewCartController.clickedCheckout.value = false;
-          }
+        //   // viewCartController.clickedCheckout.value = true;
+        //   // final bool _isCheckoutFailed = !(await checkoutActionButton());
+        //   // if (_isCheckoutFailed) {
+        //   //   viewCartController.clickedCheckout.value = false;
+        //   // }
 
-          // try {
-          // if (_restaurantController.canOrder &&
-          //     !viewCartController.clickedCheckout.value) {
-          // if (true) {
-          //   viewCartController.clickedCheckout.value = true;
-          //   mezDbgPrint("we are calling checkout");
-          //   final bool _isCheckoutFailed = !(await checkoutActionButton());
-          //   mezDbgPrint("checkout func called");
-          //   if (_isCheckoutFailed) {
-          //     viewCartController.clickedCheckout.value = false;
-          //   }
-          // } else {
-          //   _restaurantController.cart.refresh();
-          // }
-          // } on Exception catch (e) {
-          //   mezDbgPrint(
-          //       "⚠️⚠️⚠️⚠️⚠️⚠️⚠️catch an exception on checout func ${e.toString()}");
-          // }
-        },
+        //   // try {
+        //   // if (_restaurantController.canOrder &&
+        //   //     !viewCartController.clickedCheckout.value) {
+        //   // if (true) {
+        //   //   viewCartController.clickedCheckout.value = true;
+        //   //   mezDbgPrint("we are calling checkout");
+        //   //   final bool _isCheckoutFailed = !(await checkoutActionButton());
+        //   //   mezDbgPrint("checkout func called");
+        //   //   if (_isCheckoutFailed) {
+        //   //     viewCartController.clickedCheckout.value = false;
+        //   //   }
+        //   // } else {
+        //   //   _restaurantController.cart.refresh();
+        //   // }
+        //   // } on Exception catch (e) {
+        //   //   mezDbgPrint(
+        //   //       "⚠️⚠️⚠️⚠️⚠️⚠️⚠️catch an exception on checout func ${e.toString()}");
+        //   // }
+        // },
         content: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -595,8 +672,13 @@ class _ViewCartScreenForWebState extends State<ViewCartScreenForWeb> {
             },
             secondaryButtonText: _i18n()["no"],
             onYesClick: () async {
+              await clear_customer_cart(
+                customer_id: Get.find<AuthController>().user!.hasuraId,
+              );
+
+              await widget.viewController.cartController.clearCart();
               Navigator.of(context).pop();
-              _restaurantController.clearCart();
+              //    _restaurantController.clearCart();
             });
       },
       child: Container(

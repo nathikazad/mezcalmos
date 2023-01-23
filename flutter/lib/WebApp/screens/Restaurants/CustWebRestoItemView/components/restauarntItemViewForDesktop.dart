@@ -717,28 +717,28 @@ class _RestaurantItemViewForDesktopState
       );
     } else {
       if (widget.custItemViewController.isAdding) {
-        mezDbgPrint("adding mode ");
+        mezDbgPrint("adding mode 🪜🪜🪜🪜🪜🪜🪜🪜🪜🪜");
         //  widget.mezWebSideBarController.openWebEndDrawer();
+        try {
+          await widget.custItemViewController
+              .handleAddItem()
+              .whenComplete(() async {
+            mezDbgPrint("open the the drawer");
+            widget.mezWebSideBarController.openWebEndDrawer();
+          });
+        } catch (e, stk) {
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        }
+
         if (widget.custItemViewController.checkAddSpecialItemConflict()) {
           mezDbgPrint("add checkAddSpecialItemConflict ");
           await _addSpecialItemCallBack();
         } else if (widget.custItemViewController.differentRestaurantIds()) {
           mezDbgPrint("overwrite ");
           await _overriteCart(context);
-        } else {
-          mezDbgPrint("this should hhh hhh ");
-          try {
-            await widget.custItemViewController
-                .handleAddItem()
-                .whenComplete(() async {
-              mezDbgPrint("open the the drawer");
-              widget.mezWebSideBarController.openWebEndDrawer();
-            });
-          } catch (e, stk) {
-            mezDbgPrint(e);
-            mezDbgPrint(stk);
-          }
         }
+        mezDbgPrint("this should hhh hhh ");
       } else {
         mezDbgPrint("editing mode ");
         try {

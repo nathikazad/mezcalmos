@@ -135,7 +135,7 @@ class OrderSummaryCard extends StatelessWidget {
                           .copyWith(fontSize: isWebVersion == true ? 16 : null),
                     ),
                     Text(
-                      order.costToCustomer?.toPriceString() ??
+                      order.totalCost?.toPriceString() ??
                           order.cost.toPriceString(),
                       style: txt.bodyText1!.copyWith(
                           fontSize: isWebVersion == true ? 16 : 14.sp),

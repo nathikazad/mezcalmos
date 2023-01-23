@@ -11,12 +11,12 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/WebApp/controllers/mezWebSideBarController.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/CustWebRstaurantsList/components/listViewBody.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/webAppBarComponent.dart';
-import 'package:mezcalmos/WebApp/widgets/mezBottomBar.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/WebAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
-import 'package:mezcalmos/WebApp/webHelpers/setUpHelper.dart';
+import 'package:mezcalmos/WebApp/webHelpers/SetUpHelper.dart';
 
 class CustWebRestaurantListView extends StatefulWidget {
   CustWebRestaurantListView({Key? key}) : super(key: key);
@@ -35,11 +35,11 @@ class _CustWebRestaurantListViewState extends State<CustWebRestaurantListView> {
   CustRestaurantListViewController viewController =
       CustRestaurantListViewController();
 
-  Future<bool> waitWhile2(Future<bool> test(),
+  Future<bool> waitWhile2(Future<bool> function(),
       [Duration pollInterval = Duration.zero]) async {
     var completer = new Completer<bool>();
     check() async {
-      var val = await test();
+      var val = await function();
       if (val) {
         mezDbgPrint("the test is @@@@complate 😃😃😃😃😃😃😃 ${val}");
         completer.complete(true);

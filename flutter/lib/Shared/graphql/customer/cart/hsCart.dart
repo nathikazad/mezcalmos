@@ -42,6 +42,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
 
   final Query$getCustomerCart$customer_customer_by_pk$cart? cartData =
       getCartResp.parsedData?.customer_customer_by_pk?.cart;
+  mezDbgPrint("[✅✅✅] called ::${cartData.toString()} [✅✅✅]");
 
   PaymentInfo paymentInfo = PaymentInfo();
   if (cartData?.restaurant?.stripe_info != null &&

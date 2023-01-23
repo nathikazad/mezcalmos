@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/WebApp/screens/Restaurants/components/webAppExpensionPanelComponent.dart';
-import 'package:mezcalmos/WebApp/screens/components/installAppBarComponent.dart';
+import 'package:mezcalmos/WebApp/screens/components/InstallAppBarComponent.dart';
 import 'package:mezcalmos/WebApp/values/constants.dart';
 
 class ItemOptionCard extends StatefulWidget {

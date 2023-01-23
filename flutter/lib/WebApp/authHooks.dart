@@ -1,13 +1,14 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
+import 'package:mezcalmos/CustomerApp/controllers/restaurant/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/restaurant/restaurantController.dart';
 import 'package:mezcalmos/Shared/controllers/AuthController.dart';
 // import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 // import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/customerNodes.dart';
 import 'package:mezcalmos/WebApp/controllers/messageWebController.dart';
-import 'package:mezcalmos/WebApp/webHelpers/webNotificationHelper.dart';
+import 'package:mezcalmos/WebApp/webHelpers/WebNotificationHelper.dart';
 
 import '../Shared/helpers/NotificationsHelper.dart';
 
@@ -34,25 +35,15 @@ class AuthHooks {
       );
     }
 
-    // Get.put<BackgroundNotificationsController>(
-    //     BackgroundNotificationsController());
     if (!Get.isRegistered<CustomerAuthController>()) {
       await Get.put<CustomerAuthController>(
           CustomerAuthController(isWebVersion: true),
           permanent: true);
     }
-
-    // if (!Get.isRegistered<ForegroundNotificationsController>()) {
-    //   await Get.put<ForegroundNotificationsController>(
-    //       ForegroundNotificationsController(isWebVersion: true),
-    //       permanent: true);
-    // }
-
-    // Get.find<ForegroundNotificationsController>()
-    //     .startListeningForNotificationsFromFirebase(
-    //         customerNotificationsNode(
-    //             Get.find<AuthController>().fireAuthUser!.uid),
-    //         webNotificationHandler);
+    if (!Get.isRegistered<CustomerCartController>()) {
+      await Get.put<CustomerCartController>(CustomerCartController(),
+          permanent: true);
+    }
 
     if (!Get.isRegistered<MessageWebController>()) {
       await Get.put<MessageWebController>(MessageWebController(),

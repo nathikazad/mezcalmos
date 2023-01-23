@@ -1,5 +1,5 @@
 import 'package:mezcalmos/WebApp/routes/Deferred_loader.dart';
-import 'package:mezcalmos/WebApp/screens/Orders/CustOredrsListView/CustOredrsListView.dart'
+import 'package:mezcalmos/WebApp/screens/Orders/CustOredrsListView/CustOrderStatusView.dart'
     deferred as orderViewScreen;
 import 'package:mezcalmos/WebApp/screens/Orders/CustOrderView/CustOrderView.dart'
     deferred as OrdersList;
@@ -18,7 +18,7 @@ class OrdersRoutes {
           path: "/:orderId",
           name: orderById,
           middleware: [DefferedLoader(orderViewScreen.loadLibrary)],
-          builder: () => orderViewScreen.CustOredrsListView(),
+          builder: () => orderViewScreen.CustOrderStatusView(),
         )
       ]);
 }

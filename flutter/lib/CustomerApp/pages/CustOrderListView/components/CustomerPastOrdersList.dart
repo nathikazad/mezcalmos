@@ -11,14 +11,16 @@ dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
 
 class CustomerPastOrdersList extends StatelessWidget {
-  const CustomerPastOrdersList({
-    Key? key,
-    required this.txt,
-    required this.viewController,
-  }) : super(key: key);
+  CustomerPastOrdersList(
+      {Key? key,
+      required this.txt,
+      required this.viewController,
+      this.isWebVersion})
+      : super(key: key);
 
   final TextTheme txt;
   final CustomerOrdersListViewController viewController;
+  bool? isWebVersion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,8 @@ class CustomerPastOrdersList extends StatelessWidget {
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
-                style: txt.headline3,
+                style: txt.headline3
+                    ?.copyWith(fontSize: isWebVersion == true ? 18 : null),
               ),
             );
           },
@@ -63,7 +66,10 @@ class CustomerPastOrdersList extends StatelessWidget {
             height: 5,
           ),
           itemBuilder: (BuildContext context, Order element) {
-            return CustomerOrderCard(order: element);
+            return CustomerOrderCard(
+              order: element,
+              isWebVersion: isWebVersion,
+            );
           },
         ),
       ],

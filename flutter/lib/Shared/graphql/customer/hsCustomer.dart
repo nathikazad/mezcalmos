@@ -174,6 +174,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
 
     final List<Query$get_customer_orders$restaurant_order>? _orders =
         _res.parsedData?.restaurant_order;
+
     if (_orders != null) {
       mezDbgPrint(
           "[tt] found orders :: CUS_ID ($customer_id) :: len :: ${_orders.length}");
@@ -188,7 +189,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
           RestaurantOrder(
             deliveryMode: DeliveryMode.None,
             orderId: _o.id,
-            chatId: _o.chat_id!,
+            chatId: _o.chat_id,
             status: _o.status.toRestaurantOrderStatus(),
             quantity: 1,
             serviceProviderId: _o.restaurant.id,
