@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class MezCard extends StatelessWidget {
-  const MezCard({
-    super.key,
-    this.margin,
-    this.contentPadding,
-    required this.content,
-    this.action,
-    this.firstAvatarBgColor,
-    this.firstAvatarBgImage,
-    this.firstAvatarIcon,
-    this.firstAvatarIconColor,
-    this.secondAvatarBgColor,
-    this.secondAvatarBgImage,
-    this.secondAvatarIcon,
-    this.secondAvatarIconColor,
-  });
+  const MezCard(
+      {super.key,
+      this.margin,
+      this.contentPadding,
+      required this.content,
+      this.action,
+      this.firstAvatarBgColor,
+      this.firstAvatarBgImage,
+      this.firstAvatarIcon,
+      this.firstAvatarIconColor,
+      this.secondAvatarBgColor,
+      this.secondAvatarBgImage,
+      this.secondAvatarIcon,
+      this.secondAvatarIconColor,
+      this.leading});
   final EdgeInsets? margin;
   final EdgeInsets? contentPadding;
   final Color? firstAvatarBgColor;
@@ -28,6 +28,7 @@ class MezCard extends StatelessWidget {
   final IconData? secondAvatarIcon;
   final Widget content;
   final Widget? action;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -37,37 +38,46 @@ class MezCard extends StatelessWidget {
         padding: contentPadding,
         child: Row(
           children: [
-            // first avatars//
-            Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: [
-                CircleAvatar(
-                  radius: 23,
-                  backgroundColor: firstAvatarBgColor,
-                  backgroundImage: firstAvatarBgImage,
-                  child: Icon(
-                    firstAvatarIcon,
-                    color: firstAvatarIconColor,
-                    size: 25,
-                  ),
-                ),
-                if (secondAvatarBgImage != null || secondAvatarIcon != null)
-                  Positioned(
-                    right: -35,
-                    child: CircleAvatar(
-                      radius: 23,
-                      backgroundColor: secondAvatarBgColor,
-                      backgroundImage: secondAvatarBgImage,
-                      child: Icon(
-                        Icons.delivery_dining,
-                        size: 25,
-                        color: secondAvatarIconColor,
+            // leading //
+            leading != null
+                ? leading!
+                :
+                // first avatars//
+                Stack(
+                    alignment: Alignment.center,
+                    clipBehavior: Clip.none,
+                    children: [
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: firstAvatarBgColor,
+                        backgroundImage: firstAvatarBgImage,
+                        child: Icon(
+                          firstAvatarIcon,
+                          color: firstAvatarIconColor,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                  )
-              ],
-            ),
+                      if (secondAvatarBgImage != null ||
+                          secondAvatarIcon != null)
+                        Positioned(
+                          right: -35,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 22,
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: secondAvatarBgColor,
+                              backgroundImage: secondAvatarBgImage,
+                              child: Icon(
+                                secondAvatarIcon,
+                                size: 25,
+                                color: secondAvatarIconColor,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
             if (secondAvatarBgImage != null || secondAvatarIcon != null)
               SizedBox(
                 width: 37,

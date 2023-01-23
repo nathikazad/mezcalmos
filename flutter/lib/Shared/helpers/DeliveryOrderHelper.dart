@@ -1,107 +1,117 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-// import 'package:mezcalmos/Shared/constants/global.dart';
-// import 'package:mezcalmos/Shared/controllers/languageController.dart';
-// import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
-// import 'package:rive/rive.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
+import 'package:rive/rive.dart';
 
-// extension DeliveryOrderHelper on DeliveryOrder {
-//   dynamic _i18n() =>
-//       Get.find<LanguageController>().strings["CustomerApp"]["pages"]
-//           ["Restaurants"]["ViewOrderScreen"]["components"]["OrdersItemsCard"];
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
+    ["DeliveryOrderHelper"];
 
-//   String getOrderStatus() {
-//     switch (status) {
-//       case DeliveryOrderStatus.cancelledByServiceProvider:
-//         return '${_i18n()["canceledByAdmin"]}';
-//       case DeliveryOrderStatus.cancelledByCustomer:
-//         return '${_i18n()["canceledByCustomer"]}';
-//       case DeliveryOrderStatus.orderReceived:
-//         return '${_i18n()["received"]}';
-//       // case RestaurantOrderStatus.Preparing:
-//       //   return '${_i18n()["preparing"]}';
-//       case DeliveryOrderStatus.onTheWayToDropoff:
-//         return '${_i18n()["onTheWay"]}';
-//       case DeliveryOrderStatus.packageReady:
-//         return '${_i18n()["readyForPickUp"]}';
-//       case DeliveryOrderStatus.delivered:
-//         return '${_i18n()["delivered"]}';
+extension DeliveryOrderHelper on DeliveryOrder {
+// getting the order status string
 
-//       default:
-//         return 'Unknown status';
-//     }
-//   }
-//   // order status image/icon
+  String orderStatusTitle() {
+    switch (status) {
+      case DeliveryOrderStatus.CancelledByServiceProvider:
+      case DeliveryOrderStatus.CancelledByCustomer:
+      case DeliveryOrderStatus.CancelledByDeliverer:
+        return "${_i18n()['status']["canceled"]}";
 
-//   Widget orderStatusImage() {
-//     switch (status) {
-//       case DeliveryOrderStatus.cancelledByServiceProvider:
+      case DeliveryOrderStatus.OrderReceived:
+        return "${_i18n()["status"]['received']}";
+      case DeliveryOrderStatus.PackageReady:
+        return "${_i18n()["status"]['ready']}";
+      case DeliveryOrderStatus.AtPickup:
+        return "${_i18n()["status"]['atPickup']}";
+      case DeliveryOrderStatus.OnTheWayToDropoff:
+        return "${_i18n()["status"]['otwDropOff']}";
+      case DeliveryOrderStatus.AtDropoff:
+        return "${_i18n()["status"]['atDropoff']}";
+      case DeliveryOrderStatus.Delivered:
+        return "${_i18n()["status"]['delivered']}";
 
-//       case DeliveryOrderStatus.cancelledByCustomer:
-//         return Container(
-//           padding: const EdgeInsets.all(5),
-//           decoration:
-//               BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
-//           child: Icon(
-//             Icons.close,
-//             size: 25,
-//             color: Colors.red,
-//           ),
-//         );
+      default:
+        return '';
+    }
+  }
 
-//       case DeliveryOrderStatus.orderReceived:
-//         return Container(
-//           // padding: const EdgeInsets.only(right: 10.0),
-//           child: Icon(
-//             Icons.flatware_rounded,
-//             size: 40,
-//             color: primaryBlueColor,
-//           ),
-//         );
-//       // case DeliveryOrderStatus.Preparing:
-//       //   return Container(
-//       //     height: 50,
-//       //     width: 50,
-//       //     child: RiveAnimation.asset(
-//       //       "assets/animation/cooking.riv",
-//       //       fit: BoxFit.cover,
-//       //     ),
-//       //   );
-//       case DeliveryOrderStatus.onTheWayToDropoff:
-//         return Container(
-//           height: 50,
-//           width: 50,
-//           child: RiveAnimation.asset(
-//             "assets/animation/scooterWashingMachine.riv",
-//             fit: BoxFit.cover,
-//           ),
-//         );
-//       case DeliveryOrderStatus.packageReady:
-//         return Container(
-//           // padding: const EdgeInsets.only(right: 10.0),
-//           child: Icon(
-//             Icons.check_circle,
-//             size: 40,
-//             color: primaryBlueColor,
-//           ),
-//         );
+  // getting icons widgets reperesent the current status
 
-//       case DeliveryOrderStatus.delivered:
-//         return Container(
-//           padding: const EdgeInsets.all(5),
-//           decoration: BoxDecoration(
-//               color: secondaryLightBlueColor, shape: BoxShape.circle),
-//           child: Icon(
-//             Icons.check,
-//             size: 25,
-//             color: primaryBlueColor,
-//           ),
-//         );
-//       default:
-//         return Container(
-//           child: Text('UNKNOWN'),
-//         );
-//     }
-//   }
-// }
+  Widget getOrderStatusWidget() {
+    switch (status) {
+      case DeliveryOrderStatus.CancelledByDeliverer:
+      case DeliveryOrderStatus.CancelledByServiceProvider:
+      case DeliveryOrderStatus.CancelledByCustomer:
+        return Container(
+          padding: const EdgeInsets.all(5),
+          decoration:
+              BoxDecoration(color: Color(0xFFF9D8D6), shape: BoxShape.circle),
+          child: Icon(
+            Icons.close,
+            size: 25,
+            color: Colors.red,
+          ),
+        );
+
+      case DeliveryOrderStatus.OrderReceived:
+        return Container(
+          // padding: const EdgeInsets.only(right: 10.0),
+          child: Icon(
+            Icons.move_to_inbox_rounded,
+            size: 35,
+            color: primaryBlueColor,
+          ),
+        );
+      case DeliveryOrderStatus.PackageReady:
+        return Container(
+          child: Icon(
+            Icons.shopping_basket_rounded,
+            size: 35,
+            color: primaryBlueColor,
+          ),
+        );
+      case DeliveryOrderStatus.AtPickup:
+        return Container(
+          height: 50,
+          width: 50,
+          child: Icon(
+            Icons.store,
+            size: 35,
+            color: primaryBlueColor,
+          ),
+        );
+      case DeliveryOrderStatus.OnTheWayToDropoff:
+        return Container(
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/scooterWashingMachine.riv",
+            fit: BoxFit.cover,
+          ),
+        );
+      case DeliveryOrderStatus.AtDropoff:
+        return Container(
+          // padding: const EdgeInsets.only(right: 10.0),
+          child: Icon(
+            Icons.check_circle,
+            size: 35,
+            color: primaryBlueColor,
+          ),
+        );
+
+      case DeliveryOrderStatus.Delivered:
+        return Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
+          child: Icon(
+            Icons.check,
+            size: 25,
+            color: primaryBlueColor,
+          ),
+        );
+    }
+  }
+}

@@ -681,6 +681,17 @@
             }
         },
         "helpers": {
+            "DeliveryOrderHelper" : {
+                "status" : {
+                    "ready" : "Paquete listo",
+                    "atPickUp" : "En la recogida",
+                    "otwDropOff" : "En el camino de caída",
+                    "delivered" :"Entregada",
+                    "received" : "Recibió" ,
+                    "canceled" :"Cancelada",
+                    "atDropOff" : "En la caídaa"
+                }
+            },
             "StripeHelper": {
                 "addCard": "Agregar tarjeta",
                 "powered": "Energizado por",
@@ -1203,6 +1214,12 @@
             }
         },
         "pages": {
+            "DvOpTabsView": {
+                "orders": "Pedidos",
+                "drivers": "Conductoras",
+                "deliveryCost": "Costo",
+                "profile": "Profile"
+            },
             "AdminDashboardView": {
                 "dashboard": "Tablero",
                 "shippingPrice": "Precio de envío base",
@@ -2035,7 +2052,7 @@
                     }
                 },
                 "incomingOrders": "Órdenes entrantes",
-                "pastButton": "ver órdenes pasadas",
+                "pastButton": "ver pasadas",
                 "currentOrders": "Órdenes actuales",
                 "pastOrders": "Órdenes pasadas",
                 "offlineTitle": "Estas desconectado",

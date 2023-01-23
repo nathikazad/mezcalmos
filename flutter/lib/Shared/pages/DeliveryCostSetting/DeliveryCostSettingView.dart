@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpEditInfoView']['ROpEditInfoView'];
@@ -18,10 +20,9 @@ class DeliveryCostSettingView extends StatefulWidget {
     Key? key,
     this.serviceProviderId,
     this.serviceProviderType,
-    this.showAppBar = true,
   }) : super(key: key);
   final int? serviceProviderId;
-  final bool showAppBar;
+
   final ServiceProviderType? serviceProviderType;
   @override
   State<DeliveryCostSettingView> createState() =>
@@ -62,10 +63,12 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.showAppBar
-          ? mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "Delivery Cost")
-          : null,
+      appBar: mezcalmosAppBar(
+          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: asTab ? null : MezRouter.back,
+          title: "Delivery Costs"),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
       bottomSheet: asTab
           ? null
           : MezButton(

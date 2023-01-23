@@ -142,12 +142,6 @@ class ForegroundNotificationsController extends GetxController {
   }
 
   bool hasNewMessageNotification(int chatId) {
-    mezDbgPrint("🥸 chatId ==========>>>$chatId");
-    notifications().forEach((Notification n) {
-      mezDbgPrint(n.chatId);
-    });
-    mezDbgPrint(
-        "Final value ===>${notifications().where((Notification notification) => notification.notificationType == NotificationType.NewMessage && notification.chatId == chatId).toList().isNotEmpty}");
     return notifications()
         .where((Notification notification) =>
             notification.notificationType == NotificationType.NewMessage &&

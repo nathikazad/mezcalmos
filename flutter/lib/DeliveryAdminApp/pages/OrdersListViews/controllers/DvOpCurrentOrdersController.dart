@@ -14,9 +14,8 @@ class DvOpCurrentOrdersController {
   HasuraDb hasuraDb = Get.find<HasuraDb>();
 
   // vars
-  RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
-  RxBool initalized = RxBool(false);
+  Rxn<List<MinimalOrder>> currentOrders = Rxn();
+
   late int companyId;
   // Rxn<Restaurant> restaurant = Rxn();
 
@@ -25,25 +24,23 @@ class DvOpCurrentOrdersController {
   String? subscriptionId;
 
 // getters
+  bool get hasData => currentOrders.value != null;
 
   Future<void> init() async {
     companyId = opAuthController.companyId!;
     mezDbgPrint("INIT ORDERS 👋👋👋👋👋👋 CopmpanyId id $companyId");
-    try {
-      await _initOrders();
-    } on Exception catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
-
-    initalized.value = true;
-  }
-
-  Future<void> _initOrders() async {
+    mezDbgPrint("hasData before await =======>$hasData");
     currentOrders.value =
         await get_dvcompany_current_orders(companyId: companyId) ?? [];
-    pastOrders.value =
-        await get_dvcompany_past_orders(companyId: companyId) ?? [];
+
+    await _initOrdersStream();
+    mezDbgPrint("hasData after await =======>$hasData");
+    mezDbgPrint("hasData after await =======>${currentOrders.value?.length}");
+  }
+
+  Future<void> _fetchOrders() async {}
+
+  Future<void> _initOrdersStream() async {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_dvcompany_orders(companyId: companyId)

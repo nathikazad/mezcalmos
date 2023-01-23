@@ -657,6 +657,17 @@
             }
         },
         "helpers": {
+            "DeliveryOrderHelper": {
+                "status": {
+                    "ready": "Package ready",
+                    "atPickUp": "At pickup",
+                    "otwDropOff": "On the way dropoff",
+                    "delivered": "Delivered",
+                    "received": "Received",
+                    "canceled": "Cancelled",
+                    "atDropOff": "At dropoff"
+                }
+            },
             "StripeHelper": {
                 "addCard": "Add card",
                 "powered": "Powered by",
@@ -769,22 +780,21 @@
                     "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
             },
-            "UserWelcomeView" : {
-                "title" : "Happy to see you made it 👋 ",
-                "subtitle" : "Complete your profile by setting your picture and name !",
-                "nameTitle" : "What should we call you ?",
-                "save" :  "Save my information",
-                "hint" : "Type your name",
-                "imageHint" : "Your face, your profile"
-
+            "UserWelcomeView": {
+                "title": "Happy to see you made it 👋 ",
+                "subtitle": "Complete your profile by setting your picture and name !",
+                "nameTitle": "What should we call you ?",
+                "save": "Save my information",
+                "hint": "Type your name",
+                "imageHint": "Your face, your profile"
             },
             "UserProfileView": {
                 "profile": "Profile",
-                "name" : "Name",
-                "save" :  "Save my information",
-                "edit" : "Edit my information",
-                "hint" : "Type your name",
-                "imageHint" : "Your face, your profile",
+                "name": "Name",
+                "save": "Save my information",
+                "edit": "Edit my information",
+                "hint": "Type your name",
+                "imageHint": "Your face, your profile",
                 "mustSetUserNameError": "Please enter your first name.",
                 "mustSetUserImgError": "Please upload an image.",
                 "nameMustBeLettersOnly": "Your first name must only have letters.",
@@ -1163,6 +1173,12 @@
             }
         },
         "pages": {
+            "DvOpTabsView": {
+                "orders": "Orders",
+                "drivers": "Drivers",
+                "deliveryCost": "Costs",
+                "profile": "Profile"
+            },
             "AdminDashboardView": {
                 "dashboard": "Dashboard",
                 "shippingPrice": "Base shippin price",

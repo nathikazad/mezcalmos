@@ -1,7 +1,7 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/HomeScreen.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -17,7 +17,7 @@ String getDvCompanyOrderRoute(int orderId) {
 
 class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
-        GetPage(name: kDeliveryOpHomeScreen, page: () => HomeScreen()),
+        GetPage(name: kDeliveryOpHomeScreen, page: () => DvOpTabsView()),
         GetPage(
           name: kHomeRoute,
           page: () => DeliveryAdminWrapper(),

@@ -52,16 +52,14 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: widget.canGoBack == false
-            ? null
-            : mezcalmosAppBar(
-                AppBarLeftButtonType.Menu,
-                showNotifications: true,
-              ),
+        appBar: mezcalmosAppBar(
+          AppBarLeftButtonType.Menu,
+          showNotifications: true,
+        ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         body: Obx(() {
-          if (viewController.initalized.isFalse) {
+          if (!viewController.hasData) {
             return MezLogoAnimation(
               centered: true,
             );
@@ -110,7 +108,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
                     height: 32,
-                    //  width: 35.w,
+                    width: 35.w,
                     borderRadius: 35,
                     label: '${_i18n()["pastButton"]}'.inCaps,
                     onClick: () async {
@@ -121,15 +119,15 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
               ],
             ),
           ),
-          viewController.currentOrders.isNotEmpty
+          viewController.currentOrders.value!.isNotEmpty
               ? Column(
-                  children: List.generate(viewController.currentOrders.length,
-                      (int index) {
+                  children: List.generate(
+                      viewController.currentOrders.value!.length, (int index) {
                     return MinimalOrderCard(
-                      order: viewController.currentOrders[index],
+                      order: viewController.currentOrders.value![index],
                       onTap: () {
                         MezRouter.toNamed(getDvCompanyOrderRoute(
-                            viewController.currentOrders[index].id));
+                            viewController.currentOrders.value![index].id));
                       },
                     );
                   }),

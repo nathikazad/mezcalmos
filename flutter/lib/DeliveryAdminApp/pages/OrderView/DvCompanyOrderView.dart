@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -59,6 +60,28 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Card(
+                  child: Container(
+                    width: double.infinity,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        viewController.order.value!.getOrderStatusWidget(),
+                        Expanded(
+                          child: Text(
+                            viewController.order.value!.orderStatusTitle(),
+                            style: Theme.of(context).textTheme.headline3,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 _estTimes(),
                 _driverCard(),
                 _serviceCard(),
@@ -132,7 +155,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
             "Estimated Times",
             style: Get.textTheme.bodyText1,
@@ -140,20 +163,22 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
         ),
         if (viewController.order.value!.estimatedPackageReadyTime != null)
           MezCard(
+              contentPadding: const EdgeInsets.all(8),
               firstAvatarBgColor: secondaryLightBlueColor,
               secondAvatarBgColor: primaryBlueColor,
               firstAvatarIcon: Icons.watch_later,
               firstAvatarIconColor: primaryBlueColor,
-              secondAvatarIcon: Icons.inventory,
+              secondAvatarIcon: Icons.check_circle,
               secondAvatarIconColor: Colors.white,
               content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Package ready :",
                     style: Get.textTheme.bodyText1,
                   ),
                   SizedBox(
-                    height: 3,
+                    height: 2,
                   ),
                   Text(viewController.order.value!.estimatedPackageReadyTime!
                       .getEstimatedTime()),
@@ -161,14 +186,51 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
               )),
         if (viewController.order.value!.estimatedArrivalAtPickupTime != null)
           MezCard(
-              content: Text(viewController
-                  .order.value!.estimatedArrivalAtPickupTime
-                  .toString())),
+              contentPadding: const EdgeInsets.all(8),
+              firstAvatarBgColor: secondaryLightBlueColor,
+              secondAvatarBgColor: primaryBlueColor,
+              firstAvatarIcon: Icons.watch_later,
+              firstAvatarIconColor: primaryBlueColor,
+              secondAvatarIcon: Icons.delivery_dining,
+              secondAvatarIconColor: Colors.white,
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Arrival at pickup :",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(viewController.order.value!.estimatedArrivalAtPickupTime!
+                      .getEstimatedTime()),
+                ],
+              )),
         if (viewController.order.value!.estimatedArrivalAtDropoffTime != null)
           MezCard(
-              content: Text(viewController
-                  .order.value!.estimatedArrivalAtDropoffTime
-                  .toString())),
+              contentPadding: const EdgeInsets.all(8),
+              firstAvatarBgColor: secondaryLightBlueColor,
+              secondAvatarBgColor: primaryBlueColor,
+              firstAvatarIcon: Icons.watch_later,
+              firstAvatarIconColor: primaryBlueColor,
+              secondAvatarIcon: Icons.delivery_dining,
+              secondAvatarIconColor: Colors.white,
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Arrival at dropoff :",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(viewController
+                      .order.value!.estimatedArrivalAtDropoffTime!
+                      .getEstimatedTime()),
+                ],
+              )),
       ],
     );
   }

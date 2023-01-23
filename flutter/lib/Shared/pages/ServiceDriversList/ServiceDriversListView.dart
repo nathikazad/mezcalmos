@@ -6,11 +6,13 @@ import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/components/ListDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/controllers/DriversViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -21,11 +23,9 @@ class ServiceDriversListView extends StatefulWidget {
     super.key,
     this.serviceProviderType,
     this.serviceProviderId,
-    this.showAppBar,
   });
   final int? serviceProviderId;
   final ServiceProviderType? serviceProviderType;
-  final bool? showAppBar;
 
   @override
   State<ServiceDriversListView> createState() => _ServiceDriversListViewState();
@@ -50,19 +50,22 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
         int.tryParse(Get.parameters["serviceProviderId"]!);
-    showAppBar =
-        widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;
+
     serviceProviderType = widget.serviceProviderType ??
         Get.arguments?["serviceProviderType"] as ServiceProviderType;
   }
 
+  bool get asTab =>
+      widget.serviceProviderId != null && widget.serviceProviderType != null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: (showAppBar)
-          ? mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "Drivers")
-          : null,
+      appBar: mezcalmosAppBar(
+          asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
+          onClick: asTab ? null : MezRouter.back,
+          title: "Drivers"),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
         child: Container(
