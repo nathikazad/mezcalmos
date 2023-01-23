@@ -219,12 +219,13 @@ type chat {
     """filter the rows returned"""
     where: chat_participant_bool_exp
   ): chat_participant_aggregate!
+  chat_type: String!
   creation_time: timestamptz!
   id: Int!
   messages(
     """JSON select path"""
     path: String
-  ): jsonb!
+  ): jsonb
 }
 
 """
@@ -275,6 +276,7 @@ input chat_bool_exp {
   chat_info: jsonb_comparison_exp
   chat_participants: chat_participant_bool_exp
   chat_participants_aggregate: chat_participant_aggregate_bool_exp
+  chat_type: String_comparison_exp
   creation_time: timestamptz_comparison_exp
   id: Int_comparison_exp
   messages: jsonb_comparison_exp
@@ -332,6 +334,7 @@ input chat_insert_input {
   agora_info: jsonb
   chat_info: jsonb
   chat_participants: chat_participant_arr_rel_insert_input
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -339,12 +342,14 @@ input chat_insert_input {
 
 """aggregate max on columns"""
 type chat_max_fields {
+  chat_type: String
   creation_time: timestamptz
   id: Int
 }
 
 """aggregate min on columns"""
 type chat_min_fields {
+  chat_type: String
   creation_time: timestamptz
   id: Int
 }
@@ -384,6 +389,7 @@ input chat_order_by {
   agora_info: order_by
   chat_info: order_by
   chat_participants_aggregate: chat_participant_aggregate_order_by
+  chat_type: order_by
   creation_time: order_by
   id: order_by
   messages: order_by
@@ -814,6 +820,9 @@ enum chat_select_column {
   chat_info
 
   """column name"""
+  chat_type
+
+  """column name"""
   creation_time
 
   """column name"""
@@ -829,6 +838,7 @@ input type for updating data in table "chat"
 input chat_set_input {
   agora_info: jsonb
   chat_info: jsonb
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -864,6 +874,7 @@ input chat_stream_cursor_input {
 input chat_stream_cursor_value_input {
   agora_info: jsonb
   chat_info: jsonb
+  chat_type: String
   creation_time: timestamptz
   id: Int
   messages: jsonb
@@ -883,6 +894,9 @@ enum chat_update_column {
 
   """column name"""
   chat_info
+
+  """column name"""
+  chat_type
 
   """column name"""
   creation_time
@@ -5862,6 +5876,249 @@ input mez_admin_bool_exp {
 }
 
 """
+columns and relationships of "mez_admin_chat"
+"""
+type mez_admin_chat {
+  app_type: String!
+
+  """An object relationship"""
+  chat: chat
+  chat_id: Int!
+
+  """An object relationship"""
+  user: user
+  user_id: Int!
+}
+
+"""
+aggregated selection of "mez_admin_chat"
+"""
+type mez_admin_chat_aggregate {
+  aggregate: mez_admin_chat_aggregate_fields
+  nodes: [mez_admin_chat!]!
+}
+
+"""
+aggregate fields of "mez_admin_chat"
+"""
+type mez_admin_chat_aggregate_fields {
+  avg: mez_admin_chat_avg_fields
+  count(columns: [mez_admin_chat_select_column!], distinct: Boolean): Int!
+  max: mez_admin_chat_max_fields
+  min: mez_admin_chat_min_fields
+  stddev: mez_admin_chat_stddev_fields
+  stddev_pop: mez_admin_chat_stddev_pop_fields
+  stddev_samp: mez_admin_chat_stddev_samp_fields
+  sum: mez_admin_chat_sum_fields
+  var_pop: mez_admin_chat_var_pop_fields
+  var_samp: mez_admin_chat_var_samp_fields
+  variance: mez_admin_chat_variance_fields
+}
+
+"""aggregate avg on columns"""
+type mez_admin_chat_avg_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'.
+"""
+input mez_admin_chat_bool_exp {
+  _and: [mez_admin_chat_bool_exp!]
+  _not: mez_admin_chat_bool_exp
+  _or: [mez_admin_chat_bool_exp!]
+  app_type: String_comparison_exp
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mez_admin_chat"
+"""
+enum mez_admin_chat_constraint {
+  """
+  unique or primary key constraint on columns "chat_id"
+  """
+  mez_admin_chat_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "mez_admin_chat"
+"""
+input mez_admin_chat_inc_input {
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "mez_admin_chat"
+"""
+input mez_admin_chat_insert_input {
+  app_type: String
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type mez_admin_chat_max_fields {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate min on columns"""
+type mez_admin_chat_min_fields {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+response of any mutation on the table "mez_admin_chat"
+"""
+type mez_admin_chat_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [mez_admin_chat!]!
+}
+
+"""
+on_conflict condition type for table "mez_admin_chat"
+"""
+input mez_admin_chat_on_conflict {
+  constraint: mez_admin_chat_constraint!
+  update_columns: [mez_admin_chat_update_column!]! = []
+  where: mez_admin_chat_bool_exp
+}
+
+"""Ordering options when selecting data from "mez_admin_chat"."""
+input mez_admin_chat_order_by {
+  app_type: order_by
+  chat: chat_order_by
+  chat_id: order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: mez_admin_chat"""
+input mez_admin_chat_pk_columns_input {
+  chat_id: Int!
+}
+
+"""
+select columns of table "mez_admin_chat"
+"""
+enum mez_admin_chat_select_column {
+  """column name"""
+  app_type
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "mez_admin_chat"
+"""
+input mez_admin_chat_set_input {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type mez_admin_chat_stddev_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type mez_admin_chat_stddev_pop_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type mez_admin_chat_stddev_samp_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""
+Streaming cursor of the table "mez_admin_chat"
+"""
+input mez_admin_chat_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: mez_admin_chat_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input mez_admin_chat_stream_cursor_value_input {
+  app_type: String
+  chat_id: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type mez_admin_chat_sum_fields {
+  chat_id: Int
+  user_id: Int
+}
+
+"""
+update columns of table "mez_admin_chat"
+"""
+enum mez_admin_chat_update_column {
+  """column name"""
+  app_type
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  user_id
+}
+
+input mez_admin_chat_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: mez_admin_chat_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: mez_admin_chat_set_input
+  where: mez_admin_chat_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type mez_admin_chat_var_pop_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type mez_admin_chat_var_samp_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""aggregate variance on columns"""
+type mez_admin_chat_variance_fields {
+  chat_id: Float
+  user_id: Float
+}
+
+"""
 unique or primary key constraints on table "mez_admin"
 """
 enum mez_admin_constraint {
@@ -6021,6 +6278,187 @@ type mez_admin_var_samp_fields {
 """aggregate variance on columns"""
 type mez_admin_variance_fields {
   user_id: Float
+}
+
+"""
+columns and relationships of "mez_json"
+"""
+type mez_json {
+  json_object(
+    """JSON select path"""
+    path: String
+  ): jsonb!
+}
+
+"""
+aggregated selection of "mez_json"
+"""
+type mez_json_aggregate {
+  aggregate: mez_json_aggregate_fields
+  nodes: [mez_json!]!
+}
+
+"""
+aggregate fields of "mez_json"
+"""
+type mez_json_aggregate_fields {
+  count(columns: [mez_json_select_column!], distinct: Boolean): Int!
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input mez_json_append_input {
+  json_object: jsonb
+}
+
+"""
+Boolean expression to filter rows from the table "mez_json". All fields are combined with a logical 'AND'.
+"""
+input mez_json_bool_exp {
+  _and: [mez_json_bool_exp!]
+  _not: mez_json_bool_exp
+  _or: [mez_json_bool_exp!]
+  json_object: jsonb_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "mez_json"
+"""
+enum mez_json_constraint {
+  """
+  unique or primary key constraint on columns "json_object"
+  """
+  mez_json_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input mez_json_delete_at_path_input {
+  json_object: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input mez_json_delete_elem_input {
+  json_object: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input mez_json_delete_key_input {
+  json_object: String
+}
+
+"""
+input type for inserting data into table "mez_json"
+"""
+input mez_json_insert_input {
+  json_object: jsonb
+}
+
+"""
+response of any mutation on the table "mez_json"
+"""
+type mez_json_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [mez_json!]!
+}
+
+"""
+on_conflict condition type for table "mez_json"
+"""
+input mez_json_on_conflict {
+  constraint: mez_json_constraint!
+  update_columns: [mez_json_update_column!]! = []
+  where: mez_json_bool_exp
+}
+
+"""Ordering options when selecting data from "mez_json"."""
+input mez_json_order_by {
+  json_object: order_by
+}
+
+"""primary key columns input for table: mez_json"""
+input mez_json_pk_columns_input {
+  json_object: jsonb!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input mez_json_prepend_input {
+  json_object: jsonb
+}
+
+"""
+select columns of table "mez_json"
+"""
+enum mez_json_select_column {
+  """column name"""
+  json_object
+}
+
+"""
+input type for updating data in table "mez_json"
+"""
+input mez_json_set_input {
+  json_object: jsonb
+}
+
+"""
+Streaming cursor of the table "mez_json"
+"""
+input mez_json_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: mez_json_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input mez_json_stream_cursor_value_input {
+  json_object: jsonb
+}
+
+"""
+update columns of table "mez_json"
+"""
+enum mez_json_update_column {
+  """column name"""
+  json_object
+}
+
+input mez_json_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: mez_json_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: mez_json_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: mez_json_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: mez_json_delete_key_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: mez_json_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: mez_json_set_input
+  where: mez_json_bool_exp!
 }
 
 scalar money
@@ -6208,6 +6646,32 @@ type mutation_root {
   delete single row from the table: "mez_admin"
   """
   delete_mez_admin_by_pk(user_id: Int!): mez_admin
+
+  """
+  delete data from the table: "mez_admin_chat"
+  """
+  delete_mez_admin_chat(
+    """filter the rows which have to be deleted"""
+    where: mez_admin_chat_bool_exp!
+  ): mez_admin_chat_mutation_response
+
+  """
+  delete single row from the table: "mez_admin_chat"
+  """
+  delete_mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
+
+  """
+  delete data from the table: "mez_json"
+  """
+  delete_mez_json(
+    """filter the rows which have to be deleted"""
+    where: mez_json_bool_exp!
+  ): mez_json_mutation_response
+
+  """
+  delete single row from the table: "mez_json"
+  """
+  delete_mez_json_by_pk(json_object: jsonb!): mez_json
 
   """
   delete data from the table: "notification_info"
@@ -6747,6 +7211,28 @@ type mutation_root {
   ): mez_admin_mutation_response
 
   """
+  insert data into the table: "mez_admin_chat"
+  """
+  insert_mez_admin_chat(
+    """the rows to be inserted"""
+    objects: [mez_admin_chat_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: mez_admin_chat_on_conflict
+  ): mez_admin_chat_mutation_response
+
+  """
+  insert a single row into the table: "mez_admin_chat"
+  """
+  insert_mez_admin_chat_one(
+    """the row to be inserted"""
+    object: mez_admin_chat_insert_input!
+
+    """upsert condition"""
+    on_conflict: mez_admin_chat_on_conflict
+  ): mez_admin_chat
+
+  """
   insert a single row into the table: "mez_admin"
   """
   insert_mez_admin_one(
@@ -6756,6 +7242,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: mez_admin_on_conflict
   ): mez_admin
+
+  """
+  insert data into the table: "mez_json"
+  """
+  insert_mez_json(
+    """the rows to be inserted"""
+    objects: [mez_json_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: mez_json_on_conflict
+  ): mez_json_mutation_response
+
+  """
+  insert a single row into the table: "mez_json"
+  """
+  insert_mez_json_one(
+    """the row to be inserted"""
+    object: mez_json_insert_input!
+
+    """upsert condition"""
+    on_conflict: mez_json_on_conflict
+  ): mez_json
 
   """
   insert data into the table: "notification_info"
@@ -7712,12 +8220,118 @@ type mutation_root {
   ): mez_admin
 
   """
+  update data of the table: "mez_admin_chat"
+  """
+  update_mez_admin_chat(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_chat_set_input
+
+    """filter the rows which have to be updated"""
+    where: mez_admin_chat_bool_exp!
+  ): mez_admin_chat_mutation_response
+
+  """
+  update single row of the table: "mez_admin_chat"
+  """
+  update_mez_admin_chat_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: mez_admin_chat_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_admin_chat_set_input
+    pk_columns: mez_admin_chat_pk_columns_input!
+  ): mez_admin_chat
+
+  """
+  update multiples rows of table: "mez_admin_chat"
+  """
+  update_mez_admin_chat_many(
+    """updates to execute, in order"""
+    updates: [mez_admin_chat_updates!]!
+  ): [mez_admin_chat_mutation_response]
+
+  """
   update multiples rows of table: "mez_admin"
   """
   update_mez_admin_many(
     """updates to execute, in order"""
     updates: [mez_admin_updates!]!
   ): [mez_admin_mutation_response]
+
+  """
+  update data of the table: "mez_json"
+  """
+  update_mez_json(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: mez_json_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: mez_json_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: mez_json_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: mez_json_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: mez_json_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_json_set_input
+
+    """filter the rows which have to be updated"""
+    where: mez_json_bool_exp!
+  ): mez_json_mutation_response
+
+  """
+  update single row of the table: "mez_json"
+  """
+  update_mez_json_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: mez_json_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: mez_json_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: mez_json_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: mez_json_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: mez_json_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: mez_json_set_input
+    pk_columns: mez_json_pk_columns_input!
+  ): mez_json
+
+  """
+  update multiples rows of table: "mez_json"
+  """
+  update_mez_json_many(
+    """updates to execute, in order"""
+    updates: [mez_json_updates!]!
+  ): [mez_json_mutation_response]
 
   """
   update data of the table: "notification_info"
@@ -9411,6 +10025,92 @@ type query_root {
   mez_admin_by_pk(user_id: Int!): mez_admin
 
   """
+  fetch data from the table: "mez_admin_chat"
+  """
+  mez_admin_chat(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin_chat"
+  """
+  mez_admin_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): mez_admin_chat_aggregate!
+
+  """fetch data from the table: "mez_admin_chat" using primary key columns"""
+  mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
+
+  """
+  fetch data from the table: "mez_json"
+  """
+  mez_json(
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): [mez_json!]!
+
+  """
+  fetch aggregated fields from the table: "mez_json"
+  """
+  mez_json_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
+
+  """fetch data from the table: "mez_json" using primary key columns"""
+  mez_json_by_pk(json_object: jsonb!): mez_json
+
+  """
   fetch data from the table: "notification_info"
   """
   notification_info(
@@ -9987,6 +10687,106 @@ type query_root {
   ): restaurant_order_public_aggregate!
 
   """
+  execute function "restaurant.orders_by_date" which returns "mez_json"
+  """
+  restaurant_orders_by_date(
+    """
+    input parameters for function "restaurant_orders_by_date"
+    """
+    args: restaurant_orders_by_date_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json
+
+  """
+  execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json"
+  """
+  restaurant_orders_by_date_aggregate(
+    """
+    input parameters for function "restaurant_orders_by_date_aggregate"
+    """
+    args: restaurant_orders_by_date_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
+
+  """
+  execute function "restaurant.orders_by_month" which returns "mez_json"
+  """
+  restaurant_orders_by_month(
+    """
+    input parameters for function "restaurant_orders_by_month"
+    """
+    args: restaurant_orders_by_month_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json
+
+  """
+  execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json"
+  """
+  restaurant_orders_by_month_aggregate(
+    """
+    input parameters for function "restaurant_orders_by_month_aggregate"
+    """
+    args: restaurant_orders_by_month_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
+
+  """
   fetch data from the table: "restaurant.restaurant"
   """
   restaurant_restaurant(
@@ -10353,6 +11153,7 @@ type restaurant_cart {
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  discount_value: money!
 
   """An array relationship"""
   items(
@@ -10423,6 +11224,7 @@ type restaurant_cart_aggregate_fields {
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -10436,6 +11238,7 @@ input restaurant_cart_bool_exp {
   cost: money_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   items: restaurant_cart_item_bool_exp
   items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -10457,6 +11260,7 @@ input type for incrementing numeric columns in table "restaurant.cart"
 """
 input restaurant_cart_inc_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -10466,6 +11270,7 @@ input type for inserting data into table "restaurant.cart"
 input restaurant_cart_insert_input {
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  discount_value: money
   items: restaurant_cart_item_arr_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -10964,12 +11769,14 @@ input restaurant_cart_item_variance_order_by {
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -11008,6 +11815,7 @@ input restaurant_cart_order_by {
   cost: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  discount_value: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -11026,6 +11834,9 @@ enum restaurant_cart_select_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   restaurant_id
 }
 
@@ -11034,24 +11845,28 @@ input type for updating data in table "restaurant.cart"
 """
 input restaurant_cart_set_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -11069,12 +11884,14 @@ input restaurant_cart_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input restaurant_cart_stream_cursor_value_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -11084,6 +11901,9 @@ update columns of table "restaurant.cart"
 enum restaurant_cart_update_column {
   """column name"""
   customer_id
+
+  """column name"""
+  discount_value
 
   """column name"""
   restaurant_id
@@ -11101,18 +11921,21 @@ input restaurant_cart_updates {
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -14942,8 +15765,8 @@ type restaurant_order {
   cancellation_time: timestamptz
 
   """An object relationship"""
-  chat: chat!
-  chat_id: Int!
+  chat: chat
+  chat_id: Int
 
   """An object relationship"""
   customer: customer_customer!
@@ -14954,6 +15777,7 @@ type restaurant_order {
   delivery: delivery_order
   delivery_cost: money!
   delivery_id: Int
+  discount_value: money!
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int!
@@ -15124,6 +15948,7 @@ type restaurant_order_avg_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -15140,6 +15965,7 @@ input restaurant_order_avg_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -15165,6 +15991,7 @@ input restaurant_order_bool_exp {
   delivery: delivery_order_bool_exp
   delivery_cost: money_comparison_exp
   delivery_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
@@ -15259,6 +16086,7 @@ input restaurant_order_inc_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -15281,6 +16109,7 @@ input restaurant_order_insert_input {
   delivery: delivery_order_obj_rel_insert_input
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -15875,6 +16704,7 @@ type restaurant_order_max_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -15907,6 +16737,7 @@ input restaurant_order_max_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -15937,6 +16768,7 @@ type restaurant_order_min_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -15969,6 +16801,7 @@ input restaurant_order_min_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -16032,6 +16865,7 @@ input restaurant_order_order_by {
   delivery: delivery_order_order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -16385,6 +17219,9 @@ enum restaurant_order_select_column {
   delivery_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   estimated_food_ready_time
 
   """column name"""
@@ -16447,6 +17284,7 @@ input restaurant_order_set_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -16483,6 +17321,7 @@ type restaurant_order_stddev_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16499,6 +17338,7 @@ input restaurant_order_stddev_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16513,6 +17353,7 @@ type restaurant_order_stddev_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16529,6 +17370,7 @@ input restaurant_order_stddev_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16543,6 +17385,7 @@ type restaurant_order_stddev_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16559,6 +17402,7 @@ input restaurant_order_stddev_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16587,6 +17431,7 @@ input restaurant_order_stream_cursor_value_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -16623,6 +17468,7 @@ type restaurant_order_sum_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -16639,6 +17485,7 @@ input restaurant_order_sum_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16671,6 +17518,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   delivery_id
+
+  """column name"""
+  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -16761,6 +17611,7 @@ type restaurant_order_var_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16777,6 +17628,7 @@ input restaurant_order_var_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16791,6 +17643,7 @@ type restaurant_order_var_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16807,6 +17660,7 @@ input restaurant_order_var_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -16821,6 +17675,7 @@ type restaurant_order_variance_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -16837,12 +17692,21 @@ input restaurant_order_variance_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
   review_id: order_by
   stripe_fees: order_by
   tax: order_by
+}
+
+input restaurant_orders_by_date_args {
+  res_id: Int
+}
+
+input restaurant_orders_by_month_args {
+  res_id: Int
 }
 
 """
@@ -16934,6 +17798,42 @@ type restaurant_restaurant {
   firebase_id: String
   id: Int!
   image: String!
+
+  """An array relationship"""
+  items(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]!
+
+  """An aggregate relationship"""
+  items_aggregate(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): restaurant_item_aggregate!
   language_id: String!
   location_gps: geography!
   location_text: String!
@@ -17150,6 +18050,8 @@ input restaurant_restaurant_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  items: restaurant_item_bool_exp
+  items_aggregate: restaurant_item_aggregate_bool_exp
   language_id: String_comparison_exp
   location_gps: geography_comparison_exp
   location_text: String_comparison_exp
@@ -17254,6 +18156,7 @@ input restaurant_restaurant_insert_input {
   firebase_id: String
   id: Int
   image: String
+  items: restaurant_item_arr_rel_insert_input
   language_id: String
   location_gps: geography
   location_text: String
@@ -17347,6 +18250,7 @@ input restaurant_restaurant_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
+  items_aggregate: restaurant_item_aggregate_order_by
   language_id: order_by
   location_gps: order_by
   location_text: order_by
@@ -18118,6 +19022,7 @@ type service_provider_post {
     """JSON select path"""
     path: String
   ): jsonb
+  link: String
   message: String!
   posted_on: timestamptz!
 
@@ -18175,6 +19080,7 @@ input service_provider_post_bool_exp {
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
+  link: String_comparison_exp
   message: String_comparison_exp
   posted_on: timestamptz_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -18233,6 +19139,7 @@ input service_provider_post_insert_input {
   id: Int
   image: String
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -18244,6 +19151,7 @@ input service_provider_post_insert_input {
 type service_provider_post_max_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -18254,6 +19162,7 @@ type service_provider_post_max_fields {
 type service_provider_post_min_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -18286,6 +19195,7 @@ input service_provider_post_order_by {
   id: order_by
   image: order_by
   likes: order_by
+  link: order_by
   message: order_by
   posted_on: order_by
   restaurant: restaurant_restaurant_order_by
@@ -18321,6 +19231,9 @@ enum service_provider_post_select_column {
   likes
 
   """column name"""
+  link
+
+  """column name"""
   message
 
   """column name"""
@@ -18341,6 +19254,7 @@ input service_provider_post_set_input {
   id: Int
   image: String
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -18382,6 +19296,7 @@ input service_provider_post_stream_cursor_value_input {
   id: Int
   image: String
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -18409,6 +19324,9 @@ enum service_provider_post_update_column {
 
   """column name"""
   likes
+
+  """column name"""
+  link
 
   """column name"""
   message
@@ -19883,6 +20801,63 @@ type subscription_root {
   mez_admin_by_pk(user_id: Int!): mez_admin
 
   """
+  fetch data from the table: "mez_admin_chat"
+  """
+  mez_admin_chat(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
+
+  """
+  fetch aggregated fields from the table: "mez_admin_chat"
+  """
+  mez_admin_chat_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_admin_chat_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_admin_chat_order_by!]
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): mez_admin_chat_aggregate!
+
+  """fetch data from the table: "mez_admin_chat" using primary key columns"""
+  mez_admin_chat_by_pk(chat_id: Int!): mez_admin_chat
+
+  """
+  fetch data from the table in a streaming manner: "mez_admin_chat"
+  """
+  mez_admin_chat_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [mez_admin_chat_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: mez_admin_chat_bool_exp
+  ): [mez_admin_chat!]!
+
+  """
   fetch data from the table in a streaming manner: "mez_admin"
   """
   mez_admin_stream(
@@ -19895,6 +20870,63 @@ type subscription_root {
     """filter the rows returned"""
     where: mez_admin_bool_exp
   ): [mez_admin!]!
+
+  """
+  fetch data from the table: "mez_json"
+  """
+  mez_json(
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): [mez_json!]!
+
+  """
+  fetch aggregated fields from the table: "mez_json"
+  """
+  mez_json_aggregate(
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
+
+  """fetch data from the table: "mez_json" using primary key columns"""
+  mez_json_by_pk(json_object: jsonb!): mez_json
+
+  """
+  fetch data from the table in a streaming manner: "mez_json"
+  """
+  mez_json_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [mez_json_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): [mez_json!]!
 
   """
   fetch data from the table: "notification_info"
@@ -20653,6 +21685,106 @@ type subscription_root {
     """filter the rows returned"""
     where: restaurant_order_bool_exp
   ): [restaurant_order!]!
+
+  """
+  execute function "restaurant.orders_by_date" which returns "mez_json"
+  """
+  restaurant_orders_by_date(
+    """
+    input parameters for function "restaurant_orders_by_date"
+    """
+    args: restaurant_orders_by_date_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json
+
+  """
+  execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json"
+  """
+  restaurant_orders_by_date_aggregate(
+    """
+    input parameters for function "restaurant_orders_by_date_aggregate"
+    """
+    args: restaurant_orders_by_date_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
+
+  """
+  execute function "restaurant.orders_by_month" which returns "mez_json"
+  """
+  restaurant_orders_by_month(
+    """
+    input parameters for function "restaurant_orders_by_month"
+    """
+    args: restaurant_orders_by_month_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json
+
+  """
+  execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json"
+  """
+  restaurant_orders_by_month_aggregate(
+    """
+    input parameters for function "restaurant_orders_by_month_aggregate"
+    """
+    args: restaurant_orders_by_month_args!
+
+    """distinct select on columns"""
+    distinct_on: [mez_json_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [mez_json_order_by!]
+
+    """filter the rows returned"""
+    where: mez_json_bool_exp
+  ): mez_json_aggregate!
 
   """
   fetch data from the table: "restaurant.restaurant"
