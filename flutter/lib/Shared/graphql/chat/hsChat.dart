@@ -131,8 +131,8 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
           (QueryResult<Subscription$listen_on_chat_messages> event) {
     mezDbgPrint("Event from Chat::Messages 🚀🚀🚀 $event");
     final List<Message> msgs = [];
-    final List<dynamic> chatMsgs = event.parsedData?.chat_by_pk?.messages;
-    chatMsgs.forEach((_msg) {
+    final List<dynamic>? chatMsgs = event.parsedData?.chat_by_pk?.messages;
+    chatMsgs?.forEach((_msg) {
       final Map<String, dynamic> msg =
           _msg as Map<String, dynamic>; //mapFromJson(_msg as String);
       msgs.add(

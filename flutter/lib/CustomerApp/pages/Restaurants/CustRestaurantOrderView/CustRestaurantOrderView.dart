@@ -31,13 +31,13 @@ import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["ViewRestaurantOrderScreen"];
 
-class ViewRestaurantOrderScreen extends StatefulWidget {
+class CustRestaurantOrderView extends StatefulWidget {
   @override
-  _ViewRestaurantOrderScreenState createState() =>
-      _ViewRestaurantOrderScreenState();
+  _CustRestaurantOrderViewState createState() =>
+      _CustRestaurantOrderViewState();
 }
 
-class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
+class _CustRestaurantOrderViewState extends State<CustRestaurantOrderView> {
   CustRestaurantOrderViewController viewController =
       CustRestaurantOrderViewController();
   @override

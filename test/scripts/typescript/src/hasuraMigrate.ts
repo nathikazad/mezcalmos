@@ -1,4 +1,6 @@
 import * as firebaseAdmin from "firebase-admin";
+import * as functions from "firebase-functions";
+
 import * as fs from 'fs';
 import { getHasura } from "../../../../functions/src/utilities/hasura";
 import { insertRestaurants } from "../../../../functions/src/shared/graphql/restaurant/insertRestaurants";
@@ -17,12 +19,18 @@ const firebase = firebaseAdmin.initializeApp({
   credential: firebaseAdmin.credential.cert(serviceAccount),
 }, "production");
 
+functions.config()
+
+process.chdir('../')
+console.log("Current working directory: ", process.cwd()); 
+
+
 async function saveFile() {
-  let db = (await firebase.database().ref(`/customers/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/orders/past/restaurant`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./../../../../../../data/db-snapshot-customers.json", data);
+  fs.writeFileSync("./data/db-snapshot-restaurant-orders.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -31,7 +39,7 @@ async function writeToDB() {
 //   // await deleteDrivers()
 //   // await deleteOrders()
 //   // return
-  let restaurants = JSON.parse(fs.readFileSync('./../../../../../../data/db-snapshot.json').toString());
+  let restaurants = JSON.parse(fs.readFileSync('./data/db-snapshot.json').toString());
   
   // let drivers = data.taxiDrivers
   // let users = data.users
@@ -99,6 +107,18 @@ async function writeToDB() {
                   freeChoice: option.freeChoice,
                   costPerExtra: option.costPerExtra,
                   choices: (choiceArray.length) ? choiceArray : null
+                }
+                switch (option.optionType) {
+                  case 'chooseOne':
+                    optionObject.minimumChoice = 1;
+                    optionObject.maximumChoice = 1;
+                    break;
+                  case 'chooseMany':
+                    optionObject.minimumChoice = 0;
+                    optionObject.maximumChoice = (option.choices) ? Object.keys(option.choices).length : 0;
+                    break;
+                  default: 
+                    break;
                 }
                 optionArray.push(optionObject);
               }
@@ -244,7 +264,9 @@ async function writeToDB() {
 //   await insertNotification({ objects: notificationsArray })
 }
 async function writeToDBUsers() {
-  let users = JSON.parse(fs.readFileSync('./../../../../../../data/db-snapshot-users.json').toString());
+
+  
+  let users = JSON.parse(fs.readFileSync('./data/db-snapshot-users.json').toString());
 
   let array = []
   for (let userId in users) {
@@ -273,7 +295,7 @@ async function writeToDBUsers() {
 
 async function writeToDBRestoOps() {
   let operators = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-restaurant-operators.json').toString()
+    fs.readFileSync('./data/db-snapshot-restaurant-operators.json').toString()
   );
   
   let array = []
@@ -301,7 +323,7 @@ async function writeToDBRestoOps() {
 
 async function writeToDBDeliDrivers() {
   let drivers = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-delivery-drivers.json').toString()
+    fs.readFileSync('./data/db-snapshot-delivery-drivers.json').toString()
   );
   
   let array = []
@@ -332,10 +354,10 @@ async function writeToDBDeliDrivers() {
 
 async function writeToDBRestoOrders() {
   let orders = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-restaurant-orders.json').toString()
+    fs.readFileSync('./data/db-snapshot-restaurant-orders.json').toString()
   );
   let array = []
-  for (let orderId in orders) {
+  for (let orderId of Object.keys(orders)) {
     let order = orders[orderId]
     if (!order)
       continue
@@ -371,13 +393,15 @@ async function writeToDBRestoOrders() {
       }) : undefined,
       toLocationAddress: (order.to) ? order.to.address : undefined,
       estimatedFoodReadyTime: order.estimatedFoodReadyTime,
-      stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
+      // stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
       status: order.status,
       orderTime: order.orderTime,
       firebaseId: orderId,
       notes: order.notes,
       deliveryCost: order.shippingCost,
       refundAmount: order.refundAmount,
+      stripeInfo: order.stripePaymentInfo,
+      stripeFees: (order.stripePaymentInfo) ? order.stripePaymentInfo.stripeFees : order.stripeFees,
       items: itemArray,
       review: (order.review) ? {
         rating: order.review.rating,

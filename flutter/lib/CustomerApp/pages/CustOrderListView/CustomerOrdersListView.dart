@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerInprocessOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerPastOrdersList.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,21 +43,28 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
         autoBack: true,
       ),
       body: Obx(
-        () => viewController.hasOrders
-            ? SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    if (viewController.currentOrders.isNotEmpty)
-                      CustomerInprocessOrdersList(
-                          txt: txt, viewController: viewController),
-                    if (viewController.pastOrders.isNotEmpty)
-                      CustomerPastOrdersList(
-                          txt: txt, viewController: viewController),
-                  ],
-                ),
-              )
-            : _noOrdersWidget(),
+        () {
+          return !viewController.hasData
+              ? Container(
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(color: primaryBlueColor),
+                )
+              : viewController.hasOrders
+                  ? SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          if (viewController.currentOrders.value!.isNotEmpty)
+                            CustomerInprocessOrdersList(
+                                txt: txt, viewController: viewController),
+                          if (viewController.pastOrders.value!.isNotEmpty)
+                            CustomerPastOrdersList(
+                                txt: txt, viewController: viewController),
+                        ],
+                      ),
+                    )
+                  : _noOrdersWidget();
+        },
       ),
     );
   }

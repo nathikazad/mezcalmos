@@ -10397,6 +10397,18 @@ delivery_drivers_aggregate?: [{	/** distinct select on columns */
 	firebase_id?:true,
 	id?:true,
 	image?:true,
+items?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item"]],
+items_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item_aggregate"]],
 	language_id?:true,
 	location_gps?:true,
 	location_text?:true,
@@ -10506,6 +10518,8 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
+	items?:ValueTypes["restaurant_item_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_item_aggregate_bool_exp"],
 	language_id?:ValueTypes["String_comparison_exp"],
 	location_gps?:ValueTypes["geography_comparison_exp"],
 	location_text?:ValueTypes["String_comparison_exp"],
@@ -10573,6 +10587,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:ValueTypes["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
 	location_gps?:ValueTypes["geography"],
 	location_text?:string,
@@ -10649,6 +10664,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
+	items_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"],
 	language_id?:ValueTypes["order_by"],
 	location_gps?:ValueTypes["order_by"],
 	location_text?:ValueTypes["order_by"],
@@ -18381,13 +18397,13 @@ the end). throws an error if top level container is not an array */
 	restaurant_order_public?:PartialObjects["restaurant_order_public"][],
 			/** fetch aggregated fields from the table: "restaurant.order_public" */
 	restaurant_order_public_aggregate?:PartialObjects["restaurant_order_public_aggregate"],
-			/** execute function "restaurant_orders_by_date" which returns "mez_json" */
+			/** execute function "restaurant.orders_by_date" which returns "mez_json" */
 	restaurant_orders_by_date?:PartialObjects["mez_json"],
-			/** execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json" */
+			/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_date_aggregate?:PartialObjects["mez_json_aggregate"],
-			/** execute function "restaurant_orders_by_month" which returns "mez_json" */
+			/** execute function "restaurant.orders_by_month" which returns "mez_json" */
 	restaurant_orders_by_month?:PartialObjects["mez_json"],
-			/** execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json" */
+			/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_month_aggregate?:PartialObjects["mez_json_aggregate"],
 			/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant?:PartialObjects["restaurant_restaurant"][],
@@ -22937,6 +22953,10 @@ the end). throws an error if top level container is not an array */
 			firebase_id?:string,
 			id?:number,
 			image?:string,
+			/** An array relationship */
+	items?:PartialObjects["restaurant_item"][],
+			/** An aggregate relationship */
+	items_aggregate?:PartialObjects["restaurant_item_aggregate"],
 			language_id?:string,
 			location_gps?:PartialObjects["geography"],
 			location_text?:string,
@@ -23018,6 +23038,8 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
+	items?:PartialObjects["restaurant_item_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_item_aggregate_bool_exp"],
 	language_id?:PartialObjects["String_comparison_exp"],
 	location_gps?:PartialObjects["geography_comparison_exp"],
 	location_text?:PartialObjects["String_comparison_exp"],
@@ -23085,6 +23107,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:PartialObjects["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
 	location_gps?:PartialObjects["geography"],
 	location_text?:string,
@@ -23161,6 +23184,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
+	items_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"],
 	language_id?:PartialObjects["order_by"],
 	location_gps?:PartialObjects["order_by"],
 	location_text?:PartialObjects["order_by"],
@@ -24582,13 +24606,13 @@ All fields are combined with a logical 'AND'. */
 	restaurant_order_public_stream?:PartialObjects["restaurant_order_public"][],
 			/** fetch data from the table in a streaming manner: "restaurant.order" */
 	restaurant_order_stream?:PartialObjects["restaurant_order"][],
-			/** execute function "restaurant_orders_by_date" which returns "mez_json" */
+			/** execute function "restaurant.orders_by_date" which returns "mez_json" */
 	restaurant_orders_by_date?:PartialObjects["mez_json"],
-			/** execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json" */
+			/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_date_aggregate?:PartialObjects["mez_json_aggregate"],
-			/** execute function "restaurant_orders_by_month" which returns "mez_json" */
+			/** execute function "restaurant.orders_by_month" which returns "mez_json" */
 	restaurant_orders_by_month?:PartialObjects["mez_json"],
-			/** execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json" */
+			/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_month_aggregate?:PartialObjects["mez_json_aggregate"],
 			/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant?:PartialObjects["restaurant_restaurant"][],
@@ -31369,13 +31393,13 @@ export type query_root = {
 	restaurant_order_public:restaurant_order_public[],
 	/** fetch aggregated fields from the table: "restaurant.order_public" */
 	restaurant_order_public_aggregate:restaurant_order_public_aggregate,
-	/** execute function "restaurant_orders_by_date" which returns "mez_json" */
+	/** execute function "restaurant.orders_by_date" which returns "mez_json" */
 	restaurant_orders_by_date?:mez_json,
-	/** execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json" */
+	/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_date_aggregate:mez_json_aggregate,
-	/** execute function "restaurant_orders_by_month" which returns "mez_json" */
+	/** execute function "restaurant.orders_by_month" which returns "mez_json" */
 	restaurant_orders_by_month?:mez_json,
-	/** execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json" */
+	/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_month_aggregate:mez_json_aggregate,
 	/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant:restaurant_restaurant[],
@@ -35114,8 +35138,8 @@ export type restaurant_order = {
 	actual_food_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
 	/** An object relationship */
-	chat:chat,
-	chat_id:number,
+	chat?:chat,
+	chat_id?:number,
 	/** An object relationship */
 	customer:customer_customer,
 	customer_app_type:string,
@@ -36676,6 +36700,10 @@ export type restaurant_restaurant = {
 	firebase_id?:string,
 	id:number,
 	image:string,
+	/** An array relationship */
+	items:restaurant_item[],
+	/** An aggregate relationship */
+	items_aggregate:restaurant_item_aggregate,
 	language_id:string,
 	location_gps:geography,
 	location_text:string,
@@ -36762,6 +36790,8 @@ export type restaurant_restaurant_bool_exp = {
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
+	items?:restaurant_item_bool_exp,
+	items_aggregate?:restaurant_item_aggregate_bool_exp,
 	language_id?:String_comparison_exp,
 	location_gps?:geography_comparison_exp,
 	location_text?:String_comparison_exp,
@@ -36838,6 +36868,7 @@ export type restaurant_restaurant_insert_input = {
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:restaurant_item_arr_rel_insert_input,
 	language_id?:string,
 	location_gps?:geography,
 	location_text?:string,
@@ -36920,6 +36951,7 @@ export type restaurant_restaurant_order_by = {
 	firebase_id?:order_by,
 	id?:order_by,
 	image?:order_by,
+	items_aggregate?:restaurant_item_aggregate_order_by,
 	language_id?:order_by,
 	location_gps?:order_by,
 	location_text?:order_by,
@@ -38598,13 +38630,13 @@ export type subscription_root = {
 	restaurant_order_public_stream:restaurant_order_public[],
 	/** fetch data from the table in a streaming manner: "restaurant.order" */
 	restaurant_order_stream:restaurant_order[],
-	/** execute function "restaurant_orders_by_date" which returns "mez_json" */
+	/** execute function "restaurant.orders_by_date" which returns "mez_json" */
 	restaurant_orders_by_date?:mez_json,
-	/** execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json" */
+	/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_date_aggregate:mez_json_aggregate,
-	/** execute function "restaurant_orders_by_month" which returns "mez_json" */
+	/** execute function "restaurant.orders_by_month" which returns "mez_json" */
 	restaurant_orders_by_month?:mez_json,
-	/** execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json" */
+	/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
 	restaurant_orders_by_month_aggregate:mez_json_aggregate,
 	/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant:restaurant_restaurant[],
@@ -68021,6 +68053,70 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		items:{
+			distinct_on:{
+				type:"restaurant_item_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_item_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_item_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		items_aggregate:{
+			distinct_on:{
+				type:"restaurant_item_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_item_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_item_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		orders:{
 			distinct_on:{
 				type:"restaurant_order_select_column",
@@ -68383,6 +68479,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items:{
+			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		language_id:{
 			type:"String_comparison_exp",
 			array:false,
@@ -68610,6 +68718,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items:{
+			type:"restaurant_item_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		language_id:{
 			type:"String",
 			array:false,
@@ -68768,6 +68882,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -79208,6 +79328,8 @@ export const ReturnTypes: Record<string,any> = {
 		firebase_id:"String",
 		id:"Int",
 		image:"String",
+		items:"restaurant_item",
+		items_aggregate:"restaurant_item_aggregate",
 		language_id:"String",
 		location_gps:"geography",
 		location_text:"String",

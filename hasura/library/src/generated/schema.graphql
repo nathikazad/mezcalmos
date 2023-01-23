@@ -10687,7 +10687,7 @@ type query_root {
   ): restaurant_order_public_aggregate!
 
   """
-  execute function "restaurant_orders_by_date" which returns "mez_json"
+  execute function "restaurant.orders_by_date" which returns "mez_json"
   """
   restaurant_orders_by_date(
     """
@@ -10712,7 +10712,7 @@ type query_root {
   ): mez_json
 
   """
-  execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json"
+  execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json"
   """
   restaurant_orders_by_date_aggregate(
     """
@@ -10737,7 +10737,7 @@ type query_root {
   ): mez_json_aggregate!
 
   """
-  execute function "restaurant_orders_by_month" which returns "mez_json"
+  execute function "restaurant.orders_by_month" which returns "mez_json"
   """
   restaurant_orders_by_month(
     """
@@ -10762,7 +10762,7 @@ type query_root {
   ): mez_json
 
   """
-  execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json"
+  execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json"
   """
   restaurant_orders_by_month_aggregate(
     """
@@ -15765,8 +15765,8 @@ type restaurant_order {
   cancellation_time: timestamptz
 
   """An object relationship"""
-  chat: chat!
-  chat_id: Int!
+  chat: chat
+  chat_id: Int
 
   """An object relationship"""
   customer: customer_customer!
@@ -17798,6 +17798,42 @@ type restaurant_restaurant {
   firebase_id: String
   id: Int!
   image: String!
+
+  """An array relationship"""
+  items(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): [restaurant_item!]!
+
+  """An aggregate relationship"""
+  items_aggregate(
+    """distinct select on columns"""
+    distinct_on: [restaurant_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_item_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_item_bool_exp
+  ): restaurant_item_aggregate!
   language_id: String!
   location_gps: geography!
   location_text: String!
@@ -18014,6 +18050,8 @@ input restaurant_restaurant_bool_exp {
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
+  items: restaurant_item_bool_exp
+  items_aggregate: restaurant_item_aggregate_bool_exp
   language_id: String_comparison_exp
   location_gps: geography_comparison_exp
   location_text: String_comparison_exp
@@ -18118,6 +18156,7 @@ input restaurant_restaurant_insert_input {
   firebase_id: String
   id: Int
   image: String
+  items: restaurant_item_arr_rel_insert_input
   language_id: String
   location_gps: geography
   location_text: String
@@ -18211,6 +18250,7 @@ input restaurant_restaurant_order_by {
   firebase_id: order_by
   id: order_by
   image: order_by
+  items_aggregate: restaurant_item_aggregate_order_by
   language_id: order_by
   location_gps: order_by
   location_text: order_by
@@ -21647,7 +21687,7 @@ type subscription_root {
   ): [restaurant_order!]!
 
   """
-  execute function "restaurant_orders_by_date" which returns "mez_json"
+  execute function "restaurant.orders_by_date" which returns "mez_json"
   """
   restaurant_orders_by_date(
     """
@@ -21672,7 +21712,7 @@ type subscription_root {
   ): mez_json
 
   """
-  execute function "restaurant_orders_by_date" and query aggregates on result of table type "mez_json"
+  execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json"
   """
   restaurant_orders_by_date_aggregate(
     """
@@ -21697,7 +21737,7 @@ type subscription_root {
   ): mez_json_aggregate!
 
   """
-  execute function "restaurant_orders_by_month" which returns "mez_json"
+  execute function "restaurant.orders_by_month" which returns "mez_json"
   """
   restaurant_orders_by_month(
     """
@@ -21722,7 +21762,7 @@ type subscription_root {
   ): mez_json
 
   """
-  execute function "restaurant_orders_by_month" and query aggregates on result of table type "mez_json"
+  execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json"
   """
   restaurant_orders_by_month_aggregate(
     """

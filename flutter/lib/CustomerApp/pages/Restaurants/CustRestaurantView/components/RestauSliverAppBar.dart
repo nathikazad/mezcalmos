@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -37,7 +36,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColorLight,
           elevation: 0.4,
           centerTitle: true,
-          expandedHeight: 270,
+          expandedHeight: (controller.showInfo.isFalse) ? 350 : 270,
           leadingWidth: 35,
           automaticallyImplyLeading: false,
           bottom: getBottom,
@@ -446,14 +445,17 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }
 
   double _getBottomPadding() {
-    mezDbgPrint(controller.showCategoriesChips);
-    mezDbgPrint(controller.showSpecials);
-    if (controller.showCategoriesChips && controller.showSpecials) {
-      return 110;
-    } else if (controller.showCategoriesChips) {
-      return 60;
-    } else {
-      return 12;
+    double pad = 12;
+    if (controller.showSpecials) {
+      pad = 60;
     }
+    if (controller.showMenuTabs || controller.showSpecialTabs) {
+      pad = pad + 60;
+    }
+    if (controller.showInfo.isTrue) {
+      pad = 12;
+    }
+
+    return pad;
   }
 }

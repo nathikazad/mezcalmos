@@ -148,6 +148,8 @@ class CustomerCartController extends GetxController {
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
         // "checkoutRequest": <String, dynamic>{
+
+        "notes": cart.value?.notes,
         "stripePaymentId": stripePaymentId,
         "stripeFees": cart.value?.stripeFees,
         "customerAppType": "customer",

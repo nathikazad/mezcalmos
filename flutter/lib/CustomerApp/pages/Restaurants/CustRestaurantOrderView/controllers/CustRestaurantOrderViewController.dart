@@ -50,7 +50,7 @@ class CustRestaurantOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
             .listen((RestaurantOrder? event) {
-          mezDbgPrint(event);
+         
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");

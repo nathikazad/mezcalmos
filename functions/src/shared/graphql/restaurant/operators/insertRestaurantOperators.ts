@@ -2,7 +2,7 @@ import { getHasura } from "../../../../utilities/hasura";
 
 export async function insertRestaurantOperators(data: any) {
     let chain = getHasura();
-
+    
     let operators = data.map(async (o: any) => {
         let opResponse = await chain.query({
             user: [{
@@ -14,7 +14,7 @@ export async function insertRestaurantOperators(data: any) {
             }, {
                 id: true,
             }],
-            restaurant: [{
+            restaurant_restaurant: [{
                 where: {
                     firebase_id: {
                         _eq: o.restaurantFirebaseId
@@ -27,14 +27,14 @@ export async function insertRestaurantOperators(data: any) {
         // if(!(opResponse.user[0].id))
             // console.log("user: ", o.userFirebaseId)
             // console.log(opResponse.user[0].id)
-            console.log("restaurant: ", o.restaurantFirebaseId)
-            console.log(opResponse.restaurant[0])
-            console.log("\n")
+            // console.log("restaurant: ", o.restaurantFirebaseId)
+            // console.log(opResponse.restaurant_restaurant[0])
+            // console.log("\n")
         // if(!(opResponse.restaurant[0]))
         //     console.log("restaurant: ", o.restaurantFirebaseId)
         return {
             user_id: opResponse.user[0].id,
-            restaurant_id: (opResponse.restaurant[0]) ? opResponse.restaurant[0].id : undefined,
+            restaurant_id: (opResponse.restaurant_restaurant[0]) ? opResponse.restaurant_restaurant[0].id : undefined,
             status: "authorized",
             owner: true,
             app_version: o.appVersion,

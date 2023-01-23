@@ -38,10 +38,10 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 physics: NeverScrollableScrollPhysics(),
                 reverse: true,
-                itemCount: viewController.currentOrders().length,
+                itemCount: viewController.currentOrders.value!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CustomerOrderCard(
-                      order: viewController.currentOrders[index]);
+                      order: viewController.currentOrders.value![index]);
                 }),
             const SizedBox(height: 10)
           ],
