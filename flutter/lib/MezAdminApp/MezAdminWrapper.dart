@@ -23,12 +23,11 @@ class _MezAdminWrapperState extends State<MezAdminWrapper> {
     Future<void>.microtask(() {
       final MezAdmin? _admin = _adminAuthController.admin;
       if (_admin != null) {
-        MezRouter.toNamed(kDeliveryOpHomeScreen);
+        MezRouter.toNamed(kTabsView);
       } else {
         _adminAuthController.adminStream.first.then((MezAdmin? _mAdmin) {
-          if (_mAdmin != null &&
-              !MezRouter.isRouteInStack(kDeliveryOpHomeScreen)) {
-            MezRouter.toNamed(kDeliveryOpHomeScreen);
+          if (_mAdmin != null && !MezRouter.isRouteInStack(kTabsView)) {
+            MezRouter.toNamed(kTabsView);
           }
         });
       }

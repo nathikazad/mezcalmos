@@ -100,34 +100,40 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - actual_food_ready_time
-        - cancellation_time
+        - to_location_gps
         - chat_id
-        - customer_app_type
         - customer_id
-        - delivery_cost
         - delivery_id
-        - estimated_food_ready_time
-        - firebase_id
         - id
-        - notes
-        - order_time
-        - order_type
-        - payment_type
-        - refund_amount
         - restaurant_id
         - review_id
-        - status
+        - delivery_cost
+        - refund_amount
+        - stripe_fees
         - tax
+        - customer_app_type
+        - firebase_id
+        - notes
+        - order_type
+        - payment_type
         - to_location_address
-        - to_location_gps
+        - actual_food_ready_time
+        - cancellation_time
+        - estimated_food_ready_time
+        - order_time
+        - scheduled_time
+        - status
+        - stripe_info
       computed_fields:
         - in_process
         - items_cost
         - total_cost
       filter:
-        restaurant:
-          restaurant_operators:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
