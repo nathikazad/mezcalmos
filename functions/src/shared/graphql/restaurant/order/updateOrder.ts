@@ -11,6 +11,8 @@ export async function updateRestaurantOrderStatus(order: RestaurantOrder) {
       "order id not provided"
     );
   }
+  console.log("updateRestaurantOrderStatus")
+  console.log(order.refundAmount)
   await chain.mutation({
     update_restaurant_order_by_pk: [{
       pk_columns: {

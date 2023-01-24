@@ -34,3 +34,5 @@
 - "!include service_provider_post.yaml"
 - "!include service_provider_service_link.yaml"
 - "!include service_provider_subscriber.yaml"
+- "!include public_service_provider_customer_chat.yaml"
+- "!include public_direct_chat.yaml"

@@ -78,7 +78,10 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
         if (order.paymentType == PaymentType.Card) {
           capturePayment(paymentDetails, 0)
         }
+        console.log("cancelling while order received")
+        console.log(order.totalCost)
         order.refundAmount = order.totalCost;
+        console.log(order.refundAmount)
         break;
       case RestaurantOrderStatus.PreparingOrder:
       case RestaurantOrderStatus.ReadyForPickup:
