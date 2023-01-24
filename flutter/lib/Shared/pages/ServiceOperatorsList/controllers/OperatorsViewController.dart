@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -83,8 +84,8 @@ class DeliveryOperatorsListViewController extends OperatorsListViewController {
   @override
   Future<void> fetchOperators() async {
     operators.clear();
-    operators.value = await get_restaurant_operators(
-            restaurantId: serviceProviderId, withCache: false) ??
+    operators.value = await get_delivery_company_operators(
+            companyId: serviceProviderId, withCache: false) ??
         [];
   }
 

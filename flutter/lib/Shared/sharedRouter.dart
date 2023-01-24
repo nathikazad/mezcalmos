@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
@@ -56,6 +57,7 @@ const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList = "/operatorsList/:serviceProviderId";
 const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
+const String kserviceInfoEdit = "/service/:serviceProviderId";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
     "/costDeliverySettingScreen/:providerId/:providerType";
@@ -123,11 +125,11 @@ void navigateToDrivers(
 
 void navigateToOperators(
     {required int serviceProviderId,
-    required ServiceProviderType controllerType}) {
+    required ServiceProviderType serviceProviderType}) {
   final String route =
       kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
   MezRouter.toNamed(route, arguments: {
-    "serviceProviderType": controllerType,
+    "serviceProviderType": serviceProviderType,
     "showAppBar": true,
   });
 }
@@ -137,6 +139,16 @@ void navigateToDeliveryCost(
     required ServiceProviderType serviceProviderType}) {
   final String route =
       kDeliveryCost.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
+}
+
+void navigateToServiceInfoEdit(
+    {required int serviceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route =
+      kserviceInfoEdit.replaceFirst(":serviceProviderId", "$serviceProviderId");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
   });
@@ -219,5 +231,6 @@ class SharedRouter {
     GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
     GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
     GetPage(name: kUserNewProfile, page: () => UserProfileView()),
+    GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
   ];
 }

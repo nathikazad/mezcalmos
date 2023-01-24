@@ -1201,7 +1201,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    required this.chat_id,
+    this.chat_id,
     required this.delivery_cost,
     this.delivery,
     required this.$__typename,
@@ -1275,7 +1275,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int),
+      chat_id: (l$chat_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
@@ -1338,7 +1338,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int chat_id;
+  final int? chat_id;
 
   final double delivery_cost;
 
@@ -1832,9 +1832,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -6628,7 +6626,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.tax,
     this.total_cost,
     this.items_cost,
-    required this.chat_id,
+    this.chat_id,
     required this.customer,
     required this.delivery_cost,
     this.delivery,
@@ -6700,7 +6698,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
-      chat_id: (l$chat_id as int),
+      chat_id: (l$chat_id as int?),
       customer: Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
           .fromJson((l$customer as Map<String, dynamic>)),
       delivery_cost: moneyFromJson(l$delivery_cost),
@@ -6760,7 +6758,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
 
   final double? items_cost;
 
-  final int chat_id;
+  final int? chat_id;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$customer
       customer;
@@ -7241,9 +7239,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
         items_cost: items_cost == _undefined
             ? _instance.items_cost
             : (items_cost as double?),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer

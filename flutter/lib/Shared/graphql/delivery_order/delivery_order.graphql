@@ -317,7 +317,7 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
   delivery_order(
     where: {
       delivery_company: { id: { _eq: $companyId } }
-      in_process: { _eq: false }
+      in_process: { _eq: true }
     }
   ) {
     id

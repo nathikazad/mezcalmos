@@ -14823,7 +14823,7 @@ const documentNodeQueryget_delivery_company_inprocess_orders =
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
-                    value: BooleanValueNode(value: false),
+                    value: BooleanValueNode(value: true),
                   )
                 ]),
               ),

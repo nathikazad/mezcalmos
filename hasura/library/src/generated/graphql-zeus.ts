@@ -127,6 +127,7 @@ chat_participants_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["chat_participant_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["chat_participant_bool_exp"]},ValueTypes["chat_participant_aggregate"]],
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 messages?: [{	/** JSON select path */
@@ -174,6 +175,7 @@ count?: [{	columns?:ValueTypes["chat_select_column"][],	distinct?:boolean},true]
 	chat_info?:ValueTypes["jsonb_comparison_exp"],
 	chat_participants?:ValueTypes["chat_participant_bool_exp"],
 	chat_participants_aggregate?:ValueTypes["chat_participant_aggregate_bool_exp"],
+	chat_type?:ValueTypes["String_comparison_exp"],
 	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	messages?:ValueTypes["jsonb_comparison_exp"]
@@ -208,18 +210,21 @@ end). throws an error if top level container is not an array */
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
 	chat_participants?:ValueTypes["chat_participant_arr_rel_insert_input"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
 };
 	/** aggregate max on columns */
 ["chat_max_fields"]: AliasType<{
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["chat_min_fields"]: AliasType<{
+	chat_type?:true,
 	creation_time?:true,
 	id?:true,
 		__typename?: true
@@ -249,6 +254,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:ValueTypes["order_by"],
 	chat_info?:ValueTypes["order_by"],
 	chat_participants_aggregate?:ValueTypes["chat_participant_aggregate_order_by"],
+	chat_type?:ValueTypes["order_by"],
 	creation_time?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	messages?:ValueTypes["order_by"]
@@ -559,6 +565,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_set_input"]: {
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
@@ -589,6 +596,7 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 ["chat_stream_cursor_value_input"]: {
 	agora_info?:ValueTypes["jsonb"],
 	chat_info?:ValueTypes["jsonb"],
+	chat_type?:string,
 	creation_time?:ValueTypes["timestamptz"],
 	id?:number,
 	messages?:ValueTypes["jsonb"]
@@ -4023,6 +4031,183 @@ count?: [{	columns?:ValueTypes["mez_admin_select_column"][],	distinct?:boolean},
 	user_id?:ValueTypes["Int_comparison_exp"],
 	version?:ValueTypes["String_comparison_exp"]
 };
+	/** columns and relationships of "mez_admin_chat" */
+["mez_admin_chat"]: AliasType<{
+	app_type?:true,
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	user?:ValueTypes["user"],
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "mez_admin_chat" */
+["mez_admin_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["mez_admin_chat_aggregate_fields"],
+	nodes?:ValueTypes["mez_admin_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "mez_admin_chat" */
+["mez_admin_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["mez_admin_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["mez_admin_chat_max_fields"],
+	min?:ValueTypes["mez_admin_chat_min_fields"],
+	stddev?:ValueTypes["mez_admin_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["mez_admin_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["mez_admin_chat_stddev_samp_fields"],
+	sum?:ValueTypes["mez_admin_chat_sum_fields"],
+	var_pop?:ValueTypes["mez_admin_chat_var_pop_fields"],
+	var_samp?:ValueTypes["mez_admin_chat_var_samp_fields"],
+	variance?:ValueTypes["mez_admin_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["mez_admin_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+["mez_admin_chat_bool_exp"]: {
+	_and?:ValueTypes["mez_admin_chat_bool_exp"][],
+	_not?:ValueTypes["mez_admin_chat_bool_exp"],
+	_or?:ValueTypes["mez_admin_chat_bool_exp"][],
+	app_type?:ValueTypes["String_comparison_exp"],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	user?:ValueTypes["user_bool_exp"],
+	user_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "mez_admin_chat" */
+["mez_admin_chat_constraint"]:mez_admin_chat_constraint;
+	/** input type for incrementing numeric columns in table "mez_admin_chat" */
+["mez_admin_chat_inc_input"]: {
+	chat_id?:number,
+	user_id?:number
+};
+	/** input type for inserting data into table "mez_admin_chat" */
+["mez_admin_chat_insert_input"]: {
+	app_type?:string,
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user?:ValueTypes["user_obj_rel_insert_input"],
+	user_id?:number
+};
+	/** aggregate max on columns */
+["mez_admin_chat_max_fields"]: AliasType<{
+	app_type?:true,
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["mez_admin_chat_min_fields"]: AliasType<{
+	app_type?:true,
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "mez_admin_chat" */
+["mez_admin_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["mez_admin_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "mez_admin_chat" */
+["mez_admin_chat_on_conflict"]: {
+	constraint:ValueTypes["mez_admin_chat_constraint"],
+	update_columns:ValueTypes["mez_admin_chat_update_column"][],
+	where?:ValueTypes["mez_admin_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "mez_admin_chat". */
+["mez_admin_chat_order_by"]: {
+	app_type?:ValueTypes["order_by"],
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	user?:ValueTypes["user_order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: mez_admin_chat */
+["mez_admin_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "mez_admin_chat" */
+["mez_admin_chat_select_column"]:mez_admin_chat_select_column;
+	/** input type for updating data in table "mez_admin_chat" */
+["mez_admin_chat_set_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+};
+	/** aggregate stddev on columns */
+["mez_admin_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["mez_admin_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["mez_admin_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "mez_admin_chat" */
+["mez_admin_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["mez_admin_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_chat_stream_cursor_value_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+};
+	/** aggregate sum on columns */
+["mez_admin_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "mez_admin_chat" */
+["mez_admin_chat_update_column"]:mez_admin_chat_update_column;
+	["mez_admin_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],
+	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_admin_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["mez_admin_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["mez_admin_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["mez_admin_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
 	/** unique or primary key constraints on table "mez_admin" */
 ["mez_admin_constraint"]:mez_admin_constraint;
 	/** input type for incrementing numeric columns in table "mez_admin" */
@@ -4136,6 +4321,115 @@ count?: [{	columns?:ValueTypes["mez_admin_select_column"][],	distinct?:boolean},
 	user_id?:true,
 		__typename?: true
 }>;
+	/** columns and relationships of "mez_json" */
+["mez_json"]: AliasType<{
+json_object?: [{	/** JSON select path */
+	path?:string},true],
+		__typename?: true
+}>;
+	/** aggregated selection of "mez_json" */
+["mez_json_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["mez_json_aggregate_fields"],
+	nodes?:ValueTypes["mez_json"],
+		__typename?: true
+}>;
+	/** aggregate fields of "mez_json" */
+["mez_json_aggregate_fields"]: AliasType<{
+count?: [{	columns?:ValueTypes["mez_json_select_column"][],	distinct?:boolean},true],
+		__typename?: true
+}>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["mez_json_append_input"]: {
+	json_object?:ValueTypes["jsonb"]
+};
+	/** Boolean expression to filter rows from the table "mez_json". All fields are combined with a logical 'AND'. */
+["mez_json_bool_exp"]: {
+	_and?:ValueTypes["mez_json_bool_exp"][],
+	_not?:ValueTypes["mez_json_bool_exp"],
+	_or?:ValueTypes["mez_json_bool_exp"][],
+	json_object?:ValueTypes["jsonb_comparison_exp"]
+};
+	/** unique or primary key constraints on table "mez_json" */
+["mez_json_constraint"]:mez_json_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["mez_json_delete_at_path_input"]: {
+	json_object?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["mez_json_delete_elem_input"]: {
+	json_object?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["mez_json_delete_key_input"]: {
+	json_object?:string
+};
+	/** input type for inserting data into table "mez_json" */
+["mez_json_insert_input"]: {
+	json_object?:ValueTypes["jsonb"]
+};
+	/** response of any mutation on the table "mez_json" */
+["mez_json_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["mez_json"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "mez_json" */
+["mez_json_on_conflict"]: {
+	constraint:ValueTypes["mez_json_constraint"],
+	update_columns:ValueTypes["mez_json_update_column"][],
+	where?:ValueTypes["mez_json_bool_exp"]
+};
+	/** Ordering options when selecting data from "mez_json". */
+["mez_json_order_by"]: {
+	json_object?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: mez_json */
+["mez_json_pk_columns_input"]: {
+	json_object:ValueTypes["jsonb"]
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["mez_json_prepend_input"]: {
+	json_object?:ValueTypes["jsonb"]
+};
+	/** select columns of table "mez_json" */
+["mez_json_select_column"]:mez_json_select_column;
+	/** input type for updating data in table "mez_json" */
+["mez_json_set_input"]: {
+	json_object?:ValueTypes["jsonb"]
+};
+	/** Streaming cursor of the table "mez_json" */
+["mez_json_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["mez_json_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["mez_json_stream_cursor_value_input"]: {
+	json_object?:ValueTypes["jsonb"]
+};
+	/** update columns of table "mez_json" */
+["mez_json_update_column"]:mez_json_update_column;
+	["mez_json_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["mez_json_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["mez_json_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["mez_json_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["mez_json_delete_key_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["mez_json_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_json_set_input"],
+	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_json_bool_exp"]
+};
 	["money"]:unknown;
 	/** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
 ["money_comparison_exp"]: {
@@ -4190,6 +4484,12 @@ delete_language_by_pk?: [{	id:string},ValueTypes["language"]],
 delete_mez_admin?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_mutation_response"]],
 delete_mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+delete_mez_admin_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_mutation_response"]],
+delete_mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
+delete_mez_json?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_mutation_response"]],
+delete_mez_json_by_pk?: [{	json_object:ValueTypes["jsonb"]},ValueTypes["mez_json"]],
 delete_notification_info?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["notification_info_bool_exp"]},ValueTypes["notification_info_mutation_response"]],
 delete_notification_info_by_pk?: [{	id:number},ValueTypes["notification_info"]],
@@ -4325,9 +4625,21 @@ insert_language_one?: [{	/** the row to be inserted */
 insert_mez_admin?: [{	/** the rows to be inserted */
 	objects:ValueTypes["mez_admin_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin_mutation_response"]],
+insert_mez_admin_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["mez_admin_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_chat_on_conflict"]},ValueTypes["mez_admin_chat_mutation_response"]],
+insert_mez_admin_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["mez_admin_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_admin_chat_on_conflict"]},ValueTypes["mez_admin_chat"]],
 insert_mez_admin_one?: [{	/** the row to be inserted */
 	object:ValueTypes["mez_admin_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin"]],
+insert_mez_json?: [{	/** the rows to be inserted */
+	objects:ValueTypes["mez_json_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_json_on_conflict"]},ValueTypes["mez_json_mutation_response"]],
+insert_mez_json_one?: [{	/** the row to be inserted */
+	object:ValueTypes["mez_json_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["mez_json_on_conflict"]},ValueTypes["mez_json"]],
 insert_notification_info?: [{	/** the rows to be inserted */
 	objects:ValueTypes["notification_info_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["notification_info_on_conflict"]},ValueTypes["notification_info_mutation_response"]],
@@ -4584,8 +4896,36 @@ update_mez_admin?: [{	/** increments the numeric columns with given value of the
 update_mez_admin_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],	pk_columns:ValueTypes["mez_admin_pk_columns_input"]},ValueTypes["mez_admin"]],
+update_mez_admin_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_mutation_response"]],
+update_mez_admin_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["mez_admin_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_admin_chat_set_input"],	pk_columns:ValueTypes["mez_admin_chat_pk_columns_input"]},ValueTypes["mez_admin_chat"]],
+update_mez_admin_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["mez_admin_chat_updates"][]},ValueTypes["mez_admin_chat_mutation_response"]],
 update_mez_admin_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["mez_admin_updates"][]},ValueTypes["mez_admin_mutation_response"]],
+update_mez_json?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["mez_json_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["mez_json_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["mez_json_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["mez_json_delete_key_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["mez_json_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_json_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_mutation_response"]],
+update_mez_json_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["mez_json_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["mez_json_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["mez_json_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["mez_json_delete_key_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["mez_json_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["mez_json_set_input"],	pk_columns:ValueTypes["mez_json_pk_columns_input"]},ValueTypes["mez_json"]],
+update_mez_json_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["mez_json_updates"][]},ValueTypes["mez_json_mutation_response"]],
 update_notification_info?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["notification_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["notification_info_set_input"],	/** filter the rows which have to be updated */
@@ -5163,6 +5503,32 @@ mez_admin_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
 mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+mez_admin_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_aggregate"]],
+mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
+mez_json?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+mez_json_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
+mez_json_by_pk?: [{	json_object:ValueTypes["jsonb"]},ValueTypes["mez_json"]],
 notification_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["notification_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5331,6 +5697,34 @@ restaurant_order_public_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_order_public_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_order_public_bool_exp"]},ValueTypes["restaurant_order_public_aggregate"]],
+restaurant_orders_by_date?: [{	/** input parameters for function "restaurant_orders_by_date" */
+	args:ValueTypes["restaurant_orders_by_date_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+restaurant_orders_by_date_aggregate?: [{	/** input parameters for function "restaurant_orders_by_date_aggregate" */
+	args:ValueTypes["restaurant_orders_by_date_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
+restaurant_orders_by_month?: [{	/** input parameters for function "restaurant_orders_by_month" */
+	args:ValueTypes["restaurant_orders_by_month_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+restaurant_orders_by_month_aggregate?: [{	/** input parameters for function "restaurant_orders_by_month_aggregate" */
+	args:ValueTypes["restaurant_orders_by_month_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
 restaurant_restaurant?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -9956,6 +10350,12 @@ the end). throws an error if top level container is not an array */
 	stripe_fees?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"]
 };
+	["restaurant_orders_by_date_args"]: {
+	res_id?:number
+};
+	["restaurant_orders_by_month_args"]: {
+	res_id?:number
+};
 	/** columns and relationships of "restaurant.restaurant" */
 ["restaurant_restaurant"]: AliasType<{
 accepted_payments?: [{	/** JSON select path */
@@ -9991,6 +10391,18 @@ delivery_drivers_aggregate?: [{	/** distinct select on columns */
 	firebase_id?:true,
 	id?:true,
 	image?:true,
+items?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item"]],
+items_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item_aggregate"]],
 	language_id?:true,
 	location_gps?:true,
 	location_text?:true,
@@ -10100,6 +10512,8 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
+	items?:ValueTypes["restaurant_item_bool_exp"],
+	items_aggregate?:ValueTypes["restaurant_item_aggregate_bool_exp"],
 	language_id?:ValueTypes["String_comparison_exp"],
 	location_gps?:ValueTypes["geography_comparison_exp"],
 	location_text?:ValueTypes["String_comparison_exp"],
@@ -10167,6 +10581,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:ValueTypes["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
 	location_gps?:ValueTypes["geography"],
 	location_text?:string,
@@ -10243,6 +10658,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
+	items_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"],
 	language_id?:ValueTypes["order_by"],
 	location_gps?:ValueTypes["order_by"],
 	location_text?:ValueTypes["order_by"],
@@ -11664,10 +12080,44 @@ mez_admin_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["mez_admin_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_aggregate"]],
 mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
+mez_admin_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_admin_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_admin_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat_aggregate"]],
+mez_admin_chat_by_pk?: [{	chat_id:number},ValueTypes["mez_admin_chat"]],
+mez_admin_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["mez_admin_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_admin_chat_bool_exp"]},ValueTypes["mez_admin_chat"]],
 mez_admin_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["mez_admin_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin"]],
+mez_json?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+mez_json_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
+mez_json_by_pk?: [{	json_object:ValueTypes["jsonb"]},ValueTypes["mez_json"]],
+mez_json_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["mez_json_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
 notification_info?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["notification_info_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -11888,6 +12338,34 @@ restaurant_order_stream?: [{	/** maximum number of rows returned in a single bat
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["restaurant_order_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_order_bool_exp"]},ValueTypes["restaurant_order"]],
+restaurant_orders_by_date?: [{	/** input parameters for function "restaurant_orders_by_date" */
+	args:ValueTypes["restaurant_orders_by_date_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+restaurant_orders_by_date_aggregate?: [{	/** input parameters for function "restaurant_orders_by_date_aggregate" */
+	args:ValueTypes["restaurant_orders_by_date_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
+restaurant_orders_by_month?: [{	/** input parameters for function "restaurant_orders_by_month" */
+	args:ValueTypes["restaurant_orders_by_month_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json"]],
+restaurant_orders_by_month_aggregate?: [{	/** input parameters for function "restaurant_orders_by_month_aggregate" */
+	args:ValueTypes["restaurant_orders_by_month_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["mez_json_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["mez_json_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["mez_json_bool_exp"]},ValueTypes["mez_json_aggregate"]],
 restaurant_restaurant?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12809,6 +13287,7 @@ export type PartialObjects = {
 	chat_participants?:PartialObjects["chat_participant"][],
 			/** An aggregate relationship */
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate"],
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number,
 			messages?:PartialObjects["jsonb"]
@@ -12854,6 +13333,7 @@ export type PartialObjects = {
 	chat_info?:PartialObjects["jsonb_comparison_exp"],
 	chat_participants?:PartialObjects["chat_participant_bool_exp"],
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate_bool_exp"],
+	chat_type?:PartialObjects["String_comparison_exp"],
 	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	messages?:PartialObjects["jsonb_comparison_exp"]
@@ -12888,6 +13368,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
 	chat_participants?:PartialObjects["chat_participant_arr_rel_insert_input"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -12895,12 +13376,14 @@ end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["chat_max_fields"]: {
 		__typename?: "chat_max_fields";
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number
 	},
 	/** aggregate min on columns */
 ["chat_min_fields"]: {
 		__typename?: "chat_min_fields";
+			chat_type?:string,
 			creation_time?:PartialObjects["timestamptz"],
 			id?:number
 	},
@@ -12929,6 +13412,7 @@ end). throws an error if top level container is not an array */
 	agora_info?:PartialObjects["order_by"],
 	chat_info?:PartialObjects["order_by"],
 	chat_participants_aggregate?:PartialObjects["chat_participant_aggregate_order_by"],
+	chat_type?:PartialObjects["order_by"],
 	creation_time?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	messages?:PartialObjects["order_by"]
@@ -13239,6 +13723,7 @@ end). throws an error if top level container is not an array */
 ["chat_set_input"]: {
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -13269,6 +13754,7 @@ end). throws an error if top level container is not an array */
 ["chat_stream_cursor_value_input"]: {
 	agora_info?:PartialObjects["jsonb"],
 	chat_info?:PartialObjects["jsonb"],
+	chat_type?:string,
 	creation_time?:PartialObjects["timestamptz"],
 	id?:number,
 	messages?:PartialObjects["jsonb"]
@@ -16676,6 +17162,183 @@ cancelledByServiceProvider */
 	user_id?:PartialObjects["Int_comparison_exp"],
 	version?:PartialObjects["String_comparison_exp"]
 },
+	/** columns and relationships of "mez_admin_chat" */
+["mez_admin_chat"]: {
+		__typename?: "mez_admin_chat";
+			app_type?:string,
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	user?:PartialObjects["user"],
+			user_id?:number
+	},
+	/** aggregated selection of "mez_admin_chat" */
+["mez_admin_chat_aggregate"]: {
+		__typename?: "mez_admin_chat_aggregate";
+			aggregate?:PartialObjects["mez_admin_chat_aggregate_fields"],
+			nodes?:PartialObjects["mez_admin_chat"][]
+	},
+	/** aggregate fields of "mez_admin_chat" */
+["mez_admin_chat_aggregate_fields"]: {
+		__typename?: "mez_admin_chat_aggregate_fields";
+			avg?:PartialObjects["mez_admin_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["mez_admin_chat_max_fields"],
+			min?:PartialObjects["mez_admin_chat_min_fields"],
+			stddev?:PartialObjects["mez_admin_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["mez_admin_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["mez_admin_chat_stddev_samp_fields"],
+			sum?:PartialObjects["mez_admin_chat_sum_fields"],
+			var_pop?:PartialObjects["mez_admin_chat_var_pop_fields"],
+			var_samp?:PartialObjects["mez_admin_chat_var_samp_fields"],
+			variance?:PartialObjects["mez_admin_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["mez_admin_chat_avg_fields"]: {
+		__typename?: "mez_admin_chat_avg_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+["mez_admin_chat_bool_exp"]: {
+	_and?:PartialObjects["mez_admin_chat_bool_exp"][],
+	_not?:PartialObjects["mez_admin_chat_bool_exp"],
+	_or?:PartialObjects["mez_admin_chat_bool_exp"][],
+	app_type?:PartialObjects["String_comparison_exp"],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	user?:PartialObjects["user_bool_exp"],
+	user_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "mez_admin_chat" */
+["mez_admin_chat_constraint"]:mez_admin_chat_constraint,
+	/** input type for incrementing numeric columns in table "mez_admin_chat" */
+["mez_admin_chat_inc_input"]: {
+	chat_id?:number,
+	user_id?:number
+},
+	/** input type for inserting data into table "mez_admin_chat" */
+["mez_admin_chat_insert_input"]: {
+	app_type?:string,
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user?:PartialObjects["user_obj_rel_insert_input"],
+	user_id?:number
+},
+	/** aggregate max on columns */
+["mez_admin_chat_max_fields"]: {
+		__typename?: "mez_admin_chat_max_fields";
+			app_type?:string,
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate min on columns */
+["mez_admin_chat_min_fields"]: {
+		__typename?: "mez_admin_chat_min_fields";
+			app_type?:string,
+			chat_id?:number,
+			user_id?:number
+	},
+	/** response of any mutation on the table "mez_admin_chat" */
+["mez_admin_chat_mutation_response"]: {
+		__typename?: "mez_admin_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["mez_admin_chat"][]
+	},
+	/** on_conflict condition type for table "mez_admin_chat" */
+["mez_admin_chat_on_conflict"]: {
+	constraint:PartialObjects["mez_admin_chat_constraint"],
+	update_columns:PartialObjects["mez_admin_chat_update_column"][],
+	where?:PartialObjects["mez_admin_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "mez_admin_chat". */
+["mez_admin_chat_order_by"]: {
+	app_type?:PartialObjects["order_by"],
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	user?:PartialObjects["user_order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: mez_admin_chat */
+["mez_admin_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "mez_admin_chat" */
+["mez_admin_chat_select_column"]:mez_admin_chat_select_column,
+	/** input type for updating data in table "mez_admin_chat" */
+["mez_admin_chat_set_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+},
+	/** aggregate stddev on columns */
+["mez_admin_chat_stddev_fields"]: {
+		__typename?: "mez_admin_chat_stddev_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["mez_admin_chat_stddev_pop_fields"]: {
+		__typename?: "mez_admin_chat_stddev_pop_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["mez_admin_chat_stddev_samp_fields"]: {
+		__typename?: "mez_admin_chat_stddev_samp_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** Streaming cursor of the table "mez_admin_chat" */
+["mez_admin_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["mez_admin_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["mez_admin_chat_stream_cursor_value_input"]: {
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+},
+	/** aggregate sum on columns */
+["mez_admin_chat_sum_fields"]: {
+		__typename?: "mez_admin_chat_sum_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** update columns of table "mez_admin_chat" */
+["mez_admin_chat_update_column"]:mez_admin_chat_update_column,
+	["mez_admin_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["mez_admin_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["mez_admin_chat_set_input"],
+	/** filter the rows which have to be updated */
+	where:PartialObjects["mez_admin_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["mez_admin_chat_var_pop_fields"]: {
+		__typename?: "mez_admin_chat_var_pop_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate var_samp on columns */
+["mez_admin_chat_var_samp_fields"]: {
+		__typename?: "mez_admin_chat_var_samp_fields";
+			chat_id?:number,
+			user_id?:number
+	},
+	/** aggregate variance on columns */
+["mez_admin_chat_variance_fields"]: {
+		__typename?: "mez_admin_chat_variance_fields";
+			chat_id?:number,
+			user_id?:number
+	},
 	/** unique or primary key constraints on table "mez_admin" */
 ["mez_admin_constraint"]:mez_admin_constraint,
 	/** input type for incrementing numeric columns in table "mez_admin" */
@@ -16789,6 +17452,114 @@ cancelledByServiceProvider */
 		__typename?: "mez_admin_variance_fields";
 			user_id?:number
 	},
+	/** columns and relationships of "mez_json" */
+["mez_json"]: {
+		__typename?: "mez_json";
+			json_object?:PartialObjects["jsonb"]
+	},
+	/** aggregated selection of "mez_json" */
+["mez_json_aggregate"]: {
+		__typename?: "mez_json_aggregate";
+			aggregate?:PartialObjects["mez_json_aggregate_fields"],
+			nodes?:PartialObjects["mez_json"][]
+	},
+	/** aggregate fields of "mez_json" */
+["mez_json_aggregate_fields"]: {
+		__typename?: "mez_json_aggregate_fields";
+			count?:number
+	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["mez_json_append_input"]: {
+	json_object?:PartialObjects["jsonb"]
+},
+	/** Boolean expression to filter rows from the table "mez_json". All fields are combined with a logical 'AND'. */
+["mez_json_bool_exp"]: {
+	_and?:PartialObjects["mez_json_bool_exp"][],
+	_not?:PartialObjects["mez_json_bool_exp"],
+	_or?:PartialObjects["mez_json_bool_exp"][],
+	json_object?:PartialObjects["jsonb_comparison_exp"]
+},
+	/** unique or primary key constraints on table "mez_json" */
+["mez_json_constraint"]:mez_json_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["mez_json_delete_at_path_input"]: {
+	json_object?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["mez_json_delete_elem_input"]: {
+	json_object?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["mez_json_delete_key_input"]: {
+	json_object?:string
+},
+	/** input type for inserting data into table "mez_json" */
+["mez_json_insert_input"]: {
+	json_object?:PartialObjects["jsonb"]
+},
+	/** response of any mutation on the table "mez_json" */
+["mez_json_mutation_response"]: {
+		__typename?: "mez_json_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["mez_json"][]
+	},
+	/** on_conflict condition type for table "mez_json" */
+["mez_json_on_conflict"]: {
+	constraint:PartialObjects["mez_json_constraint"],
+	update_columns:PartialObjects["mez_json_update_column"][],
+	where?:PartialObjects["mez_json_bool_exp"]
+},
+	/** Ordering options when selecting data from "mez_json". */
+["mez_json_order_by"]: {
+	json_object?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: mez_json */
+["mez_json_pk_columns_input"]: {
+	json_object:PartialObjects["jsonb"]
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["mez_json_prepend_input"]: {
+	json_object?:PartialObjects["jsonb"]
+},
+	/** select columns of table "mez_json" */
+["mez_json_select_column"]:mez_json_select_column,
+	/** input type for updating data in table "mez_json" */
+["mez_json_set_input"]: {
+	json_object?:PartialObjects["jsonb"]
+},
+	/** Streaming cursor of the table "mez_json" */
+["mez_json_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["mez_json_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["mez_json_stream_cursor_value_input"]: {
+	json_object?:PartialObjects["jsonb"]
+},
+	/** update columns of table "mez_json" */
+["mez_json_update_column"]:mez_json_update_column,
+	["mez_json_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["mez_json_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["mez_json_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["mez_json_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["mez_json_delete_key_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["mez_json_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["mez_json_set_input"],
+	/** filter the rows which have to be updated */
+	where:PartialObjects["mez_json_bool_exp"]
+},
 	["money"]:any,
 	/** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
 ["money_comparison_exp"]: {
@@ -16855,6 +17626,14 @@ cancelledByServiceProvider */
 	delete_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** delete single row from the table: "mez_admin" */
 	delete_mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** delete data from the table: "mez_admin_chat" */
+	delete_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** delete single row from the table: "mez_admin_chat" */
+	delete_mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** delete data from the table: "mez_json" */
+	delete_mez_json?:PartialObjects["mez_json_mutation_response"],
+			/** delete single row from the table: "mez_json" */
+	delete_mez_json_by_pk?:PartialObjects["mez_json"],
 			/** delete data from the table: "notification_info" */
 	delete_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** delete single row from the table: "notification_info" */
@@ -16987,8 +17766,16 @@ cancelledByServiceProvider */
 	insert_language_one?:PartialObjects["language"],
 			/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:PartialObjects["mez_admin_mutation_response"],
+			/** insert data into the table: "mez_admin_chat" */
+	insert_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** insert a single row into the table: "mez_admin_chat" */
+	insert_mez_admin_chat_one?:PartialObjects["mez_admin_chat"],
 			/** insert a single row into the table: "mez_admin" */
 	insert_mez_admin_one?:PartialObjects["mez_admin"],
+			/** insert data into the table: "mez_json" */
+	insert_mez_json?:PartialObjects["mez_json_mutation_response"],
+			/** insert a single row into the table: "mez_json" */
+	insert_mez_json_one?:PartialObjects["mez_json"],
 			/** insert data into the table: "notification_info" */
 	insert_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** insert a single row into the table: "notification_info" */
@@ -17147,8 +17934,20 @@ cancelledByServiceProvider */
 	update_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** update single row of the table: "mez_admin" */
 	update_mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** update data of the table: "mez_admin_chat" */
+	update_mez_admin_chat?:PartialObjects["mez_admin_chat_mutation_response"],
+			/** update single row of the table: "mez_admin_chat" */
+	update_mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** update multiples rows of table: "mez_admin_chat" */
+	update_mez_admin_chat_many?:(PartialObjects["mez_admin_chat_mutation_response"] | undefined)[],
 			/** update multiples rows of table: "mez_admin" */
 	update_mez_admin_many?:(PartialObjects["mez_admin_mutation_response"] | undefined)[],
+			/** update data of the table: "mez_json" */
+	update_mez_json?:PartialObjects["mez_json_mutation_response"],
+			/** update single row of the table: "mez_json" */
+	update_mez_json_by_pk?:PartialObjects["mez_json"],
+			/** update multiples rows of table: "mez_json" */
+	update_mez_json_many?:(PartialObjects["mez_json_mutation_response"] | undefined)[],
 			/** update data of the table: "notification_info" */
 	update_notification_info?:PartialObjects["notification_info_mutation_response"],
 			/** update single row of the table: "notification_info" */
@@ -17535,6 +18334,18 @@ cancelledByServiceProvider */
 	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
 			/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat?:PartialObjects["mez_admin_chat"][],
+			/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate?:PartialObjects["mez_admin_chat_aggregate"],
+			/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** fetch data from the table: "mez_json" */
+	mez_json?:PartialObjects["mez_json"][],
+			/** fetch aggregated fields from the table: "mez_json" */
+	mez_json_aggregate?:PartialObjects["mez_json_aggregate"],
+			/** fetch data from the table: "mez_json" using primary key columns */
+	mez_json_by_pk?:PartialObjects["mez_json"],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
 			/** fetch aggregated fields from the table: "notification_info" */
@@ -17611,6 +18422,14 @@ cancelledByServiceProvider */
 	restaurant_order_public?:PartialObjects["restaurant_order_public"][],
 			/** fetch aggregated fields from the table: "restaurant.order_public" */
 	restaurant_order_public_aggregate?:PartialObjects["restaurant_order_public_aggregate"],
+			/** execute function "restaurant.orders_by_date" which returns "mez_json" */
+	restaurant_orders_by_date?:PartialObjects["mez_json"],
+			/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_date_aggregate?:PartialObjects["mez_json_aggregate"],
+			/** execute function "restaurant.orders_by_month" which returns "mez_json" */
+	restaurant_orders_by_month?:PartialObjects["mez_json"],
+			/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_month_aggregate?:PartialObjects["mez_json_aggregate"],
 			/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant?:PartialObjects["restaurant_restaurant"][],
 			/** fetch aggregated fields from the table: "restaurant.restaurant" */
@@ -22101,6 +22920,12 @@ the end). throws an error if top level container is not an array */
 	stripe_fees?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"]
 },
+	["restaurant_orders_by_date_args"]: {
+	res_id?:number
+},
+	["restaurant_orders_by_month_args"]: {
+	res_id?:number
+},
 	/** columns and relationships of "restaurant.restaurant" */
 ["restaurant_restaurant"]: {
 		__typename?: "restaurant_restaurant";
@@ -22121,6 +22946,10 @@ the end). throws an error if top level container is not an array */
 			firebase_id?:string,
 			id?:number,
 			image?:string,
+			/** An array relationship */
+	items?:PartialObjects["restaurant_item"][],
+			/** An aggregate relationship */
+	items_aggregate?:PartialObjects["restaurant_item_aggregate"],
 			language_id?:string,
 			location_gps?:PartialObjects["geography"],
 			location_text?:string,
@@ -22202,6 +23031,8 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
+	items?:PartialObjects["restaurant_item_bool_exp"],
+	items_aggregate?:PartialObjects["restaurant_item_aggregate_bool_exp"],
 	language_id?:PartialObjects["String_comparison_exp"],
 	location_gps?:PartialObjects["geography_comparison_exp"],
 	location_text?:PartialObjects["String_comparison_exp"],
@@ -22269,6 +23100,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:PartialObjects["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
 	location_gps?:PartialObjects["geography"],
 	location_text?:string,
@@ -22345,6 +23177,7 @@ requirements: string[] | null; email: string | null } */
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
+	items_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"],
 	language_id?:PartialObjects["order_by"],
 	location_gps?:PartialObjects["order_by"],
 	location_text?:PartialObjects["order_by"],
@@ -23648,8 +24481,24 @@ All fields are combined with a logical 'AND'. */
 	mez_admin_aggregate?:PartialObjects["mez_admin_aggregate"],
 			/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:PartialObjects["mez_admin"],
+			/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat?:PartialObjects["mez_admin_chat"][],
+			/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate?:PartialObjects["mez_admin_chat_aggregate"],
+			/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:PartialObjects["mez_admin_chat"],
+			/** fetch data from the table in a streaming manner: "mez_admin_chat" */
+	mez_admin_chat_stream?:PartialObjects["mez_admin_chat"][],
 			/** fetch data from the table in a streaming manner: "mez_admin" */
 	mez_admin_stream?:PartialObjects["mez_admin"][],
+			/** fetch data from the table: "mez_json" */
+	mez_json?:PartialObjects["mez_json"][],
+			/** fetch aggregated fields from the table: "mez_json" */
+	mez_json_aggregate?:PartialObjects["mez_json_aggregate"],
+			/** fetch data from the table: "mez_json" using primary key columns */
+	mez_json_by_pk?:PartialObjects["mez_json"],
+			/** fetch data from the table in a streaming manner: "mez_json" */
+	mez_json_stream?:PartialObjects["mez_json"][],
 			/** fetch data from the table: "notification_info" */
 	notification_info?:PartialObjects["notification_info"][],
 			/** fetch aggregated fields from the table: "notification_info" */
@@ -23752,6 +24601,14 @@ All fields are combined with a logical 'AND'. */
 	restaurant_order_public_stream?:PartialObjects["restaurant_order_public"][],
 			/** fetch data from the table in a streaming manner: "restaurant.order" */
 	restaurant_order_stream?:PartialObjects["restaurant_order"][],
+			/** execute function "restaurant.orders_by_date" which returns "mez_json" */
+	restaurant_orders_by_date?:PartialObjects["mez_json"],
+			/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_date_aggregate?:PartialObjects["mez_json_aggregate"],
+			/** execute function "restaurant.orders_by_month" which returns "mez_json" */
+	restaurant_orders_by_month?:PartialObjects["mez_json"],
+			/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_month_aggregate?:PartialObjects["mez_json_aggregate"],
 			/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant?:PartialObjects["restaurant_restaurant"][],
 			/** fetch aggregated fields from the table: "restaurant.restaurant" */
@@ -24618,6 +25475,7 @@ export type chat = {
 	chat_participants:chat_participant[],
 	/** An aggregate relationship */
 	chat_participants_aggregate:chat_participant_aggregate,
+	chat_type:string,
 	creation_time:timestamptz,
 	id:number,
 	messages:jsonb
@@ -24668,6 +25526,7 @@ export type chat_bool_exp = {
 	chat_info?:jsonb_comparison_exp,
 	chat_participants?:chat_participant_bool_exp,
 	chat_participants_aggregate?:chat_participant_aggregate_bool_exp,
+	chat_type?:String_comparison_exp,
 	creation_time?:timestamptz_comparison_exp,
 	id?:Int_comparison_exp,
 	messages?:jsonb_comparison_exp
@@ -24710,6 +25569,7 @@ export type chat_insert_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
 	chat_participants?:chat_participant_arr_rel_insert_input,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -24718,6 +25578,7 @@ export type chat_insert_input = {
 /** aggregate max on columns */
 export type chat_max_fields = {
 	__typename?: "chat_max_fields",
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number
 }
@@ -24725,6 +25586,7 @@ export type chat_max_fields = {
 /** aggregate min on columns */
 export type chat_min_fields = {
 	__typename?: "chat_min_fields",
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number
 }
@@ -24757,6 +25619,7 @@ export type chat_order_by = {
 		agora_info?:order_by,
 	chat_info?:order_by,
 	chat_participants_aggregate?:chat_participant_aggregate_order_by,
+	chat_type?:order_by,
 	creation_time?:order_by,
 	id?:order_by,
 	messages?:order_by
@@ -25121,6 +25984,7 @@ export type chat_prepend_input = {
 export enum chat_select_column {
 	agora_info = "agora_info",
 	chat_info = "chat_info",
+	chat_type = "chat_type",
 	creation_time = "creation_time",
 	id = "id",
 	messages = "messages"
@@ -25130,6 +25994,7 @@ export enum chat_select_column {
 export type chat_set_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25165,6 +26030,7 @@ export type chat_stream_cursor_input = {
 export type chat_stream_cursor_value_input = {
 		agora_info?:jsonb,
 	chat_info?:jsonb,
+	chat_type?:string,
 	creation_time?:timestamptz,
 	id?:number,
 	messages?:jsonb
@@ -25180,6 +26046,7 @@ export type chat_sum_fields = {
 export enum chat_update_column {
 	agora_info = "agora_info",
 	chat_info = "chat_info",
+	chat_type = "chat_type",
 	creation_time = "creation_time",
 	id = "id",
 	messages = "messages"
@@ -29143,6 +30010,220 @@ export type mez_admin_bool_exp = {
 	version?:String_comparison_exp
 }
 
+/** columns and relationships of "mez_admin_chat" */
+export type mez_admin_chat = {
+	__typename?: "mez_admin_chat",
+	app_type:string,
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	user?:user,
+	user_id:number
+}
+
+/** aggregated selection of "mez_admin_chat" */
+export type mez_admin_chat_aggregate = {
+	__typename?: "mez_admin_chat_aggregate",
+	aggregate?:mez_admin_chat_aggregate_fields,
+	nodes:mez_admin_chat[]
+}
+
+/** aggregate fields of "mez_admin_chat" */
+export type mez_admin_chat_aggregate_fields = {
+	__typename?: "mez_admin_chat_aggregate_fields",
+	avg?:mez_admin_chat_avg_fields,
+	count:number,
+	max?:mez_admin_chat_max_fields,
+	min?:mez_admin_chat_min_fields,
+	stddev?:mez_admin_chat_stddev_fields,
+	stddev_pop?:mez_admin_chat_stddev_pop_fields,
+	stddev_samp?:mez_admin_chat_stddev_samp_fields,
+	sum?:mez_admin_chat_sum_fields,
+	var_pop?:mez_admin_chat_var_pop_fields,
+	var_samp?:mez_admin_chat_var_samp_fields,
+	variance?:mez_admin_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type mez_admin_chat_avg_fields = {
+	__typename?: "mez_admin_chat_avg_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** Boolean expression to filter rows from the table "mez_admin_chat". All fields are combined with a logical 'AND'. */
+export type mez_admin_chat_bool_exp = {
+		_and?:mez_admin_chat_bool_exp[],
+	_not?:mez_admin_chat_bool_exp,
+	_or?:mez_admin_chat_bool_exp[],
+	app_type?:String_comparison_exp,
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	user?:user_bool_exp,
+	user_id?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "mez_admin_chat" */
+export enum mez_admin_chat_constraint {
+	mez_admin_chat_pkey = "mez_admin_chat_pkey"
+}
+
+/** input type for incrementing numeric columns in table "mez_admin_chat" */
+export type mez_admin_chat_inc_input = {
+		chat_id?:number,
+	user_id?:number
+}
+
+/** input type for inserting data into table "mez_admin_chat" */
+export type mez_admin_chat_insert_input = {
+		app_type?:string,
+	chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	user?:user_obj_rel_insert_input,
+	user_id?:number
+}
+
+/** aggregate max on columns */
+export type mez_admin_chat_max_fields = {
+	__typename?: "mez_admin_chat_max_fields",
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate min on columns */
+export type mez_admin_chat_min_fields = {
+	__typename?: "mez_admin_chat_min_fields",
+	app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** response of any mutation on the table "mez_admin_chat" */
+export type mez_admin_chat_mutation_response = {
+	__typename?: "mez_admin_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:mez_admin_chat[]
+}
+
+/** on_conflict condition type for table "mez_admin_chat" */
+export type mez_admin_chat_on_conflict = {
+		constraint:mez_admin_chat_constraint,
+	update_columns:mez_admin_chat_update_column[],
+	where?:mez_admin_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "mez_admin_chat". */
+export type mez_admin_chat_order_by = {
+		app_type?:order_by,
+	chat?:chat_order_by,
+	chat_id?:order_by,
+	user?:user_order_by,
+	user_id?:order_by
+}
+
+/** primary key columns input for table: mez_admin_chat */
+export type mez_admin_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "mez_admin_chat" */
+export enum mez_admin_chat_select_column {
+	app_type = "app_type",
+	chat_id = "chat_id",
+	user_id = "user_id"
+}
+
+/** input type for updating data in table "mez_admin_chat" */
+export type mez_admin_chat_set_input = {
+		app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev on columns */
+export type mez_admin_chat_stddev_fields = {
+	__typename?: "mez_admin_chat_stddev_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type mez_admin_chat_stddev_pop_fields = {
+	__typename?: "mez_admin_chat_stddev_pop_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type mez_admin_chat_stddev_samp_fields = {
+	__typename?: "mez_admin_chat_stddev_samp_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** Streaming cursor of the table "mez_admin_chat" */
+export type mez_admin_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:mez_admin_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type mez_admin_chat_stream_cursor_value_input = {
+		app_type?:string,
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate sum on columns */
+export type mez_admin_chat_sum_fields = {
+	__typename?: "mez_admin_chat_sum_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** update columns of table "mez_admin_chat" */
+export enum mez_admin_chat_update_column {
+	app_type = "app_type",
+	chat_id = "chat_id",
+	user_id = "user_id"
+}
+
+export type mez_admin_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:mez_admin_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:mez_admin_chat_set_input,
+	/** filter the rows which have to be updated */
+	where:mez_admin_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type mez_admin_chat_var_pop_fields = {
+	__typename?: "mez_admin_chat_var_pop_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type mez_admin_chat_var_samp_fields = {
+	__typename?: "mez_admin_chat_var_samp_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
+/** aggregate variance on columns */
+export type mez_admin_chat_variance_fields = {
+	__typename?: "mez_admin_chat_variance_fields",
+	chat_id?:number,
+	user_id?:number
+}
+
 /** unique or primary key constraints on table "mez_admin" */
 export enum mez_admin_constraint {
 	mez_admin_pkey = "mez_admin_pkey"
@@ -29286,6 +30367,141 @@ export type mez_admin_variance_fields = {
 	user_id?:number
 }
 
+/** columns and relationships of "mez_json" */
+export type mez_json = {
+	__typename?: "mez_json",
+	json_object:jsonb
+}
+
+/** aggregated selection of "mez_json" */
+export type mez_json_aggregate = {
+	__typename?: "mez_json_aggregate",
+	aggregate?:mez_json_aggregate_fields,
+	nodes:mez_json[]
+}
+
+/** aggregate fields of "mez_json" */
+export type mez_json_aggregate_fields = {
+	__typename?: "mez_json_aggregate_fields",
+	count:number
+}
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type mez_json_append_input = {
+		json_object?:jsonb
+}
+
+/** Boolean expression to filter rows from the table "mez_json". All fields are combined with a logical 'AND'. */
+export type mez_json_bool_exp = {
+		_and?:mez_json_bool_exp[],
+	_not?:mez_json_bool_exp,
+	_or?:mez_json_bool_exp[],
+	json_object?:jsonb_comparison_exp
+}
+
+/** unique or primary key constraints on table "mez_json" */
+export enum mez_json_constraint {
+	mez_json_pkey = "mez_json_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type mez_json_delete_at_path_input = {
+		json_object?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type mez_json_delete_elem_input = {
+		json_object?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type mez_json_delete_key_input = {
+		json_object?:string
+}
+
+/** input type for inserting data into table "mez_json" */
+export type mez_json_insert_input = {
+		json_object?:jsonb
+}
+
+/** response of any mutation on the table "mez_json" */
+export type mez_json_mutation_response = {
+	__typename?: "mez_json_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:mez_json[]
+}
+
+/** on_conflict condition type for table "mez_json" */
+export type mez_json_on_conflict = {
+		constraint:mez_json_constraint,
+	update_columns:mez_json_update_column[],
+	where?:mez_json_bool_exp
+}
+
+/** Ordering options when selecting data from "mez_json". */
+export type mez_json_order_by = {
+		json_object?:order_by
+}
+
+/** primary key columns input for table: mez_json */
+export type mez_json_pk_columns_input = {
+		json_object:jsonb
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type mez_json_prepend_input = {
+		json_object?:jsonb
+}
+
+/** select columns of table "mez_json" */
+export enum mez_json_select_column {
+	json_object = "json_object"
+}
+
+/** input type for updating data in table "mez_json" */
+export type mez_json_set_input = {
+		json_object?:jsonb
+}
+
+/** Streaming cursor of the table "mez_json" */
+export type mez_json_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:mez_json_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type mez_json_stream_cursor_value_input = {
+		json_object?:jsonb
+}
+
+/** update columns of table "mez_json" */
+export enum mez_json_update_column {
+	json_object = "json_object"
+}
+
+export type mez_json_updates = {
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:mez_json_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:mez_json_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:mez_json_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:mez_json_delete_key_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:mez_json_prepend_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:mez_json_set_input,
+	/** filter the rows which have to be updated */
+	where:mez_json_bool_exp
+}
+
 export type money = any
 
 /** Boolean expression to compare columns of type "money". All fields are combined with logical 'AND'. */
@@ -29354,6 +30570,14 @@ export type mutation_root = {
 	delete_mez_admin?:mez_admin_mutation_response,
 	/** delete single row from the table: "mez_admin" */
 	delete_mez_admin_by_pk?:mez_admin,
+	/** delete data from the table: "mez_admin_chat" */
+	delete_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** delete single row from the table: "mez_admin_chat" */
+	delete_mez_admin_chat_by_pk?:mez_admin_chat,
+	/** delete data from the table: "mez_json" */
+	delete_mez_json?:mez_json_mutation_response,
+	/** delete single row from the table: "mez_json" */
+	delete_mez_json_by_pk?:mez_json,
 	/** delete data from the table: "notification_info" */
 	delete_notification_info?:notification_info_mutation_response,
 	/** delete single row from the table: "notification_info" */
@@ -29486,8 +30710,16 @@ export type mutation_root = {
 	insert_language_one?:language,
 	/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:mez_admin_mutation_response,
+	/** insert data into the table: "mez_admin_chat" */
+	insert_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** insert a single row into the table: "mez_admin_chat" */
+	insert_mez_admin_chat_one?:mez_admin_chat,
 	/** insert a single row into the table: "mez_admin" */
 	insert_mez_admin_one?:mez_admin,
+	/** insert data into the table: "mez_json" */
+	insert_mez_json?:mez_json_mutation_response,
+	/** insert a single row into the table: "mez_json" */
+	insert_mez_json_one?:mez_json,
 	/** insert data into the table: "notification_info" */
 	insert_notification_info?:notification_info_mutation_response,
 	/** insert a single row into the table: "notification_info" */
@@ -29646,8 +30878,20 @@ export type mutation_root = {
 	update_mez_admin?:mez_admin_mutation_response,
 	/** update single row of the table: "mez_admin" */
 	update_mez_admin_by_pk?:mez_admin,
+	/** update data of the table: "mez_admin_chat" */
+	update_mez_admin_chat?:mez_admin_chat_mutation_response,
+	/** update single row of the table: "mez_admin_chat" */
+	update_mez_admin_chat_by_pk?:mez_admin_chat,
+	/** update multiples rows of table: "mez_admin_chat" */
+	update_mez_admin_chat_many?:(mez_admin_chat_mutation_response | undefined)[],
 	/** update multiples rows of table: "mez_admin" */
 	update_mez_admin_many?:(mez_admin_mutation_response | undefined)[],
+	/** update data of the table: "mez_json" */
+	update_mez_json?:mez_json_mutation_response,
+	/** update single row of the table: "mez_json" */
+	update_mez_json_by_pk?:mez_json,
+	/** update multiples rows of table: "mez_json" */
+	update_mez_json_many?:(mez_json_mutation_response | undefined)[],
 	/** update data of the table: "notification_info" */
 	update_notification_info?:notification_info_mutation_response,
 	/** update single row of the table: "notification_info" */
@@ -30085,6 +31329,18 @@ export type query_root = {
 	mez_admin_aggregate:mez_admin_aggregate,
 	/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:mez_admin,
+	/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat:mez_admin_chat[],
+	/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate:mez_admin_chat_aggregate,
+	/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:mez_admin_chat,
+	/** fetch data from the table: "mez_json" */
+	mez_json:mez_json[],
+	/** fetch aggregated fields from the table: "mez_json" */
+	mez_json_aggregate:mez_json_aggregate,
+	/** fetch data from the table: "mez_json" using primary key columns */
+	mez_json_by_pk?:mez_json,
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
 	/** fetch aggregated fields from the table: "notification_info" */
@@ -30161,6 +31417,14 @@ export type query_root = {
 	restaurant_order_public:restaurant_order_public[],
 	/** fetch aggregated fields from the table: "restaurant.order_public" */
 	restaurant_order_public_aggregate:restaurant_order_public_aggregate,
+	/** execute function "restaurant.orders_by_date" which returns "mez_json" */
+	restaurant_orders_by_date?:mez_json,
+	/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_date_aggregate:mez_json_aggregate,
+	/** execute function "restaurant.orders_by_month" which returns "mez_json" */
+	restaurant_orders_by_month?:mez_json,
+	/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_month_aggregate:mez_json_aggregate,
 	/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant:restaurant_restaurant[],
 	/** fetch aggregated fields from the table: "restaurant.restaurant" */
@@ -33888,8 +35152,8 @@ export type restaurant_order = {
 	actual_food_ready_time?:timestamptz,
 	cancellation_time?:timestamptz,
 	/** An object relationship */
-	chat:chat,
-	chat_id:number,
+	chat?:chat,
+	chat_id?:number,
 	/** An object relationship */
 	customer:customer_customer,
 	customer_app_type:string,
@@ -35396,6 +36660,14 @@ export type restaurant_order_variance_order_by = {
 	tax?:order_by
 }
 
+export type restaurant_orders_by_date_args = {
+		res_id?:number
+}
+
+export type restaurant_orders_by_month_args = {
+		res_id?:number
+}
+
 /** columns and relationships of "restaurant.restaurant" */
 export type restaurant_restaurant = {
 	__typename?: "restaurant_restaurant",
@@ -35416,6 +36688,10 @@ export type restaurant_restaurant = {
 	firebase_id?:string,
 	id:number,
 	image:string,
+	/** An array relationship */
+	items:restaurant_item[],
+	/** An aggregate relationship */
+	items_aggregate:restaurant_item_aggregate,
 	language_id:string,
 	location_gps:geography,
 	location_text:string,
@@ -35502,6 +36778,8 @@ export type restaurant_restaurant_bool_exp = {
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
+	items?:restaurant_item_bool_exp,
+	items_aggregate?:restaurant_item_aggregate_bool_exp,
 	language_id?:String_comparison_exp,
 	location_gps?:geography_comparison_exp,
 	location_text?:String_comparison_exp,
@@ -35578,6 +36856,7 @@ export type restaurant_restaurant_insert_input = {
 	firebase_id?:string,
 	id?:number,
 	image?:string,
+	items?:restaurant_item_arr_rel_insert_input,
 	language_id?:string,
 	location_gps?:geography,
 	location_text?:string,
@@ -35660,6 +36939,7 @@ export type restaurant_restaurant_order_by = {
 	firebase_id?:order_by,
 	id?:order_by,
 	image?:order_by,
+	items_aggregate?:restaurant_item_aggregate_order_by,
 	language_id?:order_by,
 	location_gps?:order_by,
 	location_text?:order_by,
@@ -37218,8 +38498,24 @@ export type subscription_root = {
 	mez_admin_aggregate:mez_admin_aggregate,
 	/** fetch data from the table: "mez_admin" using primary key columns */
 	mez_admin_by_pk?:mez_admin,
+	/** fetch data from the table: "mez_admin_chat" */
+	mez_admin_chat:mez_admin_chat[],
+	/** fetch aggregated fields from the table: "mez_admin_chat" */
+	mez_admin_chat_aggregate:mez_admin_chat_aggregate,
+	/** fetch data from the table: "mez_admin_chat" using primary key columns */
+	mez_admin_chat_by_pk?:mez_admin_chat,
+	/** fetch data from the table in a streaming manner: "mez_admin_chat" */
+	mez_admin_chat_stream:mez_admin_chat[],
 	/** fetch data from the table in a streaming manner: "mez_admin" */
 	mez_admin_stream:mez_admin[],
+	/** fetch data from the table: "mez_json" */
+	mez_json:mez_json[],
+	/** fetch aggregated fields from the table: "mez_json" */
+	mez_json_aggregate:mez_json_aggregate,
+	/** fetch data from the table: "mez_json" using primary key columns */
+	mez_json_by_pk?:mez_json,
+	/** fetch data from the table in a streaming manner: "mez_json" */
+	mez_json_stream:mez_json[],
 	/** fetch data from the table: "notification_info" */
 	notification_info:notification_info[],
 	/** fetch aggregated fields from the table: "notification_info" */
@@ -37322,6 +38618,14 @@ export type subscription_root = {
 	restaurant_order_public_stream:restaurant_order_public[],
 	/** fetch data from the table in a streaming manner: "restaurant.order" */
 	restaurant_order_stream:restaurant_order[],
+	/** execute function "restaurant.orders_by_date" which returns "mez_json" */
+	restaurant_orders_by_date?:mez_json,
+	/** execute function "restaurant.orders_by_date" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_date_aggregate:mez_json_aggregate,
+	/** execute function "restaurant.orders_by_month" which returns "mez_json" */
+	restaurant_orders_by_month?:mez_json,
+	/** execute function "restaurant.orders_by_month" and query aggregates on result of table type "mez_json" */
+	restaurant_orders_by_month_aggregate:mez_json_aggregate,
 	/** fetch data from the table: "restaurant.restaurant" */
 	restaurant_restaurant:restaurant_restaurant[],
 	/** fetch aggregated fields from the table: "restaurant.restaurant" */
@@ -38562,6 +39866,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz_comparison_exp",
 			array:false,
@@ -38669,6 +39979,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz",
 			array:false,
@@ -38737,6 +40053,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		chat_participants_aggregate:{
 			type:"chat_participant_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_type:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -39433,6 +40755,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		chat_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		creation_time:{
 			type:"timestamptz",
 			array:false,
@@ -39475,6 +40803,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		chat_info:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_type:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -47721,6 +49055,255 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	mez_admin_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	mez_admin_chat_bool_exp:{
+		_and:{
+			type:"mez_admin_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"mez_admin_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		app_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_constraint: "enum",
+	mez_admin_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_insert_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_on_conflict:{
+		constraint:{
+			type:"mez_admin_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"mez_admin_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_order_by:{
+		app_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_admin_chat_select_column: "enum",
+	mez_admin_chat_set_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_stream_cursor_input:{
+		initial_value:{
+			type:"mez_admin_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_stream_cursor_value_input:{
+		app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_admin_chat_update_column: "enum",
+	mez_admin_chat_updates:{
+		_inc:{
+			type:"mez_admin_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"mez_admin_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"mez_admin_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	mez_admin_constraint: "enum",
 	mez_admin_inc_input:{
 		user_id:{
@@ -47863,6 +49446,219 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		where:{
 			type:"mez_admin_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_json:{
+		json_object:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	mez_json_aggregate_fields:{
+		count:{
+			columns:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	mez_json_append_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_bool_exp:{
+		_and:{
+			type:"mez_json_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"mez_json_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"mez_json_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		json_object:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_constraint: "enum",
+	mez_json_delete_at_path_input:{
+		json_object:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_json_delete_elem_input:{
+		json_object:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_delete_key_input:{
+		json_object:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_insert_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_on_conflict:{
+		constraint:{
+			type:"mez_json_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"mez_json_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"mez_json_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_order_by:{
+		json_object:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_pk_columns_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	mez_json_prepend_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_select_column: "enum",
+	mez_json_set_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_stream_cursor_input:{
+		initial_value:{
+			type:"mez_json_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_stream_cursor_value_input:{
+		json_object:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	mez_json_update_column: "enum",
+	mez_json_updates:{
+		_append:{
+			type:"mez_json_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"mez_json_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"mez_json_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"mez_json_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"mez_json_prepend_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"mez_json_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"mez_json_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -48121,6 +49917,38 @@ export const AllTypesProps: Record<string,any> = {
 		delete_mez_admin_by_pk:{
 			user_id:{
 				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin_chat:{
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_admin_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_json:{
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_mez_json_by_pk:{
+			json_object:{
+				type:"jsonb",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -48798,6 +50626,34 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		insert_mez_admin_chat:{
+			objects:{
+				type:"mez_admin_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_admin_chat_one:{
+			object:{
+				type:"mez_admin_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_admin_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		insert_mez_admin_one:{
 			object:{
 				type:"mez_admin_insert_input",
@@ -48807,6 +50663,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"mez_admin_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_json:{
+			objects:{
+				type:"mez_json_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_json_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_mez_json_one:{
+			object:{
+				type:"mez_json_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"mez_json_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -50080,9 +51964,153 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_mez_admin_chat:{
+			_inc:{
+				type:"mez_admin_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_chat_by_pk:{
+			_inc:{
+				type:"mez_admin_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_admin_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"mez_admin_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_admin_chat_many:{
+			updates:{
+				type:"mez_admin_chat_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
 		update_mez_admin_many:{
 			updates:{
 				type:"mez_admin_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_mez_json:{
+			_append:{
+				type:"mez_json_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"mez_json_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"mez_json_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"mez_json_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"mez_json_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_json_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_json_by_pk:{
+			_append:{
+				type:"mez_json_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"mez_json_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"mez_json_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"mez_json_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"mez_json_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"mez_json_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"mez_json_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_mez_json_many:{
+			updates:{
+				type:"mez_json_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -52444,6 +54472,150 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		mez_admin_chat:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_aggregate:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_json:{
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_json_aggregate:{
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_json_by_pk:{
+			json_object:{
+				type:"jsonb",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		notification_info:{
 			distinct_on:{
 				type:"notification_info_select_column",
@@ -53367,6 +55539,158 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"restaurant_order_public_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_date:{
+			args:{
+				type:"restaurant_orders_by_date_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_date_aggregate:{
+			args:{
+				type:"restaurant_orders_by_date_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_month:{
+			args:{
+				type:"restaurant_orders_by_month_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_month_aggregate:{
+			args:{
+				type:"restaurant_orders_by_month_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -65471,6 +67795,22 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	restaurant_orders_by_date_args:{
+		res_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_orders_by_month_args:{
+		res_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	restaurant_restaurant:{
 		accepted_payments:{
 			path:{
@@ -65603,6 +67943,70 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"delivery_driver_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		items:{
+			distinct_on:{
+				type:"restaurant_item_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_item_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_item_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		items_aggregate:{
+			distinct_on:{
+				type:"restaurant_item_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_item_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_item_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -65970,6 +68374,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items:{
+			type:"restaurant_item_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		language_id:{
 			type:"String_comparison_exp",
 			array:false,
@@ -66197,6 +68613,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items:{
+			type:"restaurant_item_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		language_id:{
 			type:"String",
 			array:false,
@@ -66355,6 +68777,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		items_aggregate:{
+			type:"restaurant_item_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -70097,6 +72525,98 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		mez_admin_chat:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_aggregate:{
+			distinct_on:{
+				type:"mez_admin_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_admin_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_admin_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_admin_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"mez_admin_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_admin_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		mez_admin_stream:{
 			batch_size:{
 				type:"Int",
@@ -70112,6 +72632,98 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"mez_admin_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_json:{
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_json_aggregate:{
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		mez_json_by_pk:{
+			json_object:{
+				type:"jsonb",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		mez_json_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"mez_json_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -71300,6 +73912,158 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"restaurant_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_date:{
+			args:{
+				type:"restaurant_orders_by_date_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_date_aggregate:{
+			args:{
+				type:"restaurant_orders_by_date_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_month:{
+			args:{
+				type:"restaurant_orders_by_month_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_orders_by_month_aggregate:{
+			args:{
+				type:"restaurant_orders_by_month_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"mez_json_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"mez_json_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"mez_json_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -73358,6 +76122,7 @@ export const ReturnTypes: Record<string,any> = {
 		chat_info:"jsonb",
 		chat_participants:"chat_participant",
 		chat_participants_aggregate:"chat_participant_aggregate",
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int",
 		messages:"jsonb"
@@ -73383,10 +76148,12 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	chat_max_fields:{
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int"
 	},
 	chat_min_fields:{
+		chat_type:"String",
 		creation_time:"timestamptz",
 		id:"Int"
 	},
@@ -74525,6 +77292,76 @@ export const ReturnTypes: Record<string,any> = {
 	mez_admin_avg_fields:{
 		user_id:"Float"
 	},
+	mez_admin_chat:{
+		app_type:"String",
+		chat:"chat",
+		chat_id:"Int",
+		user:"user",
+		user_id:"Int"
+	},
+	mez_admin_chat_aggregate:{
+		aggregate:"mez_admin_chat_aggregate_fields",
+		nodes:"mez_admin_chat"
+	},
+	mez_admin_chat_aggregate_fields:{
+		avg:"mez_admin_chat_avg_fields",
+		count:"Int",
+		max:"mez_admin_chat_max_fields",
+		min:"mez_admin_chat_min_fields",
+		stddev:"mez_admin_chat_stddev_fields",
+		stddev_pop:"mez_admin_chat_stddev_pop_fields",
+		stddev_samp:"mez_admin_chat_stddev_samp_fields",
+		sum:"mez_admin_chat_sum_fields",
+		var_pop:"mez_admin_chat_var_pop_fields",
+		var_samp:"mez_admin_chat_var_samp_fields",
+		variance:"mez_admin_chat_variance_fields"
+	},
+	mez_admin_chat_avg_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_max_fields:{
+		app_type:"String",
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_min_fields:{
+		app_type:"String",
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"mez_admin_chat"
+	},
+	mez_admin_chat_stddev_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_sum_fields:{
+		chat_id:"Int",
+		user_id:"Int"
+	},
+	mez_admin_chat_var_pop_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_var_samp_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
+	mez_admin_chat_variance_fields:{
+		chat_id:"Float",
+		user_id:"Float"
+	},
 	mez_admin_max_fields:{
 		user_id:"Int",
 		version:"String"
@@ -74558,6 +77395,20 @@ export const ReturnTypes: Record<string,any> = {
 	mez_admin_variance_fields:{
 		user_id:"Float"
 	},
+	mez_json:{
+		json_object:"jsonb"
+	},
+	mez_json_aggregate:{
+		aggregate:"mez_json_aggregate_fields",
+		nodes:"mez_json"
+	},
+	mez_json_aggregate_fields:{
+		count:"Int"
+	},
+	mez_json_mutation_response:{
+		affected_rows:"Int",
+		returning:"mez_json"
+	},
 	mutation_root:{
 		delete_app_type:"app_type_mutation_response",
 		delete_app_type_by_pk:"app_type",
@@ -74584,6 +77435,10 @@ export const ReturnTypes: Record<string,any> = {
 		delete_language_by_pk:"language",
 		delete_mez_admin:"mez_admin_mutation_response",
 		delete_mez_admin_by_pk:"mez_admin",
+		delete_mez_admin_chat:"mez_admin_chat_mutation_response",
+		delete_mez_admin_chat_by_pk:"mez_admin_chat",
+		delete_mez_json:"mez_json_mutation_response",
+		delete_mez_json_by_pk:"mez_json",
 		delete_notification_info:"notification_info_mutation_response",
 		delete_notification_info_by_pk:"notification_info",
 		delete_restaurant_cart:"restaurant_cart_mutation_response",
@@ -74650,7 +77505,11 @@ export const ReturnTypes: Record<string,any> = {
 		insert_language:"language_mutation_response",
 		insert_language_one:"language",
 		insert_mez_admin:"mez_admin_mutation_response",
+		insert_mez_admin_chat:"mez_admin_chat_mutation_response",
+		insert_mez_admin_chat_one:"mez_admin_chat",
 		insert_mez_admin_one:"mez_admin",
+		insert_mez_json:"mez_json_mutation_response",
+		insert_mez_json_one:"mez_json",
 		insert_notification_info:"notification_info_mutation_response",
 		insert_notification_info_one:"notification_info",
 		insert_restaurant_cart:"restaurant_cart_mutation_response",
@@ -74730,7 +77589,13 @@ export const ReturnTypes: Record<string,any> = {
 		update_language_many:"language_mutation_response",
 		update_mez_admin:"mez_admin_mutation_response",
 		update_mez_admin_by_pk:"mez_admin",
+		update_mez_admin_chat:"mez_admin_chat_mutation_response",
+		update_mez_admin_chat_by_pk:"mez_admin_chat",
+		update_mez_admin_chat_many:"mez_admin_chat_mutation_response",
 		update_mez_admin_many:"mez_admin_mutation_response",
+		update_mez_json:"mez_json_mutation_response",
+		update_mez_json_by_pk:"mez_json",
+		update_mez_json_many:"mez_json_mutation_response",
 		update_notification_info:"notification_info_mutation_response",
 		update_notification_info_by_pk:"notification_info",
 		update_notification_info_many:"notification_info_mutation_response",
@@ -74904,6 +77769,12 @@ export const ReturnTypes: Record<string,any> = {
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
+		mez_admin_chat:"mez_admin_chat",
+		mez_admin_chat_aggregate:"mez_admin_chat_aggregate",
+		mez_admin_chat_by_pk:"mez_admin_chat",
+		mez_json:"mez_json",
+		mez_json_aggregate:"mez_json_aggregate",
+		mez_json_by_pk:"mez_json",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
 		notification_info_by_pk:"notification_info",
@@ -74942,6 +77813,10 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_order_item_by_pk:"restaurant_order_item",
 		restaurant_order_public:"restaurant_order_public",
 		restaurant_order_public_aggregate:"restaurant_order_public_aggregate",
+		restaurant_orders_by_date:"mez_json",
+		restaurant_orders_by_date_aggregate:"mez_json_aggregate",
+		restaurant_orders_by_month:"mez_json",
+		restaurant_orders_by_month_aggregate:"mez_json_aggregate",
 		restaurant_restaurant:"restaurant_restaurant",
 		restaurant_restaurant_aggregate:"restaurant_restaurant_aggregate",
 		restaurant_restaurant_by_pk:"restaurant_restaurant",
@@ -76316,6 +79191,8 @@ export const ReturnTypes: Record<string,any> = {
 		firebase_id:"String",
 		id:"Int",
 		image:"String",
+		items:"restaurant_item",
+		items_aggregate:"restaurant_item_aggregate",
 		language_id:"String",
 		location_gps:"geography",
 		location_text:"String",
@@ -76809,7 +79686,15 @@ export const ReturnTypes: Record<string,any> = {
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
+		mez_admin_chat:"mez_admin_chat",
+		mez_admin_chat_aggregate:"mez_admin_chat_aggregate",
+		mez_admin_chat_by_pk:"mez_admin_chat",
+		mez_admin_chat_stream:"mez_admin_chat",
 		mez_admin_stream:"mez_admin",
+		mez_json:"mez_json",
+		mez_json_aggregate:"mez_json_aggregate",
+		mez_json_by_pk:"mez_json",
+		mez_json_stream:"mez_json",
 		notification_info:"notification_info",
 		notification_info_aggregate:"notification_info_aggregate",
 		notification_info_by_pk:"notification_info",
@@ -76861,6 +79746,10 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_order_public_aggregate:"restaurant_order_public_aggregate",
 		restaurant_order_public_stream:"restaurant_order_public",
 		restaurant_order_stream:"restaurant_order",
+		restaurant_orders_by_date:"mez_json",
+		restaurant_orders_by_date_aggregate:"mez_json_aggregate",
+		restaurant_orders_by_month:"mez_json",
+		restaurant_orders_by_month_aggregate:"mez_json_aggregate",
 		restaurant_restaurant:"restaurant_restaurant",
 		restaurant_restaurant_aggregate:"restaurant_restaurant_aggregate",
 		restaurant_restaurant_by_pk:"restaurant_restaurant",

@@ -72,7 +72,8 @@ class CustCartViewController {
       orderToLocation.value =
           customerAuthController.customer?.defaultLocation?.location;
       if (orderToLocation.value != null) {
-        cart.toLocation = orderToLocation.value;
+        _cartRxn.value?.toLocation = orderToLocation.value;
+        _cartRxn.refresh();
 
         unawaited(updateShippingPrice());
       }

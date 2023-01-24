@@ -95,16 +95,6 @@ class MezSideMenu extends GetWidget<AuthController> {
               MezRouter.toNamed<void>(kSignInRouteOptional);
           },
         ),
-        if (controller.isUserSignedIn)
-          SideMenuItem(
-            icon: Icons.notifications,
-
-            title: "${_i18n()["notifications"]}", // _i18n()["userInfo"],
-            onClick: () {
-              _drawerController.closeMenu();
-              MezRouter.toNamed<void>(kNotificationsRoute);
-            },
-          ),
         if (_drawerController.pastOrdersRoute != null)
           SideMenuItem(
             icon: Icons.restore,

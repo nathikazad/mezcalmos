@@ -42,6 +42,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
 
   @override
   void dispose() {
+    viewController.dispose();
     super.dispose();
   }
 

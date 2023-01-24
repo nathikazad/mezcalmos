@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
@@ -96,7 +95,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
 
       final RestaurantOrder res = RestaurantOrder(
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
-        chatId: orderData.chat_id,
+        chatId: orderData.chat_id!,
         orderId: orderData.id,
         notes: orderData.notes,
         estimatedFoodReadyTime: (orderData.estimated_food_ready_time != null)
@@ -268,7 +267,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
-    chatId: orderData.chat_id,
+    chatId: orderData.chat_id!,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)

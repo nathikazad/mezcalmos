@@ -115,7 +115,7 @@ class ROpDashboardPage extends StatelessWidget {
                         true;
                     navigateToOperators(
                         serviceProviderId: viewController.restaurantId,
-                        controllerType: ServiceProviderType.Restaurant);
+                        serviceProviderType: ServiceProviderType.Restaurant);
                   },
                   icon: Icons.people,
                   titleWidget: Text(

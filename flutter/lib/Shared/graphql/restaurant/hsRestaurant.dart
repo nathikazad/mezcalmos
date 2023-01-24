@@ -251,6 +251,14 @@ Future<Restaurant> update_restaurant_info(
   }
   final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk data =
       response.parsedData!.update_restaurant_restaurant_by_pk!;
+  final PaymentInfo _paymentInfo = PaymentInfo();
+  if (data.accepted_payments != null) {
+    _paymentInfo.acceptedPayments =
+        parseAcceptedPayments(data.accepted_payments);
+  }
+  if (data.stripe_info != null) {
+    _paymentInfo.stripe = parseServiceStripeInfo(data.stripe_info);
+  }
   mezDbgPrint(
       "Location after saving 📍 ${data.location_gps.latitude}  --  ${data.location_gps.longitude} ");
   return Restaurant(
@@ -271,7 +279,7 @@ Future<Restaurant> update_restaurant_info(
           name: data.name,
           location: Location.fromHasura(data.location_gps, data.location_text)),
       schedule: data.schedule != null ? Schedule.fromData(data.schedule) : null,
-      paymentInfo: PaymentInfo(),
+      paymentInfo: _paymentInfo,
       restaurantState:
           ServiceState(data.open_status.toServiceStatus(), data.approved),
       primaryLanguage: data.language_id.toString().toLanguageType(),

@@ -1,0 +1,36 @@
+query getDeliveryCompanyById($id: Int!) {
+  delivery_company_by_pk(id: $id) {
+    approved
+    description_id
+    id
+    image
+    name
+    open_status
+    service_provider_type
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
+  update_delivery_company_by_pk(pk_columns: { id: $id }, _set: $data) {
+    approved
+    description_id
+    id
+    image
+    name
+    open_status
+    service_provider_type
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}

@@ -191,7 +191,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
           RestaurantOrder(
             deliveryMode: DeliveryMode.None,
             orderId: _o.id,
-            chatId: _o.chat_id,
+            chatId: _o.chat_id!,
             status: _o.status.toRestaurantOrderStatus(),
             quantity: 1,
             serviceProviderId: _o.restaurant.id,

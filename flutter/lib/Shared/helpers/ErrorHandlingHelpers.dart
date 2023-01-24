@@ -1,3 +1,3 @@
 void throwError(error) {
-  throw Exception(" \n 🛑 Error 🛑 $error  \n  ");
+  throw Exception(" \n ======🛑 Error 🛑===== $error  \n  ");
 }

@@ -5299,7 +5299,7 @@ class Query$get_customer_orders$restaurant_order {
     required this.customer_app_type,
     this.notes,
     required this.tax,
-    required this.chat_id,
+    this.chat_id,
     required this.delivery_cost,
     this.delivery,
     required this.$__typename,
@@ -5355,7 +5355,7 @@ class Query$get_customer_orders$restaurant_order {
       customer_app_type: (l$customer_app_type as String),
       notes: (l$notes as String?),
       tax: moneyFromJson(l$tax),
-      chat_id: (l$chat_id as int),
+      chat_id: (l$chat_id as int?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
@@ -5401,7 +5401,7 @@ class Query$get_customer_orders$restaurant_order {
 
   final double tax;
 
-  final int chat_id;
+  final int? chat_id;
 
   final double delivery_cost;
 
@@ -5781,9 +5781,7 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
                 : (customer_app_type as String),
         notes: notes == _undefined ? _instance.notes : (notes as String?),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        chat_id: chat_id == _undefined || chat_id == null
-            ? _instance.chat_id
-            : (chat_id as int),
+        chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),

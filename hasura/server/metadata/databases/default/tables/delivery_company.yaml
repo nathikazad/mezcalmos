@@ -57,6 +57,22 @@ select_permissions:
             user_id:
               _eq: X-Hasura-User-Id
 update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - image
+        - name
+        - open_status
+      filter:
+        delivery_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check:
+        delivery_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
