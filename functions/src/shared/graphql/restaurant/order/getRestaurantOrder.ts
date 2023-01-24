@@ -3,7 +3,7 @@ import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, Location } from "../../../models/Generic/Generic";
 import { PaymentType } from "../../../models/Generic/Order";
 import { OperatorStatus, RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
-import { OrderItem, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderType } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { OrderItem, RestaurantOrder, RestaurantOrderStatus, DeliveryType } from "../../../models/Services/Restaurant/RestaurantOrder";
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
   let chain = getHasura();
@@ -13,7 +13,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
       { id: orderId }, {
         restaurant_id: true,
         total_cost: true,
-        order_type: true,
+        delivery_type: true,
         status: true,
         payment_type: true,
         customer_id: true,
@@ -85,7 +85,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     toLocation,
     estimatedFoodReadyTime: response.restaurant_order_by_pk.estimated_food_ready_time,
     status: response.restaurant_order_by_pk.status as RestaurantOrderStatus,
-    orderType: response.restaurant_order_by_pk.order_type as RestaurantOrderType,
+    deliveryType: response.restaurant_order_by_pk.delivery_type as DeliveryType,
     customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
     deliveryCost: response.restaurant_order_by_pk.delivery_cost,
     items,
@@ -111,7 +111,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
     }, {
       id: true,
       restaurant_id: true,
-      order_type: true,
+      delivery_type: true,
       status: true,
       payment_type: true,
       customer_id: true,
@@ -133,7 +133,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         image: true,
         self_delivery:true,
         location_gps: true,
-       
+        delivery: true,
+        customer_pickup: true,
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -198,7 +199,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       },
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
-      orderType: o.order_type as RestaurantOrderType,
+      deliveryType: o.delivery_type as DeliveryType,
       customerAppType: o.customer_app_type as AppType,
       deliveryCost: o.delivery_cost,
       items,
@@ -208,6 +209,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         image: o.restaurant.image,
         location: o.restaurant.location_gps as Location,
         restaurantOperators,
+        delivery: o.restaurant.delivery,
+        customerPickup: o.restaurant.customer_pickup
       }
     }
   })
@@ -226,7 +229,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
     }, {
       id: true,
       restaurant_id: true,
-      order_type: true,
+      delivery_type: true,
       status: true,
       payment_type: true,
       customer_id: true,
@@ -251,7 +254,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       }],
     }]
   });
-  return response.restaurant_order.map((o) => {
+  return response.restaurant_order.map((o): RestaurantOrder => {
     let items: OrderItem[] = o.items.map((i) => {
       return {
         name: i.restaurant_item.name,
@@ -272,7 +275,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       },
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
-      orderType: o.order_type as RestaurantOrderType,
+      deliveryType: o.delivery_type as DeliveryType,
       customerAppType: o.customer_app_type as AppType,
       deliveryCost: o.delivery_cost,
       items

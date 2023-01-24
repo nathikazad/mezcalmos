@@ -1,2 +1,4 @@
+- "!include delivery_fetch_delivery_company.yaml"
+- "!include restaurant_fetch_restaurants.yaml"
 - "!include restaurant_orders_by_date.yaml"
 - "!include restaurant_orders_by_month.yaml"

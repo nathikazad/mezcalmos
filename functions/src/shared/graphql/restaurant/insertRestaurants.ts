@@ -99,8 +99,8 @@ export async function insertRestaurants(data: any) {
                                     })
                                 }
             
-                                let choices = undefined;
                                 if(o.choices) {
+                                    let choices = undefined;
                                     choices = o.choices.map((ch: any) => {
                                         let choiceName = [];
                                         if(ch.name.en) {

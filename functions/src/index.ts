@@ -70,6 +70,7 @@ export const restaurant2 = {
   checkoutCart: authenticatedCall((userId, data) => checkout(userId, data)),
   prepareOrder: authenticatedCall((userId, data) => restaurantStatusChange.prepareOrder(userId, data)),
   readyForOrderPickup: authenticatedCall((userId, data) => restaurantStatusChange.readyForPickupOrder(userId, data)),
+  orderPickedUpByCustomer: authenticatedCall((userId, data) => restaurantStatusChange.orderPickedUpByCustomer(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),

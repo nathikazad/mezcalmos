@@ -1,4 +1,5 @@
 import { ServiceProviderStripeInfo } from "../../../../utilities/stripe/model";
+import { DeliveryDetails } from "../../Generic/Delivery";
 import { Language, Location, NotificationInfo } from "../../Generic/Generic";
 import { PaymentType } from "../../Generic/Order";
 import { UserInfo } from "../../Generic/User";
@@ -21,6 +22,10 @@ export interface Restaurant {
   approved?: boolean;
   restaurantOperators?: Array<RestaurantOperator>
   links?: ServiceLink;
+  deliveryPartnerId?: number;
+  delivery: boolean;
+  customerPickup: boolean;
+  deliveryDetails?: DeliveryDetails;
 }
 
 export enum OpenStatus {

@@ -4,7 +4,7 @@ import { ParticipantAgoraDetails } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { CustomerInfo } from "../../models/Generic/User";
 import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
-import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
+import { DeliveryType, RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 
 export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: Restaurant, delivery: DeliveryOrder, customer: CustomerInfo) {
 
@@ -50,53 +50,56 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
       id: true
     }]
   });
-  chain.mutation({
-    update_chat_by_pk: [{
-      pk_columns: {
-        id: delivery.chatWithCustomerId
-      },
-      _set: {
-        chat_info: JSON.stringify({
-          DeliveryApp: {
-            chatTitle: customer.name ?? "Customer",
-            chatImage: customer.image,
-            parentLink: `/Orders/${delivery.deliveryId}`
-          },
-          RestaurantApp: {
-            chatTitle: customer.name ?? "Customer",
-            chatImage: customer.image,
-            parentLink: `/Orders/${delivery.deliveryId}`
-          },
-          CustomerApp: {
-            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
-          }
-        })
-      }
-    }, {
-      id: true
-    },]
-  });
-  chain.mutation({
-    update_chat_by_pk: [{
-      pk_columns: {
-        id: delivery.chatWithServiceProviderId
-      },
-      _set: {
-        chat_info: JSON.stringify({
-          DeliveryApp: {
-            chatTitle: restaurant.name,
-            chatImage: restaurant.image,
-            parentLink: `/Orders/${delivery.deliveryId}`
-          },
-          RestaurantApp: {
-            parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
-          }
-        })
-      }
-    }, {
-      id: true
-    },]
-  });
+  if(restaurantOrder.deliveryType == DeliveryType.Delivery) {
+    chain.mutation({
+      update_chat_by_pk: [{
+        pk_columns: {
+          id: delivery.chatWithCustomerId
+        },
+        _set: {
+          chat_info: JSON.stringify({
+            DeliveryApp: {
+              chatTitle: customer.name ?? "Customer",
+              chatImage: customer.image,
+              parentLink: `/Orders/${delivery.deliveryId}`
+            },
+            RestaurantApp: {
+              chatTitle: customer.name ?? "Customer",
+              chatImage: customer.image,
+              parentLink: `/Orders/${delivery.deliveryId}`
+            },
+            CustomerApp: {
+              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+            }
+          })
+        }
+      }, {
+        id: true
+      },]
+    });
+    chain.mutation({
+      update_chat_by_pk: [{
+        pk_columns: {
+          id: delivery.chatWithServiceProviderId
+        },
+        _set: {
+          chat_info: JSON.stringify({
+            DeliveryApp: {
+              chatTitle: restaurant.name,
+              chatImage: restaurant.image,
+              parentLink: `/Orders/${delivery.deliveryId}`
+            },
+            RestaurantApp: {
+              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`
+            }
+          })
+        }
+      }, {
+        id: true
+      },]
+    });
+  }
+  
 }
 
 export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDriver: DeliveryDriver) {

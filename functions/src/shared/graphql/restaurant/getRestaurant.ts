@@ -40,7 +40,12 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
           email: true,
           phone: true,
         }
-      }]
+      }],
+      delivery_partner: {
+        delivery_company_id: true,
+      },
+      delivery: true,
+      customer_pickup: true,
     }],
   });
 
@@ -94,7 +99,10 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     approved: response.restaurant_restaurant_by_pk.approved,
     stripeInfo: JSON.parse(response.restaurant_restaurant_by_pk.stripe_info),
     acceptedPayments: JSON.parse(response.restaurant_restaurant_by_pk.accepted_payments),
-    restaurantOperators
+    restaurantOperators,
+    deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partner?.delivery_company_id,
+    customerPickup: response.restaurant_restaurant_by_pk.customer_pickup,
+    delivery: response.restaurant_restaurant_by_pk.delivery
   }
 
   return restaurant;

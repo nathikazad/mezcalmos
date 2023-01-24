@@ -57,7 +57,7 @@ select_permissions:
         - id
         - notes
         - order_time
-        - order_type
+        - delivery_type
         - payment_type
         - refund_amount
         - restaurant_id
@@ -100,7 +100,7 @@ select_permissions:
         - id
         - notes
         - order_time
-        - order_type
+        - delivery_type
         - payment_type
         - refund_amount
         - restaurant_id
@@ -133,7 +133,7 @@ select_permissions:
         - id
         - notes
         - order_time
-        - order_type
+        - delivery_type
         - payment_type
         - refund_amount
         - restaurant_id

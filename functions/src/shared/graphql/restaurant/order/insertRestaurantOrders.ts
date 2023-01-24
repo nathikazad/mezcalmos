@@ -1,41 +1,46 @@
 import { getHasura } from "../../../../utilities/hasura";
 import * as fs from 'fs';
-import { Language } from "../../../models/Generic/Generic";
 
 interface Restaurant {
     items: Record<string, number>; //en name to hasura id
     hsId: number
 }
-export async function insertRestaurantOrders(data: any) {
+export async function insertRestaurantOrders(data: any, response: any) {
     let chain = getHasura();
     // let restaurantFbIds: number[] = [];
     // data.forEach((o: any) => {
     //     restaurantFbIds.push(o.restaurantFirebaseId)
     // })
-    let response = await chain.query({
-        restaurant_restaurant: [{}, {
-            id: true,
-            firebase_id: true,
-            items: [{}, {
-                id: true,
-                name: {
-                    translations: [{
-                        where: {
-                            language_id: {
-                                _eq: Language.EN
-                            }
-                        }
-                    }, {
-                        value: true
-                    }]
-                }
-            }]
-        }],
-        user: [{}, {
-            id: true,
-            firebase_id: true,
-        }]
-    });
+    // let response = await chain.query({
+    //     restaurant_restaurant: [{}, {
+    //         id: true,
+    //         firebase_id: true,
+    //         items: [{}, {
+    //             id: true,
+    //             name: {
+    //                 translations: [{
+    //                     where: {
+    //                         language_id: {
+    //                             _eq: Language.EN
+    //                         }
+    //                     }
+    //                 }, {
+    //                     value: true
+    //                 }]
+    //             }
+    //         }]
+    //     }],
+    //     user: [{}, {
+    //         id: true,
+    //         firebase_id: true,
+    //     }],
+    //     customer_customer: [{}, {
+    //         user_id: true,
+    //         user: {
+    //             firebase_id: true
+    //         }
+    //     }]
+    // });
     let restaurantFbIdToObject: Record<string, Restaurant> = {};
 
     for(let restaurant of response.restaurant_restaurant) {
@@ -52,7 +57,10 @@ export async function insertRestaurantOrders(data: any) {
     for(let user of response.user) {
         userFbIdToHsId[user.firebase_id] = user.id
     }
-    let customerFbIdToHsId: Record<string, number> = {}
+    let customerFbIdToHsId: Record<string, number> = {};
+    for(let customer of response.customer_customer) {
+        customerFbIdToHsId[customer.user.firebase_id] = customer.user_id
+    }
 
     let orders: any[] = [];
 
@@ -289,7 +297,8 @@ export async function insertRestaurantOrders(data: any) {
     console.log(orders.length);
     fs.writeFileSync("./restaurant-orders.json", JSON.stringify(orders));
 
-    let response1 = await chain.mutation({
+    // let response1 = 
+    await chain.mutation({
         insert_restaurant_order: [{
             objects: orders
             // [{
@@ -372,5 +381,5 @@ export async function insertRestaurantOrders(data: any) {
             }
         }]
     })
-    console.log("response: ", response1)
+    // console.log("response: ", response1)
 }

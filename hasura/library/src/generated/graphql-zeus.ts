@@ -1227,6 +1227,7 @@ count?: [{	columns?:ValueTypes["customer_saved_location_select_column"][],	disti
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: AliasType<{
 	approved?:true,
+	creation_time?:true,
 delivery_drivers?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -1251,11 +1252,13 @@ delivery_operators_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_operator_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_operator_bool_exp"]},ValueTypes["delivery_operator_aggregate"]],
+	delivery_radius?:true,
 	/** An object relationship */
 	description?:ValueTypes["translation"],
 	description_id?:true,
 	id?:true,
 	image?:true,
+	location?:true,
 	name?:true,
 	open_status?:true,
 	service_provider_type?:true,
@@ -1284,6 +1287,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 }>;
 	/** aggregate avg on columns */
 ["delivery_company_avg_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1294,14 +1298,17 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_not?:ValueTypes["delivery_company_bool_exp"],
 	_or?:ValueTypes["delivery_company_bool_exp"][],
 	approved?:ValueTypes["Boolean_comparison_exp"],
+	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
+	delivery_radius?:ValueTypes["Int_comparison_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
+	location?:ValueTypes["geography_comparison_exp"],
 	name?:ValueTypes["String_comparison_exp"],
 	open_status?:ValueTypes["String_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
@@ -1310,24 +1317,30 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 ["delivery_company_constraint"]:delivery_company_constraint;
 	/** input type for incrementing numeric columns in table "delivery.company" */
 ["delivery_company_inc_input"]: {
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 };
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
 	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
 	delivery_drivers?:ValueTypes["delivery_driver_arr_rel_insert_input"],
 	delivery_operators?:ValueTypes["delivery_operator_arr_rel_insert_input"],
+	delivery_radius?:number,
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
 ["delivery_company_max_fields"]: AliasType<{
+	creation_time?:true,
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 	image?:true,
@@ -1338,6 +1351,8 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 }>;
 	/** aggregate min on columns */
 ["delivery_company_min_fields"]: AliasType<{
+	creation_time?:true,
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 	image?:true,
@@ -1369,12 +1384,15 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
 	approved?:ValueTypes["order_by"],
+	creation_time?:ValueTypes["order_by"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_order_by"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_order_by"],
+	delivery_radius?:ValueTypes["order_by"],
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
+	location?:ValueTypes["order_by"],
 	name?:ValueTypes["order_by"],
 	open_status?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"]
@@ -1388,27 +1406,33 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** input type for updating data in table "delivery.company" */
 ["delivery_company_set_input"]: {
 	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
 };
 	/** aggregate stddev on columns */
 ["delivery_company_stddev_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["delivery_company_stddev_pop_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["delivery_company_stddev_samp_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1423,15 +1447,19 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** Initial value of the column from where the streaming should start */
 ["delivery_company_stream_cursor_value_input"]: {
 	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
 };
 	/** aggregate sum on columns */
 ["delivery_company_sum_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1447,261 +1475,397 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** aggregate var_pop on columns */
 ["delivery_company_var_pop_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["delivery_company_var_samp_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["delivery_company_variance_fields"]: AliasType<{
+	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
-	/** columns and relationships of "delivery.cost" */
-["delivery_cost"]: AliasType<{
+	/** columns and relationships of "delivery.details" */
+["delivery_details"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
 	service_provider_id?:true,
 	service_provider_type?:true,
 		__typename?: true
 }>;
-	/** aggregated selection of "delivery.cost" */
-["delivery_cost_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["delivery_cost_aggregate_fields"],
-	nodes?:ValueTypes["delivery_cost"],
+	/** aggregated selection of "delivery.details" */
+["delivery_details_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["delivery_details_aggregate_fields"],
+	nodes?:ValueTypes["delivery_details"],
 		__typename?: true
 }>;
-	/** aggregate fields of "delivery.cost" */
-["delivery_cost_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["delivery_cost_avg_fields"],
-count?: [{	columns?:ValueTypes["delivery_cost_select_column"][],	distinct?:boolean},true],
-	max?:ValueTypes["delivery_cost_max_fields"],
-	min?:ValueTypes["delivery_cost_min_fields"],
-	stddev?:ValueTypes["delivery_cost_stddev_fields"],
-	stddev_pop?:ValueTypes["delivery_cost_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["delivery_cost_stddev_samp_fields"],
-	sum?:ValueTypes["delivery_cost_sum_fields"],
-	var_pop?:ValueTypes["delivery_cost_var_pop_fields"],
-	var_samp?:ValueTypes["delivery_cost_var_samp_fields"],
-	variance?:ValueTypes["delivery_cost_variance_fields"],
+	/** aggregate fields of "delivery.details" */
+["delivery_details_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["delivery_details_avg_fields"],
+count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["delivery_details_max_fields"],
+	min?:ValueTypes["delivery_details_min_fields"],
+	stddev?:ValueTypes["delivery_details_stddev_fields"],
+	stddev_pop?:ValueTypes["delivery_details_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["delivery_details_stddev_samp_fields"],
+	sum?:ValueTypes["delivery_details_sum_fields"],
+	var_pop?:ValueTypes["delivery_details_var_pop_fields"],
+	var_samp?:ValueTypes["delivery_details_var_samp_fields"],
+	variance?:ValueTypes["delivery_details_variance_fields"],
 		__typename?: true
 }>;
+	/** order by aggregate values of table "delivery.details" */
+["delivery_details_aggregate_order_by"]: {
+	avg?:ValueTypes["delivery_details_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["delivery_details_max_order_by"],
+	min?:ValueTypes["delivery_details_min_order_by"],
+	stddev?:ValueTypes["delivery_details_stddev_order_by"],
+	stddev_pop?:ValueTypes["delivery_details_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["delivery_details_stddev_samp_order_by"],
+	sum?:ValueTypes["delivery_details_sum_order_by"],
+	var_pop?:ValueTypes["delivery_details_var_pop_order_by"],
+	var_samp?:ValueTypes["delivery_details_var_samp_order_by"],
+	variance?:ValueTypes["delivery_details_variance_order_by"]
+};
 	/** aggregate avg on columns */
-["delivery_cost_avg_fields"]: AliasType<{
+["delivery_details_avg_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
-	/** Boolean expression to filter rows from the table "delivery.cost". All fields are combined with a logical 'AND'. */
-["delivery_cost_bool_exp"]: {
-	_and?:ValueTypes["delivery_cost_bool_exp"][],
-	_not?:ValueTypes["delivery_cost_bool_exp"],
-	_or?:ValueTypes["delivery_cost_bool_exp"][],
-	cost_per_km?:ValueTypes["money_comparison_exp"],
-	free_delivery_km_range?:ValueTypes["Float_comparison_exp"],
-	free_delivery_minimum_cost?:ValueTypes["money_comparison_exp"],
-	id?:ValueTypes["Int_comparison_exp"],
-	minimum_cost?:ValueTypes["money_comparison_exp"],
-	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
-	service_provider_id?:ValueTypes["Int_comparison_exp"],
-	service_provider_type?:ValueTypes["String_comparison_exp"]
-};
-	/** unique or primary key constraints on table "delivery.cost" */
-["delivery_cost_constraint"]:delivery_cost_constraint;
-	/** input type for incrementing numeric columns in table "delivery.cost" */
-["delivery_cost_inc_input"]: {
-	cost_per_km?:ValueTypes["money"],
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:ValueTypes["money"],
-	id?:number,
-	minimum_cost?:ValueTypes["money"],
-	service_provider_id?:number
-};
-	/** input type for inserting data into table "delivery.cost" */
-["delivery_cost_insert_input"]: {
-	cost_per_km?:ValueTypes["money"],
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:ValueTypes["money"],
-	id?:number,
-	minimum_cost?:ValueTypes["money"],
-	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
-	service_provider_id?:number,
-	service_provider_type?:string
-};
-	/** aggregate max on columns */
-["delivery_cost_max_fields"]: AliasType<{
-	cost_per_km?:true,
-	free_delivery_km_range?:true,
-	free_delivery_minimum_cost?:true,
-	id?:true,
-	minimum_cost?:true,
-	service_provider_id?:true,
-	service_provider_type?:true,
-		__typename?: true
-}>;
-	/** aggregate min on columns */
-["delivery_cost_min_fields"]: AliasType<{
-	cost_per_km?:true,
-	free_delivery_km_range?:true,
-	free_delivery_minimum_cost?:true,
-	id?:true,
-	minimum_cost?:true,
-	service_provider_id?:true,
-	service_provider_type?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "delivery.cost" */
-["delivery_cost_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["delivery_cost"],
-		__typename?: true
-}>;
-	/** on_conflict condition type for table "delivery.cost" */
-["delivery_cost_on_conflict"]: {
-	constraint:ValueTypes["delivery_cost_constraint"],
-	update_columns:ValueTypes["delivery_cost_update_column"][],
-	where?:ValueTypes["delivery_cost_bool_exp"]
-};
-	/** Ordering options when selecting data from "delivery.cost". */
-["delivery_cost_order_by"]: {
+	/** order by avg() on columns of table "delivery.details" */
+["delivery_details_avg_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
+	/** Boolean expression to filter rows from the table "delivery.details". All fields are combined with a logical 'AND'. */
+["delivery_details_bool_exp"]: {
+	_and?:ValueTypes["delivery_details_bool_exp"][],
+	_not?:ValueTypes["delivery_details_bool_exp"],
+	_or?:ValueTypes["delivery_details_bool_exp"][],
+	cost_per_km?:ValueTypes["money_comparison_exp"],
+	free_delivery_km_range?:ValueTypes["Float_comparison_exp"],
+	free_delivery_minimum_cost?:ValueTypes["money_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	minimum_cost?:ValueTypes["money_comparison_exp"],
+	radius?:ValueTypes["Int_comparison_exp"],
+	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "delivery.details" */
+["delivery_details_constraint"]:delivery_details_constraint;
+	/** input type for incrementing numeric columns in table "delivery.details" */
+["delivery_details_inc_input"]: {
+	cost_per_km?:ValueTypes["money"],
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:ValueTypes["money"],
+	id?:number,
+	minimum_cost?:ValueTypes["money"],
+	radius?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "delivery.details" */
+["delivery_details_insert_input"]: {
+	cost_per_km?:ValueTypes["money"],
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:ValueTypes["money"],
+	id?:number,
+	minimum_cost?:ValueTypes["money"],
+	radius?:number,
+	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["delivery_details_max_fields"]: AliasType<{
+	cost_per_km?:true,
+	free_delivery_km_range?:true,
+	free_delivery_minimum_cost?:true,
+	id?:true,
+	minimum_cost?:true,
+	radius?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** order by max() on columns of table "delivery.details" */
+["delivery_details_max_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** aggregate min on columns */
+["delivery_details_min_fields"]: AliasType<{
+	cost_per_km?:true,
+	free_delivery_km_range?:true,
+	free_delivery_minimum_cost?:true,
+	id?:true,
+	minimum_cost?:true,
+	radius?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** order by min() on columns of table "delivery.details" */
+["delivery_details_min_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** response of any mutation on the table "delivery.details" */
+["delivery_details_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["delivery_details"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "delivery.details" */
+["delivery_details_on_conflict"]: {
+	constraint:ValueTypes["delivery_details_constraint"],
+	update_columns:ValueTypes["delivery_details_update_column"][],
+	where?:ValueTypes["delivery_details_bool_exp"]
+};
+	/** Ordering options when selecting data from "delivery.details". */
+["delivery_details_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"]
 };
-	/** primary key columns input for table: delivery.cost */
-["delivery_cost_pk_columns_input"]: {
+	/** primary key columns input for table: delivery.details */
+["delivery_details_pk_columns_input"]: {
 	id:number
 };
-	/** select columns of table "delivery.cost" */
-["delivery_cost_select_column"]:delivery_cost_select_column;
-	/** input type for updating data in table "delivery.cost" */
-["delivery_cost_set_input"]: {
+	/** select columns of table "delivery.details" */
+["delivery_details_select_column"]:delivery_details_select_column;
+	/** input type for updating data in table "delivery.details" */
+["delivery_details_set_input"]: {
 	cost_per_km?:ValueTypes["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
 	minimum_cost?:ValueTypes["money"],
+	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
 };
 	/** aggregate stddev on columns */
-["delivery_cost_stddev_fields"]: AliasType<{
+["delivery_details_stddev_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev() on columns of table "delivery.details" */
+["delivery_details_stddev_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_pop on columns */
-["delivery_cost_stddev_pop_fields"]: AliasType<{
+["delivery_details_stddev_pop_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_pop() on columns of table "delivery.details" */
+["delivery_details_stddev_pop_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_samp on columns */
-["delivery_cost_stddev_samp_fields"]: AliasType<{
+["delivery_details_stddev_samp_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
-	/** Streaming cursor of the table "delivery_cost" */
-["delivery_cost_stream_cursor_input"]: {
+	/** order by stddev_samp() on columns of table "delivery.details" */
+["delivery_details_stddev_samp_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
+	/** Streaming cursor of the table "delivery_details" */
+["delivery_details_stream_cursor_input"]: {
 	/** Stream column input with initial value */
-	initial_value:ValueTypes["delivery_cost_stream_cursor_value_input"],
+	initial_value:ValueTypes["delivery_details_stream_cursor_value_input"],
 	/** cursor ordering */
 	ordering?:ValueTypes["cursor_ordering"]
 };
 	/** Initial value of the column from where the streaming should start */
-["delivery_cost_stream_cursor_value_input"]: {
+["delivery_details_stream_cursor_value_input"]: {
 	cost_per_km?:ValueTypes["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
 	minimum_cost?:ValueTypes["money"],
+	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
 };
 	/** aggregate sum on columns */
-["delivery_cost_sum_fields"]: AliasType<{
+["delivery_details_sum_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
-	/** update columns of table "delivery.cost" */
-["delivery_cost_update_column"]:delivery_cost_update_column;
-	["delivery_cost_updates"]: {
+	/** order by sum() on columns of table "delivery.details" */
+["delivery_details_sum_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
+	/** update columns of table "delivery.details" */
+["delivery_details_update_column"]:delivery_details_update_column;
+	["delivery_details_updates"]: {
 	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["delivery_cost_inc_input"],
+	_inc?:ValueTypes["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["delivery_cost_set_input"],
-	where:ValueTypes["delivery_cost_bool_exp"]
+	_set?:ValueTypes["delivery_details_set_input"],
+	where:ValueTypes["delivery_details_bool_exp"]
 };
 	/** aggregate var_pop on columns */
-["delivery_cost_var_pop_fields"]: AliasType<{
+["delivery_details_var_pop_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by var_pop() on columns of table "delivery.details" */
+["delivery_details_var_pop_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate var_samp on columns */
-["delivery_cost_var_samp_fields"]: AliasType<{
+["delivery_details_var_samp_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by var_samp() on columns of table "delivery.details" */
+["delivery_details_var_samp_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate variance on columns */
-["delivery_cost_variance_fields"]: AliasType<{
+["delivery_details_variance_fields"]: AliasType<{
 	cost_per_km?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by variance() on columns of table "delivery.details" */
+["delivery_details_variance_order_by"]: {
+	cost_per_km?:ValueTypes["order_by"],
+	free_delivery_km_range?:ValueTypes["order_by"],
+	free_delivery_minimum_cost?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	minimum_cost?:ValueTypes["order_by"],
+	radius?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** columns and relationships of "delivery.driver" */
 ["delivery_driver"]: AliasType<{
 	app_version?:true,
@@ -2111,6 +2275,10 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	id?:ValueTypes["order_by"],
 	notification_info_id?:ValueTypes["order_by"],
 	user_id?:ValueTypes["order_by"]
+};
+	["delivery_fetch_delivery_company_args"]: {
+	location?:ValueTypes["geography"],
+	radius?:ValueTypes["float8"]
 };
 	/** columns and relationships of "delivery.operator" */
 ["delivery_operator"]: AliasType<{
@@ -3760,6 +3928,7 @@ cancelledByServiceProvider */
 	_neq?:number,
 	_nin?:number[]
 };
+	["float8"]:unknown;
 	["geography"]:unknown;
 	["geography_cast_exp"]: {
 	geometry?:ValueTypes["geometry_comparison_exp"]
@@ -4439,9 +4608,9 @@ delete_customer_saved_location_by_pk?: [{	id:number},ValueTypes["customer_saved_
 delete_delivery_company?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_mutation_response"]],
 delete_delivery_company_by_pk?: [{	id:number},ValueTypes["delivery_company"]],
-delete_delivery_cost?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost_mutation_response"]],
-delete_delivery_cost_by_pk?: [{	id:number},ValueTypes["delivery_cost"]],
+delete_delivery_details?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details_mutation_response"]],
+delete_delivery_details_by_pk?: [{	id:number},ValueTypes["delivery_details"]],
 delete_delivery_driver?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver_mutation_response"]],
 delete_delivery_driver_by_pk?: [{	id:number},ValueTypes["delivery_driver"]],
@@ -4509,6 +4678,9 @@ delete_restaurant_restaurant_by_pk?: [{	id:number},ValueTypes["restaurant_restau
 delete_review?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["review_bool_exp"]},ValueTypes["review_mutation_response"]],
 delete_review_by_pk?: [{	id:number},ValueTypes["review"]],
+delete_service_provider_delivery_partner?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
+delete_service_provider_delivery_partner_by_pk?: [{	id:number},ValueTypes["service_provider_delivery_partner"]],
 delete_service_provider_post?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_post_bool_exp"]},ValueTypes["service_provider_post_mutation_response"]],
 delete_service_provider_post_by_pk?: [{	id:number},ValueTypes["service_provider_post"]],
@@ -4563,12 +4735,12 @@ insert_delivery_company?: [{	/** the rows to be inserted */
 insert_delivery_company_one?: [{	/** the row to be inserted */
 	object:ValueTypes["delivery_company_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["delivery_company_on_conflict"]},ValueTypes["delivery_company"]],
-insert_delivery_cost?: [{	/** the rows to be inserted */
-	objects:ValueTypes["delivery_cost_insert_input"][],	/** upsert condition */
-	on_conflict?:ValueTypes["delivery_cost_on_conflict"]},ValueTypes["delivery_cost_mutation_response"]],
-insert_delivery_cost_one?: [{	/** the row to be inserted */
-	object:ValueTypes["delivery_cost_insert_input"],	/** upsert condition */
-	on_conflict?:ValueTypes["delivery_cost_on_conflict"]},ValueTypes["delivery_cost"]],
+insert_delivery_details?: [{	/** the rows to be inserted */
+	objects:ValueTypes["delivery_details_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["delivery_details_on_conflict"]},ValueTypes["delivery_details_mutation_response"]],
+insert_delivery_details_one?: [{	/** the row to be inserted */
+	object:ValueTypes["delivery_details_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["delivery_details_on_conflict"]},ValueTypes["delivery_details"]],
 insert_delivery_driver?: [{	/** the rows to be inserted */
 	objects:ValueTypes["delivery_driver_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["delivery_driver_on_conflict"]},ValueTypes["delivery_driver_mutation_response"]],
@@ -4703,6 +4875,12 @@ insert_review?: [{	/** the rows to be inserted */
 insert_review_one?: [{	/** the row to be inserted */
 	object:ValueTypes["review_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["review_on_conflict"]},ValueTypes["review"]],
+insert_service_provider_delivery_partner?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_delivery_partner_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_delivery_partner_on_conflict"]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
+insert_service_provider_delivery_partner_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_delivery_partner_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_delivery_partner_on_conflict"]},ValueTypes["service_provider_delivery_partner"]],
 insert_service_provider_post?: [{	/** the rows to be inserted */
 	objects:ValueTypes["service_provider_post_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_post_on_conflict"]},ValueTypes["service_provider_post_mutation_response"]],
@@ -4815,15 +4993,15 @@ update_delivery_company_by_pk?: [{	/** increments the numeric columns with given
 	_set?:ValueTypes["delivery_company_set_input"],	pk_columns:ValueTypes["delivery_company_pk_columns_input"]},ValueTypes["delivery_company"]],
 update_delivery_company_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_company_updates"][]},ValueTypes["delivery_company_mutation_response"]],
-update_delivery_cost?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["delivery_cost_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["delivery_cost_set_input"],	/** filter the rows which have to be updated */
-	where:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost_mutation_response"]],
-update_delivery_cost_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["delivery_cost_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["delivery_cost_set_input"],	pk_columns:ValueTypes["delivery_cost_pk_columns_input"]},ValueTypes["delivery_cost"]],
-update_delivery_cost_many?: [{	/** updates to execute, in order */
-	updates:ValueTypes["delivery_cost_updates"][]},ValueTypes["delivery_cost_mutation_response"]],
+update_delivery_details?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["delivery_details_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["delivery_details_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details_mutation_response"]],
+update_delivery_details_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["delivery_details_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["delivery_details_set_input"],	pk_columns:ValueTypes["delivery_details_pk_columns_input"]},ValueTypes["delivery_details"]],
+update_delivery_details_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["delivery_details_updates"][]},ValueTypes["delivery_details_mutation_response"]],
 update_delivery_driver?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["delivery_driver_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_driver_set_input"],	/** filter the rows which have to be updated */
@@ -5057,6 +5235,15 @@ update_review_by_pk?: [{	/** increments the numeric columns with given value of 
 	_set?:ValueTypes["review_set_input"],	pk_columns:ValueTypes["review_pk_columns_input"]},ValueTypes["review"]],
 update_review_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["review_updates"][]},ValueTypes["review_mutation_response"]],
+update_service_provider_delivery_partner?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_delivery_partner_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
+update_service_provider_delivery_partner_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_delivery_partner_set_input"],	pk_columns:ValueTypes["service_provider_delivery_partner_pk_columns_input"]},ValueTypes["service_provider_delivery_partner"]],
+update_service_provider_delivery_partner_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_delivery_partner_updates"][]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
 update_service_provider_post?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
 	_append?:ValueTypes["service_provider_post_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 	_delete_at_path?:ValueTypes["service_provider_post_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
@@ -5387,19 +5574,19 @@ delivery_company_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["delivery_company_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_aggregate"]],
 delivery_company_by_pk?: [{	id:number},ValueTypes["delivery_company"]],
-delivery_cost?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_cost_select_column"][],	/** limit the number of rows returned */
+delivery_details?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_cost_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost"]],
-delivery_cost_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_cost_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
+delivery_details_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_cost_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost_aggregate"]],
-delivery_cost_by_pk?: [{	id:number},ValueTypes["delivery_cost"]],
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details_aggregate"]],
+delivery_details_by_pk?: [{	id:number},ValueTypes["delivery_details"]],
 delivery_driver?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5413,6 +5600,20 @@ delivery_driver_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["delivery_driver_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver_aggregate"]],
 delivery_driver_by_pk?: [{	id:number},ValueTypes["delivery_driver"]],
+delivery_fetch_delivery_company?: [{	/** input parameters for function "delivery_fetch_delivery_company" */
+	args:ValueTypes["delivery_fetch_delivery_company_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_company_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company"]],
+delivery_fetch_delivery_company_aggregate?: [{	/** input parameters for function "delivery_fetch_delivery_company_aggregate" */
+	args:ValueTypes["delivery_fetch_delivery_company_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_company_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_aggregate"]],
 delivery_operator?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_operator_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5568,6 +5769,20 @@ restaurant_choice_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["restaurant_choice_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_choice_bool_exp"]},ValueTypes["restaurant_choice_aggregate"]],
 restaurant_choice_by_pk?: [{	id:number},ValueTypes["restaurant_choice"]],
+restaurant_fetch_restaurants?: [{	/** input parameters for function "restaurant_fetch_restaurants" */
+	args:ValueTypes["restaurant_fetch_restaurants_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_restaurant_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_restaurant_bool_exp"]},ValueTypes["restaurant_restaurant"]],
+restaurant_fetch_restaurants_aggregate?: [{	/** input parameters for function "restaurant_fetch_restaurants_aggregate" */
+	args:ValueTypes["restaurant_fetch_restaurants_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_restaurant_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_restaurant_bool_exp"]},ValueTypes["restaurant_restaurant_aggregate"]],
 restaurant_item?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5725,6 +5940,19 @@ review_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 review_by_pk?: [{	id:number},ValueTypes["review"]],
+service_provider_delivery_partner?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner"]],
+service_provider_delivery_partner_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_aggregate"]],
+service_provider_delivery_partner_by_pk?: [{	id:number},ValueTypes["service_provider_delivery_partner"]],
 service_provider_post?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_post_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -7086,6 +7314,10 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 	id?:ValueTypes["order_by"],
 	name_id?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"]
+};
+	["restaurant_fetch_restaurants_args"]: {
+	location?:ValueTypes["geography"],
+	radius?:ValueTypes["float8"]
 };
 	/** columns and relationships of "restaurant.item" */
 ["restaurant_item"]: AliasType<{
@@ -9022,6 +9254,7 @@ All fields are combined with a logical 'AND'. */
 	delivery?:ValueTypes["delivery_order"],
 	delivery_cost?:true,
 	delivery_id?:true,
+	delivery_type?:true,
 	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
@@ -9044,7 +9277,6 @@ items_aggregate?: [{	/** distinct select on columns */
 	items_cost?:true,
 	notes?:true,
 	order_time?:true,
-	order_type?:true,
 	payment_type?:true,
 	refund_amount?:true,
 	/** An object relationship */
@@ -9168,6 +9400,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:ValueTypes["delivery_order_bool_exp"],
 	delivery_cost?:ValueTypes["money_comparison_exp"],
 	delivery_id?:ValueTypes["Int_comparison_exp"],
+	delivery_type?:ValueTypes["String_comparison_exp"],
 	discount_value?:ValueTypes["money_comparison_exp"],
 	estimated_food_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -9178,7 +9411,6 @@ cancelled), serviceProviderAccount: string } */
 	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
-	order_type?:ValueTypes["String_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
 	refund_amount?:ValueTypes["money_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -9247,6 +9479,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:ValueTypes["delivery_order_obj_rel_insert_input"],
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
@@ -9254,7 +9487,6 @@ cancelled), serviceProviderAccount: string } */
 	items?:ValueTypes["restaurant_order_item_arr_rel_insert_input"],
 	notes?:string,
 	order_time?:ValueTypes["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:ValueTypes["money"],
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
@@ -9679,13 +9911,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	delivery_type?:true,
 	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
 	notes?:true,
 	order_time?:true,
-	order_type?:true,
 	payment_type?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9707,13 +9939,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	delivery_type?:ValueTypes["order_by"],
 	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
-	order_type?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9734,13 +9966,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	delivery_type?:true,
 	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
 	notes?:true,
 	order_time?:true,
-	order_type?:true,
 	payment_type?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -9762,13 +9994,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	delivery_type?:ValueTypes["order_by"],
 	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
-	order_type?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -9812,6 +10044,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery?:ValueTypes["delivery_order_order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	delivery_type?:ValueTypes["order_by"],
 	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
@@ -9821,7 +10054,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	items_cost?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
-	order_type?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
@@ -10069,13 +10301,13 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:ValueTypes["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
@@ -10196,13 +10428,13 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:ValueTypes["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
@@ -10379,6 +10611,17 @@ categories_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_category_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_category_bool_exp"]},ValueTypes["restaurant_category_aggregate"]],
+	creation_time?:true,
+	/** pickup on or off */
+	customer_pickup?:true,
+	/** delivery on or off */
+	delivery?:true,
+delivery_details?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
 delivery_drivers?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -10391,6 +10634,8 @@ delivery_drivers_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_driver_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver_aggregate"]],
+	/** An object relationship */
+	delivery_partner?:ValueTypes["service_provider_delivery_partner"],
 	/** An object relationship */
 	description?:ValueTypes["translation"],
 	description_id?:true,
@@ -10465,8 +10710,7 @@ stripe_info?: [{	/** JSON select path */
 	path?:string},true],
 		__typename?: true
 }>;
-	/** aggregated selection of "restaurant.restaurant" */
-["restaurant_restaurant_aggregate"]: AliasType<{
+	["restaurant_restaurant_aggregate"]: AliasType<{
 	aggregate?:ValueTypes["restaurant_restaurant_aggregate_fields"],
 	nodes?:ValueTypes["restaurant_restaurant"],
 		__typename?: true
@@ -10511,8 +10755,13 @@ requirements: string[] | null; email: string | null } */
 	approved?:ValueTypes["Boolean_comparison_exp"],
 	categories?:ValueTypes["restaurant_category_bool_exp"],
 	categories_aggregate?:ValueTypes["restaurant_category_aggregate_bool_exp"],
+	creation_time?:ValueTypes["timestamptz_comparison_exp"],
+	customer_pickup?:ValueTypes["Boolean_comparison_exp"],
+	delivery?:ValueTypes["Boolean_comparison_exp"],
+	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_bool_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -10581,7 +10830,13 @@ requirements: string[] | null; email: string | null } */
 	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
 	categories?:ValueTypes["restaurant_category_arr_rel_insert_input"],
+	creation_time?:ValueTypes["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	delivery_drivers?:ValueTypes["delivery_driver_arr_rel_insert_input"],
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_obj_rel_insert_input"],
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	firebase_id?:string,
@@ -10607,6 +10862,7 @@ requirements: string[] | null; email: string | null } */
 };
 	/** aggregate max on columns */
 ["restaurant_restaurant_max_fields"]: AliasType<{
+	creation_time?:true,
 	description_id?:true,
 	firebase_id?:true,
 	id?:true,
@@ -10621,6 +10877,7 @@ requirements: string[] | null; email: string | null } */
 }>;
 	/** aggregate min on columns */
 ["restaurant_restaurant_min_fields"]: AliasType<{
+	creation_time?:true,
 	description_id?:true,
 	firebase_id?:true,
 	id?:true,
@@ -10658,7 +10915,12 @@ requirements: string[] | null; email: string | null } */
 	accepted_payments?:ValueTypes["order_by"],
 	approved?:ValueTypes["order_by"],
 	categories_aggregate?:ValueTypes["restaurant_category_aggregate_order_by"],
+	creation_time?:ValueTypes["order_by"],
+	customer_pickup?:ValueTypes["order_by"],
+	delivery?:ValueTypes["order_by"],
+	delivery_details_aggregate?:ValueTypes["delivery_details_aggregate_order_by"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_order_by"],
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_order_by"],
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
@@ -10700,6 +10962,11 @@ requirements: string[] | null; email: string | null } */
 	/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -10748,6 +11015,11 @@ requirements: string[] | null; email: string | null } */
 	/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:ValueTypes["jsonb"],
 	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -11152,6 +11424,196 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	rating?:ValueTypes["order_by"],
 	to_entity_id?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "service_provider.delivery_partner" */
+["service_provider_delivery_partner"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_delivery_partner_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_delivery_partner"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_delivery_partner_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_delivery_partner_max_fields"],
+	min?:ValueTypes["service_provider_delivery_partner_min_fields"],
+	stddev?:ValueTypes["service_provider_delivery_partner_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_delivery_partner_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_delivery_partner_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_delivery_partner_sum_fields"],
+	var_pop?:ValueTypes["service_provider_delivery_partner_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_delivery_partner_var_samp_fields"],
+	variance?:ValueTypes["service_provider_delivery_partner_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_delivery_partner_avg_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"service_provider.delivery_partner". All fields are combined with a logical 'AND'. */
+["service_provider_delivery_partner_bool_exp"]: {
+	_and?:ValueTypes["service_provider_delivery_partner_bool_exp"][],
+	_not?:ValueTypes["service_provider_delivery_partner_bool_exp"],
+	_or?:ValueTypes["service_provider_delivery_partner_bool_exp"][],
+	delivery_company_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_constraint"]:service_provider_delivery_partner_constraint;
+	/** input type for incrementing numeric columns in table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_inc_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_insert_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["service_provider_delivery_partner_max_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_delivery_partner_min_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_delivery_partner"],
+		__typename?: true
+}>;
+	/** input type for inserting object relation for remote table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_obj_rel_insert_input"]: {
+	data:ValueTypes["service_provider_delivery_partner_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_delivery_partner_on_conflict"]
+};
+	/** on_conflict condition type for table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_on_conflict"]: {
+	constraint:ValueTypes["service_provider_delivery_partner_constraint"],
+	update_columns:ValueTypes["service_provider_delivery_partner_update_column"][],
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider.delivery_partner". */
+["service_provider_delivery_partner_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider.delivery_partner */
+["service_provider_delivery_partner_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_select_column"]:service_provider_delivery_partner_select_column;
+	/** input type for updating data in table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_set_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_delivery_partner_stddev_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_delivery_partner_stddev_pop_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_delivery_partner_stddev_samp_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_delivery_partner" */
+["service_provider_delivery_partner_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_delivery_partner_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_delivery_partner_stream_cursor_value_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate sum on columns */
+["service_provider_delivery_partner_sum_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_update_column"]:service_provider_delivery_partner_update_column;
+	["service_provider_delivery_partner_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_delivery_partner_set_input"],
+	where:ValueTypes["service_provider_delivery_partner_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_delivery_partner_var_pop_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_delivery_partner_var_samp_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_delivery_partner_variance_fields"]: AliasType<{
+	delivery_company_id?:true,
+	id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "service_provider.post" */
 ["service_provider_post"]: AliasType<{
 comments?: [{	/** JSON select path */
@@ -11970,23 +12432,23 @@ delivery_company_stream?: [{	/** maximum number of rows returned in a single bat
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["delivery_company_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company"]],
-delivery_cost?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_cost_select_column"][],	/** limit the number of rows returned */
+delivery_details?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_cost_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost"]],
-delivery_cost_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_cost_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
+delivery_details_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_cost_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost_aggregate"]],
-delivery_cost_by_pk?: [{	id:number},ValueTypes["delivery_cost"]],
-delivery_cost_stream?: [{	/** maximum number of rows returned in a single batch */
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details_aggregate"]],
+delivery_details_by_pk?: [{	id:number},ValueTypes["delivery_details"]],
+delivery_details_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
-	cursor?:ValueTypes["delivery_cost_stream_cursor_input"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_cost_bool_exp"]},ValueTypes["delivery_cost"]],
+	cursor?:ValueTypes["delivery_details_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
 delivery_driver?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12004,6 +12466,20 @@ delivery_driver_stream?: [{	/** maximum number of rows returned in a single batc
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["delivery_driver_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver"]],
+delivery_fetch_delivery_company?: [{	/** input parameters for function "delivery_fetch_delivery_company" */
+	args:ValueTypes["delivery_fetch_delivery_company_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_company_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company"]],
+delivery_fetch_delivery_company_aggregate?: [{	/** input parameters for function "delivery_fetch_delivery_company_aggregate" */
+	args:ValueTypes["delivery_fetch_delivery_company_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_company_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_aggregate"]],
 delivery_operator?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_operator_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12207,6 +12683,20 @@ restaurant_choice_stream?: [{	/** maximum number of rows returned in a single ba
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["restaurant_choice_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_choice_bool_exp"]},ValueTypes["restaurant_choice"]],
+restaurant_fetch_restaurants?: [{	/** input parameters for function "restaurant_fetch_restaurants" */
+	args:ValueTypes["restaurant_fetch_restaurants_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_restaurant_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_restaurant_bool_exp"]},ValueTypes["restaurant_restaurant"]],
+restaurant_fetch_restaurants_aggregate?: [{	/** input parameters for function "restaurant_fetch_restaurants_aggregate" */
+	args:ValueTypes["restaurant_fetch_restaurants_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["restaurant_restaurant_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["restaurant_restaurant_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["restaurant_restaurant_bool_exp"]},ValueTypes["restaurant_restaurant_aggregate"]],
 restaurant_item?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12404,6 +12894,23 @@ review_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["review_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+service_provider_delivery_partner?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner"]],
+service_provider_delivery_partner_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_aggregate"]],
+service_provider_delivery_partner_by_pk?: [{	id:number},ValueTypes["service_provider_delivery_partner"]],
+service_provider_delivery_partner_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_delivery_partner_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner"]],
 service_provider_post?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_post_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12958,6 +13465,7 @@ count?: [{	columns?:ValueTypes["translation_value_select_column"][],	distinct?:b
 	/** columns and relationships of "user" */
 ["user"]: AliasType<{
 	big_image?:true,
+	creation_time?:true,
 	/** An object relationship */
 	customer?:ValueTypes["customer_customer"],
 	deleted?:true,
@@ -13002,6 +13510,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	_not?:ValueTypes["user_bool_exp"],
 	_or?:ValueTypes["user_bool_exp"][],
 	big_image?:ValueTypes["String_comparison_exp"],
+	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	customer?:ValueTypes["customer_customer_bool_exp"],
 	deleted?:ValueTypes["Boolean_comparison_exp"],
 	email?:ValueTypes["String_comparison_exp"],
@@ -13021,6 +13530,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
 	big_image?:string,
+	creation_time?:ValueTypes["timestamptz"],
 	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
 	deleted?:boolean,
 	email?:string,
@@ -13034,6 +13544,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** aggregate max on columns */
 ["user_max_fields"]: AliasType<{
 	big_image?:true,
+	creation_time?:true,
 	email?:true,
 	firebase_id?:true,
 	id?:true,
@@ -13046,6 +13557,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** aggregate min on columns */
 ["user_min_fields"]: AliasType<{
 	big_image?:true,
+	creation_time?:true,
 	email?:true,
 	firebase_id?:true,
 	id?:true,
@@ -13078,6 +13590,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
 	big_image?:ValueTypes["order_by"],
+	creation_time?:ValueTypes["order_by"],
 	customer?:ValueTypes["customer_customer_order_by"],
 	deleted?:ValueTypes["order_by"],
 	email?:ValueTypes["order_by"],
@@ -13097,6 +13610,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** input type for updating data in table "user" */
 ["user_set_input"]: {
 	big_image?:string,
+	creation_time?:ValueTypes["timestamptz"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -13131,6 +13645,7 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	/** Initial value of the column from where the streaming should start */
 ["user_stream_cursor_value_input"]: {
 	big_image?:string,
+	creation_time?:ValueTypes["timestamptz"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -14376,6 +14891,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_company"]: {
 		__typename?: "delivery_company";
 			approved?:boolean,
+			creation_time?:PartialObjects["timestamptz"],
 			/** An array relationship */
 	delivery_drivers?:PartialObjects["delivery_driver"][],
 			/** An aggregate relationship */
@@ -14384,11 +14900,13 @@ the end). throws an error if top level container is not an array */
 	delivery_operators?:PartialObjects["delivery_operator"][],
 			/** An aggregate relationship */
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate"],
+			delivery_radius?:number,
 			/** An object relationship */
 	description?:PartialObjects["translation"],
 			description_id?:number,
 			id?:number,
 			image?:string,
+			location?:PartialObjects["geography"],
 			name?:string,
 			open_status?:string,
 			service_provider_type?:string
@@ -14417,6 +14935,7 @@ the end). throws an error if top level container is not an array */
 	/** aggregate avg on columns */
 ["delivery_company_avg_fields"]: {
 		__typename?: "delivery_company_avg_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -14426,14 +14945,17 @@ the end). throws an error if top level container is not an array */
 	_not?:PartialObjects["delivery_company_bool_exp"],
 	_or?:PartialObjects["delivery_company_bool_exp"][],
 	approved?:PartialObjects["Boolean_comparison_exp"],
+	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
+	delivery_radius?:PartialObjects["Int_comparison_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
+	location?:PartialObjects["geography_comparison_exp"],
 	name?:PartialObjects["String_comparison_exp"],
 	open_status?:PartialObjects["String_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
@@ -14442,18 +14964,22 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_constraint"]:delivery_company_constraint,
 	/** input type for incrementing numeric columns in table "delivery.company" */
 ["delivery_company_inc_input"]: {
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 },
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
 	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
 	delivery_drivers?:PartialObjects["delivery_driver_arr_rel_insert_input"],
 	delivery_operators?:PartialObjects["delivery_operator_arr_rel_insert_input"],
+	delivery_radius?:number,
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -14461,6 +14987,8 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["delivery_company_max_fields"]: {
 		__typename?: "delivery_company_max_fields";
+			creation_time?:PartialObjects["timestamptz"],
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number,
 			image?:string,
@@ -14471,6 +14999,8 @@ the end). throws an error if top level container is not an array */
 	/** aggregate min on columns */
 ["delivery_company_min_fields"]: {
 		__typename?: "delivery_company_min_fields";
+			creation_time?:PartialObjects["timestamptz"],
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number,
 			image?:string,
@@ -14501,12 +15031,15 @@ the end). throws an error if top level container is not an array */
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
 	approved?:PartialObjects["order_by"],
+	creation_time?:PartialObjects["order_by"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_order_by"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_order_by"],
+	delivery_radius?:PartialObjects["order_by"],
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
+	location?:PartialObjects["order_by"],
 	name?:PartialObjects["order_by"],
 	open_status?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"]
@@ -14520,9 +15053,12 @@ the end). throws an error if top level container is not an array */
 	/** input type for updating data in table "delivery.company" */
 ["delivery_company_set_input"]: {
 	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -14530,18 +15066,21 @@ the end). throws an error if top level container is not an array */
 	/** aggregate stddev on columns */
 ["delivery_company_stddev_fields"]: {
 		__typename?: "delivery_company_stddev_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["delivery_company_stddev_pop_fields"]: {
 		__typename?: "delivery_company_stddev_pop_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["delivery_company_stddev_samp_fields"]: {
 		__typename?: "delivery_company_stddev_samp_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -14555,9 +15094,12 @@ the end). throws an error if top level container is not an array */
 	/** Initial value of the column from where the streaming should start */
 ["delivery_company_stream_cursor_value_input"]: {
 	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -14565,6 +15107,7 @@ the end). throws an error if top level container is not an array */
 	/** aggregate sum on columns */
 ["delivery_company_sum_fields"]: {
 		__typename?: "delivery_company_sum_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -14580,260 +15123,396 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["delivery_company_var_pop_fields"]: {
 		__typename?: "delivery_company_var_pop_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate var_samp on columns */
 ["delivery_company_var_samp_fields"]: {
 		__typename?: "delivery_company_var_samp_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate variance on columns */
 ["delivery_company_variance_fields"]: {
 		__typename?: "delivery_company_variance_fields";
+			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
-	/** columns and relationships of "delivery.cost" */
-["delivery_cost"]: {
-		__typename?: "delivery_cost";
+	/** columns and relationships of "delivery.details" */
+["delivery_details"]: {
+		__typename?: "delivery_details";
 			cost_per_km?:PartialObjects["money"],
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
 			minimum_cost?:PartialObjects["money"],
+			radius?:number,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
 			service_provider_id?:number,
 			service_provider_type?:string
 	},
-	/** aggregated selection of "delivery.cost" */
-["delivery_cost_aggregate"]: {
-		__typename?: "delivery_cost_aggregate";
-			aggregate?:PartialObjects["delivery_cost_aggregate_fields"],
-			nodes?:PartialObjects["delivery_cost"][]
+	/** aggregated selection of "delivery.details" */
+["delivery_details_aggregate"]: {
+		__typename?: "delivery_details_aggregate";
+			aggregate?:PartialObjects["delivery_details_aggregate_fields"],
+			nodes?:PartialObjects["delivery_details"][]
 	},
-	/** aggregate fields of "delivery.cost" */
-["delivery_cost_aggregate_fields"]: {
-		__typename?: "delivery_cost_aggregate_fields";
-			avg?:PartialObjects["delivery_cost_avg_fields"],
+	/** aggregate fields of "delivery.details" */
+["delivery_details_aggregate_fields"]: {
+		__typename?: "delivery_details_aggregate_fields";
+			avg?:PartialObjects["delivery_details_avg_fields"],
 			count?:number,
-			max?:PartialObjects["delivery_cost_max_fields"],
-			min?:PartialObjects["delivery_cost_min_fields"],
-			stddev?:PartialObjects["delivery_cost_stddev_fields"],
-			stddev_pop?:PartialObjects["delivery_cost_stddev_pop_fields"],
-			stddev_samp?:PartialObjects["delivery_cost_stddev_samp_fields"],
-			sum?:PartialObjects["delivery_cost_sum_fields"],
-			var_pop?:PartialObjects["delivery_cost_var_pop_fields"],
-			var_samp?:PartialObjects["delivery_cost_var_samp_fields"],
-			variance?:PartialObjects["delivery_cost_variance_fields"]
+			max?:PartialObjects["delivery_details_max_fields"],
+			min?:PartialObjects["delivery_details_min_fields"],
+			stddev?:PartialObjects["delivery_details_stddev_fields"],
+			stddev_pop?:PartialObjects["delivery_details_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["delivery_details_stddev_samp_fields"],
+			sum?:PartialObjects["delivery_details_sum_fields"],
+			var_pop?:PartialObjects["delivery_details_var_pop_fields"],
+			var_samp?:PartialObjects["delivery_details_var_samp_fields"],
+			variance?:PartialObjects["delivery_details_variance_fields"]
 	},
+	/** order by aggregate values of table "delivery.details" */
+["delivery_details_aggregate_order_by"]: {
+	avg?:PartialObjects["delivery_details_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["delivery_details_max_order_by"],
+	min?:PartialObjects["delivery_details_min_order_by"],
+	stddev?:PartialObjects["delivery_details_stddev_order_by"],
+	stddev_pop?:PartialObjects["delivery_details_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["delivery_details_stddev_samp_order_by"],
+	sum?:PartialObjects["delivery_details_sum_order_by"],
+	var_pop?:PartialObjects["delivery_details_var_pop_order_by"],
+	var_samp?:PartialObjects["delivery_details_var_samp_order_by"],
+	variance?:PartialObjects["delivery_details_variance_order_by"]
+},
 	/** aggregate avg on columns */
-["delivery_cost_avg_fields"]: {
-		__typename?: "delivery_cost_avg_fields";
+["delivery_details_avg_fields"]: {
+		__typename?: "delivery_details_avg_fields";
 			cost_per_km?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
+			radius?:number,
 			service_provider_id?:number
 	},
-	/** Boolean expression to filter rows from the table "delivery.cost". All fields are combined with a logical 'AND'. */
-["delivery_cost_bool_exp"]: {
-	_and?:PartialObjects["delivery_cost_bool_exp"][],
-	_not?:PartialObjects["delivery_cost_bool_exp"],
-	_or?:PartialObjects["delivery_cost_bool_exp"][],
-	cost_per_km?:PartialObjects["money_comparison_exp"],
-	free_delivery_km_range?:PartialObjects["Float_comparison_exp"],
-	free_delivery_minimum_cost?:PartialObjects["money_comparison_exp"],
-	id?:PartialObjects["Int_comparison_exp"],
-	minimum_cost?:PartialObjects["money_comparison_exp"],
-	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
-	service_provider_id?:PartialObjects["Int_comparison_exp"],
-	service_provider_type?:PartialObjects["String_comparison_exp"]
-},
-	/** unique or primary key constraints on table "delivery.cost" */
-["delivery_cost_constraint"]:delivery_cost_constraint,
-	/** input type for incrementing numeric columns in table "delivery.cost" */
-["delivery_cost_inc_input"]: {
-	cost_per_km?:PartialObjects["money"],
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:PartialObjects["money"],
-	id?:number,
-	minimum_cost?:PartialObjects["money"],
-	service_provider_id?:number
-},
-	/** input type for inserting data into table "delivery.cost" */
-["delivery_cost_insert_input"]: {
-	cost_per_km?:PartialObjects["money"],
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:PartialObjects["money"],
-	id?:number,
-	minimum_cost?:PartialObjects["money"],
-	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
-	service_provider_id?:number,
-	service_provider_type?:string
-},
-	/** aggregate max on columns */
-["delivery_cost_max_fields"]: {
-		__typename?: "delivery_cost_max_fields";
-			cost_per_km?:PartialObjects["money"],
-			free_delivery_km_range?:number,
-			free_delivery_minimum_cost?:PartialObjects["money"],
-			id?:number,
-			minimum_cost?:PartialObjects["money"],
-			service_provider_id?:number,
-			service_provider_type?:string
-	},
-	/** aggregate min on columns */
-["delivery_cost_min_fields"]: {
-		__typename?: "delivery_cost_min_fields";
-			cost_per_km?:PartialObjects["money"],
-			free_delivery_km_range?:number,
-			free_delivery_minimum_cost?:PartialObjects["money"],
-			id?:number,
-			minimum_cost?:PartialObjects["money"],
-			service_provider_id?:number,
-			service_provider_type?:string
-	},
-	/** response of any mutation on the table "delivery.cost" */
-["delivery_cost_mutation_response"]: {
-		__typename?: "delivery_cost_mutation_response";
-			/** number of rows affected by the mutation */
-	affected_rows?:number,
-			/** data from the rows affected by the mutation */
-	returning?:PartialObjects["delivery_cost"][]
-	},
-	/** on_conflict condition type for table "delivery.cost" */
-["delivery_cost_on_conflict"]: {
-	constraint:PartialObjects["delivery_cost_constraint"],
-	update_columns:PartialObjects["delivery_cost_update_column"][],
-	where?:PartialObjects["delivery_cost_bool_exp"]
-},
-	/** Ordering options when selecting data from "delivery.cost". */
-["delivery_cost_order_by"]: {
+	/** order by avg() on columns of table "delivery.details" */
+["delivery_details_avg_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
-	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
-	service_provider_id?:PartialObjects["order_by"],
-	service_provider_type?:PartialObjects["order_by"]
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
 },
-	/** primary key columns input for table: delivery.cost */
-["delivery_cost_pk_columns_input"]: {
-	id:number
+	/** Boolean expression to filter rows from the table "delivery.details". All fields are combined with a logical 'AND'. */
+["delivery_details_bool_exp"]: {
+	_and?:PartialObjects["delivery_details_bool_exp"][],
+	_not?:PartialObjects["delivery_details_bool_exp"],
+	_or?:PartialObjects["delivery_details_bool_exp"][],
+	cost_per_km?:PartialObjects["money_comparison_exp"],
+	free_delivery_km_range?:PartialObjects["Float_comparison_exp"],
+	free_delivery_minimum_cost?:PartialObjects["money_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	minimum_cost?:PartialObjects["money_comparison_exp"],
+	radius?:PartialObjects["Int_comparison_exp"],
+	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
 },
-	/** select columns of table "delivery.cost" */
-["delivery_cost_select_column"]:delivery_cost_select_column,
-	/** input type for updating data in table "delivery.cost" */
-["delivery_cost_set_input"]: {
+	/** unique or primary key constraints on table "delivery.details" */
+["delivery_details_constraint"]:delivery_details_constraint,
+	/** input type for incrementing numeric columns in table "delivery.details" */
+["delivery_details_inc_input"]: {
 	cost_per_km?:PartialObjects["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
 	minimum_cost?:PartialObjects["money"],
-	service_provider_id?:number,
-	service_provider_type?:string
+	radius?:number,
+	service_provider_id?:number
 },
-	/** aggregate stddev on columns */
-["delivery_cost_stddev_fields"]: {
-		__typename?: "delivery_cost_stddev_fields";
-			cost_per_km?:number,
-			free_delivery_km_range?:number,
-			free_delivery_minimum_cost?:number,
-			id?:number,
-			minimum_cost?:number,
-			service_provider_id?:number
-	},
-	/** aggregate stddev_pop on columns */
-["delivery_cost_stddev_pop_fields"]: {
-		__typename?: "delivery_cost_stddev_pop_fields";
-			cost_per_km?:number,
-			free_delivery_km_range?:number,
-			free_delivery_minimum_cost?:number,
-			id?:number,
-			minimum_cost?:number,
-			service_provider_id?:number
-	},
-	/** aggregate stddev_samp on columns */
-["delivery_cost_stddev_samp_fields"]: {
-		__typename?: "delivery_cost_stddev_samp_fields";
-			cost_per_km?:number,
-			free_delivery_km_range?:number,
-			free_delivery_minimum_cost?:number,
-			id?:number,
-			minimum_cost?:number,
-			service_provider_id?:number
-	},
-	/** Streaming cursor of the table "delivery_cost" */
-["delivery_cost_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:PartialObjects["delivery_cost_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:PartialObjects["cursor_ordering"]
-},
-	/** Initial value of the column from where the streaming should start */
-["delivery_cost_stream_cursor_value_input"]: {
+	/** input type for inserting data into table "delivery.details" */
+["delivery_details_insert_input"]: {
 	cost_per_km?:PartialObjects["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
 	minimum_cost?:PartialObjects["money"],
+	radius?:number,
+	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
 	service_provider_id?:number,
 	service_provider_type?:string
 },
-	/** aggregate sum on columns */
-["delivery_cost_sum_fields"]: {
-		__typename?: "delivery_cost_sum_fields";
+	/** aggregate max on columns */
+["delivery_details_max_fields"]: {
+		__typename?: "delivery_details_max_fields";
 			cost_per_km?:PartialObjects["money"],
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
 			minimum_cost?:PartialObjects["money"],
+			radius?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** order by max() on columns of table "delivery.details" */
+["delivery_details_max_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** aggregate min on columns */
+["delivery_details_min_fields"]: {
+		__typename?: "delivery_details_min_fields";
+			cost_per_km?:PartialObjects["money"],
+			free_delivery_km_range?:number,
+			free_delivery_minimum_cost?:PartialObjects["money"],
+			id?:number,
+			minimum_cost?:PartialObjects["money"],
+			radius?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** order by min() on columns of table "delivery.details" */
+["delivery_details_min_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** response of any mutation on the table "delivery.details" */
+["delivery_details_mutation_response"]: {
+		__typename?: "delivery_details_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["delivery_details"][]
+	},
+	/** on_conflict condition type for table "delivery.details" */
+["delivery_details_on_conflict"]: {
+	constraint:PartialObjects["delivery_details_constraint"],
+	update_columns:PartialObjects["delivery_details_update_column"][],
+	where?:PartialObjects["delivery_details_bool_exp"]
+},
+	/** Ordering options when selecting data from "delivery.details". */
+["delivery_details_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: delivery.details */
+["delivery_details_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "delivery.details" */
+["delivery_details_select_column"]:delivery_details_select_column,
+	/** input type for updating data in table "delivery.details" */
+["delivery_details_set_input"]: {
+	cost_per_km?:PartialObjects["money"],
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:PartialObjects["money"],
+	id?:number,
+	minimum_cost?:PartialObjects["money"],
+	radius?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["delivery_details_stddev_fields"]: {
+		__typename?: "delivery_details_stddev_fields";
+			cost_per_km?:number,
+			free_delivery_km_range?:number,
+			free_delivery_minimum_cost?:number,
+			id?:number,
+			minimum_cost?:number,
+			radius?:number,
 			service_provider_id?:number
 	},
-	/** update columns of table "delivery.cost" */
-["delivery_cost_update_column"]:delivery_cost_update_column,
-	["delivery_cost_updates"]: {
+	/** order by stddev() on columns of table "delivery.details" */
+["delivery_details_stddev_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_pop on columns */
+["delivery_details_stddev_pop_fields"]: {
+		__typename?: "delivery_details_stddev_pop_fields";
+			cost_per_km?:number,
+			free_delivery_km_range?:number,
+			free_delivery_minimum_cost?:number,
+			id?:number,
+			minimum_cost?:number,
+			radius?:number,
+			service_provider_id?:number
+	},
+	/** order by stddev_pop() on columns of table "delivery.details" */
+["delivery_details_stddev_pop_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_samp on columns */
+["delivery_details_stddev_samp_fields"]: {
+		__typename?: "delivery_details_stddev_samp_fields";
+			cost_per_km?:number,
+			free_delivery_km_range?:number,
+			free_delivery_minimum_cost?:number,
+			id?:number,
+			minimum_cost?:number,
+			radius?:number,
+			service_provider_id?:number
+	},
+	/** order by stddev_samp() on columns of table "delivery.details" */
+["delivery_details_stddev_samp_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
+	/** Streaming cursor of the table "delivery_details" */
+["delivery_details_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["delivery_details_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["delivery_details_stream_cursor_value_input"]: {
+	cost_per_km?:PartialObjects["money"],
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:PartialObjects["money"],
+	id?:number,
+	minimum_cost?:PartialObjects["money"],
+	radius?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["delivery_details_sum_fields"]: {
+		__typename?: "delivery_details_sum_fields";
+			cost_per_km?:PartialObjects["money"],
+			free_delivery_km_range?:number,
+			free_delivery_minimum_cost?:PartialObjects["money"],
+			id?:number,
+			minimum_cost?:PartialObjects["money"],
+			radius?:number,
+			service_provider_id?:number
+	},
+	/** order by sum() on columns of table "delivery.details" */
+["delivery_details_sum_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
+	/** update columns of table "delivery.details" */
+["delivery_details_update_column"]:delivery_details_update_column,
+	["delivery_details_updates"]: {
 	/** increments the numeric columns with given value of the filtered values */
-	_inc?:PartialObjects["delivery_cost_inc_input"],
+	_inc?:PartialObjects["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
-	_set?:PartialObjects["delivery_cost_set_input"],
-	where:PartialObjects["delivery_cost_bool_exp"]
+	_set?:PartialObjects["delivery_details_set_input"],
+	where:PartialObjects["delivery_details_bool_exp"]
 },
 	/** aggregate var_pop on columns */
-["delivery_cost_var_pop_fields"]: {
-		__typename?: "delivery_cost_var_pop_fields";
+["delivery_details_var_pop_fields"]: {
+		__typename?: "delivery_details_var_pop_fields";
 			cost_per_km?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
+			radius?:number,
 			service_provider_id?:number
 	},
+	/** order by var_pop() on columns of table "delivery.details" */
+["delivery_details_var_pop_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate var_samp on columns */
-["delivery_cost_var_samp_fields"]: {
-		__typename?: "delivery_cost_var_samp_fields";
+["delivery_details_var_samp_fields"]: {
+		__typename?: "delivery_details_var_samp_fields";
 			cost_per_km?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
+			radius?:number,
 			service_provider_id?:number
 	},
+	/** order by var_samp() on columns of table "delivery.details" */
+["delivery_details_var_samp_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate variance on columns */
-["delivery_cost_variance_fields"]: {
-		__typename?: "delivery_cost_variance_fields";
+["delivery_details_variance_fields"]: {
+		__typename?: "delivery_details_variance_fields";
 			cost_per_km?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
+			radius?:number,
 			service_provider_id?:number
 	},
+	/** order by variance() on columns of table "delivery.details" */
+["delivery_details_variance_order_by"]: {
+	cost_per_km?:PartialObjects["order_by"],
+	free_delivery_km_range?:PartialObjects["order_by"],
+	free_delivery_minimum_cost?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	minimum_cost?:PartialObjects["order_by"],
+	radius?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** columns and relationships of "delivery.driver" */
 ["delivery_driver"]: {
 		__typename?: "delivery_driver";
@@ -15243,6 +15922,10 @@ the end). throws an error if top level container is not an array */
 	id?:PartialObjects["order_by"],
 	notification_info_id?:PartialObjects["order_by"],
 	user_id?:PartialObjects["order_by"]
+},
+	["delivery_fetch_delivery_company_args"]: {
+	location?:PartialObjects["geography"],
+	radius?:PartialObjects["float8"]
 },
 	/** columns and relationships of "delivery.operator" */
 ["delivery_operator"]: {
@@ -16892,6 +17575,7 @@ cancelledByServiceProvider */
 	_neq?:number,
 	_nin?:number[]
 },
+	["float8"]:any,
 	["geography"]:any,
 	["geography_cast_exp"]: {
 	geometry?:PartialObjects["geometry_comparison_exp"]
@@ -17576,10 +18260,10 @@ the end). throws an error if top level container is not an array */
 	delete_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** delete single row from the table: "delivery.company" */
 	delete_delivery_company_by_pk?:PartialObjects["delivery_company"],
-			/** delete data from the table: "delivery.cost" */
-	delete_delivery_cost?:PartialObjects["delivery_cost_mutation_response"],
-			/** delete single row from the table: "delivery.cost" */
-	delete_delivery_cost_by_pk?:PartialObjects["delivery_cost"],
+			/** delete data from the table: "delivery.details" */
+	delete_delivery_details?:PartialObjects["delivery_details_mutation_response"],
+			/** delete single row from the table: "delivery.details" */
+	delete_delivery_details_by_pk?:PartialObjects["delivery_details"],
 			/** delete data from the table: "delivery.driver" */
 	delete_delivery_driver?:PartialObjects["delivery_driver_mutation_response"],
 			/** delete single row from the table: "delivery.driver" */
@@ -17668,6 +18352,10 @@ the end). throws an error if top level container is not an array */
 	delete_review?:PartialObjects["review_mutation_response"],
 			/** delete single row from the table: "review" */
 	delete_review_by_pk?:PartialObjects["review"],
+			/** delete data from the table: "service_provider.delivery_partner" */
+	delete_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
+			/** delete single row from the table: "service_provider.delivery_partner" */
+	delete_service_provider_delivery_partner_by_pk?:PartialObjects["service_provider_delivery_partner"],
 			/** delete data from the table: "service_provider.post" */
 	delete_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** delete single row from the table: "service_provider.post" */
@@ -17716,10 +18404,10 @@ the end). throws an error if top level container is not an array */
 	insert_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** insert a single row into the table: "delivery.company" */
 	insert_delivery_company_one?:PartialObjects["delivery_company"],
-			/** insert data into the table: "delivery.cost" */
-	insert_delivery_cost?:PartialObjects["delivery_cost_mutation_response"],
-			/** insert a single row into the table: "delivery.cost" */
-	insert_delivery_cost_one?:PartialObjects["delivery_cost"],
+			/** insert data into the table: "delivery.details" */
+	insert_delivery_details?:PartialObjects["delivery_details_mutation_response"],
+			/** insert a single row into the table: "delivery.details" */
+	insert_delivery_details_one?:PartialObjects["delivery_details"],
 			/** insert data into the table: "delivery.driver" */
 	insert_delivery_driver?:PartialObjects["delivery_driver_mutation_response"],
 			/** insert a single row into the table: "delivery.driver" */
@@ -17812,6 +18500,10 @@ the end). throws an error if top level container is not an array */
 	insert_review?:PartialObjects["review_mutation_response"],
 			/** insert a single row into the table: "review" */
 	insert_review_one?:PartialObjects["review"],
+			/** insert data into the table: "service_provider.delivery_partner" */
+	insert_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
+			/** insert a single row into the table: "service_provider.delivery_partner" */
+	insert_service_provider_delivery_partner_one?:PartialObjects["service_provider_delivery_partner"],
 			/** insert data into the table: "service_provider.post" */
 	insert_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** insert a single row into the table: "service_provider.post" */
@@ -17872,12 +18564,12 @@ the end). throws an error if top level container is not an array */
 	update_delivery_company_by_pk?:PartialObjects["delivery_company"],
 			/** update multiples rows of table: "delivery.company" */
 	update_delivery_company_many?:(PartialObjects["delivery_company_mutation_response"] | undefined)[],
-			/** update data of the table: "delivery.cost" */
-	update_delivery_cost?:PartialObjects["delivery_cost_mutation_response"],
-			/** update single row of the table: "delivery.cost" */
-	update_delivery_cost_by_pk?:PartialObjects["delivery_cost"],
-			/** update multiples rows of table: "delivery.cost" */
-	update_delivery_cost_many?:(PartialObjects["delivery_cost_mutation_response"] | undefined)[],
+			/** update data of the table: "delivery.details" */
+	update_delivery_details?:PartialObjects["delivery_details_mutation_response"],
+			/** update single row of the table: "delivery.details" */
+	update_delivery_details_by_pk?:PartialObjects["delivery_details"],
+			/** update multiples rows of table: "delivery.details" */
+	update_delivery_details_many?:(PartialObjects["delivery_details_mutation_response"] | undefined)[],
 			/** update data of the table: "delivery.driver" */
 	update_delivery_driver?:PartialObjects["delivery_driver_mutation_response"],
 			/** update single row of the table: "delivery.driver" */
@@ -18012,6 +18704,12 @@ the end). throws an error if top level container is not an array */
 	update_review_by_pk?:PartialObjects["review"],
 			/** update multiples rows of table: "review" */
 	update_review_many?:(PartialObjects["review_mutation_response"] | undefined)[],
+			/** update data of the table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
+			/** update single row of the table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner_by_pk?:PartialObjects["service_provider_delivery_partner"],
+			/** update multiples rows of table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner_many?:(PartialObjects["service_provider_delivery_partner_mutation_response"] | undefined)[],
 			/** update data of the table: "service_provider.post" */
 	update_service_provider_post?:PartialObjects["service_provider_post_mutation_response"],
 			/** update single row of the table: "service_provider.post" */
@@ -18269,18 +18967,22 @@ the end). throws an error if top level container is not an array */
 	delivery_company_aggregate?:PartialObjects["delivery_company_aggregate"],
 			/** fetch data from the table: "delivery.company" using primary key columns */
 	delivery_company_by_pk?:PartialObjects["delivery_company"],
-			/** fetch data from the table: "delivery.cost" */
-	delivery_cost?:PartialObjects["delivery_cost"][],
-			/** fetch aggregated fields from the table: "delivery.cost" */
-	delivery_cost_aggregate?:PartialObjects["delivery_cost_aggregate"],
-			/** fetch data from the table: "delivery.cost" using primary key columns */
-	delivery_cost_by_pk?:PartialObjects["delivery_cost"],
+			/** fetch data from the table: "delivery.details" */
+	delivery_details?:PartialObjects["delivery_details"][],
+			/** fetch aggregated fields from the table: "delivery.details" */
+	delivery_details_aggregate?:PartialObjects["delivery_details_aggregate"],
+			/** fetch data from the table: "delivery.details" using primary key columns */
+	delivery_details_by_pk?:PartialObjects["delivery_details"],
 			/** fetch data from the table: "delivery.driver" */
 	delivery_driver?:PartialObjects["delivery_driver"][],
 			/** fetch aggregated fields from the table: "delivery.driver" */
 	delivery_driver_aggregate?:PartialObjects["delivery_driver_aggregate"],
 			/** fetch data from the table: "delivery.driver" using primary key columns */
 	delivery_driver_by_pk?:PartialObjects["delivery_driver"],
+			/** execute function "delivery.fetch_delivery_company" which returns "delivery.company" */
+	delivery_fetch_delivery_company?:PartialObjects["delivery_company"][],
+			/** execute function "delivery.fetch_delivery_company" and query aggregates on result of table type "delivery.company" */
+	delivery_fetch_delivery_company_aggregate?:PartialObjects["delivery_company_aggregate"],
 			/** fetch data from the table: "delivery.operator" */
 	delivery_operator?:PartialObjects["delivery_operator"][],
 			/** fetch aggregated fields from the table: "delivery.operator" */
@@ -18351,6 +19053,10 @@ the end). throws an error if top level container is not an array */
 	restaurant_choice_aggregate?:PartialObjects["restaurant_choice_aggregate"],
 			/** fetch data from the table: "restaurant.choice" using primary key columns */
 	restaurant_choice_by_pk?:PartialObjects["restaurant_choice"],
+			/** execute function "restaurant.fetch_restaurants" which returns "restaurant.restaurant" */
+	restaurant_fetch_restaurants?:PartialObjects["restaurant_restaurant"][],
+			/** execute function "restaurant.fetch_restaurants" and query aggregates on result of table type "restaurant.restaurant" */
+	restaurant_fetch_restaurants_aggregate?:PartialObjects["restaurant_restaurant_aggregate"],
 			/** fetch data from the table: "restaurant.item" */
 	restaurant_item?:PartialObjects["restaurant_item"][],
 			/** fetch aggregated fields from the table: "restaurant.item" */
@@ -18417,6 +19123,12 @@ the end). throws an error if top level container is not an array */
 	review_aggregate?:PartialObjects["review_aggregate"],
 			/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:PartialObjects["review"],
+			/** fetch data from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner"][],
+			/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate"],
+			/** fetch data from the table: "service_provider.delivery_partner" using primary key columns */
+	service_provider_delivery_partner_by_pk?:PartialObjects["service_provider_delivery_partner"],
 			/** fetch data from the table: "service_provider.post" */
 	service_provider_post?:PartialObjects["service_provider_post"][],
 			/** fetch aggregated fields from the table: "service_provider.post" */
@@ -19711,6 +20423,10 @@ the end). throws an error if top level container is not an array */
 	id?:PartialObjects["order_by"],
 	name_id?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"]
+},
+	["restaurant_fetch_restaurants_args"]: {
+	location?:PartialObjects["geography"],
+	radius?:PartialObjects["float8"]
 },
 	/** columns and relationships of "restaurant.item" */
 ["restaurant_item"]: {
@@ -21608,6 +22324,7 @@ All fields are combined with a logical 'AND'. */
 	delivery?:PartialObjects["delivery_order"],
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			delivery_type?:string,
 			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
@@ -21622,7 +22339,6 @@ All fields are combined with a logical 'AND'. */
 	items_cost?:PartialObjects["money"],
 			notes?:string,
 			order_time?:PartialObjects["timestamptz"],
-			order_type?:string,
 			payment_type?:string,
 			refund_amount?:PartialObjects["money"],
 			/** An object relationship */
@@ -21748,6 +22464,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_bool_exp"],
 	delivery_cost?:PartialObjects["money_comparison_exp"],
 	delivery_id?:PartialObjects["Int_comparison_exp"],
+	delivery_type?:PartialObjects["String_comparison_exp"],
 	discount_value?:PartialObjects["money_comparison_exp"],
 	estimated_food_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -21758,7 +22475,6 @@ cancelled), serviceProviderAccount: string } */
 	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
-	order_type?:PartialObjects["String_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
 	refund_amount?:PartialObjects["money_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -21827,6 +22543,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_obj_rel_insert_input"],
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
@@ -21834,7 +22551,6 @@ cancelled), serviceProviderAccount: string } */
 	items?:PartialObjects["restaurant_order_item_arr_rel_insert_input"],
 	notes?:string,
 	order_time?:PartialObjects["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:PartialObjects["money"],
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
@@ -22259,13 +22975,13 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			delivery_type?:string,
 			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
 			notes?:string,
 			order_time?:PartialObjects["timestamptz"],
-			order_type?:string,
 			payment_type?:string,
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
@@ -22286,13 +23002,13 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	delivery_type?:PartialObjects["order_by"],
 	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
-	order_type?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -22314,13 +23030,13 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			delivery_type?:string,
 			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
 			notes?:string,
 			order_time?:PartialObjects["timestamptz"],
-			order_type?:string,
 			payment_type?:string,
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
@@ -22341,13 +23057,13 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	delivery_type?:PartialObjects["order_by"],
 	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
-	order_type?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -22391,6 +23107,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery?:PartialObjects["delivery_order_order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	delivery_type?:PartialObjects["order_by"],
 	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
@@ -22400,7 +23117,6 @@ cancelled), serviceProviderAccount: string } */
 	items_cost?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
-	order_type?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
@@ -22640,13 +23356,13 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:PartialObjects["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
@@ -22767,13 +23483,13 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:PartialObjects["timestamptz"],
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
@@ -22943,10 +23659,19 @@ the end). throws an error if top level container is not an array */
 	categories?:PartialObjects["restaurant_category"][],
 			/** An aggregate relationship */
 	categories_aggregate?:PartialObjects["restaurant_category_aggregate"],
+			creation_time?:PartialObjects["timestamptz"],
+			/** pickup on or off */
+	customer_pickup?:boolean,
+			/** delivery on or off */
+	delivery?:boolean,
+			/** A computed field, executes function "restaurant_delivery_details" */
+	delivery_details?:PartialObjects["delivery_details"][],
 			/** An array relationship */
 	delivery_drivers?:PartialObjects["delivery_driver"][],
 			/** An aggregate relationship */
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate"],
+			/** An object relationship */
+	delivery_partner?:PartialObjects["service_provider_delivery_partner"],
 			/** An object relationship */
 	description?:PartialObjects["translation"],
 			description_id?:number,
@@ -22985,8 +23710,7 @@ chargesEnabled: boolean; payoutsEnabled: boolean; detailsSubmitted: boolean;
 requirements: string[] | null; email: string | null } */
 	stripe_info?:PartialObjects["jsonb"]
 	},
-	/** aggregated selection of "restaurant.restaurant" */
-["restaurant_restaurant_aggregate"]: {
+	["restaurant_restaurant_aggregate"]: {
 		__typename?: "restaurant_restaurant_aggregate";
 			aggregate?:PartialObjects["restaurant_restaurant_aggregate_fields"],
 			nodes?:PartialObjects["restaurant_restaurant"][]
@@ -23031,8 +23755,13 @@ requirements: string[] | null; email: string | null } */
 	approved?:PartialObjects["Boolean_comparison_exp"],
 	categories?:PartialObjects["restaurant_category_bool_exp"],
 	categories_aggregate?:PartialObjects["restaurant_category_aggregate_bool_exp"],
+	creation_time?:PartialObjects["timestamptz_comparison_exp"],
+	customer_pickup?:PartialObjects["Boolean_comparison_exp"],
+	delivery?:PartialObjects["Boolean_comparison_exp"],
+	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_bool_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -23101,7 +23830,13 @@ requirements: string[] | null; email: string | null } */
 	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
 	categories?:PartialObjects["restaurant_category_arr_rel_insert_input"],
+	creation_time?:PartialObjects["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	delivery_drivers?:PartialObjects["delivery_driver_arr_rel_insert_input"],
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_obj_rel_insert_input"],
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	firebase_id?:string,
@@ -23128,6 +23863,7 @@ requirements: string[] | null; email: string | null } */
 	/** aggregate max on columns */
 ["restaurant_restaurant_max_fields"]: {
 		__typename?: "restaurant_restaurant_max_fields";
+			creation_time?:PartialObjects["timestamptz"],
 			description_id?:number,
 			firebase_id?:string,
 			id?:number,
@@ -23142,6 +23878,7 @@ requirements: string[] | null; email: string | null } */
 	/** aggregate min on columns */
 ["restaurant_restaurant_min_fields"]: {
 		__typename?: "restaurant_restaurant_min_fields";
+			creation_time?:PartialObjects["timestamptz"],
 			description_id?:number,
 			firebase_id?:string,
 			id?:number,
@@ -23178,7 +23915,12 @@ requirements: string[] | null; email: string | null } */
 	accepted_payments?:PartialObjects["order_by"],
 	approved?:PartialObjects["order_by"],
 	categories_aggregate?:PartialObjects["restaurant_category_aggregate_order_by"],
+	creation_time?:PartialObjects["order_by"],
+	customer_pickup?:PartialObjects["order_by"],
+	delivery?:PartialObjects["order_by"],
+	delivery_details_aggregate?:PartialObjects["delivery_details_aggregate_order_by"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_order_by"],
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_order_by"],
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
@@ -23220,6 +23962,11 @@ requirements: string[] | null; email: string | null } */
 	/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -23268,6 +24015,11 @@ requirements: string[] | null; email: string | null } */
 	/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:PartialObjects["jsonb"],
 	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -23672,6 +24424,196 @@ the end). throws an error if top level container is not an array */
 	rating?:PartialObjects["order_by"],
 	to_entity_id?:PartialObjects["order_by"]
 },
+	/** columns and relationships of "service_provider.delivery_partner" */
+["service_provider_delivery_partner"]: {
+		__typename?: "service_provider_delivery_partner";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregated selection of "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate"]: {
+		__typename?: "service_provider_delivery_partner_aggregate";
+			aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_delivery_partner"][]
+	},
+	/** aggregate fields of "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate_fields"]: {
+		__typename?: "service_provider_delivery_partner_aggregate_fields";
+			avg?:PartialObjects["service_provider_delivery_partner_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_delivery_partner_max_fields"],
+			min?:PartialObjects["service_provider_delivery_partner_min_fields"],
+			stddev?:PartialObjects["service_provider_delivery_partner_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_delivery_partner_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_delivery_partner_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_delivery_partner_sum_fields"],
+			var_pop?:PartialObjects["service_provider_delivery_partner_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_delivery_partner_var_samp_fields"],
+			variance?:PartialObjects["service_provider_delivery_partner_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["service_provider_delivery_partner_avg_fields"]: {
+		__typename?: "service_provider_delivery_partner_avg_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** Boolean expression to filter rows from the table
+"service_provider.delivery_partner". All fields are combined with a logical 'AND'. */
+["service_provider_delivery_partner_bool_exp"]: {
+	_and?:PartialObjects["service_provider_delivery_partner_bool_exp"][],
+	_not?:PartialObjects["service_provider_delivery_partner_bool_exp"],
+	_or?:PartialObjects["service_provider_delivery_partner_bool_exp"][],
+	delivery_company_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_constraint"]:service_provider_delivery_partner_constraint,
+	/** input type for incrementing numeric columns in table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_inc_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+},
+	/** input type for inserting data into table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_insert_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate max on columns */
+["service_provider_delivery_partner_max_fields"]: {
+		__typename?: "service_provider_delivery_partner_max_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["service_provider_delivery_partner_min_fields"]: {
+		__typename?: "service_provider_delivery_partner_min_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_mutation_response"]: {
+		__typename?: "service_provider_delivery_partner_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_delivery_partner"][]
+	},
+	/** input type for inserting object relation for remote table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_obj_rel_insert_input"]: {
+	data:PartialObjects["service_provider_delivery_partner_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["service_provider_delivery_partner_on_conflict"]
+},
+	/** on_conflict condition type for table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_on_conflict"]: {
+	constraint:PartialObjects["service_provider_delivery_partner_constraint"],
+	update_columns:PartialObjects["service_provider_delivery_partner_update_column"][],
+	where?:PartialObjects["service_provider_delivery_partner_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider.delivery_partner". */
+["service_provider_delivery_partner_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider.delivery_partner */
+["service_provider_delivery_partner_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_select_column"]:service_provider_delivery_partner_select_column,
+	/** input type for updating data in table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_set_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_delivery_partner_stddev_fields"]: {
+		__typename?: "service_provider_delivery_partner_stddev_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_delivery_partner_stddev_pop_fields"]: {
+		__typename?: "service_provider_delivery_partner_stddev_pop_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_delivery_partner_stddev_samp_fields"]: {
+		__typename?: "service_provider_delivery_partner_stddev_samp_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_delivery_partner" */
+["service_provider_delivery_partner_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_delivery_partner_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_delivery_partner_stream_cursor_value_input"]: {
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["service_provider_delivery_partner_sum_fields"]: {
+		__typename?: "service_provider_delivery_partner_sum_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** update columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_update_column"]:service_provider_delivery_partner_update_column,
+	["service_provider_delivery_partner_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_delivery_partner_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_delivery_partner_set_input"],
+	where:PartialObjects["service_provider_delivery_partner_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_delivery_partner_var_pop_fields"]: {
+		__typename?: "service_provider_delivery_partner_var_pop_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_delivery_partner_var_samp_fields"]: {
+		__typename?: "service_provider_delivery_partner_var_samp_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_delivery_partner_variance_fields"]: {
+		__typename?: "service_provider_delivery_partner_variance_fields";
+			delivery_company_id?:number,
+			id?:number,
+			service_provider_id?:number
+	},
 	/** columns and relationships of "service_provider.post" */
 ["service_provider_post"]: {
 		__typename?: "service_provider_post";
@@ -24434,14 +25376,14 @@ All fields are combined with a logical 'AND'. */
 	delivery_company_by_pk?:PartialObjects["delivery_company"],
 			/** fetch data from the table in a streaming manner: "delivery.company" */
 	delivery_company_stream?:PartialObjects["delivery_company"][],
-			/** fetch data from the table: "delivery.cost" */
-	delivery_cost?:PartialObjects["delivery_cost"][],
-			/** fetch aggregated fields from the table: "delivery.cost" */
-	delivery_cost_aggregate?:PartialObjects["delivery_cost_aggregate"],
-			/** fetch data from the table: "delivery.cost" using primary key columns */
-	delivery_cost_by_pk?:PartialObjects["delivery_cost"],
-			/** fetch data from the table in a streaming manner: "delivery.cost" */
-	delivery_cost_stream?:PartialObjects["delivery_cost"][],
+			/** fetch data from the table: "delivery.details" */
+	delivery_details?:PartialObjects["delivery_details"][],
+			/** fetch aggregated fields from the table: "delivery.details" */
+	delivery_details_aggregate?:PartialObjects["delivery_details_aggregate"],
+			/** fetch data from the table: "delivery.details" using primary key columns */
+	delivery_details_by_pk?:PartialObjects["delivery_details"],
+			/** fetch data from the table in a streaming manner: "delivery.details" */
+	delivery_details_stream?:PartialObjects["delivery_details"][],
 			/** fetch data from the table: "delivery.driver" */
 	delivery_driver?:PartialObjects["delivery_driver"][],
 			/** fetch aggregated fields from the table: "delivery.driver" */
@@ -24450,6 +25392,10 @@ All fields are combined with a logical 'AND'. */
 	delivery_driver_by_pk?:PartialObjects["delivery_driver"],
 			/** fetch data from the table in a streaming manner: "delivery.driver" */
 	delivery_driver_stream?:PartialObjects["delivery_driver"][],
+			/** execute function "delivery.fetch_delivery_company" which returns "delivery.company" */
+	delivery_fetch_delivery_company?:PartialObjects["delivery_company"][],
+			/** execute function "delivery.fetch_delivery_company" and query aggregates on result of table type "delivery.company" */
+	delivery_fetch_delivery_company_aggregate?:PartialObjects["delivery_company_aggregate"],
 			/** fetch data from the table: "delivery.operator" */
 	delivery_operator?:PartialObjects["delivery_operator"][],
 			/** fetch aggregated fields from the table: "delivery.operator" */
@@ -24544,6 +25490,10 @@ All fields are combined with a logical 'AND'. */
 	restaurant_choice_by_pk?:PartialObjects["restaurant_choice"],
 			/** fetch data from the table in a streaming manner: "restaurant.choice" */
 	restaurant_choice_stream?:PartialObjects["restaurant_choice"][],
+			/** execute function "restaurant.fetch_restaurants" which returns "restaurant.restaurant" */
+	restaurant_fetch_restaurants?:PartialObjects["restaurant_restaurant"][],
+			/** execute function "restaurant.fetch_restaurants" and query aggregates on result of table type "restaurant.restaurant" */
+	restaurant_fetch_restaurants_aggregate?:PartialObjects["restaurant_restaurant_aggregate"],
 			/** fetch data from the table: "restaurant.item" */
 	restaurant_item?:PartialObjects["restaurant_item"][],
 			/** fetch aggregated fields from the table: "restaurant.item" */
@@ -24630,6 +25580,14 @@ All fields are combined with a logical 'AND'. */
 	review_by_pk?:PartialObjects["review"],
 			/** fetch data from the table in a streaming manner: "review" */
 	review_stream?:PartialObjects["review"][],
+			/** fetch data from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner"][],
+			/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate"],
+			/** fetch data from the table: "service_provider.delivery_partner" using primary key columns */
+	service_provider_delivery_partner_by_pk?:PartialObjects["service_provider_delivery_partner"],
+			/** fetch data from the table in a streaming manner: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_stream?:PartialObjects["service_provider_delivery_partner"][],
 			/** fetch data from the table: "service_provider.post" */
 	service_provider_post?:PartialObjects["service_provider_post"][],
 			/** fetch aggregated fields from the table: "service_provider.post" */
@@ -25122,6 +26080,7 @@ All fields are combined with a logical 'AND'. */
 ["user"]: {
 		__typename?: "user";
 			big_image?:string,
+			creation_time?:PartialObjects["timestamptz"],
 			/** An object relationship */
 	customer?:PartialObjects["customer_customer"],
 			deleted?:boolean,
@@ -25165,6 +26124,7 @@ All fields are combined with a logical 'AND'. */
 	_not?:PartialObjects["user_bool_exp"],
 	_or?:PartialObjects["user_bool_exp"][],
 	big_image?:PartialObjects["String_comparison_exp"],
+	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	customer?:PartialObjects["customer_customer_bool_exp"],
 	deleted?:PartialObjects["Boolean_comparison_exp"],
 	email?:PartialObjects["String_comparison_exp"],
@@ -25184,6 +26144,7 @@ All fields are combined with a logical 'AND'. */
 	/** input type for inserting data into table "user" */
 ["user_insert_input"]: {
 	big_image?:string,
+	creation_time?:PartialObjects["timestamptz"],
 	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
 	deleted?:boolean,
 	email?:string,
@@ -25198,6 +26159,7 @@ All fields are combined with a logical 'AND'. */
 ["user_max_fields"]: {
 		__typename?: "user_max_fields";
 			big_image?:string,
+			creation_time?:PartialObjects["timestamptz"],
 			email?:string,
 			firebase_id?:string,
 			id?:number,
@@ -25210,6 +26172,7 @@ All fields are combined with a logical 'AND'. */
 ["user_min_fields"]: {
 		__typename?: "user_min_fields";
 			big_image?:string,
+			creation_time?:PartialObjects["timestamptz"],
 			email?:string,
 			firebase_id?:string,
 			id?:number,
@@ -25241,6 +26204,7 @@ All fields are combined with a logical 'AND'. */
 	/** Ordering options when selecting data from "user". */
 ["user_order_by"]: {
 	big_image?:PartialObjects["order_by"],
+	creation_time?:PartialObjects["order_by"],
 	customer?:PartialObjects["customer_customer_order_by"],
 	deleted?:PartialObjects["order_by"],
 	email?:PartialObjects["order_by"],
@@ -25260,6 +26224,7 @@ All fields are combined with a logical 'AND'. */
 	/** input type for updating data in table "user" */
 ["user_set_input"]: {
 	big_image?:string,
+	creation_time?:PartialObjects["timestamptz"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -25294,6 +26259,7 @@ All fields are combined with a logical 'AND'. */
 	/** Initial value of the column from where the streaming should start */
 ["user_stream_cursor_value_input"]: {
 	big_image?:string,
+	creation_time?:PartialObjects["timestamptz"],
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -26782,6 +27748,7 @@ export type customer_saved_location_variance_order_by = {
 export type delivery_company = {
 	__typename?: "delivery_company",
 	approved:boolean,
+	creation_time:timestamptz,
 	/** An array relationship */
 	delivery_drivers:delivery_driver[],
 	/** An aggregate relationship */
@@ -26790,11 +27757,13 @@ export type delivery_company = {
 	delivery_operators:delivery_operator[],
 	/** An aggregate relationship */
 	delivery_operators_aggregate:delivery_operator_aggregate,
+	delivery_radius:number,
 	/** An object relationship */
 	description?:translation,
 	description_id?:number,
 	id:number,
 	image:string,
+	location:geography,
 	name:string,
 	open_status:string,
 	service_provider_type:string
@@ -26826,6 +27795,7 @@ export type delivery_company_aggregate_fields = {
 /** aggregate avg on columns */
 export type delivery_company_avg_fields = {
 	__typename?: "delivery_company_avg_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -26836,14 +27806,17 @@ export type delivery_company_bool_exp = {
 	_not?:delivery_company_bool_exp,
 	_or?:delivery_company_bool_exp[],
 	approved?:Boolean_comparison_exp,
+	creation_time?:timestamptz_comparison_exp,
 	delivery_drivers?:delivery_driver_bool_exp,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
 	delivery_operators?:delivery_operator_bool_exp,
 	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
+	delivery_radius?:Int_comparison_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
+	location?:geography_comparison_exp,
 	name?:String_comparison_exp,
 	open_status?:String_comparison_exp,
 	service_provider_type?:String_comparison_exp
@@ -26856,19 +27829,23 @@ export enum delivery_company_constraint {
 
 /** input type for incrementing numeric columns in table "delivery.company" */
 export type delivery_company_inc_input = {
-		description_id?:number,
+		delivery_radius?:number,
+	description_id?:number,
 	id?:number
 }
 
 /** input type for inserting data into table "delivery.company" */
 export type delivery_company_insert_input = {
 		approved?:boolean,
+	creation_time?:timestamptz,
 	delivery_drivers?:delivery_driver_arr_rel_insert_input,
 	delivery_operators?:delivery_operator_arr_rel_insert_input,
+	delivery_radius?:number,
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -26877,6 +27854,8 @@ export type delivery_company_insert_input = {
 /** aggregate max on columns */
 export type delivery_company_max_fields = {
 	__typename?: "delivery_company_max_fields",
+	creation_time?:timestamptz,
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
@@ -26888,6 +27867,8 @@ export type delivery_company_max_fields = {
 /** aggregate min on columns */
 export type delivery_company_min_fields = {
 	__typename?: "delivery_company_min_fields",
+	creation_time?:timestamptz,
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
@@ -26922,12 +27903,15 @@ export type delivery_company_on_conflict = {
 /** Ordering options when selecting data from "delivery.company". */
 export type delivery_company_order_by = {
 		approved?:order_by,
+	creation_time?:order_by,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_order_by,
 	delivery_operators_aggregate?:delivery_operator_aggregate_order_by,
+	delivery_radius?:order_by,
 	description?:translation_order_by,
 	description_id?:order_by,
 	id?:order_by,
 	image?:order_by,
+	location?:order_by,
 	name?:order_by,
 	open_status?:order_by,
 	service_provider_type?:order_by
@@ -26941,9 +27925,12 @@ export type delivery_company_pk_columns_input = {
 /** select columns of table "delivery.company" */
 export enum delivery_company_select_column {
 	approved = "approved",
+	creation_time = "creation_time",
+	delivery_radius = "delivery_radius",
 	description_id = "description_id",
 	id = "id",
 	image = "image",
+	location = "location",
 	name = "name",
 	open_status = "open_status",
 	service_provider_type = "service_provider_type"
@@ -26952,9 +27939,12 @@ export enum delivery_company_select_column {
 /** input type for updating data in table "delivery.company" */
 export type delivery_company_set_input = {
 		approved?:boolean,
+	creation_time?:timestamptz,
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -26963,6 +27953,7 @@ export type delivery_company_set_input = {
 /** aggregate stddev on columns */
 export type delivery_company_stddev_fields = {
 	__typename?: "delivery_company_stddev_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -26970,6 +27961,7 @@ export type delivery_company_stddev_fields = {
 /** aggregate stddev_pop on columns */
 export type delivery_company_stddev_pop_fields = {
 	__typename?: "delivery_company_stddev_pop_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -26977,6 +27969,7 @@ export type delivery_company_stddev_pop_fields = {
 /** aggregate stddev_samp on columns */
 export type delivery_company_stddev_samp_fields = {
 	__typename?: "delivery_company_stddev_samp_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -26992,9 +27985,12 @@ export type delivery_company_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type delivery_company_stream_cursor_value_input = {
 		approved?:boolean,
+	creation_time?:timestamptz,
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
+	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -27003,6 +27999,7 @@ export type delivery_company_stream_cursor_value_input = {
 /** aggregate sum on columns */
 export type delivery_company_sum_fields = {
 	__typename?: "delivery_company_sum_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -27010,9 +28007,12 @@ export type delivery_company_sum_fields = {
 /** update columns of table "delivery.company" */
 export enum delivery_company_update_column {
 	approved = "approved",
+	creation_time = "creation_time",
+	delivery_radius = "delivery_radius",
 	description_id = "description_id",
 	id = "id",
 	image = "image",
+	location = "location",
 	name = "name",
 	open_status = "open_status",
 	service_provider_type = "service_provider_type"
@@ -27029,6 +28029,7 @@ export type delivery_company_updates = {
 /** aggregate var_pop on columns */
 export type delivery_company_var_pop_fields = {
 	__typename?: "delivery_company_var_pop_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -27036,6 +28037,7 @@ export type delivery_company_var_pop_fields = {
 /** aggregate var_samp on columns */
 export type delivery_company_var_samp_fields = {
 	__typename?: "delivery_company_var_samp_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -27043,293 +28045,440 @@ export type delivery_company_var_samp_fields = {
 /** aggregate variance on columns */
 export type delivery_company_variance_fields = {
 	__typename?: "delivery_company_variance_fields",
+	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
 
-/** columns and relationships of "delivery.cost" */
-export type delivery_cost = {
-	__typename?: "delivery_cost",
+/** columns and relationships of "delivery.details" */
+export type delivery_details = {
+	__typename?: "delivery_details",
 	cost_per_km:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id:number,
 	minimum_cost:money,
+	radius:number,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
 	service_provider_id:number,
 	service_provider_type:string
 }
 
-/** aggregated selection of "delivery.cost" */
-export type delivery_cost_aggregate = {
-	__typename?: "delivery_cost_aggregate",
-	aggregate?:delivery_cost_aggregate_fields,
-	nodes:delivery_cost[]
+/** aggregated selection of "delivery.details" */
+export type delivery_details_aggregate = {
+	__typename?: "delivery_details_aggregate",
+	aggregate?:delivery_details_aggregate_fields,
+	nodes:delivery_details[]
 }
 
-/** aggregate fields of "delivery.cost" */
-export type delivery_cost_aggregate_fields = {
-	__typename?: "delivery_cost_aggregate_fields",
-	avg?:delivery_cost_avg_fields,
+/** aggregate fields of "delivery.details" */
+export type delivery_details_aggregate_fields = {
+	__typename?: "delivery_details_aggregate_fields",
+	avg?:delivery_details_avg_fields,
 	count:number,
-	max?:delivery_cost_max_fields,
-	min?:delivery_cost_min_fields,
-	stddev?:delivery_cost_stddev_fields,
-	stddev_pop?:delivery_cost_stddev_pop_fields,
-	stddev_samp?:delivery_cost_stddev_samp_fields,
-	sum?:delivery_cost_sum_fields,
-	var_pop?:delivery_cost_var_pop_fields,
-	var_samp?:delivery_cost_var_samp_fields,
-	variance?:delivery_cost_variance_fields
+	max?:delivery_details_max_fields,
+	min?:delivery_details_min_fields,
+	stddev?:delivery_details_stddev_fields,
+	stddev_pop?:delivery_details_stddev_pop_fields,
+	stddev_samp?:delivery_details_stddev_samp_fields,
+	sum?:delivery_details_sum_fields,
+	var_pop?:delivery_details_var_pop_fields,
+	var_samp?:delivery_details_var_samp_fields,
+	variance?:delivery_details_variance_fields
+}
+
+/** order by aggregate values of table "delivery.details" */
+export type delivery_details_aggregate_order_by = {
+		avg?:delivery_details_avg_order_by,
+	count?:order_by,
+	max?:delivery_details_max_order_by,
+	min?:delivery_details_min_order_by,
+	stddev?:delivery_details_stddev_order_by,
+	stddev_pop?:delivery_details_stddev_pop_order_by,
+	stddev_samp?:delivery_details_stddev_samp_order_by,
+	sum?:delivery_details_sum_order_by,
+	var_pop?:delivery_details_var_pop_order_by,
+	var_samp?:delivery_details_var_samp_order_by,
+	variance?:delivery_details_variance_order_by
 }
 
 /** aggregate avg on columns */
-export type delivery_cost_avg_fields = {
-	__typename?: "delivery_cost_avg_fields",
+export type delivery_details_avg_fields = {
+	__typename?: "delivery_details_avg_fields",
 	cost_per_km?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	radius?:number,
 	service_provider_id?:number
 }
 
-/** Boolean expression to filter rows from the table "delivery.cost". All fields are combined with a logical 'AND'. */
-export type delivery_cost_bool_exp = {
-		_and?:delivery_cost_bool_exp[],
-	_not?:delivery_cost_bool_exp,
-	_or?:delivery_cost_bool_exp[],
+/** order by avg() on columns of table "delivery.details" */
+export type delivery_details_avg_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
+/** Boolean expression to filter rows from the table "delivery.details". All fields are combined with a logical 'AND'. */
+export type delivery_details_bool_exp = {
+		_and?:delivery_details_bool_exp[],
+	_not?:delivery_details_bool_exp,
+	_or?:delivery_details_bool_exp[],
 	cost_per_km?:money_comparison_exp,
 	free_delivery_km_range?:Float_comparison_exp,
 	free_delivery_minimum_cost?:money_comparison_exp,
 	id?:Int_comparison_exp,
 	minimum_cost?:money_comparison_exp,
+	radius?:Int_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
 	service_provider_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp
 }
 
-/** unique or primary key constraints on table "delivery.cost" */
-export enum delivery_cost_constraint {
+/** unique or primary key constraints on table "delivery.details" */
+export enum delivery_details_constraint {
 	delivery_cost_pkey = "delivery_cost_pkey",
 	delivery_cost_service_provider_id_service_provider_type_key = "delivery_cost_service_provider_id_service_provider_type_key"
 }
 
-/** input type for incrementing numeric columns in table "delivery.cost" */
-export type delivery_cost_inc_input = {
+/** input type for incrementing numeric columns in table "delivery.details" */
+export type delivery_details_inc_input = {
 		cost_per_km?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
+	radius?:number,
 	service_provider_id?:number
 }
 
-/** input type for inserting data into table "delivery.cost" */
-export type delivery_cost_insert_input = {
+/** input type for inserting data into table "delivery.details" */
+export type delivery_details_insert_input = {
 		cost_per_km?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
+	radius?:number,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
 	service_provider_id?:number,
 	service_provider_type?:string
 }
 
 /** aggregate max on columns */
-export type delivery_cost_max_fields = {
-	__typename?: "delivery_cost_max_fields",
+export type delivery_details_max_fields = {
+	__typename?: "delivery_details_max_fields",
 	cost_per_km?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
+	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
 }
 
-/** aggregate min on columns */
-export type delivery_cost_min_fields = {
-	__typename?: "delivery_cost_min_fields",
-	cost_per_km?:money,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:money,
-	id?:number,
-	minimum_cost?:money,
-	service_provider_id?:number,
-	service_provider_type?:string
-}
-
-/** response of any mutation on the table "delivery.cost" */
-export type delivery_cost_mutation_response = {
-	__typename?: "delivery_cost_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:delivery_cost[]
-}
-
-/** on_conflict condition type for table "delivery.cost" */
-export type delivery_cost_on_conflict = {
-		constraint:delivery_cost_constraint,
-	update_columns:delivery_cost_update_column[],
-	where?:delivery_cost_bool_exp
-}
-
-/** Ordering options when selecting data from "delivery.cost". */
-export type delivery_cost_order_by = {
+/** order by max() on columns of table "delivery.details" */
+export type delivery_details_max_order_by = {
 		cost_per_km?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
-	restaurant?:restaurant_restaurant_order_by,
+	radius?:order_by,
 	service_provider_id?:order_by,
 	service_provider_type?:order_by
 }
 
-/** primary key columns input for table: delivery.cost */
-export type delivery_cost_pk_columns_input = {
-		id:number
-}
-
-/** select columns of table "delivery.cost" */
-export enum delivery_cost_select_column {
-	cost_per_km = "cost_per_km",
-	free_delivery_km_range = "free_delivery_km_range",
-	free_delivery_minimum_cost = "free_delivery_minimum_cost",
-	id = "id",
-	minimum_cost = "minimum_cost",
-	service_provider_id = "service_provider_id",
-	service_provider_type = "service_provider_type"
-}
-
-/** input type for updating data in table "delivery.cost" */
-export type delivery_cost_set_input = {
-		cost_per_km?:money,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:money,
-	id?:number,
-	minimum_cost?:money,
-	service_provider_id?:number,
-	service_provider_type?:string
-}
-
-/** aggregate stddev on columns */
-export type delivery_cost_stddev_fields = {
-	__typename?: "delivery_cost_stddev_fields",
-	cost_per_km?:number,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:number,
-	id?:number,
-	minimum_cost?:number,
-	service_provider_id?:number
-}
-
-/** aggregate stddev_pop on columns */
-export type delivery_cost_stddev_pop_fields = {
-	__typename?: "delivery_cost_stddev_pop_fields",
-	cost_per_km?:number,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:number,
-	id?:number,
-	minimum_cost?:number,
-	service_provider_id?:number
-}
-
-/** aggregate stddev_samp on columns */
-export type delivery_cost_stddev_samp_fields = {
-	__typename?: "delivery_cost_stddev_samp_fields",
-	cost_per_km?:number,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:number,
-	id?:number,
-	minimum_cost?:number,
-	service_provider_id?:number
-}
-
-/** Streaming cursor of the table "delivery_cost" */
-export type delivery_cost_stream_cursor_input = {
-		/** Stream column input with initial value */
-	initial_value:delivery_cost_stream_cursor_value_input,
-	/** cursor ordering */
-	ordering?:cursor_ordering
-}
-
-/** Initial value of the column from where the streaming should start */
-export type delivery_cost_stream_cursor_value_input = {
-		cost_per_km?:money,
-	free_delivery_km_range?:number,
-	free_delivery_minimum_cost?:money,
-	id?:number,
-	minimum_cost?:money,
-	service_provider_id?:number,
-	service_provider_type?:string
-}
-
-/** aggregate sum on columns */
-export type delivery_cost_sum_fields = {
-	__typename?: "delivery_cost_sum_fields",
+/** aggregate min on columns */
+export type delivery_details_min_fields = {
+	__typename?: "delivery_details_min_fields",
 	cost_per_km?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
-	service_provider_id?:number
+	radius?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
 }
 
-/** update columns of table "delivery.cost" */
-export enum delivery_cost_update_column {
+/** order by min() on columns of table "delivery.details" */
+export type delivery_details_min_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** response of any mutation on the table "delivery.details" */
+export type delivery_details_mutation_response = {
+	__typename?: "delivery_details_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:delivery_details[]
+}
+
+/** on_conflict condition type for table "delivery.details" */
+export type delivery_details_on_conflict = {
+		constraint:delivery_details_constraint,
+	update_columns:delivery_details_update_column[],
+	where?:delivery_details_bool_exp
+}
+
+/** Ordering options when selecting data from "delivery.details". */
+export type delivery_details_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	restaurant?:restaurant_restaurant_order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: delivery.details */
+export type delivery_details_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "delivery.details" */
+export enum delivery_details_select_column {
 	cost_per_km = "cost_per_km",
 	free_delivery_km_range = "free_delivery_km_range",
 	free_delivery_minimum_cost = "free_delivery_minimum_cost",
 	id = "id",
 	minimum_cost = "minimum_cost",
+	radius = "radius",
 	service_provider_id = "service_provider_id",
 	service_provider_type = "service_provider_type"
 }
 
-export type delivery_cost_updates = {
+/** input type for updating data in table "delivery.details" */
+export type delivery_details_set_input = {
+		cost_per_km?:money,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:money,
+	id?:number,
+	minimum_cost?:money,
+	radius?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type delivery_details_stddev_fields = {
+	__typename?: "delivery_details_stddev_fields",
+	cost_per_km?:number,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:number,
+	id?:number,
+	minimum_cost?:number,
+	radius?:number,
+	service_provider_id?:number
+}
+
+/** order by stddev() on columns of table "delivery.details" */
+export type delivery_details_stddev_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
+/** aggregate stddev_pop on columns */
+export type delivery_details_stddev_pop_fields = {
+	__typename?: "delivery_details_stddev_pop_fields",
+	cost_per_km?:number,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:number,
+	id?:number,
+	minimum_cost?:number,
+	radius?:number,
+	service_provider_id?:number
+}
+
+/** order by stddev_pop() on columns of table "delivery.details" */
+export type delivery_details_stddev_pop_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
+/** aggregate stddev_samp on columns */
+export type delivery_details_stddev_samp_fields = {
+	__typename?: "delivery_details_stddev_samp_fields",
+	cost_per_km?:number,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:number,
+	id?:number,
+	minimum_cost?:number,
+	radius?:number,
+	service_provider_id?:number
+}
+
+/** order by stddev_samp() on columns of table "delivery.details" */
+export type delivery_details_stddev_samp_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
+/** Streaming cursor of the table "delivery_details" */
+export type delivery_details_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:delivery_details_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type delivery_details_stream_cursor_value_input = {
+		cost_per_km?:money,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:money,
+	id?:number,
+	minimum_cost?:money,
+	radius?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type delivery_details_sum_fields = {
+	__typename?: "delivery_details_sum_fields",
+	cost_per_km?:money,
+	free_delivery_km_range?:number,
+	free_delivery_minimum_cost?:money,
+	id?:number,
+	minimum_cost?:money,
+	radius?:number,
+	service_provider_id?:number
+}
+
+/** order by sum() on columns of table "delivery.details" */
+export type delivery_details_sum_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
+/** update columns of table "delivery.details" */
+export enum delivery_details_update_column {
+	cost_per_km = "cost_per_km",
+	free_delivery_km_range = "free_delivery_km_range",
+	free_delivery_minimum_cost = "free_delivery_minimum_cost",
+	id = "id",
+	minimum_cost = "minimum_cost",
+	radius = "radius",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type delivery_details_updates = {
 		/** increments the numeric columns with given value of the filtered values */
-	_inc?:delivery_cost_inc_input,
+	_inc?:delivery_details_inc_input,
 	/** sets the columns of the filtered rows to the given values */
-	_set?:delivery_cost_set_input,
-	where:delivery_cost_bool_exp
+	_set?:delivery_details_set_input,
+	where:delivery_details_bool_exp
 }
 
 /** aggregate var_pop on columns */
-export type delivery_cost_var_pop_fields = {
-	__typename?: "delivery_cost_var_pop_fields",
+export type delivery_details_var_pop_fields = {
+	__typename?: "delivery_details_var_pop_fields",
 	cost_per_km?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	radius?:number,
 	service_provider_id?:number
+}
+
+/** order by var_pop() on columns of table "delivery.details" */
+export type delivery_details_var_pop_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
 }
 
 /** aggregate var_samp on columns */
-export type delivery_cost_var_samp_fields = {
-	__typename?: "delivery_cost_var_samp_fields",
+export type delivery_details_var_samp_fields = {
+	__typename?: "delivery_details_var_samp_fields",
 	cost_per_km?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	radius?:number,
 	service_provider_id?:number
 }
 
+/** order by var_samp() on columns of table "delivery.details" */
+export type delivery_details_var_samp_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
+}
+
 /** aggregate variance on columns */
-export type delivery_cost_variance_fields = {
-	__typename?: "delivery_cost_variance_fields",
+export type delivery_details_variance_fields = {
+	__typename?: "delivery_details_variance_fields",
 	cost_per_km?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	radius?:number,
 	service_provider_id?:number
+}
+
+/** order by variance() on columns of table "delivery.details" */
+export type delivery_details_variance_order_by = {
+		cost_per_km?:order_by,
+	free_delivery_km_range?:order_by,
+	free_delivery_minimum_cost?:order_by,
+	id?:order_by,
+	minimum_cost?:order_by,
+	radius?:order_by,
+	service_provider_id?:order_by
 }
 
 /** columns and relationships of "delivery.driver" */
@@ -27815,6 +28964,11 @@ export type delivery_driver_variance_order_by = {
 	id?:order_by,
 	notification_info_id?:order_by,
 	user_id?:order_by
+}
+
+export type delivery_fetch_delivery_company_args = {
+		location?:geography,
+	radius?:float8
 }
 
 /** columns and relationships of "delivery.operator" */
@@ -29699,6 +30853,8 @@ export type Float_comparison_exp = {
 	_nin?:number[]
 }
 
+export type float8 = any
+
 export type geography = any
 
 export type geography_cast_exp = {
@@ -30521,10 +31677,10 @@ export type mutation_root = {
 	delete_delivery_company?:delivery_company_mutation_response,
 	/** delete single row from the table: "delivery.company" */
 	delete_delivery_company_by_pk?:delivery_company,
-	/** delete data from the table: "delivery.cost" */
-	delete_delivery_cost?:delivery_cost_mutation_response,
-	/** delete single row from the table: "delivery.cost" */
-	delete_delivery_cost_by_pk?:delivery_cost,
+	/** delete data from the table: "delivery.details" */
+	delete_delivery_details?:delivery_details_mutation_response,
+	/** delete single row from the table: "delivery.details" */
+	delete_delivery_details_by_pk?:delivery_details,
 	/** delete data from the table: "delivery.driver" */
 	delete_delivery_driver?:delivery_driver_mutation_response,
 	/** delete single row from the table: "delivery.driver" */
@@ -30613,6 +31769,10 @@ export type mutation_root = {
 	delete_review?:review_mutation_response,
 	/** delete single row from the table: "review" */
 	delete_review_by_pk?:review,
+	/** delete data from the table: "service_provider.delivery_partner" */
+	delete_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
+	/** delete single row from the table: "service_provider.delivery_partner" */
+	delete_service_provider_delivery_partner_by_pk?:service_provider_delivery_partner,
 	/** delete data from the table: "service_provider.post" */
 	delete_service_provider_post?:service_provider_post_mutation_response,
 	/** delete single row from the table: "service_provider.post" */
@@ -30661,10 +31821,10 @@ export type mutation_root = {
 	insert_delivery_company?:delivery_company_mutation_response,
 	/** insert a single row into the table: "delivery.company" */
 	insert_delivery_company_one?:delivery_company,
-	/** insert data into the table: "delivery.cost" */
-	insert_delivery_cost?:delivery_cost_mutation_response,
-	/** insert a single row into the table: "delivery.cost" */
-	insert_delivery_cost_one?:delivery_cost,
+	/** insert data into the table: "delivery.details" */
+	insert_delivery_details?:delivery_details_mutation_response,
+	/** insert a single row into the table: "delivery.details" */
+	insert_delivery_details_one?:delivery_details,
 	/** insert data into the table: "delivery.driver" */
 	insert_delivery_driver?:delivery_driver_mutation_response,
 	/** insert a single row into the table: "delivery.driver" */
@@ -30757,6 +31917,10 @@ export type mutation_root = {
 	insert_review?:review_mutation_response,
 	/** insert a single row into the table: "review" */
 	insert_review_one?:review,
+	/** insert data into the table: "service_provider.delivery_partner" */
+	insert_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
+	/** insert a single row into the table: "service_provider.delivery_partner" */
+	insert_service_provider_delivery_partner_one?:service_provider_delivery_partner,
 	/** insert data into the table: "service_provider.post" */
 	insert_service_provider_post?:service_provider_post_mutation_response,
 	/** insert a single row into the table: "service_provider.post" */
@@ -30817,12 +31981,12 @@ export type mutation_root = {
 	update_delivery_company_by_pk?:delivery_company,
 	/** update multiples rows of table: "delivery.company" */
 	update_delivery_company_many?:(delivery_company_mutation_response | undefined)[],
-	/** update data of the table: "delivery.cost" */
-	update_delivery_cost?:delivery_cost_mutation_response,
-	/** update single row of the table: "delivery.cost" */
-	update_delivery_cost_by_pk?:delivery_cost,
-	/** update multiples rows of table: "delivery.cost" */
-	update_delivery_cost_many?:(delivery_cost_mutation_response | undefined)[],
+	/** update data of the table: "delivery.details" */
+	update_delivery_details?:delivery_details_mutation_response,
+	/** update single row of the table: "delivery.details" */
+	update_delivery_details_by_pk?:delivery_details,
+	/** update multiples rows of table: "delivery.details" */
+	update_delivery_details_many?:(delivery_details_mutation_response | undefined)[],
 	/** update data of the table: "delivery.driver" */
 	update_delivery_driver?:delivery_driver_mutation_response,
 	/** update single row of the table: "delivery.driver" */
@@ -30957,6 +32121,12 @@ export type mutation_root = {
 	update_review_by_pk?:review,
 	/** update multiples rows of table: "review" */
 	update_review_many?:(review_mutation_response | undefined)[],
+	/** update data of the table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
+	/** update single row of the table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner_by_pk?:service_provider_delivery_partner,
+	/** update multiples rows of table: "service_provider.delivery_partner" */
+	update_service_provider_delivery_partner_many?:(service_provider_delivery_partner_mutation_response | undefined)[],
 	/** update data of the table: "service_provider.post" */
 	update_service_provider_post?:service_provider_post_mutation_response,
 	/** update single row of the table: "service_provider.post" */
@@ -31265,18 +32435,22 @@ export type query_root = {
 	delivery_company_aggregate:delivery_company_aggregate,
 	/** fetch data from the table: "delivery.company" using primary key columns */
 	delivery_company_by_pk?:delivery_company,
-	/** fetch data from the table: "delivery.cost" */
-	delivery_cost:delivery_cost[],
-	/** fetch aggregated fields from the table: "delivery.cost" */
-	delivery_cost_aggregate:delivery_cost_aggregate,
-	/** fetch data from the table: "delivery.cost" using primary key columns */
-	delivery_cost_by_pk?:delivery_cost,
+	/** fetch data from the table: "delivery.details" */
+	delivery_details:delivery_details[],
+	/** fetch aggregated fields from the table: "delivery.details" */
+	delivery_details_aggregate:delivery_details_aggregate,
+	/** fetch data from the table: "delivery.details" using primary key columns */
+	delivery_details_by_pk?:delivery_details,
 	/** fetch data from the table: "delivery.driver" */
 	delivery_driver:delivery_driver[],
 	/** fetch aggregated fields from the table: "delivery.driver" */
 	delivery_driver_aggregate:delivery_driver_aggregate,
 	/** fetch data from the table: "delivery.driver" using primary key columns */
 	delivery_driver_by_pk?:delivery_driver,
+	/** execute function "delivery.fetch_delivery_company" which returns "delivery.company" */
+	delivery_fetch_delivery_company:delivery_company[],
+	/** execute function "delivery.fetch_delivery_company" and query aggregates on result of table type "delivery.company" */
+	delivery_fetch_delivery_company_aggregate:delivery_company_aggregate,
 	/** fetch data from the table: "delivery.operator" */
 	delivery_operator:delivery_operator[],
 	/** fetch aggregated fields from the table: "delivery.operator" */
@@ -31347,6 +32521,10 @@ export type query_root = {
 	restaurant_choice_aggregate:restaurant_choice_aggregate,
 	/** fetch data from the table: "restaurant.choice" using primary key columns */
 	restaurant_choice_by_pk?:restaurant_choice,
+	/** execute function "restaurant.fetch_restaurants" which returns "restaurant.restaurant" */
+	restaurant_fetch_restaurants:restaurant_restaurant[],
+	/** execute function "restaurant.fetch_restaurants" and query aggregates on result of table type "restaurant.restaurant" */
+	restaurant_fetch_restaurants_aggregate:restaurant_restaurant_aggregate,
 	/** fetch data from the table: "restaurant.item" */
 	restaurant_item:restaurant_item[],
 	/** fetch aggregated fields from the table: "restaurant.item" */
@@ -31413,6 +32591,12 @@ export type query_root = {
 	review_aggregate:review_aggregate,
 	/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:review,
+	/** fetch data from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner:service_provider_delivery_partner[],
+	/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_aggregate:service_provider_delivery_partner_aggregate,
+	/** fetch data from the table: "service_provider.delivery_partner" using primary key columns */
+	service_provider_delivery_partner_by_pk?:service_provider_delivery_partner,
 	/** fetch data from the table: "service_provider.post" */
 	service_provider_post:service_provider_post[],
 	/** fetch aggregated fields from the table: "service_provider.post" */
@@ -32926,6 +34110,11 @@ export type restaurant_choice_variance_order_by = {
 	id?:order_by,
 	name_id?:order_by,
 	restaurant_id?:order_by
+}
+
+export type restaurant_fetch_restaurants_args = {
+		location?:geography,
+	radius?:float8
 }
 
 /** columns and relationships of "restaurant.item" */
@@ -35148,6 +36337,7 @@ export type restaurant_order = {
 	delivery?:delivery_order,
 	delivery_cost:money,
 	delivery_id?:number,
+	delivery_type:string,
 	discount_value:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
@@ -35162,7 +36352,6 @@ export type restaurant_order = {
 	items_cost?:money,
 	notes?:string,
 	order_time:timestamptz,
-	order_type:string,
 	payment_type:string,
 	refund_amount:money,
 	/** An object relationship */
@@ -35298,6 +36487,7 @@ export type restaurant_order_bool_exp = {
 	delivery?:delivery_order_bool_exp,
 	delivery_cost?:money_comparison_exp,
 	delivery_id?:Int_comparison_exp,
+	delivery_type?:String_comparison_exp,
 	discount_value?:money_comparison_exp,
 	estimated_food_ready_time?:timestamptz_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -35308,7 +36498,6 @@ export type restaurant_order_bool_exp = {
 	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
-	order_type?:String_comparison_exp,
 	payment_type?:String_comparison_exp,
 	refund_amount?:money_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -35387,6 +36576,7 @@ export type restaurant_order_insert_input = {
 	delivery?:delivery_order_obj_rel_insert_input,
 	delivery_cost?:money,
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
@@ -35394,7 +36584,6 @@ export type restaurant_order_insert_input = {
 	items?:restaurant_order_item_arr_rel_insert_input,
 	notes?:string,
 	order_time?:timestamptz,
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:money,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
@@ -35891,13 +37080,13 @@ export type restaurant_order_max_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:timestamptz,
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -35919,13 +37108,13 @@ export type restaurant_order_max_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	delivery_type?:order_by,
 	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
 	notes?:order_by,
 	order_time?:order_by,
-	order_type?:order_by,
 	payment_type?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -35948,13 +37137,13 @@ export type restaurant_order_min_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:timestamptz,
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -35976,13 +37165,13 @@ export type restaurant_order_min_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	delivery_type?:order_by,
 	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
 	notes?:order_by,
 	order_time?:order_by,
-	order_type?:order_by,
 	payment_type?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -36030,6 +37219,7 @@ export type restaurant_order_order_by = {
 	delivery?:delivery_order_order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	delivery_type?:order_by,
 	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
@@ -36039,7 +37229,6 @@ export type restaurant_order_order_by = {
 	items_cost?:order_by,
 	notes?:order_by,
 	order_time?:order_by,
-	order_type?:order_by,
 	payment_type?:order_by,
 	refund_amount?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
@@ -36311,13 +37500,13 @@ export enum restaurant_order_select_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
+	delivery_type = "delivery_type",
 	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
 	notes = "notes",
 	order_time = "order_time",
-	order_type = "order_type",
 	payment_type = "payment_type",
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
@@ -36340,13 +37529,13 @@ export type restaurant_order_set_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:timestamptz,
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -36475,13 +37664,13 @@ export type restaurant_order_stream_cursor_value_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	delivery_type?:string,
 	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
 	notes?:string,
 	order_time?:timestamptz,
-	order_type?:string,
 	payment_type?:string,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -36540,13 +37729,13 @@ export enum restaurant_order_update_column {
 	customer_id = "customer_id",
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
+	delivery_type = "delivery_type",
 	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
 	notes = "notes",
 	order_time = "order_time",
-	order_type = "order_type",
 	payment_type = "payment_type",
 	refund_amount = "refund_amount",
 	restaurant_id = "restaurant_id",
@@ -36690,10 +37879,19 @@ export type restaurant_restaurant = {
 	categories:restaurant_category[],
 	/** An aggregate relationship */
 	categories_aggregate:restaurant_category_aggregate,
+	creation_time:timestamptz,
+	/** pickup on or off */
+	customer_pickup:boolean,
+	/** delivery on or off */
+	delivery:boolean,
+	/** A computed field, executes function "restaurant_delivery_details" */
+	delivery_details?:delivery_details[],
 	/** An array relationship */
 	delivery_drivers:delivery_driver[],
 	/** An aggregate relationship */
 	delivery_drivers_aggregate:delivery_driver_aggregate,
+	/** An object relationship */
+	delivery_partner?:service_provider_delivery_partner,
 	/** An object relationship */
 	description?:translation,
 	description_id?:number,
@@ -36733,7 +37931,6 @@ requirements: string[] | null; email: string | null } */
 	stripe_info?:jsonb
 }
 
-/** aggregated selection of "restaurant.restaurant" */
 export type restaurant_restaurant_aggregate = {
 	__typename?: "restaurant_restaurant_aggregate",
 	aggregate?:restaurant_restaurant_aggregate_fields,
@@ -36783,8 +37980,13 @@ export type restaurant_restaurant_bool_exp = {
 	approved?:Boolean_comparison_exp,
 	categories?:restaurant_category_bool_exp,
 	categories_aggregate?:restaurant_category_aggregate_bool_exp,
+	creation_time?:timestamptz_comparison_exp,
+	customer_pickup?:Boolean_comparison_exp,
+	delivery?:Boolean_comparison_exp,
+	delivery_details?:delivery_details_bool_exp,
 	delivery_drivers?:delivery_driver_bool_exp,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
+	delivery_partner?:service_provider_delivery_partner_bool_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -36862,7 +38064,13 @@ export type restaurant_restaurant_insert_input = {
 	accepted_payments?:jsonb,
 	approved?:boolean,
 	categories?:restaurant_category_arr_rel_insert_input,
+	creation_time?:timestamptz,
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	delivery_drivers?:delivery_driver_arr_rel_insert_input,
+	delivery_partner?:service_provider_delivery_partner_obj_rel_insert_input,
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	firebase_id?:string,
@@ -36890,6 +38098,7 @@ requirements: string[] | null; email: string | null } */
 /** aggregate max on columns */
 export type restaurant_restaurant_max_fields = {
 	__typename?: "restaurant_restaurant_max_fields",
+	creation_time?:timestamptz,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -36905,6 +38114,7 @@ export type restaurant_restaurant_max_fields = {
 /** aggregate min on columns */
 export type restaurant_restaurant_min_fields = {
 	__typename?: "restaurant_restaurant_min_fields",
+	creation_time?:timestamptz,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -36945,7 +38155,12 @@ export type restaurant_restaurant_order_by = {
 		accepted_payments?:order_by,
 	approved?:order_by,
 	categories_aggregate?:restaurant_category_aggregate_order_by,
+	creation_time?:order_by,
+	customer_pickup?:order_by,
+	delivery?:order_by,
+	delivery_details_aggregate?:delivery_details_aggregate_order_by,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_order_by,
+	delivery_partner?:service_provider_delivery_partner_order_by,
 	description?:translation_order_by,
 	description_id?:order_by,
 	firebase_id?:order_by,
@@ -36987,6 +38202,9 @@ requirements: string[] | null; email: string | null } */
 export enum restaurant_restaurant_select_column {
 	accepted_payments = "accepted_payments",
 	approved = "approved",
+	creation_time = "creation_time",
+	customer_pickup = "customer_pickup",
+	delivery = "delivery",
 	description_id = "description_id",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -37007,6 +38225,11 @@ export type restaurant_restaurant_set_input = {
 		/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:jsonb,
 	approved?:boolean,
+	creation_time?:timestamptz,
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -37060,6 +38283,11 @@ export type restaurant_restaurant_stream_cursor_value_input = {
 		/** Record of PaymentType(cash, card, bank transfer) and boolean */
 	accepted_payments?:jsonb,
 	approved?:boolean,
+	creation_time?:timestamptz,
+	/** pickup on or off */
+	customer_pickup?:boolean,
+	/** delivery on or off */
+	delivery?:boolean,
 	description_id?:number,
 	firebase_id?:string,
 	id?:number,
@@ -37090,6 +38318,9 @@ export type restaurant_restaurant_sum_fields = {
 export enum restaurant_restaurant_update_column {
 	accepted_payments = "accepted_payments",
 	approved = "approved",
+	creation_time = "creation_time",
+	customer_pickup = "customer_pickup",
+	delivery = "delivery",
 	description_id = "description_id",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -37547,6 +38778,237 @@ export type review_variance_order_by = {
 	id?:order_by,
 	rating?:order_by,
 	to_entity_id?:order_by
+}
+
+/** columns and relationships of "service_provider.delivery_partner" */
+export type service_provider_delivery_partner = {
+	__typename?: "service_provider_delivery_partner",
+	delivery_company_id:number,
+	id:number,
+	service_provider_id:number,
+	service_provider_type:string
+}
+
+/** aggregated selection of "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_aggregate = {
+	__typename?: "service_provider_delivery_partner_aggregate",
+	aggregate?:service_provider_delivery_partner_aggregate_fields,
+	nodes:service_provider_delivery_partner[]
+}
+
+/** aggregate fields of "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_aggregate_fields = {
+	__typename?: "service_provider_delivery_partner_aggregate_fields",
+	avg?:service_provider_delivery_partner_avg_fields,
+	count:number,
+	max?:service_provider_delivery_partner_max_fields,
+	min?:service_provider_delivery_partner_min_fields,
+	stddev?:service_provider_delivery_partner_stddev_fields,
+	stddev_pop?:service_provider_delivery_partner_stddev_pop_fields,
+	stddev_samp?:service_provider_delivery_partner_stddev_samp_fields,
+	sum?:service_provider_delivery_partner_sum_fields,
+	var_pop?:service_provider_delivery_partner_var_pop_fields,
+	var_samp?:service_provider_delivery_partner_var_samp_fields,
+	variance?:service_provider_delivery_partner_variance_fields
+}
+
+/** aggregate avg on columns */
+export type service_provider_delivery_partner_avg_fields = {
+	__typename?: "service_provider_delivery_partner_avg_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** Boolean expression to filter rows from the table
+"service_provider.delivery_partner". All fields are combined with a logical 'AND'. */
+export type service_provider_delivery_partner_bool_exp = {
+		_and?:service_provider_delivery_partner_bool_exp[],
+	_not?:service_provider_delivery_partner_bool_exp,
+	_or?:service_provider_delivery_partner_bool_exp[],
+	delivery_company_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
+	service_provider_id?:Int_comparison_exp,
+	service_provider_type?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider.delivery_partner" */
+export enum service_provider_delivery_partner_constraint {
+	delivery_partner_pkey = "delivery_partner_pkey",
+	delivery_partner_service_provider_id_service_provider_type_key = "delivery_partner_service_provider_id_service_provider_type_key"
+}
+
+/** input type for incrementing numeric columns in table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_inc_input = {
+		delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** input type for inserting data into table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_insert_input = {
+		delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_delivery_partner_max_fields = {
+	__typename?: "service_provider_delivery_partner_max_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_delivery_partner_min_fields = {
+	__typename?: "service_provider_delivery_partner_min_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_mutation_response = {
+	__typename?: "service_provider_delivery_partner_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_delivery_partner[]
+}
+
+/** input type for inserting object relation for remote table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_obj_rel_insert_input = {
+		data:service_provider_delivery_partner_insert_input,
+	/** upsert condition */
+	on_conflict?:service_provider_delivery_partner_on_conflict
+}
+
+/** on_conflict condition type for table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_on_conflict = {
+		constraint:service_provider_delivery_partner_constraint,
+	update_columns:service_provider_delivery_partner_update_column[],
+	where?:service_provider_delivery_partner_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider.delivery_partner". */
+export type service_provider_delivery_partner_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: service_provider.delivery_partner */
+export type service_provider_delivery_partner_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "service_provider.delivery_partner" */
+export enum service_provider_delivery_partner_select_column {
+	delivery_company_id = "delivery_company_id",
+	id = "id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+/** input type for updating data in table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_set_input = {
+		delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_delivery_partner_stddev_fields = {
+	__typename?: "service_provider_delivery_partner_stddev_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_delivery_partner_stddev_pop_fields = {
+	__typename?: "service_provider_delivery_partner_stddev_pop_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_delivery_partner_stddev_samp_fields = {
+	__typename?: "service_provider_delivery_partner_stddev_samp_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_delivery_partner" */
+export type service_provider_delivery_partner_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_delivery_partner_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_delivery_partner_stream_cursor_value_input = {
+		delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_delivery_partner_sum_fields = {
+	__typename?: "service_provider_delivery_partner_sum_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** update columns of table "service_provider.delivery_partner" */
+export enum service_provider_delivery_partner_update_column {
+	delivery_company_id = "delivery_company_id",
+	id = "id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type service_provider_delivery_partner_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_delivery_partner_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_delivery_partner_set_input,
+	where:service_provider_delivery_partner_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_delivery_partner_var_pop_fields = {
+	__typename?: "service_provider_delivery_partner_var_pop_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_delivery_partner_var_samp_fields = {
+	__typename?: "service_provider_delivery_partner_var_samp_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_delivery_partner_variance_fields = {
+	__typename?: "service_provider_delivery_partner_variance_fields",
+	delivery_company_id?:number,
+	id?:number,
+	service_provider_id?:number
 }
 
 /** columns and relationships of "service_provider.post" */
@@ -38458,14 +39920,14 @@ export type subscription_root = {
 	delivery_company_by_pk?:delivery_company,
 	/** fetch data from the table in a streaming manner: "delivery.company" */
 	delivery_company_stream:delivery_company[],
-	/** fetch data from the table: "delivery.cost" */
-	delivery_cost:delivery_cost[],
-	/** fetch aggregated fields from the table: "delivery.cost" */
-	delivery_cost_aggregate:delivery_cost_aggregate,
-	/** fetch data from the table: "delivery.cost" using primary key columns */
-	delivery_cost_by_pk?:delivery_cost,
-	/** fetch data from the table in a streaming manner: "delivery.cost" */
-	delivery_cost_stream:delivery_cost[],
+	/** fetch data from the table: "delivery.details" */
+	delivery_details:delivery_details[],
+	/** fetch aggregated fields from the table: "delivery.details" */
+	delivery_details_aggregate:delivery_details_aggregate,
+	/** fetch data from the table: "delivery.details" using primary key columns */
+	delivery_details_by_pk?:delivery_details,
+	/** fetch data from the table in a streaming manner: "delivery.details" */
+	delivery_details_stream:delivery_details[],
 	/** fetch data from the table: "delivery.driver" */
 	delivery_driver:delivery_driver[],
 	/** fetch aggregated fields from the table: "delivery.driver" */
@@ -38474,6 +39936,10 @@ export type subscription_root = {
 	delivery_driver_by_pk?:delivery_driver,
 	/** fetch data from the table in a streaming manner: "delivery.driver" */
 	delivery_driver_stream:delivery_driver[],
+	/** execute function "delivery.fetch_delivery_company" which returns "delivery.company" */
+	delivery_fetch_delivery_company:delivery_company[],
+	/** execute function "delivery.fetch_delivery_company" and query aggregates on result of table type "delivery.company" */
+	delivery_fetch_delivery_company_aggregate:delivery_company_aggregate,
 	/** fetch data from the table: "delivery.operator" */
 	delivery_operator:delivery_operator[],
 	/** fetch aggregated fields from the table: "delivery.operator" */
@@ -38568,6 +40034,10 @@ export type subscription_root = {
 	restaurant_choice_by_pk?:restaurant_choice,
 	/** fetch data from the table in a streaming manner: "restaurant.choice" */
 	restaurant_choice_stream:restaurant_choice[],
+	/** execute function "restaurant.fetch_restaurants" which returns "restaurant.restaurant" */
+	restaurant_fetch_restaurants:restaurant_restaurant[],
+	/** execute function "restaurant.fetch_restaurants" and query aggregates on result of table type "restaurant.restaurant" */
+	restaurant_fetch_restaurants_aggregate:restaurant_restaurant_aggregate,
 	/** fetch data from the table: "restaurant.item" */
 	restaurant_item:restaurant_item[],
 	/** fetch aggregated fields from the table: "restaurant.item" */
@@ -38654,6 +40124,14 @@ export type subscription_root = {
 	review_by_pk?:review,
 	/** fetch data from the table in a streaming manner: "review" */
 	review_stream:review[],
+	/** fetch data from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner:service_provider_delivery_partner[],
+	/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_aggregate:service_provider_delivery_partner_aggregate,
+	/** fetch data from the table: "service_provider.delivery_partner" using primary key columns */
+	service_provider_delivery_partner_by_pk?:service_provider_delivery_partner,
+	/** fetch data from the table in a streaming manner: "service_provider.delivery_partner" */
+	service_provider_delivery_partner_stream:service_provider_delivery_partner[],
 	/** fetch data from the table: "service_provider.post" */
 	service_provider_post:service_provider_post[],
 	/** fetch aggregated fields from the table: "service_provider.post" */
@@ -39238,6 +40716,7 @@ export type translation_variance_fields = {
 export type user = {
 	__typename?: "user",
 	big_image?:string,
+	creation_time:timestamptz,
 	/** An object relationship */
 	customer?:customer_customer,
 	deleted:boolean,
@@ -39285,6 +40764,7 @@ export type user_bool_exp = {
 	_not?:user_bool_exp,
 	_or?:user_bool_exp[],
 	big_image?:String_comparison_exp,
+	creation_time?:timestamptz_comparison_exp,
 	customer?:customer_customer_bool_exp,
 	deleted?:Boolean_comparison_exp,
 	email?:String_comparison_exp,
@@ -39309,6 +40789,7 @@ export type user_inc_input = {
 /** input type for inserting data into table "user" */
 export type user_insert_input = {
 		big_image?:string,
+	creation_time?:timestamptz,
 	customer?:customer_customer_obj_rel_insert_input,
 	deleted?:boolean,
 	email?:string,
@@ -39324,6 +40805,7 @@ export type user_insert_input = {
 export type user_max_fields = {
 	__typename?: "user_max_fields",
 	big_image?:string,
+	creation_time?:timestamptz,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -39337,6 +40819,7 @@ export type user_max_fields = {
 export type user_min_fields = {
 	__typename?: "user_min_fields",
 	big_image?:string,
+	creation_time?:timestamptz,
 	email?:string,
 	firebase_id?:string,
 	id?:number,
@@ -39372,6 +40855,7 @@ export type user_on_conflict = {
 /** Ordering options when selecting data from "user". */
 export type user_order_by = {
 		big_image?:order_by,
+	creation_time?:order_by,
 	customer?:customer_customer_order_by,
 	deleted?:order_by,
 	email?:order_by,
@@ -39391,6 +40875,7 @@ export type user_pk_columns_input = {
 /** select columns of table "user" */
 export enum user_select_column {
 	big_image = "big_image",
+	creation_time = "creation_time",
 	deleted = "deleted",
 	email = "email",
 	firebase_id = "firebase_id",
@@ -39404,6 +40889,7 @@ export enum user_select_column {
 /** input type for updating data in table "user" */
 export type user_set_input = {
 		big_image?:string,
+	creation_time?:timestamptz,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -39443,6 +40929,7 @@ export type user_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type user_stream_cursor_value_input = {
 		big_image?:string,
+	creation_time?:timestamptz,
 	deleted?:boolean,
 	email?:string,
 	firebase_id?:string,
@@ -39462,6 +40949,7 @@ export type user_sum_fields = {
 /** update columns of table "user" */
 export enum user_update_column {
 	big_image = "big_image",
+	creation_time = "creation_time",
 	deleted = "deleted",
 	email = "email",
 	firebase_id = "firebase_id",
@@ -42268,6 +43756,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers:{
 			type:"delivery_driver_bool_exp",
 			array:false,
@@ -42288,6 +43782,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_operators_aggregate:{
 			type:"delivery_operator_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_radius:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42316,6 +43816,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		location:{
+			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		name:{
 			type:"String_comparison_exp",
 			array:false,
@@ -42337,6 +43843,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_company_constraint: "enum",
 	delivery_company_inc_input:{
+		delivery_radius:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -42357,6 +43869,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers:{
 			type:"delivery_driver_arr_rel_insert_input",
 			array:false,
@@ -42365,6 +43883,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_operators:{
 			type:"delivery_operator_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_radius:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42389,6 +43913,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42453,6 +43983,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers_aggregate:{
 			type:"delivery_driver_aggregate_order_by",
 			array:false,
@@ -42461,6 +43997,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_operators_aggregate:{
 			type:"delivery_operator_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_radius:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42484,6 +44026,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -42524,6 +44072,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_radius:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -42538,6 +44098,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42582,6 +44148,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_radius:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -42596,6 +44174,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42640,10 +44224,10 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
-	delivery_cost_aggregate_fields:{
+	delivery_details_aggregate_fields:{
 		count:{
 			columns:{
-				type:"delivery_cost_select_column",
+				type:"delivery_details_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -42656,21 +44240,133 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
-	delivery_cost_bool_exp:{
+	delivery_details_aggregate_order_by:{
+		avg:{
+			type:"delivery_details_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"delivery_details_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"delivery_details_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"delivery_details_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"delivery_details_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"delivery_details_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"delivery_details_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"delivery_details_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"delivery_details_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"delivery_details_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_avg_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_bool_exp:{
 		_and:{
-			type:"delivery_cost_bool_exp",
+			type:"delivery_details_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
 		},
 		_not:{
-			type:"delivery_cost_bool_exp",
+			type:"delivery_details_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_or:{
-			type:"delivery_cost_bool_exp",
+			type:"delivery_details_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
@@ -42705,6 +44401,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		radius:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant:{
 			type:"restaurant_restaurant_bool_exp",
 			array:false,
@@ -42724,8 +44426,8 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_constraint: "enum",
-	delivery_cost_inc_input:{
+	delivery_details_constraint: "enum",
+	delivery_details_inc_input:{
 		cost_per_km:{
 			type:"money",
 			array:false,
@@ -42752,6 +44454,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		minimum_cost:{
 			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42763,7 +44471,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_insert_input:{
+	delivery_details_insert_input:{
 		cost_per_km:{
 			type:"money",
 			array:false,
@@ -42790,6 +44498,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		minimum_cost:{
 			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -42813,27 +44527,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_on_conflict:{
-		constraint:{
-			type:"delivery_cost_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"delivery_cost_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"delivery_cost_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_cost_order_by:{
+	delivery_details_max_order_by:{
 		cost_per_km:{
 			type:"order_by",
 			array:false,
@@ -42859,6 +44553,132 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_min_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_on_conflict:{
+		constraint:{
+			type:"delivery_details_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"delivery_details_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -42883,7 +44703,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_pk_columns_input:{
+	delivery_details_pk_columns_input:{
 		id:{
 			type:"Int",
 			array:false,
@@ -42891,8 +44711,8 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
-	delivery_cost_select_column: "enum",
-	delivery_cost_set_input:{
+	delivery_details_select_column: "enum",
+	delivery_details_set_input:{
 		cost_per_km:{
 			type:"money",
 			array:false,
@@ -42923,6 +44743,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		radius:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_id:{
 			type:"Int",
 			array:false,
@@ -42936,9 +44762,141 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_stream_cursor_input:{
+	delivery_details_stddev_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_stddev_pop_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_stddev_samp_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_stream_cursor_input:{
 		initial_value:{
-			type:"delivery_cost_stream_cursor_value_input",
+			type:"delivery_details_stream_cursor_value_input",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -42950,7 +44908,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_stream_cursor_value_input:{
+	delivery_details_stream_cursor_value_input:{
 		cost_per_km:{
 			type:"money",
 			array:false,
@@ -42981,6 +44939,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		radius:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_id:{
 			type:"Int",
 			array:false,
@@ -42994,25 +44958,201 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_cost_update_column: "enum",
-	delivery_cost_updates:{
+	delivery_details_sum_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_update_column: "enum",
+	delivery_details_updates:{
 		_inc:{
-			type:"delivery_cost_inc_input",
+			type:"delivery_details_inc_input",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_set:{
-			type:"delivery_cost_set_input",
+			type:"delivery_details_set_input",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		where:{
-			type:"delivery_cost_bool_exp",
+			type:"delivery_details_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	delivery_details_var_pop_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_var_samp_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_details_variance_order_by:{
+		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_km_range:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		free_delivery_minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		minimum_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_driver_aggregate_bool_exp:{
@@ -44015,6 +46155,20 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		user_id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	delivery_fetch_delivery_company_args:{
+		location:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"float8",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -48393,6 +50547,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	float8: "String",
 	geography: "String",
 	geography_cast_exp:{
 		geometry:{
@@ -49791,15 +51946,15 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		delete_delivery_cost:{
+		delete_delivery_details:{
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		delete_delivery_cost_by_pk:{
+		delete_delivery_details_by_pk:{
 			id:{
 				type:"Int",
 				array:false,
@@ -50159,6 +52314,22 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_service_provider_delivery_partner:{
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_delivery_partner_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_service_provider_post:{
 			where:{
 				type:"service_provider_post_bool_exp",
@@ -50429,29 +52600,29 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		insert_delivery_cost:{
+		insert_delivery_details:{
 			objects:{
-				type:"delivery_cost_insert_input",
+				type:"delivery_details_insert_input",
 				array:true,
 				arrayRequired:true,
 				required:true
 			},
 			on_conflict:{
-				type:"delivery_cost_on_conflict",
+				type:"delivery_details_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		insert_delivery_cost_one:{
+		insert_delivery_details_one:{
 			object:{
-				type:"delivery_cost_insert_input",
+				type:"delivery_details_insert_input",
 				array:false,
 				arrayRequired:false,
 				required:true
 			},
 			on_conflict:{
-				type:"delivery_cost_on_conflict",
+				type:"delivery_details_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -51077,6 +53248,34 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		insert_service_provider_delivery_partner:{
+			objects:{
+				type:"service_provider_delivery_partner_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_delivery_partner_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_delivery_partner_one:{
+			object:{
+				type:"service_provider_delivery_partner_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_delivery_partner_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		insert_service_provider_post:{
 			objects:{
 				type:"service_provider_post_insert_input",
@@ -51641,49 +53840,49 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		update_delivery_cost:{
+		update_delivery_details:{
 			_inc:{
-				type:"delivery_cost_inc_input",
+				type:"delivery_details_inc_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			_set:{
-				type:"delivery_cost_set_input",
+				type:"delivery_details_set_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		update_delivery_cost_by_pk:{
+		update_delivery_details_by_pk:{
 			_inc:{
-				type:"delivery_cost_inc_input",
+				type:"delivery_details_inc_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			_set:{
-				type:"delivery_cost_set_input",
+				type:"delivery_details_set_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			pk_columns:{
-				type:"delivery_cost_pk_columns_input",
+				type:"delivery_details_pk_columns_input",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		update_delivery_cost_many:{
+		update_delivery_details_many:{
 			updates:{
-				type:"delivery_cost_updates",
+				type:"delivery_details_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -52909,6 +55108,54 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		update_service_provider_delivery_partner:{
+			_inc:{
+				type:"service_provider_delivery_partner_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_delivery_partner_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_delivery_partner_by_pk:{
+			_inc:{
+				type:"service_provider_delivery_partner_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_delivery_partner_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_delivery_partner_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_delivery_partner_many:{
+			updates:{
+				type:"service_provider_delivery_partner_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
 		update_service_provider_post:{
 			_append:{
 				type:"service_provider_post_append_input",
@@ -53949,9 +56196,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		delivery_cost:{
+		delivery_details:{
 			distinct_on:{
-				type:"delivery_cost_select_column",
+				type:"delivery_details_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -53969,21 +56216,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"delivery_cost_order_by",
+				type:"delivery_details_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		delivery_cost_aggregate:{
+		delivery_details_aggregate:{
 			distinct_on:{
-				type:"delivery_cost_select_column",
+				type:"delivery_details_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -54001,19 +56248,19 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"delivery_cost_order_by",
+				type:"delivery_details_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		delivery_cost_by_pk:{
+		delivery_details_by_pk:{
 			id:{
 				type:"Int",
 				array:false,
@@ -54091,6 +56338,82 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		delivery_fetch_delivery_company:{
+			args:{
+				type:"delivery_fetch_delivery_company_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"delivery_company_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_company_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_company_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		delivery_fetch_delivery_company_aggregate:{
+			args:{
+				type:"delivery_fetch_delivery_company_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"delivery_company_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_company_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_company_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		delivery_operator:{
@@ -54947,6 +57270,82 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		restaurant_fetch_restaurants:{
+			args:{
+				type:"restaurant_fetch_restaurants_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"restaurant_restaurant_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_restaurant_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_restaurant_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_fetch_restaurants_aggregate:{
+			args:{
+				type:"restaurant_fetch_restaurants_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"restaurant_restaurant_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_restaurant_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_restaurant_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		restaurant_item:{
@@ -55806,6 +58205,78 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		review_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_delivery_partner:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_delivery_partner_aggregate:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_delivery_partner_by_pk:{
 			id:{
 				type:"Int",
 				array:false,
@@ -59297,6 +61768,20 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant_id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	restaurant_fetch_restaurants_args:{
+		location:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		radius:{
+			type:"float8",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64650,6 +67135,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"money_comparison_exp",
 			array:false,
@@ -64706,12 +67197,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		order_time:{
 			type:"timestamptz_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
-			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64955,6 +67440,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"money",
 			array:false,
@@ -64993,12 +67484,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		order_time:{
 			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -66162,6 +68647,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"order_by",
 			array:false,
@@ -66193,12 +68684,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		order_time:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -66302,6 +68787,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"order_by",
 			array:false,
@@ -66333,12 +68824,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		order_time:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -66494,6 +68979,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"order_by",
 			array:false,
@@ -66543,12 +69034,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		order_time:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -67098,6 +69583,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"money",
 			array:false,
@@ -67130,12 +69621,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		order_time:{
 			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67468,6 +69953,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		discount_value:{
 			type:"money",
 			array:false,
@@ -67500,12 +69991,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		order_time:{
 			type:"timestamptz",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		order_type:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67989,6 +70474,38 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		delivery_details:{
+			distinct_on:{
+				type:"delivery_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		delivery_drivers:{
 			distinct_on:{
 				type:"delivery_driver_select_column",
@@ -68437,6 +70954,30 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers:{
 			type:"delivery_driver_bool_exp",
 			array:false,
@@ -68445,6 +70986,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_drivers_aggregate:{
 			type:"delivery_driver_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -68682,8 +71229,32 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers:{
 			type:"delivery_driver_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -68850,8 +71421,38 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_aggregate:{
+			type:"delivery_details_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_drivers_aggregate:{
 			type:"delivery_driver_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -69013,6 +71614,24 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -69114,6 +71733,24 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		approved:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
 			type:"Boolean",
 			array:false,
 			arrayRequired:false,
@@ -70078,6 +72715,269 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		}
+	},
+	service_provider_delivery_partner_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_delivery_partner_bool_exp:{
+		_and:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		delivery_company_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_constraint: "enum",
+	service_provider_delivery_partner_inc_input:{
+		delivery_company_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_insert_input:{
+		delivery_company_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_obj_rel_insert_input:{
+		data:{
+			type:"service_provider_delivery_partner_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"service_provider_delivery_partner_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_on_conflict:{
+		constraint:{
+			type:"service_provider_delivery_partner_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_delivery_partner_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_delivery_partner_select_column: "enum",
+	service_provider_delivery_partner_set_input:{
+		delivery_company_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_delivery_partner_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_stream_cursor_value_input:{
+		delivery_company_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_update_column: "enum",
+	service_provider_delivery_partner_updates:{
+		_inc:{
+			type:"service_provider_delivery_partner_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_delivery_partner_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
 		}
 	},
 	service_provider_post:{
@@ -72026,9 +74926,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		delivery_cost:{
+		delivery_details:{
 			distinct_on:{
-				type:"delivery_cost_select_column",
+				type:"delivery_details_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -72046,21 +74946,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"delivery_cost_order_by",
+				type:"delivery_details_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		delivery_cost_aggregate:{
+		delivery_details_aggregate:{
 			distinct_on:{
-				type:"delivery_cost_select_column",
+				type:"delivery_details_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -72078,19 +74978,19 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"delivery_cost_order_by",
+				type:"delivery_details_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		delivery_cost_by_pk:{
+		delivery_details_by_pk:{
 			id:{
 				type:"Int",
 				array:false,
@@ -72098,7 +74998,7 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		delivery_cost_stream:{
+		delivery_details_stream:{
 			batch_size:{
 				type:"Int",
 				array:false,
@@ -72106,13 +75006,13 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			},
 			cursor:{
-				type:"delivery_cost_stream_cursor_input",
+				type:"delivery_details_stream_cursor_input",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_cost_bool_exp",
+				type:"delivery_details_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -72205,6 +75105,82 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"delivery_driver_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		delivery_fetch_delivery_company:{
+			args:{
+				type:"delivery_fetch_delivery_company_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"delivery_company_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_company_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_company_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		delivery_fetch_delivery_company_aggregate:{
+			args:{
+				type:"delivery_fetch_delivery_company_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"delivery_company_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_company_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_company_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -73306,6 +76282,82 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		restaurant_fetch_restaurants:{
+			args:{
+				type:"restaurant_fetch_restaurants_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"restaurant_restaurant_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_restaurant_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_restaurant_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		restaurant_fetch_restaurants_aggregate:{
+			args:{
+				type:"restaurant_fetch_restaurants_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"restaurant_restaurant_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"restaurant_restaurant_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"restaurant_restaurant_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		restaurant_item:{
 			distinct_on:{
 				type:"restaurant_item_select_column",
@@ -74365,6 +77417,98 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_delivery_partner:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_delivery_partner_aggregate:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_delivery_partner_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_delivery_partner_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_delivery_partner_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -75831,6 +78975,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer:{
 			type:"customer_customer_bool_exp",
 			array:false,
@@ -75898,6 +79048,12 @@ export const AllTypesProps: Record<string,any> = {
 	user_insert_input:{
 		big_image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75998,6 +79154,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer:{
 			type:"customer_customer_order_by",
 			array:false,
@@ -76069,6 +79231,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		deleted:{
 			type:"Boolean",
 			array:false,
@@ -76135,6 +79303,12 @@ export const AllTypesProps: Record<string,any> = {
 	user_stream_cursor_value_input:{
 		big_image:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -76524,14 +79698,17 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_company:{
 		approved:"Boolean",
+		creation_time:"timestamptz",
 		delivery_drivers:"delivery_driver",
 		delivery_drivers_aggregate:"delivery_driver_aggregate",
 		delivery_operators:"delivery_operator",
 		delivery_operators_aggregate:"delivery_operator_aggregate",
+		delivery_radius:"Int",
 		description:"translation",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
+		location:"geography",
 		name:"String",
 		open_status:"String",
 		service_provider_type:"String"
@@ -76554,10 +79731,13 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"delivery_company_variance_fields"
 	},
 	delivery_company_avg_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_max_fields:{
+		creation_time:"timestamptz",
+		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
@@ -76566,6 +79746,8 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String"
 	},
 	delivery_company_min_fields:{
+		creation_time:"timestamptz",
+		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
@@ -76578,144 +79760,162 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"delivery_company"
 	},
 	delivery_company_stddev_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_stddev_pop_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_stddev_samp_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_sum_fields:{
+		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int"
 	},
 	delivery_company_var_pop_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_var_samp_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_variance_fields:{
+		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
-	delivery_cost:{
+	delivery_details:{
 		cost_per_km:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
 		minimum_cost:"money",
+		radius:"Int",
 		restaurant:"restaurant_restaurant",
 		service_provider_id:"Int",
 		service_provider_type:"String"
 	},
-	delivery_cost_aggregate:{
-		aggregate:"delivery_cost_aggregate_fields",
-		nodes:"delivery_cost"
+	delivery_details_aggregate:{
+		aggregate:"delivery_details_aggregate_fields",
+		nodes:"delivery_details"
 	},
-	delivery_cost_aggregate_fields:{
-		avg:"delivery_cost_avg_fields",
+	delivery_details_aggregate_fields:{
+		avg:"delivery_details_avg_fields",
 		count:"Int",
-		max:"delivery_cost_max_fields",
-		min:"delivery_cost_min_fields",
-		stddev:"delivery_cost_stddev_fields",
-		stddev_pop:"delivery_cost_stddev_pop_fields",
-		stddev_samp:"delivery_cost_stddev_samp_fields",
-		sum:"delivery_cost_sum_fields",
-		var_pop:"delivery_cost_var_pop_fields",
-		var_samp:"delivery_cost_var_samp_fields",
-		variance:"delivery_cost_variance_fields"
+		max:"delivery_details_max_fields",
+		min:"delivery_details_min_fields",
+		stddev:"delivery_details_stddev_fields",
+		stddev_pop:"delivery_details_stddev_pop_fields",
+		stddev_samp:"delivery_details_stddev_samp_fields",
+		sum:"delivery_details_sum_fields",
+		var_pop:"delivery_details_var_pop_fields",
+		var_samp:"delivery_details_var_samp_fields",
+		variance:"delivery_details_variance_fields"
 	},
-	delivery_cost_avg_fields:{
+	delivery_details_avg_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_max_fields:{
+	delivery_details_max_fields:{
 		cost_per_km:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
 		minimum_cost:"money",
+		radius:"Int",
 		service_provider_id:"Int",
 		service_provider_type:"String"
 	},
-	delivery_cost_min_fields:{
+	delivery_details_min_fields:{
 		cost_per_km:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
 		minimum_cost:"money",
+		radius:"Int",
 		service_provider_id:"Int",
 		service_provider_type:"String"
 	},
-	delivery_cost_mutation_response:{
+	delivery_details_mutation_response:{
 		affected_rows:"Int",
-		returning:"delivery_cost"
+		returning:"delivery_details"
 	},
-	delivery_cost_stddev_fields:{
+	delivery_details_stddev_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_stddev_pop_fields:{
+	delivery_details_stddev_pop_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_stddev_samp_fields:{
+	delivery_details_stddev_samp_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_sum_fields:{
+	delivery_details_sum_fields:{
 		cost_per_km:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
 		minimum_cost:"money",
+		radius:"Int",
 		service_provider_id:"Int"
 	},
-	delivery_cost_var_pop_fields:{
+	delivery_details_var_pop_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_var_samp_fields:{
+	delivery_details_var_samp_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
-	delivery_cost_variance_fields:{
+	delivery_details_variance_fields:{
 		cost_per_km:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
 		minimum_cost:"Float",
+		radius:"Float",
 		service_provider_id:"Float"
 	},
 	delivery_driver:{
@@ -77537,8 +80737,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_customer_saved_location_by_pk:"customer_saved_location",
 		delete_delivery_company:"delivery_company_mutation_response",
 		delete_delivery_company_by_pk:"delivery_company",
-		delete_delivery_cost:"delivery_cost_mutation_response",
-		delete_delivery_cost_by_pk:"delivery_cost",
+		delete_delivery_details:"delivery_details_mutation_response",
+		delete_delivery_details_by_pk:"delivery_details",
 		delete_delivery_driver:"delivery_driver_mutation_response",
 		delete_delivery_driver_by_pk:"delivery_driver",
 		delete_delivery_operator:"delivery_operator_mutation_response",
@@ -77583,6 +80783,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_restaurant_restaurant_by_pk:"restaurant_restaurant",
 		delete_review:"review_mutation_response",
 		delete_review_by_pk:"review",
+		delete_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
+		delete_service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
 		delete_service_provider_post:"service_provider_post_mutation_response",
 		delete_service_provider_post_by_pk:"service_provider_post",
 		delete_service_provider_service_link:"service_provider_service_link_mutation_response",
@@ -77607,8 +80809,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_customer_saved_location_one:"customer_saved_location",
 		insert_delivery_company:"delivery_company_mutation_response",
 		insert_delivery_company_one:"delivery_company",
-		insert_delivery_cost:"delivery_cost_mutation_response",
-		insert_delivery_cost_one:"delivery_cost",
+		insert_delivery_details:"delivery_details_mutation_response",
+		insert_delivery_details_one:"delivery_details",
 		insert_delivery_driver:"delivery_driver_mutation_response",
 		insert_delivery_driver_one:"delivery_driver",
 		insert_delivery_operator:"delivery_operator_mutation_response",
@@ -77655,6 +80857,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_restaurant_restaurant_one:"restaurant_restaurant",
 		insert_review:"review_mutation_response",
 		insert_review_one:"review",
+		insert_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
+		insert_service_provider_delivery_partner_one:"service_provider_delivery_partner",
 		insert_service_provider_post:"service_provider_post_mutation_response",
 		insert_service_provider_post_one:"service_provider_post",
 		insert_service_provider_service_link:"service_provider_service_link_mutation_response",
@@ -77685,9 +80889,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_delivery_company:"delivery_company_mutation_response",
 		update_delivery_company_by_pk:"delivery_company",
 		update_delivery_company_many:"delivery_company_mutation_response",
-		update_delivery_cost:"delivery_cost_mutation_response",
-		update_delivery_cost_by_pk:"delivery_cost",
-		update_delivery_cost_many:"delivery_cost_mutation_response",
+		update_delivery_details:"delivery_details_mutation_response",
+		update_delivery_details_by_pk:"delivery_details",
+		update_delivery_details_many:"delivery_details_mutation_response",
 		update_delivery_driver:"delivery_driver_mutation_response",
 		update_delivery_driver_by_pk:"delivery_driver",
 		update_delivery_driver_many:"delivery_driver_mutation_response",
@@ -77755,6 +80959,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_review:"review_mutation_response",
 		update_review_by_pk:"review",
 		update_review_many:"review_mutation_response",
+		update_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
+		update_service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
+		update_service_provider_delivery_partner_many:"service_provider_delivery_partner_mutation_response",
 		update_service_provider_post:"service_provider_post_mutation_response",
 		update_service_provider_post_by_pk:"service_provider_post",
 		update_service_provider_post_many:"service_provider_post_mutation_response",
@@ -77864,12 +81071,14 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company:"delivery_company",
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",
-		delivery_cost:"delivery_cost",
-		delivery_cost_aggregate:"delivery_cost_aggregate",
-		delivery_cost_by_pk:"delivery_cost",
+		delivery_details:"delivery_details",
+		delivery_details_aggregate:"delivery_details_aggregate",
+		delivery_details_by_pk:"delivery_details",
 		delivery_driver:"delivery_driver",
 		delivery_driver_aggregate:"delivery_driver_aggregate",
 		delivery_driver_by_pk:"delivery_driver",
+		delivery_fetch_delivery_company:"delivery_company",
+		delivery_fetch_delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_operator:"delivery_operator",
 		delivery_operator_aggregate:"delivery_operator_aggregate",
 		delivery_operator_by_pk:"delivery_operator",
@@ -77905,6 +81114,8 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_choice:"restaurant_choice",
 		restaurant_choice_aggregate:"restaurant_choice_aggregate",
 		restaurant_choice_by_pk:"restaurant_choice",
+		restaurant_fetch_restaurants:"restaurant_restaurant",
+		restaurant_fetch_restaurants_aggregate:"restaurant_restaurant_aggregate",
 		restaurant_item:"restaurant_item",
 		restaurant_item_aggregate:"restaurant_item_aggregate",
 		restaurant_item_by_pk:"restaurant_item",
@@ -77938,6 +81149,9 @@ export const ReturnTypes: Record<string,any> = {
 		review:"review",
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
+		service_provider_delivery_partner:"service_provider_delivery_partner",
+		service_provider_delivery_partner_aggregate:"service_provider_delivery_partner_aggregate",
+		service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
 		service_provider_post:"service_provider_post",
 		service_provider_post_aggregate:"service_provider_post_aggregate",
 		service_provider_post_by_pk:"service_provider_post",
@@ -78909,6 +82123,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery:"delivery_order",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		delivery_type:"String",
 		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
@@ -78919,7 +82134,6 @@ export const ReturnTypes: Record<string,any> = {
 		items_cost:"money",
 		notes:"String",
 		order_time:"timestamptz",
-		order_type:"String",
 		payment_type:"String",
 		refund_amount:"money",
 		restaurant:"restaurant_restaurant",
@@ -79089,13 +82303,13 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		delivery_type:"String",
 		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
 		notes:"String",
 		order_time:"timestamptz",
-		order_type:"String",
 		payment_type:"String",
 		refund_amount:"money",
 		restaurant_id:"Int",
@@ -79114,13 +82328,13 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		delivery_type:"String",
 		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
 		notes:"String",
 		order_time:"timestamptz",
-		order_type:"String",
 		payment_type:"String",
 		refund_amount:"money",
 		restaurant_id:"Int",
@@ -79321,8 +82535,13 @@ export const ReturnTypes: Record<string,any> = {
 		approved:"Boolean",
 		categories:"restaurant_category",
 		categories_aggregate:"restaurant_category_aggregate",
+		creation_time:"timestamptz",
+		customer_pickup:"Boolean",
+		delivery:"Boolean",
+		delivery_details:"delivery_details",
 		delivery_drivers:"delivery_driver",
 		delivery_drivers_aggregate:"delivery_driver_aggregate",
+		delivery_partner:"service_provider_delivery_partner",
 		description:"translation",
 		description_id:"Int",
 		firebase_id:"String",
@@ -79369,6 +82588,7 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	restaurant_restaurant_max_fields:{
+		creation_time:"timestamptz",
 		description_id:"Int",
 		firebase_id:"String",
 		id:"Int",
@@ -79380,6 +82600,7 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_type:"String"
 	},
 	restaurant_restaurant_min_fields:{
+		creation_time:"timestamptz",
 		description_id:"Int",
 		firebase_id:"String",
 		id:"Int",
@@ -79521,6 +82742,85 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float",
 		rating:"Float",
 		to_entity_id:"Float"
+	},
+	service_provider_delivery_partner:{
+		delivery_company_id:"Int",
+		id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_delivery_partner_aggregate:{
+		aggregate:"service_provider_delivery_partner_aggregate_fields",
+		nodes:"service_provider_delivery_partner"
+	},
+	service_provider_delivery_partner_aggregate_fields:{
+		avg:"service_provider_delivery_partner_avg_fields",
+		count:"Int",
+		max:"service_provider_delivery_partner_max_fields",
+		min:"service_provider_delivery_partner_min_fields",
+		stddev:"service_provider_delivery_partner_stddev_fields",
+		stddev_pop:"service_provider_delivery_partner_stddev_pop_fields",
+		stddev_samp:"service_provider_delivery_partner_stddev_samp_fields",
+		sum:"service_provider_delivery_partner_sum_fields",
+		var_pop:"service_provider_delivery_partner_var_pop_fields",
+		var_samp:"service_provider_delivery_partner_var_samp_fields",
+		variance:"service_provider_delivery_partner_variance_fields"
+	},
+	service_provider_delivery_partner_avg_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_max_fields:{
+		delivery_company_id:"Int",
+		id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_delivery_partner_min_fields:{
+		delivery_company_id:"Int",
+		id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_delivery_partner_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_delivery_partner"
+	},
+	service_provider_delivery_partner_stddev_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_stddev_pop_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_stddev_samp_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_sum_fields:{
+		delivery_company_id:"Int",
+		id:"Int",
+		service_provider_id:"Int"
+	},
+	service_provider_delivery_partner_var_pop_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_var_samp_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_delivery_partner_variance_fields:{
+		delivery_company_id:"Float",
+		id:"Float",
+		service_provider_id:"Float"
 	},
 	service_provider_post:{
 		comments:"jsonb",
@@ -79799,14 +83099,16 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",
 		delivery_company_stream:"delivery_company",
-		delivery_cost:"delivery_cost",
-		delivery_cost_aggregate:"delivery_cost_aggregate",
-		delivery_cost_by_pk:"delivery_cost",
-		delivery_cost_stream:"delivery_cost",
+		delivery_details:"delivery_details",
+		delivery_details_aggregate:"delivery_details_aggregate",
+		delivery_details_by_pk:"delivery_details",
+		delivery_details_stream:"delivery_details",
 		delivery_driver:"delivery_driver",
 		delivery_driver_aggregate:"delivery_driver_aggregate",
 		delivery_driver_by_pk:"delivery_driver",
 		delivery_driver_stream:"delivery_driver",
+		delivery_fetch_delivery_company:"delivery_company",
+		delivery_fetch_delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_operator:"delivery_operator",
 		delivery_operator_aggregate:"delivery_operator_aggregate",
 		delivery_operator_by_pk:"delivery_operator",
@@ -79854,6 +83156,8 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_choice_aggregate:"restaurant_choice_aggregate",
 		restaurant_choice_by_pk:"restaurant_choice",
 		restaurant_choice_stream:"restaurant_choice",
+		restaurant_fetch_restaurants:"restaurant_restaurant",
+		restaurant_fetch_restaurants_aggregate:"restaurant_restaurant_aggregate",
 		restaurant_item:"restaurant_item",
 		restaurant_item_aggregate:"restaurant_item_aggregate",
 		restaurant_item_by_pk:"restaurant_item",
@@ -79897,6 +83201,10 @@ export const ReturnTypes: Record<string,any> = {
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
 		review_stream:"review",
+		service_provider_delivery_partner:"service_provider_delivery_partner",
+		service_provider_delivery_partner_aggregate:"service_provider_delivery_partner_aggregate",
+		service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
+		service_provider_delivery_partner_stream:"service_provider_delivery_partner",
 		service_provider_post:"service_provider_post",
 		service_provider_post_aggregate:"service_provider_post_aggregate",
 		service_provider_post_by_pk:"service_provider_post",
@@ -80057,6 +83365,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	user:{
 		big_image:"String",
+		creation_time:"timestamptz",
 		customer:"customer_customer",
 		deleted:"Boolean",
 		email:"String",
@@ -80089,6 +83398,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	user_max_fields:{
 		big_image:"String",
+		creation_time:"timestamptz",
 		email:"String",
 		firebase_id:"String",
 		id:"Int",
@@ -80099,6 +83409,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	user_min_fields:{
 		big_image:"String",
+		creation_time:"timestamptz",
 		email:"String",
 		firebase_id:"String",
 		id:"Int",
