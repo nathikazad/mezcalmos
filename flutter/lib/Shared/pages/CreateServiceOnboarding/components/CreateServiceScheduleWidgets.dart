@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezWorkingHours"];
 
-class ROpScheduleWidgets {
-  final ROpScheduleController viewController;
+class CreateServiceScheduleWidgets {
+  final CreateServiceViewController viewController;
   final BuildContext context;
-  ROpScheduleWidgets({required this.viewController, required this.context});
-
-  int selectedValue = 1;
+  CreateServiceScheduleWidgets(
+      {required this.viewController, required this.context});
 
   // List of weekdays  cards
   Widget editWorkingHoursComponent() {
@@ -26,18 +25,18 @@ class ROpScheduleWidgets {
         alignment: Alignment.centerLeft,
         child: Text(
           "${_i18n()["workingHours"]}",
-          style: Theme.of(context).textTheme.bodyText2,
+          style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
       SizedBox(
-        height: 10,
+        height: 15,
       )
     ];
 
     for (int i = 0;
-        i < viewController.newSchedule.value!.openHours.length;
+        i < viewController.newSchedule.value.openHours.length;
         i++) {
-      viewController.newSchedule.value!.openHours
+      viewController.newSchedule.value.openHours
           .forEach((Weekday key, OpenHours value) {
         if (key.index == i) {
           widgets.add(
@@ -79,20 +78,20 @@ class ROpScheduleWidgets {
                   flex: 6,
                   fit: FlexFit.loose,
                   child: viewController
-                          .newSchedule.value!.openHours[weekday]!.isOpen
+                          .newSchedule.value.openHours[weekday]!.isOpen
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                               Text(
                                 convertToAmPm(
-                                    viewController.newSchedule.value!
+                                    viewController.newSchedule.value
                                         .openHours[weekday]!.from[0],
-                                    viewController.newSchedule.value!
+                                    viewController.newSchedule.value
                                         .openHours[weekday]!.from[1]),
                                 textAlign: TextAlign.center,
                               ),
                               Text(
-                                " - ${convertToAmPm(viewController.newSchedule.value!.openHours[weekday]!.to[0], viewController.newSchedule.value!.openHours[weekday]!.to[1])}",
+                                " - ${convertToAmPm(viewController.newSchedule.value.openHours[weekday]!.to[0], viewController.newSchedule.value.openHours[weekday]!.to[1])}",
                                 textAlign: TextAlign.center,
                               ),
                             ])
@@ -106,7 +105,7 @@ class ROpScheduleWidgets {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: (viewController
-                            .newSchedule.value!.openHours[weekday]!.isOpen)
+                            .newSchedule.value.openHours[weekday]!.isOpen)
                         ? Color(0xFFE9F4E9)
                         : Color(0xFFFCE7EB),
                   ),
@@ -114,13 +113,13 @@ class ROpScheduleWidgets {
 
                   child: Center(
                       child: Text(
-                    viewController.newSchedule.value!.openHours[weekday]!.isOpen
+                    viewController.newSchedule.value.openHours[weekday]!.isOpen
                         ? "${_i18n()["workingHoursCard"]["open"]}"
                         : "${_i18n()["workingHoursCard"]["closed"]}",
                     style: Get.textTheme.bodyText2?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: viewController
-                                .newSchedule.value!.openHours[weekday]!.isOpen
+                                .newSchedule.value.openHours[weekday]!.isOpen
                             ? Color(0xFF219125)
                             : Color(0xFFE21132)),
                   )),
@@ -205,11 +204,11 @@ class ROpScheduleWidgets {
                             style: Get.textTheme.bodyText1),
                         Spacer(),
                         radioCircleButton(
-                            value: viewController.schedulePreview.value!
+                            value: viewController.schedulePreview.value
                                     .openHours[weekday]!.isOpen ==
                                 true,
                             onTap: (bool? v) {
-                              viewController.schedulePreview.value!
+                              viewController.schedulePreview.value
                                   .openHours[weekday]!.isOpen = true;
                               viewController.schedulePreview.refresh();
                             })
@@ -226,11 +225,11 @@ class ROpScheduleWidgets {
                             style: Get.textTheme.bodyText1),
                         Spacer(),
                         radioCircleButton(
-                            value: viewController.schedulePreview.value!
+                            value: viewController.schedulePreview.value
                                     .openHours[weekday]!.isOpen ==
                                 false,
                             onTap: (bool? v) {
-                              viewController.schedulePreview.value!
+                              viewController.schedulePreview.value
                                   .openHours[weekday]!.isOpen = false;
                               viewController.schedulePreview.refresh();
                             })
@@ -240,8 +239,7 @@ class ROpScheduleWidgets {
                 ],
               ),
             ),
-            if (viewController
-                .schedulePreview.value!.openHours[weekday]!.isOpen)
+            if (viewController.schedulePreview.value.openHours[weekday]!.isOpen)
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                 child: Column(
@@ -300,7 +298,7 @@ class ROpScheduleWidgets {
         onPressed: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.schedulePreview.value =
-                Schedule.clone(viewController.newSchedule.value!);
+                Schedule.clone(viewController.newSchedule.value);
             viewController.schedulePreview.refresh();
             //   viewController.theNewSchedule.refresh();
           });
@@ -317,7 +315,7 @@ class ROpScheduleWidgets {
         onTap: () {
           Future.delayed(Duration.zero, MezRouter.back).then((value) {
             viewController.newSchedule.value =
-                Schedule.clone(viewController.schedulePreview.value!);
+                Schedule.clone(viewController.schedulePreview.value);
             viewController.newSchedule.refresh();
           });
         },
@@ -344,9 +342,9 @@ class ROpScheduleWidgets {
             context: context,
             initialTime: TimeOfDay(
                 hour: viewController
-                    .schedulePreview.value!.openHours[weekday]!.to[0],
+                    .schedulePreview.value.openHours[weekday]!.to[0],
                 minute: viewController
-                    .schedulePreview.value!.openHours[weekday]!.to[1]),
+                    .schedulePreview.value.openHours[weekday]!.to[1]),
             builder: (BuildContext context, Widget? child) {
               return Theme(
                   data: Theme.of(context).copyWith(
@@ -363,7 +361,7 @@ class ROpScheduleWidgets {
             },
           ).then((TimeOfDay? value) {
             if (value != null) {
-              viewController.schedulePreview.value!.openHours[weekday]!.to = [
+              viewController.schedulePreview.value.openHours[weekday]!.to = [
                 value.hour.toInt(),
                 value.minute.toInt()
               ];
@@ -377,7 +375,7 @@ class ROpScheduleWidgets {
             width: double.infinity,
             alignment: Alignment.centerLeft,
             child: Text(
-              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.to[0], viewController.schedulePreview.value!.openHours[weekday]!.to[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value.openHours[weekday]!.to[0], viewController.schedulePreview.value.openHours[weekday]!.to[1])}",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
@@ -398,9 +396,9 @@ class ROpScheduleWidgets {
               context: context,
               initialTime: TimeOfDay(
                   hour: viewController
-                      .schedulePreview.value!.openHours[weekday]!.from[0],
+                      .schedulePreview.value.openHours[weekday]!.from[0],
                   minute: viewController
-                      .schedulePreview.value!.openHours[weekday]!.from[1]),
+                      .schedulePreview.value.openHours[weekday]!.from[1]),
               builder: (BuildContext context, Widget? child) {
                 return Theme(
                     data: Theme.of(context).copyWith(
@@ -417,7 +415,7 @@ class ROpScheduleWidgets {
               }).then((TimeOfDay? value) {
             if (value != null) {
               // mezDbgPrint(value);
-              viewController.schedulePreview.value!.openHours[weekday]!.from = [
+              viewController.schedulePreview.value.openHours[weekday]!.from = [
                 value.hour.toInt(),
                 value.minute.toInt()
               ];
@@ -431,7 +429,7 @@ class ROpScheduleWidgets {
             alignment: Alignment.centerLeft,
             height: 50,
             child: Text(
-              "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.from[0], viewController.schedulePreview.value!.openHours[weekday]!.from[1])}",
+              "${convertToAmPm(viewController.schedulePreview.value.openHours[weekday]!.from[0], viewController.schedulePreview.value.openHours[weekday]!.from[1])}",
               style: Theme.of(context)
                   .textTheme
                   .bodyText1

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
@@ -56,7 +57,9 @@ const String kDriversList = "/driversList/:serviceProviderId";
 const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList = "/operatorsList/:serviceProviderId";
 const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
+const String kCreateService = "/createService";
 const String kPickLocationEdit = "/pick_location/edit";
+const String kPickLocationNew = "/pick_location/new";
 const String kserviceInfoEdit = "/service/:serviceProviderId";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
@@ -164,6 +167,13 @@ void navigateToServicePayments(
   });
 }
 
+void navigateToCreateService(
+    {required ServiceProviderType serviceProviderType}) {
+  MezRouter.toNamed(kCreateService, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
+}
+
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
@@ -222,6 +232,9 @@ class SharedRouter {
     GetPage(
         name: kPickLocationEdit,
         page: () => PickLocationView(PickLocationMode.EditLocation)),
+    GetPage(
+        name: kPickLocationNew,
+        page: () => PickLocationView(PickLocationMode.AddNewLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => ServiceDriversListView()),
@@ -232,5 +245,6 @@ class SharedRouter {
     GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
     GetPage(name: kUserNewProfile, page: () => UserProfileView()),
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
+    GetPage(name: kCreateService, page: () => CreateServiceView()),
   ];
 }
