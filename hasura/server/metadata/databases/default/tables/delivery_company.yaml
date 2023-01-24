@@ -56,6 +56,17 @@ select_permissions:
           _where:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - image
+        - name
+        - open_status
+        - service_provider_type
+      filter: {}
 update_permissions:
   - role: delivery_operator
     permission:

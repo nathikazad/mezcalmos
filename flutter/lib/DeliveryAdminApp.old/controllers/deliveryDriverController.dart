@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -29,7 +28,7 @@ class DeliveryDriverController extends GetxController {
         .ref()
         .child(deliveryDriversNode())
         .onValue
-        .listen((event) {
+        .listen((DatabaseEvent event) {
       final List<DeliveryDriver> _deliveryDrivers = <DeliveryDriver>[];
       if (event.snapshot.value != null) {
         for (var deliveryDriverId in (event.snapshot.value as dynamic).keys) {
@@ -49,7 +48,7 @@ class DeliveryDriverController extends GetxController {
   }
 
   Future<ServerResponse> assignDeliveryDriver({
-    required String deliveryDriverId,
+    required int deliveryDriverId,
     required int orderId,
     required OrderType orderType,
     DeliveryDriverType deliveryDriverType = DeliveryDriverType.Delivery_driver,
