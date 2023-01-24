@@ -2148,6 +2148,17 @@
             "atPickupBody": "Your driver arrived at pickup location"
         }
     },
+    "MezAdmin" : {
+        "pages" : {
+            "AdminTabsView" : {
+                "orders" : "Orders",
+                "services" :"Services",
+                "messages"  : "Messages",
+                "profile":"Profile"
+
+            }
+        }
+    },
     "General": {
         "to": "To",
         "required": "Required",

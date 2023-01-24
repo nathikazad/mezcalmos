@@ -124,18 +124,21 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
+        - location_gps
         - approved
+        - self_delivery
         - description_id
-        - firebase_id
         - id
+        - schedule
+        - firebase_id
         - image
         - language_id
-        - location_gps
         - location_text
         - name
-        - open_status
-        - schedule
         - service_provider_type
+        - accepted_payments
+        - open_status
+        - stripe_info
       filter:
         _exists:
           _table:
@@ -170,8 +173,10 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
+        - firebase_id
         - image
         - language_id
         - location_gps
@@ -179,6 +184,8 @@ update_permissions:
         - name
         - open_status
         - schedule
+        - self_delivery
+        - stripe_info
       filter:
         _exists:
           _table:

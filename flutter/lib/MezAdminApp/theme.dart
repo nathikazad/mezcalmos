@@ -15,11 +15,43 @@ class MezAdminTheme {
       brightness: Brightness.light,
 
       dividerColor: Colors.grey.withOpacity(0.8),
-      colorScheme: ColorScheme.light().copyWith(secondary: Colors.grey[850]),
+      colorScheme: ColorScheme.light()
+          .copyWith(primary: primaryBlueColor, secondary: Colors.grey[850]),
 
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
+      tabBarTheme: TabBarTheme(
+        labelColor: primaryBlueColor,
+        unselectedLabelColor: Colors.grey.shade800,
+        unselectedLabelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+          fontSize: 11.sp,
+          color: Color(0xFF494949),
+        ),
+        labelStyle: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 12.sp,
+          color: Colors.black,
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          isDense: false,
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide.none),
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: BorderSide(color: Colors.red, width: 0.5)),
+          filled: true,
+          fillColor: Colors.grey.shade200),
 
       timePickerTheme: TimePickerThemeData(
         dialHandColor: primaryBlueColor,
@@ -52,7 +84,7 @@ class MezAdminTheme {
           titleTextStyle: TextStyle(
               fontFamily: "Poppins",
               fontWeight: FontWeight.w600,
-              fontSize: 17.sp,
+              fontSize: 15.sp,
               color: Colors.black),
           elevation: 0.2,
           centerTitle: true,
@@ -63,19 +95,7 @@ class MezAdminTheme {
           backgroundColor: Colors.white, elevation: 1.0),
       bottomAppBarTheme:
           BottomAppBarTheme(color: primaryBlueColor, elevation: 1.0),
-      inputDecorationTheme: InputDecorationTheme(
-        fillColor: Colors.grey.shade200,
-        filled: true,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide.none),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide.none),
-      ),
+
       buttonTheme:
           ButtonThemeData(shape: CircleBorder(), padding: EdgeInsets.all(8)),
       dialogTheme: DialogTheme(
@@ -94,8 +114,8 @@ class MezAdminTheme {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        primary: Colors.white,
         backgroundColor: primaryBlueColor,
         padding: EdgeInsets.all(5),
         textStyle: TextStyle(
@@ -114,24 +134,42 @@ class MezAdminTheme {
             borderRadius: BorderRadius.circular(10),
           )),
       chipTheme: ChipThemeData(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        backgroundColor: Colors.grey.shade300,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        backgroundColor: Colors.white,
+        elevation: 0.5,
         showCheckmark: false,
-        disabledColor: Colors.grey,
-        selectedColor: Colors.white,
+        disabledColor: Colors.white,
+        selectedColor: secondaryLightBlueColor,
         padding: EdgeInsets.all(12),
+        // labelStyle:
+        //     MaterialStateTextStyle.resolveWith((Set<MaterialState> states) {
+        //   if (states.contains(MaterialState.selected)) {
+        //     return TextStyle(
+        //         fontFamily: "Montserrat",
+        //         fontWeight: FontWeight.w600,
+        //         fontSize: 11.sp,
+        //         color: primaryBlueColor);
+        //   } else {
+        //     return TextStyle(
+        //         fontFamily: "Montserrat",
+        //         fontWeight: FontWeight.w500,
+        //         fontSize: 11.sp,
+        //         color: Colors.grey.shade900);
+        //   }
+        // }),
+
         labelStyle: TextStyle(
             fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 12.sp,
-            color: Colors.black),
+            fontWeight: FontWeight.w500,
+            fontSize: 11.sp,
+            color: MaterialStateColor.resolveWith(
+              (Set<MaterialState> states) =>
+                  states.contains(MaterialState.selected)
+                      ? primaryBlueColor
+                      : Colors.grey.shade900,
+            )),
         brightness: Brightness.light,
         secondarySelectedColor: primaryBlueColor,
-        secondaryLabelStyle: TextStyle(
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w600,
-            fontSize: 14.sp,
-            color: Colors.white),
       ),
 
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//
@@ -185,6 +223,7 @@ class MezAdminTheme {
           color: Colors.black,
         ),
       ),
+      textSelectionTheme: TextSelectionThemeData(cursorColor: primaryBlueColor),
     );
   }
 }

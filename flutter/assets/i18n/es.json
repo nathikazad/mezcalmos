@@ -2229,6 +2229,17 @@
             "atPickupBody" : "Su conductor llegó a la ubicación de recogida"
         }
     },
+    "MezAdmin" : {
+        "pages" : {
+            "AdminTabsView" : {
+                "orders" : "Pedidos",
+                "services" :"Servicios",
+                "messages"  : "Mensajes",
+                "profile":"Perfil"
+
+            }
+        }
+    },
     "General": {
         "to": "a",
         "required": "Requerida",

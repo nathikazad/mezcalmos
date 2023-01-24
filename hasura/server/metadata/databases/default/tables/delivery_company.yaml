@@ -38,3 +38,46 @@ select_permissions:
         delivery_operators:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - image
+        - name
+        - open_status
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - approved
+        - description_id
+        - image
+        - name
+        - open_status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -246,9 +246,10 @@ select_permissions:
         - delivery_cost
         - package_cost
         - dropoff_address
+        - order_type
         - payment_type
         - pickup_address
-        - service_provider_type
+        - schedule_time
         - trip_polyline
         - actual_arrival_at_dropoff_time
         - actual_arrival_at_pickup_time
@@ -258,10 +259,16 @@ select_permissions:
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
         - estimated_package_ready_time
+        - order_time
         - trip_distance
         - trip_duration
         - status
+        - service_provider_type
         - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
+        - notification_token
       filter:
         _exists:
           _table:

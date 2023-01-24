@@ -1,53 +1,90 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
-import 'package:mezcalmos/MezAdminApp/pages/DeliveryCostSetter.dart';
-import 'package:mezcalmos/MezAdminApp/pages/HomeScreen.dart';
-import 'package:mezcalmos/MezAdminApp/pages/MezAdminWrapper.dart';
-import 'package:mezcalmos/MezAdminApp/pages/Orders/PastDeliveryOrdersList.dart';
-import 'package:mezcalmos/MezAdminApp/pages/Orders/ViewOrderScreen/ViewRestaurantOrderScreen.dart';
-import 'package:mezcalmos/MezAdminApp/pages/ServiceProvidersListScreen.dart';
+import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
+import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
+import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
+import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/Shared/pages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersList = "/currentDeliveryOrders";
-const String kDeliveryOpHomeScreen = '/deliveryOpHomeScreen';
+const String kTabsView = '/deliveryOpHomeScreen';
 const String kCurrentDeliveryOrderInfoRoute = '/currentDeliveryOrders/:orderId';
 const String kPastOrdersList = "/pastDeliveryOrders";
 const String kPastDeliveryOrderInfoRoute = '/pastDeliveryOrders/:orderId';
 const String kServiceProvidersListScreen = '/serviceProvidersListScreen';
 const String kNotAuthorizedAdmin = "/unauthorized";
 const String kDeliveryCostSetter = "/deliveryCostSetter";
+const String kMenuView = '/menu/:restaurantId';
+
+const String kEditInfoView = '/editInfo/:restaurantId';
+const String kDashboardView = '/dashboard/:restaurantId';
+
+const String kCategoryView = '/categoryScreen/:restaurantId';
+const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
+const String kAddItemView = '/itemView/:restaurantId';
+
+const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
+const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
+const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
+const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+
+// dv admin //
+const String kDvCompanyOrderView = "/deliveryOrders/:orderId";
+
 // const String kCompanyDriversScreen = "/companyDriversScreen";
 // const String kServiceProfileScreen = "/serviceProfileScreen";
 
 class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
-        GetPage(name: kDeliveryOpHomeScreen, page: () => HomeScreen()),
+        GetPage(name: kTabsView, page: () => AdminTabsView()),
         GetPage(
           name: kHomeRoute,
           page: () => MezAdminWrapper(),
         ),
         GetPage(
-          name: kPastOrdersList,
-          page: () => PastDeliveryOrdersList(),
+          name: kMenuView,
+          page: () => ROpMenuView(),
+        ),
+        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
+        GetPage(
+          name: kCategoryView,
+          page: () => ROpCategoryView(),
         ),
         GetPage(
-          name: kCurrentDeliveryOrderInfoRoute,
-          page: () => ViewRestaurantOrderScreen(),
+          name: kEditCategoryScreen,
+          page: () => ROpCategoryView(),
         ),
         GetPage(
-          name: kPastDeliveryOrderInfoRoute,
-          page: () => ViewRestaurantOrderScreen(),
+          name: kAddItemView,
+          page: () => ROpItemView(),
         ),
         GetPage(
-          name: kServiceProvidersListScreen,
-          page: () => ServiceProvidersListScreen(),
+          name: kEditItemView,
+          page: () => ROpItemView(),
         ),
+        GetPage(name: kRestaurantOrderView, page: () => RestaurantOrderView()),
+        GetPage(name: kOptionView, page: () => ROpOptionView()),
+        GetPage(name: kChoiceView, page: () => ROpChoiceView()),
         GetPage(
-          name: kDeliveryCostSetter,
-          page: () => DeliveryCostSetter(),
+          name: kDvCompanyOrderView,
+          page: () => DvCompanyOrderView(),
         ),
       ] +
       SharedRouter.sharedRoutes;
+}
+
+String getRestaurantOrderRoute(int orderId) {
+  return kRestaurantOrderView.replaceFirst(":orderId", "$orderId");
+}
+
+String getDvCompanyOrderRoute(int orderId) {
+  return kDvCompanyOrderView.replaceFirst(":orderId", "$orderId");
 }
 
 String currentDeliveryOrderInfoRoute(int orderId) {
@@ -65,4 +102,24 @@ String pickDriverForOrderRoute(int orderId) {
       ':orderId', orderId.toString());
 }
 
+String getRestaurantMenuRoute({required int restaurantId}) {
+  return kMenuView.replaceFirst(":restaurantId", "$restaurantId");
+}
+
+String getROpEditInfoRoute({required int restaurantId}) {
+  return kDashboardView.replaceFirst(":restaurantId", "$restaurantId");
+}
+
+String getROpChoiceRoute(
+    {required int? choiceId,
+    required String restaurantId,
+    required int optionId}) {
+  String route = kChoiceView.replaceFirst(":restaurantId", restaurantId);
+  route = route.replaceFirst(":optionId", "$optionId");
+  if (choiceId != null) {
+    route = route.replaceFirst(":choiceId", "$choiceId");
+  }
+
+  return route;
+}
 // String specificServicePastOrderRoute() {}

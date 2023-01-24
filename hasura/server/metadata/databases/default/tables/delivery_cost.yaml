@@ -37,6 +37,23 @@ insert_permissions:
         - minimum_cost
         - service_provider_id
         - service_provider_type
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - service_provider_id
+        - service_provider_type
   - role: restaurant_operator
     permission:
       check:
@@ -100,8 +117,13 @@ select_permissions:
         - service_provider_id
         - service_provider_type
       filter:
-        service_provider_id:
-          _eq: X-Hasura-User-Id
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:
@@ -133,6 +155,32 @@ update_permissions:
       check:
         delivery_company:
           delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - cost_per_km
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator

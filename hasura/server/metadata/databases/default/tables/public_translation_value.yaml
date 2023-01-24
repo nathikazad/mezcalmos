@@ -23,6 +23,20 @@ insert_permissions:
         - translation_id
         - language_id
         - value
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
   - role: restaurant_operator
     permission:
       check:
@@ -85,6 +99,28 @@ update_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: mez_admin
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

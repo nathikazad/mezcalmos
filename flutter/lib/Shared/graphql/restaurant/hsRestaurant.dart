@@ -32,7 +32,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
               ? FetchPolicy.cacheAndNetwork
               : FetchPolicy.networkOnly));
 
-  if (response.parsedData != null) {
+  if (response.parsedData?.restaurant_restaurant != null) {
     response.parsedData?.restaurant_restaurant
         .forEach((Query$getRestaurants$restaurant_restaurant data) async {
       _restaurants.add(Restaurant(

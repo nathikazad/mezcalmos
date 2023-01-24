@@ -203,6 +203,8 @@ class HasuraDb {
         return "restaurant_operator";
       case AppType.DeliveryAdminApp:
         return "delivery_operator";
+      case AppType.MezAdminApp:
+        return "mez_admin";
       default:
         return "customer";
     }

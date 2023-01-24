@@ -39,7 +39,8 @@ class DeliveryCostSettingViewController {
         serviceProviderId: serviceProviderId, withCache: false);
     if (deliveryCost.value != null) {
       isEditing.value = true;
-      freeKmRange.text = deliveryCost.value!.freeDeliveryKmRange.toString();
+      freeKmRange.text =
+          deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
       minCost.text = deliveryCost.value!.minimumCost.toString();
       costPerKm.text = deliveryCost.value!.costPerKm.toString();
     }
@@ -58,7 +59,7 @@ class DeliveryCostSettingViewController {
         serviceProviderType: serviceProviderType,
         serviceProviderId: serviceProviderId,
         minimumCost: double.parse(minCost.text),
-        freeDeliveryKmRange: double.parse(freeKmRange.text),
+        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));
   }
 

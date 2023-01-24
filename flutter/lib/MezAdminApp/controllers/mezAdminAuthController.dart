@@ -22,6 +22,8 @@ class MezAdminAuthController extends GetxController {
   // StreamSubscription? _adminNodeListener;
 
   bool _checkedAppVersion = false;
+
+  get companyId => null;
   @override
   Future<void> onInit() async {
     super.onInit();
