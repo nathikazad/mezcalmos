@@ -8,13 +8,11 @@ class CustomerOrdersListViewController {
   AuthController _authController = Get.find<AuthController>();
 
   // state variables //
-  Rxn<List<RestaurantOrder>> currentOrders = Rxn();
-  Rxn<List<RestaurantOrder>> pastOrders = Rxn();
+  RxList<RestaurantOrder> currentOrders = RxList.empty();
+  RxList<RestaurantOrder> pastOrders = RxList.empty();
 
   // getters //
-  bool get hasOrders =>
-      currentOrders.value!.length + pastOrders.value!.length > 0;
-  bool get hasData => currentOrders.value != null && pastOrders.value != null;
+  bool get hasOrders => currentOrders.length + pastOrders.length > 0;
 
   // methods //
   Future<void> init() async {

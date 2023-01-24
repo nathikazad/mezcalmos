@@ -1,0 +1,40 @@
+mutation set_admin_app_version($admin_id:Int!, $version: String!) {
+  update_mez_admin_by_pk(pk_columns : {user_id:$admin_id} , _set: { version:$version })
+  {
+     version
+  }
+}
+
+mutation set_notif_token($admin_id:Int!, $token: String!) {
+  update_notification_info(where :{user_id : {_eq :$admin_id}} , _set :{token :$token}){
+    returning {
+      token
+    }
+  }
+}
+
+
+query get_admin_info($admin_id : Int!) {
+  mez_admin(where:{user_id  : {_eq: $admin_id}})
+  {
+    version,
+    notification_token,
+    user {
+      id,
+      name,
+      image,
+      email,
+      phone,
+      language_id
+    },
+  }
+}
+
+mutation set_service_status($id : Int! , $status: String!) {
+  update_restaurant_restaurant(where:{id  : {_eq: $id}}, _set :{open_status : $status})
+  {
+    returning {
+      open_status
+    }
+  }
+}

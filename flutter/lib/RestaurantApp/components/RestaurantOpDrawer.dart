@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -42,7 +41,6 @@ class _ROpDrawerState extends State<ROpDrawer> {
   static final String version =
       GetStorage().read<String>(getxAppVersion) as String;
   Rxn<Restaurant> restaurant = Rxn();
-  late RestaurantInfoController restaurantInfoController;
 
   @override
   void initState() {
@@ -82,7 +80,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
                     // Navigation links
                     if (restaurantOpAuthController.operator.value != null &&
                         restaurantOpAuthController
-                                .operator.value?.state.restaurantId !=
+                                .operator.value?.state.serviceProviderId !=
                             null)
                       _operatorNavLinks(),
                     _navigationLink(

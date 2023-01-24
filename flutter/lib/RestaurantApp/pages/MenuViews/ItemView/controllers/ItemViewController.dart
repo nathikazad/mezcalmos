@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
@@ -24,8 +23,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 
 class ROpItemViewController {
-  late RestaurantInfoController _restaurantInfoController;
-
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
 
   final TextEditingController prItemNameController = TextEditingController();
@@ -160,11 +157,11 @@ class ROpItemViewController {
 
     if (newImageFile.value != null) {
       mezDbgPrint("m66are =====> uploading new image");
-      await _restaurantInfoController
-          .uploadImgToDb(imageFile: newImageFile.value!)
-          .then((String value) {
-        newImageUrl.value = value;
-      });
+      // await _restaurantInfoController
+      //     .uploadImgToDb(imageFile: newImageFile.value!)
+      //     .then((String value) {
+      //   newImageUrl.value = value;
+      // });
     }
     const String _tmpLmode =
         String.fromEnvironment('LMODE', defaultValue: "prod");

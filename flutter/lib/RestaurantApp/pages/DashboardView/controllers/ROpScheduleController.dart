@@ -25,7 +25,12 @@ class ROpScheduleController {
   final Rxn<Schedule> oldSchedule = Rxn();
   Rxn<Restaurant> get restaurant => editInfoController.restaurant;
   Future<void> init() async {
-    await fetchSchedule();
+    try {
+      await fetchSchedule();
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   Future<void> fetchSchedule() async {

@@ -1,0 +1,25 @@
+query getOperatorByUserId($userId: Int!) {
+  delivery_operator(where: {user_id: {_eq: $userId}}) {
+    id
+    owner
+    status
+    user_id
+    user {
+      firebase_id
+  
+      image
+      language_id
+      name
+   
+    }
+    delivery_company_id
+   
+   
+  
+  }
+}
+subscription restaurantOperatorStatusStream($userId: Int!) {
+  delivery_operator(where: {user_id: {_eq: $userId}}) {
+    status
+  }
+}

@@ -257,6 +257,36 @@
                 ],
                 "super": "FlutterFragmentActivity"
             }
+        },
+        "MezAdminApp": {
+            "folderName": "MezAdminApp",
+            "packages": {
+                "stage": {
+                    "appName": "MezAdmin Stage",
+                    "packageName": "com.mezstaging.admin",
+                    "googe-service-file": "services/stage/android/deliveryadmin.json",
+                    "apple-service-file": "services/stage/ios/deliveryadmin.plist"
+                },
+                "prod": {
+                    "appName": "MezAdmin",
+                    "packageName": "com.mezcalmos.admin",
+                    "googe-service-file": "services/prod/android/deliveryadmin.json",
+                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                },
+                "dev": {
+                    "appName": "MezAdmin Dev",
+                    "packageName": "com.mezcalmos.admin",
+                    "googe-service-file": "services/prod/android/deliveryadmin.json",
+                    "apple-service-file": "services/prod/ios/deliveryadmin.plist"
+                }
+            },
+            
+            "MainActivityKt": {
+                "imports": [
+                    "import io.flutter.embedding.android.FlutterFragmentActivity"
+                ],
+                "super": "FlutterFragmentActivity"
+            }
         }
     }
 }

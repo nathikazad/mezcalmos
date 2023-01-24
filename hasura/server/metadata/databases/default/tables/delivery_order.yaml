@@ -184,39 +184,44 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - id
-        - pickup_gps
-        - pickup_address
-        - dropoff_gps
-        - dropoff_address
-        - delivery_driver_type
-        - delivery_driver_id
-        - chat_with_service_provider_id
-        - chat_with_customer_id
-        - payment_type
-        - estimated_package_ready_time
-        - actual_package_ready_time
-        - estimated_arrival_at_pickup_time
-        - actual_arrival_at_pickup_time
-        - estimated_arrival_at_dropoff_time
         - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
         - actual_delivered_time
-        - status
-        - driver_review_by_service_provider_id
-        - driver_review_by_customer_id
-        - service_provider_review_by_driver_id
-        - customer_review_by_driver_id
-        - customer_id
-        - service_provider_id
-        - service_provider_type
-        - trip_polyline
-        - delivery_cost
-        - package_cost
+        - actual_package_ready_time
+        - cancellation_time
+        - chat_with_customer_id
+        - chat_with_service_provider_id
         - current_gps
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_cost
+        - delivery_driver_id
+        - delivery_driver_type
+        - direction
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - dropoff_address
+        - dropoff_gps
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - id
+        - order_time
+        - order_type
+        - package_cost
+        - payment_type
+        - pickup_address
+        - pickup_gps
+        - schedule_time
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - service_provider_type
+        - status
         - trip_distance
         - trip_duration
-        - order_time
-        - cancellation_time
+        - trip_polyline
+      computed_fields:
+        - in_process
       filter:
         delivery_company:
           delivery_operators:
@@ -241,9 +246,10 @@ select_permissions:
         - delivery_cost
         - package_cost
         - dropoff_address
+        - order_type
         - payment_type
         - pickup_address
-        - service_provider_type
+        - schedule_time
         - trip_polyline
         - actual_arrival_at_dropoff_time
         - actual_arrival_at_pickup_time
@@ -253,10 +259,16 @@ select_permissions:
         - estimated_arrival_at_dropoff_time
         - estimated_arrival_at_pickup_time
         - estimated_package_ready_time
+        - order_time
         - trip_distance
         - trip_duration
         - status
+        - service_provider_type
         - delivery_driver_type
+        - direction
+      computed_fields:
+        - in_process
+        - notification_token
       filter:
         _exists:
           _table:
@@ -307,10 +319,11 @@ select_permissions:
       computed_fields:
         - in_process
       filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+        restaurant_order:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
 update_permissions:
   - role: delivery_driver
     permission:
@@ -352,8 +365,14 @@ update_permissions:
         - estimated_arrival_at_pickup_time
         - estimated_package_ready_time
       filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check: null
+        restaurant_order:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        restaurant_order:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

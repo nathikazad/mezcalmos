@@ -5,6 +5,13 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
+  String toNormalString() {
+    String str = toString().split('.').last;
+    str = str[0].toUpperCase() + str.substring(1);
+    str = str.replaceFirst("_", " ");
+    return str;
+  }
 }
 
 extension ParseStringToServiceProviderType on String {

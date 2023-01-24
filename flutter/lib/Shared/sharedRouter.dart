@@ -18,7 +18,7 @@ import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
-import 'package:mezcalmos/Shared/pages/ServiceDriversList/DriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
@@ -57,6 +57,8 @@ const String kOperatorsList = "/operatorsList/:serviceProviderId";
 const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
+const String kDeliveryCostSettingScreen =
+    "/costDeliverySettingScreen/:providerId/:providerType";
 
 String getMessagesRoute({
   required int chatId,
@@ -103,7 +105,7 @@ bool isCurrentRoute(String route) {
 void navigateToPickDriver(
     {required int deliveryOrderId, required bool showForwardButton}) {
   final String route = kPickDriver.replaceFirst(":orderId", "$deliveryOrderId");
-  MezRouter.toNamed(kPickDriver, arguments: {
+  MezRouter.toNamed(route, arguments: {
     "showForwardButton": showForwardButton,
   });
 }
@@ -153,6 +155,9 @@ void navigateToServicePayments(
 // GetX based Router (For navigating)
 class SharedRouter {
   static List<GetPage> sharedRoutes = [
+    GetPage(
+        name: kDeliveryCostSettingScreen,
+        page: () => DeliveryCostSettingView()),
     GetPage(
         name: kSomethingWentWrongScreen,
         page: () => SomethingWentWrongScreen()),
@@ -207,7 +212,7 @@ class SharedRouter {
         page: () => PickLocationView(PickLocationMode.EditLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
-    GetPage(name: kDriversList, page: () => DriversListView()),
+    GetPage(name: kDriversList, page: () => ServiceDriversListView()),
     // GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
     GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),

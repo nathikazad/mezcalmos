@@ -73,7 +73,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
     Get.put(CustomerOrderController(), permanent: true);
     _orderController = Get.find<CustomerOrderController>();
     WidgetsBinding.instance.addObserver(this);
-
     if (Get.find<AuthController>().fireAuthUser != null) {
       _doIfFireAuthUserIsNotNull();
     }

@@ -2,6 +2,16 @@ table:
   name: service_link
   schema: service_provider
 object_relationships:
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
   - name: restaurant
     using:
       manual_configuration:
@@ -26,6 +36,21 @@ insert_permissions:
         - operator_deep_link
         - operator_qr_image_link
 select_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - driver_deep_link
+        - driver_qr_image_link
+        - id
+        - operator_deep_link
+        - operator_qr_image_link
+        - service_provider_id
+        - service_provider_type
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

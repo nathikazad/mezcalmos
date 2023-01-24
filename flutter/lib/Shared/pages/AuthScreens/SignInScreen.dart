@@ -207,7 +207,14 @@ class SignIn extends GetWidget<AuthController> {
                               // Get.back();
                               signIn(tTestAdminValue, tEmailTestPassword);
                             },
-                            child: Text(tTestAdminValue))
+                            child: Text(tTestAdminValue)),
+                        TextButton(
+                          onPressed: () {
+                            // Get.back();
+                            signIn(tTestDeliveryOpValue, tEmailTestPassword);
+                          },
+                          child: Text(tTestDeliveryOpValue),
+                        ),
                       ],
                     ));
 

@@ -33,8 +33,6 @@ class ROpDashboardView extends StatefulWidget {
 }
 
 class _ROpDashboardViewState extends State<ROpDashboardView> {
-  // LaundryInfoController laundryInfoController =
-  //     Get.find<LaundryInfoController>();
   AnimatedSliderController animatedSliderController =
       AnimatedSliderController();
   ROpEditInfoController editInfoController = ROpEditInfoController();
@@ -84,10 +82,6 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 //
 
                 ROpReviewsView(restId: restaurantID!),
-
-                // OperatorsListView(restaurantId: restaurantID!),
-                // if (editInfoController.restaurant.value!.selfDelivery)
-                //   DriversListView(),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),

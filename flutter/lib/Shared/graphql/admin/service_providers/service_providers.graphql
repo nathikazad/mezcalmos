@@ -1,0 +1,24 @@
+query admin_get_dv_companies {
+  delivery_company {
+    approved
+    image
+    name
+    open_status
+    service_provider_type
+    id
+  }
+}
+query admin_get_restaurants {
+  restaurant_restaurant {
+    approved
+    firebase_id
+    id
+    image
+    language_id
+    location_gps
+    location_text
+    name
+    open_status
+    service_provider_type
+  }
+}

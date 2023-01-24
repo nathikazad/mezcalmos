@@ -2,24 +2,24 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 class OperatorState {
-  final int? restaurantId;
+  final int? serviceProviderId;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
-      {required this.restaurantId,
+      {required this.serviceProviderId,
       required this.operatorState,
       required this.owner});
 
   factory OperatorState.fromSnapshot(data) {
     final int restaurantId = data['restaurantId'] ?? null;
     return OperatorState(
-        restaurantId: restaurantId,
+        serviceProviderId: restaurantId,
         owner: false,
         operatorState: AgentStatus.Awaiting_approval);
   }
 
   Map<String, dynamic> toJson() => {
-        "restaurantId": restaurantId,
+        "restaurantId": serviceProviderId,
         "operatorStat": operatorState.toFirebaseFormatString(),
       };
 }
@@ -71,11 +71,16 @@ class Operator {
 }
 // ignore_for_file: constant_identifier_names
 
-enum OperatorType { Laundry, Restaurant }
+enum OperatorType { Laundry, Restaurant, Delivery }
 
 extension ParseOrderTypeToString on OperatorType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  OperatorType toOperatorType() {
+    return OperatorType.values.firstWhere(
+        (OperatorType e) => e.toFirebaseFormatString().toLowerCase() == this);
   }
 }

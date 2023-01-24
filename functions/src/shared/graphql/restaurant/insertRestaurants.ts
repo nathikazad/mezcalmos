@@ -99,45 +99,6 @@ export async function insertRestaurants(data: any) {
                                     })
                                 }
             
-                                if(o.choices) {
-                                    let choices = undefined;
-                                    choices = o.choices.map((ch: any) => {
-                                        let choiceName = [];
-                                        if(ch.name.en) {
-                                            choiceName.push({
-                                                language_id: "en",
-                                                value: ch.name.en
-                                            })
-                                        }
-                                        if(ch.name.es) {
-                                            choiceName.push({
-                                                language_id: "es",
-                                                value: ch.name.es
-                                            })
-                                        }
-                                        return {
-                                            restaurant_id: index + 1,
-                                            option_choices: {
-                                                data: [{
-                                                    name: {
-                                                        data: {
-                                                            service_provider_id: index + 1,
-                                                            service_provider_type: "restaurant",
-                                                            translations: {
-                                                                data: choiceName
-                                                            }
-                                                        }
-                                                    },
-                                                    restaurant_id: index + 1,
-                                                    available: ch.available,
-                                                    cost: ch.cost
-                                                }]
-                                            }
-                                        }
-                                        // console.log(JSON.stringify(b))
-                                        // return b;
-                                    })
-                                }
                                 return {
                                     restaurant_id: index + 1,
                                     item_options: {

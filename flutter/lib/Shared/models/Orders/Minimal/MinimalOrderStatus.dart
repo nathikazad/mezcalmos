@@ -1,4 +1,4 @@
-import 'package:mezcalmos/DeliveryApp/models/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 
 enum MinimalOrderStatus {

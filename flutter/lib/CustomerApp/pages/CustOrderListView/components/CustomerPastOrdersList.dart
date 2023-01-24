@@ -25,7 +25,7 @@ class CustomerPastOrdersList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
-        () => viewController.pastOrders.value!.length >= 1
+        () => viewController.pastOrders().length >= 1
             ? pastOrdersWidget()
             : _noPastOrdersWidget(context),
       ),
@@ -38,7 +38,7 @@ class CustomerPastOrdersList extends StatelessWidget {
       children: <Widget>[
         GroupedListView<Order, DateTime>(
           shrinkWrap: true,
-          elements: viewController.pastOrders.value!,
+          elements: viewController.pastOrders(),
           groupBy: (Order element) => DateTime(element.orderTime.year,
               element.orderTime.month, element.orderTime.day),
           groupComparator: (DateTime value1, DateTime value2) =>

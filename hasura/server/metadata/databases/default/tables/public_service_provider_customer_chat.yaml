@@ -19,7 +19,7 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: customer
-          schema: public
+          schema: customer
   - name: restaurant
     using:
       manual_configuration:
@@ -29,4 +29,4 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant
-          schema: public
+          schema: restaurant

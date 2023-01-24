@@ -42,6 +42,19 @@ select_permissions:
         - name
         - phone
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - deleted
+        - id
+        - big_image
+        - email
+        - firebase_id
+        - image
+        - language_id
+        - name
+        - phone
+      filter: {}
   - role: mez_admin
     permission:
       columns:

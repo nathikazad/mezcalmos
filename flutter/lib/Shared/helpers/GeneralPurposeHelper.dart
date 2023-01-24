@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
+import 'package:location/location.dart';
+import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -22,6 +26,25 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["helpers"]
 /// This calls will contains all the Formatting Stuff
 class MezFormatter {
   static final NumberFormat currency = NumberFormat("#,##0.00", "en_US");
+}
+
+extension ParseGeography on Geography {
+  LocationData toLocationData() {
+    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
+  }
+
+  LatLng toLatLng() {
+    return LatLng(latitude, longitude);
+  }
+}
+
+extension ParseLocationData on LocationData {
+  Geography? toGeography() {
+    if (latitude != null && longitude != null) {
+      return Geography(latitude!, longitude!);
+    }
+    return null;
+  }
 }
 
 /// Call this with the _i18n fucntion and the wanted path.

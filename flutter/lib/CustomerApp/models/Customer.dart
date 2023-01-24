@@ -47,21 +47,6 @@ class Customer {
   }
 }
 
-extension ParseGeography on Geography {
-  LocationData toLocationData() {
-    return LocationData.fromMap({"latitude": latitude, "longitude": longitude});
-  }
-}
-
-extension ParseLocationData on LocationData {
-  Geography? toGeography() {
-    if (latitude != null && longitude != null) {
-      return Geography(latitude!, longitude!);
-    }
-    return null;
-  }
-}
-
 class SavedLocation {
   String name;
   int? id;

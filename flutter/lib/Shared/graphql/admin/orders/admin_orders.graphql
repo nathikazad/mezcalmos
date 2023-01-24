@@ -1,0 +1,64 @@
+# For mez admin only 
+
+subscription admin_listen_on_orders($serviceProviderType: String!,$inProccess: Boolean!) {
+  delivery_order(
+    where: {
+    service_provider_type: {_eq: $serviceProviderType},
+      in_process: { _eq: $inProccess }
+    }
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      firebase_id
+      image
+      name
+      location_gps
+      location_text
+      language_id
+      open_status
+    }
+  }
+}
+query admin_get__orders($serviceProviderType: String!,$inProccess: Boolean!) {
+  delivery_order(
+    where: {
+    service_provider_type: {_eq: $serviceProviderType},
+      in_process: { _eq: $inProccess }
+    }
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    restaurant {
+      id
+      firebase_id
+      image
+      name
+      location_gps
+      location_text
+      language_id
+      open_status
+    }
+  }
+}

@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -50,7 +51,6 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         final RestaurantOrderItem _restauItem = RestaurantOrderItem(
           costPerOne: item.cost_per_one,
           idInCart: item.id,
-          notes: item.notes,
           name: toLanguageMap(
               translations: item.restaurant_item.name.translations),
           image: item.restaurant_item.image,
@@ -226,7 +226,6 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     final RestaurantOrderItem _restauItem = RestaurantOrderItem(
       costPerOne: item.cost_per_one,
       idInCart: item.id,
-      notes: item.notes,
       name: toLanguageMap(translations: item.restaurant_item.name.translations),
       image: item.restaurant_item.image,
       quantity: item.quantity,

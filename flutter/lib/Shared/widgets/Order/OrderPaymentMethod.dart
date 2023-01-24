@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 //
@@ -11,8 +10,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
 //
 
 class OrderPaymentMethod extends StatelessWidget {
-  const OrderPaymentMethod({super.key, required this.order, this.margin});
-  final Order order;
+  const OrderPaymentMethod(
+      {super.key,
+      required this.paymentType,
+      required this.stripeOrderPaymentInfo,
+      this.margin});
+  final PaymentType paymentType;
+  final StripeOrderPaymentInfo? stripeOrderPaymentInfo;
   final EdgeInsets? margin;
   @override
   Widget build(BuildContext context) {
@@ -41,11 +45,11 @@ class OrderPaymentMethod extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  if (order.stripePaymentInfo != null)
+                  if (stripeOrderPaymentInfo != null)
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
-                        "${order.stripePaymentInfo!.brand!.toName()}",
+                        "${stripeOrderPaymentInfo?.brand!.toName()}",
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
@@ -53,7 +57,7 @@ class OrderPaymentMethod extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       _getTitle(),
-                      style: (order.stripePaymentInfo != null)
+                      style: (stripeOrderPaymentInfo != null)
                           ? Get.textTheme.bodyText2
                           : Get.textTheme.bodyText1,
                     ),
@@ -68,17 +72,17 @@ class OrderPaymentMethod extends StatelessWidget {
   }
 
   String _getTitle() {
-    if (order.stripePaymentInfo != null) {
-      return "*" * 12 + "${order.stripePaymentInfo!.last4}";
+    if (stripeOrderPaymentInfo != null) {
+      return "*" * 12 + "${stripeOrderPaymentInfo!.last4}";
     } else {
-      return '${_i18n()[order.paymentType.toNormalString().toLowerCase()]}';
+      return '${_i18n()[paymentType.toNormalString().toLowerCase()]}';
     }
   }
 
   IconData? _getIcon() {
-    if (order.stripePaymentInfo != null) {
-      return order.stripePaymentInfo?.brand?.toIcon();
-    } else if (order.paymentType == PaymentType.BankTransfer) {
+    if (stripeOrderPaymentInfo != null) {
+      return stripeOrderPaymentInfo?.brand?.toIcon();
+    } else if (paymentType == PaymentType.BankTransfer) {
       return Icons.account_balance;
     } else {
       return Icons.payments;
