@@ -27,6 +27,19 @@ export interface RestaurantDetails {
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
   try {
+    if(restaurantDetails.delivery) {
+      if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
+        throw new HttpsError(
+          "unknown",
+          "Restaurant delivery details not provided"
+        );
+      } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+        throw new HttpsError(
+          "unknown",
+          "delivery partner not specified"
+        );
+      }
+    }
     let userPromise = getUser(userId);
     let mezAdminsPromise = getMezAdmins();
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);

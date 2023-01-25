@@ -1953,14 +1953,12 @@ type delivery_company {
     """filter the rows returned"""
     where: delivery_operator_bool_exp
   ): delivery_operator_aggregate!
-  delivery_radius: Int!
 
   """An object relationship"""
   description: translation
   description_id: Int
   id: Int!
   image: String!
-  location: geography!
   name: String!
   open_status: String!
   service_provider_type: String!
@@ -1993,7 +1991,6 @@ type delivery_company_aggregate_fields {
 
 """aggregate avg on columns"""
 type delivery_company_avg_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
@@ -2011,12 +2008,10 @@ input delivery_company_bool_exp {
   delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   delivery_operators: delivery_operator_bool_exp
   delivery_operators_aggregate: delivery_operator_aggregate_bool_exp
-  delivery_radius: Int_comparison_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
-  location: geography_comparison_exp
   name: String_comparison_exp
   open_status: String_comparison_exp
   service_provider_type: String_comparison_exp
@@ -2036,7 +2031,6 @@ enum delivery_company_constraint {
 input type for incrementing numeric columns in table "delivery.company"
 """
 input delivery_company_inc_input {
-  delivery_radius: Int
   description_id: Int
   id: Int
 }
@@ -2049,12 +2043,10 @@ input delivery_company_insert_input {
   creation_time: timestamptz
   delivery_drivers: delivery_driver_arr_rel_insert_input
   delivery_operators: delivery_operator_arr_rel_insert_input
-  delivery_radius: Int
   description: translation_obj_rel_insert_input
   description_id: Int
   id: Int
   image: String
-  location: geography
   name: String
   open_status: String
   service_provider_type: String
@@ -2063,7 +2055,6 @@ input delivery_company_insert_input {
 """aggregate max on columns"""
 type delivery_company_max_fields {
   creation_time: timestamptz
-  delivery_radius: Int
   description_id: Int
   id: Int
   image: String
@@ -2075,7 +2066,6 @@ type delivery_company_max_fields {
 """aggregate min on columns"""
 type delivery_company_min_fields {
   creation_time: timestamptz
-  delivery_radius: Int
   description_id: Int
   id: Int
   image: String
@@ -2120,12 +2110,10 @@ input delivery_company_order_by {
   creation_time: order_by
   delivery_drivers_aggregate: delivery_driver_aggregate_order_by
   delivery_operators_aggregate: delivery_operator_aggregate_order_by
-  delivery_radius: order_by
   description: translation_order_by
   description_id: order_by
   id: order_by
   image: order_by
-  location: order_by
   name: order_by
   open_status: order_by
   service_provider_type: order_by
@@ -2147,9 +2135,6 @@ enum delivery_company_select_column {
   creation_time
 
   """column name"""
-  delivery_radius
-
-  """column name"""
   description_id
 
   """column name"""
@@ -2157,9 +2142,6 @@ enum delivery_company_select_column {
 
   """column name"""
   image
-
-  """column name"""
-  location
 
   """column name"""
   name
@@ -2177,11 +2159,9 @@ input type for updating data in table "delivery.company"
 input delivery_company_set_input {
   approved: Boolean
   creation_time: timestamptz
-  delivery_radius: Int
   description_id: Int
   id: Int
   image: String
-  location: geography
   name: String
   open_status: String
   service_provider_type: String
@@ -2189,21 +2169,18 @@ input delivery_company_set_input {
 
 """aggregate stddev on columns"""
 type delivery_company_stddev_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type delivery_company_stddev_pop_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type delivery_company_stddev_samp_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
@@ -2223,11 +2200,9 @@ input delivery_company_stream_cursor_input {
 input delivery_company_stream_cursor_value_input {
   approved: Boolean
   creation_time: timestamptz
-  delivery_radius: Int
   description_id: Int
   id: Int
   image: String
-  location: geography
   name: String
   open_status: String
   service_provider_type: String
@@ -2235,7 +2210,6 @@ input delivery_company_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type delivery_company_sum_fields {
-  delivery_radius: Int
   description_id: Int
   id: Int
 }
@@ -2251,9 +2225,6 @@ enum delivery_company_update_column {
   creation_time
 
   """column name"""
-  delivery_radius
-
-  """column name"""
   description_id
 
   """column name"""
@@ -2261,9 +2232,6 @@ enum delivery_company_update_column {
 
   """column name"""
   image
-
-  """column name"""
-  location
 
   """column name"""
   name
@@ -2288,21 +2256,18 @@ input delivery_company_updates {
 
 """aggregate var_pop on columns"""
 type delivery_company_var_pop_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
 
 """aggregate var_samp on columns"""
 type delivery_company_var_samp_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
 
 """aggregate variance on columns"""
 type delivery_company_variance_fields {
-  delivery_radius: Float
   description_id: Float
   id: Float
 }
@@ -2315,7 +2280,11 @@ type delivery_details {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int!
+  location_gps: geography!
+  location_text: String
   minimum_cost: money!
+
+  """in metres"""
   radius: Int!
 
   """An object relationship"""
@@ -2373,6 +2342,8 @@ type delivery_details_avg_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2386,6 +2357,8 @@ input delivery_details_avg_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2401,6 +2374,8 @@ input delivery_details_bool_exp {
   free_delivery_km_range: Float_comparison_exp
   free_delivery_minimum_cost: money_comparison_exp
   id: Int_comparison_exp
+  location_gps: geography_comparison_exp
+  location_text: String_comparison_exp
   minimum_cost: money_comparison_exp
   radius: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -2432,6 +2407,8 @@ input delivery_details_inc_input {
   free_delivery_minimum_cost: money
   id: Int
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
 }
@@ -2444,7 +2421,11 @@ input delivery_details_insert_input {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  location_gps: geography
+  location_text: String
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
@@ -2457,7 +2438,10 @@ type delivery_details_max_fields {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  location_text: String
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
   service_provider_type: String
@@ -2471,7 +2455,10 @@ input delivery_details_max_order_by {
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
+  location_text: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
   service_provider_type: order_by
@@ -2483,7 +2470,10 @@ type delivery_details_min_fields {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  location_text: String
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
   service_provider_type: String
@@ -2497,7 +2487,10 @@ input delivery_details_min_order_by {
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
+  location_text: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
   service_provider_type: order_by
@@ -2529,6 +2522,8 @@ input delivery_details_order_by {
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
+  location_gps: order_by
+  location_text: order_by
   minimum_cost: order_by
   radius: order_by
   restaurant: restaurant_restaurant_order_by
@@ -2558,6 +2553,12 @@ enum delivery_details_select_column {
   id
 
   """column name"""
+  location_gps
+
+  """column name"""
+  location_text
+
+  """column name"""
   minimum_cost
 
   """column name"""
@@ -2578,7 +2579,11 @@ input delivery_details_set_input {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  location_gps: geography
+  location_text: String
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
   service_provider_type: String
@@ -2591,6 +2596,8 @@ type delivery_details_stddev_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2604,6 +2611,8 @@ input delivery_details_stddev_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2615,6 +2624,8 @@ type delivery_details_stddev_pop_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2628,6 +2639,8 @@ input delivery_details_stddev_pop_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2639,6 +2652,8 @@ type delivery_details_stddev_samp_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2652,6 +2667,8 @@ input delivery_details_stddev_samp_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2673,7 +2690,11 @@ input delivery_details_stream_cursor_value_input {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  location_gps: geography
+  location_text: String
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
   service_provider_type: String
@@ -2686,6 +2707,8 @@ type delivery_details_sum_fields {
   free_delivery_minimum_cost: money
   id: Int
   minimum_cost: money
+
+  """in metres"""
   radius: Int
   service_provider_id: Int
 }
@@ -2699,6 +2722,8 @@ input delivery_details_sum_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2718,6 +2743,12 @@ enum delivery_details_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  location_gps
+
+  """column name"""
+  location_text
 
   """column name"""
   minimum_cost
@@ -2750,6 +2781,8 @@ type delivery_details_var_pop_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2763,6 +2796,8 @@ input delivery_details_var_pop_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2774,6 +2809,8 @@ type delivery_details_var_samp_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2787,6 +2824,8 @@ input delivery_details_var_samp_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -2798,6 +2837,8 @@ type delivery_details_variance_fields {
   free_delivery_minimum_cost: Float
   id: Float
   minimum_cost: Float
+
+  """in metres"""
   radius: Float
   service_provider_id: Float
 }
@@ -2811,6 +2852,8 @@ input delivery_details_variance_order_by {
   free_delivery_minimum_cost: order_by
   id: order_by
   minimum_cost: order_by
+
+  """in metres"""
   radius: order_by
   service_provider_id: order_by
 }
@@ -18810,8 +18853,16 @@ type restaurant_restaurant {
     where: restaurant_item_bool_exp
   ): restaurant_item_aggregate!
   language_id: String!
-  location_gps: geography!
-  location_text: String!
+
+  """
+  A computed field, executes function "restaurant_location_gps"
+  """
+  location_gps: geography
+
+  """
+  A computed field, executes function "restaurant_location_text"
+  """
+  location_text: String
   name: String!
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19143,8 +19194,6 @@ input restaurant_restaurant_insert_input {
   image: String
   items: restaurant_item_arr_rel_insert_input
   language_id: String
-  location_gps: geography
-  location_text: String
   name: String
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19172,7 +19221,6 @@ type restaurant_restaurant_max_fields {
   id: Int
   image: String
   language_id: String
-  location_text: String
   name: String
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19188,7 +19236,6 @@ type restaurant_restaurant_min_fields {
   id: Int
   image: String
   language_id: String
-  location_text: String
   name: String
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19312,12 +19359,6 @@ enum restaurant_restaurant_select_column {
   language_id
 
   """column name"""
-  location_gps
-
-  """column name"""
-  location_text
-
-  """column name"""
   name
 
   """column name"""
@@ -19355,8 +19396,6 @@ input restaurant_restaurant_set_input {
   id: Int
   image: String
   language_id: String
-  location_gps: geography
-  location_text: String
   name: String
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19419,8 +19458,6 @@ input restaurant_restaurant_stream_cursor_value_input {
   id: Int
   image: String
   language_id: String
-  location_gps: geography
-  location_text: String
   name: String
 
   """open, closed_temporarily, closed_indefinitely"""
@@ -19476,12 +19513,6 @@ enum restaurant_restaurant_update_column {
 
   """column name"""
   language_id
-
-  """column name"""
-  location_gps
-
-  """column name"""
-  location_text
 
   """column name"""
   name
