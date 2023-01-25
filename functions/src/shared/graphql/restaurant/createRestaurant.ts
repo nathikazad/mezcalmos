@@ -46,6 +46,21 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
+  await chain.mutation({
+    insert_service_provider_location_one: [{
+      object: {
+        service_provider_id: response.insert_restaurant_restaurant_one.id,
+        service_provider_type: ServiceProviderType.Restaurant,
+        gps: JSON.stringify({
+          "type": "point",
+          "coordinates": [restaurant.location.lng, restaurant.location.lat]
+        }),
+        address: restaurant.location.address
+      }
+    }, {
+      id: true,
+    }]
+  });
   if(restaurant.deliveryPartnerId) {
     await chain.mutation({
       insert_service_provider_delivery_partner_one: [{
@@ -70,28 +85,6 @@ export async function createRestaurant(
           radius: restaurant.deliveryDetails.radius,
           free_delivery_minimum_cost: restaurant.deliveryDetails.freeDeliveryMinimumCost,
           free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange,
-          location_gps: JSON.stringify({
-            "type": "point",
-            "coordinates": [restaurant.location.lng, restaurant.location.lat]
-          }),
-          location_text: restaurant.location.address
-        }
-      }, {
-        service_provider_id: true,
-        service_provider_type: true,
-      }]
-    });
-  } else {
-    await chain.mutation({
-      insert_delivery_details_one: [{
-        object: {
-          service_provider_id: response.insert_restaurant_restaurant_one?.id,
-          service_provider_type: ServiceProviderType.Restaurant,
-          location_gps: JSON.stringify({
-            "type": "point",
-            "coordinates": [restaurant.location.lng, restaurant.location.lat]
-          }),
-          location_text: restaurant.location.address
         }
       }, {
         service_provider_id: true,
@@ -99,7 +92,6 @@ export async function createRestaurant(
       }]
     });
   }
-  
   
   // Generating 3 links/Qr
   let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"providerId": response.insert_restaurant_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})
