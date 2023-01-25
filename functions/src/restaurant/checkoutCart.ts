@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { Location, AppType, ServerResponse, ServerResponseStatus, Language } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
@@ -57,6 +57,17 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     let mezAdmins: MezAdmin[] = response[3];
     errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
+    let orderItems: OrderItem[] = customerCart.items.map((i) => {
+      return {
+        itemId: i.itemId,
+        name: i.name,
+        image: i.image,
+        selectedOptions: i.selectedOptions,
+        notes: i.note,
+        quantity: i.quantity,
+        costPerOne: i.costPerOne
+      }
+    })
     let restaurantOrder: RestaurantOrder = {
       customerId,
       restaurantId: checkoutRequest.restaurantId,
@@ -65,7 +76,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       status: RestaurantOrderStatus.OrderReceived,
       deliveryType: checkoutRequest.deliveryType,
       customerAppType: checkoutRequest.customerAppType,
-      items: customerCart.items,
+      items: orderItems,
       itemsCost: customerCart.cost,
       notes: checkoutRequest.notes,
       deliveryCost: checkoutRequest.deliveryCost,

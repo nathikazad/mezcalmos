@@ -2284,6 +2284,8 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 ["delivery_operator"]: AliasType<{
 	app_version?:true,
 	current_gps?:true,
+	/** An object relationship */
+	delivery_company?:ValueTypes["delivery_company"],
 	delivery_company_id?:true,
 	delivery_driver_type?:true,
 	id?:true,
@@ -2380,6 +2382,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	_or?:ValueTypes["delivery_operator_bool_exp"][],
 	app_version?:ValueTypes["String_comparison_exp"],
 	current_gps?:ValueTypes["geography_comparison_exp"],
+	delivery_company?:ValueTypes["delivery_company_bool_exp"],
 	delivery_company_id?:ValueTypes["Int_comparison_exp"],
 	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -2401,6 +2404,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 ["delivery_operator_insert_input"]: {
 	app_version?:string,
 	current_gps?:ValueTypes["geography"],
+	delivery_company?:ValueTypes["delivery_company_obj_rel_insert_input"],
 	delivery_company_id?:number,
 	delivery_driver_type?:string,
 	id?:number,
@@ -2471,6 +2475,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 ["delivery_operator_order_by"]: {
 	app_version?:ValueTypes["order_by"],
 	current_gps?:ValueTypes["order_by"],
+	delivery_company?:ValueTypes["delivery_company_order_by"],
 	delivery_company_id?:ValueTypes["order_by"],
 	delivery_driver_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -3916,6 +3921,196 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "direct_chat" */
+["direct_chat"]: AliasType<{
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	user1?:ValueTypes["user"],
+	/** An object relationship */
+	user2?:ValueTypes["user"],
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "direct_chat" */
+["direct_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["direct_chat_aggregate_fields"],
+	nodes?:ValueTypes["direct_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "direct_chat" */
+["direct_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["direct_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["direct_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["direct_chat_max_fields"],
+	min?:ValueTypes["direct_chat_min_fields"],
+	stddev?:ValueTypes["direct_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["direct_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["direct_chat_stddev_samp_fields"],
+	sum?:ValueTypes["direct_chat_sum_fields"],
+	var_pop?:ValueTypes["direct_chat_var_pop_fields"],
+	var_samp?:ValueTypes["direct_chat_var_samp_fields"],
+	variance?:ValueTypes["direct_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["direct_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+["direct_chat_bool_exp"]: {
+	_and?:ValueTypes["direct_chat_bool_exp"][],
+	_not?:ValueTypes["direct_chat_bool_exp"],
+	_or?:ValueTypes["direct_chat_bool_exp"][],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	user1?:ValueTypes["user_bool_exp"],
+	user2?:ValueTypes["user_bool_exp"],
+	user_id1?:ValueTypes["Int_comparison_exp"],
+	user_id2?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "direct_chat" */
+["direct_chat_constraint"]:direct_chat_constraint;
+	/** input type for incrementing numeric columns in table "direct_chat" */
+["direct_chat_inc_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** input type for inserting data into table "direct_chat" */
+["direct_chat_insert_input"]: {
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user1?:ValueTypes["user_obj_rel_insert_input"],
+	user2?:ValueTypes["user_obj_rel_insert_input"],
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate max on columns */
+["direct_chat_max_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["direct_chat_min_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "direct_chat" */
+["direct_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["direct_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "direct_chat" */
+["direct_chat_on_conflict"]: {
+	constraint:ValueTypes["direct_chat_constraint"],
+	update_columns:ValueTypes["direct_chat_update_column"][],
+	where?:ValueTypes["direct_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "direct_chat". */
+["direct_chat_order_by"]: {
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	user1?:ValueTypes["user_order_by"],
+	user2?:ValueTypes["user_order_by"],
+	user_id1?:ValueTypes["order_by"],
+	user_id2?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: direct_chat */
+["direct_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "direct_chat" */
+["direct_chat_select_column"]:direct_chat_select_column;
+	/** input type for updating data in table "direct_chat" */
+["direct_chat_set_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate stddev on columns */
+["direct_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["direct_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["direct_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "direct_chat" */
+["direct_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["direct_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["direct_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+};
+	/** aggregate sum on columns */
+["direct_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** update columns of table "direct_chat" */
+["direct_chat_update_column"]:direct_chat_update_column;
+	["direct_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],
+	where:ValueTypes["direct_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["direct_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["direct_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["direct_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	user_id1?:true,
+	user_id2?:true,
+		__typename?: true
+}>;
 	/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 ["Float_comparison_exp"]: {
 	_eq?:number,
@@ -4622,6 +4817,9 @@ delete_delivery_order?: [{	/** filter the rows which have to be deleted */
 delete_delivery_order_by_pk?: [{	id:number},ValueTypes["delivery_order"]],
 delete_delivery_order_public?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_mutation_response"]],
+delete_direct_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_mutation_response"]],
+delete_direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
 delete_language?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["language_bool_exp"]},ValueTypes["language_mutation_response"]],
 delete_language_by_pk?: [{	id:string},ValueTypes["language"]],
@@ -4678,6 +4876,9 @@ delete_restaurant_restaurant_by_pk?: [{	id:number},ValueTypes["restaurant_restau
 delete_review?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["review_bool_exp"]},ValueTypes["review_mutation_response"]],
 delete_review_by_pk?: [{	id:number},ValueTypes["review"]],
+delete_service_provider_customer_chat?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+delete_service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
 delete_service_provider_delivery_partner?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
 delete_service_provider_delivery_partner_by_pk?: [{	id:number},ValueTypes["service_provider_delivery_partner"]],
@@ -4763,6 +4964,12 @@ insert_delivery_order_public?: [{	/** the rows to be inserted */
 	objects:ValueTypes["delivery_order_public_insert_input"][]},ValueTypes["delivery_order_public_mutation_response"]],
 insert_delivery_order_public_one?: [{	/** the row to be inserted */
 	object:ValueTypes["delivery_order_public_insert_input"]},ValueTypes["delivery_order_public"]],
+insert_direct_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["direct_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["direct_chat_on_conflict"]},ValueTypes["direct_chat_mutation_response"]],
+insert_direct_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["direct_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["direct_chat_on_conflict"]},ValueTypes["direct_chat"]],
 insert_language?: [{	/** the rows to be inserted */
 	objects:ValueTypes["language_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["language_on_conflict"]},ValueTypes["language_mutation_response"]],
@@ -4875,6 +5082,12 @@ insert_review?: [{	/** the rows to be inserted */
 insert_review_one?: [{	/** the row to be inserted */
 	object:ValueTypes["review_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["review_on_conflict"]},ValueTypes["review"]],
+insert_service_provider_customer_chat?: [{	/** the rows to be inserted */
+	objects:ValueTypes["service_provider_customer_chat_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_customer_chat_on_conflict"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+insert_service_provider_customer_chat_one?: [{	/** the row to be inserted */
+	object:ValueTypes["service_provider_customer_chat_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_customer_chat_on_conflict"]},ValueTypes["service_provider_customer_chat"]],
 insert_service_provider_delivery_partner?: [{	/** the rows to be inserted */
 	objects:ValueTypes["service_provider_delivery_partner_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["service_provider_delivery_partner_on_conflict"]},ValueTypes["service_provider_delivery_partner_mutation_response"]],
@@ -5035,6 +5248,15 @@ update_delivery_order_public?: [{	/** increments the numeric columns with given 
 	where:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_mutation_response"]],
 update_delivery_order_public_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["delivery_order_public_updates"][]},ValueTypes["delivery_order_public_mutation_response"]],
+update_direct_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_mutation_response"]],
+update_direct_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["direct_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["direct_chat_set_input"],	pk_columns:ValueTypes["direct_chat_pk_columns_input"]},ValueTypes["direct_chat"]],
+update_direct_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["direct_chat_updates"][]},ValueTypes["direct_chat_mutation_response"]],
 update_language?: [{	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["language_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["language_bool_exp"]},ValueTypes["language_mutation_response"]],
@@ -5235,6 +5457,15 @@ update_review_by_pk?: [{	/** increments the numeric columns with given value of 
 	_set?:ValueTypes["review_set_input"],	pk_columns:ValueTypes["review_pk_columns_input"]},ValueTypes["review"]],
 update_review_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["review_updates"][]},ValueTypes["review_mutation_response"]],
+update_service_provider_customer_chat?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_mutation_response"]],
+update_service_provider_customer_chat_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],	pk_columns:ValueTypes["service_provider_customer_chat_pk_columns_input"]},ValueTypes["service_provider_customer_chat"]],
+update_service_provider_customer_chat_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["service_provider_customer_chat_updates"][]},ValueTypes["service_provider_customer_chat_mutation_response"]],
 update_service_provider_delivery_partner?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_delivery_partner_set_input"],	/** filter the rows which have to be updated */
@@ -5652,6 +5883,19 @@ delivery_order_public_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_order_public_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_order_public_bool_exp"]},ValueTypes["delivery_order_public_aggregate"]],
+direct_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
+direct_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_aggregate"]],
+direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
 language?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["language_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -5940,6 +6184,19 @@ review_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 review_by_pk?: [{	id:number},ValueTypes["review"]],
+service_provider_customer_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_aggregate"]],
+service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
 service_provider_delivery_partner?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -11424,6 +11681,205 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	rating?:ValueTypes["order_by"],
 	to_entity_id?:ValueTypes["order_by"]
 };
+	/** columns and relationships of "service_provider_customer_chat" */
+["service_provider_customer_chat"]: AliasType<{
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	customer?:ValueTypes["customer_customer"],
+	customer_id?:true,
+	/** An object relationship */
+	restaurant?:ValueTypes["restaurant_restaurant"],
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["service_provider_customer_chat_aggregate_fields"],
+	nodes?:ValueTypes["service_provider_customer_chat"],
+		__typename?: true
+}>;
+	/** aggregate fields of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["service_provider_customer_chat_avg_fields"],
+count?: [{	columns?:ValueTypes["service_provider_customer_chat_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["service_provider_customer_chat_max_fields"],
+	min?:ValueTypes["service_provider_customer_chat_min_fields"],
+	stddev?:ValueTypes["service_provider_customer_chat_stddev_fields"],
+	stddev_pop?:ValueTypes["service_provider_customer_chat_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["service_provider_customer_chat_stddev_samp_fields"],
+	sum?:ValueTypes["service_provider_customer_chat_sum_fields"],
+	var_pop?:ValueTypes["service_provider_customer_chat_var_pop_fields"],
+	var_samp?:ValueTypes["service_provider_customer_chat_var_samp_fields"],
+	variance?:ValueTypes["service_provider_customer_chat_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["service_provider_customer_chat_avg_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+["service_provider_customer_chat_bool_exp"]: {
+	_and?:ValueTypes["service_provider_customer_chat_bool_exp"][],
+	_not?:ValueTypes["service_provider_customer_chat_bool_exp"],
+	_or?:ValueTypes["service_provider_customer_chat_bool_exp"][],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	customer?:ValueTypes["customer_customer_bool_exp"],
+	customer_id?:ValueTypes["Int_comparison_exp"],
+	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
+	service_provider_id?:ValueTypes["Int_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "service_provider_customer_chat" */
+["service_provider_customer_chat_constraint"]:service_provider_customer_chat_constraint;
+	/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+["service_provider_customer_chat_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+};
+	/** input type for inserting data into table "service_provider_customer_chat" */
+["service_provider_customer_chat_insert_input"]: {
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
+	customer_id?:number,
+	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate max on columns */
+["service_provider_customer_chat_max_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["service_provider_customer_chat_min_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "service_provider_customer_chat" */
+["service_provider_customer_chat_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["service_provider_customer_chat"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "service_provider_customer_chat" */
+["service_provider_customer_chat_on_conflict"]: {
+	constraint:ValueTypes["service_provider_customer_chat_constraint"],
+	update_columns:ValueTypes["service_provider_customer_chat_update_column"][],
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]
+};
+	/** Ordering options when selecting data from "service_provider_customer_chat". */
+["service_provider_customer_chat_order_by"]: {
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	customer?:ValueTypes["customer_customer_order_by"],
+	customer_id?:ValueTypes["order_by"],
+	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: service_provider_customer_chat */
+["service_provider_customer_chat_pk_columns_input"]: {
+	chat_id:number
+};
+	/** select columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_select_column"]:service_provider_customer_chat_select_column;
+	/** input type for updating data in table "service_provider_customer_chat" */
+["service_provider_customer_chat_set_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate stddev on columns */
+["service_provider_customer_chat_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["service_provider_customer_chat_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["service_provider_customer_chat_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "service_provider_customer_chat" */
+["service_provider_customer_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["service_provider_customer_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["service_provider_customer_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+};
+	/** aggregate sum on columns */
+["service_provider_customer_chat_sum_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_update_column"]:service_provider_customer_chat_update_column;
+	["service_provider_customer_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["service_provider_customer_chat_set_input"],
+	where:ValueTypes["service_provider_customer_chat_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["service_provider_customer_chat_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["service_provider_customer_chat_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["service_provider_customer_chat_variance_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	service_provider_id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "service_provider.delivery_partner" */
 ["service_provider_delivery_partner"]: AliasType<{
 	delivery_company_id?:true,
@@ -11872,6 +12328,8 @@ the end). throws an error if top level container is not an array */
 ["service_provider_service_link"]: AliasType<{
 	customer_deep_link?:true,
 	customer_qr_image_link?:true,
+	/** An object relationship */
+	delivery_company?:ValueTypes["delivery_company"],
 	driver_deep_link?:true,
 	driver_qr_image_link?:true,
 	id?:true,
@@ -11918,6 +12376,7 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	_or?:ValueTypes["service_provider_service_link_bool_exp"][],
 	customer_deep_link?:ValueTypes["String_comparison_exp"],
 	customer_qr_image_link?:ValueTypes["String_comparison_exp"],
+	delivery_company?:ValueTypes["delivery_company_bool_exp"],
 	driver_deep_link?:ValueTypes["String_comparison_exp"],
 	driver_qr_image_link?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -11938,6 +12397,7 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 ["service_provider_service_link_insert_input"]: {
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+	delivery_company?:ValueTypes["delivery_company_obj_rel_insert_input"],
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -11991,6 +12451,7 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 ["service_provider_service_link_order_by"]: {
 	customer_deep_link?:ValueTypes["order_by"],
 	customer_qr_image_link?:ValueTypes["order_by"],
+	delivery_company?:ValueTypes["delivery_company_order_by"],
 	driver_deep_link?:ValueTypes["order_by"],
 	driver_qr_image_link?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -12530,6 +12991,23 @@ delivery_order_stream?: [{	/** maximum number of rows returned in a single batch
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["delivery_order_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_order_bool_exp"]},ValueTypes["delivery_order"]],
+direct_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
+direct_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["direct_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["direct_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat_aggregate"]],
+direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
+direct_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["direct_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["direct_chat_bool_exp"]},ValueTypes["direct_chat"]],
 language?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["language_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -12894,6 +13372,23 @@ review_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["review_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+service_provider_customer_chat?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_customer_chat_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_customer_chat_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat_aggregate"]],
+service_provider_customer_chat_by_pk?: [{	chat_id:number},ValueTypes["service_provider_customer_chat"]],
+service_provider_customer_chat_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["service_provider_customer_chat_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_customer_chat_bool_exp"]},ValueTypes["service_provider_customer_chat"]],
 service_provider_delivery_partner?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -15932,6 +16427,8 @@ the end). throws an error if top level container is not an array */
 		__typename?: "delivery_operator";
 			app_version?:string,
 			current_gps?:PartialObjects["geography"],
+			/** An object relationship */
+	delivery_company?:PartialObjects["delivery_company"],
 			delivery_company_id?:number,
 			delivery_driver_type?:string,
 			id?:number,
@@ -16027,6 +16524,7 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["delivery_operator_bool_exp"][],
 	app_version?:PartialObjects["String_comparison_exp"],
 	current_gps?:PartialObjects["geography_comparison_exp"],
+	delivery_company?:PartialObjects["delivery_company_bool_exp"],
 	delivery_company_id?:PartialObjects["Int_comparison_exp"],
 	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -16048,6 +16546,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_insert_input"]: {
 	app_version?:string,
 	current_gps?:PartialObjects["geography"],
+	delivery_company?:PartialObjects["delivery_company_obj_rel_insert_input"],
 	delivery_company_id?:number,
 	delivery_driver_type?:string,
 	id?:number,
@@ -16118,6 +16617,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_order_by"]: {
 	app_version?:PartialObjects["order_by"],
 	current_gps?:PartialObjects["order_by"],
+	delivery_company?:PartialObjects["delivery_company_order_by"],
 	delivery_company_id?:PartialObjects["order_by"],
 	delivery_driver_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -17563,6 +18063,196 @@ cancelledByServiceProvider */
 	/** in seconds */
 	trip_duration?:PartialObjects["order_by"]
 },
+	/** columns and relationships of "direct_chat" */
+["direct_chat"]: {
+		__typename?: "direct_chat";
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	user1?:PartialObjects["user"],
+			/** An object relationship */
+	user2?:PartialObjects["user"],
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregated selection of "direct_chat" */
+["direct_chat_aggregate"]: {
+		__typename?: "direct_chat_aggregate";
+			aggregate?:PartialObjects["direct_chat_aggregate_fields"],
+			nodes?:PartialObjects["direct_chat"][]
+	},
+	/** aggregate fields of "direct_chat" */
+["direct_chat_aggregate_fields"]: {
+		__typename?: "direct_chat_aggregate_fields";
+			avg?:PartialObjects["direct_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["direct_chat_max_fields"],
+			min?:PartialObjects["direct_chat_min_fields"],
+			stddev?:PartialObjects["direct_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["direct_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["direct_chat_stddev_samp_fields"],
+			sum?:PartialObjects["direct_chat_sum_fields"],
+			var_pop?:PartialObjects["direct_chat_var_pop_fields"],
+			var_samp?:PartialObjects["direct_chat_var_samp_fields"],
+			variance?:PartialObjects["direct_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["direct_chat_avg_fields"]: {
+		__typename?: "direct_chat_avg_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+["direct_chat_bool_exp"]: {
+	_and?:PartialObjects["direct_chat_bool_exp"][],
+	_not?:PartialObjects["direct_chat_bool_exp"],
+	_or?:PartialObjects["direct_chat_bool_exp"][],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	user1?:PartialObjects["user_bool_exp"],
+	user2?:PartialObjects["user_bool_exp"],
+	user_id1?:PartialObjects["Int_comparison_exp"],
+	user_id2?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "direct_chat" */
+["direct_chat_constraint"]:direct_chat_constraint,
+	/** input type for incrementing numeric columns in table "direct_chat" */
+["direct_chat_inc_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** input type for inserting data into table "direct_chat" */
+["direct_chat_insert_input"]: {
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	user1?:PartialObjects["user_obj_rel_insert_input"],
+	user2?:PartialObjects["user_obj_rel_insert_input"],
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate max on columns */
+["direct_chat_max_fields"]: {
+		__typename?: "direct_chat_max_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate min on columns */
+["direct_chat_min_fields"]: {
+		__typename?: "direct_chat_min_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** response of any mutation on the table "direct_chat" */
+["direct_chat_mutation_response"]: {
+		__typename?: "direct_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["direct_chat"][]
+	},
+	/** on_conflict condition type for table "direct_chat" */
+["direct_chat_on_conflict"]: {
+	constraint:PartialObjects["direct_chat_constraint"],
+	update_columns:PartialObjects["direct_chat_update_column"][],
+	where?:PartialObjects["direct_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "direct_chat". */
+["direct_chat_order_by"]: {
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	user1?:PartialObjects["user_order_by"],
+	user2?:PartialObjects["user_order_by"],
+	user_id1?:PartialObjects["order_by"],
+	user_id2?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: direct_chat */
+["direct_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "direct_chat" */
+["direct_chat_select_column"]:direct_chat_select_column,
+	/** input type for updating data in table "direct_chat" */
+["direct_chat_set_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate stddev on columns */
+["direct_chat_stddev_fields"]: {
+		__typename?: "direct_chat_stddev_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate stddev_pop on columns */
+["direct_chat_stddev_pop_fields"]: {
+		__typename?: "direct_chat_stddev_pop_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate stddev_samp on columns */
+["direct_chat_stddev_samp_fields"]: {
+		__typename?: "direct_chat_stddev_samp_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** Streaming cursor of the table "direct_chat" */
+["direct_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["direct_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["direct_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+},
+	/** aggregate sum on columns */
+["direct_chat_sum_fields"]: {
+		__typename?: "direct_chat_sum_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** update columns of table "direct_chat" */
+["direct_chat_update_column"]:direct_chat_update_column,
+	["direct_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["direct_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["direct_chat_set_input"],
+	where:PartialObjects["direct_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["direct_chat_var_pop_fields"]: {
+		__typename?: "direct_chat_var_pop_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate var_samp on columns */
+["direct_chat_var_samp_fields"]: {
+		__typename?: "direct_chat_var_samp_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
+	/** aggregate variance on columns */
+["direct_chat_variance_fields"]: {
+		__typename?: "direct_chat_variance_fields";
+			chat_id?:number,
+			user_id1?:number,
+			user_id2?:number
+	},
 	/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 ["Float_comparison_exp"]: {
 	_eq?:number,
@@ -18278,6 +18968,10 @@ the end). throws an error if top level container is not an array */
 	delete_delivery_order_by_pk?:PartialObjects["delivery_order"],
 			/** delete data from the table: "delivery.order_public" */
 	delete_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
+			/** delete data from the table: "direct_chat" */
+	delete_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** delete single row from the table: "direct_chat" */
+	delete_direct_chat_by_pk?:PartialObjects["direct_chat"],
 			/** delete data from the table: "language" */
 	delete_language?:PartialObjects["language_mutation_response"],
 			/** delete single row from the table: "language" */
@@ -18352,6 +19046,10 @@ the end). throws an error if top level container is not an array */
 	delete_review?:PartialObjects["review_mutation_response"],
 			/** delete single row from the table: "review" */
 	delete_review_by_pk?:PartialObjects["review"],
+			/** delete data from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** delete single row from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
 			/** delete data from the table: "service_provider.delivery_partner" */
 	delete_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
 			/** delete single row from the table: "service_provider.delivery_partner" */
@@ -18424,6 +19122,10 @@ the end). throws an error if top level container is not an array */
 	insert_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
 			/** insert a single row into the table: "delivery.order_public" */
 	insert_delivery_order_public_one?:PartialObjects["delivery_order_public"],
+			/** insert data into the table: "direct_chat" */
+	insert_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** insert a single row into the table: "direct_chat" */
+	insert_direct_chat_one?:PartialObjects["direct_chat"],
 			/** insert data into the table: "language" */
 	insert_language?:PartialObjects["language_mutation_response"],
 			/** insert a single row into the table: "language" */
@@ -18500,6 +19202,10 @@ the end). throws an error if top level container is not an array */
 	insert_review?:PartialObjects["review_mutation_response"],
 			/** insert a single row into the table: "review" */
 	insert_review_one?:PartialObjects["review"],
+			/** insert data into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** insert a single row into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat_one?:PartialObjects["service_provider_customer_chat"],
 			/** insert data into the table: "service_provider.delivery_partner" */
 	insert_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
 			/** insert a single row into the table: "service_provider.delivery_partner" */
@@ -18592,6 +19298,12 @@ the end). throws an error if top level container is not an array */
 	update_delivery_order_public?:PartialObjects["delivery_order_public_mutation_response"],
 			/** update multiples rows of table: "delivery.order_public" */
 	update_delivery_order_public_many?:(PartialObjects["delivery_order_public_mutation_response"] | undefined)[],
+			/** update data of the table: "direct_chat" */
+	update_direct_chat?:PartialObjects["direct_chat_mutation_response"],
+			/** update single row of the table: "direct_chat" */
+	update_direct_chat_by_pk?:PartialObjects["direct_chat"],
+			/** update multiples rows of table: "direct_chat" */
+	update_direct_chat_many?:(PartialObjects["direct_chat_mutation_response"] | undefined)[],
 			/** update data of the table: "language" */
 	update_language?:PartialObjects["language_mutation_response"],
 			/** update single row of the table: "language" */
@@ -18704,6 +19416,12 @@ the end). throws an error if top level container is not an array */
 	update_review_by_pk?:PartialObjects["review"],
 			/** update multiples rows of table: "review" */
 	update_review_many?:(PartialObjects["review_mutation_response"] | undefined)[],
+			/** update data of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat?:PartialObjects["service_provider_customer_chat_mutation_response"],
+			/** update single row of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
+			/** update multiples rows of table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_many?:(PartialObjects["service_provider_customer_chat_mutation_response"] | undefined)[],
 			/** update data of the table: "service_provider.delivery_partner" */
 	update_service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner_mutation_response"],
 			/** update single row of the table: "service_provider.delivery_partner" */
@@ -18999,6 +19717,12 @@ the end). throws an error if top level container is not an array */
 	delivery_order_public?:PartialObjects["delivery_order_public"][],
 			/** fetch aggregated fields from the table: "delivery.order_public" */
 	delivery_order_public_aggregate?:PartialObjects["delivery_order_public_aggregate"],
+			/** fetch data from the table: "direct_chat" */
+	direct_chat?:PartialObjects["direct_chat"][],
+			/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate?:PartialObjects["direct_chat_aggregate"],
+			/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:PartialObjects["direct_chat"],
 			/** fetch data from the table: "language" */
 	language?:PartialObjects["language"][],
 			/** fetch aggregated fields from the table: "language" */
@@ -19123,6 +19847,12 @@ the end). throws an error if top level container is not an array */
 	review_aggregate?:PartialObjects["review_aggregate"],
 			/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:PartialObjects["review"],
+			/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat?:PartialObjects["service_provider_customer_chat"][],
+			/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate?:PartialObjects["service_provider_customer_chat_aggregate"],
+			/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
 			/** fetch data from the table: "service_provider.delivery_partner" */
 	service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner"][],
 			/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
@@ -24424,6 +25154,205 @@ the end). throws an error if top level container is not an array */
 	rating?:PartialObjects["order_by"],
 	to_entity_id?:PartialObjects["order_by"]
 },
+	/** columns and relationships of "service_provider_customer_chat" */
+["service_provider_customer_chat"]: {
+		__typename?: "service_provider_customer_chat";
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	customer?:PartialObjects["customer_customer"],
+			customer_id?:number,
+			/** An object relationship */
+	restaurant?:PartialObjects["restaurant_restaurant"],
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregated selection of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate"]: {
+		__typename?: "service_provider_customer_chat_aggregate";
+			aggregate?:PartialObjects["service_provider_customer_chat_aggregate_fields"],
+			nodes?:PartialObjects["service_provider_customer_chat"][]
+	},
+	/** aggregate fields of "service_provider_customer_chat" */
+["service_provider_customer_chat_aggregate_fields"]: {
+		__typename?: "service_provider_customer_chat_aggregate_fields";
+			avg?:PartialObjects["service_provider_customer_chat_avg_fields"],
+			count?:number,
+			max?:PartialObjects["service_provider_customer_chat_max_fields"],
+			min?:PartialObjects["service_provider_customer_chat_min_fields"],
+			stddev?:PartialObjects["service_provider_customer_chat_stddev_fields"],
+			stddev_pop?:PartialObjects["service_provider_customer_chat_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["service_provider_customer_chat_stddev_samp_fields"],
+			sum?:PartialObjects["service_provider_customer_chat_sum_fields"],
+			var_pop?:PartialObjects["service_provider_customer_chat_var_pop_fields"],
+			var_samp?:PartialObjects["service_provider_customer_chat_var_samp_fields"],
+			variance?:PartialObjects["service_provider_customer_chat_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["service_provider_customer_chat_avg_fields"]: {
+		__typename?: "service_provider_customer_chat_avg_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+["service_provider_customer_chat_bool_exp"]: {
+	_and?:PartialObjects["service_provider_customer_chat_bool_exp"][],
+	_not?:PartialObjects["service_provider_customer_chat_bool_exp"],
+	_or?:PartialObjects["service_provider_customer_chat_bool_exp"][],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	customer?:PartialObjects["customer_customer_bool_exp"],
+	customer_id?:PartialObjects["Int_comparison_exp"],
+	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
+	service_provider_id?:PartialObjects["Int_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "service_provider_customer_chat" */
+["service_provider_customer_chat_constraint"]:service_provider_customer_chat_constraint,
+	/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+["service_provider_customer_chat_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+},
+	/** input type for inserting data into table "service_provider_customer_chat" */
+["service_provider_customer_chat_insert_input"]: {
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
+	customer_id?:number,
+	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate max on columns */
+["service_provider_customer_chat_max_fields"]: {
+		__typename?: "service_provider_customer_chat_max_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["service_provider_customer_chat_min_fields"]: {
+		__typename?: "service_provider_customer_chat_min_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "service_provider_customer_chat" */
+["service_provider_customer_chat_mutation_response"]: {
+		__typename?: "service_provider_customer_chat_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["service_provider_customer_chat"][]
+	},
+	/** on_conflict condition type for table "service_provider_customer_chat" */
+["service_provider_customer_chat_on_conflict"]: {
+	constraint:PartialObjects["service_provider_customer_chat_constraint"],
+	update_columns:PartialObjects["service_provider_customer_chat_update_column"][],
+	where?:PartialObjects["service_provider_customer_chat_bool_exp"]
+},
+	/** Ordering options when selecting data from "service_provider_customer_chat". */
+["service_provider_customer_chat_order_by"]: {
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	customer?:PartialObjects["customer_customer_order_by"],
+	customer_id?:PartialObjects["order_by"],
+	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: service_provider_customer_chat */
+["service_provider_customer_chat_pk_columns_input"]: {
+	chat_id:number
+},
+	/** select columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_select_column"]:service_provider_customer_chat_select_column,
+	/** input type for updating data in table "service_provider_customer_chat" */
+["service_provider_customer_chat_set_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate stddev on columns */
+["service_provider_customer_chat_stddev_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["service_provider_customer_chat_stddev_pop_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["service_provider_customer_chat_stddev_samp_fields"]: {
+		__typename?: "service_provider_customer_chat_stddev_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** Streaming cursor of the table "service_provider_customer_chat" */
+["service_provider_customer_chat_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["service_provider_customer_chat_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["service_provider_customer_chat_stream_cursor_value_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+},
+	/** aggregate sum on columns */
+["service_provider_customer_chat_sum_fields"]: {
+		__typename?: "service_provider_customer_chat_sum_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** update columns of table "service_provider_customer_chat" */
+["service_provider_customer_chat_update_column"]:service_provider_customer_chat_update_column,
+	["service_provider_customer_chat_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["service_provider_customer_chat_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["service_provider_customer_chat_set_input"],
+	where:PartialObjects["service_provider_customer_chat_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["service_provider_customer_chat_var_pop_fields"]: {
+		__typename?: "service_provider_customer_chat_var_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate var_samp on columns */
+["service_provider_customer_chat_var_samp_fields"]: {
+		__typename?: "service_provider_customer_chat_var_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
+	/** aggregate variance on columns */
+["service_provider_customer_chat_variance_fields"]: {
+		__typename?: "service_provider_customer_chat_variance_fields";
+			chat_id?:number,
+			customer_id?:number,
+			service_provider_id?:number
+	},
 	/** columns and relationships of "service_provider.delivery_partner" */
 ["service_provider_delivery_partner"]: {
 		__typename?: "service_provider_delivery_partner";
@@ -24871,6 +25800,8 @@ the end). throws an error if top level container is not an array */
 		__typename?: "service_provider_service_link";
 			customer_deep_link?:string,
 			customer_qr_image_link?:string,
+			/** An object relationship */
+	delivery_company?:PartialObjects["delivery_company"],
 			driver_deep_link?:string,
 			driver_qr_image_link?:string,
 			id?:number,
@@ -24916,6 +25847,7 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["service_provider_service_link_bool_exp"][],
 	customer_deep_link?:PartialObjects["String_comparison_exp"],
 	customer_qr_image_link?:PartialObjects["String_comparison_exp"],
+	delivery_company?:PartialObjects["delivery_company_bool_exp"],
 	driver_deep_link?:PartialObjects["String_comparison_exp"],
 	driver_qr_image_link?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -24936,6 +25868,7 @@ the end). throws an error if top level container is not an array */
 ["service_provider_service_link_insert_input"]: {
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+	delivery_company?:PartialObjects["delivery_company_obj_rel_insert_input"],
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -24989,6 +25922,7 @@ the end). throws an error if top level container is not an array */
 ["service_provider_service_link_order_by"]: {
 	customer_deep_link?:PartialObjects["order_by"],
 	customer_qr_image_link?:PartialObjects["order_by"],
+	delivery_company?:PartialObjects["delivery_company_order_by"],
 	driver_deep_link?:PartialObjects["order_by"],
 	driver_qr_image_link?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -25418,6 +26352,14 @@ All fields are combined with a logical 'AND'. */
 	delivery_order_public_stream?:PartialObjects["delivery_order_public"][],
 			/** fetch data from the table in a streaming manner: "delivery.order" */
 	delivery_order_stream?:PartialObjects["delivery_order"][],
+			/** fetch data from the table: "direct_chat" */
+	direct_chat?:PartialObjects["direct_chat"][],
+			/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate?:PartialObjects["direct_chat_aggregate"],
+			/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:PartialObjects["direct_chat"],
+			/** fetch data from the table in a streaming manner: "direct_chat" */
+	direct_chat_stream?:PartialObjects["direct_chat"][],
 			/** fetch data from the table: "language" */
 	language?:PartialObjects["language"][],
 			/** fetch aggregated fields from the table: "language" */
@@ -25580,6 +26522,14 @@ All fields are combined with a logical 'AND'. */
 	review_by_pk?:PartialObjects["review"],
 			/** fetch data from the table in a streaming manner: "review" */
 	review_stream?:PartialObjects["review"][],
+			/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat?:PartialObjects["service_provider_customer_chat"][],
+			/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate?:PartialObjects["service_provider_customer_chat_aggregate"],
+			/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:PartialObjects["service_provider_customer_chat"],
+			/** fetch data from the table in a streaming manner: "service_provider_customer_chat" */
+	service_provider_customer_chat_stream?:PartialObjects["service_provider_customer_chat"][],
 			/** fetch data from the table: "service_provider.delivery_partner" */
 	service_provider_delivery_partner?:PartialObjects["service_provider_delivery_partner"][],
 			/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
@@ -28976,6 +29926,8 @@ export type delivery_operator = {
 	__typename?: "delivery_operator",
 	app_version?:string,
 	current_gps?:geography,
+	/** An object relationship */
+	delivery_company:delivery_company,
 	delivery_company_id:number,
 	delivery_driver_type:string,
 	id:number,
@@ -29082,6 +30034,7 @@ export type delivery_operator_bool_exp = {
 	_or?:delivery_operator_bool_exp[],
 	app_version?:String_comparison_exp,
 	current_gps?:geography_comparison_exp,
+	delivery_company?:delivery_company_bool_exp,
 	delivery_company_id?:Int_comparison_exp,
 	delivery_driver_type?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -29109,6 +30062,7 @@ export type delivery_operator_inc_input = {
 export type delivery_operator_insert_input = {
 		app_version?:string,
 	current_gps?:geography,
+	delivery_company?:delivery_company_obj_rel_insert_input,
 	delivery_company_id?:number,
 	delivery_driver_type?:string,
 	id?:number,
@@ -29187,6 +30141,7 @@ export type delivery_operator_on_conflict = {
 export type delivery_operator_order_by = {
 		app_version?:order_by,
 	current_gps?:order_by,
+	delivery_company?:delivery_company_order_by,
 	delivery_company_id?:order_by,
 	delivery_driver_type?:order_by,
 	id?:order_by,
@@ -30840,6 +31795,234 @@ export type delivery_order_variance_order_by = {
 	trip_duration?:order_by
 }
 
+/** columns and relationships of "direct_chat" */
+export type direct_chat = {
+	__typename?: "direct_chat",
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	user1?:user,
+	/** An object relationship */
+	user2?:user,
+	user_id1:number,
+	user_id2:number
+}
+
+/** aggregated selection of "direct_chat" */
+export type direct_chat_aggregate = {
+	__typename?: "direct_chat_aggregate",
+	aggregate?:direct_chat_aggregate_fields,
+	nodes:direct_chat[]
+}
+
+/** aggregate fields of "direct_chat" */
+export type direct_chat_aggregate_fields = {
+	__typename?: "direct_chat_aggregate_fields",
+	avg?:direct_chat_avg_fields,
+	count:number,
+	max?:direct_chat_max_fields,
+	min?:direct_chat_min_fields,
+	stddev?:direct_chat_stddev_fields,
+	stddev_pop?:direct_chat_stddev_pop_fields,
+	stddev_samp?:direct_chat_stddev_samp_fields,
+	sum?:direct_chat_sum_fields,
+	var_pop?:direct_chat_var_pop_fields,
+	var_samp?:direct_chat_var_samp_fields,
+	variance?:direct_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type direct_chat_avg_fields = {
+	__typename?: "direct_chat_avg_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** Boolean expression to filter rows from the table "direct_chat". All fields are combined with a logical 'AND'. */
+export type direct_chat_bool_exp = {
+		_and?:direct_chat_bool_exp[],
+	_not?:direct_chat_bool_exp,
+	_or?:direct_chat_bool_exp[],
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	user1?:user_bool_exp,
+	user2?:user_bool_exp,
+	user_id1?:Int_comparison_exp,
+	user_id2?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "direct_chat" */
+export enum direct_chat_constraint {
+	direct_chat_pkey = "direct_chat_pkey",
+	direct_chat_user_id_1_user_id_2_key = "direct_chat_user_id_1_user_id_2_key"
+}
+
+/** input type for incrementing numeric columns in table "direct_chat" */
+export type direct_chat_inc_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** input type for inserting data into table "direct_chat" */
+export type direct_chat_insert_input = {
+		chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	user1?:user_obj_rel_insert_input,
+	user2?:user_obj_rel_insert_input,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate max on columns */
+export type direct_chat_max_fields = {
+	__typename?: "direct_chat_max_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate min on columns */
+export type direct_chat_min_fields = {
+	__typename?: "direct_chat_min_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** response of any mutation on the table "direct_chat" */
+export type direct_chat_mutation_response = {
+	__typename?: "direct_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:direct_chat[]
+}
+
+/** on_conflict condition type for table "direct_chat" */
+export type direct_chat_on_conflict = {
+		constraint:direct_chat_constraint,
+	update_columns:direct_chat_update_column[],
+	where?:direct_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "direct_chat". */
+export type direct_chat_order_by = {
+		chat?:chat_order_by,
+	chat_id?:order_by,
+	user1?:user_order_by,
+	user2?:user_order_by,
+	user_id1?:order_by,
+	user_id2?:order_by
+}
+
+/** primary key columns input for table: direct_chat */
+export type direct_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "direct_chat" */
+export enum direct_chat_select_column {
+	chat_id = "chat_id",
+	user_id1 = "user_id1",
+	user_id2 = "user_id2"
+}
+
+/** input type for updating data in table "direct_chat" */
+export type direct_chat_set_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev on columns */
+export type direct_chat_stddev_fields = {
+	__typename?: "direct_chat_stddev_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type direct_chat_stddev_pop_fields = {
+	__typename?: "direct_chat_stddev_pop_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type direct_chat_stddev_samp_fields = {
+	__typename?: "direct_chat_stddev_samp_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** Streaming cursor of the table "direct_chat" */
+export type direct_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:direct_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type direct_chat_stream_cursor_value_input = {
+		chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate sum on columns */
+export type direct_chat_sum_fields = {
+	__typename?: "direct_chat_sum_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** update columns of table "direct_chat" */
+export enum direct_chat_update_column {
+	chat_id = "chat_id",
+	user_id1 = "user_id1",
+	user_id2 = "user_id2"
+}
+
+export type direct_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:direct_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:direct_chat_set_input,
+	where:direct_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type direct_chat_var_pop_fields = {
+	__typename?: "direct_chat_var_pop_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate var_samp on columns */
+export type direct_chat_var_samp_fields = {
+	__typename?: "direct_chat_var_samp_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
+/** aggregate variance on columns */
+export type direct_chat_variance_fields = {
+	__typename?: "direct_chat_variance_fields",
+	chat_id?:number,
+	user_id1?:number,
+	user_id2?:number
+}
+
 /** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
 export type Float_comparison_exp = {
 		_eq?:number,
@@ -31695,6 +32878,10 @@ export type mutation_root = {
 	delete_delivery_order_by_pk?:delivery_order,
 	/** delete data from the table: "delivery.order_public" */
 	delete_delivery_order_public?:delivery_order_public_mutation_response,
+	/** delete data from the table: "direct_chat" */
+	delete_direct_chat?:direct_chat_mutation_response,
+	/** delete single row from the table: "direct_chat" */
+	delete_direct_chat_by_pk?:direct_chat,
 	/** delete data from the table: "language" */
 	delete_language?:language_mutation_response,
 	/** delete single row from the table: "language" */
@@ -31769,6 +32956,10 @@ export type mutation_root = {
 	delete_review?:review_mutation_response,
 	/** delete single row from the table: "review" */
 	delete_review_by_pk?:review,
+	/** delete data from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** delete single row from the table: "service_provider_customer_chat" */
+	delete_service_provider_customer_chat_by_pk?:service_provider_customer_chat,
 	/** delete data from the table: "service_provider.delivery_partner" */
 	delete_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
 	/** delete single row from the table: "service_provider.delivery_partner" */
@@ -31841,6 +33032,10 @@ export type mutation_root = {
 	insert_delivery_order_public?:delivery_order_public_mutation_response,
 	/** insert a single row into the table: "delivery.order_public" */
 	insert_delivery_order_public_one?:delivery_order_public,
+	/** insert data into the table: "direct_chat" */
+	insert_direct_chat?:direct_chat_mutation_response,
+	/** insert a single row into the table: "direct_chat" */
+	insert_direct_chat_one?:direct_chat,
 	/** insert data into the table: "language" */
 	insert_language?:language_mutation_response,
 	/** insert a single row into the table: "language" */
@@ -31917,6 +33112,10 @@ export type mutation_root = {
 	insert_review?:review_mutation_response,
 	/** insert a single row into the table: "review" */
 	insert_review_one?:review,
+	/** insert data into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** insert a single row into the table: "service_provider_customer_chat" */
+	insert_service_provider_customer_chat_one?:service_provider_customer_chat,
 	/** insert data into the table: "service_provider.delivery_partner" */
 	insert_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
 	/** insert a single row into the table: "service_provider.delivery_partner" */
@@ -32009,6 +33208,12 @@ export type mutation_root = {
 	update_delivery_order_public?:delivery_order_public_mutation_response,
 	/** update multiples rows of table: "delivery.order_public" */
 	update_delivery_order_public_many?:(delivery_order_public_mutation_response | undefined)[],
+	/** update data of the table: "direct_chat" */
+	update_direct_chat?:direct_chat_mutation_response,
+	/** update single row of the table: "direct_chat" */
+	update_direct_chat_by_pk?:direct_chat,
+	/** update multiples rows of table: "direct_chat" */
+	update_direct_chat_many?:(direct_chat_mutation_response | undefined)[],
 	/** update data of the table: "language" */
 	update_language?:language_mutation_response,
 	/** update single row of the table: "language" */
@@ -32121,6 +33326,12 @@ export type mutation_root = {
 	update_review_by_pk?:review,
 	/** update multiples rows of table: "review" */
 	update_review_many?:(review_mutation_response | undefined)[],
+	/** update data of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat?:service_provider_customer_chat_mutation_response,
+	/** update single row of the table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_by_pk?:service_provider_customer_chat,
+	/** update multiples rows of table: "service_provider_customer_chat" */
+	update_service_provider_customer_chat_many?:(service_provider_customer_chat_mutation_response | undefined)[],
 	/** update data of the table: "service_provider.delivery_partner" */
 	update_service_provider_delivery_partner?:service_provider_delivery_partner_mutation_response,
 	/** update single row of the table: "service_provider.delivery_partner" */
@@ -32467,6 +33678,12 @@ export type query_root = {
 	delivery_order_public:delivery_order_public[],
 	/** fetch aggregated fields from the table: "delivery.order_public" */
 	delivery_order_public_aggregate:delivery_order_public_aggregate,
+	/** fetch data from the table: "direct_chat" */
+	direct_chat:direct_chat[],
+	/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate:direct_chat_aggregate,
+	/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:direct_chat,
 	/** fetch data from the table: "language" */
 	language:language[],
 	/** fetch aggregated fields from the table: "language" */
@@ -32591,6 +33808,12 @@ export type query_root = {
 	review_aggregate:review_aggregate,
 	/** fetch data from the table: "review" using primary key columns */
 	review_by_pk?:review,
+	/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat:service_provider_customer_chat[],
+	/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate:service_provider_customer_chat_aggregate,
+	/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:service_provider_customer_chat,
 	/** fetch data from the table: "service_provider.delivery_partner" */
 	service_provider_delivery_partner:service_provider_delivery_partner[],
 	/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
@@ -38780,6 +40003,245 @@ export type review_variance_order_by = {
 	to_entity_id?:order_by
 }
 
+/** columns and relationships of "service_provider_customer_chat" */
+export type service_provider_customer_chat = {
+	__typename?: "service_provider_customer_chat",
+	/** An object relationship */
+	chat?:chat,
+	chat_id:number,
+	/** An object relationship */
+	customer?:customer_customer,
+	customer_id:number,
+	/** An object relationship */
+	restaurant?:restaurant_restaurant,
+	service_provider_id:number,
+	service_provider_type:string
+}
+
+/** aggregated selection of "service_provider_customer_chat" */
+export type service_provider_customer_chat_aggregate = {
+	__typename?: "service_provider_customer_chat_aggregate",
+	aggregate?:service_provider_customer_chat_aggregate_fields,
+	nodes:service_provider_customer_chat[]
+}
+
+/** aggregate fields of "service_provider_customer_chat" */
+export type service_provider_customer_chat_aggregate_fields = {
+	__typename?: "service_provider_customer_chat_aggregate_fields",
+	avg?:service_provider_customer_chat_avg_fields,
+	count:number,
+	max?:service_provider_customer_chat_max_fields,
+	min?:service_provider_customer_chat_min_fields,
+	stddev?:service_provider_customer_chat_stddev_fields,
+	stddev_pop?:service_provider_customer_chat_stddev_pop_fields,
+	stddev_samp?:service_provider_customer_chat_stddev_samp_fields,
+	sum?:service_provider_customer_chat_sum_fields,
+	var_pop?:service_provider_customer_chat_var_pop_fields,
+	var_samp?:service_provider_customer_chat_var_samp_fields,
+	variance?:service_provider_customer_chat_variance_fields
+}
+
+/** aggregate avg on columns */
+export type service_provider_customer_chat_avg_fields = {
+	__typename?: "service_provider_customer_chat_avg_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Boolean expression to filter rows from the table
+"service_provider_customer_chat". All fields are combined with a logical 'AND'. */
+export type service_provider_customer_chat_bool_exp = {
+		_and?:service_provider_customer_chat_bool_exp[],
+	_not?:service_provider_customer_chat_bool_exp,
+	_or?:service_provider_customer_chat_bool_exp[],
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	customer?:customer_customer_bool_exp,
+	customer_id?:Int_comparison_exp,
+	restaurant?:restaurant_restaurant_bool_exp,
+	service_provider_id?:Int_comparison_exp,
+	service_provider_type?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_constraint {
+	service_provider_customer_cha_customer_id_service_provider__key = "service_provider_customer_cha_customer_id_service_provider__key",
+	service_provider_customer_chat_pkey = "service_provider_customer_chat_pkey"
+}
+
+/** input type for incrementing numeric columns in table "service_provider_customer_chat" */
+export type service_provider_customer_chat_inc_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** input type for inserting data into table "service_provider_customer_chat" */
+export type service_provider_customer_chat_insert_input = {
+		chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	customer?:customer_customer_obj_rel_insert_input,
+	customer_id?:number,
+	restaurant?:restaurant_restaurant_obj_rel_insert_input,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate max on columns */
+export type service_provider_customer_chat_max_fields = {
+	__typename?: "service_provider_customer_chat_max_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type service_provider_customer_chat_min_fields = {
+	__typename?: "service_provider_customer_chat_min_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "service_provider_customer_chat" */
+export type service_provider_customer_chat_mutation_response = {
+	__typename?: "service_provider_customer_chat_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:service_provider_customer_chat[]
+}
+
+/** on_conflict condition type for table "service_provider_customer_chat" */
+export type service_provider_customer_chat_on_conflict = {
+		constraint:service_provider_customer_chat_constraint,
+	update_columns:service_provider_customer_chat_update_column[],
+	where?:service_provider_customer_chat_bool_exp
+}
+
+/** Ordering options when selecting data from "service_provider_customer_chat". */
+export type service_provider_customer_chat_order_by = {
+		chat?:chat_order_by,
+	chat_id?:order_by,
+	customer?:customer_customer_order_by,
+	customer_id?:order_by,
+	restaurant?:restaurant_restaurant_order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
+/** primary key columns input for table: service_provider_customer_chat */
+export type service_provider_customer_chat_pk_columns_input = {
+		chat_id:number
+}
+
+/** select columns of table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_select_column {
+	chat_id = "chat_id",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+/** input type for updating data in table "service_provider_customer_chat" */
+export type service_provider_customer_chat_set_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate stddev on columns */
+export type service_provider_customer_chat_stddev_fields = {
+	__typename?: "service_provider_customer_chat_stddev_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type service_provider_customer_chat_stddev_pop_fields = {
+	__typename?: "service_provider_customer_chat_stddev_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type service_provider_customer_chat_stddev_samp_fields = {
+	__typename?: "service_provider_customer_chat_stddev_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** Streaming cursor of the table "service_provider_customer_chat" */
+export type service_provider_customer_chat_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:service_provider_customer_chat_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type service_provider_customer_chat_stream_cursor_value_input = {
+		chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number,
+	service_provider_type?:string
+}
+
+/** aggregate sum on columns */
+export type service_provider_customer_chat_sum_fields = {
+	__typename?: "service_provider_customer_chat_sum_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** update columns of table "service_provider_customer_chat" */
+export enum service_provider_customer_chat_update_column {
+	chat_id = "chat_id",
+	customer_id = "customer_id",
+	service_provider_id = "service_provider_id",
+	service_provider_type = "service_provider_type"
+}
+
+export type service_provider_customer_chat_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:service_provider_customer_chat_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:service_provider_customer_chat_set_input,
+	where:service_provider_customer_chat_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type service_provider_customer_chat_var_pop_fields = {
+	__typename?: "service_provider_customer_chat_var_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type service_provider_customer_chat_var_samp_fields = {
+	__typename?: "service_provider_customer_chat_var_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
+/** aggregate variance on columns */
+export type service_provider_customer_chat_variance_fields = {
+	__typename?: "service_provider_customer_chat_variance_fields",
+	chat_id?:number,
+	customer_id?:number,
+	service_provider_id?:number
+}
+
 /** columns and relationships of "service_provider.delivery_partner" */
 export type service_provider_delivery_partner = {
 	__typename?: "service_provider_delivery_partner",
@@ -39322,6 +40784,8 @@ export type service_provider_service_link = {
 	__typename?: "service_provider_service_link",
 	customer_deep_link?:string,
 	customer_qr_image_link?:string,
+	/** An object relationship */
+	delivery_company?:delivery_company,
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id:number,
@@ -39371,6 +40835,7 @@ export type service_provider_service_link_bool_exp = {
 	_or?:service_provider_service_link_bool_exp[],
 	customer_deep_link?:String_comparison_exp,
 	customer_qr_image_link?:String_comparison_exp,
+	delivery_company?:delivery_company_bool_exp,
 	driver_deep_link?:String_comparison_exp,
 	driver_qr_image_link?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -39397,6 +40862,7 @@ export type service_provider_service_link_inc_input = {
 export type service_provider_service_link_insert_input = {
 		customer_deep_link?:string,
 	customer_qr_image_link?:string,
+	delivery_company?:delivery_company_obj_rel_insert_input,
 	driver_deep_link?:string,
 	driver_qr_image_link?:string,
 	id?:number,
@@ -39455,6 +40921,7 @@ export type service_provider_service_link_on_conflict = {
 export type service_provider_service_link_order_by = {
 		customer_deep_link?:order_by,
 	customer_qr_image_link?:order_by,
+	delivery_company?:delivery_company_order_by,
 	driver_deep_link?:order_by,
 	driver_qr_image_link?:order_by,
 	id?:order_by,
@@ -39962,6 +41429,14 @@ export type subscription_root = {
 	delivery_order_public_stream:delivery_order_public[],
 	/** fetch data from the table in a streaming manner: "delivery.order" */
 	delivery_order_stream:delivery_order[],
+	/** fetch data from the table: "direct_chat" */
+	direct_chat:direct_chat[],
+	/** fetch aggregated fields from the table: "direct_chat" */
+	direct_chat_aggregate:direct_chat_aggregate,
+	/** fetch data from the table: "direct_chat" using primary key columns */
+	direct_chat_by_pk?:direct_chat,
+	/** fetch data from the table in a streaming manner: "direct_chat" */
+	direct_chat_stream:direct_chat[],
 	/** fetch data from the table: "language" */
 	language:language[],
 	/** fetch aggregated fields from the table: "language" */
@@ -40124,6 +41599,14 @@ export type subscription_root = {
 	review_by_pk?:review,
 	/** fetch data from the table in a streaming manner: "review" */
 	review_stream:review[],
+	/** fetch data from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat:service_provider_customer_chat[],
+	/** fetch aggregated fields from the table: "service_provider_customer_chat" */
+	service_provider_customer_chat_aggregate:service_provider_customer_chat_aggregate,
+	/** fetch data from the table: "service_provider_customer_chat" using primary key columns */
+	service_provider_customer_chat_by_pk?:service_provider_customer_chat,
+	/** fetch data from the table in a streaming manner: "service_provider_customer_chat" */
+	service_provider_customer_chat_stream:service_provider_customer_chat[],
 	/** fetch data from the table: "service_provider.delivery_partner" */
 	service_provider_delivery_partner:service_provider_delivery_partner[],
 	/** fetch aggregated fields from the table: "service_provider.delivery_partner" */
@@ -46421,6 +47904,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_company:{
+			type:"delivery_company_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_company_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -46500,6 +47989,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		current_gps:{
 			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_company:{
+			type:"delivery_company_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -46666,6 +48161,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		current_gps:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_company:{
+			type:"delivery_company_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -50491,6 +51992,279 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	direct_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	direct_chat_bool_exp:{
+		_and:{
+			type:"direct_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"direct_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_constraint: "enum",
+	direct_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_insert_input:{
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_on_conflict:{
+		constraint:{
+			type:"direct_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"direct_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_order_by:{
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user1:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user2:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	direct_chat_select_column: "enum",
+	direct_chat_set_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_stream_cursor_input:{
+		initial_value:{
+			type:"direct_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_stream_cursor_value_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id1:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id2:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	direct_chat_update_column: "enum",
+	direct_chat_updates:{
+		_inc:{
+			type:"direct_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"direct_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"direct_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	Float_comparison_exp:{
 		_eq:{
 			type:"Float",
@@ -52018,6 +53792,22 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_direct_chat:{
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_language:{
 			where:{
 				type:"language_bool_exp",
@@ -52308,6 +54098,22 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delete_review_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_customer_chat:{
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_service_provider_customer_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -52726,6 +54532,34 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		insert_direct_chat:{
+			objects:{
+				type:"direct_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"direct_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_direct_chat_one:{
+			object:{
+				type:"direct_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"direct_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		insert_language:{
@@ -53243,6 +55077,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"review_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_customer_chat:{
+			objects:{
+				type:"service_provider_customer_chat_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_customer_chat_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_service_provider_customer_chat_one:{
+			object:{
+				type:"service_provider_customer_chat_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"service_provider_customer_chat_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -54055,6 +55917,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_delivery_order_public_many:{
 			updates:{
 				type:"delivery_order_public_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_direct_chat:{
+			_inc:{
+				type:"direct_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"direct_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_direct_chat_by_pk:{
+			_inc:{
+				type:"direct_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"direct_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"direct_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_direct_chat_many:{
+			updates:{
+				type:"direct_chat_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -55103,6 +57013,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_review_many:{
 			updates:{
 				type:"review_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat:{
+			_inc:{
+				type:"service_provider_customer_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_customer_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat_by_pk:{
+			_inc:{
+				type:"service_provider_customer_chat_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"service_provider_customer_chat_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"service_provider_customer_chat_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_service_provider_customer_chat_many:{
+			updates:{
+				type:"service_provider_customer_chat_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -56622,6 +58580,78 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:false
+			}
+		},
+		direct_chat:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_aggregate:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		language:{
@@ -58206,6 +60236,78 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		review_by_pk:{
 			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_customer_chat:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_aggregate:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_by_pk:{
+			chat_id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -72717,6 +74819,309 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	service_provider_customer_chat_aggregate_fields:{
+		count:{
+			columns:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	service_provider_customer_chat_bool_exp:{
+		_and:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_restaurant_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_constraint: "enum",
+	service_provider_customer_chat_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_insert_input:{
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_restaurant_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_on_conflict:{
+		constraint:{
+			type:"service_provider_customer_chat_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"service_provider_customer_chat_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_order_by:{
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant:{
+			type:"restaurant_restaurant_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_pk_columns_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_customer_chat_select_column: "enum",
+	service_provider_customer_chat_set_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_stream_cursor_input:{
+		initial_value:{
+			type:"service_provider_customer_chat_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_stream_cursor_value_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_customer_chat_update_column: "enum",
+	service_provider_customer_chat_updates:{
+		_inc:{
+			type:"service_provider_customer_chat_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"service_provider_customer_chat_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"service_provider_customer_chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	service_provider_delivery_partner_aggregate_fields:{
 		count:{
 			columns:{
@@ -73556,6 +75961,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_company:{
+			type:"delivery_company_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_deep_link:{
 			type:"String_comparison_exp",
 			array:false,
@@ -73629,6 +76040,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		customer_qr_image_link:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_company:{
+			type:"delivery_company_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -73711,6 +76128,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		customer_qr_image_link:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_company:{
+			type:"delivery_company_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75449,6 +77872,98 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"delivery_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_aggregate:{
+			distinct_on:{
+				type:"direct_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"direct_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		direct_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		direct_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"direct_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"direct_chat_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -77417,6 +79932,98 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_aggregate:{
+			distinct_on:{
+				type:"service_provider_customer_chat_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_customer_chat_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		service_provider_customer_chat_by_pk:{
+			chat_id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		service_provider_customer_chat_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"service_provider_customer_chat_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_customer_chat_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -80026,6 +82633,7 @@ export const ReturnTypes: Record<string,any> = {
 	delivery_operator:{
 		app_version:"String",
 		current_gps:"geography",
+		delivery_company:"delivery_company",
 		delivery_company_id:"Int",
 		delivery_driver_type:"String",
 		id:"Int",
@@ -80559,6 +83167,85 @@ export const ReturnTypes: Record<string,any> = {
 		trip_distance:"Float",
 		trip_duration:"Float"
 	},
+	direct_chat:{
+		chat:"chat",
+		chat_id:"Int",
+		user1:"user",
+		user2:"user",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_aggregate:{
+		aggregate:"direct_chat_aggregate_fields",
+		nodes:"direct_chat"
+	},
+	direct_chat_aggregate_fields:{
+		avg:"direct_chat_avg_fields",
+		count:"Int",
+		max:"direct_chat_max_fields",
+		min:"direct_chat_min_fields",
+		stddev:"direct_chat_stddev_fields",
+		stddev_pop:"direct_chat_stddev_pop_fields",
+		stddev_samp:"direct_chat_stddev_samp_fields",
+		sum:"direct_chat_sum_fields",
+		var_pop:"direct_chat_var_pop_fields",
+		var_samp:"direct_chat_var_samp_fields",
+		variance:"direct_chat_variance_fields"
+	},
+	direct_chat_avg_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_max_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_min_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"direct_chat"
+	},
+	direct_chat_stddev_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_sum_fields:{
+		chat_id:"Int",
+		user_id1:"Int",
+		user_id2:"Int"
+	},
+	direct_chat_var_pop_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_var_samp_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
+	direct_chat_variance_fields:{
+		chat_id:"Float",
+		user_id1:"Float",
+		user_id2:"Float"
+	},
 	language:{
 		id:"String"
 	},
@@ -80746,6 +83433,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_delivery_order:"delivery_order_mutation_response",
 		delete_delivery_order_by_pk:"delivery_order",
 		delete_delivery_order_public:"delivery_order_public_mutation_response",
+		delete_direct_chat:"direct_chat_mutation_response",
+		delete_direct_chat_by_pk:"direct_chat",
 		delete_language:"language_mutation_response",
 		delete_language_by_pk:"language",
 		delete_mez_admin:"mez_admin_mutation_response",
@@ -80783,6 +83472,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_restaurant_restaurant_by_pk:"restaurant_restaurant",
 		delete_review:"review_mutation_response",
 		delete_review_by_pk:"review",
+		delete_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		delete_service_provider_customer_chat_by_pk:"service_provider_customer_chat",
 		delete_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
 		delete_service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
 		delete_service_provider_post:"service_provider_post_mutation_response",
@@ -80819,6 +83510,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_delivery_order_one:"delivery_order",
 		insert_delivery_order_public:"delivery_order_public_mutation_response",
 		insert_delivery_order_public_one:"delivery_order_public",
+		insert_direct_chat:"direct_chat_mutation_response",
+		insert_direct_chat_one:"direct_chat",
 		insert_language:"language_mutation_response",
 		insert_language_one:"language",
 		insert_mez_admin:"mez_admin_mutation_response",
@@ -80857,6 +83550,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_restaurant_restaurant_one:"restaurant_restaurant",
 		insert_review:"review_mutation_response",
 		insert_review_one:"review",
+		insert_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		insert_service_provider_customer_chat_one:"service_provider_customer_chat",
 		insert_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
 		insert_service_provider_delivery_partner_one:"service_provider_delivery_partner",
 		insert_service_provider_post:"service_provider_post_mutation_response",
@@ -80903,6 +83598,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_delivery_order_many:"delivery_order_mutation_response",
 		update_delivery_order_public:"delivery_order_public_mutation_response",
 		update_delivery_order_public_many:"delivery_order_public_mutation_response",
+		update_direct_chat:"direct_chat_mutation_response",
+		update_direct_chat_by_pk:"direct_chat",
+		update_direct_chat_many:"direct_chat_mutation_response",
 		update_language:"language_mutation_response",
 		update_language_by_pk:"language",
 		update_language_many:"language_mutation_response",
@@ -80959,6 +83657,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_review:"review_mutation_response",
 		update_review_by_pk:"review",
 		update_review_many:"review_mutation_response",
+		update_service_provider_customer_chat:"service_provider_customer_chat_mutation_response",
+		update_service_provider_customer_chat_by_pk:"service_provider_customer_chat",
+		update_service_provider_customer_chat_many:"service_provider_customer_chat_mutation_response",
 		update_service_provider_delivery_partner:"service_provider_delivery_partner_mutation_response",
 		update_service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
 		update_service_provider_delivery_partner_many:"service_provider_delivery_partner_mutation_response",
@@ -81087,6 +83788,9 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_order_by_pk:"delivery_order",
 		delivery_order_public:"delivery_order_public",
 		delivery_order_public_aggregate:"delivery_order_public_aggregate",
+		direct_chat:"direct_chat",
+		direct_chat_aggregate:"direct_chat_aggregate",
+		direct_chat_by_pk:"direct_chat",
 		language:"language",
 		language_aggregate:"language_aggregate",
 		language_by_pk:"language",
@@ -81149,6 +83853,9 @@ export const ReturnTypes: Record<string,any> = {
 		review:"review",
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
+		service_provider_customer_chat:"service_provider_customer_chat",
+		service_provider_customer_chat_aggregate:"service_provider_customer_chat_aggregate",
+		service_provider_customer_chat_by_pk:"service_provider_customer_chat",
 		service_provider_delivery_partner:"service_provider_delivery_partner",
 		service_provider_delivery_partner_aggregate:"service_provider_delivery_partner_aggregate",
 		service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
@@ -82743,6 +85450,88 @@ export const ReturnTypes: Record<string,any> = {
 		rating:"Float",
 		to_entity_id:"Float"
 	},
+	service_provider_customer_chat:{
+		chat:"chat",
+		chat_id:"Int",
+		customer:"customer_customer",
+		customer_id:"Int",
+		restaurant:"restaurant_restaurant",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_aggregate:{
+		aggregate:"service_provider_customer_chat_aggregate_fields",
+		nodes:"service_provider_customer_chat"
+	},
+	service_provider_customer_chat_aggregate_fields:{
+		avg:"service_provider_customer_chat_avg_fields",
+		count:"Int",
+		max:"service_provider_customer_chat_max_fields",
+		min:"service_provider_customer_chat_min_fields",
+		stddev:"service_provider_customer_chat_stddev_fields",
+		stddev_pop:"service_provider_customer_chat_stddev_pop_fields",
+		stddev_samp:"service_provider_customer_chat_stddev_samp_fields",
+		sum:"service_provider_customer_chat_sum_fields",
+		var_pop:"service_provider_customer_chat_var_pop_fields",
+		var_samp:"service_provider_customer_chat_var_samp_fields",
+		variance:"service_provider_customer_chat_variance_fields"
+	},
+	service_provider_customer_chat_avg_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_max_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_min_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int",
+		service_provider_type:"String"
+	},
+	service_provider_customer_chat_mutation_response:{
+		affected_rows:"Int",
+		returning:"service_provider_customer_chat"
+	},
+	service_provider_customer_chat_stddev_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_stddev_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_stddev_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_sum_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		service_provider_id:"Int"
+	},
+	service_provider_customer_chat_var_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_var_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
+	service_provider_customer_chat_variance_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		service_provider_id:"Float"
+	},
 	service_provider_delivery_partner:{
 		delivery_company_id:"Int",
 		id:"Int",
@@ -82908,6 +85697,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_service_link:{
 		customer_deep_link:"String",
 		customer_qr_image_link:"String",
+		delivery_company:"delivery_company",
 		driver_deep_link:"String",
 		driver_qr_image_link:"String",
 		id:"Int",
@@ -83120,6 +85910,10 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_order_public_aggregate:"delivery_order_public_aggregate",
 		delivery_order_public_stream:"delivery_order_public",
 		delivery_order_stream:"delivery_order",
+		direct_chat:"direct_chat",
+		direct_chat_aggregate:"direct_chat_aggregate",
+		direct_chat_by_pk:"direct_chat",
+		direct_chat_stream:"direct_chat",
 		language:"language",
 		language_aggregate:"language_aggregate",
 		language_by_pk:"language",
@@ -83201,6 +85995,10 @@ export const ReturnTypes: Record<string,any> = {
 		review_aggregate:"review_aggregate",
 		review_by_pk:"review",
 		review_stream:"review",
+		service_provider_customer_chat:"service_provider_customer_chat",
+		service_provider_customer_chat_aggregate:"service_provider_customer_chat_aggregate",
+		service_provider_customer_chat_by_pk:"service_provider_customer_chat",
+		service_provider_customer_chat_stream:"service_provider_customer_chat",
 		service_provider_delivery_partner:"service_provider_delivery_partner",
 		service_provider_delivery_partner_aggregate:"service_provider_delivery_partner_aggregate",
 		service_provider_delivery_partner_by_pk:"service_provider_delivery_partner",
