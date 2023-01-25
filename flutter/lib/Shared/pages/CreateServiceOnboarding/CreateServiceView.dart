@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCompaniesList.dart';
+import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCost.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
@@ -58,7 +61,17 @@ class _CreateServiceViewState extends State<CreateServiceView> {
                 ),
                 ServiceDeliveryTypePicker(
                   viewController: viewController,
-                )
+                ),
+                Obx(() {
+                  if (viewController.serviceInput.value.deliveryType ==
+                      ServiceDeliveryType.Self_delivery) {
+                    return CreateServiceDeliveryCost(
+                        viewController: viewController);
+                  } else
+                    return CreateServiceDeliveryCompaniesList(
+                      viewController: viewController,
+                    );
+                })
               ],
             ),
           ),

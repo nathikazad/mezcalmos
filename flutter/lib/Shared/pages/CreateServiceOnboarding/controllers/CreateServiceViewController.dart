@@ -7,10 +7,13 @@ import 'package:get/state_manager.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -19,10 +22,18 @@ class CreateServiceViewController {
   // instances //
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   PageController pageController = PageController(initialPage: 0);
+  // text inputs //
   TextEditingController serviceName = TextEditingController();
-  // obs
+  TextEditingController freeKmRange = TextEditingController();
+  TextEditingController minCost = TextEditingController();
+  TextEditingController costPerKm = TextEditingController();
+  TextEditingController distancePreview = TextEditingController();
 
+  // obs //
+  RxnNum previewCost = RxnNum();
+  Rxn<DeliveryCost> deliveryCost = Rxn();
   RxInt currentPage = RxInt(0);
+  RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   Rx<ServiceInput> serviceInput = Rx(ServiceInput());
 
   // info inputs //
@@ -52,6 +63,14 @@ class CreateServiceViewController {
   // methods //
   void init({required ServiceProviderType serviceProviderType}) {
     serviceType = serviceProviderType;
+  }
+
+  Future<void> getDeliveryCompanies() async {
+    deliveryCompanies.clear();
+    final DeliveryCompany? data = await get_delivery_company(companyId: 1);
+    if (data != null) {
+      deliveryCompanies.add(data);
+    }
   }
 
   Future<void> _setImage() async {
@@ -140,6 +159,31 @@ class CreateServiceViewController {
     }
   }
 
+  void calculatePreview() {
+    final double dist = double.parse(distancePreview.text);
+    final double kmCost = double.parse(costPerKm.text);
+    final double min = double.parse(costPerKm.text);
+    final double cost = dist * kmCost;
+    previewCost.value = cost > min ? cost : min;
+  }
+
+  bool get canCalculate {
+    return double.tryParse(costPerKm.text) != null &&
+        double.tryParse(minCost.text) != null &&
+        double.tryParse(costPerKm.text) != null;
+  }
+
+  DeliveryCost _constructDeliveryCost() {
+    mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
+    return DeliveryCost(
+        id: null,
+        serviceProviderType: serviceType,
+        serviceProviderId: Random().nextInt(5),
+        minimumCost: double.parse(minCost.text),
+        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
+        costPerKm: double.parse(costPerKm.text));
+  }
+
   void handleInfoPageNext() {
     if (_infoIsValid) {
       serviceInput.value.serviceInfo = ServiceInfo(
@@ -165,5 +209,14 @@ class CreateServiceViewController {
   bool get _infoIsValid =>
       serviceName.text.length > 3 && newLocation.value != null;
 
-  _createService() async {}
+  Future<void> _createService() async {
+    if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
+      serviceInput.value.deliveryPartnerId = null;
+      serviceInput.value.selfDeliveryCost = _constructDeliveryCost();
+    } else {
+      serviceInput.value.selfDeliveryCost = null;
+    }
+
+    mezDbgPrint(serviceInput.value.toString());
+  }
 }
