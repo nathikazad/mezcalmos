@@ -5036,13 +5036,6 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'order_time'),
             alias: null,
             arguments: [],
@@ -5293,7 +5286,6 @@ class Query$get_customer_orders$restaurant_order {
     this.delivery_id,
     required this.status,
     this.review_id,
-    required this.order_type,
     required this.order_time,
     this.firebase_id,
     required this.customer_app_type,
@@ -5319,7 +5311,6 @@ class Query$get_customer_orders$restaurant_order {
     final l$delivery_id = json['delivery_id'];
     final l$status = json['status'];
     final l$review_id = json['review_id'];
-    final l$order_type = json['order_type'];
     final l$order_time = json['order_time'];
     final l$firebase_id = json['firebase_id'];
     final l$customer_app_type = json['customer_app_type'];
@@ -5349,7 +5340,6 @@ class Query$get_customer_orders$restaurant_order {
       delivery_id: (l$delivery_id as int?),
       status: (l$status as String),
       review_id: (l$review_id as int?),
-      order_type: (l$order_type as String),
       order_time: (l$order_time as String),
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
@@ -5388,8 +5378,6 @@ class Query$get_customer_orders$restaurant_order {
   final String status;
 
   final int? review_id;
-
-  final String order_type;
 
   final String order_time;
 
@@ -5436,8 +5424,6 @@ class Query$get_customer_orders$restaurant_order {
     _resultData['status'] = l$status;
     final l$review_id = review_id;
     _resultData['review_id'] = l$review_id;
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
     final l$order_time = order_time;
     _resultData['order_time'] = l$order_time;
     final l$firebase_id = firebase_id;
@@ -5473,7 +5459,6 @@ class Query$get_customer_orders$restaurant_order {
     final l$delivery_id = delivery_id;
     final l$status = status;
     final l$review_id = review_id;
-    final l$order_type = order_type;
     final l$order_time = order_time;
     final l$firebase_id = firebase_id;
     final l$customer_app_type = customer_app_type;
@@ -5496,7 +5481,6 @@ class Query$get_customer_orders$restaurant_order {
       l$delivery_id,
       l$status,
       l$review_id,
-      l$order_type,
       l$order_time,
       l$firebase_id,
       l$customer_app_type,
@@ -5585,11 +5569,6 @@ class Query$get_customer_orders$restaurant_order {
     if (l$review_id != lOther$review_id) {
       return false;
     }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
-      return false;
-    }
     final l$order_time = order_time;
     final lOther$order_time = other.order_time;
     if (l$order_time != lOther$order_time) {
@@ -5671,7 +5650,6 @@ abstract class CopyWith$Query$get_customer_orders$restaurant_order<TRes> {
     int? delivery_id,
     String? status,
     int? review_id,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,
@@ -5720,7 +5698,6 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
     Object? delivery_id = _undefined,
     Object? status = _undefined,
     Object? review_id = _undefined,
-    Object? order_type = _undefined,
     Object? order_time = _undefined,
     Object? firebase_id = _undefined,
     Object? customer_app_type = _undefined,
@@ -5766,9 +5743,6 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order<TRes>
             : (status as String),
         review_id:
             review_id == _undefined ? _instance.review_id : (review_id as int?),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
         order_time: order_time == _undefined || order_time == null
             ? _instance.order_time
             : (order_time as String),
@@ -5842,7 +5816,6 @@ class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order<TRes>
     int? delivery_id,
     String? status,
     int? review_id,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,

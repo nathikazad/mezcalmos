@@ -34,6 +34,22 @@ class ServiceInput {
     );
   }
 
+  bool get isSelfDelivery {
+    return deliveryType == ServiceDeliveryType.Self_delivery;
+  }
+
+  bool get isValid {
+    if (deliveryType == ServiceDeliveryType.Delivery_Partner) {
+      return serviceInfo != null &&
+          schedule != null &&
+          deliveryPartnerId != null;
+    } else {
+      return serviceInfo != null &&
+          schedule != null &&
+          selfDeliveryCost != null;
+    }
+  }
+
   @override
   String toString() {
     return 'ServiceInput(serviceInfo: $serviceInfo, schedule: $schedule, deliveryType: $deliveryType, deliveryPartnerId: $deliveryPartnerId, selfDeliveryCost: $selfDeliveryCost)';

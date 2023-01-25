@@ -801,13 +801,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'order_time'),
             alias: null,
             arguments: [],
@@ -1193,7 +1186,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     required this.status,
     this.review_id,
     this.review,
-    required this.order_type,
     required this.order_time,
     this.firebase_id,
     required this.customer_app_type,
@@ -1225,7 +1217,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$status = json['status'];
     final l$review_id = json['review_id'];
     final l$review = json['review'];
-    final l$order_type = json['order_type'];
     final l$order_time = json['order_time'];
     final l$firebase_id = json['firebase_id'];
     final l$customer_app_type = json['customer_app_type'];
@@ -1265,7 +1256,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
           ? null
           : Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$review
               .fromJson((l$review as Map<String, dynamic>)),
-      order_type: (l$order_type as String),
       order_time: (l$order_time as String),
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
@@ -1320,8 +1310,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$review?
       review;
-
-  final String order_type;
 
   final String order_time;
 
@@ -1383,8 +1371,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['review_id'] = l$review_id;
     final l$review = review;
     _resultData['review'] = l$review?.toJson();
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
     final l$order_time = order_time;
     _resultData['order_time'] = l$order_time;
     final l$firebase_id = firebase_id;
@@ -1430,7 +1416,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$status = status;
     final l$review_id = review_id;
     final l$review = review;
-    final l$order_type = order_type;
     final l$order_time = order_time;
     final l$firebase_id = firebase_id;
     final l$customer_app_type = customer_app_type;
@@ -1459,7 +1444,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$status,
       l$review_id,
       l$review,
-      l$order_type,
       l$order_time,
       l$firebase_id,
       l$customer_app_type,
@@ -1571,11 +1555,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     if (l$review != lOther$review) {
       return false;
     }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
-      return false;
-    }
     final l$order_time = order_time;
     final lOther$order_time = other.order_time;
     if (l$order_time != lOther$order_time) {
@@ -1680,7 +1659,6 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? review_id,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$review?
         review,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,
@@ -1747,7 +1725,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? status = _undefined,
     Object? review_id = _undefined,
     Object? review = _undefined,
-    Object? order_type = _undefined,
     Object? order_time = _undefined,
     Object? firebase_id = _undefined,
     Object? customer_app_type = _undefined,
@@ -1808,9 +1785,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
             ? _instance.review
             : (review
                 as Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$review?),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
         order_time: order_time == _undefined || order_time == null
             ? _instance.order_time
             : (order_time as String),
@@ -1921,7 +1895,6 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? review_id,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$review?
         review,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,
@@ -6190,13 +6163,6 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'order_time'),
             alias: null,
             arguments: [],
@@ -6619,7 +6585,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     required this.status,
     this.review_id,
     this.review,
-    required this.order_type,
     required this.order_time,
     this.firebase_id,
     required this.customer_app_type,
@@ -6651,7 +6616,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$status = json['status'];
     final l$review_id = json['review_id'];
     final l$review = json['review'];
-    final l$order_type = json['order_type'];
     final l$order_time = json['order_time'];
     final l$firebase_id = json['firebase_id'];
     final l$customer_app_type = json['customer_app_type'];
@@ -6691,7 +6655,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
           ? null
           : Query$get_restaurant_order_by_id$restaurant_order_by_pk$review
               .fromJson((l$review as Map<String, dynamic>)),
-      order_type: (l$order_type as String),
       order_time: (l$order_time as String),
       firebase_id: (l$firebase_id as String?),
       customer_app_type: (l$customer_app_type as String),
@@ -6743,8 +6706,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
   final int? review_id;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$review? review;
-
-  final String order_type;
 
   final String order_time;
 
@@ -6806,8 +6767,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['review_id'] = l$review_id;
     final l$review = review;
     _resultData['review'] = l$review?.toJson();
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
     final l$order_time = order_time;
     _resultData['order_time'] = l$order_time;
     final l$firebase_id = firebase_id;
@@ -6853,7 +6812,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     final l$status = status;
     final l$review_id = review_id;
     final l$review = review;
-    final l$order_type = order_type;
     final l$order_time = order_time;
     final l$firebase_id = firebase_id;
     final l$customer_app_type = customer_app_type;
@@ -6882,7 +6840,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
       l$status,
       l$review_id,
       l$review,
-      l$order_type,
       l$order_time,
       l$firebase_id,
       l$customer_app_type,
@@ -6993,11 +6950,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk {
     if (l$review != lOther$review) {
       return false;
     }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
-      return false;
-    }
     final l$order_time = order_time;
     final lOther$order_time = other.order_time;
     if (l$order_time != lOther$order_time) {
@@ -7097,7 +7049,6 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     String? status,
     int? review_id,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$review? review,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,
@@ -7159,7 +7110,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     Object? status = _undefined,
     Object? review_id = _undefined,
     Object? review = _undefined,
-    Object? order_type = _undefined,
     Object? order_time = _undefined,
     Object? firebase_id = _undefined,
     Object? customer_app_type = _undefined,
@@ -7219,9 +7169,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
             ? _instance.review
             : (review
                 as Query$get_restaurant_order_by_id$restaurant_order_by_pk$review?),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
         order_time: order_time == _undefined || order_time == null
             ? _instance.order_time
             : (order_time as String),
@@ -7329,7 +7276,6 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk<
     String? status,
     int? review_id,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$review? review,
-    String? order_type,
     String? order_time,
     String? firebase_id,
     String? customer_app_type,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCompaniesList.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCost.dart';
@@ -39,7 +40,11 @@ class _CreateServiceViewState extends State<CreateServiceView> {
         () => MezButton(
           label: viewController.getSaveButtonTitle(),
           borderRadius: 0,
-          onClick: viewController.handleNext,
+          onClick: () async {
+            if (viewController.isFormValid()) {
+              await _handleButton();
+            }
+          },
         ),
       ),
       body: PageView(
@@ -78,5 +83,24 @@ class _CreateServiceViewState extends State<CreateServiceView> {
         ],
       ),
     );
+  }
+
+  Future<void> _handleButton() async {
+    if (viewController.currentPage.value == 2) {
+      final ServerResponse? res = await viewController.handleNext();
+      if (res?.success == true) {
+        Get.snackbar("Created", "Created}",
+            backgroundColor: Colors.black,
+            colorText: Colors.white,
+            shouldIconPulse: false,
+            icon: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ));
+      } else {
+        // handle error
+      }
+    } else
+      await viewController.handleNext();
   }
 }

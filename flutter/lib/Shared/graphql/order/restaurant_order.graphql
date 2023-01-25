@@ -73,7 +73,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    order_type
+    
     order_time
     firebase_id
     customer_app_type
@@ -190,7 +190,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    order_type
+    
     order_time
     firebase_id
     customer_app_type

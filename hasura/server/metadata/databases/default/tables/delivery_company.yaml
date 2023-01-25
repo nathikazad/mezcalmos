@@ -28,9 +28,12 @@ select_permissions:
     permission:
       columns:
         - approved
+        - creation_time
+        - delivery_radius
         - description_id
         - id
         - image
+        - location
         - name
         - open_status
         - service_provider_type

@@ -20,46 +20,49 @@ class _CreateServiceDeliveryCostState extends State<CreateServiceDeliveryCost> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _costComponent(
-                      controller: widget.viewController.freeKmRange,
-                      suffixTitle: 'Km',
-                      title: 'Free Delivery range'),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Within this distance, the customer won’t be charged for the delivery.",
-                    style: Get.textTheme.bodyText2,
-                  ),
-                  Divider(
-                    height: 35,
-                  ),
-                ],
-              ),
-              _costComponent(
-                  controller: widget.viewController.minCost,
-                  suffixTitle: '\$',
-                  title: 'Minimum cost'),
-              const SizedBox(
-                height: 15,
-              ),
-              _costComponent(
-                  controller: widget.viewController.costPerKm,
-                  suffixTitle: '\$/Km',
-                  title: 'Cost per km'),
-            ],
+          margin: const EdgeInsets.symmetric(vertical: 20),
+          child: Form(
+            key: widget.viewController.costFormKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _costComponent(
+                        controller: widget.viewController.freeKmRange,
+                        suffixTitle: 'Km',
+                        title: 'Free Delivery range'),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "Within this distance, the customer won’t be charged for the delivery.",
+                      style: Get.textTheme.bodyText2,
+                    ),
+                    Divider(
+                      height: 35,
+                    ),
+                  ],
+                ),
+                _costComponent(
+                    controller: widget.viewController.minCost,
+                    suffixTitle: '\$',
+                    title: 'Minimum cost'),
+                const SizedBox(
+                  height: 15,
+                ),
+                _costComponent(
+                    controller: widget.viewController.costPerKm,
+                    suffixTitle: '\$/Km',
+                    title: 'Cost per km'),
+              ],
+            ),
           ),
         ),
         _previewWidget(),
         SizedBox(
-          height: 20,
+          height: 70,
         ),
       ],
     );
@@ -168,6 +171,13 @@ class _CreateServiceDeliveryCostState extends State<CreateServiceDeliveryCost> {
             flex: 1,
             child: TextFormField(
               controller: controller,
+
+              validator: (String? value) {
+                if (value == null || double.tryParse(value) == null) {
+                  return "Please enter a vaild number";
+                }
+                return null;
+              },
               style: Get.textTheme.bodyText1,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),

@@ -3,11 +3,14 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryCompany extends Service {
-  DeliveryCompany({
-    required super.info,
-    required super.state,
-    required super.primaryLanguage,
-  });
+  DeliveryCompany(
+      {required super.info,
+      required super.state,
+      required super.primaryLanguage,
+      required this.deliveryRaidus,
+      required this.creationTime});
+  int deliveryRaidus;
+  DateTime creationTime;
 
   DeliveryCompany copyWith({
     ServiceInfo? userInfo,
@@ -17,6 +20,8 @@ class DeliveryCompany extends Service {
     return DeliveryCompany(
         info: userInfo ?? info,
         state: state ?? this.state,
+        deliveryRaidus: deliveryRaidus,
+        creationTime: creationTime,
         primaryLanguage: primaryLanguage ?? this.primaryLanguage);
   }
 }

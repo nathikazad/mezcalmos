@@ -112,7 +112,7 @@ query get_customer_orders($customer_id : Int!) {
     delivery_id,
     status,
     review_id,
-    order_type,
+   
     order_time,
     firebase_id,
     customer_app_type,

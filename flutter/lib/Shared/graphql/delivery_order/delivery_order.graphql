@@ -42,7 +42,7 @@ query get_driver_order($orderId: Int!) {
     payment_type
     pickup_address
     pickup_gps
-    order_type
+   
     restaurant {
       id
       firebase_id
@@ -119,7 +119,7 @@ subscription listen_on_driver_order($orderId: Int!) {
       name
       service_provider_type
     }
-    order_type
+   
 
     dropoff_address
     dropoff_gps

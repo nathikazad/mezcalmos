@@ -2,8 +2,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -16,12 +17,14 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class CreateServiceViewController {
   // instances //
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   PageController pageController = PageController(initialPage: 0);
+  GlobalKey<FormState> costFormKey = GlobalKey();
   // text inputs //
   TextEditingController serviceName = TextEditingController();
   TextEditingController freeKmRange = TextEditingController();
@@ -67,10 +70,9 @@ class CreateServiceViewController {
 
   Future<void> getDeliveryCompanies() async {
     deliveryCompanies.clear();
-    final DeliveryCompany? data = await get_delivery_company(companyId: 1);
-    if (data != null) {
-      deliveryCompanies.add(data);
-    }
+    final List<DeliveryCompany> data = await get_nearby_companies(
+        location: serviceInput.value.serviceInfo!.location);
+    deliveryCompanies.addAll(data);
   }
 
   Future<void> _setImage() async {
@@ -145,7 +147,7 @@ class CreateServiceViewController {
     }
   }
 
-  Future<void> handleNext() async {
+  Future<ServerResponse?> handleNext() async {
     switch (currentPage.value) {
       case 0:
         handleInfoPageNext();
@@ -155,8 +157,9 @@ class CreateServiceViewController {
         break;
 
       default:
-        await _createService();
+        return _createService();
     }
+    return null;
   }
 
   void calculatePreview() {
@@ -191,11 +194,11 @@ class CreateServiceViewController {
           hasuraId: Random().nextInt(5),
           image: newImageUrl.value,
           name: serviceName.text);
+      pageController
+          .animateToPage(currentPage.value + 1,
+              duration: Duration(milliseconds: 500), curve: Curves.easeIn)
+          .whenComplete(() => currentPage.value = pageController.page!.toInt());
     }
-    pageController
-        .animateToPage(currentPage.value + 1,
-            duration: Duration(milliseconds: 500), curve: Curves.easeIn)
-        .whenComplete(() => currentPage.value = pageController.page!.toInt());
   }
 
   void handleScheduleNext() {
@@ -206,17 +209,81 @@ class CreateServiceViewController {
         .whenComplete(() => currentPage.value = pageController.page!.toInt());
   }
 
-  bool get _infoIsValid =>
-      serviceName.text.length > 3 && newLocation.value != null;
+  bool isFormValid() {
+    switch (currentPage.value) {
+      case 0:
+        return _infoIsValid;
+      case 1:
+        return true;
+      case 2:
+        if (!serviceInput.value.isSelfDelivery) {
+          if (serviceInput.value.deliveryPartnerId == null) {
+            Get.snackbar(
+                "Select a company", "you need to select a delivery company",
+                backgroundColor: Colors.black, colorText: Colors.white);
+          }
+          return serviceInput.value.isValid;
+        } else {
+          return _isDeliveryCostValid;
+        }
 
-  Future<void> _createService() async {
+      default:
+        return false;
+    }
+  }
+
+  bool get _infoIsValid =>
+      serviceName.text.length > 3 &&
+      newLocation.value != null &&
+      newImageUrl.value != null;
+  bool get _isDeliveryCostValid {
+    return costFormKey.currentState?.validate() == true;
+  }
+
+  Future<ServerResponse> _createService() async {
     if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
       serviceInput.value.deliveryPartnerId = null;
       serviceInput.value.selfDeliveryCost = _constructDeliveryCost();
     } else {
       serviceInput.value.selfDeliveryCost = null;
     }
-
     mezDbgPrint(serviceInput.value.toString());
+    final ServerResponse res = await _pushServiceToDb();
+    return res;
+  }
+
+  Future<ServerResponse> _pushServiceToDb() async {
+    mezDbgPrint(
+        "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
+
+    final HttpsCallable cloudFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant2-createRestaurant');
+    try {
+      final HttpsCallableResult response =
+          await cloudFunction.call(_constructServiceDetails());
+      mezDbgPrint("Response : ${response.data}");
+
+      return ServerResponse.fromJson(response.data);
+    } catch (e, stk) {
+      mezDbgPrint("Errrooooooooor =======> $e,$stk");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+
+  Map<String, Object?> _constructServiceDetails() {
+    return {
+      "name": serviceInput.value.serviceInfo!.name,
+      "image": serviceInput.value.serviceInfo!.image,
+      "location":
+          serviceInput.value.serviceInfo!.location.toFirebaseFormattedJson(),
+      "schedule": serviceInput.value.schedule!.toFirebaseFormattedJson(),
+      "delivery": true,
+      "customerPickup": false,
+      "selfDelivery":
+          serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery,
+      "deliveryPartnerId": serviceInput.value.deliveryPartnerId,
+      "deliveryDetails": serviceInput.value.selfDeliveryCost?.toJson(),
+    };
   }
 }

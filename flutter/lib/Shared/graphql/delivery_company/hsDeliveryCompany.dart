@@ -26,6 +26,8 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
+      deliveryRaidus: data.delivery_radius,
+      creationTime: DateTime.parse(data.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
         image: data.image,
@@ -33,8 +35,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
             ? toLanguageMap(translations: data.description!.translations)
             : null,
         descriptionId: data.description_id,
-        location:
-            Location.fromLocationData(Location.buildLocationData(33.2, 44.5)),
+        location: Location.fromHasura(data.location, ""),
         name: data.name,
       ),
       state: ServiceState(
@@ -63,6 +64,8 @@ Future<DeliveryCompany?> update_delivery_company(
   final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
       res.parsedData!.update_delivery_company_by_pk!;
   return DeliveryCompany(
+      deliveryRaidus: data.delivery_radius,
+      creationTime: DateTime.parse(data.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
         image: data.image,
@@ -70,11 +73,48 @@ Future<DeliveryCompany?> update_delivery_company(
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
             : null,
-        location:
-            Location.fromLocationData(Location.buildLocationData(33.2, 44.5)),
+        location: Location.fromHasura(data.location, ""),
         name: data.name,
       ),
       state: ServiceState(
           data.open_status.toString().toServiceStatus(), data.approved),
       primaryLanguage: LanguageType.EN);
+}
+
+Future<List<DeliveryCompany>> get_nearby_companies(
+    {required Location location}) async {
+  final QueryResult<Query$getNearByCompanies> res =
+      await _hasuraDb.graphQLClient.query$getNearByCompanies(
+    Options$Query$getNearByCompanies(
+      variables: Variables$Query$getNearByCompanies(
+          args: Input$delivery_fetch_delivery_company_args(
+              location: location.toGeography(), radius: "100000")),
+    ),
+  );
+  if (res.parsedData?.delivery_fetch_delivery_company == null) {
+    throwError(res.exception);
+  }
+  List<DeliveryCompany> returnedList = [];
+  final List<Query$getNearByCompanies$delivery_fetch_delivery_company>
+      dataList = res.parsedData!.delivery_fetch_delivery_company;
+  returnedList = dataList
+      .map((Query$getNearByCompanies$delivery_fetch_delivery_company data) {
+    return DeliveryCompany(
+        deliveryRaidus: data.delivery_radius,
+        creationTime: DateTime.parse(data.creation_time),
+        info: ServiceInfo(
+          hasuraId: data.id,
+          image: data.image,
+          description: (data.description?.translations != null)
+              ? toLanguageMap(translations: data.description!.translations)
+              : null,
+          descriptionId: data.description_id,
+          location: Location.fromHasura(data.location, ""),
+          name: data.name,
+        ),
+        state: ServiceState(
+            data.open_status.toString().toServiceStatus(), data.approved),
+        primaryLanguage: LanguageType.EN);
+  }).toList();
+  return returnedList;
 }
