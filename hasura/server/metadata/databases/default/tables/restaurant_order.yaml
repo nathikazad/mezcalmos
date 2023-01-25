@@ -57,7 +57,7 @@ select_permissions:
         - id
         - notes
         - order_time
-        - order_type
+        - delivery_type
         - payment_type
         - refund_amount
         - restaurant_id
@@ -114,7 +114,8 @@ select_permissions:
         - customer_app_type
         - firebase_id
         - notes
-        - order_type
+        - order_time
+        - delivery_type
         - payment_type
         - to_location_address
         - actual_food_ready_time
@@ -151,7 +152,7 @@ select_permissions:
         - id
         - notes
         - order_time
-        - order_type
+        - delivery_type
         - payment_type
         - refund_amount
         - restaurant_id

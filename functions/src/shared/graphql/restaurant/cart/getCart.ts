@@ -21,6 +21,7 @@ export async function getCart(customerId: number): Promise<Cart> {
                 selected_options: [{} , true],
                 quantity: true,
                 cost_per_one: true,
+                note: true,
                 restaurant_item : {
                     name : {
                         translations :  [{} , {
@@ -52,7 +53,8 @@ export async function getCart(customerId: number): Promise<Cart> {
             quantity: i.quantity,
             itemId: i.restaurant_item_id,
             name : i.restaurant_item.name,
-            image : i.restaurant_item.image
+            image : i.restaurant_item.image,
+            note: i.note
         }
     })
     return {

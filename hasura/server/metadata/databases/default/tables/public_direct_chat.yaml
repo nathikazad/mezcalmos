@@ -1,0 +1,31 @@
+table:
+  name: direct_chat
+  schema: public
+object_relationships:
+  - name: chat
+    using:
+      manual_configuration:
+        column_mapping:
+          chat_id: id
+        insertion_order: null
+        remote_table:
+          name: chat
+          schema: public
+  - name: user1
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id1: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public
+  - name: user2
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id2: id
+        insertion_order: null
+        remote_table:
+          name: user
+          schema: public

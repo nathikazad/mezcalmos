@@ -8,7 +8,7 @@ CREATE TABLE "public"."restaurant_order" ("id" serial NOT NULL, "user_id" intege
 
 CREATE TABLE "public"."restaurant" ("id" serial NOT NULL, "name" text NOT NULL, "image" text NOT NULL, "location_gps" geography NOT NULL, "location_text" text NOT NULL, "description_id" integer, "firebase_id" text, "language_id" integer NOT NULL, "schedule_id" integer NOT NULL, "payment_info_id" integer, PRIMARY KEY ("id") );
 
-CREATE TABLE "topology"."language" ("id" text NOT NULL, PRIMARY KEY ("id") );
+CREATE TABLE "public"."language" ("id" text NOT NULL, PRIMARY KEY ("id") );
 
 CREATE TABLE "public"."translation" ("id" serial NOT NULL, "language_id" integer NOT NULL, "value" text NOT NULL, "shared" boolean NOT NULL DEFAULT false, "group_id" integer NOT NULL, PRIMARY KEY ("id") , UNIQUE ("group_id", "language_id"));
 
@@ -18,7 +18,7 @@ alter table "public"."translation" drop column "value" cascade;
 
 alter table "public"."translation" drop column "group_id" cascade;
 
-CREATE TABLE "public"."translation_value" ("translation_id" integer NOT NULL, "language_id" text NOT NULL, "value" text NOT NULL, PRIMARY KEY ("translation_id","language_id") , FOREIGN KEY ("language_id") REFERENCES "topology"."language"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("translation_id") REFERENCES "public"."translation"("id") ON UPDATE restrict ON DELETE restrict);
+CREATE TABLE "public"."translation_value" ("translation_id" integer NOT NULL, "language_id" text NOT NULL, "value" text NOT NULL, PRIMARY KEY ("translation_id","language_id") , FOREIGN KEY ("language_id") REFERENCES "public"."language"("id") ON UPDATE restrict ON DELETE restrict, FOREIGN KEY ("translation_id") REFERENCES "public"."translation"("id") ON UPDATE restrict ON DELETE restrict);
 
 alter table "public"."restaurant"
   add constraint "restaurant_description_id_fkey"
@@ -226,7 +226,7 @@ alter table "public"."restaurant_order_item"
   references "public"."review"
   ("id") on update restrict on delete restrict;
 
-CREATE TABLE "public"."user" ("id" serial NOT NULL, "firebase_id" text NOT NULL, "name" text, "image" text, "language_id" text NOT NULL, "deleted" boolean NOT NULL DEFAULT false, PRIMARY KEY ("id") , FOREIGN KEY ("language_id") REFERENCES "topology"."language"("id") ON UPDATE restrict ON DELETE restrict);
+CREATE TABLE "public"."user" ("id" serial NOT NULL, "firebase_id" text NOT NULL, "name" text, "image" text, "language_id" text NOT NULL, "deleted" boolean NOT NULL DEFAULT false, PRIMARY KEY ("id") , FOREIGN KEY ("language_id") REFERENCES "public"."language"("id") ON UPDATE restrict ON DELETE restrict);
 
 alter table "public"."notification_info"
   add constraint "notification_info_user_id_fkey"
@@ -237,14 +237,14 @@ alter table "public"."notification_info"
 CREATE  INDEX "notification_info_user_id" on
   "public"."notification_info" using btree ("user_id", "app_type");
 
-CREATE TABLE "topology"."app_type" ("id" text NOT NULL, PRIMARY KEY ("id") );
+CREATE TABLE "public"."app_type" ("id" text NOT NULL, PRIMARY KEY ("id") );
 
 alter table "public"."notification_info" rename column "app_type" to "app_type_id";
 
 alter table "public"."notification_info"
   add constraint "notification_info_app_type_id_fkey"
   foreign key ("app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update restrict on delete restrict;
 
 BEGIN TRANSACTION;
@@ -386,7 +386,7 @@ alter table "public"."delivery" rename column "deliverer_app_type" to "deliverer
 alter table "public"."delivery"
   add constraint "delivery_deliverer_app_type_id_fkey"
   foreign key ("deliverer_app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update restrict on delete restrict;
 
 CREATE  INDEX "notification_info_app_type" on
@@ -651,7 +651,7 @@ alter table "public"."chat_participant" add column "app_type_id" text
 alter table "public"."chat_participant"
   add constraint "chat_participant_app_type_id_fkey"
   foreign key ("app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update restrict on delete restrict;
 
 comment on column "public"."delivery"."status" is E'orderReceived';
@@ -830,7 +830,7 @@ alter table "public"."chat_participant" drop constraint "chat_participants_chat_
 alter table "public"."notification_info" drop constraint "notification_info_app_type_id_fkey",
   add constraint "notification_info_app_type_id_fkey"
   foreign key ("app_type_id")
-  references "topology"."app_type"
+  references "public"."app_type"
   ("id") on update cascade on delete restrict;
 
 alter table "public"."notification_info" add constraint "notification_info_user_id_app_type_id_key" unique ("user_id", "app_type_id");
@@ -913,7 +913,7 @@ alter table "public"."restaurant" add column "service_provider_type" text
 
 comment on column "public"."delivery"."deliverer_app_type_id" is E'restaurant_operator, deliverer';
 
-comment on column "topology"."app_type"."id" is E'customer, delivery, restaurant, admin';
+comment on column "public"."app_type"."id" is E'customer, delivery, restaurant, admin';
 
 comment on column "public"."delivery"."deliverer_app_type_id" is E'restaurant, delivery';
 

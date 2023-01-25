@@ -278,34 +278,40 @@ async function notifyOtherMessageParticipants(notificationForQueue: chat.Message
 
   // let senderInfo: chat.Participant = chatData.participants[notificationForQueue.participantType]![notificationForQueue.userId]
   // delete chatData.participants[notificationForQueue.participantType];
-
-  chatParticipants.forEach((p) => {
-    if(p.participantType != sender?.participantType) {
-      let notification: Notification = {
-        foreground: <NewMessageNotification>{
-          chatId: notificationForQueue.chatId,
-          sender,
-          message: notificationForQueue.message,
-          time: notificationForQueue.timestamp,
-          notificationType: NotificationType.NewMessage,
-          notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-        },
-        background: {
-          en: {
-            title: `New message from ${sender!.name}`,
-            body: notificationForQueue.message
-          },
-          es: {
-            title: `Nueva mensaje de ${sender!.name}`,
-            body: notificationForQueue.message
-          }
-        },
-        linkUrl: chatUrl(notificationForQueue.chatId)
+  let notification: Notification = {
+    foreground: <NewMessageNotification>{
+      chatId: notificationForQueue.chatId,
+      sender,
+      message: notificationForQueue.message,
+      time: notificationForQueue.timestamp,
+      notificationType: NotificationType.NewMessage,
+      notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+    },
+    background: {
+      en: {
+        title: `New message from ${sender!.name}`,
+        body: notificationForQueue.message
+      },
+      es: {
+        title: `Nueva mensaje de ${sender!.name}`,
+        body: notificationForQueue.message
       }
-      notifyUser.pushNotification(p.firebaseId, notification, p.notificationInfo, p.participantType, p.language);
-    }
-  })
-  
+    },
+    linkUrl: chatUrl(notificationForQueue.chatId)
+  }
+  if(notificationForQueue.chatType == chat.ChatType.Direct) {
+    chatParticipants.forEach((p) => {
+      if(p.id != notificationForQueue.userId) {
+        notifyUser.pushNotification(p.firebaseId, notification, p.notificationInfo, p.participantType, p.language);
+      }
+    })
+  } else {
+    chatParticipants.forEach((p) => {
+      if(p.participantType != sender?.participantType) {
+        notifyUser.pushNotification(p.firebaseId, notification, p.notificationInfo, p.participantType, p.language);
+      }
+    })
+  }
 
   // for (let participantType in chatData.participants) {
   //   if (participantType in chat.nonNotifiableParticipants)

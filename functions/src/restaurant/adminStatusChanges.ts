@@ -1,5 +1,5 @@
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { orderInProcess, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { DeliveryType, orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { passChecksForRestaurant } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -38,6 +38,10 @@ export async function readyForPickupOrder(userId: number, data: any) {
   let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
   return response
 }
+export async function orderPickedUpByCustomer(userId: number, data: any) {
+  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.Delivered, userId)
+  return response
+}
 
 function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
@@ -47,20 +51,10 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
   try {
     await passChecksForRestaurant(orderId, userId);
 
-    let order = await getRestaurantOrder(orderId);
-    if(!(order.deliveryId)) {
-      throw new HttpsError(
-        "internal",
-        "No delivery id"
-      );
-    }
-    let customerPromise = getCustomer(order.customerId);
-    let deliveryPromise = getDeliveryOrder(order.deliveryId);
-    let response = await Promise.all([customerPromise, deliveryPromise]);
-    let customer: CustomerInfo = response[0];
-    let deliveryOrder: DeliveryOrder = response[1];
+    let order: RestaurantOrder = await getRestaurantOrder(orderId);
+    let customer: CustomerInfo = await getCustomer(order.customerId);
 
-    if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+    if (newStatus == RestaurantOrderStatus.Delivered || newStatus == RestaurantOrderStatus.CancelledByAdmin) {
       if (!orderInProcess(order.status)) {
         throw new HttpsError(
           "internal",
@@ -89,13 +83,6 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
         // TODO: cancel or capture shipping payment depending on status
       }
       order.refundAmount = order.totalCost;
-      deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-      updateDeliveryOrderStatus(deliveryOrder);
-    } 
- 
-    if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
-      deliveryOrder.status = DeliveryOrderStatus.PackageReady;
-      updateDeliveryOrderStatus(deliveryOrder);
     }
       
     let notification: Notification = {
@@ -118,17 +105,34 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       customer.notificationInfo,
       ParticipantType.Customer, 
       customer.language
-    ).then(() => {
+    )
+
+    if(order.deliveryType == DeliveryType.Delivery) {
+      if(!(order.deliveryId)) {
+        throw new HttpsError(
+          "internal",
+          "No delivery id"
+        );
+      }
+      let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
+      if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
+        deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+        updateDeliveryOrderStatus(deliveryOrder);
+      }
+      if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
+        deliveryOrder.status = DeliveryOrderStatus.PackageReady;
+        updateDeliveryOrderStatus(deliveryOrder);
+      }
       if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
         notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-        pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId, 
+        pushNotification(deliveryOrder.deliveryDriver.user.firebaseId, 
           notification, 
           deliveryOrder.deliveryDriver.notificationInfo,
           ParticipantType.DeliveryDriver,
           deliveryOrder.deliveryDriver.user?.language,
         );
       }
-    });
+    }
 
     return { status: ServerResponseStatus.Success }
   } catch(error) {

@@ -1,122 +1,101 @@
 import { getHasura } from "../../../../utilities/hasura";
+import * as fs from 'fs';
 
-export async function insertRestaurantOrders(data: any) {
+interface Restaurant {
+    items: Record<string, number>; //en name to hasura id
+    hsId: number
+}
+export async function insertRestaurantOrders(data: any, response: any) {
     let chain = getHasura();
+    // let restaurantFbIds: number[] = [];
+    // data.forEach((o: any) => {
+    //     restaurantFbIds.push(o.restaurantFirebaseId)
+    // })
+    // let response = await chain.query({
+    //     restaurant_restaurant: [{}, {
+    //         id: true,
+    //         firebase_id: true,
+    //         items: [{}, {
+    //             id: true,
+    //             name: {
+    //                 translations: [{
+    //                     where: {
+    //                         language_id: {
+    //                             _eq: Language.EN
+    //                         }
+    //                     }
+    //                 }, {
+    //                     value: true
+    //                 }]
+    //             }
+    //         }]
+    //     }],
+    //     user: [{}, {
+    //         id: true,
+    //         firebase_id: true,
+    //     }],
+    //     customer_customer: [{}, {
+    //         user_id: true,
+    //         user: {
+    //             firebase_id: true
+    //         }
+    //     }]
+    // });
+    let restaurantFbIdToObject: Record<string, Restaurant> = {};
 
-    let orders = data.map(async (o: any) => {
-        let response = await chain.query({
-            customer_customer: [{
-                where: {
-                    user: {
-                        firebase_id: {
-                            _eq: o.customerFirebaseId
-                        }
-                    }
-                }
-            }, {
-                user_id: true
-            }],
-            restaurant_restaurant: [{
-                where: {
-                    firebase_id: {
-                        _eq: o.restaurantFirebaseId
-                    }
-                }
-            }, {
-                id: true,
-            }]
-        });
-        if(!(response.restaurant_restaurant[0]))
-            return {
-                restaurant_id: undefined
-            }
-        let items = o.items.map(async (i: any) => {
-            let response1 = await chain.query({
-                restaurant_item: [{
-                    where: {
-                        restaurant_id: {
-                            _eq: response.restaurant_restaurant[0].id
-                        },
-                        name: {
-                            translations: {
-                                value: {
-                                    _eq: i.itemName
-                                }
-                            }
-                        }
-                    }
-                }, {
-                    id: true,
-                }]
-            })
-            if(!(response1.restaurant_item[0]))
-                return {
-                    restaurant_item_id: undefined
-                }
-            return {
-                restaurant_item_id: response1.restaurant_item[0].id,
+    for(let restaurant of response.restaurant_restaurant) {
+        let items: Record<string, number> = {};
+        for(let item of restaurant.items) {
+            items[item.name.translations[0].value] = item.id;
+        }
+        restaurantFbIdToObject[restaurant.firebase_id!] = {
+            hsId: restaurant.id,
+            items
+        }
+    }
+    let userFbIdToHsId: Record<string, number> = {};
+    for(let user of response.user) {
+        userFbIdToHsId[user.firebase_id] = user.id
+    }
+    let customerFbIdToHsId: Record<string, number> = {};
+    for(let customer of response.customer_customer) {
+        customerFbIdToHsId[customer.user.firebase_id] = customer.user_id
+    }
+
+    let orders: any[] = [];
+
+    for(let o of data) {
+
+        if(restaurantFbIdToObject[o.restaurantFirebaseId] == null) 
+            continue;
+
+        let orderItems: any[] = [];
+        for(let i of o.items) {
+            if(restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName] == null)
+                continue;
+
+            orderItems.push({
+                restaurant_item_id: restaurantFbIdToObject[o.restaurantFirebaseId].items[i.itemName],
                 in_json: i.inJSON,
                 notes: i.notes,
                 unavailable: i.unavailable,
                 quantity: i.quantity,
                 cost_per_one: i.costPerOne,
-            }
-        })
-        items = await Promise.all(items)
-        items = items.filter((i: any) => i.restaurant_item_id)
-        if(response.customer_customer[0]) {
-            return {
-                customer_id: response.customer_customer[0].user_id,
-                restaurant_id:  response.restaurant_restaurant[0].id,
-                payment_type: o.paymentType,
-                to_location_gps: o.toLocationGps,
-                to_location_address: o.toLocationAddress,
-                estimated_food_ready_time: o.estimatedFoodReadyTime,
-                stripe_payment_id: o.stripePaymentId,
-                status: o.status,
-                order_time: o.orderTime,
-                firebase_id: o.firebaseId,
-                notes: o.notes,
-                delivery_cost: o.deliveryCost,
-                refund_amount:o.refundAmount,
-                items: {
-                    data: items
-                },
-                review: (o.review) ? {
-                    data: {
-                        rating: o.review.rating,
-                        note: o.review.comment,
-                        from_entity_type: "customer",
-                        from_entity_id: response.customer_customer[0].user_id,
-                        to_entity_type: "restaurant",
-                        to_entity_id: response.restaurant_restaurant[0].id,
-                        created_at: o.review.createdAt
-                    }
-                }: undefined
-            }
-        } else {
-            let response1 = await chain.query({
-                user: [{
-                    where: {
-                        firebase_id: {
-                            _eq: o.customerFirebaseId
-                        }
-                    }
-                }, {
-                    id: true
-                }]
             })
-            if(!(response1.user[0])) 
-                return {
-                    restaurant_id: undefined
-                }
-            return {
+        }
+        if(customerFbIdToHsId[o.customerFirebaseId] == null) {
+            if(userFbIdToHsId[o.customerFirebaseId] == null)
+                continue;
+            
+            customerFbIdToHsId[o.customerFirebaseId] = userFbIdToHsId[o.customerFirebaseId]
+            // console.log(customerFbIdToHsId[o.customerFirebaseId])
+            orders.push({
                 customer: {
                     data: {
-                        user_id: response1.user[0].id
+                        user_id: customerFbIdToHsId[o.customerFirebaseId]
                     }
                 },
-                restaurant_id: response.restaurant_restaurant[0].id,
+                restaurant_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
                 payment_type: o.paymentType,
                 to_location_gps: o.toLocationGps,
                 to_location_address: o.toLocationAddress,
@@ -129,27 +108,197 @@ export async function insertRestaurantOrders(data: any) {
                 delivery_cost: o.deliveryCost,
                 refund_amount:o.refundAmount,
                 items: {
-                    data: items
+                    data: orderItems
                 },
                 review: (o.review) ? {
                     data: {
                         rating: o.review.rating,
                         note: o.review.comment,
                         from_entity_type: "customer",
-                        from_entity_id: response1.user[0].id,
+                        from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
                         to_entity_type: "restaurant",
                         to_entity_id: response.restaurant_restaurant[0].id,
                         created_at: o.review.createdAt
                     }
                 }: undefined
-            }
+            })
+        } else {
+            orders.push({
+                customer_id: customerFbIdToHsId[o.customerFirebaseId],
+                restaurant_id: restaurantFbIdToObject[o.restaurantFirebaseId].hsId,
+                payment_type: o.paymentType,
+                to_location_gps: o.toLocationGps,
+                to_location_address: o.toLocationAddress,
+                estimated_food_ready_time: o.estimatedFoodReadyTime,
+                stripe_payment_id: o.stripePaymentId,
+                status: o.status,
+                order_time: o.orderTime,
+                firebase_id: o.firebaseId,
+                notes: o.notes,
+                delivery_cost: o.deliveryCost,
+                refund_amount:o.refundAmount,
+                items: {
+                    data: orderItems
+                },
+                review: (o.review) ? {
+                    data: {
+                        rating: o.review.rating,
+                        note: o.review.comment,
+                        from_entity_type: "customer",
+                        from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
+                        to_entity_type: "restaurant",
+                        to_entity_id: response.restaurant_restaurant[0].id,
+                        created_at: o.review.createdAt
+                    }
+                }: undefined
+            })
         }
-        
-    })
-    orders = await Promise.all(orders)
-    orders = orders.filter((o: any) => o.restaurant_id)
 
-    let response = await chain.mutation({
+    }
+    // let orders = data.map(async (o: any) => {
+        // let response = await chain.query({
+        //     restaurant_restaurant: [{
+        //         where: {
+        //             firebase_id: {
+        //                 _eq: o.restaurantFirebaseId
+        //             }
+        //         }
+        //     }, {
+        //         id: true,
+        //     }]
+        // });
+        // if(!(response.restaurant_restaurant[0]))
+        //     return {
+        //         restaurant_id: undefined
+        //     }
+        // let items = o.items.map(async (i: any) => {
+        //     let response1 = await chain.query({
+        //         restaurant_item: [{
+        //             where: {
+        //                 restaurant_id: {
+        //                     _eq: response.restaurant_restaurant[0].id
+        //                 },
+        //                 name: {
+        //                     translations: {
+        //                         value: {
+        //                             _eq: i.itemName
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }, {
+        //             id: true,
+        //         }]
+        //     })
+        //     if(!(response1.restaurant_item[0]))
+        //         return {
+        //             restaurant_item_id: undefined
+        //         }
+        //     return {
+        //         restaurant_item_id: response1.restaurant_item[0].id,
+        //         in_json: i.inJSON,
+        //         notes: i.notes,
+        //         unavailable: i.unavailable,
+        //         quantity: i.quantity,
+        //         cost_per_one: i.costPerOne,
+        //     }
+        // })
+        // items = await Promise.all(items)
+        // items = items.filter((i: any) => i.restaurant_item_id)
+
+    //     if(customerFbIdToHsId[o.customerFirebaseId] == null) {
+    //         // console.log("Hi")
+    //         let response1 = await chain.query({
+    //             user: [{
+    //                 where: {
+    //                     firebase_id: {
+    //                         _eq: o.customerFirebaseId
+    //                     }
+    //                 }
+    //             }, {
+    //                 id: true
+    //             }]
+    //         })
+    //         if(response1.user[0] == undefined)
+    //             return {
+    //                 restaurant_id: undefined
+    //             }
+    //         customerFbIdToHsId[o.customerFirebaseId] = response1.user[0].id
+    //         console.log(customerFbIdToHsId[o.customerFirebaseId])
+
+    //         return {
+    //             customer: {
+    //                 data: {
+    //                     user_id: customerFbIdToHsId[o.customerFirebaseId]
+    //                 }
+    //             },
+    //             restaurant_id: response.restaurant_restaurant[0].id,
+    //             payment_type: o.paymentType,
+    //             to_location_gps: o.toLocationGps,
+    //             to_location_address: o.toLocationAddress,
+    //             estimated_food_ready_time: o.estimatedFoodReadyTime,
+    //             stripe_payment_id: o.stripePaymentId,
+    //             status: o.status,
+    //             order_time: o.orderTime,
+    //             firebase_id: o.firebaseId,
+    //             notes: o.notes,
+    //             delivery_cost: o.deliveryCost,
+    //             refund_amount:o.refundAmount,
+    //             items: {
+    //                 data: items
+    //             },
+    //             review: (o.review) ? {
+    //                 data: {
+    //                     rating: o.review.rating,
+    //                     note: o.review.comment,
+    //                     from_entity_type: "customer",
+    //                     from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
+    //                     to_entity_type: "restaurant",
+    //                     to_entity_id: response.restaurant_restaurant[0].id,
+    //                     created_at: o.review.createdAt
+    //                 }
+    //             }: undefined
+    //         }
+    //     }
+    //     console.log("Hi1")
+
+    //     return {
+    //         customer_id: customerFbIdToHsId[o.customerFirebaseId],
+    //         restaurant_id: response.restaurant_restaurant[0].id,
+    //         payment_type: o.paymentType,
+    //         to_location_gps: o.toLocationGps,
+    //         to_location_address: o.toLocationAddress,
+    //         estimated_food_ready_time: o.estimatedFoodReadyTime,
+    //         stripe_payment_id: o.stripePaymentId,
+    //         status: o.status,
+    //         order_time: o.orderTime,
+    //         firebase_id: o.firebaseId,
+    //         notes: o.notes,
+    //         delivery_cost: o.deliveryCost,
+    //         refund_amount:o.refundAmount,
+    //         items: {
+    //             data: items
+    //         },
+    //         review: (o.review) ? {
+    //             data: {
+    //                 rating: o.review.rating,
+    //                 note: o.review.comment,
+    //                 from_entity_type: "customer",
+    //                 from_entity_id: customerFbIdToHsId[o.customerFirebaseId],
+    //                 to_entity_type: "restaurant",
+    //                 to_entity_id: response.restaurant_restaurant[0].id,
+    //                 created_at: o.review.createdAt
+    //             }
+    //         }: undefined
+    //     }
+    // })
+    // orders = await Promise.all(orders)
+    // orders = orders.filter((o: any) => o.restaurant_id)
+    console.log(orders.length);
+    fs.writeFileSync("./restaurant-orders.json", JSON.stringify(orders));
+
+    // let response1 = 
+    await chain.mutation({
         insert_restaurant_order: [{
             objects: orders
             // [{
@@ -232,5 +381,5 @@ export async function insertRestaurantOrders(data: any) {
             }
         }]
     })
-    console.log("response: ", response)
+    // console.log("response: ", response1)
 }

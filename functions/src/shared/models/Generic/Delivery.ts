@@ -71,6 +71,13 @@ export interface DeliveryOperator {
     notificationInfo?: NotificationInfo,
     user?: UserInfo
 }
+export interface DeliveryDetails {
+    minimumCost: number,
+    costPerKm: number,
+    radius: number,
+    freeDeliveryMinimumCost?: number,
+    freeDeliveryKmRange?: number,
+}
 
 export enum DelivererStatus {
     AwaitingApproval = "awaiting_approval",
