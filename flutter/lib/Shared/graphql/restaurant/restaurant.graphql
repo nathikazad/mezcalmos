@@ -3,9 +3,12 @@ query getRestaurants {
     id
     image
     language_id
-    location_text
+
     name
-    location_gps
+    location {
+      gps
+      address
+    }
     firebase_id
     approved
     description_id
@@ -41,8 +44,10 @@ query getOneRestaurant($id: Int!) {
     image
     language_id
     description_id
-    location_gps
-    location_text
+    location {
+      gps
+      address
+    }
     self_delivery
     accepted_payments
     stripe_info
@@ -80,8 +85,6 @@ query getRestaurantPaymentInfo($id: Int!) {
   }
 }
 
-
-
 mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
   update_restaurant_restaurant_by_pk(
     pk_columns: { id: $restauarntId }
@@ -100,14 +103,19 @@ mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
   }
 }
 
-mutation updateRestaurantInfo($id: Int!, $data: restaurant_restaurant_set_input!) {
+mutation updateRestaurantInfo(
+  $id: Int!
+  $data: restaurant_restaurant_set_input!
+) {
   update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
     firebase_id
     image
     language_id
-    location_gps
-    location_text
+    location {
+      gps
+      address
+    }
     accepted_payments
     stripe_info
     name
@@ -133,7 +141,8 @@ subscription GetRestaurants {
   restaurant_restaurant {
     id
     name
-    location_text
+    location {  gps
+    address}   
     open_status
     approved
     image

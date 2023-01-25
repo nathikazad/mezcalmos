@@ -7,9 +7,9 @@ class DeliveryCompany extends Service {
       {required super.info,
       required super.state,
       required super.primaryLanguage,
-      required this.deliveryRaidus,
+      // required this.deliveryRaidus,
       required this.creationTime});
-  int deliveryRaidus;
+  // int deliveryRaidus;
   DateTime creationTime;
 
   DeliveryCompany copyWith({
@@ -20,7 +20,7 @@ class DeliveryCompany extends Service {
     return DeliveryCompany(
         info: userInfo ?? info,
         state: state ?? this.state,
-        deliveryRaidus: deliveryRaidus,
+        // deliveryRaidus: deliveryRaidus,
         creationTime: creationTime,
         primaryLanguage: primaryLanguage ?? this.primaryLanguage);
   }

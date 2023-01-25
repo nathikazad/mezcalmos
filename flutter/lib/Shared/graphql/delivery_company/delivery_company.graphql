@@ -6,9 +6,10 @@ query getDeliveryCompanyById($id: Int!) {
     image
     name
     open_status
-    location
+   location {  gps
+    address}   
     creation_time
-    delivery_radius
+   
     service_provider_type
     description {
       id
@@ -28,7 +29,8 @@ mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
     name
     open_status
     location
-    delivery_radius
+   location {  gps
+    address}   
     creation_time
     service_provider_type
     description {
@@ -44,11 +46,12 @@ query getNearByCompanies($args :  delivery_fetch_delivery_company_args!) {
   delivery_fetch_delivery_company(args: $args) {
     approved
     creation_time
-    delivery_radius
+   
     id
     description_id
     image
-    location
+   location {  gps
+    address}   
     service_provider_type
     open_status
     name

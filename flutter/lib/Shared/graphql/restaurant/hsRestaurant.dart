@@ -52,8 +52,8 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
               firebaseId: data.firebase_id,
               name: data.name,
               descriptionId: data.description_id,
-              location:
-                  Location.fromHasura(data.location_gps, data.location_text)),
+              location: Location.fromHasura(
+                  data.location!.gps, data.location!.address)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
           paymentInfo: PaymentInfo(),
@@ -168,8 +168,8 @@ Future<Restaurant?> get_restaurant_by_id(
               firebaseId: data.firebase_id ?? "",
               name: data.name,
               descriptionId: data.description_id,
-              location:
-                  Location.fromHasura(data.location_gps, data.location_text)),
+              location: Location.fromHasura(
+                  data.location!.gps, data.location!.address)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
           paymentInfo: paymentInfo,
@@ -239,9 +239,10 @@ Future<Restaurant> update_restaurant_info(
                   schedule: restaurant.schedule?.toFirebaseFormattedJson(),
                   language_id:
                       restaurant.primaryLanguage.toFirebaseFormatString(),
-                  location_gps: restaurant.info.location.toGeography(),
+
+                  //   location_gps: restaurant.info.location.toGeography(),
                   description_id: restaurant.info.descriptionId,
-                  location_text: restaurant.info.location.address,
+                  // location_text: restaurant.info.location.address,
                   open_status:
                       restaurant.state.status.toFirebaseFormatString()))));
   if (response.hasException) {
@@ -259,8 +260,7 @@ Future<Restaurant> update_restaurant_info(
   if (data.stripe_info != null) {
     _paymentInfo.stripe = parseServiceStripeInfo(data.stripe_info);
   }
-  mezDbgPrint(
-      "Location after saving 📍 ${data.location_gps.latitude}  --  ${data.location_gps.longitude} ");
+
   return Restaurant(
       userInfo: ServiceInfo(
           hasuraId: data.id,
@@ -277,7 +277,8 @@ Future<Restaurant> update_restaurant_info(
                 }
               : null,
           name: data.name,
-          location: Location.fromHasura(data.location_gps, data.location_text)),
+          location:
+              Location.fromHasura(data.location!.gps, data.location!.address)),
       schedule: data.schedule != null ? Schedule.fromData(data.schedule) : null,
       paymentInfo: _paymentInfo,
       restaurantState:

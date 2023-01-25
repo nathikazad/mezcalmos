@@ -26,7 +26,6 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
-      deliveryRaidus: data.delivery_radius,
       creationTime: DateTime.parse(data.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
@@ -35,7 +34,8 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
             ? toLanguageMap(translations: data.description!.translations)
             : null,
         descriptionId: data.description_id,
-        location: Location.fromHasura(data.location, ""),
+        location:
+            Location.fromHasura(data.location!.gps, data.location!.address),
         name: data.name,
       ),
       state: ServiceState(
@@ -64,7 +64,6 @@ Future<DeliveryCompany?> update_delivery_company(
   final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
       res.parsedData!.update_delivery_company_by_pk!;
   return DeliveryCompany(
-      deliveryRaidus: data.delivery_radius,
       creationTime: DateTime.parse(data.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
@@ -73,7 +72,8 @@ Future<DeliveryCompany?> update_delivery_company(
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
             : null,
-        location: Location.fromHasura(data.location, ""),
+        location:
+            Location.fromHasura(data.location!.gps, data.location!.address),
         name: data.name,
       ),
       state: ServiceState(
@@ -100,7 +100,6 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   returnedList = dataList
       .map((Query$getNearByCompanies$delivery_fetch_delivery_company data) {
     return DeliveryCompany(
-        deliveryRaidus: data.delivery_radius,
         creationTime: DateTime.parse(data.creation_time),
         info: ServiceInfo(
           hasuraId: data.id,
@@ -109,7 +108,8 @@ Future<List<DeliveryCompany>> get_nearby_companies(
               ? toLanguageMap(translations: data.description!.translations)
               : null,
           descriptionId: data.description_id,
-          location: Location.fromHasura(data.location, ""),
+          location:
+              Location.fromHasura(data.location!.gps, data.location!.address),
           name: data.name,
         ),
         state: ServiceState(

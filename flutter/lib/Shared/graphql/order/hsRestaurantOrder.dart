@@ -150,8 +150,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         cost: orderData.delivery_cost,
         restaurant: ServiceInfo(
           location: Location(
-            orderData.restaurant.location_text,
-            orderData.restaurant.location_gps.toLocationData(),
+            orderData.restaurant.location!.address!,
+            orderData.restaurant.location!.gps.toLocationData(),
           ),
           firebaseId: orderData.restaurant.firebase_id,
           hasuraId: orderData.restaurant.id,
@@ -341,8 +341,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         : null,
     restaurant: ServiceInfo(
       location: Location(
-        orderData.restaurant.location_text,
-        orderData.restaurant.location_gps.toLocationData(),
+        orderData.restaurant.location!.address!,
+        orderData.restaurant.location!.gps.toLocationData(),
       ),
       firebaseId: orderData.restaurant.firebase_id,
       hasuraId: orderData.restaurant.id,

@@ -33,8 +33,8 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
-        location_gps
-        location_text
+       location {  gps
+    address}   
       }
     }
     order_time
@@ -48,8 +48,8 @@ query get_driver_order($orderId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -105,8 +105,8 @@ subscription listen_on_driver_order($orderId: Int!) {
         id
         image
         name
-        location_gps
-        location_text
+        location {  gps
+    address}   
       }
     }
     current_gps
@@ -137,8 +137,8 @@ subscription listen_on_driver_order($orderId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -181,8 +181,8 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -213,8 +213,8 @@ query get_past_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -244,8 +244,8 @@ query get_inprocess_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -275,8 +275,8 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -306,8 +306,8 @@ query get_delivery_company_past_orders($companyId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -337,8 +337,8 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }

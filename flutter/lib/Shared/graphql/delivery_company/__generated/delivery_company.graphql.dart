@@ -322,17 +322,32 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'creation_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'delivery_radius'),
             alias: null,
             arguments: [],
             directives: [],
@@ -531,9 +546,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     required this.image,
     required this.name,
     required this.open_status,
-    required this.location,
+    this.location,
     required this.creation_time,
-    required this.delivery_radius,
     required this.service_provider_type,
     this.description,
     required this.$__typename,
@@ -549,7 +563,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$open_status = json['open_status'];
     final l$location = json['location'];
     final l$creation_time = json['creation_time'];
-    final l$delivery_radius = json['delivery_radius'];
     final l$service_provider_type = json['service_provider_type'];
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
@@ -560,9 +573,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
       image: (l$image as String),
       name: (l$name as String),
       open_status: (l$open_status as String),
-      location: geographyFromJson(l$location),
+      location: l$location == null
+          ? null
+          : Query$getDeliveryCompanyById$delivery_company_by_pk$location
+              .fromJson((l$location as Map<String, dynamic>)),
       creation_time: (l$creation_time as String),
-      delivery_radius: (l$delivery_radius as int),
       service_provider_type: (l$service_provider_type as String),
       description: l$description == null
           ? null
@@ -584,11 +599,9 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
 
   final String open_status;
 
-  final Geography location;
+  final Query$getDeliveryCompanyById$delivery_company_by_pk$location? location;
 
   final String creation_time;
-
-  final int delivery_radius;
 
   final String service_provider_type;
 
@@ -612,11 +625,9 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$location = location;
-    _resultData['location'] = geographyToJson(l$location);
+    _resultData['location'] = l$location?.toJson();
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
-    final l$delivery_radius = delivery_radius;
-    _resultData['delivery_radius'] = l$delivery_radius;
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$description = description;
@@ -636,7 +647,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$open_status = open_status;
     final l$location = location;
     final l$creation_time = creation_time;
-    final l$delivery_radius = delivery_radius;
     final l$service_provider_type = service_provider_type;
     final l$description = description;
     final l$$__typename = $__typename;
@@ -649,7 +659,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
       l$open_status,
       l$location,
       l$creation_time,
-      l$delivery_radius,
       l$service_provider_type,
       l$description,
       l$$__typename,
@@ -705,11 +714,6 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     if (l$creation_time != lOther$creation_time) {
       return false;
     }
-    final l$delivery_radius = delivery_radius;
-    final lOther$delivery_radius = other.delivery_radius;
-    if (l$delivery_radius != lOther$delivery_radius) {
-      return false;
-    }
     final l$service_provider_type = service_provider_type;
     final lOther$service_provider_type = other.service_provider_type;
     if (l$service_provider_type != lOther$service_provider_type) {
@@ -758,14 +762,15 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk<
     String? image,
     String? name,
     String? open_status,
-    Geography? location,
+    Query$getDeliveryCompanyById$delivery_company_by_pk$location? location,
     String? creation_time,
-    int? delivery_radius,
     String? service_provider_type,
     Query$getDeliveryCompanyById$delivery_company_by_pk$description?
         description,
     String? $__typename,
   });
+  CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<TRes>
+      get location;
   CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$description<TRes>
       get description;
 }
@@ -794,7 +799,6 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
     Object? open_status = _undefined,
     Object? location = _undefined,
     Object? creation_time = _undefined,
-    Object? delivery_radius = _undefined,
     Object? service_provider_type = _undefined,
     Object? description = _undefined,
     Object? $__typename = _undefined,
@@ -816,16 +820,13 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        location: location == _undefined || location == null
+        location: location == _undefined
             ? _instance.location
-            : (location as Geography),
+            : (location
+                as Query$getDeliveryCompanyById$delivery_company_by_pk$location?),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
-        delivery_radius:
-            delivery_radius == _undefined || delivery_radius == null
-                ? _instance.delivery_radius
-                : (delivery_radius as int),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -838,6 +839,16 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location
+            .stub(_then(_instance))
+        : CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+            local$location, (e) => call(location: e));
+  }
+
   CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$description<TRes>
       get description {
     final local$description = _instance.description;
@@ -865,19 +876,181 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<
     String? image,
     String? name,
     String? open_status,
-    Geography? location,
+    Query$getDeliveryCompanyById$delivery_company_by_pk$location? location,
     String? creation_time,
-    int? delivery_radius,
     String? service_provider_type,
     Query$getDeliveryCompanyById$delivery_company_by_pk$description?
         description,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<TRes>
+      get location =>
+          CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location
+              .stub(_res);
   CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$description<TRes>
       get description =>
           CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$description
               .stub(_res);
+}
+
+class Query$getDeliveryCompanyById$delivery_company_by_pk$location {
+  Query$getDeliveryCompanyById$delivery_company_by_pk$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$getDeliveryCompanyById$delivery_company_by_pk$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getDeliveryCompanyById$delivery_company_by_pk$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getDeliveryCompanyById$delivery_company_by_pk$location
+    on Query$getDeliveryCompanyById$delivery_company_by_pk$location {
+  CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+          Query$getDeliveryCompanyById$delivery_company_by_pk$location>
+      get copyWith =>
+          CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+    TRes> {
+  factory CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+    Query$getDeliveryCompanyById$delivery_company_by_pk$location instance,
+    TRes Function(Query$getDeliveryCompanyById$delivery_company_by_pk$location)
+        then,
+  ) = _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location;
+
+  factory CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+            TRes> {
+  _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getDeliveryCompanyById$delivery_company_by_pk$location _instance;
+
+  final TRes Function(
+      Query$getDeliveryCompanyById$delivery_company_by_pk$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+        TRes>
+    implements
+        CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getDeliveryCompanyById$delivery_company_by_pk$description {
@@ -1630,11 +1803,33 @@ const documentNodeMutationupdateDeliveryCompany = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_radius'),
+            name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'creation_time'),
@@ -1822,8 +2017,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     required this.image,
     required this.name,
     required this.open_status,
-    required this.location,
-    required this.delivery_radius,
+    this.location,
     required this.creation_time,
     required this.service_provider_type,
     this.description,
@@ -1839,7 +2033,6 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$name = json['name'];
     final l$open_status = json['open_status'];
     final l$location = json['location'];
-    final l$delivery_radius = json['delivery_radius'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
     final l$description = json['description'];
@@ -1851,8 +2044,10 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
       image: (l$image as String),
       name: (l$name as String),
       open_status: (l$open_status as String),
-      location: geographyFromJson(l$location),
-      delivery_radius: (l$delivery_radius as int),
+      location: l$location == null
+          ? null
+          : Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+              .fromJson((l$location as Map<String, dynamic>)),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
       description: l$description == null
@@ -1875,9 +2070,8 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
 
   final String open_status;
 
-  final Geography location;
-
-  final int delivery_radius;
+  final Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?
+      location;
 
   final String creation_time;
 
@@ -1903,9 +2097,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$location = location;
-    _resultData['location'] = geographyToJson(l$location);
-    final l$delivery_radius = delivery_radius;
-    _resultData['delivery_radius'] = l$delivery_radius;
+    _resultData['location'] = l$location?.toJson();
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
     final l$service_provider_type = service_provider_type;
@@ -1926,7 +2118,6 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$name = name;
     final l$open_status = open_status;
     final l$location = location;
-    final l$delivery_radius = delivery_radius;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
     final l$description = description;
@@ -1939,7 +2130,6 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
       l$name,
       l$open_status,
       l$location,
-      l$delivery_radius,
       l$creation_time,
       l$service_provider_type,
       l$description,
@@ -1990,11 +2180,6 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$location = location;
     final lOther$location = other.location;
     if (l$location != lOther$location) {
-      return false;
-    }
-    final l$delivery_radius = delivery_radius;
-    final lOther$delivery_radius = other.delivery_radius;
-    if (l$delivery_radius != lOther$delivery_radius) {
       return false;
     }
     final l$creation_time = creation_time;
@@ -2051,14 +2236,16 @@ abstract class CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_b
     String? image,
     String? name,
     String? open_status,
-    Geography? location,
-    int? delivery_radius,
+    Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?
+        location,
     String? creation_time,
     String? service_provider_type,
     Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description?
         description,
     String? $__typename,
   });
+  CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+      TRes> get location;
   CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description<
       TRes> get description;
 }
@@ -2088,7 +2275,6 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
     Object? name = _undefined,
     Object? open_status = _undefined,
     Object? location = _undefined,
-    Object? delivery_radius = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
     Object? description = _undefined,
@@ -2111,13 +2297,10 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        location: location == _undefined || location == null
+        location: location == _undefined
             ? _instance.location
-            : (location as Geography),
-        delivery_radius:
-            delivery_radius == _undefined || delivery_radius == null
-                ? _instance.delivery_radius
-                : (delivery_radius as int),
+            : (location
+                as Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
@@ -2133,6 +2316,16 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+            local$location, (e) => call(location: e));
+  }
+
   CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -2161,8 +2354,8 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_b
     String? image,
     String? name,
     String? open_status,
-    Geography? location,
-    int? delivery_radius,
+    Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?
+        location,
     String? creation_time,
     String? service_provider_type,
     Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description?
@@ -2170,11 +2363,180 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_b
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+          TRes>
+      get location =>
+          CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+              .stub(_res);
   CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description<
           TRes>
       get description =>
           CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description
               .stub(_res);
+}
+
+class Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location {
+  Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+    on Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location {
+  CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+          Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location>
+      get copyWith =>
+          CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+    TRes> {
+  factory CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+    Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+        instance,
+    TRes Function(
+            Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location)
+        then,
+  ) = _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location;
+
+  factory CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+            TRes> {
+  _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+      _instance;
+
+  final TRes Function(
+          Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+        TRes>
+    implements
+        CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description {
@@ -2855,13 +3217,6 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_radius'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
@@ -2887,7 +3242,29 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'address'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'service_provider_type'),
@@ -3082,11 +3459,10 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
   Query$getNearByCompanies$delivery_fetch_delivery_company({
     required this.approved,
     required this.creation_time,
-    required this.delivery_radius,
     required this.id,
     this.description_id,
     required this.image,
-    required this.location,
+    this.location,
     required this.service_provider_type,
     required this.open_status,
     required this.name,
@@ -3098,7 +3474,6 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
       Map<String, dynamic> json) {
     final l$approved = json['approved'];
     final l$creation_time = json['creation_time'];
-    final l$delivery_radius = json['delivery_radius'];
     final l$id = json['id'];
     final l$description_id = json['description_id'];
     final l$image = json['image'];
@@ -3111,11 +3486,13 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     return Query$getNearByCompanies$delivery_fetch_delivery_company(
       approved: (l$approved as bool),
       creation_time: (l$creation_time as String),
-      delivery_radius: (l$delivery_radius as int),
       id: (l$id as int),
       description_id: (l$description_id as int?),
       image: (l$image as String),
-      location: geographyFromJson(l$location),
+      location: l$location == null
+          ? null
+          : Query$getNearByCompanies$delivery_fetch_delivery_company$location
+              .fromJson((l$location as Map<String, dynamic>)),
       service_provider_type: (l$service_provider_type as String),
       open_status: (l$open_status as String),
       name: (l$name as String),
@@ -3131,15 +3508,14 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
 
   final String creation_time;
 
-  final int delivery_radius;
-
   final int id;
 
   final int? description_id;
 
   final String image;
 
-  final Geography location;
+  final Query$getNearByCompanies$delivery_fetch_delivery_company$location?
+      location;
 
   final String service_provider_type;
 
@@ -3158,8 +3534,6 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     _resultData['approved'] = l$approved;
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
-    final l$delivery_radius = delivery_radius;
-    _resultData['delivery_radius'] = l$delivery_radius;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$description_id = description_id;
@@ -3167,7 +3541,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     final l$image = image;
     _resultData['image'] = l$image;
     final l$location = location;
-    _resultData['location'] = geographyToJson(l$location);
+    _resultData['location'] = l$location?.toJson();
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$open_status = open_status;
@@ -3185,7 +3559,6 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
   int get hashCode {
     final l$approved = approved;
     final l$creation_time = creation_time;
-    final l$delivery_radius = delivery_radius;
     final l$id = id;
     final l$description_id = description_id;
     final l$image = image;
@@ -3198,7 +3571,6 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     return Object.hashAll([
       l$approved,
       l$creation_time,
-      l$delivery_radius,
       l$id,
       l$description_id,
       l$image,
@@ -3228,11 +3600,6 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     final l$creation_time = creation_time;
     final lOther$creation_time = other.creation_time;
     if (l$creation_time != lOther$creation_time) {
-      return false;
-    }
-    final l$delivery_radius = delivery_radius;
-    final lOther$delivery_radius = other.delivery_radius;
-    if (l$delivery_radius != lOther$delivery_radius) {
       return false;
     }
     final l$id = id;
@@ -3310,11 +3677,10 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company
   TRes call({
     bool? approved,
     String? creation_time,
-    int? delivery_radius,
     int? id,
     int? description_id,
     String? image,
-    Geography? location,
+    Query$getNearByCompanies$delivery_fetch_delivery_company$location? location,
     String? service_provider_type,
     String? open_status,
     String? name,
@@ -3322,6 +3688,8 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company
         description,
     String? $__typename,
   });
+  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+      TRes> get location;
   CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
       TRes> get description;
 }
@@ -3346,7 +3714,6 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
   TRes call({
     Object? approved = _undefined,
     Object? creation_time = _undefined,
-    Object? delivery_radius = _undefined,
     Object? id = _undefined,
     Object? description_id = _undefined,
     Object? image = _undefined,
@@ -3364,10 +3731,6 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
-        delivery_radius:
-            delivery_radius == _undefined || delivery_radius == null
-                ? _instance.delivery_radius
-                : (delivery_radius as int),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         description_id: description_id == _undefined
             ? _instance.description_id
@@ -3375,9 +3738,10 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
-        location: location == _undefined || location == null
+        location: location == _undefined
             ? _instance.location
-            : (location as Geography),
+            : (location
+                as Query$getNearByCompanies$delivery_fetch_delivery_company$location?),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -3396,6 +3760,16 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location
+            .stub(_then(_instance))
+        : CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+            local$location, (e) => call(location: e));
+  }
+
   CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -3420,11 +3794,10 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company
   call({
     bool? approved,
     String? creation_time,
-    int? delivery_radius,
     int? id,
     int? description_id,
     String? image,
-    Geography? location,
+    Query$getNearByCompanies$delivery_fetch_delivery_company$location? location,
     String? service_provider_type,
     String? open_status,
     String? name,
@@ -3433,11 +3806,177 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+          TRes>
+      get location =>
+          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location
+              .stub(_res);
   CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
           TRes>
       get description =>
           CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description
               .stub(_res);
+}
+
+class Query$getNearByCompanies$delivery_fetch_delivery_company$location {
+  Query$getNearByCompanies$delivery_fetch_delivery_company$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$getNearByCompanies$delivery_fetch_delivery_company$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getNearByCompanies$delivery_fetch_delivery_company$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getNearByCompanies$delivery_fetch_delivery_company$location
+    on Query$getNearByCompanies$delivery_fetch_delivery_company$location {
+  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+          Query$getNearByCompanies$delivery_fetch_delivery_company$location>
+      get copyWith =>
+          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+    TRes> {
+  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+    Query$getNearByCompanies$delivery_fetch_delivery_company$location instance,
+    TRes Function(
+            Query$getNearByCompanies$delivery_fetch_delivery_company$location)
+        then,
+  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location;
+
+  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+        TRes>
+    implements
+        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+            TRes> {
+  _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getNearByCompanies$delivery_fetch_delivery_company$location
+      _instance;
+
+  final TRes Function(
+      Query$getNearByCompanies$delivery_fetch_delivery_company$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+        TRes>
+    implements
+        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getNearByCompanies$delivery_fetch_delivery_company$description {

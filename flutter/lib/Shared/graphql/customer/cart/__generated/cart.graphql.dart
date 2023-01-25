@@ -2127,25 +2127,33 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: 'self_delivery'),
@@ -3188,9 +3196,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     required this.image,
     required this.language_id,
     this.description_id,
-    required this.location_gps,
-    required this.location_text,
-    required this.name,
+    this.location,
     required this.self_delivery,
     this.schedule,
     this.description,
@@ -3208,9 +3214,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
-    final l$name = json['name'];
+    final l$location = json['location'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -3226,9 +3230,10 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       image: (l$image as String),
       language_id: (l$language_id as String),
       description_id: (l$description_id as int?),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
-      name: (l$name as String),
+      location: l$location == null
+          ? null
+          : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -3255,11 +3260,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
 
   final int? description_id;
 
-  final Geography location_gps;
-
-  final String location_text;
-
-  final String name;
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
+      location;
 
   final bool self_delivery;
 
@@ -3292,12 +3294,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     _resultData['language_id'] = l$language_id;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
-    final l$name = name;
-    _resultData['name'] = l$name;
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$schedule = schedule;
@@ -3322,9 +3320,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
-    final l$name = name;
+    final l$location = location;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
     final l$description = description;
@@ -3339,9 +3335,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       l$image,
       l$language_id,
       l$description_id,
-      l$location_gps,
-      l$location_text,
-      l$name,
+      l$location,
       l$self_delivery,
       l$schedule,
       l$description,
@@ -3396,19 +3390,9 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     if (l$description_id != lOther$description_id) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$self_delivery = self_delivery;
@@ -3476,9 +3460,8 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
@@ -3487,6 +3470,8 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location;
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description;
 }
@@ -3516,9 +3501,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
-    Object? name = _undefined,
+    Object? location = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -3546,15 +3529,10 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        location: location == _undefined
+            ? _instance.location
+            : (location
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -3575,6 +3553,16 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+            local$location, (e) => call(location: e));
+  }
+
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -3604,9 +3592,8 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
@@ -3616,11 +3603,180 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+              .stub(_res);
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
           TRes>
       get description =>
           CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
               .stub(_res);
+}
+
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description {
@@ -7981,18 +8137,33 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: 'name'),
@@ -9063,8 +9234,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     required this.image,
     required this.language_id,
     this.description_id,
-    required this.location_gps,
-    required this.location_text,
+    this.location,
     required this.name,
     required this.self_delivery,
     this.schedule,
@@ -9083,8 +9253,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$name = json['name'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
@@ -9101,8 +9270,10 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       image: (l$image as String),
       language_id: (l$language_id as String),
       description_id: (l$description_id as int?),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location: l$location == null
+          ? null
+          : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       name: (l$name as String),
       self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
@@ -9130,9 +9301,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
 
   final int? description_id;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
+      location;
 
   final String name;
 
@@ -9167,10 +9337,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     _resultData['language_id'] = l$language_id;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location?.toJson();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$self_delivery = self_delivery;
@@ -9197,8 +9365,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$name = name;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
@@ -9214,8 +9381,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       l$image,
       l$language_id,
       l$description_id,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$name,
       l$self_delivery,
       l$schedule,
@@ -9271,14 +9437,9 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     if (l$description_id != lOther$description_id) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$name = name;
@@ -9353,8 +9514,8 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     String? name,
     bool? self_delivery,
     dynamic? schedule,
@@ -9364,6 +9525,8 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location;
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description;
 }
@@ -9395,8 +9558,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? name = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
@@ -9426,12 +9588,10 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -9455,6 +9615,16 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return local$location == null
+        ? CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+            local$location, (e) => call(location: e));
+  }
+
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -9484,8 +9654,8 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     String? name,
     bool? self_delivery,
     dynamic? schedule,
@@ -9496,11 +9666,180 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+              .stub(_res);
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
           TRes>
       get description =>
           CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
               .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description {

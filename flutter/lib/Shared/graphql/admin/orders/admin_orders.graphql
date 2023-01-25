@@ -24,8 +24,8 @@ subscription admin_listen_on_orders($serviceProviderType: String!,$inProccess: B
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }
@@ -55,8 +55,8 @@ query admin_get__orders($serviceProviderType: String!,$inProccess: Boolean!) {
       firebase_id
       image
       name
-      location_gps
-      location_text
+    location { gps
+      address}
       language_id
       open_status
     }

@@ -11,8 +11,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       firebase_id
       image
       language_id
-      location_gps
-      location_text
+    location { gps
+      address}
       name
     }
     items {
@@ -128,8 +128,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
       firebase_id
       image
       language_id
-      location_gps
-      location_text
+    location { gps
+      address}
       name
     }
     items {

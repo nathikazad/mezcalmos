@@ -20,8 +20,8 @@ Future<List<ServiceInfo>> admin_get_restaurants() async {
   return data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
           ServiceInfo(
-              location:
-                  Location.fromHasura(data.location_gps, data.location_text),
+              location: Location.fromHasura(
+                  data.location!.gps, data.location!.address),
               hasuraId: data.id,
               image: data.image,
               name: data.name))
