@@ -2,9 +2,22 @@ table:
   name: company
   schema: delivery
 object_relationships:
+  - name: delivery_details
+    using:
+      foreign_key_constraint_on: delivery_details_id
   - name: description
     using:
       foreign_key_constraint_on: description_id
+  - name: location
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: location
+          schema: service_provider
 array_relationships:
   - name: delivery_drivers
     using:
@@ -29,11 +42,9 @@ select_permissions:
       columns:
         - approved
         - creation_time
-        - delivery_radius
         - description_id
         - id
         - image
-        - location
         - name
         - open_status
         - service_provider_type
