@@ -15,6 +15,16 @@ object_relationships:
   - name: description
     using:
       foreign_key_constraint_on: description_id
+  - name: location
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: location
+          schema: service_provider
 array_relationships:
   - name: categories
     using:
@@ -65,20 +75,10 @@ array_relationships:
           name: review
           schema: public
 computed_fields:
-  - name: delivery_details
+  - name: delivery_details_of_deliverer
     definition:
       function:
         name: restaurant_delivery_details
-        schema: public
-  - name: location_gps
-    definition:
-      function:
-        name: restaurant_location_gps
-        schema: public
-  - name: location_text
-    definition:
-      function:
-        name: restaurant_location_text
         schema: public
   - name: specials
     definition:

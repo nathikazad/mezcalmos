@@ -34,6 +34,7 @@
 - "!include restaurant_order_public.yaml"
 - "!include restaurant_restaurant.yaml"
 - "!include service_provider_delivery_partner.yaml"
+- "!include service_provider_location.yaml"
 - "!include service_provider_post.yaml"
 - "!include service_provider_service_link.yaml"
 - "!include service_provider_subscriber.yaml"

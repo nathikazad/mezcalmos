@@ -2,9 +2,22 @@ table:
   name: company
   schema: delivery
 object_relationships:
+  - name: delivery_details
+    using:
+      foreign_key_constraint_on: delivery_details_id
   - name: description
     using:
       foreign_key_constraint_on: description_id
+  - name: location
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: location
+          schema: service_provider
 array_relationships:
   - name: delivery_drivers
     using:
@@ -25,6 +38,21 @@ array_relationships:
           schema: delivery
 select_permissions:
   - role: delivery_operator
+    permission:
+      columns:
+        - approved
+        - creation_time
+        - description_id
+        - id
+        - image
+        - name
+        - open_status
+        - service_provider_type
+      filter:
+        delivery_operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+  - role: mez_admin
     permission:
       columns:
         - approved
