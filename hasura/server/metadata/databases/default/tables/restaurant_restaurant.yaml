@@ -70,6 +70,16 @@ computed_fields:
       function:
         name: restaurant_delivery_details
         schema: public
+  - name: location_gps
+    definition:
+      function:
+        name: restaurant_location_gps
+        schema: public
+  - name: location_text
+    definition:
+      function:
+        name: restaurant_location_text
+        schema: public
   - name: specials
     definition:
       function:
@@ -86,8 +96,6 @@ select_permissions:
         - id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - schedule
@@ -105,8 +113,6 @@ select_permissions:
         - id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - schedule
@@ -121,8 +127,6 @@ select_permissions:
         - id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - service_provider_type
@@ -137,8 +141,6 @@ select_permissions:
         - id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - service_provider_type
@@ -146,7 +148,6 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - location_gps
         - approved
         - self_delivery
         - description_id
@@ -155,7 +156,6 @@ select_permissions:
         - firebase_id
         - image
         - language_id
-        - location_text
         - name
         - service_provider_type
         - accepted_payments
@@ -179,8 +179,6 @@ select_permissions:
         - id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - schedule
@@ -199,8 +197,6 @@ update_permissions:
         - description_id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - schedule
@@ -222,8 +218,6 @@ update_permissions:
         - firebase_id
         - image
         - language_id
-        - location_gps
-        - location_text
         - name
         - open_status
         - schedule

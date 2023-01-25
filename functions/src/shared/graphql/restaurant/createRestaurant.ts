@@ -19,11 +19,6 @@ export async function createRestaurant(
         name: restaurant.name,
         
         image: restaurant.image,
-        location_gps: JSON.stringify({
-            "type": "point",
-            "coordinates": [restaurant.location.lng, restaurant.location.lat]
-          }),
-        location_text: restaurant.location.address,
         schedule: JSON.stringify(restaurant.schedule),
         firebase_id: restaurant.firebaseId ?? undefined,
         self_delivery: restaurant.selfDelivery,
@@ -36,11 +31,6 @@ export async function createRestaurant(
             owner: true,
           }]
         },
-        delivery_partner: (restaurant.deliveryPartnerId) ? {
-          data: {
-            delivery_company_id: restaurant.deliveryPartnerId
-          }
-        } : undefined
       }
     }, {
       service_provider_type : true,
@@ -56,6 +46,19 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
+  if(restaurant.deliveryPartnerId) {
+    await chain.mutation({
+      insert_service_provider_delivery_partner_one: [{
+        object: {
+          delivery_company_id: restaurant.deliveryPartnerId,
+          service_provider_id: response.insert_restaurant_restaurant_one.id,
+          service_provider_type: ServiceProviderType.Restaurant
+        }
+      }, {
+        id: true,
+      }]
+    });
+  }
   if(restaurant.deliveryDetails) {
     await chain.mutation({
       insert_delivery_details_one: [{
@@ -66,7 +69,29 @@ export async function createRestaurant(
           service_provider_type: ServiceProviderType.Restaurant,
           radius: restaurant.deliveryDetails.radius,
           free_delivery_minimum_cost: restaurant.deliveryDetails.freeDeliveryMinimumCost,
-          free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange
+          free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange,
+          location_gps: JSON.stringify({
+            "type": "point",
+            "coordinates": [restaurant.location.lng, restaurant.location.lat]
+          }),
+          location_text: restaurant.location.address
+        }
+      }, {
+        service_provider_id: true,
+        service_provider_type: true,
+      }]
+    });
+  } else {
+    await chain.mutation({
+      insert_delivery_details_one: [{
+        object: {
+          service_provider_id: response.insert_restaurant_restaurant_one?.id,
+          service_provider_type: ServiceProviderType.Restaurant,
+          location_gps: JSON.stringify({
+            "type": "point",
+            "coordinates": [restaurant.location.lng, restaurant.location.lat]
+          }),
+          location_text: restaurant.location.address
         }
       }, {
         service_provider_id: true,

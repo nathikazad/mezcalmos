@@ -1252,13 +1252,11 @@ delivery_operators_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_operator_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_operator_bool_exp"]},ValueTypes["delivery_operator_aggregate"]],
-	delivery_radius?:true,
 	/** An object relationship */
 	description?:ValueTypes["translation"],
 	description_id?:true,
 	id?:true,
 	image?:true,
-	location?:true,
 	name?:true,
 	open_status?:true,
 	service_provider_type?:true,
@@ -1287,7 +1285,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 }>;
 	/** aggregate avg on columns */
 ["delivery_company_avg_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1303,12 +1300,10 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
-	delivery_radius?:ValueTypes["Int_comparison_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
-	location?:ValueTypes["geography_comparison_exp"],
 	name?:ValueTypes["String_comparison_exp"],
 	open_status?:ValueTypes["String_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
@@ -1317,7 +1312,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 ["delivery_company_constraint"]:delivery_company_constraint;
 	/** input type for incrementing numeric columns in table "delivery.company" */
 ["delivery_company_inc_input"]: {
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 };
@@ -1327,12 +1321,10 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	creation_time?:ValueTypes["timestamptz"],
 	delivery_drivers?:ValueTypes["delivery_driver_arr_rel_insert_input"],
 	delivery_operators?:ValueTypes["delivery_operator_arr_rel_insert_input"],
-	delivery_radius?:number,
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -1340,7 +1332,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** aggregate max on columns */
 ["delivery_company_max_fields"]: AliasType<{
 	creation_time?:true,
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 	image?:true,
@@ -1352,7 +1343,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** aggregate min on columns */
 ["delivery_company_min_fields"]: AliasType<{
 	creation_time?:true,
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 	image?:true,
@@ -1387,12 +1377,10 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	creation_time?:ValueTypes["order_by"],
 	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_order_by"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_order_by"],
-	delivery_radius?:ValueTypes["order_by"],
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
-	location?:ValueTypes["order_by"],
 	name?:ValueTypes["order_by"],
 	open_status?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"]
@@ -1407,32 +1395,27 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 ["delivery_company_set_input"]: {
 	approved?:boolean,
 	creation_time?:ValueTypes["timestamptz"],
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
 };
 	/** aggregate stddev on columns */
 ["delivery_company_stddev_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["delivery_company_stddev_pop_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["delivery_company_stddev_samp_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1448,18 +1431,15 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 ["delivery_company_stream_cursor_value_input"]: {
 	approved?:boolean,
 	creation_time?:ValueTypes["timestamptz"],
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:ValueTypes["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
 };
 	/** aggregate sum on columns */
 ["delivery_company_sum_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1475,21 +1455,18 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** aggregate var_pop on columns */
 ["delivery_company_var_pop_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["delivery_company_var_samp_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["delivery_company_variance_fields"]: AliasType<{
-	delivery_radius?:true,
 	description_id?:true,
 	id?:true,
 		__typename?: true
@@ -1500,7 +1477,10 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
+	location_gps?:true,
+	location_text?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
@@ -1550,6 +1530,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1561,6 +1542,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1573,6 +1555,8 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:ValueTypes["Float_comparison_exp"],
 	free_delivery_minimum_cost?:ValueTypes["money_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	location_gps?:ValueTypes["geography_comparison_exp"],
+	location_text?:ValueTypes["String_comparison_exp"],
 	minimum_cost?:ValueTypes["money_comparison_exp"],
 	radius?:ValueTypes["Int_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -1588,6 +1572,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
 	minimum_cost?:ValueTypes["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 };
@@ -1597,7 +1582,10 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
+	location_gps?:ValueTypes["geography"],
+	location_text?:string,
 	minimum_cost?:ValueTypes["money"],
+	/** in metres */
 	radius?:number,
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
 	service_provider_id?:number,
@@ -1609,7 +1597,9 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
+	location_text?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 	service_provider_type?:true,
@@ -1621,7 +1611,9 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	location_text?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"]
@@ -1632,7 +1624,9 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
+	location_text?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 	service_provider_type?:true,
@@ -1644,7 +1638,9 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	location_text?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"]
@@ -1669,6 +1665,8 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	location_gps?:ValueTypes["order_by"],
+	location_text?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
 	radius?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
@@ -1687,7 +1685,10 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
+	location_gps?:ValueTypes["geography"],
+	location_text?:string,
 	minimum_cost?:ValueTypes["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -1699,6 +1700,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1710,6 +1712,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1720,6 +1723,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1731,6 +1735,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1741,6 +1746,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1752,6 +1758,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1768,7 +1775,10 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
+	location_gps?:ValueTypes["geography"],
+	location_text?:string,
 	minimum_cost?:ValueTypes["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -1780,6 +1790,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1791,6 +1802,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1810,6 +1822,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1821,6 +1834,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1831,6 +1845,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1842,6 +1857,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -1852,6 +1868,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:true,
 	id?:true,
 	minimum_cost?:true,
+	/** in metres */
 	radius?:true,
 	service_provider_id?:true,
 		__typename?: true
@@ -1863,6 +1880,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	minimum_cost?:ValueTypes["order_by"],
+	/** in metres */
 	radius?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"]
 };
@@ -10912,7 +10930,9 @@ items_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["restaurant_item_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_item_bool_exp"]},ValueTypes["restaurant_item_aggregate"]],
 	language_id?:true,
+	/** A computed field, executes function "restaurant_location_gps" */
 	location_gps?:true,
+	/** A computed field, executes function "restaurant_location_text" */
 	location_text?:true,
 	name?:true,
 	/** open, closed_temporarily, closed_indefinitely */
@@ -11101,8 +11121,6 @@ requirements: string[] | null; email: string | null } */
 	image?:string,
 	items?:ValueTypes["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
-	location_gps?:ValueTypes["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -11125,7 +11143,6 @@ requirements: string[] | null; email: string | null } */
 	id?:true,
 	image?:true,
 	language_id?:true,
-	location_text?:true,
 	name?:true,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:true,
@@ -11140,7 +11157,6 @@ requirements: string[] | null; email: string | null } */
 	id?:true,
 	image?:true,
 	language_id?:true,
-	location_text?:true,
 	name?:true,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:true,
@@ -11229,8 +11245,6 @@ requirements: string[] | null; email: string | null } */
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:ValueTypes["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -11282,8 +11296,6 @@ requirements: string[] | null; email: string | null } */
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:ValueTypes["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -15395,13 +15407,11 @@ the end). throws an error if top level container is not an array */
 	delivery_operators?:PartialObjects["delivery_operator"][],
 			/** An aggregate relationship */
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate"],
-			delivery_radius?:number,
 			/** An object relationship */
 	description?:PartialObjects["translation"],
 			description_id?:number,
 			id?:number,
 			image?:string,
-			location?:PartialObjects["geography"],
 			name?:string,
 			open_status?:string,
 			service_provider_type?:string
@@ -15430,7 +15440,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate avg on columns */
 ["delivery_company_avg_fields"]: {
 		__typename?: "delivery_company_avg_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -15445,12 +15454,10 @@ the end). throws an error if top level container is not an array */
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
-	delivery_radius?:PartialObjects["Int_comparison_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
-	location?:PartialObjects["geography_comparison_exp"],
 	name?:PartialObjects["String_comparison_exp"],
 	open_status?:PartialObjects["String_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
@@ -15459,7 +15466,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_constraint"]:delivery_company_constraint,
 	/** input type for incrementing numeric columns in table "delivery.company" */
 ["delivery_company_inc_input"]: {
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 },
@@ -15469,12 +15475,10 @@ the end). throws an error if top level container is not an array */
 	creation_time?:PartialObjects["timestamptz"],
 	delivery_drivers?:PartialObjects["delivery_driver_arr_rel_insert_input"],
 	delivery_operators?:PartialObjects["delivery_operator_arr_rel_insert_input"],
-	delivery_radius?:number,
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -15483,7 +15487,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_max_fields"]: {
 		__typename?: "delivery_company_max_fields";
 			creation_time?:PartialObjects["timestamptz"],
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number,
 			image?:string,
@@ -15495,7 +15498,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_min_fields"]: {
 		__typename?: "delivery_company_min_fields";
 			creation_time?:PartialObjects["timestamptz"],
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number,
 			image?:string,
@@ -15529,12 +15531,10 @@ the end). throws an error if top level container is not an array */
 	creation_time?:PartialObjects["order_by"],
 	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_order_by"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_order_by"],
-	delivery_radius?:PartialObjects["order_by"],
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
-	location?:PartialObjects["order_by"],
 	name?:PartialObjects["order_by"],
 	open_status?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"]
@@ -15549,11 +15549,9 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_set_input"]: {
 	approved?:boolean,
 	creation_time?:PartialObjects["timestamptz"],
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -15561,21 +15559,18 @@ the end). throws an error if top level container is not an array */
 	/** aggregate stddev on columns */
 ["delivery_company_stddev_fields"]: {
 		__typename?: "delivery_company_stddev_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["delivery_company_stddev_pop_fields"]: {
 		__typename?: "delivery_company_stddev_pop_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["delivery_company_stddev_samp_fields"]: {
 		__typename?: "delivery_company_stddev_samp_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -15590,11 +15585,9 @@ the end). throws an error if top level container is not an array */
 ["delivery_company_stream_cursor_value_input"]: {
 	approved?:boolean,
 	creation_time?:PartialObjects["timestamptz"],
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:PartialObjects["geography"],
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -15602,7 +15595,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate sum on columns */
 ["delivery_company_sum_fields"]: {
 		__typename?: "delivery_company_sum_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -15618,21 +15610,18 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["delivery_company_var_pop_fields"]: {
 		__typename?: "delivery_company_var_pop_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate var_samp on columns */
 ["delivery_company_var_samp_fields"]: {
 		__typename?: "delivery_company_var_samp_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
 	/** aggregate variance on columns */
 ["delivery_company_variance_fields"]: {
 		__typename?: "delivery_company_variance_fields";
-			delivery_radius?:number,
 			description_id?:number,
 			id?:number
 	},
@@ -15643,8 +15632,11 @@ the end). throws an error if top level container is not an array */
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
+			location_gps?:PartialObjects["geography"],
+			location_text?:string,
 			minimum_cost?:PartialObjects["money"],
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
 			service_provider_id?:number,
@@ -15693,7 +15685,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by avg() on columns of table "delivery.details" */
@@ -15703,6 +15696,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15715,6 +15709,8 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:PartialObjects["Float_comparison_exp"],
 	free_delivery_minimum_cost?:PartialObjects["money_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	location_gps?:PartialObjects["geography_comparison_exp"],
+	location_text?:PartialObjects["String_comparison_exp"],
 	minimum_cost?:PartialObjects["money_comparison_exp"],
 	radius?:PartialObjects["Int_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -15730,6 +15726,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
 	minimum_cost?:PartialObjects["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 },
@@ -15739,7 +15736,10 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
+	location_gps?:PartialObjects["geography"],
+	location_text?:string,
 	minimum_cost?:PartialObjects["money"],
+	/** in metres */
 	radius?:number,
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
 	service_provider_id?:number,
@@ -15752,8 +15752,10 @@ the end). throws an error if top level container is not an array */
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
+			location_text?:string,
 			minimum_cost?:PartialObjects["money"],
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number,
 			service_provider_type?:string
 	},
@@ -15763,7 +15765,9 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	location_text?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"]
@@ -15775,8 +15779,10 @@ the end). throws an error if top level container is not an array */
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
+			location_text?:string,
 			minimum_cost?:PartialObjects["money"],
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number,
 			service_provider_type?:string
 	},
@@ -15786,7 +15792,9 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	location_text?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"]
@@ -15811,6 +15819,8 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	location_gps?:PartialObjects["order_by"],
+	location_text?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
 	radius?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
@@ -15829,7 +15839,10 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
+	location_gps?:PartialObjects["geography"],
+	location_text?:string,
 	minimum_cost?:PartialObjects["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -15842,7 +15855,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by stddev() on columns of table "delivery.details" */
@@ -15852,6 +15866,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15863,7 +15878,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by stddev_pop() on columns of table "delivery.details" */
@@ -15873,6 +15889,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15884,7 +15901,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by stddev_samp() on columns of table "delivery.details" */
@@ -15894,6 +15912,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15910,7 +15929,10 @@ the end). throws an error if top level container is not an array */
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
+	location_gps?:PartialObjects["geography"],
+	location_text?:string,
 	minimum_cost?:PartialObjects["money"],
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -15923,7 +15945,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
 			minimum_cost?:PartialObjects["money"],
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by sum() on columns of table "delivery.details" */
@@ -15933,6 +15956,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15953,7 +15977,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by var_pop() on columns of table "delivery.details" */
@@ -15963,6 +15988,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15974,7 +16000,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by var_samp() on columns of table "delivery.details" */
@@ -15984,6 +16011,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -15995,7 +16023,8 @@ the end). throws an error if top level container is not an array */
 			free_delivery_minimum_cost?:number,
 			id?:number,
 			minimum_cost?:number,
-			radius?:number,
+			/** in metres */
+	radius?:number,
 			service_provider_id?:number
 	},
 	/** order by variance() on columns of table "delivery.details" */
@@ -16005,6 +16034,7 @@ the end). throws an error if top level container is not an array */
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	minimum_cost?:PartialObjects["order_by"],
+	/** in metres */
 	radius?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"]
 },
@@ -24413,8 +24443,10 @@ the end). throws an error if top level container is not an array */
 			/** An aggregate relationship */
 	items_aggregate?:PartialObjects["restaurant_item_aggregate"],
 			language_id?:string,
-			location_gps?:PartialObjects["geography"],
-			location_text?:string,
+			/** A computed field, executes function "restaurant_location_gps" */
+	location_gps?:PartialObjects["geography"],
+			/** A computed field, executes function "restaurant_location_text" */
+	location_text?:string,
 			name?:string,
 			/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -24574,8 +24606,6 @@ requirements: string[] | null; email: string | null } */
 	image?:string,
 	items?:PartialObjects["restaurant_item_arr_rel_insert_input"],
 	language_id?:string,
-	location_gps?:PartialObjects["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -24599,7 +24629,6 @@ requirements: string[] | null; email: string | null } */
 			id?:number,
 			image?:string,
 			language_id?:string,
-			location_text?:string,
 			name?:string,
 			/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -24614,7 +24643,6 @@ requirements: string[] | null; email: string | null } */
 			id?:number,
 			image?:string,
 			language_id?:string,
-			location_text?:string,
 			name?:string,
 			/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -24702,8 +24730,6 @@ requirements: string[] | null; email: string | null } */
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:PartialObjects["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -24755,8 +24781,6 @@ requirements: string[] | null; email: string | null } */
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:PartialObjects["geography"],
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -28707,13 +28731,11 @@ export type delivery_company = {
 	delivery_operators:delivery_operator[],
 	/** An aggregate relationship */
 	delivery_operators_aggregate:delivery_operator_aggregate,
-	delivery_radius:number,
 	/** An object relationship */
 	description?:translation,
 	description_id?:number,
 	id:number,
 	image:string,
-	location:geography,
 	name:string,
 	open_status:string,
 	service_provider_type:string
@@ -28745,7 +28767,6 @@ export type delivery_company_aggregate_fields = {
 /** aggregate avg on columns */
 export type delivery_company_avg_fields = {
 	__typename?: "delivery_company_avg_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28761,12 +28782,10 @@ export type delivery_company_bool_exp = {
 	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
 	delivery_operators?:delivery_operator_bool_exp,
 	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
-	delivery_radius?:Int_comparison_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
-	location?:geography_comparison_exp,
 	name?:String_comparison_exp,
 	open_status?:String_comparison_exp,
 	service_provider_type?:String_comparison_exp
@@ -28779,8 +28798,7 @@ export enum delivery_company_constraint {
 
 /** input type for incrementing numeric columns in table "delivery.company" */
 export type delivery_company_inc_input = {
-		delivery_radius?:number,
-	description_id?:number,
+		description_id?:number,
 	id?:number
 }
 
@@ -28790,12 +28808,10 @@ export type delivery_company_insert_input = {
 	creation_time?:timestamptz,
 	delivery_drivers?:delivery_driver_arr_rel_insert_input,
 	delivery_operators?:delivery_operator_arr_rel_insert_input,
-	delivery_radius?:number,
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -28805,7 +28821,6 @@ export type delivery_company_insert_input = {
 export type delivery_company_max_fields = {
 	__typename?: "delivery_company_max_fields",
 	creation_time?:timestamptz,
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
@@ -28818,7 +28833,6 @@ export type delivery_company_max_fields = {
 export type delivery_company_min_fields = {
 	__typename?: "delivery_company_min_fields",
 	creation_time?:timestamptz,
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
@@ -28856,12 +28870,10 @@ export type delivery_company_order_by = {
 	creation_time?:order_by,
 	delivery_drivers_aggregate?:delivery_driver_aggregate_order_by,
 	delivery_operators_aggregate?:delivery_operator_aggregate_order_by,
-	delivery_radius?:order_by,
 	description?:translation_order_by,
 	description_id?:order_by,
 	id?:order_by,
 	image?:order_by,
-	location?:order_by,
 	name?:order_by,
 	open_status?:order_by,
 	service_provider_type?:order_by
@@ -28876,11 +28888,9 @@ export type delivery_company_pk_columns_input = {
 export enum delivery_company_select_column {
 	approved = "approved",
 	creation_time = "creation_time",
-	delivery_radius = "delivery_radius",
 	description_id = "description_id",
 	id = "id",
 	image = "image",
-	location = "location",
 	name = "name",
 	open_status = "open_status",
 	service_provider_type = "service_provider_type"
@@ -28890,11 +28900,9 @@ export enum delivery_company_select_column {
 export type delivery_company_set_input = {
 		approved?:boolean,
 	creation_time?:timestamptz,
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -28903,7 +28911,6 @@ export type delivery_company_set_input = {
 /** aggregate stddev on columns */
 export type delivery_company_stddev_fields = {
 	__typename?: "delivery_company_stddev_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28911,7 +28918,6 @@ export type delivery_company_stddev_fields = {
 /** aggregate stddev_pop on columns */
 export type delivery_company_stddev_pop_fields = {
 	__typename?: "delivery_company_stddev_pop_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28919,7 +28925,6 @@ export type delivery_company_stddev_pop_fields = {
 /** aggregate stddev_samp on columns */
 export type delivery_company_stddev_samp_fields = {
 	__typename?: "delivery_company_stddev_samp_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28936,11 +28941,9 @@ export type delivery_company_stream_cursor_input = {
 export type delivery_company_stream_cursor_value_input = {
 		approved?:boolean,
 	creation_time?:timestamptz,
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number,
 	image?:string,
-	location?:geography,
 	name?:string,
 	open_status?:string,
 	service_provider_type?:string
@@ -28949,7 +28952,6 @@ export type delivery_company_stream_cursor_value_input = {
 /** aggregate sum on columns */
 export type delivery_company_sum_fields = {
 	__typename?: "delivery_company_sum_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28958,11 +28960,9 @@ export type delivery_company_sum_fields = {
 export enum delivery_company_update_column {
 	approved = "approved",
 	creation_time = "creation_time",
-	delivery_radius = "delivery_radius",
 	description_id = "description_id",
 	id = "id",
 	image = "image",
-	location = "location",
 	name = "name",
 	open_status = "open_status",
 	service_provider_type = "service_provider_type"
@@ -28979,7 +28979,6 @@ export type delivery_company_updates = {
 /** aggregate var_pop on columns */
 export type delivery_company_var_pop_fields = {
 	__typename?: "delivery_company_var_pop_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28987,7 +28986,6 @@ export type delivery_company_var_pop_fields = {
 /** aggregate var_samp on columns */
 export type delivery_company_var_samp_fields = {
 	__typename?: "delivery_company_var_samp_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -28995,7 +28993,6 @@ export type delivery_company_var_samp_fields = {
 /** aggregate variance on columns */
 export type delivery_company_variance_fields = {
 	__typename?: "delivery_company_variance_fields",
-	delivery_radius?:number,
 	description_id?:number,
 	id?:number
 }
@@ -29007,7 +29004,10 @@ export type delivery_details = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id:number,
+	location_gps:geography,
+	location_text?:string,
 	minimum_cost:money,
+	/** in metres */
 	radius:number,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
@@ -29061,6 +29061,7 @@ export type delivery_details_avg_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29072,6 +29073,7 @@ export type delivery_details_avg_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29085,6 +29087,8 @@ export type delivery_details_bool_exp = {
 	free_delivery_km_range?:Float_comparison_exp,
 	free_delivery_minimum_cost?:money_comparison_exp,
 	id?:Int_comparison_exp,
+	location_gps?:geography_comparison_exp,
+	location_text?:String_comparison_exp,
 	minimum_cost?:money_comparison_exp,
 	radius?:Int_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -29105,6 +29109,7 @@ export type delivery_details_inc_input = {
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29115,7 +29120,10 @@ export type delivery_details_insert_input = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
+	location_gps?:geography,
+	location_text?:string,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
 	service_provider_id?:number,
@@ -29129,7 +29137,9 @@ export type delivery_details_max_fields = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
+	location_text?:string,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -29141,7 +29151,9 @@ export type delivery_details_max_order_by = {
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
+	location_text?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by,
 	service_provider_type?:order_by
@@ -29154,7 +29166,9 @@ export type delivery_details_min_fields = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
+	location_text?:string,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -29166,7 +29180,9 @@ export type delivery_details_min_order_by = {
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
+	location_text?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by,
 	service_provider_type?:order_by
@@ -29194,6 +29210,8 @@ export type delivery_details_order_by = {
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
+	location_gps?:order_by,
+	location_text?:order_by,
 	minimum_cost?:order_by,
 	radius?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
@@ -29212,6 +29230,8 @@ export enum delivery_details_select_column {
 	free_delivery_km_range = "free_delivery_km_range",
 	free_delivery_minimum_cost = "free_delivery_minimum_cost",
 	id = "id",
+	location_gps = "location_gps",
+	location_text = "location_text",
 	minimum_cost = "minimum_cost",
 	radius = "radius",
 	service_provider_id = "service_provider_id",
@@ -29224,7 +29244,10 @@ export type delivery_details_set_input = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
+	location_gps?:geography,
+	location_text?:string,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -29238,6 +29261,7 @@ export type delivery_details_stddev_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29249,6 +29273,7 @@ export type delivery_details_stddev_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29261,6 +29286,7 @@ export type delivery_details_stddev_pop_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29272,6 +29298,7 @@ export type delivery_details_stddev_pop_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29284,6 +29311,7 @@ export type delivery_details_stddev_samp_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29295,6 +29323,7 @@ export type delivery_details_stddev_samp_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29313,7 +29342,10 @@ export type delivery_details_stream_cursor_value_input = {
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
+	location_gps?:geography,
+	location_text?:string,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
@@ -29327,6 +29359,7 @@ export type delivery_details_sum_fields = {
 	free_delivery_minimum_cost?:money,
 	id?:number,
 	minimum_cost?:money,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29338,6 +29371,7 @@ export type delivery_details_sum_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29348,6 +29382,8 @@ export enum delivery_details_update_column {
 	free_delivery_km_range = "free_delivery_km_range",
 	free_delivery_minimum_cost = "free_delivery_minimum_cost",
 	id = "id",
+	location_gps = "location_gps",
+	location_text = "location_text",
 	minimum_cost = "minimum_cost",
 	radius = "radius",
 	service_provider_id = "service_provider_id",
@@ -29370,6 +29406,7 @@ export type delivery_details_var_pop_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29381,6 +29418,7 @@ export type delivery_details_var_pop_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29393,6 +29431,7 @@ export type delivery_details_var_samp_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29404,6 +29443,7 @@ export type delivery_details_var_samp_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -29416,6 +29456,7 @@ export type delivery_details_variance_fields = {
 	free_delivery_minimum_cost?:number,
 	id?:number,
 	minimum_cost?:number,
+	/** in metres */
 	radius?:number,
 	service_provider_id?:number
 }
@@ -29427,6 +29468,7 @@ export type delivery_details_variance_order_by = {
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
 	minimum_cost?:order_by,
+	/** in metres */
 	radius?:order_by,
 	service_provider_id?:order_by
 }
@@ -39126,8 +39168,10 @@ export type restaurant_restaurant = {
 	/** An aggregate relationship */
 	items_aggregate:restaurant_item_aggregate,
 	language_id:string,
-	location_gps:geography,
-	location_text:string,
+	/** A computed field, executes function "restaurant_location_gps" */
+	location_gps?:geography,
+	/** A computed field, executes function "restaurant_location_text" */
+	location_text?:string,
 	name:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status:string,
@@ -39301,8 +39345,6 @@ export type restaurant_restaurant_insert_input = {
 	image?:string,
 	items?:restaurant_item_arr_rel_insert_input,
 	language_id?:string,
-	location_gps?:geography,
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -39327,7 +39369,6 @@ export type restaurant_restaurant_max_fields = {
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -39343,7 +39384,6 @@ export type restaurant_restaurant_min_fields = {
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -39433,8 +39473,6 @@ export enum restaurant_restaurant_select_column {
 	id = "id",
 	image = "image",
 	language_id = "language_id",
-	location_gps = "location_gps",
-	location_text = "location_text",
 	name = "name",
 	open_status = "open_status",
 	schedule = "schedule",
@@ -39458,8 +39496,6 @@ export type restaurant_restaurant_set_input = {
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:geography,
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -39516,8 +39552,6 @@ export type restaurant_restaurant_stream_cursor_value_input = {
 	id?:number,
 	image?:string,
 	language_id?:string,
-	location_gps?:geography,
-	location_text?:string,
 	name?:string,
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
@@ -39549,8 +39583,6 @@ export enum restaurant_restaurant_update_column {
 	id = "id",
 	image = "image",
 	language_id = "language_id",
-	location_gps = "location_gps",
-	location_text = "location_text",
 	name = "name",
 	open_status = "open_status",
 	schedule = "schedule",
@@ -45269,12 +45301,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_radius:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_bool_exp",
 			array:false,
@@ -45295,12 +45321,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location:{
-			type:"geography_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -45326,12 +45346,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_company_constraint: "enum",
 	delivery_company_inc_input:{
-		delivery_radius:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -45370,12 +45384,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_radius:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_obj_rel_insert_input",
 			array:false,
@@ -45396,12 +45404,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location:{
-			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -45484,12 +45486,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_radius:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_order_by",
 			array:false,
@@ -45509,12 +45505,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		image:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -45561,12 +45551,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_radius:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -45581,12 +45565,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location:{
-			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -45637,12 +45615,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_radius:{
-			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description_id:{
 			type:"Int",
 			array:false,
@@ -45657,12 +45629,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		image:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location:{
-			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -45878,6 +45844,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		location_gps:{
+			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		minimum_cost:{
 			type:"money_comparison_exp",
 			array:false,
@@ -45979,6 +45957,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		minimum_cost:{
 			type:"money",
 			array:false,
@@ -46035,6 +46025,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		location_text:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		minimum_cost:{
 			type:"order_by",
 			array:false,
@@ -46080,6 +46076,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -46155,6 +46157,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		location_gps:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		minimum_cost:{
 			type:"order_by",
 			array:false,
@@ -46216,6 +46230,18 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -46412,6 +46438,18 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_text:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -73403,18 +73441,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		location_gps:{
-			type:"geography",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location_text:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		name:{
 			type:"String",
 			array:false,
@@ -73764,18 +73790,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		location_gps:{
-			type:"geography",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location_text:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		name:{
 			type:"String",
 			array:false,
@@ -73883,18 +73897,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		language_id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location_gps:{
-			type:"geography",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		location_text:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -82310,12 +82312,10 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_drivers_aggregate:"delivery_driver_aggregate",
 		delivery_operators:"delivery_operator",
 		delivery_operators_aggregate:"delivery_operator_aggregate",
-		delivery_radius:"Int",
 		description:"translation",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
-		location:"geography",
 		name:"String",
 		open_status:"String",
 		service_provider_type:"String"
@@ -82338,13 +82338,11 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"delivery_company_variance_fields"
 	},
 	delivery_company_avg_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_max_fields:{
 		creation_time:"timestamptz",
-		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
@@ -82354,7 +82352,6 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_company_min_fields:{
 		creation_time:"timestamptz",
-		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int",
 		image:"String",
@@ -82367,37 +82364,30 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"delivery_company"
 	},
 	delivery_company_stddev_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_stddev_pop_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_stddev_samp_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_sum_fields:{
-		delivery_radius:"Int",
 		description_id:"Int",
 		id:"Int"
 	},
 	delivery_company_var_pop_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_var_samp_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
 	delivery_company_variance_fields:{
-		delivery_radius:"Float",
 		description_id:"Float",
 		id:"Float"
 	},
@@ -82406,6 +82396,8 @@ export const ReturnTypes: Record<string,any> = {
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
+		location_gps:"geography",
+		location_text:"String",
 		minimum_cost:"money",
 		radius:"Int",
 		restaurant:"restaurant_restaurant",
@@ -82443,6 +82435,7 @@ export const ReturnTypes: Record<string,any> = {
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
+		location_text:"String",
 		minimum_cost:"money",
 		radius:"Int",
 		service_provider_id:"Int",
@@ -82453,6 +82446,7 @@ export const ReturnTypes: Record<string,any> = {
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
+		location_text:"String",
 		minimum_cost:"money",
 		radius:"Int",
 		service_provider_id:"Int",
@@ -85301,7 +85295,6 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Int",
 		image:"String",
 		language_id:"String",
-		location_text:"String",
 		name:"String",
 		open_status:"String",
 		service_provider_type:"String"
@@ -85313,7 +85306,6 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Int",
 		image:"String",
 		language_id:"String",
-		location_text:"String",
 		name:"String",
 		open_status:"String",
 		service_provider_type:"String"
