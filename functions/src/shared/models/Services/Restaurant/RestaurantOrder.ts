@@ -19,7 +19,7 @@ export interface RestaurantOrder {
   deliveryId?: number;
   status: RestaurantOrderStatus;
   reviewId?: number;
-  orderType: RestaurantOrderType;
+  deliveryType: DeliveryType;
   orderTime?: string;
   firebaseId?: string;
   customerAppType: AppType;
@@ -71,7 +71,7 @@ export enum DeliveryMode {
   None = "none",
 }
 
-export enum RestaurantOrderType {
+export enum DeliveryType {
   Pickup = "pickup",
   Delivery = "delivery",
 }

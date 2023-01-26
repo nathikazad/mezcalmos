@@ -10,8 +10,9 @@ import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/
 import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
+import { Language } from "../../../../functions/src/shared/models/Generic/Generic";
 
-process.env.FUNCTIONS_EMULATOR = "true";
+// process.env.FUNCTIONS_EMULATOR = "true";
 var serviceAccount = require("./../../../../../../../../service_account_production.json");
 
 const firebase = firebaseAdmin.initializeApp({
@@ -26,11 +27,11 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/orders/past/restaurant`).once('value')).val();
+  let db = (await firebase.database().ref(`/deliveryDrivers/info`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot-restaurant-orders.json", data);
+  fs.writeFileSync("./data/db-snapshot-delivery-drivers.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -356,64 +357,101 @@ async function writeToDBRestoOrders() {
   let orders = JSON.parse(
     fs.readFileSync('./data/db-snapshot-restaurant-orders.json').toString()
   );
-  let array = []
-  for (let orderId of Object.keys(orders)) {
-    let order = orders[orderId]
-    if (!order)
-      continue
+  let chain = getHasura();
 
-    let itemArray = [];
-    let orderItems = order.items
-    for(let itemFirebaseId in orderItems) {
-      let orderItem = orderItems[itemFirebaseId];
-      if(!orderItem)
+  let response = await chain.query({
+    restaurant_restaurant: [{}, {
+        id: true,
+        firebase_id: true,
+        items: [{}, {
+            id: true,
+            name: {
+                translations: [{
+                    where: {
+                        language_id: {
+                            _eq: Language.EN
+                        }
+                    }
+                }, {
+                    value: true
+                }]
+            }
+        }]
+    }],
+    user: [{}, {
+        id: true,
+        firebase_id: true,
+    }],
+    customer_customer: [{}, {
+        user_id: true,
+        user: {
+            firebase_id: true
+        }
+    }]
+});
+  // for(let i=600; i<2800; i+=200) {
+    // console.log(i)
+    let array = []
+    for (let orderId of Object.keys(orders).slice(2891, 2981)) {
+      let order = orders[orderId]
+      if (!order)
         continue
-
-      let orderItemObject = {
-        itemName: orderItem.name.en,
-        inJSON: JSON.stringify({
-          name: orderItem.name,
-          selected_options: orderItem.chosenChoices
-        }),
-        notes: orderItem.notes,
-        unavailable: orderItem.unavailable,
-        quantity: orderItem.quantity,
-        costPerOne: orderItem.costPerOne
+  
+      let itemArray = [];
+      let orderItems = order.items
+      for(let itemFirebaseId in orderItems) {
+        let orderItem = orderItems[itemFirebaseId];
+        if(!orderItem)
+          continue
+  
+        let orderItemObject = {
+          itemName: orderItem.name.en,
+          inJSON: JSON.stringify({
+            name: orderItem.name,
+            selected_options: orderItem.chosenChoices
+          }),
+          notes: orderItem.notes,
+          unavailable: orderItem.unavailable,
+          quantity: orderItem.quantity,
+          costPerOne: orderItem.costPerOne
+        }
+        itemArray.push(orderItemObject)
       }
-      itemArray.push(orderItemObject)
-    }
-
-    let orderObject = {
-      customerFirebaseId: order.customer.id,
-      restaurantFirebaseId: order.restaurant.id,
-      paymentType: order.PaymentType,
-      toLocationGps: (order.to) ? JSON.stringify({
-        "type": "Point",
-        "coordinates": [order.to.lng, order.to.lat]
-      }) : undefined,
-      toLocationAddress: (order.to) ? order.to.address : undefined,
-      estimatedFoodReadyTime: order.estimatedFoodReadyTime,
-      // stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
-      status: order.status,
-      orderTime: order.orderTime,
-      firebaseId: orderId,
-      notes: order.notes,
-      deliveryCost: order.shippingCost,
-      refundAmount: order.refundAmount,
-      stripeInfo: order.stripePaymentInfo,
-      stripeFees: (order.stripePaymentInfo) ? order.stripePaymentInfo.stripeFees : order.stripeFees,
-      items: itemArray,
-      review: (order.review) ? {
-        rating: order.review.rating,
-        note: order.review.comment,
-        createdAt: order.review.reviewTime
-      }: undefined
+  
+      let orderObject = {
+        customerFirebaseId: order.customer.id,
+        restaurantFirebaseId: order.restaurant.id,
+        paymentType: order.PaymentType,
+        toLocationGps: (order.to) ? JSON.stringify({
+          "type": "Point",
+          "coordinates": [order.to.lng, order.to.lat]
+        }) : undefined,
+        toLocationAddress: (order.to) ? order.to.address : undefined,
+        estimatedFoodReadyTime: order.estimatedFoodReadyTime,
+        // stripePaymentId: (order.stripePaymentInfo) ? order.stripePaymentInfo.id : undefined,
+        status: order.status,
+        orderTime: order.orderTime,
+        firebaseId: orderId,
+        notes: order.notes,
+        deliveryCost: order.shippingCost,
+        refundAmount: order.refundAmount,
+        stripeInfo: order.stripePaymentInfo,
+        stripeFees: (order.stripePaymentInfo) ? order.stripePaymentInfo.stripeFees : order.stripeFees,
+        items: itemArray,
+        review: (order.review) ? {
+          rating: order.review.rating,
+          note: order.review.comment,
+          createdAt: order.review.reviewTime
+        }: undefined
+      }
+      
+      array.push(orderObject)
+      // break;
     }
     
-    array.push(orderObject)
-    // break;
-  }
-  await insertRestaurantOrders(array)
+    await insertRestaurantOrders(array, response)
+  // }
+ 
 }
 
 async function writeToDBCustomers() {
@@ -451,6 +489,6 @@ async function writeToDBCustomers() {
   // writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
-// writeToDBDeliDrivers()
+writeToDBDeliDrivers()
 // writeToDBCustomers()
-writeToDBRestoOrders()
+// writeToDBRestoOrders()

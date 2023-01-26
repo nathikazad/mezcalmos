@@ -3,6 +3,7 @@ import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType } from "../../models/Generic/Generic";
 import { OperatorStatus, Restaurant } from "../../models/Services/Restaurant/Restaurant";
+import { ServiceProviderType } from "../../models/Services/Service";
 
 export async function createRestaurant(
   restaurant: Restaurant, 
@@ -17,29 +18,26 @@ export async function createRestaurant(
       object: {
         name: restaurant.name,
         
-      
         image: restaurant.image,
-        location_gps: JSON.stringify({
-            "type": "point",
-            "coordinates": [restaurant.location.lng, restaurant.location.lat]
-          }),
-        location_text: restaurant.location.address,
-       schedule: JSON.stringify(restaurant.schedule),
+        schedule: JSON.stringify(restaurant.schedule),
         firebase_id: restaurant.firebaseId ?? undefined,
-       
+        self_delivery: restaurant.selfDelivery,
+        delivery: restaurant.delivery,
+        customer_pickup: restaurant.customerPickup,
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
             status: OperatorStatus.Authorized,
             owner: true,
           }]
-        }
+        },
       }
     }, {
       service_provider_type : true,
       id: true
     }],
   });
+
   console.log("response: ", response);
 
   if(response.insert_restaurant_restaurant_one == null) {
@@ -48,7 +46,52 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
-  
+  await chain.mutation({
+    insert_service_provider_location_one: [{
+      object: {
+        service_provider_id: response.insert_restaurant_restaurant_one.id,
+        service_provider_type: ServiceProviderType.Restaurant,
+        gps: JSON.stringify({
+          "type": "point",
+          "coordinates": [restaurant.location.lng, restaurant.location.lat]
+        }),
+        address: restaurant.location.address
+      }
+    }, {
+      id: true,
+    }]
+  });
+  if(restaurant.deliveryPartnerId) {
+    await chain.mutation({
+      insert_service_provider_delivery_partner_one: [{
+        object: {
+          delivery_company_id: restaurant.deliveryPartnerId,
+          service_provider_id: response.insert_restaurant_restaurant_one.id,
+          service_provider_type: ServiceProviderType.Restaurant
+        }
+      }, {
+        id: true,
+      }]
+    });
+  }
+  if(restaurant.deliveryDetails) {
+    await chain.mutation({
+      insert_delivery_details_one: [{
+        object: {
+          minimum_cost: restaurant.deliveryDetails.minimumCost,
+          cost_per_km: restaurant.deliveryDetails.costPerKm,
+          service_provider_id: response.insert_restaurant_restaurant_one?.id,
+          service_provider_type: ServiceProviderType.Restaurant,
+          radius: restaurant.deliveryDetails.radius,
+          free_delivery_minimum_cost: restaurant.deliveryDetails.freeDeliveryMinimumCost,
+          free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange,
+        }
+      }, {
+        service_provider_id: true,
+        service_provider_type: true,
+      }]
+    });
+  }
   
   // Generating 3 links/Qr
   let restaurantOpLinks : IDeepLink|null = await generateDeepLink("Restaurant", {"providerId": response.insert_restaurant_restaurant_one.id, "deepLinkType": "addRestaurantOperator"})

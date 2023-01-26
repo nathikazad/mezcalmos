@@ -1,0 +1,12 @@
+table:
+  name: delivery_partner
+  schema: service_provider
+select_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - delivery_company_id
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}

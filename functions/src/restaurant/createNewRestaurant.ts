@@ -9,6 +9,7 @@ import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
 import { HttpsError } from "firebase-functions/v1/auth";
+import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 
 export interface RestaurantDetails {
   name: string,
@@ -16,11 +17,29 @@ export interface RestaurantDetails {
   location: Location,
   schedule:JSON,
   restaurantOperatorNotificationToken?: string,
-  firebaseId?: string
+  firebaseId?: string,
+  delivery: boolean,
+  customerPickup: boolean,
+  selfDelivery?: boolean,
+  deliveryPartnerId?: number,
+  deliveryDetails?: DeliveryDetails
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
   try {
+    if(restaurantDetails.delivery) {
+      if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
+        throw new HttpsError(
+          "unknown",
+          "Restaurant delivery details not provided"
+        );
+      } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+        throw new HttpsError(
+          "unknown",
+          "delivery partner not specified"
+        );
+      }
+    }
     let userPromise = getUser(userId);
     let mezAdminsPromise = getMezAdmins();
     let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
@@ -31,17 +50,16 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
       image: restaurantDetails.image,
       location: restaurantDetails.location,
       schedule: restaurantDetails.schedule,
-      selfDelivery: false,
-      
-    
-   
-  }
+      selfDelivery: restaurantDetails.selfDelivery ?? false,
+      customerPickup: restaurantDetails.customerPickup,
+      delivery: restaurantDetails.delivery,
+      deliveryPartnerId: restaurantDetails.deliveryPartnerId,
+      deliveryDetails: restaurantDetails.deliveryDetails
+    }
     restaurant.firebaseId = restaurantDetails.firebaseId
 
-
-      await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+    await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
     
-
     notifyAdmins(mezAdmins, restaurant);
 
     return { status: ServerResponseStatus.Success };

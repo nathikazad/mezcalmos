@@ -1,4 +1,4 @@
-import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { DeliveryType, orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
@@ -38,15 +38,9 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
     console.log("[+] getRestaurantOperators " , restaurantOperatorsPromise);
 
-    let deliveryPromise = getDeliveryOrder(order.deliveryId!);
-    console.log("[+] getDeliveryOrder " , deliveryPromise);
-
-    //delivery id assumed to be not null
-
-    let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise, deliveryPromise]);
+    let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
     let mezAdmins: MezAdmin[] = promiseResponse[0];
     let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
-    let deliveryOrder: DeliveryOrder = promiseResponse[2];
     if (order == null) {
       throw new HttpsError(
         "internal",
@@ -102,8 +96,7 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     order.status = RestaurantOrderStatus.CancelledByCustomer;
 
     updateRestaurantOrderStatus(order)
-    deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
-    updateDeliveryOrderStatus(deliveryOrder);
+    
     
     let notification: Notification = {
       foreground: <RestaurantOrderStatusChangeNotification>{
@@ -123,15 +116,20 @@ export async function cancelOrderFromCustomer(userId: number, data: any) {
     restaurantOperators.forEach((r) => {
       pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
     });
-    if(order.deliveryId != undefined) {
-      let delivery: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
-      if(delivery.deliveryDriver != undefined) {
+
+    if(order.deliveryType == DeliveryType.Delivery && order.deliveryId) {
+
+      let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
+
+      deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+      updateDeliveryOrderStatus(deliveryOrder);
+      if(deliveryOrder.deliveryDriver != undefined) {
         notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-        pushNotification(delivery.deliveryDriver.user?.firebaseId!, 
+        pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!, 
           notification, 
-          delivery.deliveryDriver.notificationInfo,
+          deliveryOrder.deliveryDriver.notificationInfo,
           ParticipantType.DeliveryDriver,
-          delivery.deliveryDriver.user?.language,
+          deliveryOrder.deliveryDriver.user?.language,
         );
       }
     }
