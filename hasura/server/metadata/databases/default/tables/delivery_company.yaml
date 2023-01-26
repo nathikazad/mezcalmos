@@ -41,14 +41,13 @@ select_permissions:
     permission:
       columns:
         - approved
-        - delivery_details_id
+        - creation_time
         - description_id
         - id
         - image
         - name
         - open_status
         - service_provider_type
-        - creation_time
       filter:
         delivery_operators:
           user_id:
@@ -57,14 +56,13 @@ select_permissions:
     permission:
       columns:
         - approved
-        - delivery_details_id
+        - creation_time
         - description_id
         - id
         - image
         - name
         - open_status
         - service_provider_type
-        - creation_time
       filter:
         _exists:
           _table:
@@ -77,14 +75,13 @@ select_permissions:
     permission:
       columns:
         - approved
-        - delivery_details_id
+        - creation_time
         - description_id
         - id
         - image
         - name
         - open_status
         - service_provider_type
-        - creation_time
       filter: {}
 update_permissions:
   - role: delivery_operator

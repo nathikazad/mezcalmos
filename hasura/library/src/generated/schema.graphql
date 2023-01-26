@@ -1882,10 +1882,6 @@ type delivery_company {
   approved: Boolean!
   creation_time: timestamptz!
 
-  """An object relationship"""
-  delivery_details: delivery_details!
-  delivery_details_id: Int!
-
   """An array relationship"""
   delivery_drivers(
     """distinct select on columns"""
@@ -1998,7 +1994,6 @@ type delivery_company_aggregate_fields {
 
 """aggregate avg on columns"""
 type delivery_company_avg_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -2012,8 +2007,6 @@ input delivery_company_bool_exp {
   _or: [delivery_company_bool_exp!]
   approved: Boolean_comparison_exp
   creation_time: timestamptz_comparison_exp
-  delivery_details: delivery_details_bool_exp
-  delivery_details_id: Int_comparison_exp
   delivery_drivers: delivery_driver_bool_exp
   delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   delivery_operators: delivery_operator_bool_exp
@@ -2042,7 +2035,6 @@ enum delivery_company_constraint {
 input type for incrementing numeric columns in table "delivery.company"
 """
 input delivery_company_inc_input {
-  delivery_details_id: Int
   description_id: Int
   id: Int
 }
@@ -2053,8 +2045,6 @@ input type for inserting data into table "delivery.company"
 input delivery_company_insert_input {
   approved: Boolean
   creation_time: timestamptz
-  delivery_details: delivery_details_obj_rel_insert_input
-  delivery_details_id: Int
   delivery_drivers: delivery_driver_arr_rel_insert_input
   delivery_operators: delivery_operator_arr_rel_insert_input
   description: translation_obj_rel_insert_input
@@ -2070,7 +2060,6 @@ input delivery_company_insert_input {
 """aggregate max on columns"""
 type delivery_company_max_fields {
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   id: Int
   image: String
@@ -2082,7 +2071,6 @@ type delivery_company_max_fields {
 """aggregate min on columns"""
 type delivery_company_min_fields {
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   id: Int
   image: String
@@ -2125,8 +2113,6 @@ input delivery_company_on_conflict {
 input delivery_company_order_by {
   approved: order_by
   creation_time: order_by
-  delivery_details: delivery_details_order_by
-  delivery_details_id: order_by
   delivery_drivers_aggregate: delivery_driver_aggregate_order_by
   delivery_operators_aggregate: delivery_operator_aggregate_order_by
   description: translation_order_by
@@ -2155,9 +2141,6 @@ enum delivery_company_select_column {
   creation_time
 
   """column name"""
-  delivery_details_id
-
-  """column name"""
   description_id
 
   """column name"""
@@ -2182,7 +2165,6 @@ input type for updating data in table "delivery.company"
 input delivery_company_set_input {
   approved: Boolean
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   id: Int
   image: String
@@ -2193,21 +2175,18 @@ input delivery_company_set_input {
 
 """aggregate stddev on columns"""
 type delivery_company_stddev_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type delivery_company_stddev_pop_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type delivery_company_stddev_samp_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -2227,7 +2206,6 @@ input delivery_company_stream_cursor_input {
 input delivery_company_stream_cursor_value_input {
   approved: Boolean
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   id: Int
   image: String
@@ -2238,7 +2216,6 @@ input delivery_company_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type delivery_company_sum_fields {
-  delivery_details_id: Int
   description_id: Int
   id: Int
 }
@@ -2252,9 +2229,6 @@ enum delivery_company_update_column {
 
   """column name"""
   creation_time
-
-  """column name"""
-  delivery_details_id
 
   """column name"""
   description_id
@@ -2288,21 +2262,18 @@ input delivery_company_updates {
 
 """aggregate var_pop on columns"""
 type delivery_company_var_pop_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate var_samp on columns"""
 type delivery_company_var_samp_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate variance on columns"""
 type delivery_company_variance_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -2535,16 +2506,6 @@ type delivery_details_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [delivery_details!]!
-}
-
-"""
-input type for inserting object relation for remote table "delivery.details"
-"""
-input delivery_details_obj_rel_insert_input {
-  data: delivery_details_insert_input!
-
-  """upsert condition"""
-  on_conflict: delivery_details_on_conflict
 }
 
 """
@@ -18995,7 +18956,6 @@ type restaurant_restaurant {
 
   """delivery on or off"""
   delivery: Boolean!
-  delivery_details_id: Int
 
   """
   A computed field, executes function "restaurant_delivery_details"
@@ -19142,9 +19102,6 @@ type restaurant_restaurant {
     """filter the rows returned"""
     where: restaurant_order_bool_exp
   ): restaurant_order_aggregate!
-
-  """An object relationship"""
-  restaurant_delivery_details: delivery_details
 
   """An array relationship"""
   restaurant_operators(
@@ -19293,7 +19250,6 @@ input restaurant_restaurant_append_input {
 
 """aggregate avg on columns"""
 type restaurant_restaurant_avg_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -19312,7 +19268,6 @@ input restaurant_restaurant_bool_exp {
   creation_time: timestamptz_comparison_exp
   customer_pickup: Boolean_comparison_exp
   delivery: Boolean_comparison_exp
-  delivery_details_id: Int_comparison_exp
   delivery_details_of_deliverer: delivery_details_bool_exp
   delivery_drivers: delivery_driver_bool_exp
   delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
@@ -19330,7 +19285,6 @@ input restaurant_restaurant_bool_exp {
   open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
   orders_aggregate: restaurant_order_aggregate_bool_exp
-  restaurant_delivery_details: delivery_details_bool_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   reviews: review_bool_exp
@@ -19410,7 +19364,6 @@ input restaurant_restaurant_delete_key_input {
 input type for incrementing numeric columns in table "restaurant.restaurant"
 """
 input restaurant_restaurant_inc_input {
-  delivery_details_id: Int
   description_id: Int
   id: Int
 }
@@ -19430,7 +19383,6 @@ input restaurant_restaurant_insert_input {
 
   """delivery on or off"""
   delivery: Boolean
-  delivery_details_id: Int
   delivery_drivers: delivery_driver_arr_rel_insert_input
   delivery_partner: service_provider_delivery_partner_obj_rel_insert_input
   description: translation_obj_rel_insert_input
@@ -19446,7 +19398,6 @@ input restaurant_restaurant_insert_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   orders: restaurant_order_arr_rel_insert_input
-  restaurant_delivery_details: delivery_details_obj_rel_insert_input
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   schedule: jsonb
@@ -19464,7 +19415,6 @@ input restaurant_restaurant_insert_input {
 """aggregate max on columns"""
 type restaurant_restaurant_max_fields {
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   firebase_id: String
   id: Int
@@ -19480,7 +19430,6 @@ type restaurant_restaurant_max_fields {
 """aggregate min on columns"""
 type restaurant_restaurant_min_fields {
   creation_time: timestamptz
-  delivery_details_id: Int
   description_id: Int
   firebase_id: String
   id: Int
@@ -19531,7 +19480,6 @@ input restaurant_restaurant_order_by {
   creation_time: order_by
   customer_pickup: order_by
   delivery: order_by
-  delivery_details_id: order_by
   delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
   delivery_drivers_aggregate: delivery_driver_aggregate_order_by
   delivery_partner: service_provider_delivery_partner_order_by
@@ -19546,7 +19494,6 @@ input restaurant_restaurant_order_by {
   name: order_by
   open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
-  restaurant_delivery_details: delivery_details_order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   schedule: order_by
@@ -19593,9 +19540,6 @@ enum restaurant_restaurant_select_column {
 
   """column name"""
   delivery
-
-  """column name"""
-  delivery_details_id
 
   """column name"""
   description_id
@@ -19645,7 +19589,6 @@ input restaurant_restaurant_set_input {
 
   """delivery on or off"""
   delivery: Boolean
-  delivery_details_id: Int
   description_id: Int
   firebase_id: String
   id: Int
@@ -19669,21 +19612,18 @@ input restaurant_restaurant_set_input {
 
 """aggregate stddev on columns"""
 type restaurant_restaurant_stddev_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_restaurant_stddev_pop_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_restaurant_stddev_samp_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -19711,7 +19651,6 @@ input restaurant_restaurant_stream_cursor_value_input {
 
   """delivery on or off"""
   delivery: Boolean
-  delivery_details_id: Int
   description_id: Int
   firebase_id: String
   id: Int
@@ -19735,7 +19674,6 @@ input restaurant_restaurant_stream_cursor_value_input {
 
 """aggregate sum on columns"""
 type restaurant_restaurant_sum_fields {
-  delivery_details_id: Int
   description_id: Int
   id: Int
 }
@@ -19758,9 +19696,6 @@ enum restaurant_restaurant_update_column {
 
   """column name"""
   delivery
-
-  """column name"""
-  delivery_details_id
 
   """column name"""
   description_id
@@ -19831,21 +19766,18 @@ input restaurant_restaurant_updates {
 
 """aggregate var_pop on columns"""
 type restaurant_restaurant_var_pop_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_restaurant_var_samp_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_restaurant_variance_fields {
-  delivery_details_id: Float
   description_id: Float
   id: Float
 }
@@ -21134,11 +21066,8 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
-<<<<<<< HEAD
 
   """filter the rows which have to be updated"""
-=======
->>>>>>> hsFlutter
   where: service_provider_location_bool_exp!
 }
 

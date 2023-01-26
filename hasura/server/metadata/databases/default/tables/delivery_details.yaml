@@ -2,6 +2,16 @@ table:
   name: details
   schema: delivery
 object_relationships:
+  - name: delivery_company
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: company
+          schema: delivery
   - name: location
     using:
       manual_configuration:
@@ -111,6 +121,24 @@ select_permissions:
         - service_provider_type
       filter: {}
 update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:
