@@ -1,7 +1,7 @@
 
 # Get all service 
-query getDeliveryCostByServiceProviderId($serviceProviderId: Int!) {
-  delivery_details(where: {service_provider_id: {_eq: $serviceProviderId}}) {
+query getDeliveryCostByServiceProviderId($serviceProviderId: Int!,$serviceType: String) {
+  delivery_details(where: {service_provider_id: {_eq: $serviceProviderId},service_provider_type: {_eq: $serviceType}}) {
     cost_per_km
     free_delivery_km_range
     free_delivery_minimum_cost

@@ -36,7 +36,9 @@ class DeliveryCostSettingViewController {
 
   Future<void> fetchDeliveryCost() async {
     deliveryCost.value = await get_delivery_cost(
-        serviceProviderId: serviceProviderId, withCache: false);
+        serviceProviderId: serviceProviderId,
+        withCache: false,
+        providerType: serviceProviderType);
     if (deliveryCost.value != null) {
       isEditing.value = true;
       freeKmRange.text =

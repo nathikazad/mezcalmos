@@ -5,10 +5,13 @@ import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getDeliveryCostByServiceProviderId {
-  factory Variables$Query$getDeliveryCostByServiceProviderId(
-          {required int serviceProviderId}) =>
+  factory Variables$Query$getDeliveryCostByServiceProviderId({
+    required int serviceProviderId,
+    String? serviceType,
+  }) =>
       Variables$Query$getDeliveryCostByServiceProviderId._({
         r'serviceProviderId': serviceProviderId,
+        if (serviceType != null) r'serviceType': serviceType,
       });
 
   Variables$Query$getDeliveryCostByServiceProviderId._(this._$data);
@@ -18,16 +21,25 @@ class Variables$Query$getDeliveryCostByServiceProviderId {
     final result$data = <String, dynamic>{};
     final l$serviceProviderId = data['serviceProviderId'];
     result$data['serviceProviderId'] = (l$serviceProviderId as int);
+    if (data.containsKey('serviceType')) {
+      final l$serviceType = data['serviceType'];
+      result$data['serviceType'] = (l$serviceType as String?);
+    }
     return Variables$Query$getDeliveryCostByServiceProviderId._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
   int get serviceProviderId => (_$data['serviceProviderId'] as int);
+  String? get serviceType => (_$data['serviceType'] as String?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$serviceProviderId = serviceProviderId;
     result$data['serviceProviderId'] = l$serviceProviderId;
+    if (_$data.containsKey('serviceType')) {
+      final l$serviceType = serviceType;
+      result$data['serviceType'] = l$serviceType;
+    }
     return result$data;
   }
 
@@ -52,13 +64,26 @@ class Variables$Query$getDeliveryCostByServiceProviderId {
     if (l$serviceProviderId != lOther$serviceProviderId) {
       return false;
     }
+    final l$serviceType = serviceType;
+    final lOther$serviceType = other.serviceType;
+    if (_$data.containsKey('serviceType') !=
+        other._$data.containsKey('serviceType')) {
+      return false;
+    }
+    if (l$serviceType != lOther$serviceType) {
+      return false;
+    }
     return true;
   }
 
   @override
   int get hashCode {
     final l$serviceProviderId = serviceProviderId;
-    return Object.hashAll([l$serviceProviderId]);
+    final l$serviceType = serviceType;
+    return Object.hashAll([
+      l$serviceProviderId,
+      _$data.containsKey('serviceType') ? l$serviceType : const {},
+    ]);
   }
 }
 
@@ -73,7 +98,10 @@ abstract class CopyWith$Variables$Query$getDeliveryCostByServiceProviderId<
           TRes res) =
       _CopyWithStubImpl$Variables$Query$getDeliveryCostByServiceProviderId;
 
-  TRes call({int? serviceProviderId});
+  TRes call({
+    int? serviceProviderId,
+    String? serviceType,
+  });
 }
 
 class _CopyWithImpl$Variables$Query$getDeliveryCostByServiceProviderId<TRes>
@@ -90,11 +118,15 @@ class _CopyWithImpl$Variables$Query$getDeliveryCostByServiceProviderId<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? serviceProviderId = _undefined}) =>
+  TRes call({
+    Object? serviceProviderId = _undefined,
+    Object? serviceType = _undefined,
+  }) =>
       _then(Variables$Query$getDeliveryCostByServiceProviderId._({
         ..._instance._$data,
         if (serviceProviderId != _undefined && serviceProviderId != null)
           'serviceProviderId': (serviceProviderId as int),
+        if (serviceType != _undefined) 'serviceType': (serviceType as String?),
       }));
 }
 
@@ -106,7 +138,11 @@ class _CopyWithStubImpl$Variables$Query$getDeliveryCostByServiceProviderId<TRes>
 
   TRes _res;
 
-  call({int? serviceProviderId}) => _res;
+  call({
+    int? serviceProviderId,
+    String? serviceType,
+  }) =>
+      _res;
 }
 
 class Query$getDeliveryCostByServiceProviderId {
@@ -285,7 +321,16 @@ const documentNodeQuerygetDeliveryCostByServiceProviderId =
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      )
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'serviceType')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'String'),
+          isNonNull: false,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -305,7 +350,16 @@ const documentNodeQuerygetDeliveryCostByServiceProviderId =
                         name: NameNode(value: 'serviceProviderId')),
                   )
                 ]),
-              )
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'serviceType')),
+                  )
+                ]),
+              ),
             ]),
           )
         ],

@@ -121,6 +121,24 @@ select_permissions:
         - service_provider_type
       filter: {}
 update_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

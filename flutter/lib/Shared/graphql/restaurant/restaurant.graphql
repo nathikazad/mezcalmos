@@ -85,6 +85,7 @@ query getRestaurantPaymentInfo($id: Int!) {
   }
 }
 
+
 mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
   update_restaurant_restaurant_by_pk(
     pk_columns: { id: $restauarntId }

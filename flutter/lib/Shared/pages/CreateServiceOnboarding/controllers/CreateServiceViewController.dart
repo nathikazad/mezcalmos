@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -66,13 +65,6 @@ class CreateServiceViewController {
   // methods //
   void init({required ServiceProviderType serviceProviderType}) {
     serviceType = serviceProviderType;
-  }
-
-  Future<void> getDeliveryCompanies() async {
-    deliveryCompanies.clear();
-    final List<DeliveryCompany> data = await get_nearby_companies(
-        location: serviceInput.value.serviceInfo!.location);
-    deliveryCompanies.addAll(data);
   }
 
   Future<void> _setImage() async {

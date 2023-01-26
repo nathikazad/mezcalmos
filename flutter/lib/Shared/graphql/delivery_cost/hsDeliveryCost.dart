@@ -10,7 +10,9 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<DeliveryCost?> get_delivery_cost(
-    {required int serviceProviderId, bool withCache = true}) async {
+    {required int serviceProviderId,
+    required ServiceProviderType providerType,
+    bool withCache = true}) async {
   mezDbgPrint("Getting dv cost =====🥹");
   final QueryResult<Query$getDeliveryCostByServiceProviderId> response =
       await _db.graphQLClient.query$getDeliveryCostByServiceProviderId(
@@ -18,7 +20,8 @@ Future<DeliveryCost?> get_delivery_cost(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
       variables: Variables$Query$getDeliveryCostByServiceProviderId(
-          serviceProviderId: serviceProviderId),
+          serviceProviderId: serviceProviderId,
+          serviceType: providerType.toFirebaseFormatString()),
     ),
   );
   if (response.parsedData?.delivery_details == null) {

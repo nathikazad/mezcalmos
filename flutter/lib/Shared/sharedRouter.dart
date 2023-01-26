@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -58,6 +59,7 @@ const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList = "/operatorsList/:serviceProviderId";
 const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
 const String kCreateService = "/createService";
+const String kdeliverySettingsView = "/deliverySettings/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kPickLocationNew = "/pick_location/new";
 const String kserviceInfoEdit = "/service/:serviceProviderId";
@@ -134,6 +136,16 @@ void navigateToOperators(
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
     "showAppBar": true,
+  });
+}
+
+void navigateToDeliverySettings(
+    {required int serviceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route = kdeliverySettingsView.replaceFirst(
+      ":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
   });
 }
 
@@ -246,5 +258,6 @@ class SharedRouter {
     GetPage(name: kUserNewProfile, page: () => UserProfileView()),
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
     GetPage(name: kCreateService, page: () => CreateServiceView()),
+    GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
   ];
 }

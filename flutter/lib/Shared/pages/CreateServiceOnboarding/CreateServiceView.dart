@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
+import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCompaniesList.dart';
-import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceDeliveryCost.dart';
-import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/ServiceDeliveryTypePicker.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceSchedulePage.dart';
+import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -38,6 +38,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
           onClick: viewController.handleBack),
       bottomSheet: Obx(
         () => MezButton(
+          height: 75,
           label: viewController.getSaveButtonTitle(),
           borderRadius: 0,
           onClick: () async {
@@ -55,31 +56,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
           CreateServiceSchedulePage(
             viewController: viewController,
           ),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("How would you like to deliver?"),
-                SizedBox(
-                  height: 10,
-                ),
-                ServiceDeliveryTypePicker(
-                  viewController: viewController,
-                ),
-                Obx(() {
-                  if (viewController.serviceInput.value.deliveryType ==
-                      ServiceDeliveryType.Self_delivery) {
-                    return CreateServiceDeliveryCost(
-                        viewController: viewController);
-                  } else
-                    return CreateServiceDeliveryCompaniesList(
-                      viewController: viewController,
-                    );
-                })
-              ],
-            ),
-          ),
+          DeliverySettingsView(createServiceViewController: viewController),
         ],
       ),
     );
@@ -89,14 +66,16 @@ class _CreateServiceViewState extends State<CreateServiceView> {
     if (viewController.currentPage.value == 2) {
       final ServerResponse? res = await viewController.handleNext();
       if (res?.success == true) {
-        Get.snackbar("Created", "Created}",
-            backgroundColor: Colors.black,
-            colorText: Colors.white,
-            shouldIconPulse: false,
-            icon: Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ));
+        await showStatusInfoDialog(
+          context,
+          primaryClickTitle: "OK",
+          primaryCallBack: () {
+            MezRouter.toNamed(kTabsView);
+          },
+          status: "Your restaurantis under review",
+          description:
+              "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+        );
       } else {
         // handle error
       }
