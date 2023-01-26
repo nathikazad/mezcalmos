@@ -2127,6 +2127,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
@@ -3196,6 +3203,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     required this.image,
     required this.language_id,
     this.description_id,
+    required this.name,
     this.location,
     required this.self_delivery,
     this.schedule,
@@ -3214,6 +3222,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
+    final l$name = json['name'];
     final l$location = json['location'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
@@ -3230,6 +3239,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       image: (l$image as String),
       language_id: (l$language_id as String),
       description_id: (l$description_id as int?),
+      name: (l$name as String),
       location: l$location == null
           ? null
           : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
@@ -3259,6 +3269,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
   final String language_id;
 
   final int? description_id;
+
+  final String name;
 
   final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
       location;
@@ -3294,6 +3306,8 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     _resultData['language_id'] = l$language_id;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
     final l$location = location;
     _resultData['location'] = l$location?.toJson();
     final l$self_delivery = self_delivery;
@@ -3320,6 +3334,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
+    final l$name = name;
     final l$location = location;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
@@ -3335,6 +3350,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       l$image,
       l$language_id,
       l$description_id,
+      l$name,
       l$location,
       l$self_delivery,
       l$schedule,
@@ -3388,6 +3404,11 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$description_id = description_id;
     final lOther$description_id = other.description_id;
     if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
       return false;
     }
     final l$location = location;
@@ -3460,6 +3481,7 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? image,
     String? language_id,
     int? description_id,
+    String? name,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
         location,
     bool? self_delivery,
@@ -3501,6 +3523,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
+    Object? name = _undefined,
     Object? location = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
@@ -3529,6 +3552,9 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
         location: location == _undefined
             ? _instance.location
             : (location
@@ -3592,6 +3618,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? image,
     String? language_id,
     int? description_id,
+    String? name,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
         location,
     bool? self_delivery,
@@ -8102,6 +8129,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'stripe_info'),
                     alias: null,
                     arguments: [],
@@ -8164,13 +8198,6 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                         selectionSet: null,
                       ),
                     ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: 'self_delivery'),
@@ -9229,13 +9256,13 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant({
     required this.id,
     this.firebase_id,
+    required this.name,
     this.stripe_info,
     this.accepted_payments,
     required this.image,
     required this.language_id,
     this.description_id,
     this.location,
-    required this.name,
     required this.self_delivery,
     this.schedule,
     this.description,
@@ -9248,13 +9275,13 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
+    final l$name = json['name'];
     final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
     final l$location = json['location'];
-    final l$name = json['name'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -9264,6 +9291,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant(
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
+      name: (l$name as String),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
@@ -9274,7 +9302,6 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
           ? null
           : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
-      name: (l$name as String),
       self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -9291,6 +9318,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
 
   final String? firebase_id;
 
+  final String name;
+
   final dynamic? stripe_info;
 
   final dynamic? accepted_payments;
@@ -9303,8 +9332,6 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
 
   final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
       location;
-
-  final String name;
 
   final bool self_delivery;
 
@@ -9325,6 +9352,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] =
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
@@ -9339,8 +9368,6 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     _resultData['description_id'] = l$description_id;
     final l$location = location;
     _resultData['location'] = l$location?.toJson();
-    final l$name = name;
-    _resultData['name'] = l$name;
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$schedule = schedule;
@@ -9360,13 +9387,13 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   int get hashCode {
     final l$id = id;
     final l$firebase_id = firebase_id;
+    final l$name = name;
     final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
     final l$location = location;
-    final l$name = name;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
     final l$description = description;
@@ -9376,13 +9403,13 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     return Object.hashAll([
       l$id,
       l$firebase_id,
+      l$name,
       l$stripe_info,
       l$accepted_payments,
       l$image,
       l$language_id,
       l$description_id,
       l$location,
-      l$name,
       l$self_delivery,
       l$schedule,
       l$description,
@@ -9410,6 +9437,11 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
       return false;
     }
     final l$stripe_info = stripe_info;
@@ -9440,11 +9472,6 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$location = location;
     final lOther$location = other.location;
     if (l$location != lOther$location) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
       return false;
     }
     final l$self_delivery = self_delivery;
@@ -9509,6 +9536,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
   TRes call({
     int? id,
     String? firebase_id,
+    String? name,
     dynamic? stripe_info,
     dynamic? accepted_payments,
     String? image,
@@ -9516,7 +9544,6 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
     int? description_id,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
         location,
-    String? name,
     bool? self_delivery,
     dynamic? schedule,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
@@ -9553,13 +9580,13 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
   TRes call({
     Object? id = _undefined,
     Object? firebase_id = _undefined,
+    Object? name = _undefined,
     Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
     Object? location = _undefined,
-    Object? name = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -9573,6 +9600,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
@@ -9592,9 +9622,6 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
             ? _instance.location
             : (location
                 as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -9649,6 +9676,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
   call({
     int? id,
     String? firebase_id,
+    String? name,
     dynamic? stripe_info,
     dynamic? accepted_payments,
     String? image,
@@ -9656,7 +9684,6 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
     int? description_id,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
         location,
-    String? name,
     bool? self_delivery,
     dynamic? schedule,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?

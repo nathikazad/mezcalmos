@@ -3497,6 +3497,10 @@ input delivery_fetch_delivery_company_args {
   radius: float8
 }
 
+input delivery_get_delivery_companies_args {
+  location: geography
+}
+
 """
 columns and relationships of "delivery.operator"
 """
@@ -10735,6 +10739,56 @@ type query_root {
   ): delivery_company_aggregate!
 
   """
+  execute function "delivery.get_delivery_companies" which returns "delivery.company"
+  """
+  delivery_get_delivery_companies(
+    """
+    input parameters for function "delivery_get_delivery_companies"
+    """
+    args: delivery_get_delivery_companies_args!
+
+    """distinct select on columns"""
+    distinct_on: [delivery_company_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_company_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_company_bool_exp
+  ): [delivery_company!]!
+
+  """
+  execute function "delivery.get_delivery_companies" and query aggregates on result of table type "delivery.company"
+  """
+  delivery_get_delivery_companies_aggregate(
+    """
+    input parameters for function "delivery_get_delivery_companies_aggregate"
+    """
+    args: delivery_get_delivery_companies_args!
+
+    """distinct select on columns"""
+    distinct_on: [delivery_company_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_company_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_company_bool_exp
+  ): delivery_company_aggregate!
+
+  """
   fetch data from the table: "delivery.operator"
   """
   delivery_operator(
@@ -11333,6 +11387,56 @@ type query_root {
     input parameters for function "restaurant_fetch_restaurants_aggregate"
     """
     args: restaurant_fetch_restaurants_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_restaurant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_restaurant_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_restaurant_bool_exp
+  ): restaurant_restaurant_aggregate!
+
+  """
+  execute function "restaurant.get_restaurants" which returns "restaurant.restaurant"
+  """
+  restaurant_get_restaurants(
+    """
+    input parameters for function "restaurant_get_restaurants"
+    """
+    args: restaurant_get_restaurants_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_restaurant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_restaurant_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_restaurant_bool_exp
+  ): [restaurant_restaurant!]!
+
+  """
+  execute function "restaurant.get_restaurants" and query aggregates on result of table type "restaurant.restaurant"
+  """
+  restaurant_get_restaurants_aggregate(
+    """
+    input parameters for function "restaurant_get_restaurants_aggregate"
+    """
+    args: restaurant_get_restaurants_args!
 
     """distinct select on columns"""
     distinct_on: [restaurant_restaurant_select_column!]
@@ -14110,6 +14214,10 @@ input restaurant_choice_variance_order_by {
 input restaurant_fetch_restaurants_args {
   location: geography
   radius: float8
+}
+
+input restaurant_get_restaurants_args {
+  location: geography
 }
 
 """
@@ -18887,7 +18995,7 @@ type restaurant_restaurant {
 
   """delivery on or off"""
   delivery: Boolean!
-  delivery_details_id: Int!
+  delivery_details_id: Int
 
   """
   A computed field, executes function "restaurant_delivery_details"
@@ -20779,14 +20887,8 @@ columns and relationships of "service_provider.location"
 """
 type service_provider_location {
   address: String
-
-  """An object relationship"""
-  delivery_company: delivery_company
   gps: geography!
   id: Int!
-
-  """An object relationship"""
-  restaurant: restaurant_restaurant
   service_provider_id: Int!
   service_provider_type: String!
 }
@@ -20830,10 +20932,8 @@ input service_provider_location_bool_exp {
   _not: service_provider_location_bool_exp
   _or: [service_provider_location_bool_exp!]
   address: String_comparison_exp
-  delivery_company: delivery_company_bool_exp
   gps: geography_comparison_exp
   id: Int_comparison_exp
-  restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
 }
@@ -20861,10 +20961,8 @@ input type for inserting data into table "service_provider.location"
 """
 input service_provider_location_insert_input {
   address: String
-  delivery_company: delivery_company_obj_rel_insert_input
   gps: geography
   id: Int
-  restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_type: String
 }
@@ -20918,10 +21016,8 @@ input service_provider_location_on_conflict {
 """Ordering options when selecting data from "service_provider.location"."""
 input service_provider_location_order_by {
   address: order_by
-  delivery_company: delivery_company_order_by
   gps: order_by
   id: order_by
-  restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
   service_provider_type: order_by
 }
@@ -22628,6 +22724,56 @@ type subscription_root {
   ): delivery_company_aggregate!
 
   """
+  execute function "delivery.get_delivery_companies" which returns "delivery.company"
+  """
+  delivery_get_delivery_companies(
+    """
+    input parameters for function "delivery_get_delivery_companies"
+    """
+    args: delivery_get_delivery_companies_args!
+
+    """distinct select on columns"""
+    distinct_on: [delivery_company_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_company_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_company_bool_exp
+  ): [delivery_company!]!
+
+  """
+  execute function "delivery.get_delivery_companies" and query aggregates on result of table type "delivery.company"
+  """
+  delivery_get_delivery_companies_aggregate(
+    """
+    input parameters for function "delivery_get_delivery_companies_aggregate"
+    """
+    args: delivery_get_delivery_companies_args!
+
+    """distinct select on columns"""
+    distinct_on: [delivery_company_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_company_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_company_bool_exp
+  ): delivery_company_aggregate!
+
+  """
   fetch data from the table: "delivery.operator"
   """
   delivery_operator(
@@ -23408,6 +23554,56 @@ type subscription_root {
     input parameters for function "restaurant_fetch_restaurants_aggregate"
     """
     args: restaurant_fetch_restaurants_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_restaurant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_restaurant_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_restaurant_bool_exp
+  ): restaurant_restaurant_aggregate!
+
+  """
+  execute function "restaurant.get_restaurants" which returns "restaurant.restaurant"
+  """
+  restaurant_get_restaurants(
+    """
+    input parameters for function "restaurant_get_restaurants"
+    """
+    args: restaurant_get_restaurants_args!
+
+    """distinct select on columns"""
+    distinct_on: [restaurant_restaurant_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [restaurant_restaurant_order_by!]
+
+    """filter the rows returned"""
+    where: restaurant_restaurant_bool_exp
+  ): [restaurant_restaurant!]!
+
+  """
+  execute function "restaurant.get_restaurants" and query aggregates on result of table type "restaurant.restaurant"
+  """
+  restaurant_get_restaurants_aggregate(
+    """
+    input parameters for function "restaurant_get_restaurants_aggregate"
+    """
+    args: restaurant_get_restaurants_args!
 
     """distinct select on columns"""
     distinct_on: [restaurant_restaurant_select_column!]
@@ -24655,8 +24851,6 @@ input timestamptz_comparison_exp {
 columns and relationships of "translation"
 """
 type translation {
-  """An object relationship"""
-  delivery_company: delivery_company
   id: Int!
 
   """An object relationship"""
@@ -24739,7 +24933,6 @@ input translation_bool_exp {
   _and: [translation_bool_exp!]
   _not: translation_bool_exp
   _or: [translation_bool_exp!]
-  delivery_company: delivery_company_bool_exp
   id: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
@@ -24770,7 +24963,6 @@ input translation_inc_input {
 input type for inserting data into table "translation"
 """
 input translation_insert_input {
-  delivery_company: delivery_company_obj_rel_insert_input
   id: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
@@ -24824,7 +25016,6 @@ input translation_on_conflict {
 
 """Ordering options when selecting data from "translation"."""
 input translation_order_by {
-  delivery_company: delivery_company_order_by
   id: order_by
   restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by

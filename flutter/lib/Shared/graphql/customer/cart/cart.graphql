@@ -39,6 +39,7 @@ query getCustomerCart($customer_id: Int!) {
         image
         language_id
         description_id
+        name
         location {
           gps
           address
@@ -138,15 +139,19 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       restaurant_id
       restaurant {
         id
+
         firebase_id
+        name
         stripe_info
         accepted_payments
         image
         language_id
         description_id
-        location {  gps
-    address}   
-        name
+        location {
+          gps
+          address
+        }
+        
         self_delivery
         #schedule_id
         schedule
