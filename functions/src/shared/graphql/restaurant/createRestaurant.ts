@@ -13,6 +13,7 @@ export async function createRestaurant(
  
   let chain = getHasura();
 
+
   let response = await chain.mutation({
     insert_restaurant_restaurant_one: [{
       object: {
@@ -24,6 +25,23 @@ export async function createRestaurant(
         self_delivery: restaurant.selfDelivery,
         delivery: restaurant.delivery,
         customer_pickup: restaurant.customerPickup,
+        location: {
+          data: {
+            gps: JSON.stringify({
+              "type": "point",
+              "coordinates": [restaurant.location.lng, restaurant.location.lat]
+            }),
+            address: restaurant.location.address
+          }
+        },
+        delivery_details: 
+          (restaurant.deliveryDetails) ? { data:  {
+            minimum_cost: restaurant.deliveryDetails.minimumCost,
+            cost_per_km: restaurant.deliveryDetails.costPerKm,
+            radius: restaurant.deliveryDetails.radius,
+            free_delivery_minimum_cost: restaurant.deliveryDetails.freeDeliveryMinimumCost,
+            free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange
+          }} : undefined,
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
@@ -46,21 +64,6 @@ export async function createRestaurant(
       "restaurant creation error"
     );
   }
-  await chain.mutation({
-    insert_service_provider_location_one: [{
-      object: {
-        service_provider_id: response.insert_restaurant_restaurant_one.id,
-        service_provider_type: ServiceProviderType.Restaurant,
-        gps: JSON.stringify({
-          "type": "point",
-          "coordinates": [restaurant.location.lng, restaurant.location.lat]
-        }),
-        address: restaurant.location.address
-      }
-    }, {
-      id: true,
-    }]
-  });
   if(restaurant.deliveryPartnerId) {
     await chain.mutation({
       insert_service_provider_delivery_partner_one: [{
@@ -71,24 +74,6 @@ export async function createRestaurant(
         }
       }, {
         id: true,
-      }]
-    });
-  }
-  if(restaurant.deliveryDetails) {
-    await chain.mutation({
-      insert_delivery_details_one: [{
-        object: {
-          minimum_cost: restaurant.deliveryDetails.minimumCost,
-          cost_per_km: restaurant.deliveryDetails.costPerKm,
-          service_provider_id: response.insert_restaurant_restaurant_one?.id,
-          service_provider_type: ServiceProviderType.Restaurant,
-          radius: restaurant.deliveryDetails.radius,
-          free_delivery_minimum_cost: restaurant.deliveryDetails.freeDeliveryMinimumCost,
-          free_delivery_km_range: restaurant.deliveryDetails.freeDeliveryKmRange,
-        }
-      }, {
-        service_provider_id: true,
-        service_provider_type: true,
       }]
     });
   }

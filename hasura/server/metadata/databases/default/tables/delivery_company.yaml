@@ -10,14 +10,7 @@ object_relationships:
       foreign_key_constraint_on: description_id
   - name: location
     using:
-      manual_configuration:
-        column_mapping:
-          id: service_provider_id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: location
-          schema: service_provider
+      foreign_key_constraint_on: location_id
 array_relationships:
   - name: delivery_drivers
     using:
