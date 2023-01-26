@@ -65,11 +65,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     return { status: ServerResponseStatus.Success };
   } catch(error) {
     console.log("error =>", error);
-    throw new HttpsError(
-      "unknown",
-      "Request was not authenticated.",
-      error
-    );
+    throw error;
   }
 };
 

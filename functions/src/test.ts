@@ -1,6 +1,6 @@
 // import { RestaurantOrderType } from './shared/models/Services/Restaurant/RestaurantOrder';
 // import { PaymentType } from "./shared/models/Generic/Order";
-// import { AppType, Location } from "./shared/models/Generic/Generic";
+import { Location } from "./shared/models/Generic/Generic";
 // import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
 // import * as firebase from "firebase-admin";
 // // import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
@@ -8,7 +8,7 @@
 // // import { OperatorType } from "./shared/models/Generic/Generic";
 // // import { OrderType } from "./shared/models/Generic/Order";
 // // import { DeliveryDriverType } from "./shared/models/Services/Delivery/DeliveryOrder";
-// // import { createNewRestaurant } from "./restaurant/createNewRestaurant";
+import { createNewRestaurant, RestaurantDetails } from "./restaurant/createNewRestaurant";
 // // import { readyForPickupOrder } from "./restaurant/adminStatusChanges"
 // // import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
 // import { AuthorizeDetails, authorizeOperator } from "./restaurant/authorizeOperator";
@@ -21,11 +21,11 @@
 //   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
 // });
 // process.env.FUNCTIONS_EMULATOR = "true"
-// const location: Location = {
-//   lat: 23,
-//   lng : 44,
-//   address: "Morocco, Agadir 77",
-// }
+const location:Location = {
+  lat: 23,
+  lng : 44,
+  address: "Morocco, Agadir 77",
+}
 
 // // let checkoutRequest: CheckoutRequest = {
 // //   customerAppType: AppType.CustomerMobile,
@@ -77,18 +77,28 @@
 
 // // cancelOrderFromCustomer(1, { orderId: 16 })
 
-// // let restaurantDetails = {
-// //   name: "restaurant2",
-// //   image: "abc",
-// //   location: location,
-// //   scheduleId: 1,
-// //   restaurantOperatorNotificationToken: "aaa",
-// //   firebaseId: "5"
-// // }
+let restaurantDetails:RestaurantDetails = {
+  name: "restaurant2",
+  image: "abc",
+  location: location,
+  schedule: JSON.parse('{"monday":{"from":"8:0","to":"20:0","isOpen":true},"tuesday":{"from":"8:0","to":"20:0","isOpen":true},"wednesday":{"from":"8:0","to":"20:0","isOpen":true},"thursday":{"from":"8:0","to":"20:0","isOpen":true},"friday":{"from":"8:0","to":"20:0","isOpen":true},"saturday":{"from":"8:0","to":"19:0","isOpen":false},"sunday":{"from":"8:0","to":"16:0","isOpen":false}}'),
+  customerPickup: false,
+  delivery:true,
+  restaurantOperatorNotificationToken: "aaa",
+  firebaseId: "5",
+  selfDelivery: true,
+  deliveryDetails: {
+    costPerKm: 2,
+    minimumCost: 40,
+    radius: 5000,
+    freeDeliveryKmRange: 0,
+    freeDeliveryMinimumCost: 100
+  }
+}
 
-// // });
+// });
 
-// // createNewRestaurant(4, restaurantDetails);
+createNewRestaurant(4, restaurantDetails);
 
 // // let authorizeDetails: AuthorizeDetails = {
 // //   restaurantOwnerOperatorId: 3,
