@@ -1,35 +1,19 @@
 table:
   name: details
   schema: delivery
-object_relationships:
+array_relationships:
   - name: delivery_company
     using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
+      foreign_key_constraint_on:
+        column: delivery_details_id
+        table:
           name: company
           schema: delivery
-  - name: location
-    using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: service_provider_id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: location
-          schema: service_provider
   - name: restaurant
     using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
+      foreign_key_constraint_on:
+        column: delivery_details_id
+        table:
           name: restaurant
           schema: restaurant
 insert_permissions:
@@ -45,8 +29,6 @@ insert_permissions:
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
-        - service_provider_id
-        - service_provider_type
 select_permissions:
   - role: anonymous
     permission:
@@ -57,8 +39,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
   - role: customer
     permission:
@@ -69,8 +49,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
   - role: delivery_driver
     permission:
@@ -81,8 +59,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
   - role: delivery_operator
     permission:
@@ -93,8 +69,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
   - role: mez_admin
     permission:
@@ -105,8 +79,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
   - role: restaurant_operator
     permission:
@@ -117,8 +89,6 @@ select_permissions:
         - id
         - minimum_cost
         - radius
-        - service_provider_id
-        - service_provider_type
       filter: {}
 update_permissions:
   - role: anonymous
