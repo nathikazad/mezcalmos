@@ -24,21 +24,26 @@ let statusArrayInSeq: Array<RestaurantOrderStatus> =
   RestaurantOrderStatus.OnTheWay,
   RestaurantOrderStatus.Delivered
   ]
-export async function prepareOrder(userId: number, data: any) {
+
+interface ChangeStatusDetails {
+  orderId:number
+}
+
+export async function prepareOrder(userId: number, data: ChangeStatusDetails) {
   let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.PreparingOrder, userId)
   return response;
 }
 
-export async function cancelOrder(userId: number, data: any) {
+export async function cancelOrder(userId: number, data: ChangeStatusDetails) {
   let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.CancelledByAdmin, userId)
   return response;
 }
 
-export async function readyForPickupOrder(userId: number, data: any) {
+export async function readyForPickupOrder(userId: number, data: ChangeStatusDetails) {
   let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
   return response
 }
-export async function orderPickedUpByCustomer(userId: number, data: any) {
+export async function orderPickedUpByCustomer(userId: number, data: ChangeStatusDetails) {
   let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.Delivered, userId)
   return response
 }

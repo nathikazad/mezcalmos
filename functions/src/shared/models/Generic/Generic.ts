@@ -27,6 +27,7 @@ export enum AppType {
   DeliveryAdmin = "delivery_admin",
   MezAdmin = "mez_admin"
 }
+
 export const ChatInfoAppName: Record<AppType, string> = {
   [AppType.Customer]: "CustomerApp",
   [AppType.DeliveryAdmin]: "DeliveryAdminApp",

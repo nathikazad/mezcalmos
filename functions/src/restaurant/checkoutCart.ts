@@ -29,7 +29,7 @@ export interface CheckoutRequest {
   paymentType: PaymentType,
   notes: string,
   restaurantId: number,
-  deliveryType: DeliveryType,
+  deliveryType?: DeliveryType,
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
@@ -74,7 +74,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       paymentType: checkoutRequest.paymentType,
       toLocation: checkoutRequest.customerLocation,
       status: RestaurantOrderStatus.OrderReceived,
-      deliveryType: checkoutRequest.deliveryType,
+      deliveryType: checkoutRequest.deliveryType ?? DeliveryType.Delivery,
       customerAppType: checkoutRequest.customerAppType,
       items: orderItems,
       itemsCost: customerCart.cost,
@@ -87,7 +87,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     console.log("+ Items ==> " , customerCart.items);
 
     let deliveryOrder: DeliveryOrder = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
-
+    console.log("🤑🤑🤑🤑🤑🤑🤑🤑")
     setOrderChatInfo(restaurantOrder, restaurant, deliveryOrder, customer);
 
     notifyAdmins(mezAdmins, restaurantOrder.orderId!, restaurant);
