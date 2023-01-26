@@ -19143,6 +19143,9 @@ type restaurant_restaurant {
     where: restaurant_order_bool_exp
   ): restaurant_order_aggregate!
 
+  """An object relationship"""
+  restaurant_delivery_details: delivery_details
+
   """An array relationship"""
   restaurant_operators(
     """distinct select on columns"""
@@ -19327,6 +19330,7 @@ input restaurant_restaurant_bool_exp {
   open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
   orders_aggregate: restaurant_order_aggregate_bool_exp
+  restaurant_delivery_details: delivery_details_bool_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   reviews: review_bool_exp
@@ -19442,6 +19446,7 @@ input restaurant_restaurant_insert_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   orders: restaurant_order_arr_rel_insert_input
+  restaurant_delivery_details: delivery_details_obj_rel_insert_input
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   schedule: jsonb
@@ -19541,6 +19546,7 @@ input restaurant_restaurant_order_by {
   name: order_by
   open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
+  restaurant_delivery_details: delivery_details_order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   schedule: order_by
@@ -21128,8 +21134,11 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
+<<<<<<< HEAD
 
   """filter the rows which have to be updated"""
+=======
+>>>>>>> hsFlutter
   where: service_provider_location_bool_exp!
 }
 

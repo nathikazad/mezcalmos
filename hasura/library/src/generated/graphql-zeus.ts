@@ -11020,6 +11020,8 @@ orders_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_order_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_order_bool_exp"]},ValueTypes["restaurant_order_aggregate"]],
+	/** An object relationship */
+	restaurant_delivery_details?:ValueTypes["delivery_details"],
 restaurant_operators?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_operator_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -11125,6 +11127,7 @@ requirements: string[] | null; email: string | null } */
 	open_status?:ValueTypes["String_comparison_exp"],
 	orders?:ValueTypes["restaurant_order_bool_exp"],
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_bool_exp"],
+	restaurant_delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	restaurant_operators?:ValueTypes["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_bool_exp"],
 	reviews?:ValueTypes["review_bool_exp"],
@@ -11200,6 +11203,7 @@ requirements: string[] | null; email: string | null } */
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:ValueTypes["restaurant_order_arr_rel_insert_input"],
+	restaurant_delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	restaurant_operators?:ValueTypes["restaurant_operator_arr_rel_insert_input"],
 	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
@@ -11283,6 +11287,7 @@ requirements: string[] | null; email: string | null } */
 	name?:ValueTypes["order_by"],
 	open_status?:ValueTypes["order_by"],
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_order_by"],
+	restaurant_delivery_details?:ValueTypes["delivery_details_order_by"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_order_by"],
 	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	schedule?:ValueTypes["order_by"],
@@ -12338,7 +12343,10 @@ count?: [{	columns?:ValueTypes["service_provider_location_select_column"][],	dis
 	_inc?:ValueTypes["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_location_set_input"],
+<<<<<<< HEAD
 	/** filter the rows which have to be updated */
+=======
+>>>>>>> hsFlutter
 	where:ValueTypes["service_provider_location_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -24814,6 +24822,8 @@ the end). throws an error if top level container is not an array */
 	orders?:PartialObjects["restaurant_order"][],
 			/** An aggregate relationship */
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate"],
+			/** An object relationship */
+	restaurant_delivery_details?:PartialObjects["delivery_details"],
 			/** An array relationship */
 	restaurant_operators?:PartialObjects["restaurant_operator"][],
 			/** An aggregate relationship */
@@ -24899,6 +24909,7 @@ requirements: string[] | null; email: string | null } */
 	open_status?:PartialObjects["String_comparison_exp"],
 	orders?:PartialObjects["restaurant_order_bool_exp"],
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_bool_exp"],
+	restaurant_delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	restaurant_operators?:PartialObjects["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_bool_exp"],
 	reviews?:PartialObjects["review_bool_exp"],
@@ -24974,6 +24985,7 @@ requirements: string[] | null; email: string | null } */
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:PartialObjects["restaurant_order_arr_rel_insert_input"],
+	restaurant_delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	restaurant_operators?:PartialObjects["restaurant_operator_arr_rel_insert_input"],
 	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
@@ -25057,6 +25069,7 @@ requirements: string[] | null; email: string | null } */
 	name?:PartialObjects["order_by"],
 	open_status?:PartialObjects["order_by"],
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_order_by"],
+	restaurant_delivery_details?:PartialObjects["delivery_details_order_by"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_order_by"],
 	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	schedule?:PartialObjects["order_by"],
@@ -26112,7 +26125,10 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_location_set_input"],
+<<<<<<< HEAD
 	/** filter the rows which have to be updated */
+=======
+>>>>>>> hsFlutter
 	where:PartialObjects["service_provider_location_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -39796,6 +39812,8 @@ export type restaurant_restaurant = {
 	orders:restaurant_order[],
 	/** An aggregate relationship */
 	orders_aggregate:restaurant_order_aggregate,
+	/** An object relationship */
+	restaurant_delivery_details?:delivery_details,
 	/** An array relationship */
 	restaurant_operators:restaurant_operator[],
 	/** An aggregate relationship */
@@ -39886,6 +39904,7 @@ export type restaurant_restaurant_bool_exp = {
 	open_status?:String_comparison_exp,
 	orders?:restaurant_order_bool_exp,
 	orders_aggregate?:restaurant_order_aggregate_bool_exp,
+	restaurant_delivery_details?:delivery_details_bool_exp,
 	restaurant_operators?:restaurant_operator_bool_exp,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_bool_exp,
 	reviews?:review_bool_exp,
@@ -39970,6 +39989,7 @@ export type restaurant_restaurant_insert_input = {
 	/** open, closed_temporarily, closed_indefinitely */
 	open_status?:string,
 	orders?:restaurant_order_arr_rel_insert_input,
+	restaurant_delivery_details?:delivery_details_obj_rel_insert_input,
 	restaurant_operators?:restaurant_operator_arr_rel_insert_input,
 	reviews?:review_arr_rel_insert_input,
 	schedule?:jsonb,
@@ -40059,6 +40079,7 @@ export type restaurant_restaurant_order_by = {
 	name?:order_by,
 	open_status?:order_by,
 	orders_aggregate?:restaurant_order_aggregate_order_by,
+	restaurant_delivery_details?:delivery_details_order_by,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_order_by,
 	reviews_aggregate?:review_aggregate_order_by,
 	schedule?:order_by,
@@ -41347,7 +41368,10 @@ export type service_provider_location_updates = {
 	_inc?:service_provider_location_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_location_set_input,
+<<<<<<< HEAD
 	/** filter the rows which have to be updated */
+=======
+>>>>>>> hsFlutter
 	where:service_provider_location_bool_exp
 }
 
@@ -74331,6 +74355,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		restaurant_delivery_details:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_operators:{
 			type:"restaurant_operator_bool_exp",
 			array:false,
@@ -74588,6 +74618,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		restaurant_delivery_details:{
+			type:"delivery_details_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_operators:{
 			type:"restaurant_operator_arr_rel_insert_input",
 			array:false,
@@ -74782,6 +74818,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		orders_aggregate:{
 			type:"restaurant_order_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		restaurant_delivery_details:{
+			type:"delivery_details_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -86901,6 +86943,7 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		orders:"restaurant_order",
 		orders_aggregate:"restaurant_order_aggregate",
+		restaurant_delivery_details:"delivery_details",
 		restaurant_operators:"restaurant_operator",
 		restaurant_operators_aggregate:"restaurant_operator_aggregate",
 		reviews:"review",

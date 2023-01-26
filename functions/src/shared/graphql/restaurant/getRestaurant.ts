@@ -21,8 +21,6 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
         }]
       },
       image: true,
-      location_gps: true,
-      location_text: true,
       open_status: true,     
       approved: true,
       stripe_info: [{}, true],
@@ -46,6 +44,10 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       },
       delivery: true,
       customer_pickup: true,
+      location: {
+        gps: true,
+        address: true,
+      }
     }],
   });
 
@@ -86,9 +88,9 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
 
     
     location: {
-      address: response.restaurant_restaurant_by_pk.location_text,
-      lat : response.restaurant_restaurant_by_pk.location_gps.coordinates[1],
-      lng: response.restaurant_restaurant_by_pk.location_gps.coordinates[0]
+      address: response.restaurant_restaurant_by_pk.location?.address,
+      lat : response.restaurant_restaurant_by_pk.location?.gps.coordinates[1],
+      lng: response.restaurant_restaurant_by_pk.location?.gps.coordinates[0]
     },
     description: response.restaurant_restaurant_by_pk.description?.translations.reduce((prev:Record<any, any>, current) => {
       prev[current.language_id] = current.value;
