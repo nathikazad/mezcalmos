@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 
 onlyFunctionImports = {}
 fileImports = {}
@@ -7,6 +8,8 @@ functionNamesGroup1 = []
 functionNamesGroup2 = {}
 uniqueTypes = {}
 models = {}
+
+types = {"number": "num", "string": "String", "boolean": "bool"}
 
 def searchForModel(search):  
   typeDictionary = {"values":{}}
@@ -79,7 +82,7 @@ def getArguments(corresponding):
     print()
     sys.exit()
 
-def getCorresponding(functionGroupName, line, authenticated):
+def getCorrespondingFnName(functionGroupName, line, authenticated):
   functionName = line.strip().split(":")[0]
   fullFunctionName = functionGroupName+"-"+functionName
   functionNamesGroup2[fullFunctionName] = {}
@@ -97,10 +100,10 @@ def extractFunctionNamesGroupAsDictionary():
     for line in fn.splitlines():
       if ":" in line:
         if "function" in line:
-          getCorresponding(functionGroupName, line, False)
+          getCorrespondingFnName(functionGroupName, line, False)
           # break
         if "authenticatedCall" in line:
-          getCorresponding(functionGroupName, line, True)
+          getCorrespondingFnName(functionGroupName, line, True)
     # break
     
 exportConstStarted = False
@@ -131,24 +134,6 @@ def extractImports(line):
       fileImports[bits2[-2]] = bits[-1].replace("\n","").replace("\n","").replace("'","").replace("\"","").strip()
 
 
-os.chdir('../../../../functions/src')
-with open('./index.ts', 'r') as f:
-  for line in f:
-    extractImports(line)
-    extractFunctionNamesGroupAsString(line)
-extractFunctionNamesGroupAsDictionary()
-
-for key in uniqueTypes:
-  if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
-    models[key] = searchForModel(key)
-
-import json
-
-# print(json.dumps(uniqueTypes, indent = 4))
-# print(json.dumps(models, indent = 4))
-
-
-types = {"number": "num", "string": "String", "boolean": "bool"}
 def printDartFormatDeclaration(name, typ):
   nullable = ""
   if "?" in name:
@@ -179,40 +164,6 @@ def printDartFormatEnum(key, values):
   converter = converter.replace("####",key)
   return str+converter+"\n\n"
 
-os.chdir('../../flutter/lib/Shared/cloudFunctions')
-toWriteIndex = '''import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-class CloudFunctions {
-  Future<ServerResponse> callCloudFunction(
-      {required String functionName, Map<String, dynamic>? parameters}) async {
-    final Map<String, dynamic> finalParams = <String, dynamic>{
-      'versionNumber': '0.0.0'
-    };
-    finalParams.addAll(parameters ?? <String, dynamic>{});
-    final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
-        .httpsCallable('restaurant2-cancelOrderFromCustomer')
-        .call(finalParams);
-    print(response.data);
-
-    return ServerResponse.fromJson(response.data);
-  }
-
-'''
-toWriteModel = ""
-for key in models:
-  # print(models[key])
-  if models[key]["type"] == "interface":
-    toWriteModel += "class "+key+" {"+"\n"
-    for v in models[key]["values"]:
-      toWriteModel +=  printDartFormatDeclaration(v, models[key]["values"][v])+"\n"
-    toWriteModel += printDartFormatClassInit(key, models[key]["values"])+"\n"
-    toWriteModel +=  "}\n\n"
-  if models[key]["type"] == "enum":
-    toWriteModel +=  printDartFormatEnum(key, models[key]["values"])
-
-
 def printDartFormatFunction(key, value):
   str = "  Future<ServerResponse> "+key.replace("-","_")+"(\n"
   if value["arguments"] != None:
@@ -236,7 +187,7 @@ def printDartFormatFunction(key, value):
           prefix = prefix.replace(arr[0], types[arr[0]])
         if(arr[1] in types):
           prefix = prefix.replace(arr[1], types[arr[1]])
-        print(prefix)
+
       toAdd = toAdd.replace("type", prefix)
       toAdd = toAdd.replace("JSON", "Map<String, dynamic>")
       str += toAdd
@@ -266,13 +217,68 @@ def printDartFormatFunction(key, value):
 
   return str+body+"\n\n";
 
-for key in functionNamesGroup2:
-  toWriteIndex += printDartFormatFunction(key, functionNamesGroup2[key])
+def getModels():
+  toWriteModel = ""
+  for key in models:
+    # print(models[key])
+    if models[key]["type"] == "interface":
+      toWriteModel += "class "+key+" {"+"\n"
+      for v in models[key]["values"]:
+        toWriteModel +=  printDartFormatDeclaration(v, models[key]["values"][v])+"\n"
+      toWriteModel += printDartFormatClassInit(key, models[key]["values"])+"\n"
+      toWriteModel +=  "}\n\n"
+    if models[key]["type"] == "enum":
+      toWriteModel +=  printDartFormatEnum(key, models[key]["values"])
+  return toWriteModel
 
-toWriteIndex += "}"
-f = open("index.dart", "w")
-f.write(toWriteIndex)
-f.close()
-f = open("model.dart", "w")
-f.write(toWriteModel)
-f.close()
+def getIndex():
+  toWriteIndex = '''import 'package:cloud_functions/cloud_functions.dart';
+  import 'dart:convert';
+  import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+  import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+  class CloudFunctions {
+    Future<ServerResponse> callCloudFunction(
+        {required String functionName, Map<String, dynamic>? parameters}) async {
+      final Map<String, dynamic> finalParams = <String, dynamic>{
+        'versionNumber': '0.0.0'
+      };
+      finalParams.addAll(parameters ?? <String, dynamic>{});
+      final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
+          .httpsCallable('restaurant2-cancelOrderFromCustomer')
+          .call(finalParams);
+      print(response.data);
+
+      return ServerResponse.fromJson(response.data);
+    }
+
+  '''
+  
+
+
+  for key in functionNamesGroup2:
+    toWriteIndex += printDartFormatFunction(key, functionNamesGroup2[key])
+
+  toWriteIndex += "}"
+  return toWriteIndex
+
+
+if __name__ == "__main__":
+  os.chdir('../../../../functions/src')
+  with open('./index.ts', 'r') as f:
+    for line in f:
+      extractImports(line)
+      extractFunctionNamesGroupAsString(line)
+  extractFunctionNamesGroupAsDictionary()
+
+  for key in uniqueTypes:
+    if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
+      models[key] = searchForModel(key)
+
+  os.chdir('../../flutter/lib/Shared/cloudFunctions')
+
+  f = open("index.dart", "w")
+  f.write(getIndex())
+  f.close()
+  f = open("model.dart", "w")
+  f.write(getModels())
+  f.close()
