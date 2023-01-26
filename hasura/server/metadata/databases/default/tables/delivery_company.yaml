@@ -4,7 +4,14 @@ table:
 object_relationships:
   - name: delivery_details
     using:
-      foreign_key_constraint_on: delivery_details_id
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: details
+          schema: delivery
   - name: description
     using:
       foreign_key_constraint_on: description_id
