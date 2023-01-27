@@ -1,5 +1,6 @@
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class MinimalOrder {
   int id;
@@ -9,6 +10,8 @@ class MinimalOrder {
   String? customerImage;
   MinimalOrderStatus status;
   double totalCost;
+  int? serviceProviderId;
+  ServiceProviderType? serviceProviderType;
   MinimalOrder({
     required this.id,
     required this.toAdress,
@@ -17,6 +20,8 @@ class MinimalOrder {
     required this.customerImage,
     required this.status,
     required this.totalCost,
+    this.serviceProviderId,
+    this.serviceProviderType,
   });
 
   MinimalOrder copyWith({

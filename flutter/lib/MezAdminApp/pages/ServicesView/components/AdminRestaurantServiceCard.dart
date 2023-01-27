@@ -1,18 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/MezAdminApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["ServicesView"];
 
 class AdminRestaurantServiceCard extends StatelessWidget {
-  const AdminRestaurantServiceCard({super.key, required this.serviceInfo});
-  final UserInfo serviceInfo;
-
+  const AdminRestaurantServiceCard(
+      {super.key, required this.restaurant, required this.viewController});
+  final Restaurant restaurant;
+  final AdminServicesViewController viewController;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +33,8 @@ class AdminRestaurantServiceCard extends StatelessWidget {
               height: 12.h,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: CachedNetworkImageProvider(serviceInfo.image))),
+                      image:
+                          CachedNetworkImageProvider(restaurant.info.image))),
             ),
             Flexible(
                 child: Column(
@@ -38,7 +46,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        serviceInfo.name,
+                        restaurant.info.name,
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
@@ -46,12 +54,12 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                       height: 18,
                       child: Switch(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        value: true,
+                        value: restaurant.state.status == ServiceStatus.Open,
                         onChanged: (bool v) {
-                          // Get.find<RestaurantsInfoController>().setOpen(
-                          //     isAv: v,
-                          //     restaurantId:
-                          //         restaurant.info.hasuraId.toString().toString());
+                          viewController.switchServiceStatus(
+                              serviceId: restaurant.info.hasuraId,
+                              providerType: ServiceProviderType.Restaurant,
+                              value: v);
                         },
                         activeColor: primaryBlueColor,
                       ),
@@ -60,16 +68,36 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                 ),
                 Container(
                     margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Text(serviceInfo.name)),
+                    child: Text(restaurant.info.name)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _smallBtn(
-                        icon: Icons.flatware, label: "Menu", ontap: () {}),
+                        icon: Icons.flatware,
+                        label: "Menu",
+                        ontap: () {
+                          MezRouter.toNamed(getRestaurantMenuRoute(
+                              restaurantId: restaurant.info.hasuraId));
+                        }),
                     _smallBtn(
-                        icon: Icons.history, label: "Orders", ontap: () {}),
+                        icon: Icons.history,
+                        label: "Orders",
+                        ontap: () {
+                          getserviceOrdersRoute(
+                              serviceName: restaurant.info.name,
+                              serviceProviderId: restaurant.info.hasuraId,
+                              serviceProviderType:
+                                  ServiceProviderType.Restaurant);
+                        }),
                     _smallBtn(
-                        icon: Icons.food_bank, label: "Profile", ontap: () {}),
+                        icon: Icons.food_bank,
+                        label: "Profile",
+                        ontap: () {
+                          navigateToServiceInfoEdit(
+                              serviceProviderId: restaurant.info.hasuraId,
+                              serviceProviderType:
+                                  ServiceProviderType.Restaurant);
+                        }),
                   ],
                 ),
               ],

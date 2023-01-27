@@ -1,16 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["ServicesView"];
 
 class AdminDeliveryCompanyServiceCard extends StatelessWidget {
-  const AdminDeliveryCompanyServiceCard({super.key, required this.serviceInfo});
-  final UserInfo serviceInfo;
+  const AdminDeliveryCompanyServiceCard(
+      {super.key, required this.company, required this.viewController});
+  final DeliveryCompany company;
+  final AdminServicesViewController viewController;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +30,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 23,
-              backgroundImage: CachedNetworkImageProvider(serviceInfo.image),
+              backgroundImage: CachedNetworkImageProvider(company.info.image),
             ),
             SizedBox(
               width: 10,
@@ -37,10 +45,26 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        serviceInfo.name,
+                        company.info.name,
                         style: Get.textTheme.bodyText1,
                       ),
                     ),
+                    SizedBox(
+                      height: 18,
+                      child: Switch(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: company.state.status == ServiceStatus.Open,
+                        onChanged: (bool v) {
+                          mezDbgPrint(v);
+                          viewController.switchServiceStatus(
+                              serviceId: company.info.hasuraId,
+                              providerType:
+                                  ServiceProviderType.Delivery_company,
+                              value: v);
+                        },
+                        activeColor: primaryBlueColor,
+                      ),
+                    )
                   ],
                 ),
                 Divider(
@@ -59,11 +83,31 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     //     label: "Drivers",
                     //     ontap: () {}),
                     _smallBtn(
-                        icon: Icons.price_check, label: "Costs", ontap: () {}),
+                        icon: Icons.price_check,
+                        label: "Costs",
+                        ontap: () {
+                          navigateToDeliveryCost(
+                              deliveryDetailsId: company.deliveryDetailsId!);
+                        }),
                     _smallBtn(
-                        icon: Icons.history, label: "Orders", ontap: () {}),
+                        icon: Icons.history,
+                        label: "Orders",
+                        ontap: () {
+                          getserviceOrdersRoute(
+                              serviceName: company.info.name,
+                              serviceProviderId: company.info.hasuraId,
+                              serviceProviderType:
+                                  ServiceProviderType.Delivery_company);
+                        }),
                     _smallBtn(
-                        icon: Icons.person, label: "Profile", ontap: () {}),
+                        icon: Icons.person,
+                        label: "Profile",
+                        ontap: () {
+                          navigateToServiceInfoEdit(
+                              serviceProviderId: company.info.hasuraId,
+                              serviceProviderType:
+                                  ServiceProviderType.Delivery_company);
+                        }),
                   ],
                 ),
               ],

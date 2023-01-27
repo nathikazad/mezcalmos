@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/location/hsServiceLocation.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -97,11 +98,20 @@ abstract class ServiceInfoEditViewController {
     }
   }
 
+  Future<void> updateServiceLocation() async {
+    if (newLocation.value?.address != service.value?.info.location.address) {
+      await update_service_location(
+          locationId: service.value!.info.locationId!,
+          location: newLocation.value!);
+    }
+  }
+
   Future<void> updateServiceInfo() async {}
   //
   Future<bool> saveInfo() async {
     try {
       await updateServiceDescriptionDescription();
+      await updateServiceLocation();
 
       await updateServiceInfo();
       return true;

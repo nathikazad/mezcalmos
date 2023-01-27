@@ -139,7 +139,6 @@ class _ROpMenuViewState extends State<ROpMenuView>
                                 : _reorderBtn()
                           ],
                         ),
-                        Divider(),
                         SizedBox(
                           height: 5,
                         ),

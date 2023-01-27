@@ -4,7 +4,6 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminDeliveryCompanyServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminRestaurantServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class AdminServicesView extends StatefulWidget {
@@ -31,14 +30,8 @@ class _AdminServicesViewState extends State<AdminServicesView> {
           Obx(() => Column(
                 children: [
                   _searchInput(),
-                  viewController.services.isNotEmpty
-                      ? Column(
-                          children: List.generate(
-                              viewController.services.length, (int index) {
-                            return _getServiceCard(
-                                viewController.services[index]);
-                          }),
-                        )
+                  viewController.hasData
+                      ? _buildServices()
                       : Container(
                           alignment: Alignment.center,
                           child: Center(child: CircularProgressIndicator())),
@@ -46,6 +39,24 @@ class _AdminServicesViewState extends State<AdminServicesView> {
               )),
         ],
       ),
+    );
+  }
+
+  Container _buildServices() {
+    return Container(
+      child: (viewController.currentService == ServiceProviderType.Restaurant)
+          ? Column(
+              children: List.generate(
+                  viewController.restaurants!.length,
+                  (int index) => AdminRestaurantServiceCard(
+                      viewController: viewController,
+                      restaurant: viewController.restaurants![index])))
+          : Column(
+              children: List.generate(
+                  viewController.companies!.length,
+                  (int index) => AdminDeliveryCompanyServiceCard(
+                      viewController: viewController,
+                      company: viewController.companies![index]))),
     );
   }
 
@@ -72,18 +83,5 @@ class _AdminServicesViewState extends State<AdminServicesView> {
             hintText: "Search"),
       ),
     );
-  }
-
-  Widget _getServiceCard(UserInfo serviceInfo) {
-    switch (viewController.currentService) {
-      case ServiceProviderType.Restaurant:
-        return AdminRestaurantServiceCard(serviceInfo: serviceInfo);
-
-      case ServiceProviderType.Delivery_company:
-        return AdminDeliveryCompanyServiceCard(serviceInfo: serviceInfo);
-
-      default:
-        return SizedBox();
-    }
   }
 }

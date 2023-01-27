@@ -29,6 +29,51 @@ Future<List<MinimalOrder>?> get_admin__orders({
         ordersData.map((Query$admin_get__orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          serviceProviderId: orderData.service_provider_id,
+          serviceProviderType: orderData.service_provider_type
+              .toString()
+              .toServiceProviderType(),
+          toAdress: orderData.dropoff_address,
+          orderTime: DateTime.parse(orderData.order_time),
+          customerName: orderData.customer.user.name!,
+          customerImage: orderData.customer.user.image,
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          totalCost: orderData.package_cost);
+    }).toList();
+    return orders;
+  } else {
+    throw Exception(
+        "🚨 Getting min orders exceptions \n ${queryResult.exception}");
+  }
+}
+
+Future<List<MinimalOrder>?> get_admin_service__orders({
+  required bool inProcess,
+  required int serviceProviderId,
+  required ServiceProviderType serviceProviderType,
+}) async {
+  final QueryResult<Query$admin_get_service__orders> queryResult =
+      await _hasuraDb.graphQLClient.query$admin_get_service__orders(
+          Options$Query$admin_get_service__orders(
+              variables: Variables$Query$admin_get_service__orders(
+                  inProccess: inProcess,
+                  serviceProviderId: serviceProviderId,
+                  serviceProviderType:
+                      serviceProviderType.toFirebaseFormatString())));
+
+  if (queryResult.parsedData?.delivery_order != null) {
+    final List<Query$admin_get_service__orders$delivery_order> ordersData =
+        queryResult.parsedData!.delivery_order;
+
+    final List<MinimalOrder> orders = ordersData
+        .map((Query$admin_get_service__orders$delivery_order orderData) {
+      return MinimalOrder(
+          id: orderData.id,
+          serviceProviderId: orderData.service_provider_id,
+          serviceProviderType: orderData.service_provider_type
+              .toString()
+              .toServiceProviderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
           customerName: orderData.customer.user.name!,
@@ -66,6 +111,10 @@ Stream<List<MinimalOrder>?> listen_on_admin_orders({
           .map((Subscription$admin_listen_on_orders$delivery_order orderData) {
         return MinimalOrder(
             id: orderData.id,
+            serviceProviderId: orderData.service_provider_id,
+            serviceProviderType: orderData.service_provider_type
+                .toString()
+                .toServiceProviderType(),
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
             customerName: orderData.customer.user.name!,

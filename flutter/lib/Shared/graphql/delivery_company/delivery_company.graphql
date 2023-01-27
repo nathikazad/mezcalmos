@@ -4,6 +4,7 @@ query getDeliveryCompanyById($id: Int!) {
     description_id
     id
     image
+    location_id
     name
     open_status
    location {  gps
@@ -24,6 +25,7 @@ mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
   update_delivery_company_by_pk(pk_columns: { id: $id }, _set: $data) {
     approved
     description_id
+    location_id
     id
     image
     name

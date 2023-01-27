@@ -48,6 +48,7 @@ query get_restaurant_desc_by_pk($desc_id: Int!) {
 query getOneRestaurant($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
     id
+    location_id
     delivery_details_id
     delivery_details_of_deliverer{   cost_per_km
       free_delivery_km_range
@@ -126,6 +127,7 @@ mutation updateRestaurantInfo(
   update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
     firebase_id
+    location_id
     delivery_details_of_deliverer{
          cost_per_km
       free_delivery_km_range
