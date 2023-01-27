@@ -87,6 +87,7 @@ select_permissions:
         - radius
       filter: {}
 update_permissions:
+<<<<<<< HEAD
   - role: anonymous
     permission:
       columns:
@@ -105,6 +106,8 @@ update_permissions:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
+=======
+>>>>>>> hsFlutter-mezAdmin
   - role: delivery_operator
     permission:
       columns:
