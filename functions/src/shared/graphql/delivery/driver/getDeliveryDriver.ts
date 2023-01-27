@@ -17,7 +17,8 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
           firebase_id: true,
           language_id: true,
           image: true,
-          name: true
+          name: true,
+          phone: true
         },
         notification_token: true
       }]
@@ -35,7 +36,8 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         firebaseId: response.restaurant_operator_by_pk.user.firebase_id,
         language: response.restaurant_operator_by_pk.user.language_id as Language,
         image: response.restaurant_operator_by_pk.user.image,
-        name: response.restaurant_operator_by_pk.user.name
+        name: response.restaurant_operator_by_pk.user.name,
+        phoneNumber: response.restaurant_operator_by_pk.user.phone
       },
       notificationInfo: (response.restaurant_operator_by_pk.notification_token) ? {
         AppTypeId: AppType.RestaurantApp,
@@ -58,7 +60,8 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
           firebase_id: true,
           language_id: true,
           image: true,
-          name: true
+          name: true,
+          phone: true
         },
         notification_token: true,
       }]
@@ -81,7 +84,8 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         firebaseId: response.delivery_driver_by_pk.user.firebase_id,
         language: response.delivery_driver_by_pk.user.language_id as Language,
         image: response.delivery_driver_by_pk.user.image,
-        name: response.delivery_driver_by_pk.user.name
+        name: response.delivery_driver_by_pk.user.name,
+        phoneNumber: response.delivery_driver_by_pk.user.phone
       },
       notificationInfo: (response.delivery_driver_by_pk.notification_token) ? {
         AppTypeId: AppType.DeliveryApp,

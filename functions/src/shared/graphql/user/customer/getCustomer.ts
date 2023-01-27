@@ -14,6 +14,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             user: {
                 firebase_id: true,
                 language_id: true,
+                phone: true,
                 name : true,
                 image:true
             },
@@ -38,6 +39,7 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             token: response.customer_customer_by_pk.notification_token
         } : undefined,
         appVersion: response.customer_customer_by_pk.app_version,
-        stripeInfo: JSON.parse(response.customer_customer_by_pk.stripe_info)
+        stripeInfo: JSON.parse(response.customer_customer_by_pk.stripe_info),
+        phoneNumber: response.customer_customer_by_pk.user.phone
     }
 }

@@ -153,6 +153,8 @@ enum app_type_update_column {
 input app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: app_type_set_input
+
+  """filter the rows which have to be updated"""
   where: app_type_bool_exp!
 }
 
@@ -225,7 +227,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
 }
 
 """
@@ -746,6 +748,8 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -936,6 +940,8 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -1426,6 +1432,8 @@ input customer_customer_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -1820,6 +1828,8 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -2089,6 +2099,16 @@ input delivery_company_bool_exp {
 unique or primary key constraints on table "delivery.company"
 """
 enum delivery_company_constraint {
+  """
+  unique or primary key constraint on columns "delivery_details_id"
+  """
+  company_delivery_details_id_key
+
+  """
+  unique or primary key constraint on columns "location_id"
+  """
+  company_location_id_key
+
   """
   unique or primary key constraint on columns "id"
   """
@@ -2441,6 +2461,8 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -3003,6 +3025,8 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -3636,6 +3660,8 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -4152,6 +4178,8 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -5291,6 +5319,8 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -5874,6 +5904,8 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -6253,6 +6285,8 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -6590,6 +6624,8 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
+
+  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -6873,6 +6909,8 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -7038,6 +7076,8 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -7234,6 +7274,8 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -10464,6 +10506,8 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
+
+  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -13026,6 +13070,8 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -13223,6 +13269,8 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
@@ -13709,6 +13757,8 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -14218,6 +14268,8 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -15027,6 +15079,8 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -15374,6 +15428,8 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -15920,6 +15976,8 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -16574,6 +16632,8 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -16985,6 +17045,8 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -17929,6 +17991,8 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -18467,6 +18531,8 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -18884,6 +18950,8 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -19460,9 +19528,19 @@ unique or primary key constraints on table "restaurant.restaurant"
 """
 enum restaurant_restaurant_constraint {
   """
+  unique or primary key constraint on columns "delivery_details_id"
+  """
+  restaurant_delivery_details_id_key
+
+  """
   unique or primary key constraint on columns "firebase_id"
   """
   restaurant_firebase_id_key
+
+  """
+  unique or primary key constraint on columns "location_id"
+  """
+  restaurant_location_id_key
 
   """
   unique or primary key constraint on columns "id"
@@ -20066,6 +20144,8 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -20547,6 +20627,8 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
+
+  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -20859,6 +20941,8 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -20889,6 +20973,9 @@ columns and relationships of "service_provider.delivery_partner"
 type service_provider_delivery_partner {
   delivery_company_id: Int!
   id: Int!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
   service_provider_id: Int!
   service_provider_type: String!
 }
@@ -20935,6 +21022,7 @@ input service_provider_delivery_partner_bool_exp {
   _or: [service_provider_delivery_partner_bool_exp!]
   delivery_company_id: Int_comparison_exp
   id: Int_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
 }
@@ -20969,6 +21057,7 @@ input type for inserting data into table "service_provider.delivery_partner"
 input service_provider_delivery_partner_insert_input {
   delivery_company_id: Int
   id: Int
+  restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_type: String
 }
@@ -21025,6 +21114,7 @@ Ordering options when selecting data from "service_provider.delivery_partner".
 input service_provider_delivery_partner_order_by {
   delivery_company_id: order_by
   id: order_by
+  restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
   service_provider_type: order_by
 }
@@ -21131,6 +21221,8 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -21159,9 +21251,15 @@ type service_provider_delivery_partner_variance_fields {
 columns and relationships of "service_provider.location"
 """
 type service_provider_location {
-  address: String
+  address: String!
+
+  """An object relationship"""
+  delivery_company: delivery_company
   gps: geography!
   id: Int!
+
+  """An object relationship"""
+  restaurant: restaurant_restaurant
 }
 
 """
@@ -21202,8 +21300,10 @@ input service_provider_location_bool_exp {
   _not: service_provider_location_bool_exp
   _or: [service_provider_location_bool_exp!]
   address: String_comparison_exp
+  delivery_company: delivery_company_bool_exp
   gps: geography_comparison_exp
   id: Int_comparison_exp
+  restaurant: restaurant_restaurant_bool_exp
 }
 
 """
@@ -21228,8 +21328,10 @@ input type for inserting data into table "service_provider.location"
 """
 input service_provider_location_insert_input {
   address: String
+  delivery_company: delivery_company_obj_rel_insert_input
   gps: geography
   id: Int
+  restaurant: restaurant_restaurant_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -21277,8 +21379,10 @@ input service_provider_location_on_conflict {
 """Ordering options when selecting data from "service_provider.location"."""
 input service_provider_location_order_by {
   address: order_by
+  delivery_company: delivery_company_order_by
   gps: order_by
   id: order_by
+  restaurant: restaurant_restaurant_order_by
 }
 
 """primary key columns input for table: service_provider.location"""
@@ -21367,6 +21471,8 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -21389,12 +21495,15 @@ type service_provider_location_variance_fields {
 columns and relationships of "service_provider.post"
 """
 type service_provider_post {
+  """Array of { message, date, Array of customerIds }"""
   comments(
     """JSON select path"""
     path: String
   ): jsonb
   id: Int!
   image: String
+
+  """Array of customerIds"""
   likes(
     """JSON select path"""
     path: String
@@ -21435,7 +21544,10 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
+
+  """Array of customerIds"""
   likes: jsonb
 }
 
@@ -21477,7 +21589,10 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: [String!]
+
+  """Array of customerIds"""
   likes: [String!]
 }
 
@@ -21486,7 +21601,10 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: Int
+
+  """Array of customerIds"""
   likes: Int
 }
 
@@ -21494,7 +21612,10 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: String
+
+  """Array of customerIds"""
   likes: String
 }
 
@@ -21510,9 +21631,12 @@ input service_provider_post_inc_input {
 input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz
@@ -21581,7 +21705,10 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
+
+  """Array of customerIds"""
   likes: jsonb
 }
 
@@ -21618,9 +21745,12 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz
@@ -21659,9 +21789,12 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz
@@ -21732,6 +21865,8 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -22067,6 +22202,8 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -22343,6 +22480,8 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -24975,6 +25114,8 @@ input timestamptz_comparison_exp {
 columns and relationships of "translation"
 """
 type translation {
+  """An object relationship"""
+  delivery_company: delivery_company
   id: Int!
 
   """An object relationship"""
@@ -25057,6 +25198,7 @@ input translation_bool_exp {
   _and: [translation_bool_exp!]
   _not: translation_bool_exp
   _or: [translation_bool_exp!]
+  delivery_company: delivery_company_bool_exp
   id: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
@@ -25087,6 +25229,7 @@ input translation_inc_input {
 input type for inserting data into table "translation"
 """
 input translation_insert_input {
+  delivery_company: delivery_company_obj_rel_insert_input
   id: Int
   restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
@@ -25140,6 +25283,7 @@ input translation_on_conflict {
 
 """Ordering options when selecting data from "translation"."""
 input translation_order_by {
+  delivery_company: delivery_company_order_by
   id: order_by
   restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
@@ -25237,6 +25381,8 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -25547,6 +25693,8 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -25920,6 +26068,8 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
+
+  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
