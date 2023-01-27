@@ -28,7 +28,7 @@ class AdmiOrdersListViewController {
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
     _restaurantOrders.value = await get_admin__orders(
-        inProcess: false, serviceProviderType: ServiceProviderType.Restaurant);
+        inProcess: true, serviceProviderType: ServiceProviderType.Restaurant);
 
     _deliveryOrders.value = await get_admin__orders(
         inProcess: true,

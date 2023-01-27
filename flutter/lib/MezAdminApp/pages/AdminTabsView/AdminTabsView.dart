@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/AdminOrdersListView.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -43,6 +44,10 @@ class _AdminTabsViewState extends State<AdminTabsView>
         return AdmiOrdersListView(
           adminTabsViewController: viewController,
         );
+      case 1:
+        return AdminServicesView(
+          adminTabsViewController: viewController,
+        );
 
       default:
         return Scaffold(
@@ -71,16 +76,12 @@ class _AdminTabsViewState extends State<AdminTabsView>
             label: '${_i18n()["orders"]}',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.store),
+            icon: Icon(Icons.room_service),
             label: '${_i18n()["services"]}',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.sms),
             label: '${_i18n()["messages"]}',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '${_i18n()["profile"]}',
           ),
         ]);
   }
@@ -90,10 +91,10 @@ class _AdminTabsViewState extends State<AdminTabsView>
       preferredSize: Size.fromHeight(viewController.getAppbarHeight),
       child: mezcalmosAppBar(
         AppBarLeftButtonType.Menu,
-        title: "Orders",
+        title:viewController.getTitle(),
         tabBar: viewController.showAppBarTabs
             ? TabBar(
-                isScrollable: true,
+                //isScrollable: true,
                 controller: viewController.appbarTabsController,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
@@ -108,8 +109,9 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 tabs: List.generate(
                     viewController.serviceTypes.length,
                     (int index) => Tab(
-                          text: viewController.serviceTypes[index]
-                              .toNormalString(),
+                          child: Icon(
+                            viewController.serviceTypes[index].toIcon(),
+                          ),
                         )))
             : null,
       ),

@@ -112,10 +112,9 @@ select_permissions:
         - stripe_fees
         - tax
         - customer_app_type
+        - delivery_type
         - firebase_id
         - notes
-        - order_time
-        - delivery_type
         - payment_type
         - to_location_address
         - actual_food_ready_time

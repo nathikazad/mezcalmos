@@ -1,0 +1,7 @@
+mutation updateServiceLocation($locationId : Int!,$data : service_provider_location_set_input) {
+   update_service_provider_location_by_pk(pk_columns: {id: $locationId}, _set: $data) {
+    address
+    gps
+    id
+  }
+}

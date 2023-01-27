@@ -119,7 +119,10 @@ class _ROpSpecialItemTimeState extends State<ROpSpecialItemTime> {
                         state.errorText?.toString().inCaps ?? "",
                         style: Get.textTheme.subtitle1
                             ?.copyWith(color: Colors.red),
-                      ))
+                      )),
+                const SizedBox(
+                  height: 25,
+                ),
               ],
             ),
           );

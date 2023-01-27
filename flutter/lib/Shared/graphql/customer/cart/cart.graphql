@@ -34,16 +34,25 @@ query getCustomerCart($customer_id: Int!) {
         id
         stripe_info
         accepted_payments
-        
-        
+delivery_details_id
+ delivery_details_of_deliverer{
+         cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      radius
+    }
 
         firebase_id
         image
         language_id
         description_id
-        location_gps
-        location_text
         name
+        location {
+          gps
+          address
+        }
         self_delivery
         #schedule_id
         schedule
@@ -139,15 +148,27 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       restaurant_id
       restaurant {
         id
+delivery_details_id
+ delivery_details_of_deliverer{
+         cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      radius
+    }
         firebase_id
+        name
         stripe_info
         accepted_payments
         image
         language_id
         description_id
-        location_gps
-        location_text
-        name
+        location {
+          gps
+          address
+        }
+        
         self_delivery
         #schedule_id
         schedule

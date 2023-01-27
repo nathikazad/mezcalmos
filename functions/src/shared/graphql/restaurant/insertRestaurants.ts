@@ -191,11 +191,15 @@ export async function insertRestaurants(data: any) {
             firebase_id: r.firebaseId,
             name: r.name,
             image: r.image,
-            location_gps: JSON.stringify({
-                "type": "point",
-                "coordinates": [r.location.lng, r.location.lat]
-            }),
-            location_text: r.location.address,
+            location: {
+                data: {
+                    gps: JSON.stringify({
+                        "type": "point",
+                        "coordinates": [r.location.lng, r.location.lat]
+                    }),
+                    address: r.location.address,
+                }
+            },
             description: {
                 data: {
                     service_provider_id: index + 1,

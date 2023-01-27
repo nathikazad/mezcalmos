@@ -72,8 +72,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
               onClick: !widget.canGoBack && viewController.reOrderMode.isFalse
                   ? null
                   : handleBack,
-              showLeftBtn: viewController.reOrderMode.isTrue ||
-                  widget.canGoBack == false,
+              // showLeftBtn: viewController.reOrderMode.isTrue ||
+              //     widget.canGoBack == false,
               title: '${_i18n()["menu"]}',
               showNotifications: true,
               tabBar: _tabBar(),
@@ -139,7 +139,6 @@ class _ROpMenuViewState extends State<ROpMenuView>
                                 : _reorderBtn()
                           ],
                         ),
-                        Divider(),
                         SizedBox(
                           height: 5,
                         ),

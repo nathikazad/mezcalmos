@@ -4,8 +4,12 @@ query admin_get_dv_companies {
     image
     name
     open_status
+    creation_time
     service_provider_type
+    delivery_details_id
     id
+     location {  gps
+    address}   
   }
 }
 query admin_get_restaurants {
@@ -14,9 +18,10 @@ query admin_get_restaurants {
     firebase_id
     id
     image
+    delivery_details_id
     language_id
-    location_gps
-    location_text
+   location {  gps
+    address}   
     name
     open_status
     service_provider_type

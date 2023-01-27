@@ -11,7 +11,9 @@ import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/OtpConfirmationScreen.dar
 import 'package:mezcalmos/Shared/pages/AuthScreens/SMS/PhoneNumberScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/SignInScreen.dart';
 import 'package:mezcalmos/Shared/pages/AuthScreens/UnauthorizedScreen.dart';
+import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/CreateServiceView.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
@@ -19,6 +21,7 @@ import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
@@ -54,8 +57,12 @@ const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
 const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList = "/operatorsList/:serviceProviderId";
-const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
+const String kDeliveryCost = "/deliveryCost/:deliveryDetailsId";
+const String kCreateService = "/createService";
+const String kdeliverySettingsView = "/deliverySettings/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
+const String kPickLocationNew = "/pick_location/new";
+const String kserviceInfoEdit = "/service/:serviceProviderId";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
     "/costDeliverySettingScreen/:providerId/:providerType";
@@ -123,20 +130,38 @@ void navigateToDrivers(
 
 void navigateToOperators(
     {required int serviceProviderId,
-    required ServiceProviderType controllerType}) {
+    required ServiceProviderType serviceProviderType}) {
   final String route =
       kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
   MezRouter.toNamed(route, arguments: {
-    "serviceProviderType": controllerType,
+    "serviceProviderType": serviceProviderType,
     "showAppBar": true,
   });
 }
 
-void navigateToDeliveryCost(
+void navigateToDeliverySettings(
+    {required int serviceProviderId,
+    required ServiceProviderType serviceProviderType}) {
+  final String route = kdeliverySettingsView.replaceFirst(
+      ":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
+}
+
+void navigateToDeliveryCost({
+  required int deliveryDetailsId,
+}) {
+  final String route =
+      kDeliveryCost.replaceFirst(":deliveryDetailsId", "$deliveryDetailsId");
+  MezRouter.toNamed(route);
+}
+
+void navigateToServiceInfoEdit(
     {required int serviceProviderId,
     required ServiceProviderType serviceProviderType}) {
   final String route =
-      kDeliveryCost.replaceFirst(":serviceProviderId", "$serviceProviderId");
+      kserviceInfoEdit.replaceFirst(":serviceProviderId", "$serviceProviderId");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
   });
@@ -148,6 +173,13 @@ void navigateToServicePayments(
   final String route =
       kServicePayments.replaceFirst(":ServiceProviderId", "$ServiceProviderId");
   MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+  });
+}
+
+void navigateToCreateService(
+    {required ServiceProviderType serviceProviderType}) {
+  MezRouter.toNamed(kCreateService, arguments: {
     "serviceProviderType": serviceProviderType,
   });
 }
@@ -210,6 +242,9 @@ class SharedRouter {
     GetPage(
         name: kPickLocationEdit,
         page: () => PickLocationView(PickLocationMode.EditLocation)),
+    GetPage(
+        name: kPickLocationNew,
+        page: () => PickLocationView(PickLocationMode.AddNewLocation)),
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => ServiceDriversListView()),
@@ -219,5 +254,8 @@ class SharedRouter {
     GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
     GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
     GetPage(name: kUserNewProfile, page: () => UserProfileView()),
+    GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
+    GetPage(name: kCreateService, page: () => CreateServiceView()),
+    GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
   ];
 }

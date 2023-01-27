@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -18,12 +17,10 @@ dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
 class DeliveryCostSettingView extends StatefulWidget {
   const DeliveryCostSettingView({
     Key? key,
-    this.serviceProviderId,
-    this.serviceProviderType,
+    this.deliveryDetailsId,
   }) : super(key: key);
-  final int? serviceProviderId;
+  final int? deliveryDetailsId;
 
-  final ServiceProviderType? serviceProviderType;
   @override
   State<DeliveryCostSettingView> createState() =>
       _DeliveryCostSettingViewState();
@@ -32,20 +29,16 @@ class DeliveryCostSettingView extends StatefulWidget {
 class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   DeliveryCostSettingViewController viewController =
       DeliveryCostSettingViewController();
-  int? serviceProviderId;
-  ServiceProviderType? serviceProviderType;
+  int? deliveryDetailsId;
+
   @override
   void initState() {
-    serviceProviderId = widget.serviceProviderId ??
-        int.tryParse(Get.parameters["serviceProviderId"]!);
-    serviceProviderType = widget.serviceProviderType ??
-        Get.arguments["serviceProviderType"] as ServiceProviderType;
+    deliveryDetailsId = widget.deliveryDetailsId ??
+        int.tryParse(Get.parameters["deliveryDetailsId"]!);
 
     // provide service provider id and service Provider type
-    if (serviceProviderId != null && serviceProviderType != null) {
-      viewController.init(
-          serviceProviderId: serviceProviderId!,
-          serviceProviderType: serviceProviderType!);
+    if (deliveryDetailsId != null) {
+      viewController.init(deliveryDetailsId: deliveryDetailsId!);
     }
 
     super.initState();
@@ -57,8 +50,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
     super.dispose();
   }
 
-  bool get asTab =>
-      widget.serviceProviderId != null && widget.serviceProviderType != null;
+  bool get asTab => widget.deliveryDetailsId != null;
 
   @override
   Widget build(BuildContext context) {
@@ -101,27 +93,6 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (serviceProviderType != null &&
-                      serviceProviderType == ServiceProviderType.Restaurant)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _costComponent(
-                            controller: viewController.freeKmRange,
-                            suffixTitle: 'Km',
-                            title: 'Free Delivery range'),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Within this distance, the customer won’t be charged for the delivery.",
-                          style: Get.textTheme.bodyText2,
-                        ),
-                        Divider(
-                          height: 35,
-                        ),
-                      ],
-                    ),
                   _costComponent(
                       controller: viewController.minCost,
                       suffixTitle: '\$',
