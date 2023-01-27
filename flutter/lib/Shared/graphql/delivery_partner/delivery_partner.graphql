@@ -1,0 +1,30 @@
+query getDeliveryPartner($serviceId: Int!, $serviceType: String) {
+  service_provider_delivery_partner(
+    where: {
+      service_provider_id: { _eq: $serviceId }
+      service_provider_type: { _eq: $serviceType }
+    }
+  ) {
+    delivery_company_id
+    id
+    service_provider_id
+    service_provider_type
+  }
+}
+mutation updateDeliveryPartner(
+  $serviceId: Int!
+  $serviceType: String
+  $newCompanyId: Int!
+) {
+  update_service_provider_delivery_partner(
+    where: {
+      service_provider_id: { _eq: $serviceId }
+      service_provider_type: { _eq: $serviceType }
+    }
+    _set: { delivery_company_id: $newCompanyId }
+  ) {
+    returning {
+      delivery_company_id
+    }
+  }
+}

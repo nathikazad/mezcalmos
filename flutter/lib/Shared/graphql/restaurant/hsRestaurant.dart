@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -31,6 +32,8 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
           fetchPolicy: withCache
               ? FetchPolicy.cacheAndNetwork
               : FetchPolicy.networkOnly));
+  mezDbgPrint(
+      "get restuarnts called =======< ${response.parsedData?.toJson()}");
 
   if (response.parsedData?.restaurant_restaurant != null) {
     response.parsedData?.restaurant_restaurant
@@ -53,7 +56,20 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
               name: data.name,
               descriptionId: data.description_id,
               location: Location.fromHasura(
-                  data.location!.gps, data.location!.address)),
+                  data.location.gps, data.location.address)),
+          deliveryCost: (data.delivery_details_of_deliverer == null)
+              ? null
+              : DeliveryCost(
+                  id: data.delivery_details_of_deliverer!.first.id,
+                  freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
+                      .first.free_delivery_minimum_cost,
+                  costPerKm:
+                      data.delivery_details_of_deliverer!.first.cost_per_km,
+                  minimumCost:
+                      data.delivery_details_of_deliverer!.first.minimum_cost,
+                  freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
+                      .free_delivery_km_range,
+                ),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
           paymentInfo: PaymentInfo(),
@@ -133,8 +149,7 @@ Future<Restaurant?> get_restaurant_by_id(
 
   mezDbgPrint("[+] -> id : $id");
   if (response.parsedData?.restaurant_restaurant_by_pk == null) {
-    Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
-    return null;
+    throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
     mezDbgPrint(
         "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_restaurant_by_pk?.toJson()} ");
@@ -152,6 +167,20 @@ Future<Restaurant?> get_restaurant_by_id(
       mezDbgPrint(
           "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
       return Restaurant(
+          deliveryDetailsId: data.delivery_details_id,
+          deliveryCost: (data.delivery_details_of_deliverer == null)
+              ? null
+              : DeliveryCost(
+                  id: data.delivery_details_of_deliverer!.first.id,
+                  freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
+                      .first.free_delivery_minimum_cost,
+                  costPerKm:
+                      data.delivery_details_of_deliverer!.first.cost_per_km,
+                  minimumCost:
+                      data.delivery_details_of_deliverer!.first.minimum_cost,
+                  freeDeliveryKmRange: data.delivery_details_of_deliverer!.first
+                      .free_delivery_km_range,
+                ),
           userInfo: ServiceInfo(
               hasuraId: data.id,
               image: data.image,
@@ -169,7 +198,7 @@ Future<Restaurant?> get_restaurant_by_id(
               name: data.name,
               descriptionId: data.description_id,
               location: Location.fromHasura(
-                  data.location!.gps, data.location!.address)),
+                  data.location.gps, data.location.address)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
           paymentInfo: paymentInfo,
@@ -222,8 +251,10 @@ Future<Schedule?> get_restaurant_schedule(
 
 // Mutations //
 
-Future<Restaurant> update_restaurant_info(
-    {required int id, required Restaurant restaurant}) async {
+Future<Restaurant> update_restaurant_info({
+  required int id,
+  required Restaurant restaurant,
+}) async {
   mezDbgPrint(
       "Location before saving 📍 ${restaurant.info.location.toFirebaseFormattedJson()}");
   final QueryResult<Mutation$updateRestaurantInfo> response = await _db
@@ -235,6 +266,7 @@ Future<Restaurant> update_restaurant_info(
               data: Input$restaurant_restaurant_set_input(
                   name: restaurant.info.name,
                   image: restaurant.info.image,
+                  delivery_details_id: restaurant.deliveryDetailsId,
                   self_delivery: restaurant.selfDelivery,
                   schedule: restaurant.schedule?.toFirebaseFormattedJson(),
                   language_id:
@@ -278,7 +310,7 @@ Future<Restaurant> update_restaurant_info(
               : null,
           name: data.name,
           location:
-              Location.fromHasura(data.location!.gps, data.location!.address)),
+              Location.fromHasura(data.location.gps, data.location.address)),
       schedule: data.schedule != null ? Schedule.fromData(data.schedule) : null,
       paymentInfo: _paymentInfo,
       restaurantState:

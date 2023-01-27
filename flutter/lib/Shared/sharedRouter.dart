@@ -57,7 +57,7 @@ const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
 const String kServicePayments = "/servicePayments/:ServiceProviderId";
 const String kOperatorsList = "/operatorsList/:serviceProviderId";
-const String kDeliveryCost = "/deliveryCost/:serviceProviderId";
+const String kDeliveryCost = "/deliveryCost/:deliveryDetailsId";
 const String kCreateService = "/createService";
 const String kdeliverySettingsView = "/deliverySettings/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
@@ -149,14 +149,11 @@ void navigateToDeliverySettings(
   });
 }
 
-void navigateToDeliveryCost(
-    {required int serviceProviderId,
-    required ServiceProviderType serviceProviderType}) {
+void navigateToDeliveryCost({
+  required int deliveryDetailsId,
+}) {
   final String route =
-      kDeliveryCost.replaceFirst(":serviceProviderId", "$serviceProviderId");
-  MezRouter.toNamed(route, arguments: {
-    "serviceProviderType": serviceProviderType,
-  });
+      kDeliveryCost.replaceFirst(":deliveryDetailsId", "$deliveryDetailsId");
 }
 
 void navigateToServiceInfoEdit(

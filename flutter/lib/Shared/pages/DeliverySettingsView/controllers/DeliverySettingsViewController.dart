@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -28,7 +29,9 @@ class DeliverySettingsViewController {
   RxnInt deliveryPartnerId = RxnInt();
   RxnNum previewCost = RxnNum();
   Rxn<DeliveryCost> deliveryCost = Rxn();
+
   Rx<ServiceDeliveryType> deliveryType = Rx(ServiceDeliveryType.Self_delivery);
+
   // methods //
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
@@ -40,28 +43,28 @@ class DeliverySettingsViewController {
     this.serviceProviderType = serviceProviderType;
     if (serviceProviderId != null && serviceProviderType != null) {
       await _initEditMode(serviceProviderId, serviceProviderType);
+      await _getDeliveryCost();
+      if (deliveryCost.value != null) {
+        _assignDeliveryCost();
+      }
     }
   }
 
   Future<void> _initEditMode(
       int? serviceProviderId, ServiceProviderType? serviceProviderType) async {
-    restaurant.value = await get_restaurant_by_id(id: serviceProviderId!);
+    restaurant.value =
+        await get_restaurant_by_id(id: serviceProviderId!, withCache: false);
     deliveryType.value = restaurant.value!.selfDelivery
         ? ServiceDeliveryType.Self_delivery
         : ServiceDeliveryType.Delivery_Partner;
-    if (restaurant.value!.selfDelivery) {
-      await _getDeliveryCost(serviceProviderId, serviceProviderType);
-    }
-    if (deliveryCost.value != null) {
-      _assignDeliveryCost();
-    }
+
+    deliveryPartnerId.value = await get_service_delivery_partner(
+        serviceId: serviceProviderId, providerType: serviceProviderType!);
   }
 
-  Future<void> _getDeliveryCost(
-      int serviceProviderId, ServiceProviderType? serviceProviderType) async {
+  Future<void> _getDeliveryCost() async {
     deliveryCost.value = await get_delivery_cost(
-        serviceProviderId: serviceProviderId,
-        providerType: serviceProviderType!);
+        deliveryDetailsId: restaurant.value!.deliveryDetailsId!);
   }
 
   void _assignDeliveryCost() {
@@ -89,7 +92,68 @@ class DeliverySettingsViewController {
       deliveryType.value = value;
     }
   }
+
+  void pickDeliveryCompany(int id) {
+    if (isCreatingNewService) {
+      createServiceViewController!.serviceInput.value.deliveryPartnerId = id;
+      createServiceViewController!.serviceInput.refresh();
+    } else {
+      deliveryPartnerId.value = id;
+    }
+  }
+
+  Future<bool> handleSave() async {
+    if (isSelfDelivery) {
+      return _handleSaveDeliveryCost();
+    } else {
+      await update_service_delivery_partner(
+          serviceId: serviceProviderId!,
+          providerType: serviceProviderType!,
+          newCompanyId: deliveryPartnerId.value!);
+      await update_restaurant_info(
+          id: serviceProviderId!,
+          restaurant: restaurant.value!.copyWith(
+            selfDelivery: false,
+          ));
+      return true;
+    }
+  }
+
+  Future<bool> _handleSaveDeliveryCost() async {
+    if (costFormKey.currentState?.validate() == true) {
+      if (deliveryCost.value == null) {
+        final int? newId =
+            await add_delivery_cost(deliveryCost: _constructDeliveryCost());
+        if (newId != null) {
+          await update_restaurant_info(
+              id: serviceProviderId!,
+              restaurant: restaurant.value!
+                  .copyWith(selfDelivery: true, deliveryDetailsId: newId));
+          return true;
+        }
+      } else {
+        await update_delivery_cost(
+            deliveryCostId: deliveryCost.value!.id!,
+            deliveryCost: deliveryCost.value!);
+        await update_restaurant_info(
+            id: serviceProviderId!,
+            restaurant: restaurant.value!.copyWith(
+              selfDelivery: true,
+            ));
+      }
+      return true;
+    }
+    return false;
+  }
+
   // getters //
+  DeliveryCost _constructDeliveryCost() {
+    return DeliveryCost(
+        id: null,
+        minimumCost: double.parse(minCost.text),
+        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
+        costPerKm: double.parse(costPerKm.text));
+  }
 
   bool get isCreatingNewService => createServiceViewController != null;
   void calculatePreview() {
@@ -113,4 +177,18 @@ class DeliverySettingsViewController {
   GlobalKey<FormState> get getFormKey => isCreatingNewService
       ? createServiceViewController!.costFormKey
       : costFormKey;
+  int? get getPartnerId => isCreatingNewService
+      ? createServiceViewController!.serviceInput.value.deliveryPartnerId
+      : deliveryPartnerId.value;
+
+  bool get hasData {
+    if (serviceProviderId != null && serviceProviderType != null) {
+      return restaurant.value != null &&
+          (deliveryCost.value != null || deliveryPartnerId.value != null);
+    } else
+      return true;
+  }
+
+  bool get isSelfDelivery =>
+      getDeliveryType == ServiceDeliveryType.Self_delivery;
 }

@@ -235,16 +235,14 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         return Column(
           children: List.generate(10, (int index) => RestaurantShimmerCard()),
         );
-      } else if (viewController.filteredRestaurants.isNotEmpty &&
-          viewController.mezMinmumDeliveryCost != null) {
+      } else if (viewController.filteredRestaurants.isNotEmpty) {
         return Column(
           children: List.generate(viewController.filteredRestaurants.length,
               (int index) {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
               shippingPrice: viewController
-                      .filteredRestaurants[index].deliveryCost?.minimumCost ??
-                  viewController.mezMinmumDeliveryCost!,
+                  .filteredRestaurants[index].deliveryCost!.minimumCost,
               onClick: () {
                 MezRouter.toNamed<void>(
                     getRestaurantRoute(

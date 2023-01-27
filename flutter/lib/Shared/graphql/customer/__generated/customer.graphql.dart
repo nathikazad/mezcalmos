@@ -5859,7 +5859,7 @@ class Query$get_customer_orders$restaurant_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.language_id,
-    this.location,
+    required this.location,
     required this.name,
     required this.$__typename,
   });
@@ -5878,10 +5878,8 @@ class Query$get_customer_orders$restaurant_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location: l$location == null
-          ? null
-          : Query$get_customer_orders$restaurant_order$restaurant$location
-              .fromJson((l$location as Map<String, dynamic>)),
+      location: Query$get_customer_orders$restaurant_order$restaurant$location
+          .fromJson((l$location as Map<String, dynamic>)),
       name: (l$name as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -5895,8 +5893,7 @@ class Query$get_customer_orders$restaurant_order$restaurant {
 
   final String language_id;
 
-  final Query$get_customer_orders$restaurant_order$restaurant$location?
-      location;
+  final Query$get_customer_orders$restaurant_order$restaurant$location location;
 
   final String name;
 
@@ -5913,7 +5910,7 @@ class Query$get_customer_orders$restaurant_order$restaurant {
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$$__typename = $__typename;
@@ -6059,10 +6056,10 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant<TRes>
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_customer_orders$restaurant_order$restaurant$location?),
+                as Query$get_customer_orders$restaurant_order$restaurant$location),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -6073,11 +6070,8 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant<TRes>
   CopyWith$Query$get_customer_orders$restaurant_order$restaurant$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_customer_orders$restaurant_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_customer_orders$restaurant_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_customer_orders$restaurant_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 

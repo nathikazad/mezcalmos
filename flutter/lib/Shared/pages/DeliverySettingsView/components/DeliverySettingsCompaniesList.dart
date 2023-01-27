@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -168,15 +169,13 @@ class _DeliverySettingsCompaniesListState
             SizedBox(
               width: 5,
             ),
-            // radioCircleButton(
-            //     value: widget
-            //             .viewController.serviceInput.value.deliveryPartnerId ==
-            //         company.info.hasuraId,
-            //     onTap: (bool? v) {
-            //       widget.viewController.serviceInput.value.deliveryPartnerId =
-            //           company.info.hasuraId;
-            //       widget.viewController.serviceInput.refresh();
-            //     })
+            radioCircleButton(
+                value:
+                    widget.viewController.getPartnerId == company.info.hasuraId,
+                onTap: (bool? v) {
+                  widget.viewController
+                      .pickDeliveryCompany(company.info.hasuraId);
+                })
           ],
         ),
       ),

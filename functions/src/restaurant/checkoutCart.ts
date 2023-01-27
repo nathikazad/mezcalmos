@@ -74,7 +74,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
       paymentType: checkoutRequest.paymentType,
       toLocation: checkoutRequest.customerLocation,
       status: RestaurantOrderStatus.OrderReceived,
-      deliveryType: checkoutRequest.deliveryType,
+      deliveryType: checkoutRequest.deliveryType ?? DeliveryType.Delivery,
       customerAppType: checkoutRequest.customerAppType,
       items: orderItems,
       itemsCost: customerCart.cost,

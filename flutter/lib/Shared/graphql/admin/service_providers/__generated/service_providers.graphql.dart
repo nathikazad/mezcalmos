@@ -933,7 +933,7 @@ class Query$admin_get_restaurants$restaurant_restaurant {
     required this.id,
     required this.image,
     required this.language_id,
-    this.location,
+    required this.location,
     required this.name,
     required this.open_status,
     required this.service_provider_type,
@@ -958,9 +958,8 @@ class Query$admin_get_restaurants$restaurant_restaurant {
       id: (l$id as int),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      location: l$location == null
-          ? null
-          : Query$admin_get_restaurants$restaurant_restaurant$location.fromJson(
+      location:
+          Query$admin_get_restaurants$restaurant_restaurant$location.fromJson(
               (l$location as Map<String, dynamic>)),
       name: (l$name as String),
       open_status: (l$open_status as String),
@@ -979,7 +978,7 @@ class Query$admin_get_restaurants$restaurant_restaurant {
 
   final String language_id;
 
-  final Query$admin_get_restaurants$restaurant_restaurant$location? location;
+  final Query$admin_get_restaurants$restaurant_restaurant$location location;
 
   final String name;
 
@@ -1002,7 +1001,7 @@ class Query$admin_get_restaurants$restaurant_restaurant {
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$open_status = open_status;
@@ -1181,10 +1180,10 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$admin_get_restaurants$restaurant_restaurant$location?),
+                as Query$admin_get_restaurants$restaurant_restaurant$location),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -1202,11 +1201,8 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
   CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 

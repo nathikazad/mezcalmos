@@ -546,7 +546,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     required this.image,
     required this.name,
     required this.open_status,
-    this.location,
+    required this.location,
     required this.creation_time,
     required this.service_provider_type,
     this.description,
@@ -573,10 +573,9 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
       image: (l$image as String),
       name: (l$name as String),
       open_status: (l$open_status as String),
-      location: l$location == null
-          ? null
-          : Query$getDeliveryCompanyById$delivery_company_by_pk$location
-              .fromJson((l$location as Map<String, dynamic>)),
+      location:
+          Query$getDeliveryCompanyById$delivery_company_by_pk$location.fromJson(
+              (l$location as Map<String, dynamic>)),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
       description: l$description == null
@@ -599,7 +598,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
 
   final String open_status;
 
-  final Query$getDeliveryCompanyById$delivery_company_by_pk$location? location;
+  final Query$getDeliveryCompanyById$delivery_company_by_pk$location location;
 
   final String creation_time;
 
@@ -625,7 +624,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
     final l$service_provider_type = service_provider_type;
@@ -820,10 +819,10 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$getDeliveryCompanyById$delivery_company_by_pk$location?),
+                as Query$getDeliveryCompanyById$delivery_company_by_pk$location),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
@@ -842,11 +841,8 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
   CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location
-            .stub(_then(_instance))
-        : CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$location(
+        local$location, (e) => call(location: e));
   }
 
   CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk$description<TRes>
@@ -2017,7 +2013,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     required this.image,
     required this.name,
     required this.open_status,
-    this.location,
+    required this.location,
     required this.creation_time,
     required this.service_provider_type,
     this.description,
@@ -2044,9 +2040,8 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
       image: (l$image as String),
       name: (l$name as String),
       open_status: (l$open_status as String),
-      location: l$location == null
-          ? null
-          : Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
+      location:
+          Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
               .fromJson((l$location as Map<String, dynamic>)),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -2070,7 +2065,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
 
   final String open_status;
 
-  final Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?
+  final Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
       location;
 
   final String creation_time;
@@ -2097,7 +2092,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$creation_time = creation_time;
     _resultData['creation_time'] = l$creation_time;
     final l$service_provider_type = service_provider_type;
@@ -2297,10 +2292,10 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location?),
+                as Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location),
         creation_time: creation_time == _undefined || creation_time == null
             ? _instance.creation_time
             : (creation_time as String),
@@ -2319,11 +2314,8 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
   CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location
-            .stub(_then(_instance))
-        : CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
+        local$location, (e) => call(location: e));
   }
 
   CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_by_pk$description<
@@ -2905,7 +2897,7 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_b
 
 class Variables$Query$getNearByCompanies {
   factory Variables$Query$getNearByCompanies(
-          {required Input$delivery_fetch_delivery_company_args args}) =>
+          {required Input$delivery_get_delivery_companies_args args}) =>
       Variables$Query$getNearByCompanies._({
         r'args': args,
       });
@@ -2916,15 +2908,15 @@ class Variables$Query$getNearByCompanies {
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$args = data['args'];
-    result$data['args'] = Input$delivery_fetch_delivery_company_args.fromJson(
+    result$data['args'] = Input$delivery_get_delivery_companies_args.fromJson(
         (l$args as Map<String, dynamic>));
     return Variables$Query$getNearByCompanies._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  Input$delivery_fetch_delivery_company_args get args =>
-      (_$data['args'] as Input$delivery_fetch_delivery_company_args);
+  Input$delivery_get_delivery_companies_args get args =>
+      (_$data['args'] as Input$delivery_get_delivery_companies_args);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$args = args;
@@ -2971,7 +2963,7 @@ abstract class CopyWith$Variables$Query$getNearByCompanies<TRes> {
   factory CopyWith$Variables$Query$getNearByCompanies.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getNearByCompanies;
 
-  TRes call({Input$delivery_fetch_delivery_company_args? args});
+  TRes call({Input$delivery_get_delivery_companies_args? args});
 }
 
 class _CopyWithImpl$Variables$Query$getNearByCompanies<TRes>
@@ -2991,7 +2983,7 @@ class _CopyWithImpl$Variables$Query$getNearByCompanies<TRes>
       _then(Variables$Query$getNearByCompanies._({
         ..._instance._$data,
         if (args != _undefined && args != null)
-          'args': (args as Input$delivery_fetch_delivery_company_args),
+          'args': (args as Input$delivery_get_delivery_companies_args),
       }));
 }
 
@@ -3001,40 +2993,40 @@ class _CopyWithStubImpl$Variables$Query$getNearByCompanies<TRes>
 
   TRes _res;
 
-  call({Input$delivery_fetch_delivery_company_args? args}) => _res;
+  call({Input$delivery_get_delivery_companies_args? args}) => _res;
 }
 
 class Query$getNearByCompanies {
   Query$getNearByCompanies({
-    required this.delivery_fetch_delivery_company,
+    required this.delivery_get_delivery_companies,
     required this.$__typename,
   });
 
   factory Query$getNearByCompanies.fromJson(Map<String, dynamic> json) {
-    final l$delivery_fetch_delivery_company =
-        json['delivery_fetch_delivery_company'];
+    final l$delivery_get_delivery_companies =
+        json['delivery_get_delivery_companies'];
     final l$$__typename = json['__typename'];
     return Query$getNearByCompanies(
-      delivery_fetch_delivery_company: (l$delivery_fetch_delivery_company
+      delivery_get_delivery_companies: (l$delivery_get_delivery_companies
               as List<dynamic>)
           .map((e) =>
-              Query$getNearByCompanies$delivery_fetch_delivery_company.fromJson(
+              Query$getNearByCompanies$delivery_get_delivery_companies.fromJson(
                   (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$getNearByCompanies$delivery_fetch_delivery_company>
-      delivery_fetch_delivery_company;
+  final List<Query$getNearByCompanies$delivery_get_delivery_companies>
+      delivery_get_delivery_companies;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_fetch_delivery_company = delivery_fetch_delivery_company;
-    _resultData['delivery_fetch_delivery_company'] =
-        l$delivery_fetch_delivery_company.map((e) => e.toJson()).toList();
+    final l$delivery_get_delivery_companies = delivery_get_delivery_companies;
+    _resultData['delivery_get_delivery_companies'] =
+        l$delivery_get_delivery_companies.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3042,10 +3034,10 @@ class Query$getNearByCompanies {
 
   @override
   int get hashCode {
-    final l$delivery_fetch_delivery_company = delivery_fetch_delivery_company;
+    final l$delivery_get_delivery_companies = delivery_get_delivery_companies;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$delivery_fetch_delivery_company.map((v) => v)),
+      Object.hashAll(l$delivery_get_delivery_companies.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -3059,20 +3051,20 @@ class Query$getNearByCompanies {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_fetch_delivery_company = delivery_fetch_delivery_company;
-    final lOther$delivery_fetch_delivery_company =
-        other.delivery_fetch_delivery_company;
-    if (l$delivery_fetch_delivery_company.length !=
-        lOther$delivery_fetch_delivery_company.length) {
+    final l$delivery_get_delivery_companies = delivery_get_delivery_companies;
+    final lOther$delivery_get_delivery_companies =
+        other.delivery_get_delivery_companies;
+    if (l$delivery_get_delivery_companies.length !=
+        lOther$delivery_get_delivery_companies.length) {
       return false;
     }
-    for (int i = 0; i < l$delivery_fetch_delivery_company.length; i++) {
-      final l$delivery_fetch_delivery_company$entry =
-          l$delivery_fetch_delivery_company[i];
-      final lOther$delivery_fetch_delivery_company$entry =
-          lOther$delivery_fetch_delivery_company[i];
-      if (l$delivery_fetch_delivery_company$entry !=
-          lOther$delivery_fetch_delivery_company$entry) {
+    for (int i = 0; i < l$delivery_get_delivery_companies.length; i++) {
+      final l$delivery_get_delivery_companies$entry =
+          l$delivery_get_delivery_companies[i];
+      final lOther$delivery_get_delivery_companies$entry =
+          lOther$delivery_get_delivery_companies[i];
+      if (l$delivery_get_delivery_companies$entry !=
+          lOther$delivery_get_delivery_companies$entry) {
         return false;
       }
     }
@@ -3104,15 +3096,15 @@ abstract class CopyWith$Query$getNearByCompanies<TRes> {
       _CopyWithStubImpl$Query$getNearByCompanies;
 
   TRes call({
-    List<Query$getNearByCompanies$delivery_fetch_delivery_company>?
-        delivery_fetch_delivery_company,
+    List<Query$getNearByCompanies$delivery_get_delivery_companies>?
+        delivery_get_delivery_companies,
     String? $__typename,
   });
-  TRes delivery_fetch_delivery_company(
-      Iterable<Query$getNearByCompanies$delivery_fetch_delivery_company> Function(
+  TRes delivery_get_delivery_companies(
+      Iterable<Query$getNearByCompanies$delivery_get_delivery_companies> Function(
               Iterable<
-                  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
-                      Query$getNearByCompanies$delivery_fetch_delivery_company>>)
+                  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
+                      Query$getNearByCompanies$delivery_get_delivery_companies>>)
           _fn);
 }
 
@@ -3130,30 +3122,30 @@ class _CopyWithImpl$Query$getNearByCompanies<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_fetch_delivery_company = _undefined,
+    Object? delivery_get_delivery_companies = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getNearByCompanies(
-        delivery_fetch_delivery_company:
-            delivery_fetch_delivery_company == _undefined ||
-                    delivery_fetch_delivery_company == null
-                ? _instance.delivery_fetch_delivery_company
-                : (delivery_fetch_delivery_company as List<
-                    Query$getNearByCompanies$delivery_fetch_delivery_company>),
+        delivery_get_delivery_companies:
+            delivery_get_delivery_companies == _undefined ||
+                    delivery_get_delivery_companies == null
+                ? _instance.delivery_get_delivery_companies
+                : (delivery_get_delivery_companies as List<
+                    Query$getNearByCompanies$delivery_get_delivery_companies>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_fetch_delivery_company(
-          Iterable<Query$getNearByCompanies$delivery_fetch_delivery_company> Function(
+  TRes delivery_get_delivery_companies(
+          Iterable<Query$getNearByCompanies$delivery_get_delivery_companies> Function(
                   Iterable<
-                      CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
-                          Query$getNearByCompanies$delivery_fetch_delivery_company>>)
+                      CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
+                          Query$getNearByCompanies$delivery_get_delivery_companies>>)
               _fn) =>
       call(
-          delivery_fetch_delivery_company: _fn(
-              _instance.delivery_fetch_delivery_company.map((e) =>
-                  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company(
+          delivery_get_delivery_companies: _fn(
+              _instance.delivery_get_delivery_companies.map((e) =>
+                  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies(
                     e,
                     (i) => i,
                   ))).toList());
@@ -3166,12 +3158,12 @@ class _CopyWithStubImpl$Query$getNearByCompanies<TRes>
   TRes _res;
 
   call({
-    List<Query$getNearByCompanies$delivery_fetch_delivery_company>?
-        delivery_fetch_delivery_company,
+    List<Query$getNearByCompanies$delivery_get_delivery_companies>?
+        delivery_get_delivery_companies,
     String? $__typename,
   }) =>
       _res;
-  delivery_fetch_delivery_company(_fn) => _res;
+  delivery_get_delivery_companies(_fn) => _res;
 }
 
 const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
@@ -3182,7 +3174,7 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'args')),
         type: NamedTypeNode(
-          name: NameNode(value: 'delivery_fetch_delivery_company_args'),
+          name: NameNode(value: 'delivery_get_delivery_companies_args'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
@@ -3192,7 +3184,7 @@ const documentNodeQuerygetNearByCompanies = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_fetch_delivery_company'),
+        name: NameNode(value: 'delivery_get_delivery_companies'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -3455,14 +3447,14 @@ extension ClientExtension$Query$getNearByCompanies on graphql.GraphQLClient {
   }
 }
 
-class Query$getNearByCompanies$delivery_fetch_delivery_company {
-  Query$getNearByCompanies$delivery_fetch_delivery_company({
+class Query$getNearByCompanies$delivery_get_delivery_companies {
+  Query$getNearByCompanies$delivery_get_delivery_companies({
     required this.approved,
     required this.creation_time,
     required this.id,
     this.description_id,
     required this.image,
-    this.location,
+    required this.location,
     required this.service_provider_type,
     required this.open_status,
     required this.name,
@@ -3470,7 +3462,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     required this.$__typename,
   });
 
-  factory Query$getNearByCompanies$delivery_fetch_delivery_company.fromJson(
+  factory Query$getNearByCompanies$delivery_get_delivery_companies.fromJson(
       Map<String, dynamic> json) {
     final l$approved = json['approved'];
     final l$creation_time = json['creation_time'];
@@ -3483,22 +3475,21 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     final l$name = json['name'];
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
-    return Query$getNearByCompanies$delivery_fetch_delivery_company(
+    return Query$getNearByCompanies$delivery_get_delivery_companies(
       approved: (l$approved as bool),
       creation_time: (l$creation_time as String),
       id: (l$id as int),
       description_id: (l$description_id as int?),
       image: (l$image as String),
-      location: l$location == null
-          ? null
-          : Query$getNearByCompanies$delivery_fetch_delivery_company$location
+      location:
+          Query$getNearByCompanies$delivery_get_delivery_companies$location
               .fromJson((l$location as Map<String, dynamic>)),
       service_provider_type: (l$service_provider_type as String),
       open_status: (l$open_status as String),
       name: (l$name as String),
       description: l$description == null
           ? null
-          : Query$getNearByCompanies$delivery_fetch_delivery_company$description
+          : Query$getNearByCompanies$delivery_get_delivery_companies$description
               .fromJson((l$description as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3514,7 +3505,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
 
   final String image;
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company$location?
+  final Query$getNearByCompanies$delivery_get_delivery_companies$location
       location;
 
   final String service_provider_type;
@@ -3523,7 +3514,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
 
   final String name;
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company$description?
+  final Query$getNearByCompanies$delivery_get_delivery_companies$description?
       description;
 
   final String $__typename;
@@ -3541,7 +3532,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     final l$image = image;
     _resultData['image'] = l$image;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$service_provider_type = service_provider_type;
     _resultData['service_provider_type'] = l$service_provider_type;
     final l$open_status = open_status;
@@ -3588,7 +3579,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getNearByCompanies$delivery_fetch_delivery_company) ||
+    if (!(other is Query$getNearByCompanies$delivery_get_delivery_companies) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3651,28 +3642,28 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company {
   }
 }
 
-extension UtilityExtension$Query$getNearByCompanies$delivery_fetch_delivery_company
-    on Query$getNearByCompanies$delivery_fetch_delivery_company {
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
-          Query$getNearByCompanies$delivery_fetch_delivery_company>
+extension UtilityExtension$Query$getNearByCompanies$delivery_get_delivery_companies
+    on Query$getNearByCompanies$delivery_get_delivery_companies {
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
+          Query$getNearByCompanies$delivery_get_delivery_companies>
       get copyWith =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company(
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
+abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
     TRes> {
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company(
-    Query$getNearByCompanies$delivery_fetch_delivery_company instance,
-    TRes Function(Query$getNearByCompanies$delivery_fetch_delivery_company)
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies(
+    Query$getNearByCompanies$delivery_get_delivery_companies instance,
+    TRes Function(Query$getNearByCompanies$delivery_get_delivery_companies)
         then,
-  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company;
+  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies;
 
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company.stub(
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company;
+      _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies;
 
   TRes call({
     bool? approved,
@@ -3680,33 +3671,33 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company
     int? id,
     int? description_id,
     String? image,
-    Query$getNearByCompanies$delivery_fetch_delivery_company$location? location,
+    Query$getNearByCompanies$delivery_get_delivery_companies$location? location,
     String? service_provider_type,
     String? open_status,
     String? name,
-    Query$getNearByCompanies$delivery_fetch_delivery_company$description?
+    Query$getNearByCompanies$delivery_get_delivery_companies$description?
         description,
     String? $__typename,
   });
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
       TRes> get location;
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
       TRes> get description;
 }
 
-class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
+class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
             TRes> {
-  _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company(
+  _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies(
     this._instance,
     this._then,
   );
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company _instance;
+  final Query$getNearByCompanies$delivery_get_delivery_companies _instance;
 
-  final TRes Function(Query$getNearByCompanies$delivery_fetch_delivery_company)
+  final TRes Function(Query$getNearByCompanies$delivery_get_delivery_companies)
       _then;
 
   static const _undefined = {};
@@ -3724,7 +3715,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
     Object? description = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getNearByCompanies$delivery_fetch_delivery_company(
+      _then(Query$getNearByCompanies$delivery_get_delivery_companies(
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -3738,10 +3729,10 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$getNearByCompanies$delivery_fetch_delivery_company$location?),
+                as Query$getNearByCompanies$delivery_get_delivery_companies$location),
         service_provider_type:
             service_provider_type == _undefined || service_provider_type == null
                 ? _instance.service_provider_type
@@ -3755,38 +3746,35 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
         description: description == _undefined
             ? _instance.description
             : (description
-                as Query$getNearByCompanies$delivery_fetch_delivery_company$description?),
+                as Query$getNearByCompanies$delivery_get_delivery_companies$description?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location
-            .stub(_then(_instance))
-        : CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location(
+        local$location, (e) => call(location: e));
   }
 
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
       TRes> get description {
     final local$description = _instance.description;
     return local$description == null
-        ? CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description
+        ? CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description
             .stub(_then(_instance))
-        : CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+        : CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description(
             local$description, (e) => call(description: e));
   }
 }
 
-class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company<
+class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies<
             TRes> {
-  _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company(
+  _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies(
       this._res);
 
   TRes _res;
@@ -3797,40 +3785,40 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company
     int? id,
     int? description_id,
     String? image,
-    Query$getNearByCompanies$delivery_fetch_delivery_company$location? location,
+    Query$getNearByCompanies$delivery_get_delivery_companies$location? location,
     String? service_provider_type,
     String? open_status,
     String? name,
-    Query$getNearByCompanies$delivery_fetch_delivery_company$description?
+    Query$getNearByCompanies$delivery_get_delivery_companies$description?
         description,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
           TRes>
       get location =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location
               .stub(_res);
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
           TRes>
       get description =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description
               .stub(_res);
 }
 
-class Query$getNearByCompanies$delivery_fetch_delivery_company$location {
-  Query$getNearByCompanies$delivery_fetch_delivery_company$location({
+class Query$getNearByCompanies$delivery_get_delivery_companies$location {
+  Query$getNearByCompanies$delivery_get_delivery_companies$location({
     required this.gps,
     this.address,
     required this.$__typename,
   });
 
-  factory Query$getNearByCompanies$delivery_fetch_delivery_company$location.fromJson(
+  factory Query$getNearByCompanies$delivery_get_delivery_companies$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+    return Query$getNearByCompanies$delivery_get_delivery_companies$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String?),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -3872,7 +3860,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$location {
       return true;
     }
     if (!(other
-            is Query$getNearByCompanies$delivery_fetch_delivery_company$location) ||
+            is Query$getNearByCompanies$delivery_get_delivery_companies$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3895,29 +3883,29 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$location {
   }
 }
 
-extension UtilityExtension$Query$getNearByCompanies$delivery_fetch_delivery_company$location
-    on Query$getNearByCompanies$delivery_fetch_delivery_company$location {
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
-          Query$getNearByCompanies$delivery_fetch_delivery_company$location>
+extension UtilityExtension$Query$getNearByCompanies$delivery_get_delivery_companies$location
+    on Query$getNearByCompanies$delivery_get_delivery_companies$location {
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
+          Query$getNearByCompanies$delivery_get_delivery_companies$location>
       get copyWith =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
     TRes> {
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
-    Query$getNearByCompanies$delivery_fetch_delivery_company$location instance,
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location(
+    Query$getNearByCompanies$delivery_get_delivery_companies$location instance,
     TRes Function(
-            Query$getNearByCompanies$delivery_fetch_delivery_company$location)
+            Query$getNearByCompanies$delivery_get_delivery_companies$location)
         then,
-  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location;
+  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location;
 
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location.stub(
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location;
+      _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location;
 
   TRes call({
     Geography? gps,
@@ -3926,21 +3914,21 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company
   });
 }
 
-class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
             TRes> {
-  _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+  _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location(
     this._instance,
     this._then,
   );
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company$location
+  final Query$getNearByCompanies$delivery_get_delivery_companies$location
       _instance;
 
   final TRes Function(
-      Query$getNearByCompanies$delivery_fetch_delivery_company$location) _then;
+      Query$getNearByCompanies$delivery_get_delivery_companies$location) _then;
 
   static const _undefined = {};
 
@@ -3949,7 +3937,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$loc
     Object? address = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+      _then(Query$getNearByCompanies$delivery_get_delivery_companies$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -3961,12 +3949,12 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$loc
       ));
 }
 
-class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$location<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$location<
             TRes> {
-  _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$location(
+  _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$location(
       this._res);
 
   TRes _res;
@@ -3979,20 +3967,20 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company
       _res;
 }
 
-class Query$getNearByCompanies$delivery_fetch_delivery_company$description {
-  Query$getNearByCompanies$delivery_fetch_delivery_company$description({
+class Query$getNearByCompanies$delivery_get_delivery_companies$description {
+  Query$getNearByCompanies$delivery_get_delivery_companies$description({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$getNearByCompanies$delivery_fetch_delivery_company$description.fromJson(
+  factory Query$getNearByCompanies$delivery_get_delivery_companies$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+    return Query$getNearByCompanies$delivery_get_delivery_companies$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations
+              Query$getNearByCompanies$delivery_get_delivery_companies$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4000,7 +3988,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$description {
   }
 
   final List<
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>
+          Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>
       translations;
 
   final String $__typename;
@@ -4031,7 +4019,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$description {
       return true;
     }
     if (!(other
-            is Query$getNearByCompanies$delivery_fetch_delivery_company$description) ||
+            is Query$getNearByCompanies$delivery_get_delivery_companies$description) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4056,59 +4044,59 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$description {
   }
 }
 
-extension UtilityExtension$Query$getNearByCompanies$delivery_fetch_delivery_company$description
-    on Query$getNearByCompanies$delivery_fetch_delivery_company$description {
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description>
+extension UtilityExtension$Query$getNearByCompanies$delivery_get_delivery_companies$description
+    on Query$getNearByCompanies$delivery_get_delivery_companies$description {
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
+          Query$getNearByCompanies$delivery_get_delivery_companies$description>
       get copyWith =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
     TRes> {
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description(
-    Query$getNearByCompanies$delivery_fetch_delivery_company$description
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description(
+    Query$getNearByCompanies$delivery_get_delivery_companies$description
         instance,
     TRes Function(
-            Query$getNearByCompanies$delivery_fetch_delivery_company$description)
+            Query$getNearByCompanies$delivery_get_delivery_companies$description)
         then,
-  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description;
+  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description;
 
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description.stub(
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description;
+      _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description;
 
   TRes call({
-    List<Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>?
+    List<Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations> Function(
+      Iterable<Query$getNearByCompanies$delivery_get_delivery_companies$description$translations> Function(
               Iterable<
-                  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
-                      Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>>)
+                  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
+                      Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
             TRes> {
-  _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+  _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description(
     this._instance,
     this._then,
   );
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company$description
+  final Query$getNearByCompanies$delivery_get_delivery_companies$description
       _instance;
 
   final TRes Function(
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description)
+          Query$getNearByCompanies$delivery_get_delivery_companies$description)
       _then;
 
   static const _undefined = {};
@@ -4118,41 +4106,41 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$des
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+          Query$getNearByCompanies$delivery_get_delivery_companies$description(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>),
+                Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations> Function(
+          Iterable<Query$getNearByCompanies$delivery_get_delivery_companies$description$translations> Function(
                   Iterable<
-                      CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
-                          Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>>)
+                      CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
+                          Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+              CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description<
             TRes> {
-  _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description(
+  _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>?
+    List<Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -4160,19 +4148,19 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company
   translations(_fn) => _res;
 }
 
-class Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations {
-  Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations({
+class Query$getNearByCompanies$delivery_get_delivery_companies$description$translations {
+  Query$getNearByCompanies$delivery_get_delivery_companies$description$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations.fromJson(
+  factory Query$getNearByCompanies$delivery_get_delivery_companies$description$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+    return Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4214,7 +4202,7 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$description$trans
       return true;
     }
     if (!(other
-            is Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations) ||
+            is Query$getNearByCompanies$delivery_get_delivery_companies$description$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4237,30 +4225,30 @@ class Query$getNearByCompanies$delivery_fetch_delivery_company$description$trans
   }
 }
 
-extension UtilityExtension$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations
-    on Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations {
-  CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations>
+extension UtilityExtension$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations
+    on Query$getNearByCompanies$delivery_get_delivery_companies$description$translations {
+  CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
+          Query$getNearByCompanies$delivery_get_delivery_companies$description$translations>
       get copyWith =>
-          CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+          CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
+abstract class CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
     TRes> {
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
-    Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
+    Query$getNearByCompanies$delivery_get_delivery_companies$description$translations
         instance,
     TRes Function(
-            Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations)
+            Query$getNearByCompanies$delivery_get_delivery_companies$description$translations)
         then,
-  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations;
+  ) = _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations;
 
-  factory CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations.stub(
+  factory CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations;
+      _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations;
 
   TRes call({
     String? language_id,
@@ -4269,21 +4257,21 @@ abstract class CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company
   });
 }
 
-class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
+class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
             TRes> {
-  _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+  _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
     this._instance,
     this._then,
   );
 
-  final Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations
+  final Query$getNearByCompanies$delivery_get_delivery_companies$description$translations
       _instance;
 
   final TRes Function(
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations)
+          Query$getNearByCompanies$delivery_get_delivery_companies$description$translations)
       _then;
 
   static const _undefined = {};
@@ -4294,7 +4282,7 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$des
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+          Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -4307,12 +4295,12 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$des
       ));
 }
 
-class _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
+class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
         TRes>
     implements
-        CopyWith$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations<
+        CopyWith$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations<
             TRes> {
-  _CopyWithStubImpl$Query$getNearByCompanies$delivery_fetch_delivery_company$description$translations(
+  _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies$description$translations(
       this._res);
 
   TRes _res;

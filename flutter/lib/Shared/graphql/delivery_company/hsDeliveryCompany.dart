@@ -34,8 +34,8 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
             ? toLanguageMap(translations: data.description!.translations)
             : null,
         descriptionId: data.description_id,
-        location: Location.fromHasura(
-            data.location!.gps, data.location?.address ?? ""),
+        location:
+            Location.fromHasura(data.location.gps, data.location.address ?? ""),
         name: data.name,
       ),
       state: ServiceState(
@@ -72,8 +72,7 @@ Future<DeliveryCompany?> update_delivery_company(
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
             : null,
-        location:
-            Location.fromHasura(data.location!.gps, data.location?.address),
+        location: Location.fromHasura(data.location.gps, data.location.address),
         name: data.name,
       ),
       state: ServiceState(
@@ -87,18 +86,18 @@ Future<List<DeliveryCompany>> get_nearby_companies(
       await _hasuraDb.graphQLClient.query$getNearByCompanies(
     Options$Query$getNearByCompanies(
       variables: Variables$Query$getNearByCompanies(
-          args: Input$delivery_fetch_delivery_company_args(
-              location: location.toGeography(), radius: "100000")),
+          args: Input$delivery_get_delivery_companies_args(
+              location: location.toGeography())),
     ),
   );
-  if (res.parsedData?.delivery_fetch_delivery_company == null) {
+  if (res.parsedData?.delivery_get_delivery_companies == null) {
     throwError(res.exception);
   }
   List<DeliveryCompany> returnedList = [];
-  final List<Query$getNearByCompanies$delivery_fetch_delivery_company>
-      dataList = res.parsedData!.delivery_fetch_delivery_company;
+  final List<Query$getNearByCompanies$delivery_get_delivery_companies>
+      dataList = res.parsedData!.delivery_get_delivery_companies;
   returnedList = dataList
-      .map((Query$getNearByCompanies$delivery_fetch_delivery_company data) {
+      .map((Query$getNearByCompanies$delivery_get_delivery_companies data) {
     return DeliveryCompany(
         creationTime: DateTime.parse(data.creation_time),
         info: ServiceInfo(
@@ -109,7 +108,7 @@ Future<List<DeliveryCompany>> get_nearby_companies(
               : null,
           descriptionId: data.description_id,
           location: Location.fromHasura(
-              data.location!.gps, data.location?.address ?? ""),
+              data.location.gps, data.location.address ?? ""),
           name: data.name,
         ),
         state: ServiceState(

@@ -4,49 +4,36 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
-class Variables$Query$getDeliveryCostByServiceProviderId {
-  factory Variables$Query$getDeliveryCostByServiceProviderId({
-    required int serviceProviderId,
-    String? serviceType,
-  }) =>
-      Variables$Query$getDeliveryCostByServiceProviderId._({
-        r'serviceProviderId': serviceProviderId,
-        if (serviceType != null) r'serviceType': serviceType,
+class Variables$Query$getDeliveryCostById {
+  factory Variables$Query$getDeliveryCostById(
+          {required int deliveryDetailsId}) =>
+      Variables$Query$getDeliveryCostById._({
+        r'deliveryDetailsId': deliveryDetailsId,
       });
 
-  Variables$Query$getDeliveryCostByServiceProviderId._(this._$data);
+  Variables$Query$getDeliveryCostById._(this._$data);
 
-  factory Variables$Query$getDeliveryCostByServiceProviderId.fromJson(
+  factory Variables$Query$getDeliveryCostById.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$serviceProviderId = data['serviceProviderId'];
-    result$data['serviceProviderId'] = (l$serviceProviderId as int);
-    if (data.containsKey('serviceType')) {
-      final l$serviceType = data['serviceType'];
-      result$data['serviceType'] = (l$serviceType as String?);
-    }
-    return Variables$Query$getDeliveryCostByServiceProviderId._(result$data);
+    final l$deliveryDetailsId = data['deliveryDetailsId'];
+    result$data['deliveryDetailsId'] = (l$deliveryDetailsId as int);
+    return Variables$Query$getDeliveryCostById._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get serviceProviderId => (_$data['serviceProviderId'] as int);
-  String? get serviceType => (_$data['serviceType'] as String?);
+  int get deliveryDetailsId => (_$data['deliveryDetailsId'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$serviceProviderId = serviceProviderId;
-    result$data['serviceProviderId'] = l$serviceProviderId;
-    if (_$data.containsKey('serviceType')) {
-      final l$serviceType = serviceType;
-      result$data['serviceType'] = l$serviceType;
-    }
+    final l$deliveryDetailsId = deliveryDetailsId;
+    result$data['deliveryDetailsId'] = l$deliveryDetailsId;
     return result$data;
   }
 
-  CopyWith$Variables$Query$getDeliveryCostByServiceProviderId<
-          Variables$Query$getDeliveryCostByServiceProviderId>
-      get copyWith =>
-          CopyWith$Variables$Query$getDeliveryCostByServiceProviderId(
+  CopyWith$Variables$Query$getDeliveryCostById<
+          Variables$Query$getDeliveryCostById>
+      get copyWith => CopyWith$Variables$Query$getDeliveryCostById(
             this,
             (i) => i,
           );
@@ -55,22 +42,13 @@ class Variables$Query$getDeliveryCostByServiceProviderId {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Query$getDeliveryCostByServiceProviderId) ||
+    if (!(other is Variables$Query$getDeliveryCostById) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$serviceProviderId = serviceProviderId;
-    final lOther$serviceProviderId = other.serviceProviderId;
-    if (l$serviceProviderId != lOther$serviceProviderId) {
-      return false;
-    }
-    final l$serviceType = serviceType;
-    final lOther$serviceType = other.serviceType;
-    if (_$data.containsKey('serviceType') !=
-        other._$data.containsKey('serviceType')) {
-      return false;
-    }
-    if (l$serviceType != lOther$serviceType) {
+    final l$deliveryDetailsId = deliveryDetailsId;
+    final lOther$deliveryDetailsId = other.deliveryDetailsId;
+    if (l$deliveryDetailsId != lOther$deliveryDetailsId) {
       return false;
     }
     return true;
@@ -78,102 +56,80 @@ class Variables$Query$getDeliveryCostByServiceProviderId {
 
   @override
   int get hashCode {
-    final l$serviceProviderId = serviceProviderId;
-    final l$serviceType = serviceType;
-    return Object.hashAll([
-      l$serviceProviderId,
-      _$data.containsKey('serviceType') ? l$serviceType : const {},
-    ]);
+    final l$deliveryDetailsId = deliveryDetailsId;
+    return Object.hashAll([l$deliveryDetailsId]);
   }
 }
 
-abstract class CopyWith$Variables$Query$getDeliveryCostByServiceProviderId<
-    TRes> {
-  factory CopyWith$Variables$Query$getDeliveryCostByServiceProviderId(
-    Variables$Query$getDeliveryCostByServiceProviderId instance,
-    TRes Function(Variables$Query$getDeliveryCostByServiceProviderId) then,
-  ) = _CopyWithImpl$Variables$Query$getDeliveryCostByServiceProviderId;
+abstract class CopyWith$Variables$Query$getDeliveryCostById<TRes> {
+  factory CopyWith$Variables$Query$getDeliveryCostById(
+    Variables$Query$getDeliveryCostById instance,
+    TRes Function(Variables$Query$getDeliveryCostById) then,
+  ) = _CopyWithImpl$Variables$Query$getDeliveryCostById;
 
-  factory CopyWith$Variables$Query$getDeliveryCostByServiceProviderId.stub(
-          TRes res) =
-      _CopyWithStubImpl$Variables$Query$getDeliveryCostByServiceProviderId;
+  factory CopyWith$Variables$Query$getDeliveryCostById.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getDeliveryCostById;
 
-  TRes call({
-    int? serviceProviderId,
-    String? serviceType,
-  });
+  TRes call({int? deliveryDetailsId});
 }
 
-class _CopyWithImpl$Variables$Query$getDeliveryCostByServiceProviderId<TRes>
-    implements
-        CopyWith$Variables$Query$getDeliveryCostByServiceProviderId<TRes> {
-  _CopyWithImpl$Variables$Query$getDeliveryCostByServiceProviderId(
+class _CopyWithImpl$Variables$Query$getDeliveryCostById<TRes>
+    implements CopyWith$Variables$Query$getDeliveryCostById<TRes> {
+  _CopyWithImpl$Variables$Query$getDeliveryCostById(
     this._instance,
     this._then,
   );
 
-  final Variables$Query$getDeliveryCostByServiceProviderId _instance;
+  final Variables$Query$getDeliveryCostById _instance;
 
-  final TRes Function(Variables$Query$getDeliveryCostByServiceProviderId) _then;
+  final TRes Function(Variables$Query$getDeliveryCostById) _then;
 
   static const _undefined = {};
 
-  TRes call({
-    Object? serviceProviderId = _undefined,
-    Object? serviceType = _undefined,
-  }) =>
-      _then(Variables$Query$getDeliveryCostByServiceProviderId._({
+  TRes call({Object? deliveryDetailsId = _undefined}) =>
+      _then(Variables$Query$getDeliveryCostById._({
         ..._instance._$data,
-        if (serviceProviderId != _undefined && serviceProviderId != null)
-          'serviceProviderId': (serviceProviderId as int),
-        if (serviceType != _undefined) 'serviceType': (serviceType as String?),
+        if (deliveryDetailsId != _undefined && deliveryDetailsId != null)
+          'deliveryDetailsId': (deliveryDetailsId as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Query$getDeliveryCostByServiceProviderId<TRes>
-    implements
-        CopyWith$Variables$Query$getDeliveryCostByServiceProviderId<TRes> {
-  _CopyWithStubImpl$Variables$Query$getDeliveryCostByServiceProviderId(
-      this._res);
+class _CopyWithStubImpl$Variables$Query$getDeliveryCostById<TRes>
+    implements CopyWith$Variables$Query$getDeliveryCostById<TRes> {
+  _CopyWithStubImpl$Variables$Query$getDeliveryCostById(this._res);
 
   TRes _res;
 
-  call({
-    int? serviceProviderId,
-    String? serviceType,
-  }) =>
-      _res;
+  call({int? deliveryDetailsId}) => _res;
 }
 
-class Query$getDeliveryCostByServiceProviderId {
-  Query$getDeliveryCostByServiceProviderId({
-    required this.delivery_details,
+class Query$getDeliveryCostById {
+  Query$getDeliveryCostById({
+    this.delivery_details_by_pk,
     required this.$__typename,
   });
 
-  factory Query$getDeliveryCostByServiceProviderId.fromJson(
-      Map<String, dynamic> json) {
-    final l$delivery_details = json['delivery_details'];
+  factory Query$getDeliveryCostById.fromJson(Map<String, dynamic> json) {
+    final l$delivery_details_by_pk = json['delivery_details_by_pk'];
     final l$$__typename = json['__typename'];
-    return Query$getDeliveryCostByServiceProviderId(
-      delivery_details: (l$delivery_details as List<dynamic>)
-          .map((e) => Query$getDeliveryCostByServiceProviderId$delivery_details
-              .fromJson((e as Map<String, dynamic>)))
-          .toList(),
+    return Query$getDeliveryCostById(
+      delivery_details_by_pk: l$delivery_details_by_pk == null
+          ? null
+          : Query$getDeliveryCostById$delivery_details_by_pk.fromJson(
+              (l$delivery_details_by_pk as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$getDeliveryCostByServiceProviderId$delivery_details>
-      delivery_details;
+  final Query$getDeliveryCostById$delivery_details_by_pk?
+      delivery_details_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$delivery_details = delivery_details;
-    _resultData['delivery_details'] =
-        l$delivery_details.map((e) => e.toJson()).toList();
+    final l$delivery_details_by_pk = delivery_details_by_pk;
+    _resultData['delivery_details_by_pk'] = l$delivery_details_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -181,10 +137,10 @@ class Query$getDeliveryCostByServiceProviderId {
 
   @override
   int get hashCode {
-    final l$delivery_details = delivery_details;
+    final l$delivery_details_by_pk = delivery_details_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$delivery_details.map((v) => v)),
+      l$delivery_details_by_pk,
       l$$__typename,
     ]);
   }
@@ -194,21 +150,14 @@ class Query$getDeliveryCostByServiceProviderId {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getDeliveryCostByServiceProviderId) ||
+    if (!(other is Query$getDeliveryCostById) ||
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$delivery_details = delivery_details;
-    final lOther$delivery_details = other.delivery_details;
-    if (l$delivery_details.length != lOther$delivery_details.length) {
+    final l$delivery_details_by_pk = delivery_details_by_pk;
+    final lOther$delivery_details_by_pk = other.delivery_details_by_pk;
+    if (l$delivery_details_by_pk != lOther$delivery_details_by_pk) {
       return false;
-    }
-    for (int i = 0; i < l$delivery_details.length; i++) {
-      final l$delivery_details$entry = l$delivery_details[i];
-      final lOther$delivery_details$entry = lOther$delivery_details[i];
-      if (l$delivery_details$entry != lOther$delivery_details$entry) {
-        return false;
-      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -219,148 +168,110 @@ class Query$getDeliveryCostByServiceProviderId {
   }
 }
 
-extension UtilityExtension$Query$getDeliveryCostByServiceProviderId
-    on Query$getDeliveryCostByServiceProviderId {
-  CopyWith$Query$getDeliveryCostByServiceProviderId<
-          Query$getDeliveryCostByServiceProviderId>
-      get copyWith => CopyWith$Query$getDeliveryCostByServiceProviderId(
-            this,
-            (i) => i,
-          );
+extension UtilityExtension$Query$getDeliveryCostById
+    on Query$getDeliveryCostById {
+  CopyWith$Query$getDeliveryCostById<Query$getDeliveryCostById> get copyWith =>
+      CopyWith$Query$getDeliveryCostById(
+        this,
+        (i) => i,
+      );
 }
 
-abstract class CopyWith$Query$getDeliveryCostByServiceProviderId<TRes> {
-  factory CopyWith$Query$getDeliveryCostByServiceProviderId(
-    Query$getDeliveryCostByServiceProviderId instance,
-    TRes Function(Query$getDeliveryCostByServiceProviderId) then,
-  ) = _CopyWithImpl$Query$getDeliveryCostByServiceProviderId;
+abstract class CopyWith$Query$getDeliveryCostById<TRes> {
+  factory CopyWith$Query$getDeliveryCostById(
+    Query$getDeliveryCostById instance,
+    TRes Function(Query$getDeliveryCostById) then,
+  ) = _CopyWithImpl$Query$getDeliveryCostById;
 
-  factory CopyWith$Query$getDeliveryCostByServiceProviderId.stub(TRes res) =
-      _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId;
+  factory CopyWith$Query$getDeliveryCostById.stub(TRes res) =
+      _CopyWithStubImpl$Query$getDeliveryCostById;
 
   TRes call({
-    List<Query$getDeliveryCostByServiceProviderId$delivery_details>?
-        delivery_details,
+    Query$getDeliveryCostById$delivery_details_by_pk? delivery_details_by_pk,
     String? $__typename,
   });
-  TRes delivery_details(
-      Iterable<Query$getDeliveryCostByServiceProviderId$delivery_details> Function(
-              Iterable<
-                  CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-                      Query$getDeliveryCostByServiceProviderId$delivery_details>>)
-          _fn);
+  CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
+      get delivery_details_by_pk;
 }
 
-class _CopyWithImpl$Query$getDeliveryCostByServiceProviderId<TRes>
-    implements CopyWith$Query$getDeliveryCostByServiceProviderId<TRes> {
-  _CopyWithImpl$Query$getDeliveryCostByServiceProviderId(
+class _CopyWithImpl$Query$getDeliveryCostById<TRes>
+    implements CopyWith$Query$getDeliveryCostById<TRes> {
+  _CopyWithImpl$Query$getDeliveryCostById(
     this._instance,
     this._then,
   );
 
-  final Query$getDeliveryCostByServiceProviderId _instance;
+  final Query$getDeliveryCostById _instance;
 
-  final TRes Function(Query$getDeliveryCostByServiceProviderId) _then;
+  final TRes Function(Query$getDeliveryCostById) _then;
 
   static const _undefined = {};
 
   TRes call({
-    Object? delivery_details = _undefined,
+    Object? delivery_details_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getDeliveryCostByServiceProviderId(
-        delivery_details:
-            delivery_details == _undefined || delivery_details == null
-                ? _instance.delivery_details
-                : (delivery_details as List<
-                    Query$getDeliveryCostByServiceProviderId$delivery_details>),
+      _then(Query$getDeliveryCostById(
+        delivery_details_by_pk: delivery_details_by_pk == _undefined
+            ? _instance.delivery_details_by_pk
+            : (delivery_details_by_pk
+                as Query$getDeliveryCostById$delivery_details_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes delivery_details(
-          Iterable<Query$getDeliveryCostByServiceProviderId$delivery_details> Function(
-                  Iterable<
-                      CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-                          Query$getDeliveryCostByServiceProviderId$delivery_details>>)
-              _fn) =>
-      call(
-          delivery_details: _fn(_instance.delivery_details.map((e) =>
-              CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details(
-                e,
-                (i) => i,
-              ))).toList());
+  CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
+      get delivery_details_by_pk {
+    final local$delivery_details_by_pk = _instance.delivery_details_by_pk;
+    return local$delivery_details_by_pk == null
+        ? CopyWith$Query$getDeliveryCostById$delivery_details_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$getDeliveryCostById$delivery_details_by_pk(
+            local$delivery_details_by_pk,
+            (e) => call(delivery_details_by_pk: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId<TRes>
-    implements CopyWith$Query$getDeliveryCostByServiceProviderId<TRes> {
-  _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId(this._res);
+class _CopyWithStubImpl$Query$getDeliveryCostById<TRes>
+    implements CopyWith$Query$getDeliveryCostById<TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCostById(this._res);
 
   TRes _res;
 
   call({
-    List<Query$getDeliveryCostByServiceProviderId$delivery_details>?
-        delivery_details,
+    Query$getDeliveryCostById$delivery_details_by_pk? delivery_details_by_pk,
     String? $__typename,
   }) =>
       _res;
-  delivery_details(_fn) => _res;
+  CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
+      get delivery_details_by_pk =>
+          CopyWith$Query$getDeliveryCostById$delivery_details_by_pk.stub(_res);
 }
 
-const documentNodeQuerygetDeliveryCostByServiceProviderId =
-    DocumentNode(definitions: [
+const documentNodeQuerygetDeliveryCostById = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
-    name: NameNode(value: 'getDeliveryCostByServiceProviderId'),
+    name: NameNode(value: 'getDeliveryCostById'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceProviderId')),
+        variable: VariableNode(name: NameNode(value: 'deliveryDetailsId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceType')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
+      )
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'delivery_details'),
+        name: NameNode(value: 'delivery_details_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'service_provider_id'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(
-                        name: NameNode(value: 'serviceProviderId')),
-                  )
-                ]),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'service_provider_type'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'serviceType')),
-                  )
-                ]),
-              ),
-            ]),
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'deliveryDetailsId')),
           )
         ],
         directives: [],
@@ -401,20 +312,6 @@ const documentNodeQuerygetDeliveryCostByServiceProviderId =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'service_provider_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'service_provider_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -427,16 +324,15 @@ const documentNodeQuerygetDeliveryCostByServiceProviderId =
     ]),
   ),
 ]);
-Query$getDeliveryCostByServiceProviderId
-    _parserFn$Query$getDeliveryCostByServiceProviderId(
-            Map<String, dynamic> data) =>
-        Query$getDeliveryCostByServiceProviderId.fromJson(data);
+Query$getDeliveryCostById _parserFn$Query$getDeliveryCostById(
+        Map<String, dynamic> data) =>
+    Query$getDeliveryCostById.fromJson(data);
 
-class Options$Query$getDeliveryCostByServiceProviderId
-    extends graphql.QueryOptions<Query$getDeliveryCostByServiceProviderId> {
-  Options$Query$getDeliveryCostByServiceProviderId({
+class Options$Query$getDeliveryCostById
+    extends graphql.QueryOptions<Query$getDeliveryCostById> {
+  Options$Query$getDeliveryCostById({
     String? operationName,
-    required Variables$Query$getDeliveryCostByServiceProviderId variables,
+    required Variables$Query$getDeliveryCostById variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -452,16 +348,16 @@ class Options$Query$getDeliveryCostByServiceProviderId
           optimisticResult: optimisticResult,
           pollInterval: pollInterval,
           context: context,
-          document: documentNodeQuerygetDeliveryCostByServiceProviderId,
-          parserFn: _parserFn$Query$getDeliveryCostByServiceProviderId,
+          document: documentNodeQuerygetDeliveryCostById,
+          parserFn: _parserFn$Query$getDeliveryCostById,
         );
 }
 
-class WatchOptions$Query$getDeliveryCostByServiceProviderId extends graphql
-    .WatchQueryOptions<Query$getDeliveryCostByServiceProviderId> {
-  WatchOptions$Query$getDeliveryCostByServiceProviderId({
+class WatchOptions$Query$getDeliveryCostById
+    extends graphql.WatchQueryOptions<Query$getDeliveryCostById> {
+  WatchOptions$Query$getDeliveryCostById({
     String? operationName,
-    required Variables$Query$getDeliveryCostByServiceProviderId variables,
+    required Variables$Query$getDeliveryCostById variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -479,93 +375,85 @@ class WatchOptions$Query$getDeliveryCostByServiceProviderId extends graphql
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeQuerygetDeliveryCostByServiceProviderId,
+          document: documentNodeQuerygetDeliveryCostById,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Query$getDeliveryCostByServiceProviderId,
+          parserFn: _parserFn$Query$getDeliveryCostById,
         );
 }
 
-class FetchMoreOptions$Query$getDeliveryCostByServiceProviderId
+class FetchMoreOptions$Query$getDeliveryCostById
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$getDeliveryCostByServiceProviderId({
+  FetchMoreOptions$Query$getDeliveryCostById({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Query$getDeliveryCostByServiceProviderId variables,
+    required Variables$Query$getDeliveryCostById variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeQuerygetDeliveryCostByServiceProviderId,
+          document: documentNodeQuerygetDeliveryCostById,
         );
 }
 
-extension ClientExtension$Query$getDeliveryCostByServiceProviderId
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Query$getDeliveryCostByServiceProviderId>>
-      query$getDeliveryCostByServiceProviderId(
-              Options$Query$getDeliveryCostByServiceProviderId options) async =>
+extension ClientExtension$Query$getDeliveryCostById on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getDeliveryCostById>>
+      query$getDeliveryCostById(
+              Options$Query$getDeliveryCostById options) async =>
           await this.query(options);
-  graphql.ObservableQuery<Query$getDeliveryCostByServiceProviderId>
-      watchQuery$getDeliveryCostByServiceProviderId(
-              WatchOptions$Query$getDeliveryCostByServiceProviderId options) =>
+  graphql.ObservableQuery<Query$getDeliveryCostById>
+      watchQuery$getDeliveryCostById(
+              WatchOptions$Query$getDeliveryCostById options) =>
           this.watchQuery(options);
-  void writeQuery$getDeliveryCostByServiceProviderId({
-    required Query$getDeliveryCostByServiceProviderId data,
-    required Variables$Query$getDeliveryCostByServiceProviderId variables,
+  void writeQuery$getDeliveryCostById({
+    required Query$getDeliveryCostById data,
+    required Variables$Query$getDeliveryCostById variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQuerygetDeliveryCostByServiceProviderId),
+          operation:
+              graphql.Operation(document: documentNodeQuerygetDeliveryCostById),
           variables: variables.toJson(),
         ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$getDeliveryCostByServiceProviderId?
-      readQuery$getDeliveryCostByServiceProviderId({
-    required Variables$Query$getDeliveryCostByServiceProviderId variables,
+  Query$getDeliveryCostById? readQuery$getDeliveryCostById({
+    required Variables$Query$getDeliveryCostById variables,
     bool optimistic = true,
   }) {
     final result = this.readQuery(
       graphql.Request(
-        operation: graphql.Operation(
-            document: documentNodeQuerygetDeliveryCostByServiceProviderId),
+        operation:
+            graphql.Operation(document: documentNodeQuerygetDeliveryCostById),
         variables: variables.toJson(),
       ),
       optimistic: optimistic,
     );
-    return result == null
-        ? null
-        : Query$getDeliveryCostByServiceProviderId.fromJson(result);
+    return result == null ? null : Query$getDeliveryCostById.fromJson(result);
   }
 }
 
-class Query$getDeliveryCostByServiceProviderId$delivery_details {
-  Query$getDeliveryCostByServiceProviderId$delivery_details({
+class Query$getDeliveryCostById$delivery_details_by_pk {
+  Query$getDeliveryCostById$delivery_details_by_pk({
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
-    required this.service_provider_id,
-    required this.service_provider_type,
     required this.$__typename,
   });
 
-  factory Query$getDeliveryCostByServiceProviderId$delivery_details.fromJson(
+  factory Query$getDeliveryCostById$delivery_details_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
-    final l$service_provider_id = json['service_provider_id'];
-    final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
-    return Query$getDeliveryCostByServiceProviderId$delivery_details(
+    return Query$getDeliveryCostById$delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
       free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
@@ -573,8 +461,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
-      service_provider_id: (l$service_provider_id as int),
-      service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -588,10 +474,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
   final int id;
 
   final double minimum_cost;
-
-  final int service_provider_id;
-
-  final String service_provider_type;
 
   final String $__typename;
 
@@ -610,10 +492,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
-    final l$service_provider_id = service_provider_id;
-    _resultData['service_provider_id'] = l$service_provider_id;
-    final l$service_provider_type = service_provider_type;
-    _resultData['service_provider_type'] = l$service_provider_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -626,8 +504,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
-    final l$service_provider_id = service_provider_id;
-    final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -635,8 +511,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
-      l$service_provider_id,
-      l$service_provider_type,
       l$$__typename,
     ]);
   }
@@ -646,7 +520,7 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$getDeliveryCostByServiceProviderId$delivery_details) ||
+    if (!(other is Query$getDeliveryCostById$delivery_details_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -675,16 +549,6 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
     if (l$minimum_cost != lOther$minimum_cost) {
       return false;
     }
-    final l$service_provider_id = service_provider_id;
-    final lOther$service_provider_id = other.service_provider_id;
-    if (l$service_provider_id != lOther$service_provider_id) {
-      return false;
-    }
-    final l$service_provider_type = service_provider_type;
-    final lOther$service_provider_type = other.service_provider_type;
-    if (l$service_provider_type != lOther$service_provider_type) {
-      return false;
-    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -694,28 +558,25 @@ class Query$getDeliveryCostByServiceProviderId$delivery_details {
   }
 }
 
-extension UtilityExtension$Query$getDeliveryCostByServiceProviderId$delivery_details
-    on Query$getDeliveryCostByServiceProviderId$delivery_details {
-  CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-          Query$getDeliveryCostByServiceProviderId$delivery_details>
-      get copyWith =>
-          CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details(
+extension UtilityExtension$Query$getDeliveryCostById$delivery_details_by_pk
+    on Query$getDeliveryCostById$delivery_details_by_pk {
+  CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<
+          Query$getDeliveryCostById$delivery_details_by_pk>
+      get copyWith => CopyWith$Query$getDeliveryCostById$delivery_details_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-    TRes> {
-  factory CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details(
-    Query$getDeliveryCostByServiceProviderId$delivery_details instance,
-    TRes Function(Query$getDeliveryCostByServiceProviderId$delivery_details)
-        then,
-  ) = _CopyWithImpl$Query$getDeliveryCostByServiceProviderId$delivery_details;
+abstract class CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
+  factory CopyWith$Query$getDeliveryCostById$delivery_details_by_pk(
+    Query$getDeliveryCostById$delivery_details_by_pk instance,
+    TRes Function(Query$getDeliveryCostById$delivery_details_by_pk) then,
+  ) = _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk;
 
-  factory CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details.stub(
+  factory CopyWith$Query$getDeliveryCostById$delivery_details_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId$delivery_details;
+      _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk;
 
   TRes call({
     double? cost_per_km,
@@ -723,26 +584,20 @@ abstract class CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_detail
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
-    int? service_provider_id,
-    String? service_provider_type,
     String? $__typename,
   });
 }
 
-class _CopyWithImpl$Query$getDeliveryCostByServiceProviderId$delivery_details<
-        TRes>
-    implements
-        CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-            TRes> {
-  _CopyWithImpl$Query$getDeliveryCostByServiceProviderId$delivery_details(
+class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
+    implements CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
+  _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk(
     this._instance,
     this._then,
   );
 
-  final Query$getDeliveryCostByServiceProviderId$delivery_details _instance;
+  final Query$getDeliveryCostById$delivery_details_by_pk _instance;
 
-  final TRes Function(Query$getDeliveryCostByServiceProviderId$delivery_details)
-      _then;
+  final TRes Function(Query$getDeliveryCostById$delivery_details_by_pk) _then;
 
   static const _undefined = {};
 
@@ -752,11 +607,9 @@ class _CopyWithImpl$Query$getDeliveryCostByServiceProviderId$delivery_details<
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
-    Object? service_provider_id = _undefined,
-    Object? service_provider_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getDeliveryCostByServiceProviderId$delivery_details(
+      _then(Query$getDeliveryCostById$delivery_details_by_pk(
         cost_per_km: cost_per_km == _undefined || cost_per_km == null
             ? _instance.cost_per_km
             : (cost_per_km as double),
@@ -770,27 +623,15 @@ class _CopyWithImpl$Query$getDeliveryCostByServiceProviderId$delivery_details<
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
-        service_provider_type:
-            service_provider_type == _undefined || service_provider_type == null
-                ? _instance.service_provider_type
-                : (service_provider_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
 }
 
-class _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId$delivery_details<
-        TRes>
-    implements
-        CopyWith$Query$getDeliveryCostByServiceProviderId$delivery_details<
-            TRes> {
-  _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId$delivery_details(
-      this._res);
+class _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
+    implements CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
+  _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk(this._res);
 
   TRes _res;
 
@@ -800,8 +641,6 @@ class _CopyWithStubImpl$Query$getDeliveryCostByServiceProviderId$delivery_detail
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
-    int? service_provider_id,
-    String? service_provider_type,
     String? $__typename,
   }) =>
       _res;
@@ -1710,20 +1549,6 @@ const documentNodeMutationupdateDeliveryCost = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'service_provider_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'service_provider_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1841,8 +1666,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
-    required this.service_provider_id,
-    required this.service_provider_type,
     required this.$__typename,
   });
 
@@ -1853,8 +1676,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
-    final l$service_provider_id = json['service_provider_id'];
-    final l$service_provider_type = json['service_provider_type'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryCost$update_delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -1864,8 +1685,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
-      service_provider_id: (l$service_provider_id as int),
-      service_provider_type: (l$service_provider_type as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1879,10 +1698,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
   final int id;
 
   final double minimum_cost;
-
-  final int service_provider_id;
-
-  final String service_provider_type;
 
   final String $__typename;
 
@@ -1901,10 +1716,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
-    final l$service_provider_id = service_provider_id;
-    _resultData['service_provider_id'] = l$service_provider_id;
-    final l$service_provider_type = service_provider_type;
-    _resultData['service_provider_type'] = l$service_provider_type;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1917,8 +1728,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
-    final l$service_provider_id = service_provider_id;
-    final l$service_provider_type = service_provider_type;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -1926,8 +1735,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
-      l$service_provider_id,
-      l$service_provider_type,
       l$$__typename,
     ]);
   }
@@ -1964,16 +1771,6 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$minimum_cost = minimum_cost;
     final lOther$minimum_cost = other.minimum_cost;
     if (l$minimum_cost != lOther$minimum_cost) {
-      return false;
-    }
-    final l$service_provider_id = service_provider_id;
-    final lOther$service_provider_id = other.service_provider_id;
-    if (l$service_provider_id != lOther$service_provider_id) {
-      return false;
-    }
-    final l$service_provider_type = service_provider_type;
-    final lOther$service_provider_type = other.service_provider_type;
-    if (l$service_provider_type != lOther$service_provider_type) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2014,8 +1811,6 @@ abstract class CopyWith$Mutation$updateDeliveryCost$update_delivery_details_by_p
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
-    int? service_provider_id,
-    String? service_provider_type,
     String? $__typename,
   });
 }
@@ -2043,8 +1838,6 @@ class _CopyWithImpl$Mutation$updateDeliveryCost$update_delivery_details_by_pk<
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
-    Object? service_provider_id = _undefined,
-    Object? service_provider_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryCost$update_delivery_details_by_pk(
@@ -2061,14 +1854,6 @@ class _CopyWithImpl$Mutation$updateDeliveryCost$update_delivery_details_by_pk<
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
-        service_provider_id:
-            service_provider_id == _undefined || service_provider_id == null
-                ? _instance.service_provider_id
-                : (service_provider_id as int),
-        service_provider_type:
-            service_provider_type == _undefined || service_provider_type == null
-                ? _instance.service_provider_type
-                : (service_provider_type as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2091,8 +1876,6 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCost$update_delivery_details_by_p
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
-    int? service_provider_id,
-    String? service_provider_type,
     String? $__typename,
   }) =>
       _res;

@@ -172,8 +172,6 @@ class CreateServiceViewController {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
-        serviceProviderType: serviceType,
-        serviceProviderId: Random().nextInt(5),
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: double.tryParse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));

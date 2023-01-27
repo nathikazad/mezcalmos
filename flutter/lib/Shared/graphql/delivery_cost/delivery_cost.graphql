@@ -1,14 +1,13 @@
 
 # Get all service 
-query getDeliveryCostByServiceProviderId($serviceProviderId: Int!,$serviceType: String) {
-  delivery_details(where: {service_provider_id: {_eq: $serviceProviderId},service_provider_type: {_eq: $serviceType}}) {
+query getDeliveryCostById($deliveryDetailsId: Int! ) {
+   delivery_details_by_pk(id: $deliveryDetailsId) {
     cost_per_km
     free_delivery_km_range
     free_delivery_minimum_cost
     id
     minimum_cost
-    service_provider_id
-    service_provider_type
+   
   }
 }
 mutation addDeliveryCost($deliveryCost :  delivery_details_insert_input!) {
@@ -21,7 +20,6 @@ mutation updateDeliveryCost($id: Int!,$data : delivery_details_set_input) {
     free_delivery_minimum_cost
     id
     minimum_cost
-    service_provider_id
-    service_provider_type
+   
   }
 }

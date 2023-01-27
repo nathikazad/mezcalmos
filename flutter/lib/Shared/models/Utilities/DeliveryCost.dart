@@ -4,16 +4,13 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryCost {
   int? id;
-  ServiceProviderType serviceProviderType;
-  int serviceProviderId;
+
   double minimumCost;
   double costPerKm;
   double? freeDeliveryMinimumCost;
   double? freeDeliveryKmRange;
   DeliveryCost({
     required this.id,
-    required this.serviceProviderType,
-    required this.serviceProviderId,
     required this.minimumCost,
     required this.costPerKm,
     this.freeDeliveryMinimumCost,
@@ -29,8 +26,6 @@ class DeliveryCost {
     double? freeDeliveryKmRange,
   }) {
     return DeliveryCost(
-      serviceProviderType: serviceProviderType ?? this.serviceProviderType,
-      serviceProviderId: serviceProviderId ?? this.serviceProviderId,
       minimumCost: minimumCost ?? this.minimumCost,
       costPerKm: costPerKm ?? this.costPerKm,
       id: id ?? id,
@@ -42,8 +37,6 @@ class DeliveryCost {
 
   Map<String, dynamic> toMap() {
     return {
-      'serviceProviderType': serviceProviderType.toFirebaseFormatString(),
-      'serviceProviderId': serviceProviderId,
       'minimumCost': minimumCost,
       'costPerKm': costPerKm,
       'freeDeliveryMinimumCost': freeDeliveryMinimumCost,
@@ -54,9 +47,6 @@ class DeliveryCost {
   factory DeliveryCost.fromMap(Map<String, dynamic> map) {
     return DeliveryCost(
       id: map["id"],
-      serviceProviderType:
-          map["serviceProviderType"].toString().toServiceProviderType(),
-      serviceProviderId: map['serviceProviderId']?.toInt() ?? 0,
       minimumCost: map['minimumCost']?.toDouble() ?? 0.0,
       costPerKm: map['costPerKm']?.toDouble() ?? 0.0,
       freeDeliveryMinimumCost:
@@ -71,17 +61,10 @@ class DeliveryCost {
       DeliveryCost.fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'DeliveryCost(serviceProviderType: $serviceProviderType, serviceProviderId: $serviceProviderId, minimumCost: $minimumCost, costPerKm: $costPerKm, freeDeliveryMinimumCost: $freeDeliveryMinimumCost, freeDeliveryKmRange: $freeDeliveryKmRange)';
-  }
-
-  @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is DeliveryCost &&
-        other.serviceProviderType == serviceProviderType &&
-        other.serviceProviderId == serviceProviderId &&
         other.minimumCost == minimumCost &&
         other.costPerKm == costPerKm &&
         other.freeDeliveryMinimumCost == freeDeliveryMinimumCost &&
@@ -90,9 +73,7 @@ class DeliveryCost {
 
   @override
   int get hashCode {
-    return serviceProviderType.hashCode ^
-        serviceProviderId.hashCode ^
-        minimumCost.hashCode ^
+    return minimumCost.hashCode ^
         costPerKm.hashCode ^
         freeDeliveryMinimumCost.hashCode ^
         freeDeliveryKmRange.hashCode;

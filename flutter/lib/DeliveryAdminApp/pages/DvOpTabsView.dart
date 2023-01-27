@@ -56,8 +56,7 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
         );
       case 2:
         return DeliveryCostSettingView(
-          serviceProviderId: opAuthController.companyId,
-          serviceProviderType: ServiceProviderType.Delivery_company,
+          deliveryDetailsId: 1,
         );
       case 3:
         return DvOpProfileView();

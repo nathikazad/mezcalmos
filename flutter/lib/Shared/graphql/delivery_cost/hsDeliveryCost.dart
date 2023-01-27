@@ -5,45 +5,37 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/__generated/delivery_cost.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<DeliveryCost?> get_delivery_cost(
-    {required int serviceProviderId,
-    required ServiceProviderType providerType,
-    bool withCache = true}) async {
+    {required int deliveryDetailsId, bool withCache = true}) async {
   mezDbgPrint("Getting dv cost =====🥹");
-  final QueryResult<Query$getDeliveryCostByServiceProviderId> response =
-      await _db.graphQLClient.query$getDeliveryCostByServiceProviderId(
-    Options$Query$getDeliveryCostByServiceProviderId(
+  final QueryResult<Query$getDeliveryCostById> response =
+      await _db.graphQLClient.query$getDeliveryCostById(
+    Options$Query$getDeliveryCostById(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$getDeliveryCostByServiceProviderId(
-          serviceProviderId: serviceProviderId,
-          serviceType: providerType.toFirebaseFormatString()),
+      variables: Variables$Query$getDeliveryCostById(
+          deliveryDetailsId: deliveryDetailsId),
     ),
   );
-  if (response.parsedData?.delivery_details == null) {
+  if (response.parsedData?.delivery_details_by_pk == null) {
     throw Exception("🚨🚨 get_delivery_cost exceptions ${response.exception}");
   }
   mezDbgPrint(
-      "Getting dv cost =====🥹==>${response.parsedData?.delivery_details}");
+      "Getting dv cost =====🥹==>${response.parsedData?.delivery_details_by_pk}");
 
-  if (response.parsedData!.delivery_details.isNotEmpty) {
-    final Query$getDeliveryCostByServiceProviderId$delivery_details data =
-        response.parsedData!.delivery_details.first;
-    return DeliveryCost(
-        id: data.id,
-        serviceProviderType:
-            data.service_provider_type.toString().toServiceProviderType(),
-        serviceProviderId: serviceProviderId,
-        minimumCost: data.minimum_cost,
-        costPerKm: data.cost_per_km,
-        freeDeliveryMinimumCost: data.free_delivery_minimum_cost,
-        freeDeliveryKmRange: data.free_delivery_km_range);
-  }
-  return null;
+  final Query$getDeliveryCostById$delivery_details_by_pk data =
+      response.parsedData!.delivery_details_by_pk!;
+  return DeliveryCost(
+      id: data.id,
+      // serviceProviderType: providerType,
+      // serviceProviderId: serviceProviderId,
+      minimumCost: data.minimum_cost,
+      costPerKm: data.cost_per_km,
+      freeDeliveryMinimumCost: data.free_delivery_minimum_cost,
+      freeDeliveryKmRange: data.free_delivery_km_range);
 }
 
 Future<bool?> update_delivery_cost(
@@ -73,9 +65,6 @@ Future<int?> add_delivery_cost({required DeliveryCost deliveryCost}) async {
       .mutate$addDeliveryCost(Options$Mutation$addDeliveryCost(
           variables: Variables$Mutation$addDeliveryCost(
               deliveryCost: Input$delivery_details_insert_input(
-    service_provider_id: deliveryCost.serviceProviderId,
-    service_provider_type:
-        deliveryCost.serviceProviderType.toFirebaseFormatString(),
     free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
     free_delivery_minimum_cost: deliveryCost.freeDeliveryMinimumCost,
     minimum_cost: deliveryCost.minimumCost,

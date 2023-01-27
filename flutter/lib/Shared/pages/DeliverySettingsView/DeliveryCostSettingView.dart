@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
@@ -62,33 +61,49 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
               borderRadius: 0,
               height: 75,
               label: "Save",
-              onClick: () async {},
+              onClick: () async {
+                final bool res = await viewController.handleSave();
+                if (res) {
+                  Get.snackbar("Saved", "your settings has been updated}",
+                      backgroundColor: Colors.black,
+                      colorText: Colors.white,
+                      shouldIconPulse: false,
+                      icon: Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                      ));
+                }
+              },
             ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("How would you like to deliver?"),
-            SizedBox(
-              height: 10,
-            ),
-            ServiceDeliveryTypePicker(
-              viewController: viewController,
-            ),
-            Obx(() {
-              if (viewController.getDeliveryType ==
-                  ServiceDeliveryType.Self_delivery) {
-                return DeliverySettingCostComponent(
-                    viewController: viewController);
-              } else
-                return DeliverySettingsCompaniesList(
+      body: Obx(() {
+        if (viewController.hasData) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("How would you like to deliver?"),
+                SizedBox(
+                  height: 10,
+                ),
+                ServiceDeliveryTypePicker(
                   viewController: viewController,
-                );
-            })
-          ],
-        ),
-      ),
+                ),
+                (viewController.isSelfDelivery)
+                    ? DeliverySettingCostComponent(
+                        viewController: viewController)
+                    : DeliverySettingsCompaniesList(
+                        viewController: viewController,
+                      )
+              ],
+            ),
+          );
+        } else
+          return Container(
+            alignment: Alignment.center,
+            child: CircularProgressIndicator(),
+          );
+      }),
     );
   }
 }

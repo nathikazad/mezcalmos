@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/Creat
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceSchedulePage.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -69,10 +69,12 @@ class _CreateServiceViewState extends State<CreateServiceView> {
         await showStatusInfoDialog(
           context,
           primaryClickTitle: "OK",
+          primaryIcon: Icons.flatware,
+          showSmallIcon: false,
           primaryCallBack: () {
-            MezRouter.toNamed(kTabsView);
+            popEverythingAndNavigateTo(kTabsView);
           },
-          status: "Your restaurantis under review",
+          status: "Your restaurant is under review",
           description:
               "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
         );

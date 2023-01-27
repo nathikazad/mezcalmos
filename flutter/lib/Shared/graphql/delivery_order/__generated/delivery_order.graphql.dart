@@ -2280,7 +2280,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     required this.id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.$__typename,
   });
 
@@ -2297,9 +2297,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      location:
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -2313,7 +2312,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
 
   final String name;
 
-  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
       location;
 
   final String $__typename;
@@ -2329,7 +2328,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2474,10 +2473,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?),
+                as Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2485,11 +2484,8 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -2690,7 +2686,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -2711,10 +2707,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_driver_order$delivery_order_by_pk$restaurant$location
-              .fromJson((l$location as Map<String, dynamic>)),
+      location: Query$get_driver_order$delivery_order_by_pk$restaurant$location
+          .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2729,7 +2723,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
 
   final String name;
 
-  final Query$get_driver_order$delivery_order_by_pk$restaurant$location?
+  final Query$get_driver_order$delivery_order_by_pk$restaurant$location
       location;
 
   final String language_id;
@@ -2749,7 +2743,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -2906,10 +2900,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_driver_order$delivery_order_by_pk$restaurant$location?),
+                as Query$get_driver_order$delivery_order_by_pk$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -2923,11 +2917,8 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
   CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -6270,7 +6261,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     required this.id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.$__typename,
   });
 
@@ -6287,9 +6278,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      location:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -6303,7 +6293,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   final String name;
 
-  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
       location;
 
   final String $__typename;
@@ -6319,7 +6309,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6464,10 +6454,10 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?),
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -6475,11 +6465,8 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -6884,7 +6871,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -6905,9 +6892,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+      location:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -6923,7 +6909,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
 
   final String name;
 
-  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location?
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
       location;
 
   final String language_id;
@@ -6943,7 +6929,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -7109,10 +7095,10 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location?),
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -7126,11 +7112,8 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
   CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -8933,7 +8916,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -8954,9 +8937,8 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+      location:
+          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -8972,7 +8954,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location?
+  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -8992,7 +8974,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -9159,10 +9141,10 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location?),
+                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -9176,11 +9158,8 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
   CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -10587,7 +10566,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -10608,10 +10587,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_past_driver_orders$delivery_order$restaurant$location
-              .fromJson((l$location as Map<String, dynamic>)),
+      location: Query$get_past_driver_orders$delivery_order$restaurant$location
+          .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -10626,7 +10603,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Query$get_past_driver_orders$delivery_order$restaurant$location?
+  final Query$get_past_driver_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -10646,7 +10623,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -10803,10 +10780,10 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_past_driver_orders$delivery_order$restaurant$location?),
+                as Query$get_past_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -10820,11 +10797,8 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
   CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<TRes>
       get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -12236,7 +12210,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -12257,9 +12231,8 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+      location:
+          Query$get_inprocess_driver_orders$delivery_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -12275,7 +12248,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Query$get_inprocess_driver_orders$delivery_order$restaurant$location?
+  final Query$get_inprocess_driver_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -12295,7 +12268,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -12457,10 +12430,10 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_inprocess_driver_orders$delivery_order$restaurant$location?),
+                as Query$get_inprocess_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -12474,11 +12447,8 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
   CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -13948,7 +13918,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -13969,9 +13939,8 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+      location:
+          Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -13987,7 +13956,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
 
   final String name;
 
-  final Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location?
+  final Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -14007,7 +13976,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -14174,10 +14143,10 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location?),
+                as Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -14191,11 +14160,8 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
   CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -15642,7 +15608,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -15663,9 +15629,8 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+      location:
+          Query$get_delivery_company_past_orders$delivery_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -15681,7 +15646,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Query$get_delivery_company_past_orders$delivery_order$restaurant$location?
+  final Query$get_delivery_company_past_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -15701,7 +15666,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -15865,10 +15830,10 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_delivery_company_past_orders$delivery_order$restaurant$location?),
+                as Query$get_delivery_company_past_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -15882,11 +15847,8 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
   CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 
@@ -17359,7 +17321,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    this.location,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -17380,9 +17342,8 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location: l$location == null
-          ? null
-          : Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+      location:
+          Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
               .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
@@ -17398,7 +17359,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location?
+  final Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
       location;
 
   final String language_id;
@@ -17418,7 +17379,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
-    _resultData['location'] = l$location?.toJson();
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -17585,10 +17546,10 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location: location == _undefined
+        location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location?),
+                as Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -17602,11 +17563,8 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
   CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
       TRes> get location {
     final local$location = _instance.location;
-    return local$location == null
-        ? CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
-            .stub(_then(_instance))
-        : CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
-            local$location, (e) => call(location: e));
+    return CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
   }
 }
 

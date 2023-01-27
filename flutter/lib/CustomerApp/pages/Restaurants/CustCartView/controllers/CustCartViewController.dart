@@ -10,7 +10,6 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
@@ -52,10 +51,8 @@ class CustCartViewController {
     return pickerChoice.value!.entries.first.key.toCardChoice();
   }
 
-  Rxn<DeliveryCost> _mezDeliveryCost = Rxn<DeliveryCost>();
-  DeliveryCost? get mezeliveryCost => _mezDeliveryCost.value;
   DeliveryCost? get deliveryCost {
-    return cart.restaurant?.deliveryCost ?? mezeliveryCost;
+    return cart.restaurant?.deliveryCost;
   }
 
   RxBool isShippingSet = RxBool(false);
@@ -66,18 +63,12 @@ class CustCartViewController {
   num get getOrderDistance => _orderDistanceInKm;
   // init //
   Future<void> init() async {
-    unawaited(get_delivery_cost(serviceProviderId: 1, withCache: false)
-        .then((DeliveryCost? value) => _mezDeliveryCost.value = value)
-        .whenComplete(() {
-      orderToLocation.value =
-          customerAuthController.customer?.defaultLocation?.location;
-      if (orderToLocation.value != null) {
-        _cartRxn.value?.toLocation = orderToLocation.value;
-        _cartRxn.refresh();
-
-        unawaited(updateShippingPrice());
-      }
-    }));
+    orderToLocation.value =
+        customerAuthController.customer?.defaultLocation?.location;
+    if (orderToLocation.value != null) {
+      _cartRxn.value?.toLocation = orderToLocation.value;
+    }
+    unawaited(updateShippingPrice());
 
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
       savedCardChoice =
@@ -91,6 +82,7 @@ class CustCartViewController {
     await getCustomerCards();
     await _addingValusToOptions();
     pickerChoice.value = options.first;
+    _cartRxn.refresh();
   }
 
   Future<void> _setDefaultOptions() async {
@@ -212,12 +204,11 @@ class CustCartViewController {
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
     try {
-      final String? stripePaymentId =
-          await acceptPaymentByCardChoice(getCardChoice);
-      mezDbgPrint(
-          "✅ Stripe payment id ====================>>>$stripePaymentId");
+      // final String? stripePaymentId =
+      //     await acceptPaymentByCardChoice(getCardChoice);
+      mezDbgPrint("✅ Stripe payment id ====================>>>");
       final ServerResponse _serverResponse =
-          await cartController.checkout(stripePaymentId: stripePaymentId);
+          await cartController.checkout(stripePaymentId: null);
 
       mezDbgPrint("datatatatataat => ${_serverResponse.data}");
 

@@ -179,24 +179,6 @@ class ROpDashboardPage extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                               color: Colors.grey.shade900),
                         )),
-                    _divider(),
-                    _navigationLink(
-                        onClick: () async {
-                          viewController
-                              .tabsViewViewController?.showTabs.value = true;
-                          navigateToDeliveryCost(
-                              serviceProviderId: viewController.restaurantId,
-                              serviceProviderType:
-                                  ServiceProviderType.Restaurant);
-                        },
-                        icon: Icons.price_check_rounded,
-                        titleWidget: Text(
-                          'Delivery cost',
-                          style: Get.textTheme.bodyText1?.copyWith(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade900),
-                        )),
                   ],
                 ),
             ],

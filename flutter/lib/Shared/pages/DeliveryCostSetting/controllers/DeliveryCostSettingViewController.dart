@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryCostSettingViewController {
   // text inputs //
@@ -16,15 +15,13 @@ class DeliveryCostSettingViewController {
   Rxn<DeliveryCost> deliveryCost = Rxn();
   RxBool isEditing = RxBool(false);
   RxnNum previewCost = RxnNum();
-  late int serviceProviderId;
-  late ServiceProviderType serviceProviderType;
+  late int deliveryDetailsId;
 
   // inti //
-  Future<void> init(
-      {required int serviceProviderId,
-      required ServiceProviderType serviceProviderType}) async {
-    this.serviceProviderId = serviceProviderId;
-    this.serviceProviderType = serviceProviderType;
+  Future<void> init({
+    required int deliveryDetailsId,
+  }) async {
+    this.deliveryDetailsId = deliveryDetailsId;
     try {
       await fetchDeliveryCost();
     } on Exception catch (e, stk) {
@@ -36,9 +33,9 @@ class DeliveryCostSettingViewController {
 
   Future<void> fetchDeliveryCost() async {
     deliveryCost.value = await get_delivery_cost(
-        serviceProviderId: serviceProviderId,
-        withCache: false,
-        providerType: serviceProviderType);
+      deliveryDetailsId: deliveryDetailsId,
+      withCache: false,
+    );
     if (deliveryCost.value != null) {
       isEditing.value = true;
       freeKmRange.text =
@@ -58,8 +55,6 @@ class DeliveryCostSettingViewController {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
-        serviceProviderType: serviceProviderType,
-        serviceProviderId: serviceProviderId,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: double.tryParse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));

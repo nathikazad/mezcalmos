@@ -42,8 +42,8 @@ mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
     }
   }
 }
-query getNearByCompanies($args :  delivery_fetch_delivery_company_args!) {
-  delivery_fetch_delivery_company(args: $args) {
+query getNearByCompanies($args :  delivery_get_delivery_companies_args!) {
+  delivery_get_delivery_companies(args: $args) {
     approved
     creation_time
    
