@@ -191,7 +191,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
           RestaurantOrder(
             deliveryMode: DeliveryMode.None,
             orderId: _o.id,
-            chatId: _o.chat_id,
+            chatId: _o.chat_id!,
             status: _o.status.toRestaurantOrderStatus(),
             quantity: 1,
             serviceProviderId: _o.restaurant.id,
@@ -200,8 +200,8 @@ Future<List<RestaurantOrder>> get_customer_orders(
             cost: _o.delivery_cost,
             restaurant: ServiceInfo(
               location: Location(
-                _o.restaurant.location_text,
-                _o.restaurant.location_gps.toLocationData(),
+                _o.restaurant.location!.address!,
+                _o.restaurant.location!.gps.toLocationData(),
               ),
               firebaseId: _o.restaurant.firebase_id,
               hasuraId: _o.restaurant.id,

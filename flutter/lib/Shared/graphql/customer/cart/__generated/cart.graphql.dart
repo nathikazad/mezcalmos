@@ -2099,6 +2099,70 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'delivery_details_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'delivery_details_of_deliverer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'cost_per_km'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'free_delivery_km_range'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'free_delivery_minimum_cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'minimum_cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'radius'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'firebase_id'),
                     alias: null,
                     arguments: [],
@@ -2127,25 +2191,40 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'location'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: 'self_delivery'),
@@ -3184,13 +3263,14 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     required this.id,
     this.stripe_info,
     this.accepted_payments,
+    this.delivery_details_id,
+    this.delivery_details_of_deliverer,
     this.firebase_id,
     required this.image,
     required this.language_id,
     this.description_id,
-    required this.location_gps,
-    required this.location_text,
     required this.name,
+    required this.location,
     required this.self_delivery,
     this.schedule,
     this.description,
@@ -3204,13 +3284,15 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$id = json['id'];
     final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$delivery_details_of_deliverer =
+        json['delivery_details_of_deliverer'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
     final l$name = json['name'];
+    final l$location = json['location'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -3222,13 +3304,21 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      delivery_details_id: (l$delivery_details_id as int?),
+      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
+              as List<dynamic>?)
+          ?.map((e) =>
+              Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language_id: (l$language_id as String),
       description_id: (l$description_id as int?),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
       name: (l$name as String),
+      location:
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -3247,6 +3337,12 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
 
   final dynamic? accepted_payments;
 
+  final int? delivery_details_id;
+
+  final List<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+      delivery_details_of_deliverer;
+
   final String? firebase_id;
 
   final String image;
@@ -3255,11 +3351,10 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
 
   final int? description_id;
 
-  final Geography location_gps;
-
-  final String location_text;
-
   final String name;
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+      location;
 
   final bool self_delivery;
 
@@ -3284,6 +3379,11 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    _resultData['delivery_details_of_deliverer'] =
+        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
@@ -3292,12 +3392,10 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     _resultData['language_id'] = l$language_id;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$schedule = schedule;
@@ -3318,13 +3416,14 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$id = id;
     final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
+    final l$delivery_details_id = delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
     final l$name = name;
+    final l$location = location;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
     final l$description = description;
@@ -3335,13 +3434,16 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
       l$id,
       l$stripe_info,
       l$accepted_payments,
+      l$delivery_details_id,
+      l$delivery_details_of_deliverer == null
+          ? null
+          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
       l$firebase_id,
       l$image,
       l$language_id,
       l$description_id,
-      l$location_gps,
-      l$location_text,
       l$name,
+      l$location,
       l$self_delivery,
       l$schedule,
       l$description,
@@ -3376,6 +3478,34 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     if (l$accepted_payments != lOther$accepted_payments) {
       return false;
     }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final lOther$delivery_details_of_deliverer =
+        other.delivery_details_of_deliverer;
+    if (l$delivery_details_of_deliverer != null &&
+        lOther$delivery_details_of_deliverer != null) {
+      if (l$delivery_details_of_deliverer.length !=
+          lOther$delivery_details_of_deliverer.length) {
+        return false;
+      }
+      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
+        final l$delivery_details_of_deliverer$entry =
+            l$delivery_details_of_deliverer[i];
+        final lOther$delivery_details_of_deliverer$entry =
+            lOther$delivery_details_of_deliverer[i];
+        if (l$delivery_details_of_deliverer$entry !=
+            lOther$delivery_details_of_deliverer$entry) {
+          return false;
+        }
+      }
+    } else if (l$delivery_details_of_deliverer !=
+        lOther$delivery_details_of_deliverer) {
+      return false;
+    }
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
@@ -3396,19 +3526,14 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     if (l$description_id != lOther$description_id) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
-      return false;
-    }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$self_delivery = self_delivery;
@@ -3472,13 +3597,16 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     int? id,
     dynamic? stripe_info,
     dynamic? accepted_payments,
+    int? delivery_details_id,
+    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? firebase_id,
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
     String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
@@ -3487,6 +3615,14 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? open_status,
     String? $__typename,
   });
+  TRes delivery_details_of_deliverer(
+      Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>? Function(
+              Iterable<
+                  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+                      Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
+          _fn);
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location;
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description;
 }
@@ -3512,13 +3648,14 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? id = _undefined,
     Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? delivery_details_of_deliverer = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
     Object? name = _undefined,
+    Object? location = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -3534,6 +3671,14 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
+        delivery_details_id: delivery_details_id == _undefined
+            ? _instance.delivery_details_id
+            : (delivery_details_id as int?),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
@@ -3546,15 +3691,13 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -3575,6 +3718,26 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes delivery_details_of_deliverer(
+          Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>? Function(
+                  Iterable<
+                      CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+                          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
+              _fn) =>
+      call(
+          delivery_details_of_deliverer: _fn(
+              _instance.delivery_details_of_deliverer?.map((e) =>
+                  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+                    e,
+                    (i) => i,
+                  )))?.toList());
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
+
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -3600,13 +3763,16 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     int? id,
     dynamic? stripe_info,
     dynamic? accepted_payments,
+    int? delivery_details_id,
+    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? firebase_id,
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
     String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
@@ -3616,11 +3782,429 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
     String? $__typename,
   }) =>
       _res;
+  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+              .stub(_res);
   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
           TRes>
       get description =>
           CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
               .stub(_res);
+}
+
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer({
+    required this.cost_per_km,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.minimum_cost,
+    required this.radius,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final double minimum_cost;
+
+  final int radius;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$minimum_cost,
+      l$radius,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer;
+
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer;
+
+  TRes call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description {
@@ -7939,7 +8523,78 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'delivery_details_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'delivery_details_of_deliverer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'cost_per_km'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'free_delivery_km_range'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'free_delivery_minimum_cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'minimum_cost'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'radius'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'firebase_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -7981,25 +8636,33 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: 'self_delivery'),
@@ -9057,15 +9720,16 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
 class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant {
   Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant({
     required this.id,
+    this.delivery_details_id,
+    this.delivery_details_of_deliverer,
     this.firebase_id,
+    required this.name,
     this.stripe_info,
     this.accepted_payments,
     required this.image,
     required this.language_id,
     this.description_id,
-    required this.location_gps,
-    required this.location_text,
-    required this.name,
+    required this.location,
     required this.self_delivery,
     this.schedule,
     this.description,
@@ -9077,15 +9741,17 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$delivery_details_of_deliverer =
+        json['delivery_details_of_deliverer'];
     final l$firebase_id = json['firebase_id'];
+    final l$name = json['name'];
     final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
-    final l$name = json['name'];
+    final l$location = json['location'];
     final l$self_delivery = json['self_delivery'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -9094,16 +9760,24 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant(
       id: (l$id as int),
+      delivery_details_id: (l$delivery_details_id as int?),
+      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
+              as List<dynamic>?)
+          ?.map((e) =>
+              Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       firebase_id: (l$firebase_id as String?),
+      name: (l$name as String),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
       image: (l$image as String),
       language_id: (l$language_id as String),
       description_id: (l$description_id as int?),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
-      name: (l$name as String),
+      location:
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -9118,7 +9792,15 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
 
   final int id;
 
+  final int? delivery_details_id;
+
+  final List<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+      delivery_details_of_deliverer;
+
   final String? firebase_id;
+
+  final String name;
 
   final dynamic? stripe_info;
 
@@ -9130,11 +9812,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
 
   final int? description_id;
 
-  final Geography location_gps;
-
-  final String location_text;
-
-  final String name;
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+      location;
 
   final bool self_delivery;
 
@@ -9153,8 +9832,15 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    _resultData['delivery_details_of_deliverer'] =
+        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] =
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
@@ -9167,12 +9853,8 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     _resultData['language_id'] = l$language_id;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
-    final l$name = name;
-    _resultData['name'] = l$name;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$schedule = schedule;
@@ -9191,15 +9873,16 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   @override
   int get hashCode {
     final l$id = id;
+    final l$delivery_details_id = delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$firebase_id = firebase_id;
+    final l$name = name;
     final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
-    final l$name = name;
+    final l$location = location;
     final l$self_delivery = self_delivery;
     final l$schedule = schedule;
     final l$description = description;
@@ -9208,15 +9891,18 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$delivery_details_id,
+      l$delivery_details_of_deliverer == null
+          ? null
+          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
       l$firebase_id,
+      l$name,
       l$stripe_info,
       l$accepted_payments,
       l$image,
       l$language_id,
       l$description_id,
-      l$location_gps,
-      l$location_text,
-      l$name,
+      l$location,
       l$self_delivery,
       l$schedule,
       l$description,
@@ -9241,9 +9927,42 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     if (l$id != lOther$id) {
       return false;
     }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final lOther$delivery_details_of_deliverer =
+        other.delivery_details_of_deliverer;
+    if (l$delivery_details_of_deliverer != null &&
+        lOther$delivery_details_of_deliverer != null) {
+      if (l$delivery_details_of_deliverer.length !=
+          lOther$delivery_details_of_deliverer.length) {
+        return false;
+      }
+      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
+        final l$delivery_details_of_deliverer$entry =
+            l$delivery_details_of_deliverer[i];
+        final lOther$delivery_details_of_deliverer$entry =
+            lOther$delivery_details_of_deliverer[i];
+        if (l$delivery_details_of_deliverer$entry !=
+            lOther$delivery_details_of_deliverer$entry) {
+          return false;
+        }
+      }
+    } else if (l$delivery_details_of_deliverer !=
+        lOther$delivery_details_of_deliverer) {
+      return false;
+    }
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
       return false;
     }
     final l$stripe_info = stripe_info;
@@ -9271,19 +9990,9 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     if (l$description_id != lOther$description_id) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$self_delivery = self_delivery;
@@ -9347,15 +10056,18 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
 
   TRes call({
     int? id,
+    int? delivery_details_id,
+    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? firebase_id,
+    String? name,
     dynamic? stripe_info,
     dynamic? accepted_payments,
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
@@ -9364,6 +10076,14 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
     String? open_status,
     String? $__typename,
   });
+  TRes delivery_details_of_deliverer(
+      Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>? Function(
+              Iterable<
+                  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+                      Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
+          _fn);
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location;
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description;
 }
@@ -9389,15 +10109,16 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
 
   TRes call({
     Object? id = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? delivery_details_of_deliverer = _undefined,
     Object? firebase_id = _undefined,
+    Object? name = _undefined,
     Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
-    Object? name = _undefined,
+    Object? location = _undefined,
     Object? self_delivery = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -9408,9 +10129,20 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
       _then(
           Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        delivery_details_id: delivery_details_id == _undefined
+            ? _instance.delivery_details_id
+            : (delivery_details_id as int?),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
@@ -9426,15 +10158,10 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -9455,6 +10182,26 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes delivery_details_of_deliverer(
+          Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>? Function(
+                  Iterable<
+                      CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+                          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
+              _fn) =>
+      call(
+          delivery_details_of_deliverer: _fn(
+              _instance.delivery_details_of_deliverer?.map((e) =>
+                  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+                    e,
+                    (i) => i,
+                  )))?.toList());
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
+
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
       TRes> get description {
     final local$description = _instance.description;
@@ -9478,15 +10225,18 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
 
   call({
     int? id,
+    int? delivery_details_id,
+    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? firebase_id,
+    String? name,
     dynamic? stripe_info,
     dynamic? accepted_payments,
     String? image,
     String? language_id,
     int? description_id,
-    Geography? location_gps,
-    String? location_text,
-    String? name,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
+        location,
     bool? self_delivery,
     dynamic? schedule,
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
@@ -9496,11 +10246,429 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
     String? $__typename,
   }) =>
       _res;
+  delivery_details_of_deliverer(_fn) => _res;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+              .stub(_res);
   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
           TRes>
       get description =>
           CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
               .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer({
+    required this.cost_per_km,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.minimum_cost,
+    required this.radius,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final double minimum_cost;
+
+  final int radius;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$minimum_cost,
+      l$radius,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer;
+
+  TRes call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description {

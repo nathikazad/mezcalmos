@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum ServiceProviderType { Customer, Restaurant, Laundry, Delivery_company }
 
 extension ParseServiceProviderTypeToString on ServiceProviderType {
@@ -11,6 +13,20 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
     str = str[0].toUpperCase() + str.substring(1);
     str = str.replaceFirst("_", " ");
     return str;
+  }
+
+  IconData toIcon() {
+    switch (this) {
+      case ServiceProviderType.Restaurant:
+        return Icons.food_bank;
+      case ServiceProviderType.Delivery_company:
+        return Icons.delivery_dining;
+      case ServiceProviderType.Laundry:
+        return Icons.dry_cleaning;
+
+      default:
+        return Icons.store;
+    }
   }
 }
 

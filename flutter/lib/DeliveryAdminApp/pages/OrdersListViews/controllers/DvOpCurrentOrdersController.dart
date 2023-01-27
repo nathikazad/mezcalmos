@@ -38,8 +38,6 @@ class DvOpCurrentOrdersController {
     mezDbgPrint("hasData after await =======>${currentOrders.value?.length}");
   }
 
-  Future<void> _fetchOrders() async {}
-
   Future<void> _initOrdersStream() async {
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =

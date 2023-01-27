@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
@@ -57,6 +58,33 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     final Cart cart = Cart(
         restaurant: cartData.restaurant != null
             ? Restaurant(
+                deliveryCost:
+                    (cartData.restaurant!.delivery_details_of_deliverer == null)
+                        ? null
+                        : DeliveryCost(
+                            id: cartData.restaurant!
+                                .delivery_details_of_deliverer!.first.id,
+                            freeDeliveryMinimumCost: cartData
+                                .restaurant!
+                                .delivery_details_of_deliverer!
+                                .first
+                                .free_delivery_minimum_cost,
+                            costPerKm: cartData
+                                .restaurant!
+                                .delivery_details_of_deliverer!
+                                .first
+                                .cost_per_km,
+                            minimumCost: cartData
+                                .restaurant!
+                                .delivery_details_of_deliverer!
+                                .first
+                                .minimum_cost,
+                            freeDeliveryKmRange: cartData
+                                .restaurant!
+                                .delivery_details_of_deliverer!
+                                .first
+                                .free_delivery_km_range,
+                          ),
                 userInfo: ServiceInfo(
                   hasuraId: cartData.restaurant!.id,
                   description:
@@ -80,8 +108,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                   descriptionId: cartData.restaurant!.description_id,
                   //   descriptionId: data.d,
                   location: Location.fromHasura(
-                    cartData.restaurant!.location_gps,
-                    cartData.restaurant!.location_text,
+                    cartData.restaurant!.location.gps,
+                    cartData.restaurant!.location.address!,
                   ),
                 ),
                 schedule: cartData.restaurant?.schedule != null
@@ -281,8 +309,21 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       }
       if (cart.parsedData?.customer_customer_by_pk?.cart?.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
+          deliveryCost: (_res!.delivery_details_of_deliverer == null)
+              ? null
+              : DeliveryCost(
+                  id: _res.delivery_details_of_deliverer!.first.id,
+                  freeDeliveryMinimumCost: _res.delivery_details_of_deliverer!
+                      .first.free_delivery_minimum_cost,
+                  costPerKm:
+                      _res.delivery_details_of_deliverer!.first.cost_per_km,
+                  minimumCost:
+                      _res.delivery_details_of_deliverer!.first.minimum_cost,
+                  freeDeliveryKmRange: _res.delivery_details_of_deliverer!.first
+                      .free_delivery_km_range,
+                ),
           userInfo: ServiceInfo(
-            hasuraId: _res!.id,
+            hasuraId: _res.id,
             image: _res.image,
             firebaseId: _res.firebase_id,
             name: _res.name,
@@ -299,8 +340,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             descriptionId: _res.description_id,
             //   descriptionId: data.d,
             location: Location.fromHasura(
-              _res.location_gps,
-              _res.location_text,
+              _res.location.gps,
+              _res.location.address!,
             ),
           ),
           schedule:

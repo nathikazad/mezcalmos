@@ -19,11 +19,7 @@ array_relationships:
 insert_permissions:
   - role: restaurant_operator
     permission:
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      check: {}
       columns:
         - cost_per_km
         - free_delivery_km_range
@@ -91,6 +87,59 @@ select_permissions:
         - radius
       filter: {}
 update_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - cost_per_km
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: restaurant_operator
     permission:
       columns:
@@ -98,9 +147,14 @@ update_permissions:
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
+        - radius
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
-      check: null
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id

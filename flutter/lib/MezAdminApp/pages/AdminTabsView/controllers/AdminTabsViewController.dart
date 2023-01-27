@@ -27,4 +27,23 @@ class AdminTabsViewController {
     appbarTabsController =
         TabController(length: serviceTypes.length, vsync: vsync);
   }
+
+  String getTitle() {
+    switch (bottomTabIndex.value) {
+      case 0:
+        return "Orders";
+
+        break;
+      case 1:
+        return "Services";
+
+        break;
+      case 2:
+        return "Messages";
+
+        break;
+      default:
+        return "";
+    }
+  }
 }

@@ -104,11 +104,16 @@ select_permissions:
       columns:
         - accepted_payments
         - approved
+        - creation_time
+        - customer_pickup
+        - delivery
+        - delivery_details_id
         - description_id
         - firebase_id
         - id
         - image
         - language_id
+        - location_id
         - name
         - open_status
         - schedule
@@ -146,16 +151,21 @@ select_permissions:
       columns:
         - approved
         - self_delivery
+        - delivery_details_id
         - description_id
         - id
+        - location_id
         - schedule
         - firebase_id
         - image
         - language_id
         - name
         - service_provider_type
+        - creation_time
         - accepted_payments
+        - delivery
         - open_status
+        - customer_pickup
         - stripe_info
       filter:
         _exists:
@@ -170,11 +180,16 @@ select_permissions:
       columns:
         - accepted_payments
         - approved
+        - creation_time
+        - customer_pickup
+        - delivery
+        - delivery_details_id
         - description_id
         - firebase_id
         - id
         - image
         - language_id
+        - location_id
         - name
         - open_status
         - schedule
@@ -190,12 +205,23 @@ update_permissions:
     permission:
       columns:
         - approved
+        - self_delivery
+        - delivery_details_id
         - description_id
+        - id
+        - location_id
+        - schedule
+        - firebase_id
         - image
         - language_id
         - name
+        - service_provider_type
+        - creation_time
+        - accepted_payments
+        - delivery
         - open_status
-        - schedule
+        - customer_pickup
+        - stripe_info
       filter:
         _exists:
           _table:
@@ -208,17 +234,23 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - accepted_payments
         - approved
+        - self_delivery
+        - delivery_details_id
         - description_id
+        - id
+        - location_id
+        - schedule
         - firebase_id
         - image
         - language_id
         - name
-        - open_status
-        - schedule
-        - self_delivery
         - service_provider_type
+        - creation_time
+        - accepted_payments
+        - delivery
+        - open_status
+        - customer_pickup
         - stripe_info
       filter:
         restaurant_operators:

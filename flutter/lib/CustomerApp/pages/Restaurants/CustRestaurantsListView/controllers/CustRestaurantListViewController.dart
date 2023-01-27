@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum UserInteraction { isSearching, isSorting, isSearchingAndSorting, Nothing }
@@ -19,9 +18,7 @@ class CustRestaurantListViewController {
 
   RestaurantList _restaurants = List<Restaurant>.empty();
   Rx<SearchType> searchType = SearchType.searchByRestaurantName.obs;
-  Rxn<DeliveryCost> _mezDeliveryCost = Rxn();
 
-  num? get mezMinmumDeliveryCost => _mezDeliveryCost.value?.minimumCost;
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
@@ -31,14 +28,17 @@ class CustRestaurantListViewController {
 
   void init() {
     isLoading.value = true;
-    get_delivery_cost(serviceProviderId: 1,withCache: false)
-        .then((DeliveryCost? value) => _mezDeliveryCost.value = value);
+    // get_delivery_cost(serviceProviderId: 1,withCache: false)
+    //     .then((DeliveryCost? value) => _mezDeliveryCost.value = value);
     fetch_restaurants(withCache: false).then((List<Restaurant> list) {
       _restaurants = list;
+
       _assignServiceIds();
       filter();
     }).whenComplete(() {
       isLoading.value = false;
+      mezDbgPrint(
+          "List from view :================>${filteredRestaurants.length}");
     });
   }
 

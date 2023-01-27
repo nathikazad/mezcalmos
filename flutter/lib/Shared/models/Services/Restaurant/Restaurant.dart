@@ -32,6 +32,7 @@ extension ParseStringToRestaurantsView on String {
 
 class Restaurant extends Service {
   static String kNoCategoryNode = "noCategory";
+  int? deliveryDetailsId;
 
   List<Item> currentSpecials = <Item>[];
   List<Item> pastSpecials = <Item>[];
@@ -56,6 +57,7 @@ class Restaurant extends Service {
       this.deliveryCost,
       this.rate,
       this.serviceLink,
+      this.deliveryDetailsId,
       this.selfDelivery = false,
       LanguageType? secondaryLanguage})
       : super(
@@ -337,9 +339,11 @@ class Restaurant extends Service {
     PaymentInfo? paymentInfo,
     LanguageType? primaryLanguage,
     Schedule? schedule,
+    int? deliveryDetailsId,
   }) {
     return Restaurant(
         userInfo: userInfo ?? info,
+        deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,
         selfDelivery: selfDelivery ?? this.selfDelivery,
         schedule: schedule ?? this.schedule,
         paymentInfo: paymentInfo ?? this.paymentInfo,

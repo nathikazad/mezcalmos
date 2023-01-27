@@ -9,13 +9,14 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:sizer/sizer.dart';
 
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
+    ["MezWorkingHours"];
+
 class ROpScheduleWidgets {
   final ROpScheduleController viewController;
   final BuildContext context;
   ROpScheduleWidgets({required this.viewController, required this.context});
 
-  dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
-      ["MezWorkingHours"];
   int selectedValue = 1;
 
   // List of weekdays  cards

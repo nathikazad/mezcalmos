@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getOperatorByUserId {
   factory Variables$Query$getOperatorByUserId({required int userId}) =>
@@ -915,21 +916,21 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$user<TRes>
       _res;
 }
 
-class Variables$Subscription$restaurantOperatorStatusStream {
-  factory Variables$Subscription$restaurantOperatorStatusStream(
+class Variables$Subscription$dvOperatorStatusStream {
+  factory Variables$Subscription$dvOperatorStatusStream(
           {required int userId}) =>
-      Variables$Subscription$restaurantOperatorStatusStream._({
+      Variables$Subscription$dvOperatorStatusStream._({
         r'userId': userId,
       });
 
-  Variables$Subscription$restaurantOperatorStatusStream._(this._$data);
+  Variables$Subscription$dvOperatorStatusStream._(this._$data);
 
-  factory Variables$Subscription$restaurantOperatorStatusStream.fromJson(
+  factory Variables$Subscription$dvOperatorStatusStream.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
     final l$userId = data['userId'];
     result$data['userId'] = (l$userId as int);
-    return Variables$Subscription$restaurantOperatorStatusStream._(result$data);
+    return Variables$Subscription$dvOperatorStatusStream._(result$data);
   }
 
   Map<String, dynamic> _$data;
@@ -942,10 +943,9 @@ class Variables$Subscription$restaurantOperatorStatusStream {
     return result$data;
   }
 
-  CopyWith$Variables$Subscription$restaurantOperatorStatusStream<
-          Variables$Subscription$restaurantOperatorStatusStream>
-      get copyWith =>
-          CopyWith$Variables$Subscription$restaurantOperatorStatusStream(
+  CopyWith$Variables$Subscription$dvOperatorStatusStream<
+          Variables$Subscription$dvOperatorStatusStream>
+      get copyWith => CopyWith$Variables$Subscription$dvOperatorStatusStream(
             this,
             (i) => i,
           );
@@ -954,7 +954,7 @@ class Variables$Subscription$restaurantOperatorStatusStream {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Variables$Subscription$restaurantOperatorStatusStream) ||
+    if (!(other is Variables$Subscription$dvOperatorStatusStream) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -973,75 +973,69 @@ class Variables$Subscription$restaurantOperatorStatusStream {
   }
 }
 
-abstract class CopyWith$Variables$Subscription$restaurantOperatorStatusStream<
-    TRes> {
-  factory CopyWith$Variables$Subscription$restaurantOperatorStatusStream(
-    Variables$Subscription$restaurantOperatorStatusStream instance,
-    TRes Function(Variables$Subscription$restaurantOperatorStatusStream) then,
-  ) = _CopyWithImpl$Variables$Subscription$restaurantOperatorStatusStream;
+abstract class CopyWith$Variables$Subscription$dvOperatorStatusStream<TRes> {
+  factory CopyWith$Variables$Subscription$dvOperatorStatusStream(
+    Variables$Subscription$dvOperatorStatusStream instance,
+    TRes Function(Variables$Subscription$dvOperatorStatusStream) then,
+  ) = _CopyWithImpl$Variables$Subscription$dvOperatorStatusStream;
 
-  factory CopyWith$Variables$Subscription$restaurantOperatorStatusStream.stub(
+  factory CopyWith$Variables$Subscription$dvOperatorStatusStream.stub(
           TRes res) =
-      _CopyWithStubImpl$Variables$Subscription$restaurantOperatorStatusStream;
+      _CopyWithStubImpl$Variables$Subscription$dvOperatorStatusStream;
 
   TRes call({int? userId});
 }
 
-class _CopyWithImpl$Variables$Subscription$restaurantOperatorStatusStream<TRes>
-    implements
-        CopyWith$Variables$Subscription$restaurantOperatorStatusStream<TRes> {
-  _CopyWithImpl$Variables$Subscription$restaurantOperatorStatusStream(
+class _CopyWithImpl$Variables$Subscription$dvOperatorStatusStream<TRes>
+    implements CopyWith$Variables$Subscription$dvOperatorStatusStream<TRes> {
+  _CopyWithImpl$Variables$Subscription$dvOperatorStatusStream(
     this._instance,
     this._then,
   );
 
-  final Variables$Subscription$restaurantOperatorStatusStream _instance;
+  final Variables$Subscription$dvOperatorStatusStream _instance;
 
-  final TRes Function(Variables$Subscription$restaurantOperatorStatusStream)
-      _then;
+  final TRes Function(Variables$Subscription$dvOperatorStatusStream) _then;
 
   static const _undefined = {};
 
   TRes call({Object? userId = _undefined}) =>
-      _then(Variables$Subscription$restaurantOperatorStatusStream._({
+      _then(Variables$Subscription$dvOperatorStatusStream._({
         ..._instance._$data,
         if (userId != _undefined && userId != null) 'userId': (userId as int),
       }));
 }
 
-class _CopyWithStubImpl$Variables$Subscription$restaurantOperatorStatusStream<
-        TRes>
-    implements
-        CopyWith$Variables$Subscription$restaurantOperatorStatusStream<TRes> {
-  _CopyWithStubImpl$Variables$Subscription$restaurantOperatorStatusStream(
-      this._res);
+class _CopyWithStubImpl$Variables$Subscription$dvOperatorStatusStream<TRes>
+    implements CopyWith$Variables$Subscription$dvOperatorStatusStream<TRes> {
+  _CopyWithStubImpl$Variables$Subscription$dvOperatorStatusStream(this._res);
 
   TRes _res;
 
   call({int? userId}) => _res;
 }
 
-class Subscription$restaurantOperatorStatusStream {
-  Subscription$restaurantOperatorStatusStream({
+class Subscription$dvOperatorStatusStream {
+  Subscription$dvOperatorStatusStream({
     required this.delivery_operator,
     required this.$__typename,
   });
 
-  factory Subscription$restaurantOperatorStatusStream.fromJson(
+  factory Subscription$dvOperatorStatusStream.fromJson(
       Map<String, dynamic> json) {
     final l$delivery_operator = json['delivery_operator'];
     final l$$__typename = json['__typename'];
-    return Subscription$restaurantOperatorStatusStream(
+    return Subscription$dvOperatorStatusStream(
       delivery_operator: (l$delivery_operator as List<dynamic>)
           .map((e) =>
-              Subscription$restaurantOperatorStatusStream$delivery_operator
-                  .fromJson((e as Map<String, dynamic>)))
+              Subscription$dvOperatorStatusStream$delivery_operator.fromJson(
+                  (e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Subscription$restaurantOperatorStatusStream$delivery_operator>
+  final List<Subscription$dvOperatorStatusStream$delivery_operator>
       delivery_operator;
 
   final String $__typename;
@@ -1071,7 +1065,7 @@ class Subscription$restaurantOperatorStatusStream {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Subscription$restaurantOperatorStatusStream) ||
+    if (!(other is Subscription$dvOperatorStatusStream) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1096,48 +1090,48 @@ class Subscription$restaurantOperatorStatusStream {
   }
 }
 
-extension UtilityExtension$Subscription$restaurantOperatorStatusStream
-    on Subscription$restaurantOperatorStatusStream {
-  CopyWith$Subscription$restaurantOperatorStatusStream<
-          Subscription$restaurantOperatorStatusStream>
-      get copyWith => CopyWith$Subscription$restaurantOperatorStatusStream(
+extension UtilityExtension$Subscription$dvOperatorStatusStream
+    on Subscription$dvOperatorStatusStream {
+  CopyWith$Subscription$dvOperatorStatusStream<
+          Subscription$dvOperatorStatusStream>
+      get copyWith => CopyWith$Subscription$dvOperatorStatusStream(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$restaurantOperatorStatusStream<TRes> {
-  factory CopyWith$Subscription$restaurantOperatorStatusStream(
-    Subscription$restaurantOperatorStatusStream instance,
-    TRes Function(Subscription$restaurantOperatorStatusStream) then,
-  ) = _CopyWithImpl$Subscription$restaurantOperatorStatusStream;
+abstract class CopyWith$Subscription$dvOperatorStatusStream<TRes> {
+  factory CopyWith$Subscription$dvOperatorStatusStream(
+    Subscription$dvOperatorStatusStream instance,
+    TRes Function(Subscription$dvOperatorStatusStream) then,
+  ) = _CopyWithImpl$Subscription$dvOperatorStatusStream;
 
-  factory CopyWith$Subscription$restaurantOperatorStatusStream.stub(TRes res) =
-      _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream;
+  factory CopyWith$Subscription$dvOperatorStatusStream.stub(TRes res) =
+      _CopyWithStubImpl$Subscription$dvOperatorStatusStream;
 
   TRes call({
-    List<Subscription$restaurantOperatorStatusStream$delivery_operator>?
+    List<Subscription$dvOperatorStatusStream$delivery_operator>?
         delivery_operator,
     String? $__typename,
   });
   TRes delivery_operator(
-      Iterable<Subscription$restaurantOperatorStatusStream$delivery_operator> Function(
+      Iterable<Subscription$dvOperatorStatusStream$delivery_operator> Function(
               Iterable<
-                  CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
-                      Subscription$restaurantOperatorStatusStream$delivery_operator>>)
+                  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<
+                      Subscription$dvOperatorStatusStream$delivery_operator>>)
           _fn);
 }
 
-class _CopyWithImpl$Subscription$restaurantOperatorStatusStream<TRes>
-    implements CopyWith$Subscription$restaurantOperatorStatusStream<TRes> {
-  _CopyWithImpl$Subscription$restaurantOperatorStatusStream(
+class _CopyWithImpl$Subscription$dvOperatorStatusStream<TRes>
+    implements CopyWith$Subscription$dvOperatorStatusStream<TRes> {
+  _CopyWithImpl$Subscription$dvOperatorStatusStream(
     this._instance,
     this._then,
   );
 
-  final Subscription$restaurantOperatorStatusStream _instance;
+  final Subscription$dvOperatorStatusStream _instance;
 
-  final TRes Function(Subscription$restaurantOperatorStatusStream) _then;
+  final TRes Function(Subscription$dvOperatorStatusStream) _then;
 
   static const _undefined = {};
 
@@ -1145,38 +1139,38 @@ class _CopyWithImpl$Subscription$restaurantOperatorStatusStream<TRes>
     Object? delivery_operator = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$restaurantOperatorStatusStream(
+      _then(Subscription$dvOperatorStatusStream(
         delivery_operator: delivery_operator == _undefined ||
                 delivery_operator == null
             ? _instance.delivery_operator
-            : (delivery_operator as List<
-                Subscription$restaurantOperatorStatusStream$delivery_operator>),
+            : (delivery_operator
+                as List<Subscription$dvOperatorStatusStream$delivery_operator>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes delivery_operator(
-          Iterable<Subscription$restaurantOperatorStatusStream$delivery_operator> Function(
+          Iterable<Subscription$dvOperatorStatusStream$delivery_operator> Function(
                   Iterable<
-                      CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
-                          Subscription$restaurantOperatorStatusStream$delivery_operator>>)
+                      CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<
+                          Subscription$dvOperatorStatusStream$delivery_operator>>)
               _fn) =>
       call(
           delivery_operator: _fn(_instance.delivery_operator.map((e) =>
-              CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator(
+              CopyWith$Subscription$dvOperatorStatusStream$delivery_operator(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream<TRes>
-    implements CopyWith$Subscription$restaurantOperatorStatusStream<TRes> {
-  _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream(this._res);
+class _CopyWithStubImpl$Subscription$dvOperatorStatusStream<TRes>
+    implements CopyWith$Subscription$dvOperatorStatusStream<TRes> {
+  _CopyWithStubImpl$Subscription$dvOperatorStatusStream(this._res);
 
   TRes _res;
 
   call({
-    List<Subscription$restaurantOperatorStatusStream$delivery_operator>?
+    List<Subscription$dvOperatorStatusStream$delivery_operator>?
         delivery_operator,
     String? $__typename,
   }) =>
@@ -1184,11 +1178,11 @@ class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream<TRes>
   delivery_operator(_fn) => _res;
 }
 
-const documentNodeSubscriptionrestaurantOperatorStatusStream =
+const documentNodeSubscriptiondvOperatorStatusStream =
     DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.subscription,
-    name: NameNode(value: 'restaurantOperatorStatusStream'),
+    name: NameNode(value: 'dvOperatorStatusStream'),
     variableDefinitions: [
       VariableDefinitionNode(
         variable: VariableNode(name: NameNode(value: 'userId')),
@@ -1243,16 +1237,15 @@ const documentNodeSubscriptionrestaurantOperatorStatusStream =
     ]),
   ),
 ]);
-Subscription$restaurantOperatorStatusStream
-    _parserFn$Subscription$restaurantOperatorStatusStream(
-            Map<String, dynamic> data) =>
-        Subscription$restaurantOperatorStatusStream.fromJson(data);
+Subscription$dvOperatorStatusStream
+    _parserFn$Subscription$dvOperatorStatusStream(Map<String, dynamic> data) =>
+        Subscription$dvOperatorStatusStream.fromJson(data);
 
-class Options$Subscription$restaurantOperatorStatusStream extends graphql
-    .SubscriptionOptions<Subscription$restaurantOperatorStatusStream> {
-  Options$Subscription$restaurantOperatorStatusStream({
+class Options$Subscription$dvOperatorStatusStream
+    extends graphql.SubscriptionOptions<Subscription$dvOperatorStatusStream> {
+  Options$Subscription$dvOperatorStatusStream({
     String? operationName,
-    required Variables$Subscription$restaurantOperatorStatusStream variables,
+    required Variables$Subscription$dvOperatorStatusStream variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1266,16 +1259,16 @@ class Options$Subscription$restaurantOperatorStatusStream extends graphql
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeSubscriptionrestaurantOperatorStatusStream,
-          parserFn: _parserFn$Subscription$restaurantOperatorStatusStream,
+          document: documentNodeSubscriptiondvOperatorStatusStream,
+          parserFn: _parserFn$Subscription$dvOperatorStatusStream,
         );
 }
 
-class WatchOptions$Subscription$restaurantOperatorStatusStream extends graphql
-    .WatchQueryOptions<Subscription$restaurantOperatorStatusStream> {
-  WatchOptions$Subscription$restaurantOperatorStatusStream({
+class WatchOptions$Subscription$dvOperatorStatusStream
+    extends graphql.WatchQueryOptions<Subscription$dvOperatorStatusStream> {
+  WatchOptions$Subscription$dvOperatorStatusStream({
     String? operationName,
-    required Variables$Subscription$restaurantOperatorStatusStream variables,
+    required Variables$Subscription$dvOperatorStatusStream variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1293,51 +1286,50 @@ class WatchOptions$Subscription$restaurantOperatorStatusStream extends graphql
           cacheRereadPolicy: cacheRereadPolicy,
           optimisticResult: optimisticResult,
           context: context,
-          document: documentNodeSubscriptionrestaurantOperatorStatusStream,
+          document: documentNodeSubscriptiondvOperatorStatusStream,
           pollInterval: pollInterval,
           eagerlyFetchResults: eagerlyFetchResults,
           carryForwardDataOnException: carryForwardDataOnException,
           fetchResults: fetchResults,
-          parserFn: _parserFn$Subscription$restaurantOperatorStatusStream,
+          parserFn: _parserFn$Subscription$dvOperatorStatusStream,
         );
 }
 
-class FetchMoreOptions$Subscription$restaurantOperatorStatusStream
+class FetchMoreOptions$Subscription$dvOperatorStatusStream
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Subscription$restaurantOperatorStatusStream({
+  FetchMoreOptions$Subscription$dvOperatorStatusStream({
     required graphql.UpdateQuery updateQuery,
-    required Variables$Subscription$restaurantOperatorStatusStream variables,
+    required Variables$Subscription$dvOperatorStatusStream variables,
   }) : super(
           updateQuery: updateQuery,
           variables: variables.toJson(),
-          document: documentNodeSubscriptionrestaurantOperatorStatusStream,
+          document: documentNodeSubscriptiondvOperatorStatusStream,
         );
 }
 
-extension ClientExtension$Subscription$restaurantOperatorStatusStream
+extension ClientExtension$Subscription$dvOperatorStatusStream
     on graphql.GraphQLClient {
-  Stream<graphql.QueryResult<Subscription$restaurantOperatorStatusStream>>
-      subscribe$restaurantOperatorStatusStream(
-              Options$Subscription$restaurantOperatorStatusStream options) =>
+  Stream<graphql.QueryResult<Subscription$dvOperatorStatusStream>>
+      subscribe$dvOperatorStatusStream(
+              Options$Subscription$dvOperatorStatusStream options) =>
           this.subscribe(options);
-  graphql.ObservableQuery<Subscription$restaurantOperatorStatusStream>
-      watchSubscription$restaurantOperatorStatusStream(
-              WatchOptions$Subscription$restaurantOperatorStatusStream
-                  options) =>
+  graphql.ObservableQuery<Subscription$dvOperatorStatusStream>
+      watchSubscription$dvOperatorStatusStream(
+              WatchOptions$Subscription$dvOperatorStatusStream options) =>
           this.watchQuery(options);
 }
 
-class Subscription$restaurantOperatorStatusStream$delivery_operator {
-  Subscription$restaurantOperatorStatusStream$delivery_operator({
+class Subscription$dvOperatorStatusStream$delivery_operator {
+  Subscription$dvOperatorStatusStream$delivery_operator({
     required this.status,
     required this.$__typename,
   });
 
-  factory Subscription$restaurantOperatorStatusStream$delivery_operator.fromJson(
+  factory Subscription$dvOperatorStatusStream$delivery_operator.fromJson(
       Map<String, dynamic> json) {
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
-    return Subscription$restaurantOperatorStatusStream$delivery_operator(
+    return Subscription$dvOperatorStatusStream$delivery_operator(
       status: (l$status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1371,8 +1363,7 @@ class Subscription$restaurantOperatorStatusStream$delivery_operator {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Subscription$restaurantOperatorStatusStream$delivery_operator) ||
+    if (!(other is Subscription$dvOperatorStatusStream$delivery_operator) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1390,28 +1381,27 @@ class Subscription$restaurantOperatorStatusStream$delivery_operator {
   }
 }
 
-extension UtilityExtension$Subscription$restaurantOperatorStatusStream$delivery_operator
-    on Subscription$restaurantOperatorStatusStream$delivery_operator {
-  CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
-          Subscription$restaurantOperatorStatusStream$delivery_operator>
+extension UtilityExtension$Subscription$dvOperatorStatusStream$delivery_operator
+    on Subscription$dvOperatorStatusStream$delivery_operator {
+  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<
+          Subscription$dvOperatorStatusStream$delivery_operator>
       get copyWith =>
-          CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator(
+          CopyWith$Subscription$dvOperatorStatusStream$delivery_operator(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
+abstract class CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<
     TRes> {
-  factory CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator(
-    Subscription$restaurantOperatorStatusStream$delivery_operator instance,
-    TRes Function(Subscription$restaurantOperatorStatusStream$delivery_operator)
-        then,
-  ) = _CopyWithImpl$Subscription$restaurantOperatorStatusStream$delivery_operator;
+  factory CopyWith$Subscription$dvOperatorStatusStream$delivery_operator(
+    Subscription$dvOperatorStatusStream$delivery_operator instance,
+    TRes Function(Subscription$dvOperatorStatusStream$delivery_operator) then,
+  ) = _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator;
 
-  factory CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator.stub(
+  factory CopyWith$Subscription$dvOperatorStatusStream$delivery_operator.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$delivery_operator;
+      _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator;
 
   TRes call({
     String? status,
@@ -1419,20 +1409,18 @@ abstract class CopyWith$Subscription$restaurantOperatorStatusStream$delivery_ope
   });
 }
 
-class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$delivery_operator<
-        TRes>
+class _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator<TRes>
     implements
-        CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
-            TRes> {
-  _CopyWithImpl$Subscription$restaurantOperatorStatusStream$delivery_operator(
+        CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<TRes> {
+  _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator(
     this._instance,
     this._then,
   );
 
-  final Subscription$restaurantOperatorStatusStream$delivery_operator _instance;
+  final Subscription$dvOperatorStatusStream$delivery_operator _instance;
 
-  final TRes Function(
-      Subscription$restaurantOperatorStatusStream$delivery_operator) _then;
+  final TRes Function(Subscription$dvOperatorStatusStream$delivery_operator)
+      _then;
 
   static const _undefined = {};
 
@@ -1440,7 +1428,7 @@ class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$delivery_operato
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Subscription$restaurantOperatorStatusStream$delivery_operator(
+      _then(Subscription$dvOperatorStatusStream$delivery_operator(
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -1450,18 +1438,1013 @@ class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$delivery_operato
       ));
 }
 
-class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$delivery_operator<
+class _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator<
         TRes>
     implements
-        CopyWith$Subscription$restaurantOperatorStatusStream$delivery_operator<
-            TRes> {
-  _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$delivery_operator(
+        CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<TRes> {
+  _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator(
       this._res);
 
   TRes _res;
 
   call({
     String? status,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Query$getCompanyOerators {
+  factory Variables$Query$getCompanyOerators({required int companyId}) =>
+      Variables$Query$getCompanyOerators._({
+        r'companyId': companyId,
+      });
+
+  Variables$Query$getCompanyOerators._(this._$data);
+
+  factory Variables$Query$getCompanyOerators.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$companyId = data['companyId'];
+    result$data['companyId'] = (l$companyId as int);
+    return Variables$Query$getCompanyOerators._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get companyId => (_$data['companyId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$companyId = companyId;
+    result$data['companyId'] = l$companyId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getCompanyOerators<
+          Variables$Query$getCompanyOerators>
+      get copyWith => CopyWith$Variables$Query$getCompanyOerators(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getCompanyOerators) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$companyId = companyId;
+    final lOther$companyId = other.companyId;
+    if (l$companyId != lOther$companyId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$companyId = companyId;
+    return Object.hashAll([l$companyId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getCompanyOerators<TRes> {
+  factory CopyWith$Variables$Query$getCompanyOerators(
+    Variables$Query$getCompanyOerators instance,
+    TRes Function(Variables$Query$getCompanyOerators) then,
+  ) = _CopyWithImpl$Variables$Query$getCompanyOerators;
+
+  factory CopyWith$Variables$Query$getCompanyOerators.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getCompanyOerators;
+
+  TRes call({int? companyId});
+}
+
+class _CopyWithImpl$Variables$Query$getCompanyOerators<TRes>
+    implements CopyWith$Variables$Query$getCompanyOerators<TRes> {
+  _CopyWithImpl$Variables$Query$getCompanyOerators(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getCompanyOerators _instance;
+
+  final TRes Function(Variables$Query$getCompanyOerators) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? companyId = _undefined}) =>
+      _then(Variables$Query$getCompanyOerators._({
+        ..._instance._$data,
+        if (companyId != _undefined && companyId != null)
+          'companyId': (companyId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getCompanyOerators<TRes>
+    implements CopyWith$Variables$Query$getCompanyOerators<TRes> {
+  _CopyWithStubImpl$Variables$Query$getCompanyOerators(this._res);
+
+  TRes _res;
+
+  call({int? companyId}) => _res;
+}
+
+class Query$getCompanyOerators {
+  Query$getCompanyOerators({
+    required this.delivery_operator,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOerators.fromJson(Map<String, dynamic> json) {
+    final l$delivery_operator = json['delivery_operator'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOerators(
+      delivery_operator: (l$delivery_operator as List<dynamic>)
+          .map((e) => Query$getCompanyOerators$delivery_operator.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$getCompanyOerators$delivery_operator> delivery_operator;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_operator = delivery_operator;
+    _resultData['delivery_operator'] =
+        l$delivery_operator.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_operator = delivery_operator;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$delivery_operator.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCompanyOerators) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_operator = delivery_operator;
+    final lOther$delivery_operator = other.delivery_operator;
+    if (l$delivery_operator.length != lOther$delivery_operator.length) {
+      return false;
+    }
+    for (int i = 0; i < l$delivery_operator.length; i++) {
+      final l$delivery_operator$entry = l$delivery_operator[i];
+      final lOther$delivery_operator$entry = lOther$delivery_operator[i];
+      if (l$delivery_operator$entry != lOther$delivery_operator$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOerators
+    on Query$getCompanyOerators {
+  CopyWith$Query$getCompanyOerators<Query$getCompanyOerators> get copyWith =>
+      CopyWith$Query$getCompanyOerators(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$getCompanyOerators<TRes> {
+  factory CopyWith$Query$getCompanyOerators(
+    Query$getCompanyOerators instance,
+    TRes Function(Query$getCompanyOerators) then,
+  ) = _CopyWithImpl$Query$getCompanyOerators;
+
+  factory CopyWith$Query$getCompanyOerators.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOerators;
+
+  TRes call({
+    List<Query$getCompanyOerators$delivery_operator>? delivery_operator,
+    String? $__typename,
+  });
+  TRes delivery_operator(
+      Iterable<Query$getCompanyOerators$delivery_operator> Function(
+              Iterable<
+                  CopyWith$Query$getCompanyOerators$delivery_operator<
+                      Query$getCompanyOerators$delivery_operator>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$getCompanyOerators<TRes>
+    implements CopyWith$Query$getCompanyOerators<TRes> {
+  _CopyWithImpl$Query$getCompanyOerators(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOerators _instance;
+
+  final TRes Function(Query$getCompanyOerators) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_operator = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOerators(
+        delivery_operator:
+            delivery_operator == _undefined || delivery_operator == null
+                ? _instance.delivery_operator
+                : (delivery_operator
+                    as List<Query$getCompanyOerators$delivery_operator>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes delivery_operator(
+          Iterable<Query$getCompanyOerators$delivery_operator> Function(
+                  Iterable<
+                      CopyWith$Query$getCompanyOerators$delivery_operator<
+                          Query$getCompanyOerators$delivery_operator>>)
+              _fn) =>
+      call(
+          delivery_operator: _fn(_instance.delivery_operator
+              .map((e) => CopyWith$Query$getCompanyOerators$delivery_operator(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$getCompanyOerators<TRes>
+    implements CopyWith$Query$getCompanyOerators<TRes> {
+  _CopyWithStubImpl$Query$getCompanyOerators(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$getCompanyOerators$delivery_operator>? delivery_operator,
+    String? $__typename,
+  }) =>
+      _res;
+  delivery_operator(_fn) => _res;
+}
+
+const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getCompanyOerators'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'companyId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_operator'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'delivery_company_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'companyId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'app_version'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'current_gps'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_company_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_driver_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'owner'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'status'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'user'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'firebase_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getCompanyOerators _parserFn$Query$getCompanyOerators(
+        Map<String, dynamic> data) =>
+    Query$getCompanyOerators.fromJson(data);
+
+class Options$Query$getCompanyOerators
+    extends graphql.QueryOptions<Query$getCompanyOerators> {
+  Options$Query$getCompanyOerators({
+    String? operationName,
+    required Variables$Query$getCompanyOerators variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetCompanyOerators,
+          parserFn: _parserFn$Query$getCompanyOerators,
+        );
+}
+
+class WatchOptions$Query$getCompanyOerators
+    extends graphql.WatchQueryOptions<Query$getCompanyOerators> {
+  WatchOptions$Query$getCompanyOerators({
+    String? operationName,
+    required Variables$Query$getCompanyOerators variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetCompanyOerators,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getCompanyOerators,
+        );
+}
+
+class FetchMoreOptions$Query$getCompanyOerators
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getCompanyOerators({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getCompanyOerators variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetCompanyOerators,
+        );
+}
+
+extension ClientExtension$Query$getCompanyOerators on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getCompanyOerators>>
+      query$getCompanyOerators(
+              Options$Query$getCompanyOerators options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getCompanyOerators>
+      watchQuery$getCompanyOerators(
+              WatchOptions$Query$getCompanyOerators options) =>
+          this.watchQuery(options);
+  void writeQuery$getCompanyOerators({
+    required Query$getCompanyOerators data,
+    required Variables$Query$getCompanyOerators variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQuerygetCompanyOerators),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getCompanyOerators? readQuery$getCompanyOerators({
+    required Variables$Query$getCompanyOerators variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQuerygetCompanyOerators),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$getCompanyOerators.fromJson(result);
+  }
+}
+
+class Query$getCompanyOerators$delivery_operator {
+  Query$getCompanyOerators$delivery_operator({
+    this.app_version,
+    this.current_gps,
+    required this.delivery_company_id,
+    required this.delivery_driver_type,
+    required this.id,
+    required this.owner,
+    required this.status,
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOerators$delivery_operator.fromJson(
+      Map<String, dynamic> json) {
+    final l$app_version = json['app_version'];
+    final l$current_gps = json['current_gps'];
+    final l$delivery_company_id = json['delivery_company_id'];
+    final l$delivery_driver_type = json['delivery_driver_type'];
+    final l$id = json['id'];
+    final l$owner = json['owner'];
+    final l$status = json['status'];
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOerators$delivery_operator(
+      app_version: (l$app_version as String?),
+      current_gps:
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      delivery_company_id: (l$delivery_company_id as int),
+      delivery_driver_type: (l$delivery_driver_type as String),
+      id: (l$id as int),
+      owner: (l$owner as bool),
+      status: (l$status as String),
+      user: Query$getCompanyOerators$delivery_operator$user.fromJson(
+          (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? app_version;
+
+  final Geography? current_gps;
+
+  final int delivery_company_id;
+
+  final String delivery_driver_type;
+
+  final int id;
+
+  final bool owner;
+
+  final String status;
+
+  final Query$getCompanyOerators$delivery_operator$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$app_version = app_version;
+    _resultData['app_version'] = l$app_version;
+    final l$current_gps = current_gps;
+    _resultData['current_gps'] =
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
+    final l$delivery_company_id = delivery_company_id;
+    _resultData['delivery_company_id'] = l$delivery_company_id;
+    final l$delivery_driver_type = delivery_driver_type;
+    _resultData['delivery_driver_type'] = l$delivery_driver_type;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$app_version = app_version;
+    final l$current_gps = current_gps;
+    final l$delivery_company_id = delivery_company_id;
+    final l$delivery_driver_type = delivery_driver_type;
+    final l$id = id;
+    final l$owner = owner;
+    final l$status = status;
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$app_version,
+      l$current_gps,
+      l$delivery_company_id,
+      l$delivery_driver_type,
+      l$id,
+      l$owner,
+      l$status,
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCompanyOerators$delivery_operator) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$app_version = app_version;
+    final lOther$app_version = other.app_version;
+    if (l$app_version != lOther$app_version) {
+      return false;
+    }
+    final l$current_gps = current_gps;
+    final lOther$current_gps = other.current_gps;
+    if (l$current_gps != lOther$current_gps) {
+      return false;
+    }
+    final l$delivery_company_id = delivery_company_id;
+    final lOther$delivery_company_id = other.delivery_company_id;
+    if (l$delivery_company_id != lOther$delivery_company_id) {
+      return false;
+    }
+    final l$delivery_driver_type = delivery_driver_type;
+    final lOther$delivery_driver_type = other.delivery_driver_type;
+    if (l$delivery_driver_type != lOther$delivery_driver_type) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOerators$delivery_operator
+    on Query$getCompanyOerators$delivery_operator {
+  CopyWith$Query$getCompanyOerators$delivery_operator<
+          Query$getCompanyOerators$delivery_operator>
+      get copyWith => CopyWith$Query$getCompanyOerators$delivery_operator(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOerators$delivery_operator<TRes> {
+  factory CopyWith$Query$getCompanyOerators$delivery_operator(
+    Query$getCompanyOerators$delivery_operator instance,
+    TRes Function(Query$getCompanyOerators$delivery_operator) then,
+  ) = _CopyWithImpl$Query$getCompanyOerators$delivery_operator;
+
+  factory CopyWith$Query$getCompanyOerators$delivery_operator.stub(TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator;
+
+  TRes call({
+    String? app_version,
+    Geography? current_gps,
+    int? delivery_company_id,
+    String? delivery_driver_type,
+    int? id,
+    bool? owner,
+    String? status,
+    Query$getCompanyOerators$delivery_operator$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user;
+}
+
+class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
+    implements CopyWith$Query$getCompanyOerators$delivery_operator<TRes> {
+  _CopyWithImpl$Query$getCompanyOerators$delivery_operator(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOerators$delivery_operator _instance;
+
+  final TRes Function(Query$getCompanyOerators$delivery_operator) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? app_version = _undefined,
+    Object? current_gps = _undefined,
+    Object? delivery_company_id = _undefined,
+    Object? delivery_driver_type = _undefined,
+    Object? id = _undefined,
+    Object? owner = _undefined,
+    Object? status = _undefined,
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOerators$delivery_operator(
+        app_version: app_version == _undefined
+            ? _instance.app_version
+            : (app_version as String?),
+        current_gps: current_gps == _undefined
+            ? _instance.current_gps
+            : (current_gps as Geography?),
+        delivery_company_id:
+            delivery_company_id == _undefined || delivery_company_id == null
+                ? _instance.delivery_company_id
+                : (delivery_company_id as int),
+        delivery_driver_type:
+            delivery_driver_type == _undefined || delivery_driver_type == null
+                ? _instance.delivery_driver_type
+                : (delivery_driver_type as String),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user as Query$getCompanyOerators$delivery_operator$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$getCompanyOerators$delivery_operator$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator<TRes>
+    implements CopyWith$Query$getCompanyOerators$delivery_operator<TRes> {
+  _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator(this._res);
+
+  TRes _res;
+
+  call({
+    String? app_version,
+    Geography? current_gps,
+    int? delivery_company_id,
+    String? delivery_driver_type,
+    int? id,
+    bool? owner,
+    String? status,
+    Query$getCompanyOerators$delivery_operator$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user =>
+      CopyWith$Query$getCompanyOerators$delivery_operator$user.stub(_res);
+}
+
+class Query$getCompanyOerators$delivery_operator$user {
+  Query$getCompanyOerators$delivery_operator$user({
+    required this.id,
+    required this.firebase_id,
+    this.image,
+    required this.language_id,
+    this.name,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOerators$delivery_operator$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$firebase_id = json['firebase_id'];
+    final l$image = json['image'];
+    final l$language_id = json['language_id'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOerators$delivery_operator$user(
+      id: (l$id as int),
+      firebase_id: (l$firebase_id as String),
+      image: (l$image as String?),
+      language_id: (l$language_id as String),
+      name: (l$name as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String firebase_id;
+
+  final String? image;
+
+  final String language_id;
+
+  final String? name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language_id = language_id;
+    _resultData['language_id'] = l$language_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$image = image;
+    final l$language_id = language_id;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$firebase_id,
+      l$image,
+      l$language_id,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getCompanyOerators$delivery_operator$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language_id = language_id;
+    final lOther$language_id = other.language_id;
+    if (l$language_id != lOther$language_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOerators$delivery_operator$user
+    on Query$getCompanyOerators$delivery_operator$user {
+  CopyWith$Query$getCompanyOerators$delivery_operator$user<
+          Query$getCompanyOerators$delivery_operator$user>
+      get copyWith => CopyWith$Query$getCompanyOerators$delivery_operator$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> {
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$user(
+    Query$getCompanyOerators$delivery_operator$user instance,
+    TRes Function(Query$getCompanyOerators$delivery_operator$user) then,
+  ) = _CopyWithImpl$Query$getCompanyOerators$delivery_operator$user;
+
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$user;
+
+  TRes call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$user<TRes>
+    implements CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> {
+  _CopyWithImpl$Query$getCompanyOerators$delivery_operator$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOerators$delivery_operator$user _instance;
+
+  final TRes Function(Query$getCompanyOerators$delivery_operator$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? firebase_id = _undefined,
+    Object? image = _undefined,
+    Object? language_id = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOerators$delivery_operator$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        firebase_id: firebase_id == _undefined || firebase_id == null
+            ? _instance.firebase_id
+            : (firebase_id as String),
+        image: image == _undefined ? _instance.image : (image as String?),
+        language_id: language_id == _undefined || language_id == null
+            ? _instance.language_id
+            : (language_id as String),
+        name: name == _undefined ? _instance.name : (name as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$user<TRes>
+    implements CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> {
+  _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$user(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? firebase_id,
+    String? image,
+    String? language_id,
+    String? name,
     String? $__typename,
   }) =>
       _res;

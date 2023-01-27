@@ -62,8 +62,13 @@ class ROpEditInfoController {
     this.restaurantId = restaurantId;
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$restaurantId");
     this.tabsViewViewController = tabsViewViewController;
-    await fetchRestaurant();
-    _updateResTInfo();
+    try {
+      await fetchRestaurant();
+      _updateResTInfo();
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   Future<void> fetchRestaurant() async {

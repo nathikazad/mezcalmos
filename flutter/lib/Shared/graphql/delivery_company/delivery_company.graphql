@@ -1,0 +1,68 @@
+query getDeliveryCompanyById($id: Int!) {
+  delivery_company_by_pk(id: $id) {
+    approved
+    description_id
+    id
+    image
+    location_id
+    name
+    open_status
+   location {  gps
+    address}   
+    creation_time
+   
+    service_provider_type
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
+  update_delivery_company_by_pk(pk_columns: { id: $id }, _set: $data) {
+    approved
+    description_id
+    location_id
+    id
+    image
+    name
+    open_status
+    location
+   location {  gps
+    address}   
+    creation_time
+    service_provider_type
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+query getNearByCompanies($args :  delivery_get_delivery_companies_args!) {
+  delivery_get_delivery_companies(args: $args) {
+    approved
+    creation_time
+   
+    id
+    description_id
+    image
+   location {  gps
+    address}   
+    service_provider_type
+    open_status
+    name
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+

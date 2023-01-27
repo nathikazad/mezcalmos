@@ -48,9 +48,11 @@ class _PickLocationViewState extends State<PickLocationView> {
             LatLng(locData.latitude!, locData.longitude!));
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      currentLatLng = Get.arguments as LatLng;
+      currentLatLng = Get.arguments as LatLng?;
       mezDbgPrint("Current latlng from recent route =>>>>>$currentLatLng");
-      geoCodeAndSetLocation(currentLatLng!);
+      if (currentLatLng != null) {
+        geoCodeAndSetLocation(currentLatLng!);
+      }
     } else {
       mezDbgPrint("Iniiit");
 
@@ -147,6 +149,9 @@ class _PickLocationViewState extends State<PickLocationView> {
         MezRouter.back<Location>(
             result: locationPickerController.location.value);
         mezDbgPrint(locationPickerController.location.value!.address);
+      } else {
+        MezRouter.back<Location>(
+            result: locationPickerController.location.value);
       }
     }
   }
