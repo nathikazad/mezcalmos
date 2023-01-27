@@ -18,6 +18,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -53,7 +55,8 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
         "🫡 Start routing process 🫡 =>${restaurantOpAuthController.operator.value?.toJson()}");
 
     if (restaurantOpAuthController.operator.value == null) {
-      MezRouter.toNamed(kCreateRestaurant);
+      navigateToCreateService(
+          serviceProviderType: ServiceProviderType.Restaurant);
     } else if (restaurantOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
       MezRouter.toNamed(kOpUnauth);

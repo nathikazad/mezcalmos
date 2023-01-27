@@ -26,7 +26,7 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
           Variables$Query$getDriversByServiceId(serviceId: serviceProviderId),
     ),
   );
-  mezDbgPrint(" 🚨🚨 Getting drivers of service $serviceProviderId ");
+
   if (response.parsedData?.delivery_driver == null) {
     throw Exception(
         " 🚨🚨 Getting drivers of service $serviceProviderId exceptions 🚨🚨 \n ${response.exception}");

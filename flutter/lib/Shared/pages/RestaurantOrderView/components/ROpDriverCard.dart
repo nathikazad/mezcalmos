@@ -99,19 +99,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                           ),
                         ),
                         if (widget.order.inProcess() &&
-                            widget.order.dropoffDriver != null)
+                            widget.order.dropoffDriver != null &&
+                            showSet == true)
                           MezIconButton(
                             onTap: () async {
-                              final bool? forwardToMezCalmos =
-                                  await MezRouter.toNamed(getROpPickDriverRoute(
-                                      serviceProviderId:
-                                          widget.order.restaurantId,
-                                      orderId: widget
-                                          .order.deliveryOrderId!)) as bool?;
-                              if (forwardToMezCalmos != null &&
-                                  forwardToMezCalmos == false) {
-                                showSet.value = false;
-                              }
+                              navigateToPickDriver(
+                                  deliveryOrderId:
+                                      widget.order.deliveryOrderId!,
+                                  showForwardButton: true);
                             },
                             icon: Icons.edit,
                           ),
@@ -129,9 +124,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                                 .order.serviceProviderDropOffDriverChatId!,
                           ),
                       ])
-                    : (widget.order.selfDelivery)
-                        ? _selfDeliveryWidget()
-                        : _noDriverYet()),
+                    : _noDriverYet()),
           ),
         ],
       ),

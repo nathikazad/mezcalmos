@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
+import 'package:mezcalmos/MezAdminApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:sizer/sizer.dart';
@@ -29,7 +32,6 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
         children: [
           Obx(() => Column(
                 children: [
-                  Text(viewController.currentService.name.toString()),
                   viewController.orders.isNotEmpty
                       ? Column(
                           children: List.generate(viewController.orders.length,
@@ -37,9 +39,14 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                             return MinimalOrderCard(
                               order: viewController.orders[index],
                               onTap: () {
-                                // MezRouter.toNamed(getDvCompanyOrderRoute(
-                                //     viewController
-                                //         .currentOrders.value![index].id));
+                                if (viewController.currentService ==
+                                    ServiceProviderType.Delivery_company) {
+                                  MezRouter.toNamed(getDvCompanyOrderRoute(
+                                      viewController.orders[index].id));
+                                } else {
+                                  MezRouter.toNamed(getRestaurantOrderRoute(
+                                      viewController.orders[index].id));
+                                }
                               },
                             );
                           }),

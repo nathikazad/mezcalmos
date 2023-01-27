@@ -104,11 +104,16 @@ select_permissions:
       columns:
         - accepted_payments
         - approved
+        - creation_time
+        - customer_pickup
+        - delivery
+        - delivery_details_id
         - description_id
         - firebase_id
         - id
         - image
         - language_id
+        - location_id
         - name
         - open_status
         - schedule
@@ -170,11 +175,16 @@ select_permissions:
       columns:
         - accepted_payments
         - approved
+        - creation_time
+        - customer_pickup
+        - delivery
+        - delivery_details_id
         - description_id
         - firebase_id
         - id
         - image
         - language_id
+        - location_id
         - name
         - open_status
         - schedule
@@ -189,13 +199,17 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - accepted_payments
         - approved
         - description_id
+        - firebase_id
         - image
         - language_id
         - name
         - open_status
         - schedule
+        - self_delivery
+        - stripe_info
       filter:
         _exists:
           _table:
@@ -210,10 +224,12 @@ update_permissions:
       columns:
         - accepted_payments
         - approved
+        - delivery_details_id
         - description_id
         - firebase_id
         - image
         - language_id
+        - location_id
         - name
         - open_status
         - schedule

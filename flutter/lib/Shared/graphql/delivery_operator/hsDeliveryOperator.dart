@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/__generated/delivery_operator.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
@@ -37,11 +38,11 @@ Future<Operator?> get_delivery_operator({required int userId}) async {
 
 Stream<AgentStatus> listen_operator_status({required int operatorId}) {
   return _db.graphQLClient
-      .subscribe$restaurantOperatorStatusStream(
-          Options$Subscription$restaurantOperatorStatusStream(
-              variables: Variables$Subscription$restaurantOperatorStatusStream(
+      .subscribe$dvOperatorStatusStream(
+          Options$Subscription$dvOperatorStatusStream(
+              variables: Variables$Subscription$dvOperatorStatusStream(
                   userId: operatorId)))
-      .map((QueryResult<Subscription$restaurantOperatorStatusStream> event) {
+      .map((QueryResult<Subscription$dvOperatorStatusStream> event) {
     if (event.parsedData?.delivery_operator == null ||
         event.parsedData!.delivery_operator.isEmpty) {
       throw Exception(
@@ -50,4 +51,31 @@ Stream<AgentStatus> listen_operator_status({required int operatorId}) {
       return event.parsedData!.delivery_operator.first.status.toAgentStatus();
     }
   });
+}
+
+Future<List<Operator>?> get_delivery_company_operators(
+    {required int companyId, bool withCache = true}) async {
+  final QueryResult<Query$getCompanyOerators> res = await _db.graphQLClient
+      .query$getCompanyOerators(Options$Query$getCompanyOerators(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+          variables: Variables$Query$getCompanyOerators(companyId: companyId)));
+  if (res.parsedData?.delivery_operator == null) {
+    throwError(res.exception);
+  }
+  final List<Query$getCompanyOerators$delivery_operator> data =
+      res.parsedData!.delivery_operator;
+
+  return data
+      .map((Query$getCompanyOerators$delivery_operator opData) => Operator(
+          state: OperatorState(
+              owner: opData.owner,
+              operatorState: opData.status.toAgentStatus(),
+              serviceProviderId: null),
+          info: UserInfo(
+              hasuraId: opData.user.id,
+              image: opData.user.image,
+              name: opData.user.name),
+          operatorId: opData.id))
+      .toList();
 }

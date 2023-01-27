@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -154,6 +153,8 @@ class ServiceInfo extends UserInfo {
   Location location;
   int? descriptionId;
   LanguageMap? description;
+  
+
 
   ServiceInfo({
     required this.location,
@@ -167,7 +168,6 @@ class ServiceInfo extends UserInfo {
   }) : super(language: lang);
 
   factory ServiceInfo.fromData(data) {
-    mezDbgPrint(" 👋👋👋👋 Service info data $data");
     return ServiceInfo(
       location: Location.fromFirebaseData(data['location']),
       firebaseId: data['firebase_id'],

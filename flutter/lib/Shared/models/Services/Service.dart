@@ -11,6 +11,7 @@ abstract class Service {
   LanguageType primaryLanguage;
   LanguageType? secondaryLanguage;
   PaymentInfo? paymentInfo;
+  
   Service(
       {required this.info,
       this.schedule,
@@ -18,7 +19,7 @@ abstract class Service {
       required this.state,
       required this.primaryLanguage,
       this.secondaryLanguage,
-      required this.paymentInfo});
+      this.paymentInfo});
 }
 
 class ServiceState {

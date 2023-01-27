@@ -4,94 +4,104 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
     ["pages"]["ServicesView"];
 
-class AdminServiceCard extends StatelessWidget {
-  const AdminServiceCard({super.key, required this.serviceInfo});
+class AdminRestaurantServiceCard extends StatelessWidget {
+  const AdminRestaurantServiceCard({super.key, required this.serviceInfo});
   final UserInfo serviceInfo;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 5),
+      margin: const EdgeInsets.all(5),
       child: Container(
         margin: const EdgeInsets.all(8),
-        child: Column(
+        child: Row(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage:
-                      CachedNetworkImageProvider(serviceInfo.image),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(
-                    serviceInfo.name,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                ),
-                // Switch(
-                //   // TODO: Switch open @m66are
-                //   value: restaurant.state.approved,
-                //   onChanged: (bool v) {
-                //     Get.find<RestaurantsInfoController>().setOpen(
-                //         isAv: v,
-                //         restaurantId:
-                //             restaurant.info.hasuraId.toString().toString());
-                //   },
-                //   activeColor: primaryBlueColor,
-                // )
-              ],
+            Container(
+              width: 20.w,
+              height: 12.h,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: CachedNetworkImageProvider(serviceInfo.image))),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Flexible(
+                child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
-                  child: TextButton.icon(
-                    style: TextButton.styleFrom(
-                        foregroundColor: primaryBlueColor,
-                        backgroundColor: Colors.transparent,
-                        textStyle: Get.textTheme.bodyText1,
-                        padding: const EdgeInsets.all(3)),
-                    onPressed: () {
-                      // MezRouter.toNamed(
-                      //   getROpEditInfoRoute(
-                      //     restaurantId: restaurant.info.hasuraId,
-                      //   ),
-                      // );
-                    },
-                    icon: Icon(Icons.person),
-                    label: Text('${_i18n()["editProfile"]}'),
-                  ),
+                Row(
+                  children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(
+                        serviceInfo.name,
+                        style: Get.textTheme.bodyText1,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 18,
+                      child: Switch(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: true,
+                        onChanged: (bool v) {
+                          // Get.find<RestaurantsInfoController>().setOpen(
+                          //     isAv: v,
+                          //     restaurantId:
+                          //         restaurant.info.hasuraId.toString().toString());
+                        },
+                        activeColor: primaryBlueColor,
+                      ),
+                    )
+                  ],
                 ),
-                Flexible(
-                  child: TextButton.icon(
-                    onPressed: () {
-                      // MezRouter.toNamed(
-                      //   getROpMenuRoute(
-                      //     restaurantId: restaurant.info.hasuraId,
-                      //   ),
-                      // );
-                    },
-                    style: TextButton.styleFrom(
-                        foregroundColor: primaryBlueColor,
-                        backgroundColor: Colors.transparent,
-                        textStyle: Get.textTheme.bodyText1,
-                        padding: const EdgeInsets.all(3)),
-                    icon: Icon(Icons.settings),
-                    label: Text('${_i18n()["editAdmin"]}'),
-                  ),
+                Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    child: Text(serviceInfo.name)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _smallBtn(
+                        icon: Icons.flatware, label: "Menu", ontap: () {}),
+                    _smallBtn(
+                        icon: Icons.history, label: "Orders", ontap: () {}),
+                    _smallBtn(
+                        icon: Icons.food_bank, label: "Profile", ontap: () {}),
+                  ],
                 ),
               ],
+            ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  InkWell _smallBtn(
+      {required IconData icon,
+      required String label,
+      required Function()? ontap}) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(5),
+      onTap: ontap,
+      child: Ink(
+        padding: const EdgeInsets.all(3),
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 17,
+              color: primaryBlueColor,
+            ),
+            SizedBox(
+              width: 3,
+            ),
+            Text(
+              label,
+              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

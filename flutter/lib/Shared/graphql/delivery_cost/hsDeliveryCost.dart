@@ -5,42 +5,37 @@ import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/__generated/delivery_cost.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
 Future<DeliveryCost?> get_delivery_cost(
-    {required int serviceProviderId, bool withCache = true}) async {
+    {required int deliveryDetailsId, bool withCache = true}) async {
   mezDbgPrint("Getting dv cost =====🥹");
-  final QueryResult<Query$getDeliveryCostByServiceProviderId> response =
-      await _db.graphQLClient.query$getDeliveryCostByServiceProviderId(
-    Options$Query$getDeliveryCostByServiceProviderId(
+  final QueryResult<Query$getDeliveryCostById> response =
+      await _db.graphQLClient.query$getDeliveryCostById(
+    Options$Query$getDeliveryCostById(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$getDeliveryCostByServiceProviderId(
-          serviceProviderId: serviceProviderId),
+      variables: Variables$Query$getDeliveryCostById(
+          deliveryDetailsId: deliveryDetailsId),
     ),
   );
-  if (response.parsedData?.delivery_cost == null) {
+  if (response.parsedData?.delivery_details_by_pk == null) {
     throw Exception("🚨🚨 get_delivery_cost exceptions ${response.exception}");
   }
   mezDbgPrint(
-      "Getting dv cost =====🥹==>${response.parsedData?.delivery_cost}");
+      "Getting dv cost =====🥹==>${response.parsedData?.delivery_details_by_pk}");
 
-  if (response.parsedData!.delivery_cost.isNotEmpty) {
-    final Query$getDeliveryCostByServiceProviderId$delivery_cost data =
-        response.parsedData!.delivery_cost.first;
-    return DeliveryCost(
-        id: data.id,
-        serviceProviderType:
-            data.service_provider_type.toString().toServiceProviderType(),
-        serviceProviderId: serviceProviderId,
-        minimumCost: data.minimum_cost,
-        costPerKm: data.cost_per_km,
-        freeDeliveryMinimumCost: data.free_delivery_minimum_cost,
-        freeDeliveryKmRange: data.free_delivery_km_range);
-  }
-  return null;
+  final Query$getDeliveryCostById$delivery_details_by_pk data =
+      response.parsedData!.delivery_details_by_pk!;
+  return DeliveryCost(
+      id: data.id,
+      // serviceProviderType: providerType,
+      // serviceProviderId: serviceProviderId,
+      minimumCost: data.minimum_cost,
+      costPerKm: data.cost_per_km,
+      freeDeliveryMinimumCost: data.free_delivery_minimum_cost,
+      freeDeliveryKmRange: data.free_delivery_km_range);
 }
 
 Future<bool?> update_delivery_cost(
@@ -50,13 +45,13 @@ Future<bool?> update_delivery_cost(
       .mutate$updateDeliveryCost(Options$Mutation$updateDeliveryCost(
           variables: Variables$Mutation$updateDeliveryCost(
               id: deliveryCostId,
-              data: Input$delivery_cost_set_input(
+              data: Input$delivery_details_set_input(
                   cost_per_km: deliveryCost.costPerKm,
                   minimum_cost: deliveryCost.minimumCost,
                   free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
                   free_delivery_minimum_cost:
                       deliveryCost.freeDeliveryMinimumCost))));
-  if (response.parsedData?.update_delivery_cost_by_pk == null) {
+  if (response.parsedData?.update_delivery_details_by_pk == null) {
     mezDbgPrint("Response ===> $response");
     throw Exception(
         "🚨🚨 update_delivery_cost exceptions ${response.exception}");
@@ -69,19 +64,17 @@ Future<int?> add_delivery_cost({required DeliveryCost deliveryCost}) async {
   final QueryResult<Mutation$addDeliveryCost> response = await _db.graphQLClient
       .mutate$addDeliveryCost(Options$Mutation$addDeliveryCost(
           variables: Variables$Mutation$addDeliveryCost(
-              deliveryCost: Input$delivery_cost_insert_input(
-    service_provider_id: deliveryCost.serviceProviderId,
-    service_provider_type: deliveryCost.serviceProviderType.toFirebaseFormatString(),
+              deliveryCost: Input$delivery_details_insert_input(
     free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
     free_delivery_minimum_cost: deliveryCost.freeDeliveryMinimumCost,
     minimum_cost: deliveryCost.minimumCost,
     cost_per_km: deliveryCost.costPerKm,
   ))));
 
-  if (response.parsedData?.insert_delivery_cost_one == null) {
+  if (response.parsedData?.insert_delivery_details_one == null) {
     throw Exception("🚨🚨 add_delivery_cost exceptions ${response.exception}");
   }
-  return response.parsedData!.insert_delivery_cost_one!.id;
+  return response.parsedData!.insert_delivery_details_one!.id;
 
   // final Query$getDeliveryCostByServiceProviderId$delivery_cost data =
   //     response.parsedData!.delivery_cost.first;

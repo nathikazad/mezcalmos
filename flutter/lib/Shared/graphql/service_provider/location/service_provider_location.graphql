@@ -1,0 +1,11 @@
+# mutation updateServiceLocation($serviceId : Int!,$serviceType : String,$data : service_provider_location_set_input) {
+#   update_service_provider_location(where: {service_provider_id: {_eq: $serviceId}, service_provider_type: {_eq: $serviceType}}, _set: $data) {
+#     returning {
+#       address
+#       gps
+#       id
+     
+#     }
+#     affected_rows
+#   }
+# }

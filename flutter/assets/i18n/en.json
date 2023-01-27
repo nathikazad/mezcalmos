@@ -724,6 +724,16 @@
             }
         },
         "pages": {
+            "ServiceInfoEditView" : {
+                "name" : "Name",
+                "location" :"Location",
+                "description" :"Description in",
+                "info" : "Info",
+                "save" :"Save",
+                "saved" : "Saved",
+                "error" : "Error",
+                "savedSuccess" : "Your information has been successfully saved "
+            },
             "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No restaurant found on your operator",
                 "pleaseContactAdmin": "Please contact the admin: +5219541184711"

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DvOpProfileView extends StatefulWidget {
   const DvOpProfileView({super.key});
@@ -38,9 +45,29 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      _navigationLink(icon: Icons.person, title: "Info"),
+                      _navigationLink(
+                          icon: Icons.person,
+                          title: "Info",
+                          onClick: () {
+                            navigateToServiceInfoEdit(
+                                serviceProviderId:
+                                    Get.find<DeliveryOpAuthController>()
+                                        .companyId!,
+                                serviceProviderType:
+                                    ServiceProviderType.Delivery_company);
+                          }),
                       Divider(),
-                      _navigationLink(icon: Icons.people, title: "Operators"),
+                      _navigationLink(
+                          icon: Icons.people,
+                          title: "Operators",
+                          onClick: () {
+                            navigateToOperators(
+                                serviceProviderId:
+                                    Get.find<DeliveryOpAuthController>()
+                                        .companyId!,
+                                serviceProviderType:
+                                    ServiceProviderType.Delivery_company);
+                          }),
                     ],
                   ),
                 ),
@@ -60,12 +87,20 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                   child: Column(
                     children: [
                       _navigationLink(
-                          icon: Icons.privacy_tip, title: "Privacy Policy"),
+                          icon: Icons.privacy_tip,
+                          title: "Privacy Policy",
+                          onClick: () async {
+                            await launch(
+                                GetStorage().read(getxPrivacyPolicyLink));
+                          }),
                       Divider(),
                       _navigationLink(
                           icon: Icons.logout,
                           iconColor: Colors.red,
                           textColor: Colors.red,
+                          onClick: () async {
+                            await Get.find<AuthController>().signOut();
+                          },
                           title: "Logout"),
                     ],
                   ),
@@ -84,7 +119,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
       Widget? trailingWidget,
       Color? iconColor,
       Color? textColor,
-      Future<void> Function()? onClick}) {
+      Function()? onClick}) {
     return InkWell(
       borderRadius: BorderRadius.circular(5),
       onTap: () async {

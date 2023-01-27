@@ -487,18 +487,33 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -554,13 +569,6 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'restaurant'),
             alias: null,
             arguments: [],
@@ -595,18 +603,33 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -943,7 +966,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.payment_type,
     required this.pickup_address,
     required this.pickup_gps,
-    required this.order_type,
     this.restaurant,
     this.service_provider_id,
     this.delivery_driver,
@@ -988,7 +1010,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$payment_type = json['payment_type'];
     final l$pickup_address = json['pickup_address'];
     final l$pickup_gps = json['pickup_gps'];
-    final l$order_type = json['order_type'];
     final l$restaurant = json['restaurant'];
     final l$service_provider_id = json['service_provider_id'];
     final l$delivery_driver = json['delivery_driver'];
@@ -1037,7 +1058,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       payment_type: (l$payment_type as String),
       pickup_address: (l$pickup_address as String),
       pickup_gps: geographyFromJson(l$pickup_gps),
-      order_type: (l$order_type as String),
       restaurant: l$restaurant == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant.fromJson(
@@ -1109,8 +1129,6 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String pickup_address;
 
   final Geography pickup_gps;
-
-  final String order_type;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant;
 
@@ -1194,8 +1212,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     _resultData['pickup_address'] = l$pickup_address;
     final l$pickup_gps = pickup_gps;
     _resultData['pickup_gps'] = geographyToJson(l$pickup_gps);
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$service_provider_id = service_provider_id;
@@ -1250,7 +1266,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$payment_type = payment_type;
     final l$pickup_address = pickup_address;
     final l$pickup_gps = pickup_gps;
-    final l$order_type = order_type;
     final l$restaurant = restaurant;
     final l$service_provider_id = service_provider_id;
     final l$delivery_driver = delivery_driver;
@@ -1288,7 +1303,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$payment_type,
       l$pickup_address,
       l$pickup_gps,
-      l$order_type,
       l$restaurant,
       l$service_provider_id,
       l$delivery_driver,
@@ -1445,11 +1459,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     if (l$pickup_gps != lOther$pickup_gps) {
       return false;
     }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
-      return false;
-    }
     final l$restaurant = restaurant;
     final lOther$restaurant = other.restaurant;
     if (l$restaurant != lOther$restaurant) {
@@ -1558,7 +1567,6 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? payment_type,
     String? pickup_address,
     Geography? pickup_gps,
-    String? order_type,
     Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant,
     int? service_provider_id,
     Query$get_driver_order$delivery_order_by_pk$delivery_driver?
@@ -1622,7 +1630,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? payment_type = _undefined,
     Object? pickup_address = _undefined,
     Object? pickup_gps = _undefined,
-    Object? order_type = _undefined,
     Object? restaurant = _undefined,
     Object? service_provider_id = _undefined,
     Object? delivery_driver = _undefined,
@@ -1715,9 +1722,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         pickup_gps: pickup_gps == _undefined || pickup_gps == null
             ? _instance.pickup_gps
             : (pickup_gps as Geography),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant
@@ -1837,7 +1841,6 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? payment_type,
     String? pickup_address,
     Geography? pickup_gps,
-    String? order_type,
     Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant,
     int? service_provider_id,
     Query$get_driver_order$delivery_order_by_pk$delivery_driver?
@@ -2277,8 +2280,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     required this.id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.$__typename,
   });
 
@@ -2288,16 +2290,16 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
       firebase_id: (l$firebase_id as String?),
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2310,9 +2312,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      location;
 
   final String $__typename;
 
@@ -2326,10 +2327,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2341,16 +2340,14 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     final l$id = id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$firebase_id,
       l$id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -2385,14 +2382,9 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2434,10 +2426,12 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     int? id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+        location,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
@@ -2464,8 +2458,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -2480,16 +2473,20 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
@@ -2507,8 +2504,177 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_o
     int? id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
+  Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+    on Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+    Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+        instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -2520,8 +2686,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -2533,8 +2698,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -2543,8 +2707,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location: Query$get_driver_order$delivery_order_by_pk$restaurant$location
+          .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -2559,9 +2723,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_driver_order$delivery_order_by_pk$restaurant$location
+      location;
 
   final String language_id;
 
@@ -2579,10 +2742,8 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -2598,8 +2759,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -2608,8 +2768,7 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -2645,14 +2804,9 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -2701,12 +2855,13 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant<
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_driver_order$delivery_order_by_pk$restaurant$location? location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<TRes>
+      get location;
 }
 
 class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
@@ -2729,8 +2884,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -2746,12 +2900,10 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_driver_order$delivery_order_by_pk$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -2762,6 +2914,12 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<
@@ -2778,10 +2936,174 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_driver_order$delivery_order_by_pk$restaurant$location? location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<TRes>
+      get location =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_driver_order$delivery_order_by_pk$restaurant$location {
+  Query$get_driver_order$delivery_order_by_pk$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_driver_order$delivery_order_by_pk$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_driver_order$delivery_order_by_pk$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_driver_order$delivery_order_by_pk$restaurant$location
+    on Query$get_driver_order$delivery_order_by_pk$restaurant$location {
+  CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+          Query$get_driver_order$delivery_order_by_pk$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+    Query$get_driver_order$delivery_order_by_pk$restaurant$location instance,
+    TRes Function(
+            Query$get_driver_order$delivery_order_by_pk$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location;
+
+  factory CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_driver_order$delivery_order_by_pk$restaurant$location
+      _instance;
+
+  final TRes Function(
+      Query$get_driver_order$delivery_order_by_pk$restaurant$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_driver_order$delivery_order_by_pk$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -3923,18 +4245,33 @@ const documentNodeSubscriptionlisten_on_driver_order =
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'location_gps'),
+                    name: NameNode(value: 'location'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location_text'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'gps'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'address'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -4024,13 +4361,6 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 selectionSet: null,
               ),
             ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'order_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: 'dropoff_address'),
@@ -4144,18 +4474,33 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -4398,7 +4743,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     this.customer_review_by_driver_id,
     required this.delivery_cost,
     this.delivery_company,
-    required this.order_type,
     required this.dropoff_address,
     required this.dropoff_gps,
     this.estimated_arrival_at_dropoff_time,
@@ -4441,7 +4785,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_company = json['delivery_company'];
-    final l$order_type = json['order_type'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$estimated_arrival_at_dropoff_time =
@@ -4493,7 +4836,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
           ? null
           : Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
               .fromJson((l$delivery_company as Map<String, dynamic>)),
-      order_type: (l$order_type as String),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       estimated_arrival_at_dropoff_time:
@@ -4556,8 +4898,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
 
   final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
-
-  final String order_type;
 
   final String dropoff_address;
 
@@ -4638,8 +4978,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
-    final l$order_type = order_type;
-    _resultData['order_type'] = l$order_type;
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -4707,7 +5045,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
     final l$delivery_cost = delivery_cost;
     final l$delivery_company = delivery_company;
-    final l$order_type = order_type;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     final l$estimated_arrival_at_dropoff_time =
@@ -4746,7 +5083,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$customer_review_by_driver_id,
       l$delivery_cost,
       l$delivery_company,
-      l$order_type,
       l$dropoff_address,
       l$dropoff_gps,
       l$estimated_arrival_at_dropoff_time,
@@ -4855,11 +5191,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$delivery_company = delivery_company;
     final lOther$delivery_company = other.delivery_company;
     if (l$delivery_company != lOther$delivery_company) {
-      return false;
-    }
-    final l$order_type = order_type;
-    final lOther$order_type = other.order_type;
-    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -5021,7 +5352,6 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     double? delivery_cost,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
-    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -5089,7 +5419,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? customer_review_by_driver_id = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery_company = _undefined,
-    Object? order_type = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
     Object? estimated_arrival_at_dropoff_time = _undefined,
@@ -5162,9 +5491,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
             ? _instance.delivery_company
             : (delivery_company
                 as Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?),
-        order_type: order_type == _undefined || order_type == null
-            ? _instance.order_type
-            : (order_type as String),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -5309,7 +5635,6 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     double? delivery_cost,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
-    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     String? estimated_arrival_at_dropoff_time,
@@ -5936,8 +6261,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     required this.id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.$__typename,
   });
 
@@ -5947,16 +6271,16 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
       firebase_id: (l$firebase_id as String?),
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -5969,9 +6293,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      location;
 
   final String $__typename;
 
@@ -5985,10 +6308,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -6000,16 +6321,14 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     final l$id = id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$firebase_id,
       l$id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$$__typename,
     ]);
   }
@@ -6044,14 +6363,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -6093,10 +6407,12 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+        location,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
@@ -6123,8 +6439,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -6139,16 +6454,20 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant<
@@ -6166,8 +6485,177 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     int? id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -6383,8 +6871,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -6396,8 +6883,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -6406,8 +6892,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -6422,9 +6909,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+      location;
 
   final String language_id;
 
@@ -6442,10 +6928,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -6461,8 +6945,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -6471,8 +6954,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -6509,14 +6991,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -6568,12 +7045,14 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant<
@@ -6600,8 +7079,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -6617,12 +7095,10 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -6633,6 +7109,12 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant<
@@ -6650,10 +7132,179 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+              .stub(_res);
+}
+
+class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location {
+  Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+    on Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location {
+  CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+    Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location;
+
+  factory CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -7463,18 +8114,33 @@ const documentNodeSubscriptionlisten_on_inprocess_driver_orders =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -8250,8 +8916,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -8263,8 +8928,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -8273,8 +8937,9 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -8289,9 +8954,8 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -8309,10 +8973,8 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -8328,8 +8990,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -8338,8 +8999,7 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -8376,14 +9036,9 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -8435,12 +9090,14 @@ abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
@@ -8467,8 +9124,7 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -8485,12 +9141,10 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -8501,6 +9155,12 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant<
@@ -8518,10 +9178,179 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location {
+  Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+    on Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location {
+  CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+    Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -8949,18 +9778,33 @@ const documentNodeQueryget_past_driver_orders = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -9722,8 +10566,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -9735,8 +10578,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -9745,8 +10587,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location: Query$get_past_driver_orders$delivery_order$restaurant$location
+          .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -9761,9 +10603,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_past_driver_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -9781,10 +10622,8 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -9800,8 +10639,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -9810,8 +10648,7 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -9847,14 +10684,9 @@ class Query$get_past_driver_orders$delivery_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -9903,12 +10735,13 @@ abstract class CopyWith$Query$get_past_driver_orders$delivery_order$restaurant<
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_past_driver_orders$delivery_order$restaurant$location? location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<TRes>
+      get location;
 }
 
 class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
@@ -9931,8 +10764,7 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -9948,12 +10780,10 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_past_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -9964,6 +10794,12 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant<
@@ -9980,10 +10816,174 @@ class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant<
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_past_driver_orders$delivery_order$restaurant$location? location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<TRes>
+      get location =>
+          CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_past_driver_orders$delivery_order$restaurant$location {
+  Query$get_past_driver_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_past_driver_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_past_driver_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_past_driver_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_past_driver_orders$delivery_order$restaurant$location
+    on Query$get_past_driver_orders$delivery_order$restaurant$location {
+  CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<
+          Query$get_past_driver_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location(
+    Query$get_past_driver_orders$delivery_order$restaurant$location instance,
+    TRes Function(
+            Query$get_past_driver_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_past_driver_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+      Query$get_past_driver_orders$delivery_order$restaurant$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_past_driver_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_past_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -10413,18 +11413,33 @@ const documentNodeQueryget_inprocess_driver_orders = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -11195,8 +12210,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -11208,8 +12222,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -11218,8 +12231,9 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -11234,9 +12248,8 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -11254,10 +12267,8 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -11273,8 +12284,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -11283,8 +12293,7 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -11321,14 +12330,9 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -11378,12 +12382,14 @@ abstract class CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaur
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_inprocess_driver_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
@@ -11408,8 +12414,7 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -11425,12 +12430,10 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_inprocess_driver_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -11441,6 +12444,12 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant<
@@ -11458,10 +12467,179 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaur
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_inprocess_driver_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_inprocess_driver_orders$delivery_order$restaurant$location {
+  Query$get_inprocess_driver_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_inprocess_driver_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_inprocess_driver_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+    on Query$get_inprocess_driver_orders$delivery_order$restaurant$location {
+  CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+          Query$get_inprocess_driver_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+    Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+        instance,
+    TRes Function(
+            Query$get_inprocess_driver_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_inprocess_driver_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$get_inprocess_driver_orders$delivery_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_inprocess_driver_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -11924,18 +13102,33 @@ const documentNodeSubscriptionlisten_delivery_company_current_orders =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -12725,8 +13918,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -12738,8 +13930,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -12748,8 +13939,9 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -12764,9 +13956,8 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -12784,10 +13975,8 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -12803,8 +13992,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -12813,8 +14001,7 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -12851,14 +14038,9 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -12910,12 +14092,14 @@ abstract class CopyWith$Subscription$listen_delivery_company_current_orders$deli
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant<
@@ -12942,8 +14126,7 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -12960,12 +14143,10 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -12976,6 +14157,12 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant<
@@ -12993,10 +14180,179 @@ class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$deli
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location {
+  Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+    on Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location {
+  CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+          Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+    Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+        instance,
+    TRes Function(
+            Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -13436,18 +14792,33 @@ const documentNodeQueryget_delivery_company_past_orders =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -14237,8 +15608,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -14250,8 +15620,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -14260,8 +15629,9 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -14276,9 +15646,8 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -14296,10 +15665,8 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -14315,8 +15682,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -14325,8 +15691,7 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -14363,14 +15728,9 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -14421,12 +15781,14 @@ abstract class CopyWith$Query$get_delivery_company_past_orders$delivery_order$re
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_delivery_company_past_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant<
@@ -14452,8 +15814,7 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -14469,12 +15830,10 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_delivery_company_past_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -14485,6 +15844,12 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant<
@@ -14502,10 +15867,179 @@ class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$re
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_delivery_company_past_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_delivery_company_past_orders$delivery_order$restaurant$location {
+  Query$get_delivery_company_past_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_delivery_company_past_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_delivery_company_past_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+    on Query$get_delivery_company_past_orders$delivery_order$restaurant$location {
+  CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+          Query$get_delivery_company_past_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+    Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+        instance,
+    TRes Function(
+            Query$get_delivery_company_past_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_delivery_company_past_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$get_delivery_company_past_orders$delivery_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_delivery_company_past_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;
@@ -14823,7 +16357,7 @@ const documentNodeQueryget_delivery_company_inprocess_orders =
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
-                    value: BooleanValueNode(value: false),
+                    value: BooleanValueNode(value: true),
                   )
                 ]),
               ),
@@ -14953,18 +16487,33 @@ const documentNodeQueryget_delivery_company_inprocess_orders =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'location_gps'),
+                name: NameNode(value: 'location'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'location_text'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'language_id'),
@@ -15772,8 +17321,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     this.firebase_id,
     required this.image,
     required this.name,
-    required this.location_gps,
-    required this.location_text,
+    required this.location,
     required this.language_id,
     required this.open_status,
     required this.$__typename,
@@ -15785,8 +17333,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
     final l$name = json['name'];
-    final l$location_gps = json['location_gps'];
-    final l$location_text = json['location_text'];
+    final l$location = json['location'];
     final l$language_id = json['language_id'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -15795,8 +17342,9 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       name: (l$name as String),
-      location_gps: geographyFromJson(l$location_gps),
-      location_text: (l$location_text as String),
+      location:
+          Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+              .fromJson((l$location as Map<String, dynamic>)),
       language_id: (l$language_id as String),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -15811,9 +17359,8 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
 
   final String name;
 
-  final Geography location_gps;
-
-  final String location_text;
+  final Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+      location;
 
   final String language_id;
 
@@ -15831,10 +17378,8 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     _resultData['image'] = l$image;
     final l$name = name;
     _resultData['name'] = l$name;
-    final l$location_gps = location_gps;
-    _resultData['location_gps'] = geographyToJson(l$location_gps);
-    final l$location_text = location_text;
-    _resultData['location_text'] = l$location_text;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
     final l$language_id = language_id;
     _resultData['language_id'] = l$language_id;
     final l$open_status = open_status;
@@ -15850,8 +17395,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     final l$firebase_id = firebase_id;
     final l$image = image;
     final l$name = name;
-    final l$location_gps = location_gps;
-    final l$location_text = location_text;
+    final l$location = location;
     final l$language_id = language_id;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -15860,8 +17404,7 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
       l$firebase_id,
       l$image,
       l$name,
-      l$location_gps,
-      l$location_text,
+      l$location,
       l$language_id,
       l$open_status,
       l$$__typename,
@@ -15898,14 +17441,9 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant {
     if (l$name != lOther$name) {
       return false;
     }
-    final l$location_gps = location_gps;
-    final lOther$location_gps = other.location_gps;
-    if (l$location_gps != lOther$location_gps) {
-      return false;
-    }
-    final l$location_text = location_text;
-    final lOther$location_text = other.location_text;
-    if (l$location_text != lOther$location_text) {
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
       return false;
     }
     final l$language_id = language_id;
@@ -15957,12 +17495,14 @@ abstract class CopyWith$Query$get_delivery_company_inprocess_orders$delivery_ord
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+      TRes> get location;
 }
 
 class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant<
@@ -15989,8 +17529,7 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
     Object? firebase_id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
-    Object? location_gps = _undefined,
-    Object? location_text = _undefined,
+    Object? location = _undefined,
     Object? language_id = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -16007,12 +17546,10 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        location_gps: location_gps == _undefined || location_gps == null
-            ? _instance.location_gps
-            : (location_gps as Geography),
-        location_text: location_text == _undefined || location_text == null
-            ? _instance.location_text
-            : (location_text as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -16023,6 +17560,12 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+        local$location, (e) => call(location: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant<
@@ -16040,10 +17583,179 @@ class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_ord
     String? firebase_id,
     String? image,
     String? name,
-    Geography? location_gps,
-    String? location_text,
+    Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location?
+        location,
     String? language_id,
     String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+              .stub(_res);
+}
+
+class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location {
+  Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location({
+    required this.gps,
+    this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String? address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+    on Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location {
+  CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+          Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location>
+      get copyWith =>
+          CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+    TRes> {
+  factory CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+    Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+        instance,
+    TRes Function(
+            Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location)
+        then,
+  ) = _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location;
+
+  factory CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location
+      _instance;
+
+  final TRes Function(
+          Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address:
+            address == _undefined ? _instance.address : (address as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+        TRes>
+    implements
+        CopyWith$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
     String? $__typename,
   }) =>
       _res;

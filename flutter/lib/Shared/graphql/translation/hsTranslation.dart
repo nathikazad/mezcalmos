@@ -58,7 +58,7 @@ Future<int> insert_translation({
       ),
     ),
   ));
-  if (response.parsedData?.insert_translation_one?.id == null) {
+  if (response.parsedData?.insert_translation_one == null) {
     throw Exception(
         "🚨🚨🚨 Hasura translation insert exception =>${response.exception}");
   } else {

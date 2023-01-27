@@ -15,8 +15,8 @@ query admin_get_restaurants {
     id
     image
     language_id
-    location_gps
-    location_text
+   location {  gps
+    address}   
     name
     open_status
     service_provider_type

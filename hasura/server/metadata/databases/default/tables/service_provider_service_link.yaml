@@ -51,6 +51,26 @@ select_permissions:
           delivery_operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - customer_deep_link
+        - customer_qr_image_link
+        - driver_deep_link
+        - driver_qr_image_link
+        - operator_deep_link
+        - operator_qr_image_link
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

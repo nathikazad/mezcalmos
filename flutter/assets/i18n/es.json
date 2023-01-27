@@ -749,6 +749,16 @@
             }
         },
         "pages": {
+            "ServiceInfoEditView" : {
+                "name" : "Nombre",
+                "location" :"Localización",
+                "description" :"Descripción",
+                "info" : "Información",
+                "save" :"Salvar",
+                "saved" : "Salvado",
+                "error" : "error",
+                "savedSuccess" : "Su información ha sido guardada con éxito"
+            },
             "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
                 "pleaseContactAdmin": "Póngase en contacto con el administrador: +5219541184711"
