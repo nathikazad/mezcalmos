@@ -27,9 +27,9 @@ export interface CheckoutRequest {
   customerLocation: Location,
   deliveryCost: number,
   paymentType: PaymentType,
-  notes: string,
+  notes?: string,
   restaurantId: number,
-  deliveryType: DeliveryType,
+  deliveryType?: DeliveryType,
   tripDistance: number,
   tripDuration: number,
   tripPolyline: string,
@@ -87,7 +87,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     console.log("+ Items ==> " , customerCart.items);
 
     let deliveryOrder: DeliveryOrder = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
-
+    console.log("🤑🤑🤑🤑🤑🤑🤑🤑")
     setOrderChatInfo(restaurantOrder, restaurant, deliveryOrder, customer);
 
     notifyAdmins(mezAdmins, restaurantOrder.orderId!, restaurant);

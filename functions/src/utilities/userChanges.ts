@@ -24,7 +24,7 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
       }
     ]
   })
-  await addHasuraClaim(user.uid);
+  await addHasuraClaim(user.uid, null);
 });
 
 // export async function deleteAccount(userId: string, data: any) {
@@ -39,7 +39,7 @@ export const processSignUp = functions.auth.user().onCreate(async user => {
 
 
 
-export async function addHasuraClaim(uid: string | undefined) {
+export async function addHasuraClaim(uid: string | undefined, _:null) {
   try {
     console.log("[+] User Id ===> ", uid);
     functions.logger.info("[+] User Id ===> ", uid);

@@ -20,10 +20,7 @@ export interface AuthorizeDetails {
   approved: boolean;
 }
 
-export async function authorizeRestaurantOperator(
-  ownerUserId: number,
-  authorizeDetails: AuthorizeDetails
-) {
+export async function authorizeRestaurantOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
   try {
     console.log("Starting authorize restaurant operator");
     let operator = await getRestaurantOperator(authorizeDetails.newOperatorId);

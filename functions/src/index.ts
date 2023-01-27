@@ -48,12 +48,12 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 export const user = {
   processSignUp: userChanges.processSignUp,
   // deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data))
-  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid))
+  addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
 }
 
 export const otp = {
-  sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(data)),
-  getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(data)),
+  sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(null, data)),
+  getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
 
 export const stripe = {
@@ -157,7 +157,7 @@ function authenticatedCall(func:AuthenticatedFunction) {
     let firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     console.log("Custom claims",firebaseUser.customClaims)
     if(firebaseUser.customClaims!["https://hasura.io/jwt/claims"]["x-hasura-user-id"] == null) {
-      await userChanges.addHasuraClaim(context.auth?.uid);
+      await userChanges.addHasuraClaim(context.auth?.uid, null);
       firebaseUser = await firebase.auth().getUser(context.auth!.uid)
     }
    

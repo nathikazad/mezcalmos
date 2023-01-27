@@ -19,7 +19,11 @@ import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDeli
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 
 // Customer Canceling
-export async function cancelOrderFromCustomer(userId: number, data: any) {
+interface CancelOrderDetails {
+  orderId: number
+}
+
+export async function cancelOrderFromCustomer(userId: number, data: CancelOrderDetails) {
   try {
 
     if (data.orderId == null) {

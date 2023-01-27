@@ -13,7 +13,7 @@ interface verifyOtpInterface {
   OTPCode: string
 }
 
-export async function sendOTPForLogin(data: sendOtpInterface): Promise<ServerResponse> {
+export async function sendOTPForLogin(_:any, data: sendOtpInterface): Promise<ServerResponse> {
   if (!data.phoneNumber) {
     return {
       status: ServerResponseStatus.Error,
@@ -58,7 +58,7 @@ export async function sendOTPForLogin(data: sendOtpInterface): Promise<ServerRes
   }
 }
 
-export async function getAuthUsingOTP(data: verifyOtpInterface) {
+export async function getAuthUsingOTP(_:any, data: verifyOtpInterface) {
   if (!data.phoneNumber || !data.OTPCode) {
     return {
       status: "Error",
