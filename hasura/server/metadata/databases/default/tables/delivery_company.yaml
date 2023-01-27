@@ -49,13 +49,15 @@ select_permissions:
     permission:
       columns:
         - approved
-        - creation_time
+        - delivery_details_id
         - description_id
         - id
+        - location_id
         - image
         - name
         - open_status
         - service_provider_type
+        - creation_time
       filter:
         _exists:
           _table:

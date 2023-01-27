@@ -45,6 +45,7 @@ insert_permissions:
         - category_id
         - cost
         - description_id
+        - image
         - item_type
         - name_id
         - position

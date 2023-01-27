@@ -3,12 +3,15 @@ import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -18,6 +21,7 @@ const String kCurrentDeliveryOrderInfoRoute = '/currentDeliveryOrders/:orderId';
 const String kPastOrdersList = "/pastDeliveryOrders";
 const String kPastDeliveryOrderInfoRoute = '/pastDeliveryOrders/:orderId';
 const String kServiceProvidersListScreen = '/serviceProvidersListScreen';
+const String kServiceOrders = '/serviceOrders/:serviceProviderId';
 const String kNotAuthorizedAdmin = "/unauthorized";
 const String kDeliveryCostSetter = "/deliveryCostSetter";
 const String kMenuView = '/menu/:restaurantId';
@@ -47,6 +51,7 @@ class XRouter {
           name: kHomeRoute,
           page: () => MezAdminWrapper(),
         ),
+        GetPage(name: kServiceOrders, page: () => AdminServiceOrdersView()),
         GetPage(
           name: kMenuView,
           page: () => ROpMenuView(),
@@ -77,6 +82,19 @@ class XRouter {
         ),
       ] +
       SharedRouter.sharedRoutes;
+}
+
+void getserviceOrdersRoute({
+  required int serviceProviderId,
+  required ServiceProviderType serviceProviderType,
+  required String serviceName,
+}) {
+  final String route =
+      kServiceOrders.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  MezRouter.toNamed(route, arguments: {
+    "serviceProviderType": serviceProviderType,
+    "serviceName": serviceName,
+  });
 }
 
 String getRestaurantOrderRoute(int orderId) {

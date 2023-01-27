@@ -19,16 +19,8 @@ subscription admin_listen_on_orders($serviceProviderType: String!,$inProccess: B
         image
       }
     }
-    restaurant {
-      id
-      firebase_id
-      image
-      name
-    location { gps
-      address}
-      language_id
-      open_status
-    }
+       service_provider_id
+    service_provider_type
   }
 }
 query admin_get__orders($serviceProviderType: String!,$inProccess: Boolean!) {
@@ -50,15 +42,32 @@ query admin_get__orders($serviceProviderType: String!,$inProccess: Boolean!) {
         image
       }
     }
-    restaurant {
-      id
-      firebase_id
-      image
-      name
-    location { gps
-      address}
-      language_id
-      open_status
+      service_provider_id
+    service_provider_type
+  }
+}
+query admin_get_service__orders($serviceProviderType: String!,$serviceProviderId: Int!,$inProccess: Boolean!) {
+  delivery_order(
+    where: {
+    service_provider_type: {_eq: $serviceProviderType},
+    service_provider_id: {_eq: $serviceProviderId},
+      in_process: { _eq: $inProccess }
     }
+  ) {
+    id
+    order_time
+    status
+    package_cost
+    dropoff_address
+    dropoff_gps
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    service_provider_id
+    service_provider_type
+  
   }
 }

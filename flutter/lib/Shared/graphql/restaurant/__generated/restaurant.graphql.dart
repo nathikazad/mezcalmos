@@ -2736,6 +2736,13 @@ const documentNodeQuerygetOneRestaurant = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'location_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_details_id'),
             alias: null,
             arguments: [],
@@ -3073,6 +3080,7 @@ extension ClientExtension$Query$getOneRestaurant on graphql.GraphQLClient {
 class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   Query$getOneRestaurant$restaurant_restaurant_by_pk({
     required this.id,
+    required this.location_id,
     this.delivery_details_id,
     this.delivery_details_of_deliverer,
     this.firebase_id,
@@ -3094,6 +3102,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   factory Query$getOneRestaurant$restaurant_restaurant_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$location_id = json['location_id'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
@@ -3113,6 +3122,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk(
       id: (l$id as int),
+      location_id: (l$location_id as int),
       delivery_details_id: (l$delivery_details_id as int?),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
@@ -3144,6 +3154,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   }
 
   final int id;
+
+  final int location_id;
 
   final int? delivery_details_id;
 
@@ -3184,6 +3196,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$location_id = location_id;
+    _resultData['location_id'] = l$location_id;
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
@@ -3225,6 +3239,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
   @override
   int get hashCode {
     final l$id = id;
+    final l$location_id = location_id;
     final l$delivery_details_id = delivery_details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$firebase_id = firebase_id;
@@ -3243,6 +3258,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$location_id,
       l$delivery_details_id,
       l$delivery_details_of_deliverer == null
           ? null
@@ -3276,6 +3292,11 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$location_id = location_id;
+    final lOther$location_id = other.location_id;
+    if (l$location_id != lOther$location_id) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -3404,6 +3425,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk<
 
   TRes call({
     int? id,
+    int? location_id,
     int? delivery_details_id,
     List<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
@@ -3450,6 +3472,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? location_id = _undefined,
     Object? delivery_details_id = _undefined,
     Object? delivery_details_of_deliverer = _undefined,
     Object? firebase_id = _undefined,
@@ -3469,6 +3492,9 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
   }) =>
       _then(Query$getOneRestaurant$restaurant_restaurant_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        location_id: location_id == _undefined || location_id == null
+            ? _instance.location_id
+            : (location_id as int),
         delivery_details_id: delivery_details_id == _undefined
             ? _instance.delivery_details_id
             : (delivery_details_id as int?),
@@ -3563,6 +3589,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk<TRes>
 
   call({
     int? id,
+    int? location_id,
     int? delivery_details_id,
     List<Query$getOneRestaurant$restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
@@ -8156,6 +8183,13 @@ const documentNodeMutationupdateRestaurantInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'location_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_details_of_deliverer'),
             alias: null,
             arguments: [],
@@ -8465,6 +8499,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk({
     required this.id,
     this.firebase_id,
+    required this.location_id,
     this.delivery_details_of_deliverer,
     required this.image,
     required this.language_id,
@@ -8483,6 +8518,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
+    final l$location_id = json['location_id'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
     final l$image = json['image'];
@@ -8499,6 +8535,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk(
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
+      location_id: (l$location_id as int),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
           ?.map((e) =>
@@ -8528,6 +8565,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   final int id;
 
   final String? firebase_id;
+
+  final int location_id;
 
   final List<
           Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
@@ -8563,6 +8602,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$location_id = location_id;
+    _resultData['location_id'] = l$location_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     _resultData['delivery_details_of_deliverer'] =
         l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
@@ -8597,6 +8638,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
   int get hashCode {
     final l$id = id;
     final l$firebase_id = firebase_id;
+    final l$location_id = location_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$image = image;
     final l$language_id = language_id;
@@ -8612,6 +8654,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     return Object.hashAll([
       l$id,
       l$firebase_id,
+      l$location_id,
       l$delivery_details_of_deliverer == null
           ? null
           : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
@@ -8647,6 +8690,11 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk {
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$location_id = location_id;
+    final lOther$location_id = other.location_id;
+    if (l$location_id != lOther$location_id) {
       return false;
     }
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
@@ -8758,6 +8806,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
   TRes call({
     int? id,
     String? firebase_id,
+    int? location_id,
     List<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
     String? image,
@@ -8807,6 +8856,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
   TRes call({
     Object? id = _undefined,
     Object? firebase_id = _undefined,
+    Object? location_id = _undefined,
     Object? delivery_details_of_deliverer = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
@@ -8825,6 +8875,9 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        location_id: location_id == _undefined || location_id == null
+            ? _instance.location_id
+            : (location_id as int),
         delivery_details_of_deliverer: delivery_details_of_deliverer ==
                 _undefined
             ? _instance.delivery_details_of_deliverer
@@ -8910,6 +8963,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
   call({
     int? id,
     String? firebase_id,
+    int? location_id,
     List<Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
     String? image,

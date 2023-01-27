@@ -1,44 +1,78 @@
 import 'package:get/get.dart';
-import 'package:graphql/src/core/query_result.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/__generated/service_providers.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<List<ServiceInfo>> admin_get_restaurants() async {
+Future<List<Restaurant>> admin_get_restaurants({bool withCache = true}) async {
   final QueryResult<Query$admin_get_restaurants> result = await _hasuraDb
       .graphQLClient
-      .query$admin_get_restaurants(Options$Query$admin_get_restaurants());
+      .query$admin_get_restaurants(Options$Query$admin_get_restaurants(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.restaurant_restaurant == null) {
     throwError(result.exception);
   }
   final List<Query$admin_get_restaurants$restaurant_restaurant> data =
       result.parsedData!.restaurant_restaurant;
-  return data
+  final List<Restaurant> returnedList = data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
-          ServiceInfo(
-              location: Location.fromHasura(
-                  data.location!.gps, data.location!.address),
-              hasuraId: data.id,
-              image: data.image,
-              name: data.name))
+          Restaurant(
+              userInfo: ServiceInfo(
+                  location: Location.fromHasura(
+                      data.location.gps, data.location.address),
+                  hasuraId: data.id,
+                  image: data.image,
+                  name: data.name),
+              paymentInfo: null,
+              primaryLanguage: LanguageType.EN,
+              restaurantState: ServiceState(
+                  data.open_status.toServiceStatus(), data.approved),
+              schedule: null))
       .toList();
+  returnedList.sort((Restaurant a, Restaurant b) =>
+      a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
 }
 
-Future<List<UserInfo>> admin_get_dv_companies() async {
+Future<List<DeliveryCompany>> admin_get_dv_companies(
+    {bool withCache = true}) async {
   final QueryResult<Query$admin_get_dv_companies> result = await _hasuraDb
       .graphQLClient
-      .query$admin_get_dv_companies(Options$Query$admin_get_dv_companies());
+      .query$admin_get_dv_companies(Options$Query$admin_get_dv_companies(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.delivery_company == null) {
     throwError(result.exception);
   }
   final List<Query$admin_get_dv_companies$delivery_company> data =
       result.parsedData!.delivery_company;
-  return data
+  mezDbgPrint("Getting companies ============>>>👋 ===>${result.data}");
+  final List<DeliveryCompany> returnedList = data
       .map((Query$admin_get_dv_companies$delivery_company data) =>
-          UserInfo(hasuraId: data.id, image: data.image, name: data.name))
+          DeliveryCompany(
+              deliveryDetailsId: data.delivery_details_id,
+              info: ServiceInfo(
+                  hasuraId: data.id,
+                  image: data.image,
+                  name: data.name,
+                  location: Location.fromHasura(
+                      data.location.gps, data.location.address)),
+              creationTime: DateTime.parse(data.creation_time),
+              primaryLanguage: LanguageType.EN,
+              state: ServiceState(
+                  data.open_status.toServiceStatus(), data.approved)))
       .toList();
+  returnedList.sort((DeliveryCompany a, DeliveryCompany b) =>
+      a.info.hasuraId.compareTo(b.info.hasuraId));
+  return returnedList;
 }

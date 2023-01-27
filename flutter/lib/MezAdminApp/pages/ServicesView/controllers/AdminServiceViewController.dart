@@ -1,34 +1,62 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/hsAdminServiceProviders.dart';
+import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class AdminServicesViewController {
   late AdminTabsViewController adminTabsViewController;
   // obs //
-  Rxn<List<ServiceInfo>> _restaurants = Rxn();
-  Rxn<List<UserInfo>> _dvCompanies = Rxn();
+  Rxn<List<Restaurant>> _restaurants = Rxn();
+  Rxn<List<DeliveryCompany>> _dvCompanies = Rxn();
 // getters //
+  bool get hasData => _dvCompanies.value != null && _restaurants.value != null;
   ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
-  List<UserInfo> get services {
-    switch (currentService) {
-      case ServiceProviderType.Restaurant:
-        return _restaurants.value ?? [];
-      case ServiceProviderType.Delivery_company:
-        return _dvCompanies.value ?? [];
-
-      default:
-        return [];
-    }
-  }
+  List<Restaurant>? get restaurants => _restaurants.value;
+  List<DeliveryCompany>? get companies => _dvCompanies.value;
 
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    _restaurants.value = await admin_get_restaurants();
+    await _fetchRestaurants();
 
-    _dvCompanies.value = await admin_get_dv_companies();
+    await _fetchCompanies();
+  }
+
+  Future<void> _fetchCompanies() async {
+    _dvCompanies.value?.clear();
+    _dvCompanies.value = await admin_get_dv_companies(withCache: false) ?? [];
+  }
+
+  Future<void> _fetchRestaurants() async {
+    _restaurants.value?.clear();
+    _restaurants.value = await admin_get_restaurants(withCache: false) ?? [];
+  }
+
+  Future<void> switchServiceStatus(
+      {required int serviceId,
+      required ServiceProviderType providerType,
+      required bool value}) async {
+    if (providerType == ServiceProviderType.Restaurant) {
+      await update_restaurant_status(
+          id: serviceId,
+          status:
+              (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
+      unawaited(_fetchRestaurants());
+    } else {
+      await update_deliveryCompany_status(
+          id: serviceId,
+          status:
+              (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
+      unawaited(_fetchCompanies());
+    }
   }
 }

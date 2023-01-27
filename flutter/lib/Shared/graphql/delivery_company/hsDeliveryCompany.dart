@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
-import 'package:graphql/src/core/query_result.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/__generated/delivery_company.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -29,6 +30,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
       creationTime: DateTime.parse(data.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
+        locationId: data.location_id,
         image: data.image,
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
@@ -68,6 +70,7 @@ Future<DeliveryCompany?> update_delivery_company(
       info: ServiceInfo(
         hasuraId: data.id,
         image: data.image,
+        locationId: data.location_id,
         descriptionId: data.description_id,
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
@@ -116,4 +119,30 @@ Future<List<DeliveryCompany>> get_nearby_companies(
         primaryLanguage: LanguageType.EN);
   }).toList();
   return returnedList;
+}
+
+Future<ServiceStatus> update_deliveryCompany_status(
+    {required int id, required ServiceStatus status}) async {
+  final QueryResult<Mutation$updateDeliveryCompany> response =
+      await _hasuraDb.graphQLClient.mutate$updateDeliveryCompany(
+    Options$Mutation$updateDeliveryCompany(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$updateDeliveryCompany(
+        id: id,
+        data: Input$delivery_company_set_input(
+          open_status: status.toFirebaseFormatString(),
+        ),
+      ),
+    ),
+  );
+  if (response.parsedData?.update_delivery_company_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint(
+        "✅✅✅ Hasura mutation success => ${response.parsedData?.update_delivery_company_by_pk?.open_status}");
+    final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
+        response.parsedData!.update_delivery_company_by_pk!;
+    return data.open_status.toServiceStatus();
+  }
 }

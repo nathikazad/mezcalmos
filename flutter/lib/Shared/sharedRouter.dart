@@ -154,6 +154,7 @@ void navigateToDeliveryCost({
 }) {
   final String route =
       kDeliveryCost.replaceFirst(":deliveryDetailsId", "$deliveryDetailsId");
+  MezRouter.toNamed(route);
 }
 
 void navigateToServiceInfoEdit(

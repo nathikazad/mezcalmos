@@ -304,6 +304,13 @@ const documentNodeQuerygetDeliveryCompanyById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'location_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -544,6 +551,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     this.description_id,
     required this.id,
     required this.image,
+    required this.location_id,
     required this.name,
     required this.open_status,
     required this.location,
@@ -559,6 +567,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$description_id = json['description_id'];
     final l$id = json['id'];
     final l$image = json['image'];
+    final l$location_id = json['location_id'];
     final l$name = json['name'];
     final l$open_status = json['open_status'];
     final l$location = json['location'];
@@ -571,6 +580,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
       description_id: (l$description_id as int?),
       id: (l$id as int),
       image: (l$image as String),
+      location_id: (l$location_id as int),
       name: (l$name as String),
       open_status: (l$open_status as String),
       location:
@@ -593,6 +603,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
   final int id;
 
   final String image;
+
+  final int location_id;
 
   final String name;
 
@@ -619,6 +631,8 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
+    final l$location_id = location_id;
+    _resultData['location_id'] = l$location_id;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$open_status = open_status;
@@ -642,6 +656,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$description_id = description_id;
     final l$id = id;
     final l$image = image;
+    final l$location_id = location_id;
     final l$name = name;
     final l$open_status = open_status;
     final l$location = location;
@@ -654,6 +669,7 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
       l$description_id,
       l$id,
       l$image,
+      l$location_id,
       l$name,
       l$open_status,
       l$location,
@@ -691,6 +707,11 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk {
     final l$image = image;
     final lOther$image = other.image;
     if (l$image != lOther$image) {
+      return false;
+    }
+    final l$location_id = location_id;
+    final lOther$location_id = other.location_id;
+    if (l$location_id != lOther$location_id) {
       return false;
     }
     final l$name = name;
@@ -759,6 +780,7 @@ abstract class CopyWith$Query$getDeliveryCompanyById$delivery_company_by_pk<
     int? description_id,
     int? id,
     String? image,
+    int? location_id,
     String? name,
     String? open_status,
     Query$getDeliveryCompanyById$delivery_company_by_pk$location? location,
@@ -794,6 +816,7 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
     Object? description_id = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
+    Object? location_id = _undefined,
     Object? name = _undefined,
     Object? open_status = _undefined,
     Object? location = _undefined,
@@ -813,6 +836,9 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<TRes>
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
+        location_id: location_id == _undefined || location_id == null
+            ? _instance.location_id
+            : (location_id as int),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -870,6 +896,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<
     int? description_id,
     int? id,
     String? image,
+    int? location_id,
     String? name,
     String? open_status,
     Query$getDeliveryCompanyById$delivery_company_by_pk$location? location,
@@ -1764,6 +1791,13 @@ const documentNodeMutationupdateDeliveryCompany = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'location_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
@@ -2009,6 +2043,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
   Mutation$updateDeliveryCompany$update_delivery_company_by_pk({
     required this.approved,
     this.description_id,
+    required this.location_id,
     required this.id,
     required this.image,
     required this.name,
@@ -2024,6 +2059,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
       Map<String, dynamic> json) {
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
+    final l$location_id = json['location_id'];
     final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
@@ -2036,6 +2072,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     return Mutation$updateDeliveryCompany$update_delivery_company_by_pk(
       approved: (l$approved as bool),
       description_id: (l$description_id as int?),
+      location_id: (l$location_id as int),
       id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
@@ -2056,6 +2093,8 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
   final bool approved;
 
   final int? description_id;
+
+  final int location_id;
 
   final int id;
 
@@ -2083,6 +2122,8 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     _resultData['approved'] = l$approved;
     final l$description_id = description_id;
     _resultData['description_id'] = l$description_id;
+    final l$location_id = location_id;
+    _resultData['location_id'] = l$location_id;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$image = image;
@@ -2108,6 +2149,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
   int get hashCode {
     final l$approved = approved;
     final l$description_id = description_id;
+    final l$location_id = location_id;
     final l$id = id;
     final l$image = image;
     final l$name = name;
@@ -2120,6 +2162,7 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     return Object.hashAll([
       l$approved,
       l$description_id,
+      l$location_id,
       l$id,
       l$image,
       l$name,
@@ -2150,6 +2193,11 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk {
     final l$description_id = description_id;
     final lOther$description_id = other.description_id;
     if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$location_id = location_id;
+    final lOther$location_id = other.location_id;
+    if (l$location_id != lOther$location_id) {
       return false;
     }
     final l$id = id;
@@ -2227,6 +2275,7 @@ abstract class CopyWith$Mutation$updateDeliveryCompany$update_delivery_company_b
   TRes call({
     bool? approved,
     int? description_id,
+    int? location_id,
     int? id,
     String? image,
     String? name,
@@ -2265,6 +2314,7 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
   TRes call({
     Object? approved = _undefined,
     Object? description_id = _undefined,
+    Object? location_id = _undefined,
     Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
@@ -2282,6 +2332,9 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
         description_id: description_id == _undefined
             ? _instance.description_id
             : (description_id as int?),
+        location_id: location_id == _undefined || location_id == null
+            ? _instance.location_id
+            : (location_id as int),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined || image == null
             ? _instance.image
@@ -2342,6 +2395,7 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_b
   call({
     bool? approved,
     int? description_id,
+    int? location_id,
     int? id,
     String? image,
     String? name,

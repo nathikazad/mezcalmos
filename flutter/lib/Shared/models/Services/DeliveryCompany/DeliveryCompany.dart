@@ -3,8 +3,10 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 class DeliveryCompany extends Service {
+  int? deliveryDetailsId;
   DeliveryCompany(
-      {required super.info,
+      {this.deliveryDetailsId,
+      required super.info,
       required super.state,
       required super.primaryLanguage,
       // required this.deliveryRaidus,
