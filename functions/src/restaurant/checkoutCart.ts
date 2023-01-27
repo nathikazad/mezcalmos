@@ -27,7 +27,7 @@ export interface CheckoutRequest {
   customerLocation: Location,
   deliveryCost: number,
   paymentType: PaymentType,
-  notes: string,
+  notes?: string,
   restaurantId: number,
   deliveryType?: DeliveryType,
   tripDistance: number,

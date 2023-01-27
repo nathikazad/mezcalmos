@@ -4,6 +4,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
+    as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
@@ -141,9 +144,6 @@ class CustomerCartController extends GetxController {
   }
 
   Future<ServerResponse> checkout({String? stripePaymentId}) async {
-    final HttpsCallable checkoutRestaurantCart =
-        FirebaseFunctions.instance.httpsCallable("restaurant2-checkoutCart");
-
     try {
       final Map<String, dynamic> payload = <String, dynamic>{
         // "customerId": _authController.user!.hasuraId,
@@ -170,19 +170,26 @@ class CustomerCartController extends GetxController {
         "restaurantId": cart.value?.restaurant!.info.hasuraId,
 
         "restaurantOrderType": "pickup",
-        "tripDistance":
-            cart.value?.getRouteInfo?.distance.distanceInMeters ?? 0,
-        "tripDuration": cart.value?.getRouteInfo?.duration.seconds ??
-            0, // cart.value.getRouteInfo?.duration.seconds,
-        "tripPolyline": cart.value?.getRouteInfo?.polyline ??
-            '' //cart.value.getRouteInfo?.polyline,
-        // }
       };
 
       mezDbgPrint("[+] -> payload :: $payload");
-      final HttpsCallableResult<dynamic> response =
-          await checkoutRestaurantCart.call(payload);
-      final ServerResponse res = ServerResponse.fromJson(response.data);
+      final ServerResponse res = await CloudFunctions.restaurant2_checkoutCart(
+          customerAppType: cloudFunctionModels.AppType.Customer,
+          customerLocation: cloudFunctionModels.Location(
+              cart.value?.toLocation!.latitude,
+              cart.value?.toLocation!.longitude,
+              cart.value?.toLocation!.address),
+          deliveryCost: cart.value!.shippingCost!,
+          paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
+          notes: cart.value?.notes,
+          restaurantId: cart.value!.restaurant!.info.hasuraId,
+          tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
+          tripDuration: cart.value!.getRouteInfo!.duration.seconds,
+          tripPolyline: cart.value!.getRouteInfo!.polyline,
+          deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+          scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+          stripePaymentId: stripePaymentId,
+          stripeFees: cart.value?.stripeFees);
 
       return res;
     } catch (e) {

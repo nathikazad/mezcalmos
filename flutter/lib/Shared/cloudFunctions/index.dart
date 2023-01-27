@@ -1,30 +1,30 @@
 import 'package:cloud_functions/cloud_functions.dart';
-import 'dart:convert';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-class CloudFunctions {
-  Future<ServerResponse> callCloudFunction(
-      {required String functionName, Map<String, dynamic>? parameters}) async {
-    final Map<String, dynamic> finalParams = <String, dynamic>{
-      'versionNumber': '0.0.0'
-    };
-    finalParams.addAll(parameters ?? <String, dynamic>{});
-    final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
-        .httpsCallable('restaurant2-cancelOrderFromCustomer')
-        .call(finalParams);
-    print(response.data);
+  import 'dart:convert';
+  import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+  import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+  class CloudFunctions {
+    static Future<ServerResponse> callCloudFunction(
+        {required String functionName, Map<String, dynamic>? parameters}) async {
+      final Map<String, dynamic> finalParams = <String, dynamic>{
+        'versionNumber': '0.0.0'
+      };
+      finalParams.addAll(parameters ?? <String, dynamic>{});
+      final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
+          .httpsCallable('restaurant2-cancelOrderFromCustomer')
+          .call(finalParams);
+      print(response.data);
 
-    return ServerResponse.fromJson(response.data);
-  }
+      return ServerResponse.fromJson(response.data);
+    }
 
-  Future<ServerResponse> user_addHasuraClaim(
+    static Future<ServerResponse> user_addHasuraClaim(
   ) {
     return callCloudFunction(
       functionName: "user-addHasuraClaim",
       parameters: <String, dynamic>{});
   }
 
-  Future<ServerResponse> otp_sendOTPForLogin(
+  static Future<ServerResponse> otp_sendOTPForLogin(
       {required String language,
       required String phoneNumber}  ) {
     return callCloudFunction(
@@ -35,7 +35,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> otp_getAuthUsingOTP(
+  static Future<ServerResponse> otp_getAuthUsingOTP(
       {required String phoneNumber,
       required String OTPCode}  ) {
     return callCloudFunction(
@@ -46,7 +46,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_getPaymentIntent(
+  static Future<ServerResponse> stripe_getPaymentIntent(
       {required num serviceProviderId,
       required OrderType orderType,
       required num paymentAmount}  ) {
@@ -59,7 +59,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_addCard(
+  static Future<ServerResponse> stripe_addCard(
       {required String paymentMethod}  ) {
     return callCloudFunction(
       functionName: "stripe-addCard",
@@ -68,7 +68,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_chargeCard(
+  static Future<ServerResponse> stripe_chargeCard(
       {required num serviceProviderId,
       required String cardId,
       required OrderType orderType,
@@ -83,7 +83,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_removeCard(
+  static Future<ServerResponse> stripe_removeCard(
       {required String cardId}  ) {
     return callCloudFunction(
       functionName: "stripe-removeCard",
@@ -92,7 +92,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_setupServiceProvider(
+  static Future<ServerResponse> stripe_setupServiceProvider(
       {required num serviceProviderId,
       required OrderType orderType,
       Map<PaymentType,bool>? acceptedPayments}  ) {
@@ -105,7 +105,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> stripe_updateServiceProvider(
+  static Future<ServerResponse> stripe_updateServiceProvider(
       {required num serviceProviderId,
       required OrderType orderType}  ) {
     return callCloudFunction(
@@ -116,7 +116,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_createRestaurant(
+  static Future<ServerResponse> restaurant2_createRestaurant(
       {required String name,
       required String image,
       required Location location,
@@ -133,7 +133,7 @@ class CloudFunctions {
       parameters: <String, dynamic>{
         "name":name,
         "image":image,
-        "location":location,
+        "location":location.toFirebaseFormattedJson(),
         "schedule":json.encode(schedule),
         "restaurantOperatorNotificationToken":restaurantOperatorNotificationToken,
         "firebaseId":firebaseId,
@@ -141,16 +141,16 @@ class CloudFunctions {
         "customerPickup":customerPickup,
         "selfDelivery":selfDelivery,
         "deliveryPartnerId":deliveryPartnerId,
-        "deliveryDetails":deliveryDetails,
+        "deliveryDetails":deliveryDetails?.toFirebaseFormattedJson(),
       });
   }
 
-  Future<ServerResponse> restaurant2_checkoutCart(
+  static Future<ServerResponse> restaurant2_checkoutCart(
       {required AppType customerAppType,
       required Location customerLocation,
       required num deliveryCost,
       required PaymentType paymentType,
-      required String notes,
+      String? notes,
       required num restaurantId,
       DeliveryType? deliveryType,
       required num tripDistance,
@@ -163,7 +163,7 @@ class CloudFunctions {
       functionName: "restaurant2-checkoutCart",
       parameters: <String, dynamic>{
         "customerAppType":customerAppType.toFirebaseFormatString(),
-        "customerLocation":customerLocation,
+        "customerLocation":customerLocation.toFirebaseFormattedJson(),
         "deliveryCost":deliveryCost,
         "paymentType":paymentType.toFirebaseFormatString(),
         "notes":notes,
@@ -178,7 +178,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_prepareOrder(
+  static Future<ServerResponse> restaurant2_prepareOrder(
       {required num orderId}  ) {
     return callCloudFunction(
       functionName: "restaurant2-prepareOrder",
@@ -187,7 +187,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_readyForOrderPickup(
+  static Future<ServerResponse> restaurant2_readyForOrderPickup(
       {required num orderId}  ) {
     return callCloudFunction(
       functionName: "restaurant2-readyForOrderPickup",
@@ -196,7 +196,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_orderPickedUpByCustomer(
+  static Future<ServerResponse> restaurant2_orderPickedUpByCustomer(
       {required num orderId}  ) {
     return callCloudFunction(
       functionName: "restaurant2-orderPickedUpByCustomer",
@@ -205,7 +205,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_cancelOrderFromAdmin(
+  static Future<ServerResponse> restaurant2_cancelOrderFromAdmin(
       {required num orderId}  ) {
     return callCloudFunction(
       functionName: "restaurant2-cancelOrderFromAdmin",
@@ -214,7 +214,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_cancelOrderFromCustomer(
+  static Future<ServerResponse> restaurant2_cancelOrderFromCustomer(
       {required num orderId}  ) {
     return callCloudFunction(
       functionName: "restaurant2-cancelOrderFromCustomer",
@@ -223,18 +223,18 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_addRestaurantOperator(
+  static Future<ServerResponse> restaurant2_addRestaurantOperator(
       {required num restaurantId,
       NotificationInfo? notificationInfo}  ) {
     return callCloudFunction(
       functionName: "restaurant2-addRestaurantOperator",
       parameters: <String, dynamic>{
         "restaurantId":restaurantId,
-        "notificationInfo":notificationInfo,
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
       });
   }
 
-  Future<ServerResponse> restaurant2_authorizeRestaurantOperator(
+  static Future<ServerResponse> restaurant2_authorizeRestaurantOperator(
       {required num newOperatorId,
       required bool approved}  ) {
     return callCloudFunction(
@@ -245,18 +245,18 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> restaurant2_addRestaurantDriver(
+  static Future<ServerResponse> restaurant2_addRestaurantDriver(
       {required num deliveryCompanyId,
       NotificationInfo? notificationInfo}  ) {
     return callCloudFunction(
       functionName: "restaurant2-addRestaurantDriver",
       parameters: <String, dynamic>{
         "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo,
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
       });
   }
 
-  Future<ServerResponse> restaurant2_authorizeRestaurantDriver(
+  static Future<ServerResponse> restaurant2_authorizeRestaurantDriver(
       {required num deliveryDriverId,
       required bool approved}  ) {
     return callCloudFunction(
@@ -267,7 +267,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_assignDriver(
+  static Future<ServerResponse> delivery2_assignDriver(
       {required num deliveryOrderId,
       required num deliveryDriverId,
       required OrderType orderType,
@@ -286,18 +286,18 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_addDeliveryOperator(
+  static Future<ServerResponse> delivery2_addDeliveryOperator(
       {required num deliveryCompanyId,
       NotificationInfo? notificationInfo}  ) {
     return callCloudFunction(
       functionName: "delivery2-addDeliveryOperator",
       parameters: <String, dynamic>{
         "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo,
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
       });
   }
 
-  Future<ServerResponse> delivery2_authorizeDeliveryOperator(
+  static Future<ServerResponse> delivery2_authorizeDeliveryOperator(
       {required num newOperatorId,
       required bool approved}  ) {
     return callCloudFunction(
@@ -308,18 +308,18 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_addDeliveryDriver(
+  static Future<ServerResponse> delivery2_addDeliveryDriver(
       {required num deliveryCompanyId,
       NotificationInfo? notificationInfo}  ) {
     return callCloudFunction(
       functionName: "delivery2-addDeliveryDriver",
       parameters: <String, dynamic>{
         "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo,
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
       });
   }
 
-  Future<ServerResponse> delivery2_authorizeDeliveryDriver(
+  static Future<ServerResponse> delivery2_authorizeDeliveryDriver(
       {required num deliveryDriverId,
       required bool approved}  ) {
     return callCloudFunction(
@@ -330,7 +330,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_restaurantAtPickup(
+  static Future<ServerResponse> delivery2_restaurantAtPickup(
       {required num deliveryId,
       required num deliveryDriverId,
       required DeliveryDriverType deliveryDriverType,
@@ -345,7 +345,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_restaurantAtDropoff(
+  static Future<ServerResponse> delivery2_restaurantAtDropoff(
       {required num deliveryId,
       required num deliveryDriverId,
       required DeliveryDriverType deliveryDriverType,
@@ -360,7 +360,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_restaurantFinishDelivery(
+  static Future<ServerResponse> delivery2_restaurantFinishDelivery(
       {required num deliveryId,
       required num deliveryDriverId,
       required DeliveryDriverType deliveryDriverType,
@@ -375,7 +375,7 @@ class CloudFunctions {
       });
   }
 
-  Future<ServerResponse> delivery2_restaurantStartDelivery(
+  static Future<ServerResponse> delivery2_restaurantStartDelivery(
       {required num deliveryId,
       required num deliveryDriverId,
       required DeliveryDriverType deliveryDriverType,

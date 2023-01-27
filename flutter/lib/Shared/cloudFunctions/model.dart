@@ -11,6 +11,12 @@ class Location {
   num lng;
   String? address;
   Location(this.lat, this.lng, this.address);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "lat": lat,
+      "lng": lng,
+      "address": address};
+  }
 }
 
 class DeliveryDetails {
@@ -20,6 +26,14 @@ class DeliveryDetails {
   num? freeDeliveryMinimumCost;
   num? freeDeliveryKmRange;
   DeliveryDetails(this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "minimumCost": minimumCost,
+      "costPerKm": costPerKm,
+      "radius": radius,
+      "freeDeliveryMinimumCost": freeDeliveryMinimumCost,
+      "freeDeliveryKmRange": freeDeliveryKmRange};
+  }
 }
 
 enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin }
@@ -50,6 +64,11 @@ class NotificationInfo {
   String token;
   AppType AppTypeId;
   NotificationInfo(this.token, this.AppTypeId);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "token": token,
+      "AppTypeId": AppTypeId};
+  }
 }
 
 enum DeliveryDriverType { RestaurantOperator, DeliveryDriver }

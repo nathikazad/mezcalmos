@@ -165,7 +165,7 @@ def printDartFormatEnum(key, values):
   return str+converter+"\n\n"
 
 def printDartFormatFunction(key, value):
-  str = "  Future<ServerResponse> "+key.replace("-","_")+"(\n"
+  str = "  static Future<ServerResponse> "+key.replace("-","_")+"(\n"
   if value["arguments"] != None:
     str += "      {"
     for v in value["arguments"]:
@@ -208,6 +208,11 @@ def printDartFormatFunction(key, value):
         if v1[-1] == "?":
           p2 = p2.replace(".toFir","?.toFir")
         params += p2
+      elif value["arguments"][v1] in models and models[value["arguments"][v1]]["type"] == "interface":
+        p2 = "\""+v+"\""+":"+v+".toFirebaseFormattedJson(),"+"\n"+"        "
+        if v1[-1] == "?":
+          p2 = p2.replace(".toFir","?.toFir")
+        params += p2
       elif value["arguments"][v1] == "JSON":
         params += "\""+v+"\""+":json.encode("+v+"),"+"\n"+"        "
       else:
@@ -226,7 +231,13 @@ def getModels():
       for v in models[key]["values"]:
         toWriteModel +=  printDartFormatDeclaration(v, models[key]["values"][v])+"\n"
       toWriteModel += printDartFormatClassInit(key, models[key]["values"])+"\n"
-      toWriteModel +=  "}\n\n"
+      toWriteModel +=   '''Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      '''
+      for v in models[key]["values"]:
+        toWriteModel +=  "\""+v.replace("?","")+"\": "+v.replace("?","")+",\n      "
+      toWriteModel = toWriteModel[:-8]
+      toWriteModel +=  "};\n  }\n}\n\n"
     if models[key]["type"] == "enum":
       toWriteModel +=  printDartFormatEnum(key, models[key]["values"])
   return toWriteModel
@@ -237,7 +248,7 @@ def getIndex():
   import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
   import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
   class CloudFunctions {
-    Future<ServerResponse> callCloudFunction(
+    static Future<ServerResponse> callCloudFunction(
         {required String functionName, Map<String, dynamic>? parameters}) async {
       final Map<String, dynamic> finalParams = <String, dynamic>{
         'versionNumber': '0.0.0'
