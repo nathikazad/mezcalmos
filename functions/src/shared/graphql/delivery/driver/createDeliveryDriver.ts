@@ -62,7 +62,7 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: deliveryDriver.notificationInfo.AppTypeId,
+                    app_type_id: deliveryDriver.notificationInfo.appType,
                     token: deliveryDriver.notificationInfo.token,
                     user_id: deliveryDriver.userId
                 }

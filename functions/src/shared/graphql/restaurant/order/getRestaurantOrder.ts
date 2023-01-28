@@ -127,7 +127,10 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
           user_id: true,
           status: true,
           owner: true,
-          notification_token: true,
+          notification_info: {
+            token: true,
+            turn_off_notifications: true
+          },
           user: {
             firebase_id: true,
             language_id: true,
@@ -165,16 +168,17 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
 
  return  response.restaurant_order.map((o ): RestaurantOrder => {
     let restaurantOperators: RestaurantOperator[] = o.restaurant.restaurant_operators.map((r) => {
-      return {
+      return <RestaurantOperator>{
         id: r.id,
         userId: r.user_id,
         restaurantId: o.restaurant_id,
         
         status: r.status as OperatorStatus,
         owner: r.owner,
-        notificationInfo: (r.notification_token) ? {
+        notificationInfo: (r.notification_info) ? {
           AppTypeId: AppType.RestaurantApp,
-          token: r.notification_token
+          token: r.notification_info.token,
+          turnOffNotifications: r.notification_info.turn_off_notifications
         } : undefined,
         user: {
           id: r.user_id,

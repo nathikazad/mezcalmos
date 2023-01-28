@@ -2,6 +2,16 @@ table:
   name: mez_admin
   schema: public
 object_relationships:
+  - name: notification_info
+    using:
+      manual_configuration:
+        column_mapping:
+          app_type_id: app_type_id
+          user_id: user_id
+        insertion_order: null
+        remote_table:
+          name: notification_info
+          schema: public
   - name: user
     using:
       manual_configuration:
@@ -11,20 +21,12 @@ object_relationships:
         remote_table:
           name: user
           schema: public
-computed_fields:
-  - name: notification_token
-    definition:
-      function:
-        name: mez_admin_notification_token
-        schema: public
 select_permissions:
   - role: mez_admin
     permission:
       columns:
         - user_id
         - version
-      computed_fields:
-        - notification_token
       filter:
         user_id:
           _eq: X-Hasura-User-Id

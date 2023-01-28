@@ -116,6 +116,17 @@ import 'package:cloud_functions/cloud_functions.dart';
       });
   }
 
+  static Future<ServerResponse> agora_callChatUser(
+      {required num chatId,
+      required ParticipantType callerParticipantType}  ) {
+    return callCloudFunction(
+      functionName: "agora-callChatUser",
+      parameters: <String, dynamic>{
+        "chatId":chatId,
+        "callerParticipantType":callerParticipantType.toFirebaseFormatString(),
+      });
+  }
+
   static Future<ServerResponse> restaurant2_createRestaurant(
       {required String name,
       required String image,

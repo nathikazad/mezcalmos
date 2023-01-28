@@ -22,7 +22,10 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Rest
       user_id: true,
       status: true,
       owner: true,
-      notification_token: true,
+      notification_info: {
+        token: true,
+        turn_off_notifications: true
+      },
       user: {
         firebase_id: true,
         language_id: true,
@@ -43,9 +46,10 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Rest
       restaurantId: restaurantId,
       status: r.status as OperatorStatus,
       owner: r.owner,
-      notificationInfo: (r.notification_token) ? {
-        AppTypeId: AppType.RestaurantApp,
-        token: r.notification_token
+      notificationInfo: (r.notification_info) ? {
+        appType: AppType.RestaurantApp,
+        token: r.notification_info.token,
+        turnOffNotifications: r.notification_info.turn_off_notifications
       }: undefined,
       user: {
         id: r.user_id,
@@ -69,7 +73,10 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
       status: true,
       owner: true,
       restaurant_id: true,
-      notification_token: true,
+      notification_info: {
+        token: true,
+        turn_off_notifications: true
+      },
       user: {
         firebase_id: true,
         language_id: true,
@@ -88,9 +95,10 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     restaurantId: response.restaurant_operator_by_pk.restaurant_id,
     status: response.restaurant_operator_by_pk.status as OperatorStatus,
     owner: response.restaurant_operator_by_pk.owner,
-    notificationInfo: (response.restaurant_operator_by_pk.notification_token) ? {
-      AppTypeId: AppType.RestaurantApp,
-      token: response.restaurant_operator_by_pk.notification_token
+    notificationInfo: (response.restaurant_operator_by_pk.notification_info) ? {
+      appType: AppType.RestaurantApp,
+      token: response.restaurant_operator_by_pk.notification_info.token,
+      turnOffNotifications: response.restaurant_operator_by_pk.notification_info.turn_off_notifications
     }: undefined,
     user: {
       id: response.restaurant_operator_by_pk.user_id,
@@ -116,7 +124,10 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
       status: true,
       owner: true,
       restaurant_id: true,
-      notification_token: true,
+      notification_info: {
+        token: true,
+        turn_off_notifications: true
+      },
       user: {
         firebase_id: true,
         language_id: true,
@@ -135,9 +146,10 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     restaurantId: response.restaurant_operator[0].restaurant_id,
     status: response.restaurant_operator[0].status as OperatorStatus,
     owner: response.restaurant_operator[0].owner,
-    notificationInfo: (response.restaurant_operator[0].notification_token) ? {
-      AppTypeId: AppType.RestaurantApp,
-      token: response.restaurant_operator[0].notification_token
+    notificationInfo: (response.restaurant_operator[0].notification_info) ? {
+      appType: AppType.RestaurantApp,
+      token: response.restaurant_operator[0].notification_info.token,
+      turnOffNotifications: response.restaurant_operator[0].notification_info.turn_off_notifications
     }: undefined,
     user: {
       id: response.restaurant_operator[0].user_id,

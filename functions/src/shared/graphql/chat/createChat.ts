@@ -1,7 +1,7 @@
 import { getHasura } from "../../../utilities/hasura";
 import { DirectChatDetails } from "../../chat/createChat";
-import { ChatType } from "../../models/Generic/Chat";
-import { AppParticipant, AppType, ChatInfoAppName } from "../../models/Generic/Generic";
+import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName } from "../../models/Generic/Chat";
+import { AppType } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
 import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
 import { ServiceProviderType } from "../../models/Services/Service";
@@ -25,11 +25,11 @@ export async function createRestaurantCustomerChat(restaurant: Restaurant, custo
                 chat: {
                     data: {
                         chat_info: JSON.stringify({
-                            [ChatInfoAppName[AppType.Customer]]: {
+                            [ChatInfoAppName.CustomerApp]: {
                                 chatTitle: restaurant.name,
                                 chatImage: restaurant.image,
                             },
-                            [ChatInfoAppName[AppType.RestaurantApp]]: {
+                            [ChatInfoAppName.RestaurantApp]: {
                                 chatTitle: customer.name ?? "Customer",
                                 chatImage: customer.image,
                             },
@@ -108,11 +108,11 @@ export async function createMezAdminChat(user: UserInfo, userAppType: AppType, m
                 chat: {
                     data: {
                         chat_info: JSON.stringify({
-                            [ChatInfoAppName[userAppType]]: {
+                            [AppTypeToChatInfoAppName[userAppType]]: {
                                 chatTitle: "Mez Admin",
                                 chatImage: "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d",
                             },
-                            [ChatInfoAppName[AppType.MezAdmin]]: {
+                            [ChatInfoAppName.MezAdminApp]: {
                                 chatTitle: user.name ?? AppParticipant[userAppType],
                                 chatImage: user.image,
                             },
