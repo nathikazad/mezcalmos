@@ -33,6 +33,7 @@ class MessageWebController extends GetxController {
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
+    appType = AppType.CustomerApp;
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {

@@ -27,6 +27,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/routes/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
@@ -353,13 +354,37 @@ class _OrderViewScreenFordesktopState extends State<OrderViewScreenFordesktop> {
                           RestaurantOrderDriverCard(
                             order: viewController.order.value!,
                             isWebVersion: true,
+                            navigateToChatScreenCallbac: () {
+                              QR.to(
+                                getMessagesRoute(
+                                  chatId: viewController
+                                      .order.value!.customerDropOffDriverChatId!
+                                      .toString(),
+                                  recipientType: ParticipantType.DeliveryDriver,
+                                  orderType: OrderType.Restaurant,
+                                  orderId: viewController.order.value!.orderId
+                                      .toString(),
+                                ),
+                              );
+                            },
                           ),
 
                           if (viewController.order.value!.inDeliveryPhase())
                             ..._mapWidget,
                           OrderRestaurantCard(
                               isWebVersion: true,
-                              order: viewController.order.value!),
+                              order: viewController.order.value!,
+                              navigateMsgCallback: () {
+                                QR.to(getMessagesRoute(
+                                  chatId: viewController.order.value!.chatId
+                                      .toString(),
+                                  recipientType:
+                                      ParticipantType.RestaurantOperator,
+                                  orderType: OrderType.Restaurant,
+                                  orderId: viewController.order.value!.orderId
+                                      .toString(),
+                                ));
+                              }),
 
                           OrderItemsCard(
                             order: viewController.order.value!,

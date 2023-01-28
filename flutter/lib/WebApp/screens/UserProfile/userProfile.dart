@@ -15,7 +15,8 @@ import 'package:mezcalmos/WebApp/widgets/MezBottomBar.dart';
 import 'package:mezcalmos/WebApp/widgets/mezCalmosResizer.dart';
 import 'package:mezcalmos/WebApp/widgets/mezLoaderWidget.dart';
 
-UserProfileController userProfileController = UserProfileController();
+UserProfileController userProfileController =
+    UserProfileController(isWebVersion: true);
 
 class UserProfile extends StatefulWidget {
   UserProfile({Key? key}) : super(key: key);

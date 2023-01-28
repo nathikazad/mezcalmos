@@ -37,17 +37,17 @@ Future<bool> putControllers() async {
     });
   }
 
-  //if (!Get.isRegistered<HasuraDb>()) {
-  await Get.put(AppLifeCycleController());
-  await Get.put(HasuraDb(typeMode.toLaunchMode()), permanent: true);
-  mezDbgPrint("]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
+  if (!Get.isRegistered<HasuraDb>()) {
+    await Get.put(AppLifeCycleController());
+    await Get.put(HasuraDb(typeMode.toLaunchMode()), permanent: true);
+    mezDbgPrint(
+        "]]]]]]]]]] the HasuraDb controller  is intailized ]]]]]]]]]]]]");
 
-//  }
-
-  await Get.put<AuthController>(
-    AuthController(signInCallback, signOutCallback),
-    permanent: true,
-  );
+    await Get.put<AuthController>(
+      AuthController(signInCallback, signOutCallback),
+      permanent: true,
+    );
+  }
 
   if (!Get.isRegistered<AppLifeCycleController>()) {
     await Get.put<AppLifeCycleController>(

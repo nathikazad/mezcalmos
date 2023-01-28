@@ -87,14 +87,19 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                 if (order.customerDropOffDriverChatId != null)
                   MessageButton(
                     onTap: () {
-                      MezRouter.toNamed(
-                        getMessagesRoute(
-                          chatId: order.customerDropOffDriverChatId!.toString(),
-                          recipientType: ParticipantType.DeliveryDriver,
-                          orderType: OrderType.Restaurant,
-                          orderId: order.orderId.toString(),
-                        ),
-                      );
+                      if (isWebVersion == true) {
+                        navigateToChatScreenCallbac!.call();
+                      } else {
+                        MezRouter.toNamed(
+                          getMessagesRoute(
+                            chatId:
+                                order.customerDropOffDriverChatId!.toString(),
+                            recipientType: ParticipantType.DeliveryDriver,
+                            orderType: OrderType.Restaurant,
+                            orderId: order.orderId.toString(),
+                          ),
+                        );
+                      }
                     },
                     chatId: order.customerDropOffDriverChatId!,
                   ),
