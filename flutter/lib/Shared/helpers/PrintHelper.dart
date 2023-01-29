@@ -92,3 +92,7 @@ void runMainGuarded(Function runMain) {
     mezDbgPrint("========== [ END MEZ EXCEPTION ] ==========");
   });
 }
+
+void throwError(error) {
+  throw Exception(" ======🛑 Error 🛑=====  \n $error   ");
+}

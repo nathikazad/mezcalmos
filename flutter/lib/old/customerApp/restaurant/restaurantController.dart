@@ -11,7 +11,7 @@
 // import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart' as hsCart;
 // import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 // import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
-// import 'package:mezcalmos/Shared/helpers/MapHelper.dart' as MapHelper;
+// import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart' as MapHelper;
 // import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 // import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 // import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
