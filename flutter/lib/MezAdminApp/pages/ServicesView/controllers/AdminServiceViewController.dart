@@ -33,12 +33,12 @@ class AdminServicesViewController {
 
   Future<void> _fetchCompanies() async {
     _dvCompanies.value?.clear();
-    _dvCompanies.value = await admin_get_dv_companies(withCache: false) ?? [];
+    _dvCompanies.value = await admin_get_dv_companies(withCache: false);
   }
 
   Future<void> _fetchRestaurants() async {
     _restaurants.value?.clear();
-    _restaurants.value = await admin_get_restaurants(withCache: false) ?? [];
+    _restaurants.value = await admin_get_restaurants(withCache: false);
   }
 
   Future<void> switchServiceStatus(

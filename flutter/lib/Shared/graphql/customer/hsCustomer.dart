@@ -200,8 +200,8 @@ Future<List<RestaurantOrder>> get_customer_orders(
             cost: _o.delivery_cost,
             restaurant: ServiceInfo(
               location: Location(
-                _o.restaurant.location!.address!,
-                _o.restaurant.location!.gps.toLocationData(),
+                _o.restaurant.location.address!,
+                _o.restaurant.location.gps.toLocationData(),
               ),
               firebaseId: _o.restaurant.firebase_id,
               hasuraId: _o.restaurant.id,

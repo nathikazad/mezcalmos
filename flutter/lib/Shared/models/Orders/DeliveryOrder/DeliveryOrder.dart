@@ -87,7 +87,7 @@ class DeliveryOrder {
       id: id ?? this.id,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,
-      status: status ?? status,
+      status: status,
       stripeOrderPaymentInfo: stripeOrderPaymentInfo,
       deliveryCompany: deliveryCompany ?? this.deliveryCompany,
       driverLocation: driverLocation ?? this.driverLocation,

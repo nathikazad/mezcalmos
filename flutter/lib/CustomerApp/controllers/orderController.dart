@@ -29,9 +29,8 @@ class CustomerOrderController extends GetxController {
   }
 
   Future<void> fetchCustomerOrders() async {
-    final List<RestaurantOrder> _orders = await get_customer_orders(
-            customer_id: _authController.user!.hasuraId) ??
-        [];
+    final List<RestaurantOrder> _orders =
+        await get_customer_orders(customer_id: _authController.user!.hasuraId);
     currentOrders.value = _orders
         .where((RestaurantOrder element) => element.inProcess())
         .toList();
