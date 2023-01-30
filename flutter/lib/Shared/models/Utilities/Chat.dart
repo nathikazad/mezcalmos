@@ -15,7 +15,8 @@ enum ParticipantType {
   Restaurant,
   DeliveryDriver,
   LaundryOperator,
-  RestaurantOperator
+  RestaurantOperator,
+  MezAdmin
 }
 
 extension HasuraAppTypeIdParser on String {
@@ -129,9 +130,11 @@ class HasuraChatInfo {
   final String chatTite;
   final String chatImg;
   final String parentlink;
+  final String? phoneNumber;
 
   HasuraChatInfo({
     required this.chatTite,
+    this.phoneNumber,
     required this.chatImg,
     required this.parentlink,
   });

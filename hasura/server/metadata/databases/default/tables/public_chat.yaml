@@ -34,16 +34,34 @@ select_permissions:
           user:
             id:
               _eq: X-Hasura-User-Id
-  - role: mez_admin
+  - role: delivery_operator
     permission:
       columns:
-        - chat_info
         - id
+        - chat_info
         - messages
+        - chat_type
+        - creation_time
       filter:
         chat_participants:
           user:
             id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - id
+        - chat_info
+        - messages
+        - chat_type
+        - creation_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
@@ -93,8 +111,18 @@ update_permissions:
       columns:
         - messages
       filter:
-        chat_participants:
-          user:
-            id:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
               _eq: X-Hasura-User-Id
-      check: null
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

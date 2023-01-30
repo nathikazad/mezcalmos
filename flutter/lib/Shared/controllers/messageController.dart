@@ -38,25 +38,7 @@ class MessageController extends GetxController {
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
     mezDbgPrint("Load chat id ------------->>>> $chatId");
-    // chatListener?.cancel();
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(chatNode(chatId))
-    //     .onValueWitchCatch()
-    //     .then((Stream<DatabaseEvent> value) {
-    //   chatListener = value.listen((DatabaseEvent event) {
-    //     if (event.snapshot.value != null) {
-    //       mezDbgPrint(
-    //           "PRINTING CHATING EVENT ==========================>>>> ${event.snapshot.value}");
-    //       // mezDbgPrint("\n\n\n ${event.snapshot.value} \n\n\n");
-    //       chat.value = Chat.fromJson(chatId, event.snapshot.value);
-    //       if (onValueCallBack != null) onValueCallBack();
-    //       // mezDbgPrint(
-    //       //     "--------------------> messageController Listener Invoked with Messages > ${_model.value.messages} ");
-    //     }
-    //   });
-    // });
-    //chat.value = await get_chat_info(chat_id: chatId);
+
     get_chat_info(chat_id: chatId).then((HasuraChat? value) {
       mezDbgPrint("[77] Got Chat :: id ($chatId) :: $value !");
 

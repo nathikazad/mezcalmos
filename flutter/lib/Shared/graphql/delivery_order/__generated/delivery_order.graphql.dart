@@ -313,6 +313,13 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'chat_with_service_provider_id'),
             alias: null,
             arguments: [],
@@ -948,6 +955,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     this.actual_package_ready_time,
     this.cancellation_time,
     required this.chat_with_customer_id,
+    required this.order_type,
     this.chat_with_service_provider_id,
     this.current_gps,
     this.delivery_company,
@@ -989,6 +997,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$actual_package_ready_time = json['actual_package_ready_time'];
     final l$cancellation_time = json['cancellation_time'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$order_type = json['order_type'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$current_gps = json['current_gps'];
@@ -1031,6 +1040,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       actual_package_ready_time: (l$actual_package_ready_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
+      order_type: (l$order_type as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       current_gps:
           l$current_gps == null ? null : geographyFromJson(l$current_gps),
@@ -1091,6 +1101,8 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String? cancellation_time;
 
   final int chat_with_customer_id;
+
+  final String order_type;
 
   final int? chat_with_service_provider_id;
 
@@ -1169,6 +1181,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
@@ -1247,6 +1261,7 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$actual_package_ready_time = actual_package_ready_time;
     final l$cancellation_time = cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
+    final l$order_type = order_type;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$current_gps = current_gps;
     final l$delivery_company = delivery_company;
@@ -1285,6 +1300,7 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$actual_package_ready_time,
       l$cancellation_time,
       l$chat_with_customer_id,
+      l$order_type,
       l$chat_with_service_provider_id,
       l$current_gps,
       l$delivery_company,
@@ -1358,6 +1374,11 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_customer_id = chat_with_customer_id;
     final lOther$chat_with_customer_id = other.chat_with_customer_id;
     if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -1547,6 +1568,7 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? actual_package_ready_time,
     String? cancellation_time,
     int? chat_with_customer_id,
+    String? order_type,
     int? chat_with_service_provider_id,
     Geography? current_gps,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
@@ -1612,6 +1634,7 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? actual_package_ready_time = _undefined,
     Object? cancellation_time = _undefined,
     Object? chat_with_customer_id = _undefined,
+    Object? order_type = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? current_gps = _undefined,
     Object? delivery_company = _undefined,
@@ -1664,6 +1687,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
                 : (chat_with_customer_id as int),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         chat_with_service_provider_id:
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
@@ -1821,6 +1847,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? actual_package_ready_time,
     String? cancellation_time,
     int? chat_with_customer_id,
+    String? order_type,
     int? chat_with_service_provider_id,
     Geography? current_gps,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
@@ -4128,6 +4155,13 @@ const documentNodeSubscriptionlisten_on_driver_order =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'chat_with_service_provider_id'),
             alias: null,
             arguments: [],
@@ -4737,6 +4771,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     this.actual_package_ready_time,
     this.cancellation_time,
     required this.chat_with_customer_id,
+    required this.order_type,
     this.chat_with_service_provider_id,
     this.delivery_driver,
     this.restaurant_order,
@@ -4778,6 +4813,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$actual_package_ready_time = json['actual_package_ready_time'];
     final l$cancellation_time = json['cancellation_time'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$order_type = json['order_type'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$delivery_driver = json['delivery_driver'];
@@ -4820,6 +4856,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       actual_package_ready_time: (l$actual_package_ready_time as String?),
       cancellation_time: (l$cancellation_time as String?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
+      order_type: (l$order_type as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       delivery_driver: l$delivery_driver == null
           ? null
@@ -4881,6 +4918,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final String? cancellation_time;
 
   final int chat_with_customer_id;
+
+  final String order_type;
 
   final int? chat_with_service_provider_id;
 
@@ -4961,6 +5000,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
@@ -5039,6 +5080,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$actual_package_ready_time = actual_package_ready_time;
     final l$cancellation_time = cancellation_time;
     final l$chat_with_customer_id = chat_with_customer_id;
+    final l$order_type = order_type;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$delivery_driver = delivery_driver;
     final l$restaurant_order = restaurant_order;
@@ -5077,6 +5119,7 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$actual_package_ready_time,
       l$cancellation_time,
       l$chat_with_customer_id,
+      l$order_type,
       l$chat_with_service_provider_id,
       l$delivery_driver,
       l$restaurant_order,
@@ -5150,6 +5193,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$chat_with_customer_id = chat_with_customer_id;
     final lOther$chat_with_customer_id = other.chat_with_customer_id;
     if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -5343,6 +5391,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? actual_package_ready_time,
     String? cancellation_time,
     int? chat_with_customer_id,
+    String? order_type,
     int? chat_with_service_provider_id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver?
         delivery_driver,
@@ -5413,6 +5462,7 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? actual_package_ready_time = _undefined,
     Object? cancellation_time = _undefined,
     Object? chat_with_customer_id = _undefined,
+    Object? order_type = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? delivery_driver = _undefined,
     Object? restaurant_order = _undefined,
@@ -5465,6 +5515,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
                 : (chat_with_customer_id as int),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         chat_with_service_provider_id:
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
@@ -5626,6 +5679,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? actual_package_ready_time,
     String? cancellation_time,
     int? chat_with_customer_id,
+    String? order_type,
     int? chat_with_service_provider_id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_driver?
         delivery_driver,

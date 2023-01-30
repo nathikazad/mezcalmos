@@ -37,6 +37,7 @@ Future<Option?> get_option_by_id(int optionId, {bool withCache = true}) async {
           freeChoice: data.free_choice,
           minimumChoice: data.minimum_choice,
           costPerExtra: data.cost_per_extra,
+          nameId: data.name.id,
           name: toLanguageMap(translations: data.name.translations));
       data.choices.forEach(
           (Query$getOptionById$restaurant_option_by_pk$choices element) {

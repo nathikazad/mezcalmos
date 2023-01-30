@@ -89,7 +89,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
 
   Widget _saveBtn() {
     return MezButton(
-      height: 65,
+      height: 75,
       borderRadius: 0,
       withGradient: true,
       onClick: () async {
