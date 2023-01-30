@@ -65,7 +65,7 @@ Future<int?> add_one_item(
       ),
     ),
     special_period_end: item.endsAt?.toUtc().toString(),
-    special_period_start: item.startsAt?.toString(),
+    special_period_start: item.startsAt?.toUtc().toString(),
     item_type: item.itemType.toFirebaseFormatString(),
     image: item.image,
     description: Input$translation_obj_rel_insert_input(

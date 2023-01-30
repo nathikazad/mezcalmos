@@ -74,6 +74,7 @@ class RestaurantOpAuthController extends GetxController {
         await get_notif_info(userId: operator.value!.info.hasuraId);
     mezDbgPrint("inside save notif token=====>>>😍");
     mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
+    mezDbgPrint("inside save notif token=====>>>$deviceNotificationToken");
     try {
       if (notifInfo != null &&
           deviceNotificationToken != null &&

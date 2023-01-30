@@ -45,6 +45,11 @@
 		<string>fb-messenger-share-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>http</string>
+		<string>https</string>
+		<string>sms</string>
+        <string>tel</string>
+        <string>mailto</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

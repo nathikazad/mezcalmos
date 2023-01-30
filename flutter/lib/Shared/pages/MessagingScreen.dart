@@ -19,10 +19,12 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 DateTime now = DateTime.now().toLocal();
 String formattedDate = intl.DateFormat('dd-MM-yyyy').format(now);
@@ -197,32 +199,44 @@ class _MessagingScreenState extends State<MessagingScreen> {
         actions: <Widget>[
           // Obx(
           //   () =>
-          Container(
-            child: controller.isUserAuthorizedToCall() &&
-                    // isReciepientNotAdmin() &&
-                    sagora != null
-                ? InkWell(
-                    // onTap: () async => _onCallPress(),
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      padding: EdgeInsets.all(5),
-                      margin: EdgeInsets.only(right: 12),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: secondaryLightBlueColor,
-                      ),
-                      child: Center(
-                        child: FittedBox(
-                          child: Icon(
-                            Icons.call,
-                            color: primaryBlueColor,
+          Obx(
+            () => Container(
+              child: controller.chat.value?.chatInfo.phoneNumber != null
+                  ? InkWell(
+                      // onTap: () async => _onCallPress(),
+                      onTap: () async {
+                        final Uri launchUri = Uri(
+                          scheme: 'tel',
+                          path: controller.chat.value?.chatInfo.phoneNumber,
+                        );
+                        mezDbgPrint(await canLaunchUrl(launchUri));
+                        if (await canLaunchUrl(launchUri)) {
+                          await launchUrl(launchUri);
+                        } else {
+                          throw 'Could not launch $launchUri';
+                        }
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        padding: EdgeInsets.all(5),
+                        margin: EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: secondaryLightBlueColor,
+                        ),
+                        child: Center(
+                          child: FittedBox(
+                            child: Icon(
+                              Icons.call,
+                              color: primaryBlueColor,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                : SizedBox(),
+                    )
+                  : SizedBox(),
+            ),
           ),
           // )
         ],

@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 
 class ROpMenuViewController {
   /// Handles ui logic of the menu view inside the restaurant app
@@ -46,7 +47,9 @@ class ROpMenuViewController {
     final List<Category>? _categories =
         await get_restaurant_categories_by_id(restaurnatId, withCache: false);
     noCategory.value.items.clear();
-    noCategory.value.items = itemsWithNoCat;
+    noCategory.value.items = itemsWithNoCat
+        .where((Item element) => element.itemType != ItemType.Special)
+        .toList();
     noCategory.refresh();
     if (_categories != null) {
       mainCategories.clear();

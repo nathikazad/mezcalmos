@@ -78,6 +78,9 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
         chatTite: _chat.parsedData!.chat_by_pk!.chat_info![
                 '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatTitle'],
+        phoneNumber: _chat.parsedData!.chat_by_pk!.chat_info![
+                '${Get.find<SettingsController>().appType.toNormalString()}']
+            ['phoneNumber'],
         chatImg: _chat.parsedData!.chat_by_pk!.chat_info![
                 '${Get.find<SettingsController>().appType.toNormalString()}']
             ['chatImage'],

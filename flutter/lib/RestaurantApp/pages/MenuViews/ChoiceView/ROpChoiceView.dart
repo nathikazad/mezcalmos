@@ -6,6 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/R
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -20,6 +21,8 @@ class ROpChoiceView extends StatefulWidget {
 
 class _ROpChoiceViewState extends State<ROpChoiceView>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<FormState> _prFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _scFormKey = GlobalKey<FormState>();
   ROpChoiceViewController viewController = ROpChoiceViewController();
   late TabController tabController;
   String? choiceId;
@@ -55,108 +58,128 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
             SingleChildScrollView(
               padding: const EdgeInsets.all(13),
               child: Form(
+                  key: _prFormKey,
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Obx(
-                    () => ROpAvailableChips(
-                        isAvailable: viewController.isAv.value,
-                        marging: EdgeInsets.symmetric(vertical: 10),
-                        onAvailableTap: (bool? v) {
-                          viewController.switchChoiceAv(true);
-                        },
-                        onUnavailableTap: (bool? v) {
-                          viewController.switchChoiceAv(false);
-                        }),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Choice name",
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: viewController.prChoiceName,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Choice price",
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: viewController.choicePriceText,
-                    style: Get.textTheme.bodyText1,
-                    textAlignVertical: TextAlignVertical.center,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))
-                    ],
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.attach_money_rounded)),
-                  ),
-                  SizedBox(
-                    height: 35,
-                  ),
-                  MezButton(
-                    label: "Delete choice",
-                    backgroundColor: offRedColor,
-                    textColor: Colors.red,
-                    onClick: () async {
-                      await showConfirmationDialog(context,
-                          onYesClick: () async {
-                        await viewController
-                            .deleteChoice()
-                            .then((bool? hasBennDeleted) {
-                          if (hasBennDeleted == true) {
-                            MezRouter.back(result: true);
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(
+                        () => ROpAvailableChips(
+                            isAvailable: viewController.isAv.value,
+                            marging: EdgeInsets.symmetric(vertical: 10),
+                            onAvailableTap: (bool? v) {
+                              viewController.switchChoiceAv(true);
+                            },
+                            onUnavailableTap: (bool? v) {
+                              viewController.switchChoiceAv(false);
+                            }),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Choice name",
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: viewController.prChoiceName,
+                        style: Get.textTheme.bodyText1,
+                        validator: (String? v) {
+                          if (v == null || v.isEmpty) {
+                            return "Required";
                           }
-                        });
-                      },
-                          primaryButtonText: 'Yes, delete choice',
-                          title: 'Delete choice',
-                          helperText:
-                              "Are you sure you want to delete this choice");
-                    },
-                  )
-                ],
-              )),
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "Choice price",
+                        style: Get.textTheme.bodyText1,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: viewController.choicePriceText,
+                        style: Get.textTheme.bodyText1,
+                        validator: (String? v) {
+                          if (v == null || v.isEmpty) {
+                            return "Required";
+                          }
+                          return null;
+                        },
+                        textAlignVertical: TextAlignVertical.center,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]'))
+                        ],
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.attach_money_rounded)),
+                      ),
+                      SizedBox(
+                        height: 35,
+                      ),
+                      MezButton(
+                        label: "Delete choice",
+                        backgroundColor: offRedColor,
+                        textColor: Colors.red,
+                        onClick: () async {
+                          await showConfirmationDialog(context,
+                              onYesClick: () async {
+                            await viewController
+                                .deleteChoice()
+                                .then((bool? hasBennDeleted) {
+                              if (hasBennDeleted == true) {
+                                MezRouter.back(result: true);
+                              }
+                            });
+                          },
+                              primaryButtonText: 'Yes, delete choice',
+                              title: 'Delete choice',
+                              helperText:
+                                  "Are you sure you want to delete this choice");
+                        },
+                      )
+                    ],
+                  )),
             ),
             // secondary language tab//
             SingleChildScrollView(
               padding: const EdgeInsets.all(13),
               child: Form(
+                  key: _scFormKey,
                   child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Obx(
-                    () => Text(
-                      "Choice name in ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
-                      style: Get.textTheme.bodyText1,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    controller: viewController.scChoiceName,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                ],
-              )),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Obx(
+                        () => Text(
+                          "Choice name in ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
+                          style: Get.textTheme.bodyText1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        controller: viewController.scChoiceName,
+                        style: Get.textTheme.bodyText1,
+                        validator: (String? v) {
+                          if (v == null || v.isEmpty) {
+                            return "Required";
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  )),
             ),
           ],
         ));
@@ -168,7 +191,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       withGradient: true,
       borderRadius: 0,
       onClick: () async {
-        await viewController.saveChoice();
+        await _handleSaveBtn();
       },
     );
   }
@@ -197,5 +220,60 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
         }
       }),
     );
+  }
+
+  Future<void> _handleSaveBtn() async {
+    if (!viewController.isFirstValid || !viewController.isSecondValid) {
+      _prFormKey.currentState?.validate();
+      _scFormKey.currentState?.validate();
+      mezDbgPrint("switch to second $switchToSecond");
+      mezDbgPrint("switch to first $switchToFirst");
+      if (switchToSecond) {
+        tabController.animateTo(1);
+        mezDbgPrint("Animate to second tab");
+      } else if (switchToFirst) {
+        tabController.animateTo(0);
+        mezDbgPrint("Animate to First tab");
+      }
+    } else {
+      await viewController.saveChoice();
+    }
+  }
+
+  bool get switchToFirst {
+    return !viewController.isFirstValid &&
+        tabController.index != 0 &&
+        viewController.isSecondValid;
+  }
+
+  bool get switchToSecond {
+    return !viewController.isSecondValid &&
+        tabController.index != 1 &&
+        viewController.isFirstValid;
+  }
+
+  Future<void> _handleSecondTab() async {
+    if (viewController.firstTabValid == true &&
+        _scFormKey.currentState?.validate() == true) {
+      //  MezRouter.back(result: viewController.saveOption());
+    } else if (_scFormKey.currentState?.validate() == true &&
+        _prFormKey.currentState?.validate() != true) {
+      viewController.secondTabValid = true;
+      tabController.animateTo(0);
+    }
+  }
+
+  Future<void> _handleFirstTab() async {
+    if (_prFormKey.currentState?.validate() == true &&
+        (_scFormKey.currentState?.validate() == true ||
+            viewController.secondTabValid)) {
+      await viewController.saveChoice();
+      // MezRouter.back(result: viewController.saveOption());
+    } else if (_prFormKey.currentState?.validate() == true &&
+        _scFormKey.currentState?.validate() != true) {
+      viewController.firstTabValid = true;
+
+      tabController.animateTo(1);
+    }
   }
 }

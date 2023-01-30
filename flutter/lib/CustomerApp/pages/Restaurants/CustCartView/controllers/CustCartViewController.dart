@@ -204,11 +204,11 @@ class CustCartViewController {
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
     try {
-      // final String? stripePaymentId =
-      //     await acceptPaymentByCardChoice(getCardChoice);
+      final String? stripePaymentId =
+          await acceptPaymentByCardChoice(getCardChoice);
       mezDbgPrint("✅ Stripe payment id ====================>>>");
       final ServerResponse _serverResponse =
-          await cartController.checkout(stripePaymentId: null);
+          await cartController.checkout(stripePaymentId: stripePaymentId);
 
       mezDbgPrint("datatatatataat => ${_serverResponse.data}");
 

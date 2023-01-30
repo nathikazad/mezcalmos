@@ -129,9 +129,11 @@ class HasuraChatInfo {
   final String chatTite;
   final String chatImg;
   final String parentlink;
+  final String? phoneNumber;
 
   HasuraChatInfo({
     required this.chatTite,
+    this.phoneNumber,
     required this.chatImg,
     required this.parentlink,
   });

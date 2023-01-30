@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpMenuView"]["components"]["ROpItemCard"];
@@ -31,11 +31,15 @@ class ROpSpecialItemCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          MezRouter.toNamed(
+        onTap: () async {
+          final bool? shouldRefresh = await MezRouter.toNamed(
               getEditItemRoute(
                   itemId: item.id!, restaurntID: viewController.restaurnatId),
-              arguments: {"specials": true});
+              arguments: {"specials": true}) as bool;
+
+          if (shouldRefresh == true) {
+            await viewController.fetchSpecials();
+          }
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),

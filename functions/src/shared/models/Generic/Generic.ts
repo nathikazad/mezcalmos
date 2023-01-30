@@ -86,6 +86,7 @@ export enum AuthorizationStatus {
   InReview = "inReview",
   Authorized = "authorized",
   Unauthorized = "unauthorized"
+
 }
 
 export enum OperatorType {

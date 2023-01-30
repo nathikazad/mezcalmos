@@ -255,7 +255,7 @@ def getIndex():
       };
       finalParams.addAll(parameters ?? <String, dynamic>{});
       final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
-          .httpsCallable('restaurant2-cancelOrderFromCustomer')
+          .httpsCallable(functionName)
           .call(finalParams);
       print(response.data);
 
