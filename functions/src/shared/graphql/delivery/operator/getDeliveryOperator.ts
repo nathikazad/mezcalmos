@@ -20,19 +20,22 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             owner: true,
             app_version: true,
             current_gps: true,
-            notification_token: true,
+            notification_info: {
+                token: true,
+                turn_off_notifications: true
+            },
             user: {
                 firebase_id: true,
                 language_id: true
             }
         }]
     })
-    if(response.delivery_operator == null) {
+    if (response.delivery_operator == null) {
         throw new HttpsError(
-          "internal",
-          "No delivery company with that id found or company has no operators"
+            "internal",
+            "No delivery company with that id found or company has no operators"
         );
-      }
+    }
     return response.delivery_operator.map((d) => {
         return <DeliveryOperator>{
             id: d.id,
@@ -44,11 +47,12 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             currentGPS: (d.current_gps) ? {
                 lat: d.current_gps.coordinates[1],
                 lng: d.current_gps.coordinates[0]
-            }: undefined,
-            notificationInfo: (d.notification_token) ? <NotificationInfo>{
-                AppTypeId: AppType.DeliveryAdmin,
-                token: d.notification_token
-            }: undefined,
+            } : undefined,
+            notificationInfo: (d.notification_info) ? <NotificationInfo>{
+                appType: AppType.DeliveryAdmin,
+                token: d.notification_info.token,
+                turnOffNotifications: d.notification_info.turn_off_notifications
+            } : undefined,
             user: {
                 id: d.user_id,
                 firebaseId: d.user.firebase_id,
@@ -72,20 +76,23 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
             owner: true,
             app_version: true,
             current_gps: true,
-            notification_token: true,
+            notification_info: {
+                token: true,
+                turn_off_notifications: true
+            },
             user: {
                 firebase_id: true,
                 language_id: true
             }
         }]
     })
-    if(response.delivery_operator_by_pk == null) {
+    if (response.delivery_operator_by_pk == null) {
         throw new HttpsError(
-          "internal",
-          "No delivery operator with that id found"
+            "internal",
+            "No delivery operator with that id found"
         );
-      }
-    
+    }
+
     return {
         id: response.delivery_operator_by_pk.id,
         userId: response.delivery_operator_by_pk.user_id,
@@ -97,10 +104,11 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
             lat: response.delivery_operator_by_pk.current_gps.coordinates[1],
             lng: response.delivery_operator_by_pk.current_gps.coordinates[0]
         },
-        notificationInfo: (response.delivery_operator_by_pk.notification_token) ? <NotificationInfo>{
-            AppTypeId: AppType.DeliveryAdmin,
-            token: response.delivery_operator_by_pk.notification_token
-        }: undefined,
+        notificationInfo: (response.delivery_operator_by_pk.notification_info) ? <NotificationInfo>{
+            appType: AppType.DeliveryAdmin,
+            token: response.delivery_operator_by_pk.notification_info.token,
+            turnOffNotifications: response.delivery_operator_by_pk.notification_info.turn_off_notifications
+        } : undefined,
         user: {
             id: response.delivery_operator_by_pk.user_id,
             firebaseId: response.delivery_operator_by_pk.user.firebase_id as string,
@@ -127,20 +135,23 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
             owner: true,
             app_version: true,
             current_gps: true,
-            notification_token: true,
+            notification_info: {
+                token: true,
+                turn_off_notifications: true
+            },
             user: {
                 firebase_id: true,
                 language_id: true
             }
         }]
     })
-    if(!(response.delivery_operator.length)) {
+    if (!(response.delivery_operator.length)) {
         throw new HttpsError(
-          "internal",
-          "No delivery operator with that user id found"
+            "internal",
+            "No delivery operator with that user id found"
         );
-      }
-    
+    }
+
     return {
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
@@ -148,14 +159,15 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         status: response.delivery_operator[0].status as DeliveryOperatorStatus,
         owner: response.delivery_operator[0].owner,
         appVersion: response.delivery_operator[0].app_version,
-        currentGPS: (response.delivery_operator[0].current_gps) ?{
+        currentGPS: (response.delivery_operator[0].current_gps) ? {
             lat: response.delivery_operator[0].current_gps.coordinates[1],
             lng: response.delivery_operator[0].current_gps.coordinates[0]
         } : undefined,
-        notificationInfo: (response.delivery_operator[0].notification_token) ? <NotificationInfo>{
-            AppTypeId: AppType.DeliveryAdmin,
-            token: response.delivery_operator[0].notification_token
-        }: undefined,
+        notificationInfo: (response.delivery_operator[0].notification_info) ? <NotificationInfo>{
+            appType: AppType.DeliveryAdmin,
+            token: response.delivery_operator[0].notification_info.token,
+            turnOffNotifications: response.delivery_operator[0].notification_info.turn_off_notifications
+        } : undefined,
         user: {
             id: response.delivery_operator[0].user_id,
             firebaseId: response.delivery_operator[0].user.firebase_id as string,

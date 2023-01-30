@@ -21,6 +21,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
         }]
       },
       image: true,
+      phone_number: true,
       open_status: true,     
       approved: true,
       stripe_info: [{}, true],
@@ -30,7 +31,10 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
         user_id: true,
         status: true,
         owner: true,
-        notification_token: true,
+        notification_info: {
+          token: true,
+          turn_off_notifications: true
+        },
         user: {
           firebase_id: true,
           language_id: true,
@@ -65,9 +69,10 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       restaurantId: restaurantId,
       status: r.status as OperatorStatus,
       owner: r.owner,
-      notificationInfo: (r.notification_token) ? {
-        AppTypeId: AppType.RestaurantApp,
-        token: r.notification_token
+      notificationInfo: (r.notification_info) ? {
+        appType: AppType.RestaurantApp,
+        token: r.notification_info.token,
+        turnOffNotifications: r.notification_info.turn_off_notifications
       } : undefined,
       user: {
         id: r.user_id,
@@ -85,8 +90,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     name: response.restaurant_restaurant_by_pk.name,
     image: response.restaurant_restaurant_by_pk.image,
     selfDelivery:response.restaurant_restaurant_by_pk.self_delivery,
-
-    
+    phoneNumber: response.restaurant_restaurant_by_pk.phone_number,
     location: {
       address: response.restaurant_restaurant_by_pk.location?.address,
       lat : response.restaurant_restaurant_by_pk.location?.gps.coordinates[1],

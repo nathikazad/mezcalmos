@@ -1,6 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -87,7 +87,7 @@ class DeliveryOrder {
       id: id ?? this.id,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,
-      status: status ?? status,
+      status: status,
       stripeOrderPaymentInfo: stripeOrderPaymentInfo,
       deliveryCompany: deliveryCompany ?? this.deliveryCompany,
       driverLocation: driverLocation ?? this.driverLocation,

@@ -33,6 +33,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           click: autoBack ? (onClick ?? () => MezRouter.back<void>()) : onClick,
         );
       case AppBarLeftButtonType.Menu:
+      default:
         return _MenuButtonAppBar();
     }
     return null;

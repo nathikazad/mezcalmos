@@ -35,6 +35,7 @@ import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
 import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
 import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 import { deliveryDriverAtPickup, startDelivery, deliveryDriverAtDropoff, finishDelivery } from "./delivery/restaurantStatusChange";
+import { callUser } from "./utilities/agora";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -63,6 +64,10 @@ export const stripe = {
   removeCard: authenticatedCall((userId, data) => stripeCardFunctions.removeCard(userId, data)),
   setupServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.setupServiceProvider(userId, data)),
   updateServiceProvider: authenticatedCall((userId, data) => stripeServiceProvderFunctions.updateServiceProvider(userId, data)),
+}
+
+export const agora = {
+  callChatUser: authenticatedCall((userId, data) => callUser(userId, data))
 }
 
 export const restaurant2 = {

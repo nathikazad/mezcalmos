@@ -58,7 +58,7 @@ class CustomerAuthController extends GetxController {
     mezDbgPrint(
         "Getting cust saved locations ====😀===========>>>${_customer.value?.savedLocations.length}");
     _customer.refresh();
-    print("[+] Customer currently using App v$_appVersion");
+    mezDbgPrint("[+] Customer currently using App v$_appVersion");
     await set_customer_app_version(
         version: _appVersion, customer_id: _authController.hasuraUserId!);
     // setting device notification

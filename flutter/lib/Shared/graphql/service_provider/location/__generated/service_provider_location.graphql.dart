@@ -485,7 +485,7 @@ extension ClientExtension$Mutation$updateServiceLocation
 
 class Mutation$updateServiceLocation$update_service_provider_location_by_pk {
   Mutation$updateServiceLocation$update_service_provider_location_by_pk({
-    this.address,
+    required this.address,
     required this.gps,
     required this.id,
     required this.$__typename,
@@ -498,14 +498,14 @@ class Mutation$updateServiceLocation$update_service_provider_location_by_pk {
     final l$id = json['id'];
     final l$$__typename = json['__typename'];
     return Mutation$updateServiceLocation$update_service_provider_location_by_pk(
-      address: (l$address as String?),
+      address: (l$address as String),
       gps: geographyFromJson(l$gps),
       id: (l$id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String? address;
+  final String address;
 
   final Geography gps;
 
@@ -634,8 +634,9 @@ class _CopyWithImpl$Mutation$updateServiceLocation$update_service_provider_locat
   }) =>
       _then(
           Mutation$updateServiceLocation$update_service_provider_location_by_pk(
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),

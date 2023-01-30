@@ -55,6 +55,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     let customerCart: Cart = response[1];
     let customer: CustomerInfo = response[2];
     let mezAdmins: MezAdmin[] = response[3];
+    console.log(mezAdmins)
     errorChecks(restaurant, checkoutRequest, customerId, customerCart);
 
     let orderItems: OrderItem[] = customerCart.items.map((i) => {
@@ -86,7 +87,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     console.log("+ Items[0].SelectedOptions ==> " ,customerCart.items[0].selectedOptions);
     console.log("+ Items ==> " , customerCart.items);
 
-    let deliveryOrder: DeliveryOrder = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest);
+    let deliveryOrder: DeliveryOrder = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest, mezAdmins);
     console.log("🤑🤑🤑🤑🤑🤑🤑🤑")
     setOrderChatInfo(restaurantOrder, restaurant, deliveryOrder, customer);
 
@@ -94,28 +95,11 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(restaurantOrder.orderId!, restaurant);
 
-    if(checkoutRequest.deliveryType == DeliveryType.Delivery) {
-      if(restaurant.delivery) {
-        if(!(restaurant.selfDelivery)) {
-          if(restaurant.deliveryPartnerId == null) {
-            throw new HttpsError(
-              "internal",
-              "No delivery partner"
-            );
-          }
-          let assignDetails: AssignCompanyDetails = {
-            deliveryCompanyId: restaurant.deliveryPartnerId,
-            restaurantOrderId: restaurantOrder.orderId!
-          }
-          await assignDeliveryCompany(0, assignDetails)
-        }
-      } else {
-        throw new HttpsError(
-          "internal",
-          "Restaurant not accepting delivery orders"
-        );
-      }
+    let assignDetails: AssignCompanyDetails = {
+      deliveryCompanyId: restaurant.deliveryPartnerId!,
+      restaurantOrderId: restaurantOrder.orderId!
     }
+    await assignDeliveryCompany(0, assignDetails)
     
     let paymentDetails: PaymentDetails = {
       orderId: restaurantOrder.orderId!,
@@ -161,6 +145,24 @@ function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, c
       "internal",
       "Empty cart"
     );
+  }
+
+  if(checkoutRequest.deliveryType == DeliveryType.Delivery) {
+    if(restaurant.delivery) {
+      if(!(restaurant.selfDelivery)) {
+        if(restaurant.deliveryPartnerId == null) {
+          throw new HttpsError(
+            "internal",
+            "No delivery partner"
+          );
+        }
+      }
+    } else {
+      throw new HttpsError(
+        "internal",
+        "Restaurant not accepting delivery orders"
+      );
+    }
   }
 }
 

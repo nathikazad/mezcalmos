@@ -1,5 +1,5 @@
-import 'package:mezcalmos/Shared/helpers/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -146,7 +146,6 @@ abstract class DeliverableOrder extends Order {
       this.notifiedAdmin = false,
       this.notifiedOperator = false,
       super.totalCostBeforeShipping,
-      
       super.totalCost,
       super.refundAmount,
       super.costToCustomer,

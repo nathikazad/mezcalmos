@@ -6,6 +6,14 @@ extension ParseOrderTypeToString on OrderType {
   }
 }
 
+enum ParticipantType { Customer, Taxi, DeliveryOperator, DeliveryDriver, LaundryOperator, RestaurantOperator, MezAdmin }
+extension ParseParticipantTypeToString on ParticipantType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
 class Location {
   num lat;
   num lng;
@@ -62,12 +70,14 @@ extension ParseDeliveryTypeToString on DeliveryType {
 
 class NotificationInfo {
   String token;
-  AppType AppTypeId;
-  NotificationInfo(this.token, this.AppTypeId);
+  bool turnOffNotifications;
+  AppType appType;
+  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "token": token,
-      "AppTypeId": AppTypeId};
+      "turnOffNotifications": turnOffNotifications,
+      "appType": appType};
   }
 }
 

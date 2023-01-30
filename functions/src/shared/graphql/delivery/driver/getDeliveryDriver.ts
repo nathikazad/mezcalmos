@@ -4,10 +4,10 @@ import { AppType, Language } from "../../../models/Generic/Generic";
 import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../../models/Generic/Delivery";
 
 export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
-  
+
   let chain = getHasura();
   let response;
-  if(deliveryDriverType == DeliveryDriverType.RestaurantOperator) {
+  if (deliveryDriverType == DeliveryDriverType.RestaurantOperator) {
     response = await chain.query({
       restaurant_operator_by_pk: [{
         id: deliveryDriverId
@@ -17,12 +17,16 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
           firebase_id: true,
           language_id: true,
           image: true,
-          name: true
+          name: true,
+          phone: true
         },
-        notification_token: true
+        notification_info: {
+          token: true,
+          turn_off_notifications: true
+        },
       }]
     });
-    if(response.restaurant_operator_by_pk == null) {
+    if (response.restaurant_operator_by_pk == null) {
       throw new HttpsError(
         "internal",
         "No operator with that id found"
@@ -31,18 +35,20 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
     return {
       userId: response.restaurant_operator_by_pk.user.id,
       user: {
-        id:  response.restaurant_operator_by_pk.user.id,
+        id: response.restaurant_operator_by_pk.user.id,
         firebaseId: response.restaurant_operator_by_pk.user.firebase_id,
         language: response.restaurant_operator_by_pk.user.language_id as Language,
         image: response.restaurant_operator_by_pk.user.image,
-        name: response.restaurant_operator_by_pk.user.name
+        name: response.restaurant_operator_by_pk.user.name,
+        phoneNumber: response.restaurant_operator_by_pk.user.phone
       },
-      notificationInfo: (response.restaurant_operator_by_pk.notification_token) ? {
-        AppTypeId: AppType.RestaurantApp,
-        token: response.restaurant_operator_by_pk.notification_token
+      notificationInfo: (response.restaurant_operator_by_pk.notification_info) ? {
+        appType: AppType.RestaurantApp,
+        token: response.restaurant_operator_by_pk.notification_info.token,
+        turnOffNotifications: response.restaurant_operator_by_pk.notification_info.turn_off_notifications
       } : undefined,
       deliveryDriverType: DeliveryDriverType.RestaurantOperator
-    } 
+    }
   }
   else {
     response = await chain.query({
@@ -58,12 +64,16 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
           firebase_id: true,
           language_id: true,
           image: true,
-          name: true
+          name: true,
+          phone: true
         },
-        notification_token: true,
+        notification_info: {
+          token: true,
+          turn_off_notifications: true
+        },
       }]
     });
-    if(response.delivery_driver_by_pk == null) {
+    if (response.delivery_driver_by_pk == null) {
       throw new HttpsError(
         "internal",
         "No delivery driver with that id found"
@@ -81,11 +91,13 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         firebaseId: response.delivery_driver_by_pk.user.firebase_id,
         language: response.delivery_driver_by_pk.user.language_id as Language,
         image: response.delivery_driver_by_pk.user.image,
-        name: response.delivery_driver_by_pk.user.name
+        name: response.delivery_driver_by_pk.user.name,
+        phoneNumber: response.delivery_driver_by_pk.user.phone
       },
-      notificationInfo: (response.delivery_driver_by_pk.notification_token) ? {
-        AppTypeId: AppType.DeliveryApp,
-        token: response.delivery_driver_by_pk.notification_token
+      notificationInfo: (response.delivery_driver_by_pk.notification_info) ? {
+        appType: AppType.DeliveryApp,
+        token: response.delivery_driver_by_pk.notification_info.token,
+        turnOffNotifications: response.delivery_driver_by_pk.notification_info.turn_off_notifications
       } : undefined,
       deliveryDriverType: DeliveryDriverType.DeliveryDriver
     }

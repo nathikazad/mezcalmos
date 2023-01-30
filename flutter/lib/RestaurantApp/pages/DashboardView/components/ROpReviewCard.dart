@@ -39,7 +39,7 @@ class _ROpReviewCardState extends State<ROpReviewCard> {
                       style: Get.textTheme.bodyText1,
                     ),
                     Text(
-                      widget.review.reviewTime!.timeAgo().toLowerCase(),
+                      widget.review.reviewTime.timeAgo().toLowerCase(),
                       style: Get.textTheme.subtitle1,
                     ),
                     const SizedBox(

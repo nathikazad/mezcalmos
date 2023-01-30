@@ -1432,6 +1432,13 @@ const documentNodeQuerygetNotifInfoByUserId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'turn_off_notifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1561,6 +1568,7 @@ class Query$getNotifInfoByUserId$notification_info {
     required this.id,
     required this.token,
     required this.user_id,
+    required this.turn_off_notifications,
     required this.$__typename,
   });
 
@@ -1570,12 +1578,14 @@ class Query$getNotifInfoByUserId$notification_info {
     final l$id = json['id'];
     final l$token = json['token'];
     final l$user_id = json['user_id'];
+    final l$turn_off_notifications = json['turn_off_notifications'];
     final l$$__typename = json['__typename'];
     return Query$getNotifInfoByUserId$notification_info(
       app_type_id: (l$app_type_id as String),
       id: (l$id as int),
       token: (l$token as String),
       user_id: (l$user_id as int),
+      turn_off_notifications: (l$turn_off_notifications as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1587,6 +1597,8 @@ class Query$getNotifInfoByUserId$notification_info {
   final String token;
 
   final int user_id;
+
+  final bool turn_off_notifications;
 
   final String $__typename;
 
@@ -1600,6 +1612,8 @@ class Query$getNotifInfoByUserId$notification_info {
     _resultData['token'] = l$token;
     final l$user_id = user_id;
     _resultData['user_id'] = l$user_id;
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1611,12 +1625,14 @@ class Query$getNotifInfoByUserId$notification_info {
     final l$id = id;
     final l$token = token;
     final l$user_id = user_id;
+    final l$turn_off_notifications = turn_off_notifications;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$app_type_id,
       l$id,
       l$token,
       l$user_id,
+      l$turn_off_notifications,
       l$$__typename,
     ]);
   }
@@ -1648,6 +1664,11 @@ class Query$getNotifInfoByUserId$notification_info {
     final l$user_id = user_id;
     final lOther$user_id = other.user_id;
     if (l$user_id != lOther$user_id) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1683,6 +1704,7 @@ abstract class CopyWith$Query$getNotifInfoByUserId$notification_info<TRes> {
     int? id,
     String? token,
     int? user_id,
+    bool? turn_off_notifications,
     String? $__typename,
   });
 }
@@ -1705,6 +1727,7 @@ class _CopyWithImpl$Query$getNotifInfoByUserId$notification_info<TRes>
     Object? id = _undefined,
     Object? token = _undefined,
     Object? user_id = _undefined,
+    Object? turn_off_notifications = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getNotifInfoByUserId$notification_info(
@@ -1718,6 +1741,10 @@ class _CopyWithImpl$Query$getNotifInfoByUserId$notification_info<TRes>
         user_id: user_id == _undefined || user_id == null
             ? _instance.user_id
             : (user_id as int),
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1735,6 +1762,7 @@ class _CopyWithStubImpl$Query$getNotifInfoByUserId$notification_info<TRes>
     int? id,
     String? token,
     int? user_id,
+    bool? turn_off_notifications,
     String? $__typename,
   }) =>
       _res;

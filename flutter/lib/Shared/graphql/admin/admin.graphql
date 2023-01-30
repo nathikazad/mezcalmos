@@ -18,7 +18,10 @@ query get_admin_info($admin_id : Int!) {
   mez_admin(where:{user_id  : {_eq: $admin_id}})
   {
     version,
-    notification_token,
+    notification_info {
+      token,
+      turn_off_notifications
+    },
     user {
       id,
       name,

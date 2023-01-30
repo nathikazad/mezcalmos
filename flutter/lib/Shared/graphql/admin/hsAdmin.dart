@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/__generated/admin.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 final GraphQLClient _graphClient = Get.find<HasuraDb>().graphQLClient;
 
@@ -28,9 +29,13 @@ Future<MezAdmin?> get_admin({required int user_id}) async {
         "[tt] Called :: get_admin :: SUCCESS :: got_admin(${_admin[0].user?.name})");
 
     return MezAdmin(
-      appVersion: _admin[0].version,
-      notificationInfo: _admin[0].notification_token,
-    );
+        appVersion: _admin[0].version,
+        notificationInfo: _admin[0].notification_info != null
+            ? NotificationInfo(
+                token: _admin[0].notification_info!.token,
+                turnOffNotifications:
+                    _admin[0].notification_info!.turn_off_notifications)
+            : null);
   } else {
     mezDbgPrint("[tt] No such customer exists :: id($user_id)");
   }

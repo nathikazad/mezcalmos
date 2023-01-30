@@ -125,11 +125,10 @@ class SavedLocationComponent extends StatelessWidget {
                 ),
               ],
             ),
-            if (savelocation.location != null)
-              Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(top: 5),
-                  child: Text(savelocation.location!.address))
+            Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(top: 5),
+                child: Text(savelocation.location.address))
           ],
         ),
       ),

@@ -36,7 +36,7 @@ String getPackageName() {
 Future<int> getAndroidSdkVersion() async {
   final AndroidDeviceInfo androidDeviceInfo =
       await DeviceInfoPlugin().androidInfo;
-  return androidDeviceInfo.version.sdkInt!;
+  return androidDeviceInfo.version.sdkInt;
 }
 
 String getLocalVersionName() {

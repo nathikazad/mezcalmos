@@ -1,55 +1,69 @@
 import { NotificationForQueue } from "../Notification";
-import { NotificationInfo } from "./Generic";
+import { AppType, NotificationInfo } from "./Generic";
 import { OrderType } from "./Order";
 import { UserInfo } from "./User";
 
 export type Participants = { [key in ParticipantType]?: Record<string, Participant> };
 
-export interface ChatData {
-  chatType: ChatType;
-  orderType?: OrderType;
-  chatId: string;
-  orderId?: string;
-  messages?: Record<string, Message>;
-  participants: Participants
-  authorizedUsers: Record<string, boolean>
-}
-
-//Made chat object into class to add an instance method which is not easy on chatData interface
-export class ChatObject {
-  chatData: ChatData;
-  constructor(chat: ChatData) {
-    this.chatData = chat;
-  }
-
-  addParticipant(participant: Participant) {
-    this.chatData.authorizedUsers = this.chatData.authorizedUsers || {};
-    this.chatData.authorizedUsers[participant.id] = true;
-    this.chatData.participants = this.chatData.participants || {};
-    // this.chatData.participants[participant.particpantType] = this.chatData.participants[participant.particpantType] || {};
-    // this.chatData.participants[participant.particpantType]![participant.id] = participant;
-  }
-}
 
 export enum ChatType {
   Direct = "direct",
   Group = "group"
 }
 
+export enum ChatInfoAppName {
+  CustomerApp = "CustomerApp",
+  DeliveryAdminApp = "DeliveryAdminApp",
+  DeliveryApp = "DeliveryApp",
+  MezAdminApp = "MezAdminApp",
+  RestaurantApp = "RestaurantApp"
+}
+
+export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
+  [AppType.Customer]: ChatInfoAppName.CustomerApp,
+  [AppType.DeliveryAdmin]: ChatInfoAppName.DeliveryAdminApp,
+  [AppType.DeliveryApp]: ChatInfoAppName.DeliveryApp,
+  [AppType.MezAdmin]: ChatInfoAppName.MezAdminApp,
+  [AppType.RestaurantApp]: ChatInfoAppName.RestaurantApp
+}
+
+export interface ChatInfo {
+  chatTitle: string,
+  chatImage: string,
+  phoneNumber?: string,
+  participantType?: ParticipantType,
+  parentLink: string
+}
+
 export enum ParticipantType {
   Customer = "customer",
   Taxi = "taxi",
   DeliveryOperator = "deliveryOperator",
-  Restaurant = "restaurant",
   DeliveryDriver = "deliveryDriver",
-  Laundry = "laundry",
   LaundryOperator = "laundryOperator",
   RestaurantOperator = "restaurantOperator",
   MezAdmin = "mezAdmin"
 }
 
-export const nonNotifiableParticipants: Array<ParticipantType> = [ParticipantType.Restaurant, ParticipantType.Laundry];
 
+export const AppParticipant: Record<AppType, ParticipantType> = {
+  [AppType.Customer]: ParticipantType.Customer,
+  [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
+  [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
+  [AppType.MezAdmin]: ParticipantType.MezAdmin,
+  [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
+}
+
+
+export function getAppTypeFromParticipantType(participantType: ParticipantType): AppType {
+  return Object.keys(AppParticipant).filter(function(key) {return AppParticipant[key as AppType] === participantType})[0] as AppType;
+}
+
+export interface Chat {
+  participants: Participant[]
+  chatType: ChatType
+  chatInfo: Record<ChatInfoAppName, ChatInfo>
+}
 
 export interface Participant extends UserInfo {
   participantType: ParticipantType,
@@ -66,21 +80,6 @@ export interface Message {
   timestamp: string
 }
 
-// export function buildChatForOrder(
-//   chatId: string,
-//   orderType: OrderType,
-//   orderId?: string,
-// ): ChatObject {
-//   let chat: ChatData = {
-//     orderId: orderId ?? chatId,
-//     chatId: chatId,
-//     // chatType: ChatType.Order,
-//     orderType: orderType,
-//     participants: {},
-//     authorizedUsers: {}
-//   }
-//   return new ChatObject(chat);
-// }
 
 export interface MessageNotificationForQueue extends NotificationForQueue {
   message: string,
@@ -102,14 +101,13 @@ export interface CallNotificationForQueue extends NotificationForQueue {
   chatId: number,
   callerId: number,
   callerParticipantType: ParticipantType,
-  calleeId: number,
-  calleeParticipantType: ParticipantType,
+  recipientId: number,
+  recipientParticipantType: ParticipantType,
   callNotificationType: CallNotificationtType,
-  orderId?: number
 }
 
 export interface ParticipantAgoraDetails {
-  // uid: number,
+  uid: number,
   token: string,
   expirationTime: string
 }

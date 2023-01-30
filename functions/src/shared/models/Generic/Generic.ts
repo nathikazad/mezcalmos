@@ -1,4 +1,3 @@
-import { ParticipantType } from "./Chat";
 import { UserInfo } from "./User";
 
 export interface Location {
@@ -28,25 +27,10 @@ export enum AppType {
   MezAdmin = "mez_admin"
 }
 
-export const ChatInfoAppName: Record<AppType, string> = {
-  [AppType.Customer]: "CustomerApp",
-  [AppType.DeliveryAdmin]: "DeliveryAdminApp",
-  [AppType.DeliveryApp]: "DeliveryApp",
-  [AppType.MezAdmin]: "MezAdminApp",
-  [AppType.RestaurantApp]: "RestaurantApp"
-}
-
-export const AppParticipant: Record<AppType, ParticipantType> = {
-  [AppType.Customer]: ParticipantType.Customer,
-  [AppType.DeliveryAdmin]: ParticipantType.DeliveryOperator,
-  [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
-  [AppType.MezAdmin]: ParticipantType.MezAdmin,
-  [AppType.RestaurantApp]: ParticipantType.RestaurantOperator
-}
-
 export interface NotificationInfo {
   token: string;
-  AppTypeId: AppType;
+  turnOffNotifications: boolean;
+  appType: AppType;
 }
 
 export enum TokenType {

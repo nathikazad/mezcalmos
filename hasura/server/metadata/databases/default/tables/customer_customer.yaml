@@ -9,6 +9,16 @@ object_relationships:
         table:
           name: cart
           schema: restaurant
+  - name: notification_info
+    using:
+      manual_configuration:
+        column_mapping:
+          app_type_id: app_type_id
+          user_id: user_id
+        insertion_order: null
+        remote_table:
+          name: notification_info
+          schema: public
   - name: user
     using:
       foreign_key_constraint_on: user_id
@@ -27,12 +37,6 @@ array_relationships:
         table:
           name: saved_location
           schema: customer
-computed_fields:
-  - name: notification_token
-    definition:
-      function:
-        name: customer_notification_token
-        schema: public
 insert_permissions:
   - role: customer
     permission:
@@ -50,8 +54,6 @@ select_permissions:
         - service_provider_type
         - stripe_info
         - user_id
-      computed_fields:
-        - notification_token
       filter:
         user_id:
           _eq: X-Hasura-User-Id
@@ -82,8 +84,6 @@ select_permissions:
         - app_version
         - service_provider_type
         - stripe_info
-      computed_fields:
-        - notification_token
       filter:
         _exists:
           _table:
