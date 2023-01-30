@@ -94,28 +94,11 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(restaurantOrder.orderId!, restaurant);
 
-    if(checkoutRequest.deliveryType == DeliveryType.Delivery) {
-      if(restaurant.delivery) {
-        if(!(restaurant.selfDelivery)) {
-          if(restaurant.deliveryPartnerId == null) {
-            throw new HttpsError(
-              "internal",
-              "No delivery partner"
-            );
-          }
-          let assignDetails: AssignCompanyDetails = {
-            deliveryCompanyId: restaurant.deliveryPartnerId,
-            restaurantOrderId: restaurantOrder.orderId!
-          }
-          await assignDeliveryCompany(0, assignDetails)
-        }
-      } else {
-        throw new HttpsError(
-          "internal",
-          "Restaurant not accepting delivery orders"
-        );
-      }
+    let assignDetails: AssignCompanyDetails = {
+      deliveryCompanyId: restaurant.deliveryPartnerId!,
+      restaurantOrderId: restaurantOrder.orderId!
     }
+    await assignDeliveryCompany(0, assignDetails)
     
     let paymentDetails: PaymentDetails = {
       orderId: restaurantOrder.orderId!,
@@ -161,6 +144,24 @@ function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, c
       "internal",
       "Empty cart"
     );
+  }
+
+  if(checkoutRequest.deliveryType == DeliveryType.Delivery) {
+    if(restaurant.delivery) {
+      if(!(restaurant.selfDelivery)) {
+        if(restaurant.deliveryPartnerId == null) {
+          throw new HttpsError(
+            "internal",
+            "No delivery partner"
+          );
+        }
+      }
+    } else {
+      throw new HttpsError(
+        "internal",
+        "Restaurant not accepting delivery orders"
+      );
+    }
   }
 }
 

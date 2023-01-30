@@ -32,16 +32,19 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
           CustomerApp: {
             chatTitle: restaurant.name,
             chatImage: restaurant.image,
+            // phoneNumber: restaurant.phoneNumber,
             parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           },
           RestaurantApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
             parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           },
           MezAdminApp: {
             chatTitle: customer.name ?? "Customer",
             chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
             parentLink: `/restaurantOrders/${restaurantOrder.orderId}`
           }
         }),
@@ -61,11 +64,13 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
             DeliveryApp: {
               chatTitle: customer.name ?? "Customer",
               chatImage: customer.image,
+              phoneNumber: customer.phoneNumber,
               parentLink: `/Orders/${delivery.deliveryId}`
             },
             RestaurantApp: {
               chatTitle: customer.name ?? "Customer",
               chatImage: customer.image,
+              phoneNumber: customer.phoneNumber,
               parentLink: `/Orders/${delivery.deliveryId}`
             },
             CustomerApp: {
@@ -87,6 +92,7 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
             DeliveryApp: {
               chatTitle: restaurant.name,
               chatImage: restaurant.image,
+              // phoneNumber: restaurant.phoneNumber,
               parentLink: `/Orders/${delivery.deliveryId}`
             },
             RestaurantApp: {
@@ -123,6 +129,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
     ...chatInfo.CustomerApp,
     chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
     chatImage: deliveryDriver.user?.image,
+    phoneNumber: deliveryDriver.user?.phoneNumber
   }
   chain.mutation({
     update_chat_by_pk: [{
@@ -148,6 +155,7 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
     ...chatInfo.RestaurantApp,
     chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
     chatImage: deliveryDriver.user?.image,
+    phoneNumber: deliveryDriver.user?.phoneNumber
   }
   chain.mutation({
     update_chat_by_pk: [{

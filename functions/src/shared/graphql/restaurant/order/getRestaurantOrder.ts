@@ -16,11 +16,14 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         delivery_type: true,
         status: true,
         payment_type: true,
+        refund_amount: true,
         customer_id: true,
         to_location_gps: true,
         order_time: true,
         restaurant: {
-          location_gps: true,
+          location: {
+            gps: true
+          },
           self_delivery :true,
         },
         delivery_id: true,
@@ -83,14 +86,15 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     restaurantId: response.restaurant_order_by_pk.restaurant_id,
     paymentType: response.restaurant_order_by_pk.payment_type as PaymentType,
     toLocation,
+    refundAmount: parseFloat(response.restaurant_order_by_pk.refund_amount.replace("$","")),
     estimatedFoodReadyTime: response.restaurant_order_by_pk.estimated_food_ready_time,
     status: response.restaurant_order_by_pk.status as RestaurantOrderStatus,
     deliveryType: response.restaurant_order_by_pk.delivery_type as DeliveryType,
     customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
-    deliveryCost: response.restaurant_order_by_pk.delivery_cost,
+    deliveryCost: parseFloat(response.restaurant_order_by_pk.delivery_cost.replace("$","")),
     items,
     stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info),
-    totalCost: response.restaurant_order_by_pk.total_cost
+    totalCost: parseFloat(response.restaurant_order_by_pk.total_cost.replace("$",""))
   }
   if(response.restaurant_order_by_pk.delivery_id != undefined) {
     restaurantOrder.deliveryId = response.restaurant_order_by_pk.delivery_id
@@ -132,7 +136,9 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         name: true,
         image: true,
         self_delivery:true,
-        location_gps: true,
+        location: {
+          gps: true
+        },
         delivery: true,
         customer_pickup: true,
       },
@@ -207,7 +213,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         name: o.restaurant.name,
         selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
-        location: o.restaurant.location_gps as Location,
+        location: o.restaurant.location.gps as Location,
         restaurantOperators,
         delivery: o.restaurant.delivery,
         customerPickup: o.restaurant.customer_pickup

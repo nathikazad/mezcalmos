@@ -12636,7 +12636,9 @@ count?: [{	columns?:ValueTypes["service_provider_post_select_column"][],	distinc
 }>;
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["service_provider_post_append_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:ValueTypes["jsonb"],
+	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"]
 };
 	/** aggregate avg on columns */
@@ -12664,18 +12666,24 @@ count?: [{	columns?:ValueTypes["service_provider_post_select_column"][],	distinc
 ["service_provider_post_constraint"]:service_provider_post_constraint;
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["service_provider_post_delete_at_path_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:string[],
+	/** Array of customerIds */
 	likes?:string[]
 };
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["service_provider_post_delete_elem_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:number,
+	/** Array of customerIds */
 	likes?:number
 };
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["service_provider_post_delete_key_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:string,
+	/** Array of customerIds */
 	likes?:string
 };
 	/** input type for incrementing numeric columns in table "service_provider.post" */
@@ -12685,9 +12693,11 @@ end). throws an error if top level container is not an array */
 };
 	/** input type for inserting data into table "service_provider.post" */
 ["service_provider_post_insert_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:ValueTypes["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
@@ -12747,16 +12757,20 @@ end). throws an error if top level container is not an array */
 };
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["service_provider_post_prepend_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:ValueTypes["jsonb"],
+	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"]
 };
 	/** select columns of table "service_provider.post" */
 ["service_provider_post_select_column"]:service_provider_post_select_column;
 	/** input type for updating data in table "service_provider.post" */
 ["service_provider_post_set_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:ValueTypes["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
@@ -12790,9 +12804,11 @@ end). throws an error if top level container is not an array */
 };
 	/** Initial value of the column from where the streaming should start */
 ["service_provider_post_stream_cursor_value_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:ValueTypes["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
@@ -26593,10 +26609,12 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "service_provider.post" */
 ["service_provider_post"]: {
 		__typename?: "service_provider_post";
-			comments?:PartialObjects["jsonb"],
+			/** Array of { message, date, Array of customerIds } */
+	comments?:PartialObjects["jsonb"],
 			id?:number,
 			image?:string,
-			likes?:PartialObjects["jsonb"],
+			/** Array of customerIds */
+	likes?:PartialObjects["jsonb"],
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			/** An object relationship */
@@ -26627,7 +26645,9 @@ the end). throws an error if top level container is not an array */
 	},
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["service_provider_post_append_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:PartialObjects["jsonb"],
+	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"]
 },
 	/** aggregate avg on columns */
@@ -26655,18 +26675,24 @@ the end). throws an error if top level container is not an array */
 ["service_provider_post_constraint"]:service_provider_post_constraint,
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["service_provider_post_delete_at_path_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:string[],
+	/** Array of customerIds */
 	likes?:string[]
 },
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["service_provider_post_delete_elem_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:number,
+	/** Array of customerIds */
 	likes?:number
 },
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["service_provider_post_delete_key_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:string,
+	/** Array of customerIds */
 	likes?:string
 },
 	/** input type for incrementing numeric columns in table "service_provider.post" */
@@ -26676,9 +26702,11 @@ end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "service_provider.post" */
 ["service_provider_post_insert_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:PartialObjects["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
@@ -26738,16 +26766,20 @@ end). throws an error if top level container is not an array */
 },
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["service_provider_post_prepend_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:PartialObjects["jsonb"],
+	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"]
 },
 	/** select columns of table "service_provider.post" */
 ["service_provider_post_select_column"]:service_provider_post_select_column,
 	/** input type for updating data in table "service_provider.post" */
 ["service_provider_post_set_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:PartialObjects["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
@@ -26781,9 +26813,11 @@ end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["service_provider_post_stream_cursor_value_input"]: {
+	/** Array of { message, date, Array of customerIds } */
 	comments?:PartialObjects["jsonb"],
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
@@ -41907,7 +41941,7 @@ export type service_provider_delivery_partner_variance_fields = {
 /** columns and relationships of "service_provider.location" */
 export type service_provider_location = {
 	__typename?: "service_provider_location",
-	address?:string,
+	address:string,
 	/** An object relationship */
 	delivery_company?:delivery_company,
 	gps:geography,
@@ -42117,9 +42151,11 @@ export type service_provider_location_variance_fields = {
 /** columns and relationships of "service_provider.post" */
 export type service_provider_post = {
 	__typename?: "service_provider_post",
+	/** Array of { message, date, Array of customerIds } */
 	comments?:jsonb,
 	id:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:jsonb,
 	message:string,
 	posted_on:timestamptz,
@@ -42154,7 +42190,9 @@ export type service_provider_post_aggregate_fields = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type service_provider_post_append_input = {
-		comments?:jsonb,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:jsonb,
+	/** Array of customerIds */
 	likes?:jsonb
 }
 
@@ -42188,20 +42226,26 @@ export enum service_provider_post_constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type service_provider_post_delete_at_path_input = {
-		comments?:string[],
+		/** Array of { message, date, Array of customerIds } */
+	comments?:string[],
+	/** Array of customerIds */
 	likes?:string[]
 }
 
 /** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 export type service_provider_post_delete_elem_input = {
-		comments?:number,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:number,
+	/** Array of customerIds */
 	likes?:number
 }
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type service_provider_post_delete_key_input = {
-		comments?:string,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:string,
+	/** Array of customerIds */
 	likes?:string
 }
 
@@ -42213,9 +42257,11 @@ export type service_provider_post_inc_input = {
 
 /** input type for inserting data into table "service_provider.post" */
 export type service_provider_post_insert_input = {
-		comments?:jsonb,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:jsonb,
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:jsonb,
 	message?:string,
 	posted_on?:timestamptz,
@@ -42282,7 +42328,9 @@ export type service_provider_post_pk_columns_input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type service_provider_post_prepend_input = {
-		comments?:jsonb,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:jsonb,
+	/** Array of customerIds */
 	likes?:jsonb
 }
 
@@ -42300,9 +42348,11 @@ export enum service_provider_post_select_column {
 
 /** input type for updating data in table "service_provider.post" */
 export type service_provider_post_set_input = {
-		comments?:jsonb,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:jsonb,
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:jsonb,
 	message?:string,
 	posted_on?:timestamptz,
@@ -42341,9 +42391,11 @@ export type service_provider_post_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type service_provider_post_stream_cursor_value_input = {
-		comments?:jsonb,
+		/** Array of { message, date, Array of customerIds } */
+	comments?:jsonb,
 	id?:number,
 	image?:string,
+	/** Array of customerIds */
 	likes?:jsonb,
 	message?:string,
 	posted_on?:timestamptz,

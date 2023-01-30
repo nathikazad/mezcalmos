@@ -21251,7 +21251,7 @@ type service_provider_delivery_partner_variance_fields {
 columns and relationships of "service_provider.location"
 """
 type service_provider_location {
-  address: String
+  address: String!
 
   """An object relationship"""
   delivery_company: delivery_company
@@ -21495,12 +21495,15 @@ type service_provider_location_variance_fields {
 columns and relationships of "service_provider.post"
 """
 type service_provider_post {
+  """Array of { message, date, Array of customerIds }"""
   comments(
     """JSON select path"""
     path: String
   ): jsonb
   id: Int!
   image: String
+
+  """Array of customerIds"""
   likes(
     """JSON select path"""
     path: String
@@ -21541,7 +21544,10 @@ type service_provider_post_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_append_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
+
+  """Array of customerIds"""
   likes: jsonb
 }
 
@@ -21583,7 +21589,10 @@ enum service_provider_post_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input service_provider_post_delete_at_path_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: [String!]
+
+  """Array of customerIds"""
   likes: [String!]
 }
 
@@ -21592,7 +21601,10 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input service_provider_post_delete_elem_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: Int
+
+  """Array of customerIds"""
   likes: Int
 }
 
@@ -21600,7 +21612,10 @@ input service_provider_post_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input service_provider_post_delete_key_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: String
+
+  """Array of customerIds"""
   likes: String
 }
 
@@ -21616,9 +21631,12 @@ input service_provider_post_inc_input {
 input type for inserting data into table "service_provider.post"
 """
 input service_provider_post_insert_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz
@@ -21687,7 +21705,10 @@ input service_provider_post_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input service_provider_post_prepend_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
+
+  """Array of customerIds"""
   likes: jsonb
 }
 
@@ -21724,9 +21745,12 @@ enum service_provider_post_select_column {
 input type for updating data in table "service_provider.post"
 """
 input service_provider_post_set_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz
@@ -21765,9 +21789,12 @@ input service_provider_post_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input service_provider_post_stream_cursor_value_input {
+  """Array of { message, date, Array of customerIds }"""
   comments: jsonb
   id: Int
   image: String
+
+  """Array of customerIds"""
   likes: jsonb
   message: String
   posted_on: timestamptz

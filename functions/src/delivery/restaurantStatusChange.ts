@@ -151,7 +151,7 @@ async function changeStatus(
       || deliveryOrder.status == DeliveryOrderStatus.Delivered) {
       restaurantOperators.forEach((r) => {
         if (r.user) {
-          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator, r.user.language);
         }
       })
     }
