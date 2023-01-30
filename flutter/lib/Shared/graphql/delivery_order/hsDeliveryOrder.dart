@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -106,8 +107,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
     ),
   );
   if (response.parsedData?.delivery_order_by_pk == null) {
-    throw Exception(
-        "[544D] 🚨🚨 Get restaurant order $orderId exceptions ${response.exception}");
+    throwError(response.exception);
   }
 
   final Query$get_driver_order$delivery_order_by_pk orderData =
@@ -200,8 +200,8 @@ ServiceInfo? _getServiceInfo(orderData) {
     case OrderType.Restaurant:
       return ServiceInfo(
           location: Location.fromHasura(
-              orderData.restaurant_order!.restaurant.location_gps,
-              orderData.restaurant_order!.restaurant.location_text),
+              orderData.restaurant_order!.restaurant.location.gps,
+              orderData.restaurant_order!.restaurant.location.address),
           hasuraId: orderData.restaurant_order!.restaurant.id,
           image: orderData.restaurant_order!.restaurant.image,
           name: orderData.restaurant_order!.restaurant.name);

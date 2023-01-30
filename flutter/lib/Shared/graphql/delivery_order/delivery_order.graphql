@@ -6,6 +6,7 @@ query get_driver_order($orderId: Int!) {
     actual_package_ready_time
     cancellation_time
     chat_with_customer_id
+    order_type
     chat_with_service_provider_id
     current_gps
     delivery_company {
@@ -33,8 +34,10 @@ query get_driver_order($orderId: Int!) {
         id
         image
         name
-       location {  gps
-    address}   
+        location {
+          gps
+          address
+        }
       }
     }
     order_time
@@ -42,14 +45,16 @@ query get_driver_order($orderId: Int!) {
     payment_type
     pickup_address
     pickup_gps
-   
+
     restaurant {
       id
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -88,6 +93,8 @@ subscription listen_on_driver_order($orderId: Int!) {
     actual_package_ready_time
     cancellation_time
     chat_with_customer_id
+    order_type
+
     chat_with_service_provider_id
     delivery_driver {
       current_location
@@ -105,8 +112,10 @@ subscription listen_on_driver_order($orderId: Int!) {
         id
         image
         name
-        location {  gps
-    address}   
+        location {
+          gps
+          address
+        }
       }
     }
     current_gps
@@ -119,7 +128,6 @@ subscription listen_on_driver_order($orderId: Int!) {
       name
       service_provider_type
     }
-   
 
     dropoff_address
     dropoff_gps
@@ -137,8 +145,10 @@ subscription listen_on_driver_order($orderId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -181,8 +191,10 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -213,8 +225,10 @@ query get_past_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -244,8 +258,10 @@ query get_inprocess_driver_orders($driverId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -275,8 +291,10 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -306,8 +324,10 @@ query get_delivery_company_past_orders($companyId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
@@ -337,8 +357,10 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
       firebase_id
       image
       name
-    location { gps
-      address}
+      location {
+        gps
+        address
+      }
       language_id
       open_status
     }
