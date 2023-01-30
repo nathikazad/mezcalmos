@@ -7,9 +7,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
+import 'package:mezcalmos/Shared/pages/PickDriverView/components/ROpDriversMapComponent.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -27,7 +27,7 @@ class PickDriverView extends StatefulWidget {
 }
 
 class _PickDriverViewState extends State<PickDriverView> {
-  PickDriverController viewController = PickDriverController();
+  PickDriverViewController viewController = PickDriverViewController();
   int? deliveryOrderId;
   bool showForward = false;
 
@@ -68,20 +68,14 @@ class _PickDriverViewState extends State<PickDriverView> {
                 child: Column(
                   children: [
                     // forward to mezcalmos //
-                    if (showForward)
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: MezButton(
-                          label: "${_i18n()["fwdMezcalmos"]} (50\$)",
-                          onClick: () async {
-                            //   await viewController.forwardToMezcalmos(order.value!);
-                          },
-                        ),
-                      ),
-                    // drivers map //
-                    // ROpDriversMapComponent(
-                    //     drivers: viewController.drivers, order: order.value!),
 
+                    // drivers map //
+                    ROpDriversMapComponent(
+                      viewController: viewController,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
                     // drivers list //
                     Column(
                       children: List.generate(

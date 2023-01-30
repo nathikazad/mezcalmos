@@ -175,6 +175,8 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
 }
 
 UserInfo? _getDeliveryCompany<T>(orderData) {
+  mezDbgPrint(
+      "ORDER SERVICE PROVIDER TYPE ===========>>>>>>>>>${orderData!.service_provider_type.toString()}");
   final ServiceProviderType serviceProviderType =
       orderData!.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {

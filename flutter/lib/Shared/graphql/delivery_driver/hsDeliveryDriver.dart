@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
@@ -45,6 +46,10 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
               deliveryCompanyType:
                   driverData.delivery_company_type.toDeliveryCompanyType()),
           deliveryDriverId: driverData.id,
+          driverLocation: (driverData.current_location != null)
+              ? LatLng(driverData.current_location!.latitude,
+                  driverData.current_location!.longitude)
+              : null,
           driverInfo: DeliveryDriverUserInfo(
             hasuraId: driverData.user.id,
             image: driverData.user.image,
