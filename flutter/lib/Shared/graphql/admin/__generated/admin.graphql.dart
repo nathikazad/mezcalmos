@@ -1644,11 +1644,33 @@ const documentNodeQueryget_admin_info = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'notification_token'),
+            name: NameNode(value: 'notification_info'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'token'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'turn_off_notifications'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user'),
@@ -1830,19 +1852,22 @@ extension ClientExtension$Query$get_admin_info on graphql.GraphQLClient {
 class Query$get_admin_info$mez_admin {
   Query$get_admin_info$mez_admin({
     this.version,
-    this.notification_token,
+    this.notification_info,
     this.user,
     required this.$__typename,
   });
 
   factory Query$get_admin_info$mez_admin.fromJson(Map<String, dynamic> json) {
     final l$version = json['version'];
-    final l$notification_token = json['notification_token'];
+    final l$notification_info = json['notification_info'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_admin_info$mez_admin(
       version: (l$version as String?),
-      notification_token: (l$notification_token as String?),
+      notification_info: l$notification_info == null
+          ? null
+          : Query$get_admin_info$mez_admin$notification_info.fromJson(
+              (l$notification_info as Map<String, dynamic>)),
       user: l$user == null
           ? null
           : Query$get_admin_info$mez_admin$user.fromJson(
@@ -1853,7 +1878,7 @@ class Query$get_admin_info$mez_admin {
 
   final String? version;
 
-  final String? notification_token;
+  final Query$get_admin_info$mez_admin$notification_info? notification_info;
 
   final Query$get_admin_info$mez_admin$user? user;
 
@@ -1863,8 +1888,8 @@ class Query$get_admin_info$mez_admin {
     final _resultData = <String, dynamic>{};
     final l$version = version;
     _resultData['version'] = l$version;
-    final l$notification_token = notification_token;
-    _resultData['notification_token'] = l$notification_token;
+    final l$notification_info = notification_info;
+    _resultData['notification_info'] = l$notification_info?.toJson();
     final l$user = user;
     _resultData['user'] = l$user?.toJson();
     final l$$__typename = $__typename;
@@ -1875,12 +1900,12 @@ class Query$get_admin_info$mez_admin {
   @override
   int get hashCode {
     final l$version = version;
-    final l$notification_token = notification_token;
+    final l$notification_info = notification_info;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$version,
-      l$notification_token,
+      l$notification_info,
       l$user,
       l$$__typename,
     ]);
@@ -1900,9 +1925,9 @@ class Query$get_admin_info$mez_admin {
     if (l$version != lOther$version) {
       return false;
     }
-    final l$notification_token = notification_token;
-    final lOther$notification_token = other.notification_token;
-    if (l$notification_token != lOther$notification_token) {
+    final l$notification_info = notification_info;
+    final lOther$notification_info = other.notification_info;
+    if (l$notification_info != lOther$notification_info) {
       return false;
     }
     final l$user = user;
@@ -1939,10 +1964,12 @@ abstract class CopyWith$Query$get_admin_info$mez_admin<TRes> {
 
   TRes call({
     String? version,
-    String? notification_token,
+    Query$get_admin_info$mez_admin$notification_info? notification_info,
     Query$get_admin_info$mez_admin$user? user,
     String? $__typename,
   });
+  CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes>
+      get notification_info;
   CopyWith$Query$get_admin_info$mez_admin$user<TRes> get user;
 }
 
@@ -1961,16 +1988,17 @@ class _CopyWithImpl$Query$get_admin_info$mez_admin<TRes>
 
   TRes call({
     Object? version = _undefined,
-    Object? notification_token = _undefined,
+    Object? notification_info = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_admin_info$mez_admin(
         version:
             version == _undefined ? _instance.version : (version as String?),
-        notification_token: notification_token == _undefined
-            ? _instance.notification_token
-            : (notification_token as String?),
+        notification_info: notification_info == _undefined
+            ? _instance.notification_info
+            : (notification_info
+                as Query$get_admin_info$mez_admin$notification_info?),
         user: user == _undefined
             ? _instance.user
             : (user as Query$get_admin_info$mez_admin$user?),
@@ -1978,6 +2006,16 @@ class _CopyWithImpl$Query$get_admin_info$mez_admin<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes>
+      get notification_info {
+    final local$notification_info = _instance.notification_info;
+    return local$notification_info == null
+        ? CopyWith$Query$get_admin_info$mez_admin$notification_info.stub(
+            _then(_instance))
+        : CopyWith$Query$get_admin_info$mez_admin$notification_info(
+            local$notification_info, (e) => call(notification_info: e));
+  }
+
   CopyWith$Query$get_admin_info$mez_admin$user<TRes> get user {
     final local$user = _instance.user;
     return local$user == null
@@ -1995,13 +2033,165 @@ class _CopyWithStubImpl$Query$get_admin_info$mez_admin<TRes>
 
   call({
     String? version,
-    String? notification_token,
+    Query$get_admin_info$mez_admin$notification_info? notification_info,
     Query$get_admin_info$mez_admin$user? user,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes>
+      get notification_info =>
+          CopyWith$Query$get_admin_info$mez_admin$notification_info.stub(_res);
   CopyWith$Query$get_admin_info$mez_admin$user<TRes> get user =>
       CopyWith$Query$get_admin_info$mez_admin$user.stub(_res);
+}
+
+class Query$get_admin_info$mez_admin$notification_info {
+  Query$get_admin_info$mez_admin$notification_info({
+    required this.token,
+    required this.turn_off_notifications,
+    required this.$__typename,
+  });
+
+  factory Query$get_admin_info$mez_admin$notification_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$token = json['token'];
+    final l$turn_off_notifications = json['turn_off_notifications'];
+    final l$$__typename = json['__typename'];
+    return Query$get_admin_info$mez_admin$notification_info(
+      token: (l$token as String),
+      turn_off_notifications: (l$turn_off_notifications as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String token;
+
+  final bool turn_off_notifications;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$token = token;
+    _resultData['token'] = l$token;
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$token = token;
+    final l$turn_off_notifications = turn_off_notifications;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$token,
+      l$turn_off_notifications,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_admin_info$mez_admin$notification_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$token = token;
+    final lOther$token = other.token;
+    if (l$token != lOther$token) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_admin_info$mez_admin$notification_info
+    on Query$get_admin_info$mez_admin$notification_info {
+  CopyWith$Query$get_admin_info$mez_admin$notification_info<
+          Query$get_admin_info$mez_admin$notification_info>
+      get copyWith => CopyWith$Query$get_admin_info$mez_admin$notification_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes> {
+  factory CopyWith$Query$get_admin_info$mez_admin$notification_info(
+    Query$get_admin_info$mez_admin$notification_info instance,
+    TRes Function(Query$get_admin_info$mez_admin$notification_info) then,
+  ) = _CopyWithImpl$Query$get_admin_info$mez_admin$notification_info;
+
+  factory CopyWith$Query$get_admin_info$mez_admin$notification_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_admin_info$mez_admin$notification_info;
+
+  TRes call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_admin_info$mez_admin$notification_info<TRes>
+    implements CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes> {
+  _CopyWithImpl$Query$get_admin_info$mez_admin$notification_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_admin_info$mez_admin$notification_info _instance;
+
+  final TRes Function(Query$get_admin_info$mez_admin$notification_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? token = _undefined,
+    Object? turn_off_notifications = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_admin_info$mez_admin$notification_info(
+        token: token == _undefined || token == null
+            ? _instance.token
+            : (token as String),
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_admin_info$mez_admin$notification_info<TRes>
+    implements CopyWith$Query$get_admin_info$mez_admin$notification_info<TRes> {
+  _CopyWithStubImpl$Query$get_admin_info$mez_admin$notification_info(this._res);
+
+  TRes _res;
+
+  call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$get_admin_info$mez_admin$user {

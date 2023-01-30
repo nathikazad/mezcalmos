@@ -941,7 +941,7 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant<TRes>
 class Query$getRestaurants$restaurant_restaurant$location {
   Query$getRestaurants$restaurant_restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -952,14 +952,14 @@ class Query$getRestaurants$restaurant_restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -1067,8 +1067,9 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$location<TRes>
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3871,7 +3872,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$deliv
 class Query$getOneRestaurant$restaurant_restaurant_by_pk$location {
   Query$getOneRestaurant$restaurant_restaurant_by_pk$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -3882,14 +3883,14 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$location {
     final l$$__typename = json['__typename'];
     return Query$getOneRestaurant$restaurant_restaurant_by_pk$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -4001,8 +4002,9 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$location<
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -9245,7 +9247,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
 class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$location {
   Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -9256,14 +9258,14 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$location 
     final l$$__typename = json['__typename'];
     return Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -9380,8 +9382,9 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

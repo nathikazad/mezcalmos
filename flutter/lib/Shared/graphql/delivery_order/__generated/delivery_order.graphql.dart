@@ -2519,7 +2519,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_o
 class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
   Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -2530,14 +2530,14 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$lo
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -2654,8 +2654,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant_order
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2951,7 +2952,7 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk$restaurant<
 class Query$get_driver_order$delivery_order_by_pk$restaurant$location {
   Query$get_driver_order$delivery_order_by_pk$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -2962,14 +2963,14 @@ class Query$get_driver_order$delivery_order_by_pk$restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$get_driver_order$delivery_order_by_pk$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -3083,8 +3084,9 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk$restaurant$locat
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -6500,7 +6502,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location {
   Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -6511,14 +6513,14 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -6635,8 +6637,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -7149,7 +7152,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location {
   Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -7160,14 +7163,14 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$locati
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -7284,8 +7287,9 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -9195,7 +9199,7 @@ class _CopyWithStubImpl$Subscription$listen_on_inprocess_driver_orders$delivery_
 class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location {
   Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -9206,14 +9210,14 @@ class Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$l
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_inprocess_driver_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -9330,8 +9334,9 @@ class _CopyWithImpl$Subscription$listen_on_inprocess_driver_orders$delivery_orde
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -10831,7 +10836,7 @@ class _CopyWithStubImpl$Query$get_past_driver_orders$delivery_order$restaurant<
 class Query$get_past_driver_orders$delivery_order$restaurant$location {
   Query$get_past_driver_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -10842,14 +10847,14 @@ class Query$get_past_driver_orders$delivery_order$restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$get_past_driver_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -10963,8 +10968,9 @@ class _CopyWithImpl$Query$get_past_driver_orders$delivery_order$restaurant$locat
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -12484,7 +12490,7 @@ class _CopyWithStubImpl$Query$get_inprocess_driver_orders$delivery_order$restaur
 class Query$get_inprocess_driver_orders$delivery_order$restaurant$location {
   Query$get_inprocess_driver_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -12495,14 +12501,14 @@ class Query$get_inprocess_driver_orders$delivery_order$restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$get_inprocess_driver_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -12619,8 +12625,9 @@ class _CopyWithImpl$Query$get_inprocess_driver_orders$delivery_order$restaurant$
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -14197,7 +14204,7 @@ class _CopyWithStubImpl$Subscription$listen_delivery_company_current_orders$deli
 class Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location {
   Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -14208,14 +14215,14 @@ class Subscription$listen_delivery_company_current_orders$delivery_order$restaur
     final l$$__typename = json['__typename'];
     return Subscription$listen_delivery_company_current_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -14332,8 +14339,9 @@ class _CopyWithImpl$Subscription$listen_delivery_company_current_orders$delivery
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -15884,7 +15892,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_past_orders$delivery_order$re
 class Query$get_delivery_company_past_orders$delivery_order$restaurant$location {
   Query$get_delivery_company_past_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -15895,14 +15903,14 @@ class Query$get_delivery_company_past_orders$delivery_order$restaurant$location 
     final l$$__typename = json['__typename'];
     return Query$get_delivery_company_past_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -16019,8 +16027,9 @@ class _CopyWithImpl$Query$get_delivery_company_past_orders$delivery_order$restau
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -17600,7 +17609,7 @@ class _CopyWithStubImpl$Query$get_delivery_company_inprocess_orders$delivery_ord
 class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location {
   Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -17611,14 +17620,14 @@ class Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$loca
     final l$$__typename = json['__typename'];
     return Query$get_delivery_company_inprocess_orders$delivery_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -17735,8 +17744,9 @@ class _CopyWithImpl$Query$get_delivery_company_inprocess_orders$delivery_order$r
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

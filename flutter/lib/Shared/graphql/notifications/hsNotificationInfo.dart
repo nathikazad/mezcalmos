@@ -57,6 +57,7 @@ Future<NotificationInfo?> get_notif_info({required int userId}) async {
         userId: data.first.user_id,
         appType: data.first.app_type_id,
         token: data.first.token,
+        turnOffNotifications: data.first.turn_off_notifications,
         id: data.first.id);
   }
   return null;

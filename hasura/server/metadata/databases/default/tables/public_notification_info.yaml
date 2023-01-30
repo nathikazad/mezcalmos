@@ -14,6 +14,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: delivery_driver
     permission:
       check:
@@ -26,6 +27,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: delivery_operator
     permission:
       check:
@@ -38,6 +40,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: mez_admin
     permission:
       check:
@@ -50,6 +53,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
   - role: restaurant_operator
     permission:
       check:
@@ -62,6 +66,7 @@ insert_permissions:
         - app_type_id
         - token
         - user_id
+        - turn_off_notifications
 select_permissions:
   - role: customer
     permission:
@@ -70,6 +75,7 @@ select_permissions:
         - id
         - token
         - user_id
+        - turn_off_notifications
       filter:
         user_id:
           _eq: X-Hasura-User-Id
@@ -80,6 +86,7 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -93,6 +100,7 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - user_id:
@@ -107,6 +115,7 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -120,6 +129,7 @@ select_permissions:
         - user_id
         - app_type_id
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -131,6 +141,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -142,6 +153,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -153,6 +165,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - user_id:
@@ -169,6 +182,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:
@@ -180,6 +194,7 @@ update_permissions:
     permission:
       columns:
         - token
+        - turn_off_notifications
       filter:
         _and:
           - app_type_id:

@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 final GraphQLClient _graphClient = Get.find<HasuraDb>().graphQLClient;
@@ -37,9 +38,13 @@ Future<Customer?> get_customer({required int user_id}) async {
         "[tt] Called :: get_customer_info :: SUCCESS :: got_customer(${_cus[0].user.name})");
 
     final Customer returnedCustomer = Customer(
-      appVersion: _cus[0].app_version,
-      notificationInfo: _cus[0].notification_token,
-    );
+        appVersion: _cus[0].app_version,
+        notificationInfo: _cus[0].notification_info != null
+            ? NotificationInfo(
+                token: _cus[0].notification_info!.token,
+                turnOffNotifications:
+                    _cus[0].notification_info!.turn_off_notifications)
+            : null);
     if (_cus[0].stripe_info != null) {
       _cus[0].stripe_info["cards"].forEach((key, data) {
         returnedCustomer.addCreditCard(CreditCard.fromData(data: data));
@@ -200,7 +205,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
             cost: _o.delivery_cost,
             restaurant: ServiceInfo(
               location: Location(
-                _o.restaurant.location.address!,
+                _o.restaurant.location.address,
                 _o.restaurant.location.gps.toLocationData(),
               ),
               firebaseId: _o.restaurant.firebase_id,

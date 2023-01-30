@@ -1,12 +1,13 @@
 class NotificationInfo {
   int? id;
-  int userId;
-  String appType;
+  int? userId;
+  String? appType;
   String token;
-  NotificationInfo({
-    this.id,
-    required this.userId,
-    required this.appType,
-    required this.token,
-  });
+  bool turnOffNotifications;
+  NotificationInfo(
+      {this.id,
+      this.userId,
+      this.appType,
+      required this.token,
+      this.turnOffNotifications = false});
 }

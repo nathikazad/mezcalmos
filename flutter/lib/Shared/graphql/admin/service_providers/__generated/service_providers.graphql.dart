@@ -676,7 +676,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company<TRes>
 class Query$admin_get_dv_companies$delivery_company$location {
   Query$admin_get_dv_companies$delivery_company$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -687,14 +687,14 @@ class Query$admin_get_dv_companies$delivery_company$location {
     final l$$__typename = json['__typename'];
     return Query$admin_get_dv_companies$delivery_company$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -802,8 +802,9 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location<TRes>
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1535,7 +1536,7 @@ class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
 class Query$admin_get_restaurants$restaurant_restaurant$location {
   Query$admin_get_restaurants$restaurant_restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -1546,14 +1547,14 @@ class Query$admin_get_restaurants$restaurant_restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$admin_get_restaurants$restaurant_restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -1665,8 +1666,9 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location<
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

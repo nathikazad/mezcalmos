@@ -14,5 +14,6 @@ query getNotifInfoByUserId($userId: Int!) {
     id
     token
     user_id
+    turn_off_notifications
   }
 }
