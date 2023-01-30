@@ -15,7 +15,9 @@ class ROpChoiceViewController {
   // vars //
   late int restaurantId;
   String? optionId;
-
+  // form//
+  bool firstTabValid = false;
+  bool secondTabValid = false;
   Rxn<Choice> choice = Rxn();
   RxBool editMode = RxBool(false);
   RxBool isAv = RxBool(false);
@@ -144,5 +146,13 @@ class ROpChoiceViewController {
     final bool result = await delete_choice_by_id(choiceId: choice.value!.id);
     result ? MezRouter.back() : null;
     return result;
+  }
+
+  bool get isFirstValid {
+    return prChoiceName.text.removeAllWhitespace.isNotEmpty;
+  }
+
+  bool get isSecondValid {
+    return scChoiceName.text.removeAllWhitespace.isNotEmpty;
   }
 }

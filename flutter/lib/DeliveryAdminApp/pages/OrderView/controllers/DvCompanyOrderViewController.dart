@@ -62,7 +62,9 @@ class DvCompanyOrderViewController {
         orderStream = null;
       });
     }
-    await _initMap();
+    if (order.value != null) {
+      await _initMap();
+    }
   }
 
 // Map methods //

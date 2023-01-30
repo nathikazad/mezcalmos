@@ -27,11 +27,10 @@ class AdmiOrdersListViewController {
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    _restaurantOrders.value = await get_admin__orders(
-        inProcess: true, serviceProviderType: ServiceProviderType.Restaurant);
+    _restaurantOrders.value =
+        await get_admin_restaurant_orders(inProcess: true, withCache: false);
 
-    _deliveryOrders.value = await get_admin__orders(
-        inProcess: true,
-        serviceProviderType: ServiceProviderType.Delivery_company);
+    _deliveryOrders.value =
+        await get_admin_dv_orders(inProcess: true, withCache: false);
   }
 }

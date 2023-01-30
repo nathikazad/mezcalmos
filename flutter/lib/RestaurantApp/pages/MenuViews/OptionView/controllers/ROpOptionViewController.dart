@@ -81,7 +81,7 @@ class ROpOptionViewController {
   ///
   /// Load option info and assign them to view
   Future<void> _initEditMode(int optionId) async {
-    editableOption.value = await get_option_by_id(optionId);
+    editableOption.value = await get_option_by_id(optionId, withCache: false);
     if (editableOption.value != null) {
       editMode.value = true;
       optionType.value = editableOption.value!.optionType;

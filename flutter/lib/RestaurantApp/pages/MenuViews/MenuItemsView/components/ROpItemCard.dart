@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -108,14 +108,23 @@ class _ROpItemCardState extends State<ROpItemCard> {
                 ),
                 Row(
                   children: [
-                    Text('${_i18n()["category"]}: '),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        widget.category?.name![userLanguage] ?? "Error",
-                        style: Get.textTheme.bodyText2,
-                      ),
-                    ),
+                    (widget.category != null)
+                        ? Flexible(
+                            fit: FlexFit.tight,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text('${_i18n()["category"]}: '),
+                                Text(
+                                  widget.category?.name![userLanguage] ??
+                                      "Error",
+                                  style: Get.textTheme.bodyText2,
+                                ),
+                              ],
+                            ),
+                          )
+                        : Spacer(),
                     Text(
                       '${_i18n()["available"]}',
                       maxLines: 2,
