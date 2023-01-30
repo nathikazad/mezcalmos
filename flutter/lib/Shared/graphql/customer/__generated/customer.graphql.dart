@@ -1667,11 +1667,33 @@ const documentNodeQueryget_customer_info = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'notification_token'),
+            name: NameNode(value: 'notification_info'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'token'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'turn_off_notifications'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user'),
@@ -1928,7 +1950,7 @@ extension ClientExtension$Query$get_customer_info on graphql.GraphQLClient {
 class Query$get_customer_info$customer_customer {
   Query$get_customer_info$customer_customer({
     this.app_version,
-    this.notification_token,
+    this.notification_info,
     required this.user,
     this.stripe_info,
     required this.saved_locations,
@@ -1938,14 +1960,17 @@ class Query$get_customer_info$customer_customer {
   factory Query$get_customer_info$customer_customer.fromJson(
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
-    final l$notification_token = json['notification_token'];
+    final l$notification_info = json['notification_info'];
     final l$user = json['user'];
     final l$stripe_info = json['stripe_info'];
     final l$saved_locations = json['saved_locations'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_info$customer_customer(
       app_version: (l$app_version as String?),
-      notification_token: (l$notification_token as String?),
+      notification_info: l$notification_info == null
+          ? null
+          : Query$get_customer_info$customer_customer$notification_info
+              .fromJson((l$notification_info as Map<String, dynamic>)),
       user: Query$get_customer_info$customer_customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
@@ -1959,7 +1984,8 @@ class Query$get_customer_info$customer_customer {
 
   final String? app_version;
 
-  final String? notification_token;
+  final Query$get_customer_info$customer_customer$notification_info?
+      notification_info;
 
   final Query$get_customer_info$customer_customer$user user;
 
@@ -1974,8 +2000,8 @@ class Query$get_customer_info$customer_customer {
     final _resultData = <String, dynamic>{};
     final l$app_version = app_version;
     _resultData['app_version'] = l$app_version;
-    final l$notification_token = notification_token;
-    _resultData['notification_token'] = l$notification_token;
+    final l$notification_info = notification_info;
+    _resultData['notification_info'] = l$notification_info?.toJson();
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$stripe_info = stripe_info;
@@ -1992,14 +2018,14 @@ class Query$get_customer_info$customer_customer {
   @override
   int get hashCode {
     final l$app_version = app_version;
-    final l$notification_token = notification_token;
+    final l$notification_info = notification_info;
     final l$user = user;
     final l$stripe_info = stripe_info;
     final l$saved_locations = saved_locations;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$app_version,
-      l$notification_token,
+      l$notification_info,
       l$user,
       l$stripe_info,
       Object.hashAll(l$saved_locations.map((v) => v)),
@@ -2021,9 +2047,9 @@ class Query$get_customer_info$customer_customer {
     if (l$app_version != lOther$app_version) {
       return false;
     }
-    final l$notification_token = notification_token;
-    final lOther$notification_token = other.notification_token;
-    if (l$notification_token != lOther$notification_token) {
+    final l$notification_info = notification_info;
+    final lOther$notification_info = other.notification_info;
+    if (l$notification_info != lOther$notification_info) {
       return false;
     }
     final l$user = user;
@@ -2078,13 +2104,16 @@ abstract class CopyWith$Query$get_customer_info$customer_customer<TRes> {
 
   TRes call({
     String? app_version,
-    String? notification_token,
+    Query$get_customer_info$customer_customer$notification_info?
+        notification_info,
     Query$get_customer_info$customer_customer$user? user,
     dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
         saved_locations,
     String? $__typename,
   });
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info;
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user;
   TRes saved_locations(
       Iterable<Query$get_customer_info$customer_customer$saved_locations> Function(
@@ -2109,7 +2138,7 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
 
   TRes call({
     Object? app_version = _undefined,
-    Object? notification_token = _undefined,
+    Object? notification_info = _undefined,
     Object? user = _undefined,
     Object? stripe_info = _undefined,
     Object? saved_locations = _undefined,
@@ -2119,9 +2148,10 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
         app_version: app_version == _undefined
             ? _instance.app_version
             : (app_version as String?),
-        notification_token: notification_token == _undefined
-            ? _instance.notification_token
-            : (notification_token as String?),
+        notification_info: notification_info == _undefined
+            ? _instance.notification_info
+            : (notification_info
+                as Query$get_customer_info$customer_customer$notification_info?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user as Query$get_customer_info$customer_customer$user),
@@ -2137,6 +2167,16 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info {
+    final local$notification_info = _instance.notification_info;
+    return local$notification_info == null
+        ? CopyWith$Query$get_customer_info$customer_customer$notification_info
+            .stub(_then(_instance))
+        : CopyWith$Query$get_customer_info$customer_customer$notification_info(
+            local$notification_info, (e) => call(notification_info: e));
+  }
+
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user {
     final local$user = _instance.user;
     return CopyWith$Query$get_customer_info$customer_customer$user(
@@ -2165,7 +2205,8 @@ class _CopyWithStubImpl$Query$get_customer_info$customer_customer<TRes>
 
   call({
     String? app_version,
-    String? notification_token,
+    Query$get_customer_info$customer_customer$notification_info?
+        notification_info,
     Query$get_customer_info$customer_customer$user? user,
     dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
@@ -2173,9 +2214,174 @@ class _CopyWithStubImpl$Query$get_customer_info$customer_customer<TRes>
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<TRes>
+      get notification_info =>
+          CopyWith$Query$get_customer_info$customer_customer$notification_info
+              .stub(_res);
   CopyWith$Query$get_customer_info$customer_customer$user<TRes> get user =>
       CopyWith$Query$get_customer_info$customer_customer$user.stub(_res);
   saved_locations(_fn) => _res;
+}
+
+class Query$get_customer_info$customer_customer$notification_info {
+  Query$get_customer_info$customer_customer$notification_info({
+    required this.token,
+    required this.turn_off_notifications,
+    required this.$__typename,
+  });
+
+  factory Query$get_customer_info$customer_customer$notification_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$token = json['token'];
+    final l$turn_off_notifications = json['turn_off_notifications'];
+    final l$$__typename = json['__typename'];
+    return Query$get_customer_info$customer_customer$notification_info(
+      token: (l$token as String),
+      turn_off_notifications: (l$turn_off_notifications as bool),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String token;
+
+  final bool turn_off_notifications;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$token = token;
+    _resultData['token'] = l$token;
+    final l$turn_off_notifications = turn_off_notifications;
+    _resultData['turn_off_notifications'] = l$turn_off_notifications;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$token = token;
+    final l$turn_off_notifications = turn_off_notifications;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$token,
+      l$turn_off_notifications,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_customer_info$customer_customer$notification_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$token = token;
+    final lOther$token = other.token;
+    if (l$token != lOther$token) {
+      return false;
+    }
+    final l$turn_off_notifications = turn_off_notifications;
+    final lOther$turn_off_notifications = other.turn_off_notifications;
+    if (l$turn_off_notifications != lOther$turn_off_notifications) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_customer_info$customer_customer$notification_info
+    on Query$get_customer_info$customer_customer$notification_info {
+  CopyWith$Query$get_customer_info$customer_customer$notification_info<
+          Query$get_customer_info$customer_customer$notification_info>
+      get copyWith =>
+          CopyWith$Query$get_customer_info$customer_customer$notification_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_customer_info$customer_customer$notification_info<
+    TRes> {
+  factory CopyWith$Query$get_customer_info$customer_customer$notification_info(
+    Query$get_customer_info$customer_customer$notification_info instance,
+    TRes Function(Query$get_customer_info$customer_customer$notification_info)
+        then,
+  ) = _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info;
+
+  factory CopyWith$Query$get_customer_info$customer_customer$notification_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info;
+
+  TRes call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_info$customer_customer$notification_info<
+            TRes> {
+  _CopyWithImpl$Query$get_customer_info$customer_customer$notification_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_customer_info$customer_customer$notification_info _instance;
+
+  final TRes Function(
+      Query$get_customer_info$customer_customer$notification_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? token = _undefined,
+    Object? turn_off_notifications = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_customer_info$customer_customer$notification_info(
+        token: token == _undefined || token == null
+            ? _instance.token
+            : (token as String),
+        turn_off_notifications: turn_off_notifications == _undefined ||
+                turn_off_notifications == null
+            ? _instance.turn_off_notifications
+            : (turn_off_notifications as bool),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info<
+        TRes>
+    implements
+        CopyWith$Query$get_customer_info$customer_customer$notification_info<
+            TRes> {
+  _CopyWithStubImpl$Query$get_customer_info$customer_customer$notification_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? token,
+    bool? turn_off_notifications,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$get_customer_info$customer_customer$user {
@@ -6103,7 +6309,7 @@ class _CopyWithStubImpl$Query$get_customer_orders$restaurant_order$restaurant<
 class Query$get_customer_orders$restaurant_order$restaurant$location {
   Query$get_customer_orders$restaurant_order$restaurant$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -6114,14 +6320,14 @@ class Query$get_customer_orders$restaurant_order$restaurant$location {
     final l$$__typename = json['__typename'];
     return Query$get_customer_orders$restaurant_order$restaurant$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -6235,8 +6441,9 @@ class _CopyWithImpl$Query$get_customer_orders$restaurant_order$restaurant$locati
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

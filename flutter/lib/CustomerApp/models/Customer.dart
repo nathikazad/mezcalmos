@@ -1,17 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:collection/collection.dart';
-import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class Customer {
   // List<Order> currentOrders = [];
   String? appVersion;
-  dynamic notificationInfo;
+  NotificationInfo? notificationInfo;
   SavedLocations savedLocations = <SavedLocation>[];
   CustStripeInfo? stripeInfo;
   dynamic data;

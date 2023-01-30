@@ -54,6 +54,18 @@ export interface NewCallBackgroundNotification {
   callerType: ParticipantType,
   notificationType: NotificationType,
   callNotificationType: CallNotificationtType,
+  callerId: string,
+  chatId: string,
+  [key: string]: string;
+}
+
+export interface EndCallBackgroundNotification {
+  linkUrl: string,
+  callerType: ParticipantType,
+  notificationType: NotificationType,
+  callNotificationType: CallNotificationtType,
+  callerId: string,
+  chatId: string,
   [key: string]: string;
 }
 

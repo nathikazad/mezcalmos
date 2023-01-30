@@ -920,7 +920,7 @@ class _CopyWithStubImpl$Query$getDeliveryCompanyById$delivery_company_by_pk<
 class Query$getDeliveryCompanyById$delivery_company_by_pk$location {
   Query$getDeliveryCompanyById$delivery_company_by_pk$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -931,14 +931,14 @@ class Query$getDeliveryCompanyById$delivery_company_by_pk$location {
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCompanyById$delivery_company_by_pk$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -1050,8 +1050,9 @@ class _CopyWithImpl$Query$getDeliveryCompanyById$delivery_company_by_pk$location
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2424,7 +2425,7 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCompany$update_delivery_company_b
 class Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location {
   Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -2435,14 +2436,14 @@ class Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location {
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryCompany$update_delivery_company_by_pk$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -2559,8 +2560,9 @@ class _CopyWithImpl$Mutation$updateDeliveryCompany$update_delivery_company_by_pk
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3863,7 +3865,7 @@ class _CopyWithStubImpl$Query$getNearByCompanies$delivery_get_delivery_companies
 class Query$getNearByCompanies$delivery_get_delivery_companies$location {
   Query$getNearByCompanies$delivery_get_delivery_companies$location({
     required this.gps,
-    this.address,
+    required this.address,
     required this.$__typename,
   });
 
@@ -3874,14 +3876,14 @@ class Query$getNearByCompanies$delivery_get_delivery_companies$location {
     final l$$__typename = json['__typename'];
     return Query$getNearByCompanies$delivery_get_delivery_companies$location(
       gps: geographyFromJson(l$gps),
-      address: (l$address as String?),
+      address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final Geography gps;
 
-  final String? address;
+  final String address;
 
   final String $__typename;
 
@@ -3995,8 +3997,9 @@ class _CopyWithImpl$Query$getNearByCompanies$delivery_get_delivery_companies$loc
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
-        address:
-            address == _undefined ? _instance.address : (address as String?),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

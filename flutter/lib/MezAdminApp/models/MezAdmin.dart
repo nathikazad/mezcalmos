@@ -1,9 +1,12 @@
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
+
 class MezAdmin {
   bool authorized = true;
   String? name;
   String? img;
   String? appVersion;
-  dynamic notificationInfo;
+  NotificationInfo? notificationInfo;
   dynamic data;
 
   MezAdmin({required this.notificationInfo, this.appVersion});

@@ -12,6 +12,16 @@ object_relationships:
         remote_table:
           name: company
           schema: delivery
+  - name: notification_info
+    using:
+      manual_configuration:
+        column_mapping:
+          app_type_id: app_type_id
+          user_id: user_id
+        insertion_order: null
+        remote_table:
+          name: notification_info
+          schema: public
   - name: restaurant
     using:
       manual_configuration:
@@ -25,12 +35,6 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: user_id
-computed_fields:
-  - name: notification_token
-    definition:
-      function:
-        name: driver_notification_token
-        schema: public
 select_permissions:
   - role: customer
     permission:
@@ -56,14 +60,11 @@ select_permissions:
         - online
         - delivery_company_id
         - id
-        - notification_info_id
         - user_id
         - app_version
         - delivery_driver_type
         - status
         - delivery_company_type
-      computed_fields:
-        - notification_token
       filter:
         user_id:
           _eq: X-Hasura-User-Id
@@ -74,14 +75,11 @@ select_permissions:
         - online
         - delivery_company_id
         - id
-        - notification_info_id
         - user_id
         - app_version
         - delivery_driver_type
         - status
         - delivery_company_type
-      computed_fields:
-        - notification_token
       filter:
         delivery_company:
           delivery_operators:
@@ -94,14 +92,11 @@ select_permissions:
         - online
         - delivery_company_id
         - id
-        - notification_info_id
         - user_id
         - app_version
         - delivery_driver_type
         - status
         - delivery_company_type
-      computed_fields:
-        - notification_token
       filter:
         _exists:
           _table:
@@ -119,7 +114,6 @@ select_permissions:
         - delivery_company_type
         - delivery_driver_type
         - id
-        - notification_info_id
         - online
         - status
         - user_id
@@ -134,7 +128,6 @@ update_permissions:
       columns:
         - app_version
         - current_location
-        - notification_info_id
         - online
       filter:
         user_id:

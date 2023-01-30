@@ -193,14 +193,14 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundImage: CachedNetworkImageProvider(
-                  order.value!.serviceInfo.image ?? defaultUserImgUrl),
+              backgroundImage:
+                  CachedNetworkImageProvider(order.value!.serviceInfo.image),
             ),
             SizedBox(
               width: 8,
             ),
             Text(
-              "${order.value!.serviceInfo.name ?? ""}",
+              "${order.value!.serviceInfo.name}",
               style: Get.textTheme.bodyText1,
             ),
             Spacer(),

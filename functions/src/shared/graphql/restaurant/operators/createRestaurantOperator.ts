@@ -60,7 +60,7 @@ export async function createRestaurantOperator(operator: RestaurantOperator) {
     await chain.mutation({
         insert_notification_info_one: [{
             object: {
-                app_type_id: operator.notificationInfo.AppTypeId,
+                app_type_id: operator.notificationInfo.appType,
                 token: operator.notificationInfo.token,
                 user_id: operator.userId
             }

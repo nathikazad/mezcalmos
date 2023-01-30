@@ -4,7 +4,6 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/__generated/delivery_company.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';

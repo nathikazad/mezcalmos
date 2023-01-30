@@ -10,6 +10,7 @@ export interface Restaurant {
   restaurantId?: number;
   name: string;
   image: string;
+  phoneNumber?: string;
   firebaseId?: string;
   selfDelivery: boolean;
   location: Location;

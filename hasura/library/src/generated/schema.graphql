@@ -177,10 +177,6 @@ input Boolean_comparison_exp {
 columns and relationships of "chat"
 """
 type chat {
-  agora_info(
-    """JSON select path"""
-    path: String
-  ): jsonb
   chat_info(
     """JSON select path"""
     path: String
@@ -221,6 +217,8 @@ type chat {
     """filter the rows returned"""
     where: chat_participant_bool_exp
   ): chat_participant_aggregate!
+
+  """direct, group"""
   chat_type: String!
   creation_time: timestamptz!
   id: Int!
@@ -257,7 +255,6 @@ type chat_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input chat_append_input {
-  agora_info: jsonb
   chat_info: jsonb
   messages: jsonb
 }
@@ -274,7 +271,6 @@ input chat_bool_exp {
   _and: [chat_bool_exp!]
   _not: chat_bool_exp
   _or: [chat_bool_exp!]
-  agora_info: jsonb_comparison_exp
   chat_info: jsonb_comparison_exp
   chat_participants: chat_participant_bool_exp
   chat_participants_aggregate: chat_participant_aggregate_bool_exp
@@ -298,7 +294,6 @@ enum chat_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input chat_delete_at_path_input {
-  agora_info: [String!]
   chat_info: [String!]
   messages: [String!]
 }
@@ -308,7 +303,6 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input chat_delete_elem_input {
-  agora_info: Int
   chat_info: Int
   messages: Int
 }
@@ -317,7 +311,6 @@ input chat_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input chat_delete_key_input {
-  agora_info: String
   chat_info: String
   messages: String
 }
@@ -333,9 +326,10 @@ input chat_inc_input {
 input type for inserting data into table "chat"
 """
 input chat_insert_input {
-  agora_info: jsonb
   chat_info: jsonb
   chat_participants: chat_participant_arr_rel_insert_input
+
+  """direct, group"""
   chat_type: String
   creation_time: timestamptz
   id: Int
@@ -344,6 +338,7 @@ input chat_insert_input {
 
 """aggregate max on columns"""
 type chat_max_fields {
+  """direct, group"""
   chat_type: String
   creation_time: timestamptz
   id: Int
@@ -351,6 +346,7 @@ type chat_max_fields {
 
 """aggregate min on columns"""
 type chat_min_fields {
+  """direct, group"""
   chat_type: String
   creation_time: timestamptz
   id: Int
@@ -388,7 +384,6 @@ input chat_on_conflict {
 
 """Ordering options when selecting data from "chat"."""
 input chat_order_by {
-  agora_info: order_by
   chat_info: order_by
   chat_participants_aggregate: chat_participant_aggregate_order_by
   chat_type: order_by
@@ -808,7 +803,6 @@ input chat_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input chat_prepend_input {
-  agora_info: jsonb
   chat_info: jsonb
   messages: jsonb
 }
@@ -817,9 +811,6 @@ input chat_prepend_input {
 select columns of table "chat"
 """
 enum chat_select_column {
-  """column name"""
-  agora_info
-
   """column name"""
   chat_info
 
@@ -840,8 +831,9 @@ enum chat_select_column {
 input type for updating data in table "chat"
 """
 input chat_set_input {
-  agora_info: jsonb
   chat_info: jsonb
+
+  """direct, group"""
   chat_type: String
   creation_time: timestamptz
   id: Int
@@ -876,8 +868,9 @@ input chat_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input chat_stream_cursor_value_input {
-  agora_info: jsonb
   chat_info: jsonb
+
+  """direct, group"""
   chat_type: String
   creation_time: timestamptz
   id: Int
@@ -893,9 +886,6 @@ type chat_sum_fields {
 update columns of table "chat"
 """
 enum chat_update_column {
-  """column name"""
-  agora_info
-
   """column name"""
   chat_info
 
@@ -973,6 +963,7 @@ enum cursor_ordering {
 columns and relationships of "customer.customer"
 """
 type customer_customer {
+  app_type_id: String!
   app_version: String
 
   """An object relationship"""
@@ -1014,10 +1005,8 @@ type customer_customer {
     where: delivery_order_bool_exp
   ): delivery_order_aggregate!
 
-  """
-  A computed field, executes function "customer_notification_token"
-  """
-  notification_token: String
+  """An object relationship"""
+  notification_info: notification_info
 
   """An array relationship"""
   saved_locations(
@@ -1124,11 +1113,12 @@ input customer_customer_bool_exp {
   _and: [customer_customer_bool_exp!]
   _not: customer_customer_bool_exp
   _or: [customer_customer_bool_exp!]
+  app_type_id: String_comparison_exp
   app_version: String_comparison_exp
   cart: restaurant_cart_bool_exp
   deliveries: delivery_order_bool_exp
   deliveries_aggregate: delivery_order_aggregate_bool_exp
-  notification_token: String_comparison_exp
+  notification_info: notification_info_bool_exp
   saved_locations: customer_saved_location_bool_exp
   saved_locations_aggregate: customer_saved_location_aggregate_bool_exp
   service_provider_type: String_comparison_exp
@@ -1209,9 +1199,11 @@ input customer_customer_inc_input {
 input type for inserting data into table "customer.customer"
 """
 input customer_customer_insert_input {
+  app_type_id: String
   app_version: String
   cart: restaurant_cart_obj_rel_insert_input
   deliveries: delivery_order_arr_rel_insert_input
+  notification_info: notification_info_obj_rel_insert_input
   saved_locations: customer_saved_location_arr_rel_insert_input
   service_provider_type: String
 
@@ -1230,6 +1222,7 @@ input customer_customer_insert_input {
 
 """aggregate max on columns"""
 type customer_customer_max_fields {
+  app_type_id: String
   app_version: String
   service_provider_type: String
   user_id: Int
@@ -1237,6 +1230,7 @@ type customer_customer_max_fields {
 
 """aggregate min on columns"""
 type customer_customer_min_fields {
+  app_type_id: String
   app_version: String
   service_provider_type: String
   user_id: Int
@@ -1274,10 +1268,11 @@ input customer_customer_on_conflict {
 
 """Ordering options when selecting data from "customer.customer"."""
 input customer_customer_order_by {
+  app_type_id: order_by
   app_version: order_by
   cart: restaurant_cart_order_by
   deliveries_aggregate: delivery_order_aggregate_order_by
-  notification_token: order_by
+  notification_info: notification_info_order_by
   saved_locations_aggregate: customer_saved_location_aggregate_order_by
   service_provider_type: order_by
   stripe_info: order_by
@@ -1308,6 +1303,9 @@ select columns of table "customer.customer"
 """
 enum customer_customer_select_column {
   """column name"""
+  app_type_id
+
+  """column name"""
   app_version
 
   """column name"""
@@ -1324,6 +1322,7 @@ enum customer_customer_select_column {
 input type for updating data in table "customer.customer"
 """
 input customer_customer_set_input {
+  app_type_id: String
   app_version: String
   service_provider_type: String
 
@@ -1367,6 +1366,7 @@ input customer_customer_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input customer_customer_stream_cursor_value_input {
+  app_type_id: String
   app_version: String
   service_provider_type: String
 
@@ -1391,6 +1391,9 @@ type customer_customer_sum_fields {
 update columns of table "customer.customer"
 """
 enum customer_customer_update_column {
+  """column name"""
+  app_type_id
+
   """column name"""
   app_version
 
@@ -1450,6 +1453,271 @@ type customer_customer_var_samp_fields {
 """aggregate variance on columns"""
 type customer_customer_variance_fields {
   user_id: Float
+}
+
+"""
+columns and relationships of "customer.favourited_item"
+"""
+type customer_favourited_item {
+  customer_id: Int!
+  id: Int!
+  restaurant_id: Int!
+  restaurant_item_id: Int!
+}
+
+"""
+aggregated selection of "customer.favourited_item"
+"""
+type customer_favourited_item_aggregate {
+  aggregate: customer_favourited_item_aggregate_fields
+  nodes: [customer_favourited_item!]!
+}
+
+"""
+aggregate fields of "customer.favourited_item"
+"""
+type customer_favourited_item_aggregate_fields {
+  avg: customer_favourited_item_avg_fields
+  count(columns: [customer_favourited_item_select_column!], distinct: Boolean): Int!
+  max: customer_favourited_item_max_fields
+  min: customer_favourited_item_min_fields
+  stddev: customer_favourited_item_stddev_fields
+  stddev_pop: customer_favourited_item_stddev_pop_fields
+  stddev_samp: customer_favourited_item_stddev_samp_fields
+  sum: customer_favourited_item_sum_fields
+  var_pop: customer_favourited_item_var_pop_fields
+  var_samp: customer_favourited_item_var_samp_fields
+  variance: customer_favourited_item_variance_fields
+}
+
+"""aggregate avg on columns"""
+type customer_favourited_item_avg_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "customer.favourited_item". All fields are combined with a logical 'AND'.
+"""
+input customer_favourited_item_bool_exp {
+  _and: [customer_favourited_item_bool_exp!]
+  _not: customer_favourited_item_bool_exp
+  _or: [customer_favourited_item_bool_exp!]
+  customer_id: Int_comparison_exp
+  id: Int_comparison_exp
+  restaurant_id: Int_comparison_exp
+  restaurant_item_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "customer.favourited_item"
+"""
+enum customer_favourited_item_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  favourited_item_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "customer.favourited_item"
+"""
+input customer_favourited_item_inc_input {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""
+input type for inserting data into table "customer.favourited_item"
+"""
+input customer_favourited_item_insert_input {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""aggregate max on columns"""
+type customer_favourited_item_max_fields {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""aggregate min on columns"""
+type customer_favourited_item_min_fields {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""
+response of any mutation on the table "customer.favourited_item"
+"""
+type customer_favourited_item_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [customer_favourited_item!]!
+}
+
+"""
+on_conflict condition type for table "customer.favourited_item"
+"""
+input customer_favourited_item_on_conflict {
+  constraint: customer_favourited_item_constraint!
+  update_columns: [customer_favourited_item_update_column!]! = []
+  where: customer_favourited_item_bool_exp
+}
+
+"""Ordering options when selecting data from "customer.favourited_item"."""
+input customer_favourited_item_order_by {
+  customer_id: order_by
+  id: order_by
+  restaurant_id: order_by
+  restaurant_item_id: order_by
+}
+
+"""primary key columns input for table: customer.favourited_item"""
+input customer_favourited_item_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "customer.favourited_item"
+"""
+enum customer_favourited_item_select_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  restaurant_id
+
+  """column name"""
+  restaurant_item_id
+}
+
+"""
+input type for updating data in table "customer.favourited_item"
+"""
+input customer_favourited_item_set_input {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""aggregate stddev on columns"""
+type customer_favourited_item_stddev_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type customer_favourited_item_stddev_pop_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type customer_favourited_item_stddev_samp_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""
+Streaming cursor of the table "customer_favourited_item"
+"""
+input customer_favourited_item_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: customer_favourited_item_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input customer_favourited_item_stream_cursor_value_input {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""aggregate sum on columns"""
+type customer_favourited_item_sum_fields {
+  customer_id: Int
+  id: Int
+  restaurant_id: Int
+  restaurant_item_id: Int
+}
+
+"""
+update columns of table "customer.favourited_item"
+"""
+enum customer_favourited_item_update_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  restaurant_id
+
+  """column name"""
+  restaurant_item_id
+}
+
+input customer_favourited_item_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: customer_favourited_item_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: customer_favourited_item_set_input
+
+  """filter the rows which have to be updated"""
+  where: customer_favourited_item_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type customer_favourited_item_var_pop_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type customer_favourited_item_var_samp_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
+}
+
+"""aggregate variance on columns"""
+type customer_favourited_item_variance_fields {
+  customer_id: Float
+  id: Float
+  restaurant_id: Float
+  restaurant_item_id: Float
 }
 
 """Customer's saved locations"""
@@ -3112,6 +3380,7 @@ input delivery_details_variance_order_by {
 columns and relationships of "delivery.driver"
 """
 type delivery_driver {
+  app_type_id: String!
   app_version: String
   current_location: geography
 
@@ -3125,12 +3394,9 @@ type delivery_driver {
   """Just for relationship"""
   delivery_driver_type: String!
   id: Int!
-  notification_info_id: Int
 
-  """
-  A computed field, executes function "driver_notification_token"
-  """
-  notification_token: String
+  """An object relationship"""
+  notification_info: notification_info
   online: Boolean!
 
   """An object relationship"""
@@ -3227,7 +3493,6 @@ input delivery_driver_arr_rel_insert_input {
 type delivery_driver_avg_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3237,7 +3502,6 @@ order by avg() on columns of table "delivery.driver"
 input delivery_driver_avg_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3248,6 +3512,7 @@ input delivery_driver_bool_exp {
   _and: [delivery_driver_bool_exp!]
   _not: delivery_driver_bool_exp
   _or: [delivery_driver_bool_exp!]
+  app_type_id: String_comparison_exp
   app_version: String_comparison_exp
   current_location: geography_comparison_exp
   delivery_company: delivery_company_bool_exp
@@ -3255,8 +3520,7 @@ input delivery_driver_bool_exp {
   delivery_company_type: String_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_info_id: Int_comparison_exp
-  notification_token: String_comparison_exp
+  notification_info: notification_info_bool_exp
   online: Boolean_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   status: String_comparison_exp
@@ -3285,7 +3549,6 @@ input type for incrementing numeric columns in table "delivery.driver"
 input delivery_driver_inc_input {
   delivery_company_id: Int
   id: Int
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -3293,6 +3556,7 @@ input delivery_driver_inc_input {
 input type for inserting data into table "delivery.driver"
 """
 input delivery_driver_insert_input {
+  app_type_id: String
   app_version: String
   current_location: geography
   delivery_company: delivery_company_obj_rel_insert_input
@@ -3304,7 +3568,7 @@ input delivery_driver_insert_input {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
+  notification_info: notification_info_obj_rel_insert_input
   online: Boolean
   restaurant: restaurant_restaurant_obj_rel_insert_input
 
@@ -3316,6 +3580,7 @@ input delivery_driver_insert_input {
 
 """aggregate max on columns"""
 type delivery_driver_max_fields {
+  app_type_id: String
   app_version: String
   delivery_company_id: Int
 
@@ -3325,7 +3590,6 @@ type delivery_driver_max_fields {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
 
   """awaiting_approval, authorized, banned"""
   status: String
@@ -3336,6 +3600,7 @@ type delivery_driver_max_fields {
 order by max() on columns of table "delivery.driver"
 """
 input delivery_driver_max_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_company_id: order_by
 
@@ -3345,7 +3610,6 @@ input delivery_driver_max_order_by {
   """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
-  notification_info_id: order_by
 
   """awaiting_approval, authorized, banned"""
   status: order_by
@@ -3354,6 +3618,7 @@ input delivery_driver_max_order_by {
 
 """aggregate min on columns"""
 type delivery_driver_min_fields {
+  app_type_id: String
   app_version: String
   delivery_company_id: Int
 
@@ -3363,7 +3628,6 @@ type delivery_driver_min_fields {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
 
   """awaiting_approval, authorized, banned"""
   status: String
@@ -3374,6 +3638,7 @@ type delivery_driver_min_fields {
 order by min() on columns of table "delivery.driver"
 """
 input delivery_driver_min_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_company_id: order_by
 
@@ -3383,7 +3648,6 @@ input delivery_driver_min_order_by {
   """Just for relationship"""
   delivery_driver_type: order_by
   id: order_by
-  notification_info_id: order_by
 
   """awaiting_approval, authorized, banned"""
   status: order_by
@@ -3422,6 +3686,7 @@ input delivery_driver_on_conflict {
 
 """Ordering options when selecting data from "delivery.driver"."""
 input delivery_driver_order_by {
+  app_type_id: order_by
   app_version: order_by
   current_location: order_by
   delivery_company: delivery_company_order_by
@@ -3429,8 +3694,7 @@ input delivery_driver_order_by {
   delivery_company_type: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_info_id: order_by
-  notification_token: order_by
+  notification_info: notification_info_order_by
   online: order_by
   restaurant: restaurant_restaurant_order_by
   status: order_by
@@ -3448,6 +3712,9 @@ select columns of table "delivery.driver"
 """
 enum delivery_driver_select_column {
   """column name"""
+  app_type_id
+
+  """column name"""
   app_version
 
   """column name"""
@@ -3464,9 +3731,6 @@ enum delivery_driver_select_column {
 
   """column name"""
   id
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   online
@@ -3498,6 +3762,7 @@ enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_ar
 input type for updating data in table "delivery.driver"
 """
 input delivery_driver_set_input {
+  app_type_id: String
   app_version: String
   current_location: geography
   delivery_company_id: Int
@@ -3508,7 +3773,6 @@ input delivery_driver_set_input {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   online: Boolean
 
   """awaiting_approval, authorized, banned"""
@@ -3520,7 +3784,6 @@ input delivery_driver_set_input {
 type delivery_driver_stddev_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3530,7 +3793,6 @@ order by stddev() on columns of table "delivery.driver"
 input delivery_driver_stddev_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3538,7 +3800,6 @@ input delivery_driver_stddev_order_by {
 type delivery_driver_stddev_pop_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3548,7 +3809,6 @@ order by stddev_pop() on columns of table "delivery.driver"
 input delivery_driver_stddev_pop_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3556,7 +3816,6 @@ input delivery_driver_stddev_pop_order_by {
 type delivery_driver_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3566,7 +3825,6 @@ order by stddev_samp() on columns of table "delivery.driver"
 input delivery_driver_stddev_samp_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3583,6 +3841,7 @@ input delivery_driver_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input delivery_driver_stream_cursor_value_input {
+  app_type_id: String
   app_version: String
   current_location: geography
   delivery_company_id: Int
@@ -3593,7 +3852,6 @@ input delivery_driver_stream_cursor_value_input {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
-  notification_info_id: Int
   online: Boolean
 
   """awaiting_approval, authorized, banned"""
@@ -3605,7 +3863,6 @@ input delivery_driver_stream_cursor_value_input {
 type delivery_driver_sum_fields {
   delivery_company_id: Int
   id: Int
-  notification_info_id: Int
   user_id: Int
 }
 
@@ -3615,7 +3872,6 @@ order by sum() on columns of table "delivery.driver"
 input delivery_driver_sum_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3623,6 +3879,9 @@ input delivery_driver_sum_order_by {
 update columns of table "delivery.driver"
 """
 enum delivery_driver_update_column {
+  """column name"""
+  app_type_id
+
   """column name"""
   app_version
 
@@ -3640,9 +3899,6 @@ enum delivery_driver_update_column {
 
   """column name"""
   id
-
-  """column name"""
-  notification_info_id
 
   """column name"""
   online
@@ -3669,7 +3925,6 @@ input delivery_driver_updates {
 type delivery_driver_var_pop_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3679,7 +3934,6 @@ order by var_pop() on columns of table "delivery.driver"
 input delivery_driver_var_pop_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3687,7 +3941,6 @@ input delivery_driver_var_pop_order_by {
 type delivery_driver_var_samp_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3697,7 +3950,6 @@ order by var_samp() on columns of table "delivery.driver"
 input delivery_driver_var_samp_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3705,7 +3957,6 @@ input delivery_driver_var_samp_order_by {
 type delivery_driver_variance_fields {
   delivery_company_id: Float
   id: Float
-  notification_info_id: Float
   user_id: Float
 }
 
@@ -3715,7 +3966,6 @@ order by variance() on columns of table "delivery.driver"
 input delivery_driver_variance_order_by {
   delivery_company_id: order_by
   id: order_by
-  notification_info_id: order_by
   user_id: order_by
 }
 
@@ -3727,6 +3977,7 @@ input delivery_get_delivery_companies_args {
 columns and relationships of "delivery.operator"
 """
 type delivery_operator {
+  app_type_id: String!
   app_version: String
   current_gps: geography
 
@@ -3736,10 +3987,8 @@ type delivery_operator {
   delivery_driver_type: String!
   id: Int!
 
-  """
-  A computed field, executes function "deliop_notification_token"
-  """
-  notification_token: String
+  """An object relationship"""
+  notification_info: notification_info
   owner: Boolean!
   status: String!
 
@@ -3850,13 +4099,14 @@ input delivery_operator_bool_exp {
   _and: [delivery_operator_bool_exp!]
   _not: delivery_operator_bool_exp
   _or: [delivery_operator_bool_exp!]
+  app_type_id: String_comparison_exp
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
   delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_token: String_comparison_exp
+  notification_info: notification_info_bool_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
   user: user_bool_exp
@@ -3891,12 +4141,14 @@ input delivery_operator_inc_input {
 input type for inserting data into table "delivery.operator"
 """
 input delivery_operator_insert_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_company: delivery_company_obj_rel_insert_input
   delivery_company_id: Int
   delivery_driver_type: String
   id: Int
+  notification_info: notification_info_obj_rel_insert_input
   owner: Boolean
   status: String
   user: user_obj_rel_insert_input
@@ -3905,6 +4157,7 @@ input delivery_operator_insert_input {
 
 """aggregate max on columns"""
 type delivery_operator_max_fields {
+  app_type_id: String
   app_version: String
   delivery_company_id: Int
   delivery_driver_type: String
@@ -3917,6 +4170,7 @@ type delivery_operator_max_fields {
 order by max() on columns of table "delivery.operator"
 """
 input delivery_operator_max_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_company_id: order_by
   delivery_driver_type: order_by
@@ -3927,6 +4181,7 @@ input delivery_operator_max_order_by {
 
 """aggregate min on columns"""
 type delivery_operator_min_fields {
+  app_type_id: String
   app_version: String
   delivery_company_id: Int
   delivery_driver_type: String
@@ -3939,6 +4194,7 @@ type delivery_operator_min_fields {
 order by min() on columns of table "delivery.operator"
 """
 input delivery_operator_min_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_company_id: order_by
   delivery_driver_type: order_by
@@ -3979,13 +4235,14 @@ input delivery_operator_on_conflict {
 
 """Ordering options when selecting data from "delivery.operator"."""
 input delivery_operator_order_by {
+  app_type_id: order_by
   app_version: order_by
   current_gps: order_by
   delivery_company: delivery_company_order_by
   delivery_company_id: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_token: order_by
+  notification_info: notification_info_order_by
   owner: order_by
   status: order_by
   user: user_order_by
@@ -4001,6 +4258,9 @@ input delivery_operator_pk_columns_input {
 select columns of table "delivery.operator"
 """
 enum delivery_operator_select_column {
+  """column name"""
+  app_type_id
+
   """column name"""
   app_version
 
@@ -4046,6 +4306,7 @@ enum delivery_operator_select_column_delivery_operator_aggregate_bool_exp_bool_o
 input type for updating data in table "delivery.operator"
 """
 input delivery_operator_set_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_company_id: Int
@@ -4117,6 +4378,7 @@ input delivery_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input delivery_operator_stream_cursor_value_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_company_id: Int
@@ -4147,6 +4409,9 @@ input delivery_operator_sum_order_by {
 update columns of table "delivery.operator"
 """
 enum delivery_operator_update_column {
+  """column name"""
+  app_type_id
+
   """column name"""
   app_version
 
@@ -6633,10 +6898,10 @@ input language_updates {
 columns and relationships of "mez_admin"
 """
 type mez_admin {
-  """
-  A computed field, executes function "mez_admin_notification_token"
-  """
-  notification_token: String
+  app_type_id: String!
+
+  """An object relationship"""
+  notification_info: notification_info
 
   """An object relationship"""
   user: user
@@ -6681,7 +6946,8 @@ input mez_admin_bool_exp {
   _and: [mez_admin_bool_exp!]
   _not: mez_admin_bool_exp
   _or: [mez_admin_bool_exp!]
-  notification_token: String_comparison_exp
+  app_type_id: String_comparison_exp
+  notification_info: notification_info_bool_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
   version: String_comparison_exp
@@ -6953,6 +7219,8 @@ input mez_admin_inc_input {
 input type for inserting data into table "mez_admin"
 """
 input mez_admin_insert_input {
+  app_type_id: String
+  notification_info: notification_info_obj_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
   version: String
@@ -6960,12 +7228,14 @@ input mez_admin_insert_input {
 
 """aggregate max on columns"""
 type mez_admin_max_fields {
+  app_type_id: String
   user_id: Int
   version: String
 }
 
 """aggregate min on columns"""
 type mez_admin_min_fields {
+  app_type_id: String
   user_id: Int
   version: String
 }
@@ -6992,7 +7262,8 @@ input mez_admin_on_conflict {
 
 """Ordering options when selecting data from "mez_admin"."""
 input mez_admin_order_by {
-  notification_token: order_by
+  app_type_id: order_by
+  notification_info: notification_info_order_by
   user: user_order_by
   user_id: order_by
   version: order_by
@@ -7008,6 +7279,9 @@ select columns of table "mez_admin"
 """
 enum mez_admin_select_column {
   """column name"""
+  app_type_id
+
+  """column name"""
   user_id
 
   """column name"""
@@ -7018,6 +7292,7 @@ enum mez_admin_select_column {
 input type for updating data in table "mez_admin"
 """
 input mez_admin_set_input {
+  app_type_id: String
   user_id: Int
   version: String
 }
@@ -7050,6 +7325,7 @@ input mez_admin_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input mez_admin_stream_cursor_value_input {
+  app_type_id: String
   user_id: Int
   version: String
 }
@@ -7063,6 +7339,9 @@ type mez_admin_sum_fields {
 update columns of table "mez_admin"
 """
 enum mez_admin_update_column {
+  """column name"""
+  app_type_id
+
   """column name"""
   user_id
 
@@ -7352,6 +7631,19 @@ type mutation_root {
   delete single row from the table: "customer.customer"
   """
   delete_customer_customer_by_pk(user_id: Int!): customer_customer
+
+  """
+  delete data from the table: "customer.favourited_item"
+  """
+  delete_customer_favourited_item(
+    """filter the rows which have to be deleted"""
+    where: customer_favourited_item_bool_exp!
+  ): customer_favourited_item_mutation_response
+
+  """
+  delete single row from the table: "customer.favourited_item"
+  """
+  delete_customer_favourited_item_by_pk(id: Int!): customer_favourited_item
 
   """
   delete data from the table: "customer.saved_location"
@@ -7898,6 +8190,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: customer_customer_on_conflict
   ): customer_customer
+
+  """
+  insert data into the table: "customer.favourited_item"
+  """
+  insert_customer_favourited_item(
+    """the rows to be inserted"""
+    objects: [customer_favourited_item_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: customer_favourited_item_on_conflict
+  ): customer_favourited_item_mutation_response
+
+  """
+  insert a single row into the table: "customer.favourited_item"
+  """
+  insert_customer_favourited_item_one(
+    """the row to be inserted"""
+    object: customer_favourited_item_insert_input!
+
+    """upsert condition"""
+    on_conflict: customer_favourited_item_on_conflict
+  ): customer_favourited_item
 
   """
   insert data into the table: "customer.saved_location"
@@ -8896,6 +9210,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [customer_customer_updates!]!
   ): [customer_customer_mutation_response]
+
+  """
+  update data of the table: "customer.favourited_item"
+  """
+  update_customer_favourited_item(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: customer_favourited_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: customer_favourited_item_set_input
+
+    """filter the rows which have to be updated"""
+    where: customer_favourited_item_bool_exp!
+  ): customer_favourited_item_mutation_response
+
+  """
+  update single row of the table: "customer.favourited_item"
+  """
+  update_customer_favourited_item_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: customer_favourited_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: customer_favourited_item_set_input
+    pk_columns: customer_favourited_item_pk_columns_input!
+  ): customer_favourited_item
+
+  """
+  update multiples rows of table: "customer.favourited_item"
+  """
+  update_customer_favourited_item_many(
+    """updates to execute, in order"""
+    updates: [customer_favourited_item_updates!]!
+  ): [customer_favourited_item_mutation_response]
 
   """
   update data of the table: "customer.saved_location"
@@ -10269,6 +10617,7 @@ type notification_info {
   app_type_id: String!
   id: Int!
   token: String!
+  turn_off_notifications: Boolean!
   user_id: Int!
 }
 
@@ -10313,6 +10662,7 @@ input notification_info_bool_exp {
   app_type_id: String_comparison_exp
   id: Int_comparison_exp
   token: String_comparison_exp
+  turn_off_notifications: Boolean_comparison_exp
   user_id: Int_comparison_exp
 }
 
@@ -10351,6 +10701,7 @@ input notification_info_insert_input {
   app_type_id: String
   id: Int
   token: String
+  turn_off_notifications: Boolean
   user_id: Int
 }
 
@@ -10405,6 +10756,7 @@ input notification_info_order_by {
   app_type_id: order_by
   id: order_by
   token: order_by
+  turn_off_notifications: order_by
   user_id: order_by
 }
 
@@ -10427,6 +10779,9 @@ enum notification_info_select_column {
   token
 
   """column name"""
+  turn_off_notifications
+
+  """column name"""
   user_id
 }
 
@@ -10437,6 +10792,7 @@ input notification_info_set_input {
   app_type_id: String
   id: Int
   token: String
+  turn_off_notifications: Boolean
   user_id: Int
 }
 
@@ -10474,6 +10830,7 @@ input notification_info_stream_cursor_value_input {
   app_type_id: String
   id: Int
   token: String
+  turn_off_notifications: Boolean
   user_id: Int
 }
 
@@ -10495,6 +10852,9 @@ enum notification_info_update_column {
 
   """column name"""
   token
+
+  """column name"""
+  turn_off_notifications
 
   """column name"""
   user_id
@@ -10729,6 +11089,51 @@ type query_root {
   fetch data from the table: "customer.customer" using primary key columns
   """
   customer_customer_by_pk(user_id: Int!): customer_customer
+
+  """
+  fetch data from the table: "customer.favourited_item"
+  """
+  customer_favourited_item(
+    """distinct select on columns"""
+    distinct_on: [customer_favourited_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_favourited_item_order_by!]
+
+    """filter the rows returned"""
+    where: customer_favourited_item_bool_exp
+  ): [customer_favourited_item!]!
+
+  """
+  fetch aggregated fields from the table: "customer.favourited_item"
+  """
+  customer_favourited_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_favourited_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_favourited_item_order_by!]
+
+    """filter the rows returned"""
+    where: customer_favourited_item_bool_exp
+  ): customer_favourited_item_aggregate!
+
+  """
+  fetch data from the table: "customer.favourited_item" using primary key columns
+  """
+  customer_favourited_item_by_pk(id: Int!): customer_favourited_item
 
   """
   fetch data from the table: "customer.saved_location"
@@ -15509,15 +15914,15 @@ input restaurant_item_variance_order_by {
 columns and relationships of "restaurant.operator"
 """
 type restaurant_operator {
+  app_type_id: String!
   app_version: String
   current_gps: geography
   delivery_driver_type: String!
   id: Int!
 
-  """
-  A computed field, executes function "restaurant_operator_notification_token"
-  """
-  notification_token: String
+  """An object relationship"""
+  notification_info: notification_info
+  online: Boolean!
   owner: Boolean!
 
   """An object relationship"""
@@ -15634,11 +16039,13 @@ input restaurant_operator_bool_exp {
   _and: [restaurant_operator_bool_exp!]
   _not: restaurant_operator_bool_exp
   _or: [restaurant_operator_bool_exp!]
+  app_type_id: String_comparison_exp
   app_version: String_comparison_exp
   current_gps: geography_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
-  notification_token: String_comparison_exp
+  notification_info: notification_info_bool_exp
+  online: Boolean_comparison_exp
   owner: Boolean_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
   restaurant_id: Int_comparison_exp
@@ -15675,10 +16082,13 @@ input restaurant_operator_inc_input {
 input type for inserting data into table "restaurant.operator"
 """
 input restaurant_operator_insert_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_driver_type: String
   id: Int
+  notification_info: notification_info_obj_rel_insert_input
+  online: Boolean
   owner: Boolean
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -15691,6 +16101,7 @@ input restaurant_operator_insert_input {
 
 """aggregate max on columns"""
 type restaurant_operator_max_fields {
+  app_type_id: String
   app_version: String
   delivery_driver_type: String
   id: Int
@@ -15705,6 +16116,7 @@ type restaurant_operator_max_fields {
 order by max() on columns of table "restaurant.operator"
 """
 input restaurant_operator_max_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_driver_type: order_by
   id: order_by
@@ -15717,6 +16129,7 @@ input restaurant_operator_max_order_by {
 
 """aggregate min on columns"""
 type restaurant_operator_min_fields {
+  app_type_id: String
   app_version: String
   delivery_driver_type: String
   id: Int
@@ -15731,6 +16144,7 @@ type restaurant_operator_min_fields {
 order by min() on columns of table "restaurant.operator"
 """
 input restaurant_operator_min_order_by {
+  app_type_id: order_by
   app_version: order_by
   delivery_driver_type: order_by
   id: order_by
@@ -15773,11 +16187,13 @@ input restaurant_operator_on_conflict {
 
 """Ordering options when selecting data from "restaurant.operator"."""
 input restaurant_operator_order_by {
+  app_type_id: order_by
   app_version: order_by
   current_gps: order_by
   delivery_driver_type: order_by
   id: order_by
-  notification_token: order_by
+  notification_info: notification_info_order_by
+  online: order_by
   owner: order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -15796,6 +16212,9 @@ select columns of table "restaurant.operator"
 """
 enum restaurant_operator_select_column {
   """column name"""
+  app_type_id
+
+  """column name"""
   app_version
 
   """column name"""
@@ -15806,6 +16225,9 @@ enum restaurant_operator_select_column {
 
   """column name"""
   id
+
+  """column name"""
+  online
 
   """column name"""
   owner
@@ -15825,6 +16247,9 @@ select "restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns" colum
 """
 enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_and_arguments_columns {
   """column name"""
+  online
+
+  """column name"""
   owner
 }
 
@@ -15833,6 +16258,9 @@ select "restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns" column
 """
 enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bool_or_arguments_columns {
   """column name"""
+  online
+
+  """column name"""
   owner
 }
 
@@ -15840,10 +16268,12 @@ enum restaurant_operator_select_column_restaurant_operator_aggregate_bool_exp_bo
 input type for updating data in table "restaurant.operator"
 """
 input restaurant_operator_set_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_driver_type: String
   id: Int
+  online: Boolean
   owner: Boolean
   restaurant_id: Int
 
@@ -15913,10 +16343,12 @@ input restaurant_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_operator_stream_cursor_value_input {
+  app_type_id: String
   app_version: String
   current_gps: geography
   delivery_driver_type: String
   id: Int
+  online: Boolean
   owner: Boolean
   restaurant_id: Int
 
@@ -15946,6 +16378,9 @@ update columns of table "restaurant.operator"
 """
 enum restaurant_operator_update_column {
   """column name"""
+  app_type_id
+
+  """column name"""
   app_version
 
   """column name"""
@@ -15956,6 +16391,9 @@ enum restaurant_operator_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  online
 
   """column name"""
   owner
@@ -19257,6 +19695,7 @@ type restaurant_restaurant {
     """filter the rows returned"""
     where: restaurant_order_bool_exp
   ): restaurant_order_aggregate!
+  phone_number: String
 
   """An array relationship"""
   restaurant_operators(
@@ -19512,6 +19951,7 @@ input restaurant_restaurant_bool_exp {
   open_status: String_comparison_exp
   orders: restaurant_order_bool_exp
   orders_aggregate: restaurant_order_aggregate_bool_exp
+  phone_number: String_comparison_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
   reviews: review_bool_exp
@@ -19640,6 +20080,7 @@ input restaurant_restaurant_insert_input {
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
   orders: restaurant_order_arr_rel_insert_input
+  phone_number: String
   restaurant_operators: restaurant_operator_arr_rel_insert_input
   reviews: review_arr_rel_insert_input
   schedule: jsonb
@@ -19668,6 +20109,7 @@ type restaurant_restaurant_max_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  phone_number: String
   service_provider_type: String
 }
 
@@ -19687,6 +20129,7 @@ input restaurant_restaurant_max_order_by {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: order_by
+  phone_number: order_by
   service_provider_type: order_by
 }
 
@@ -19704,6 +20147,7 @@ type restaurant_restaurant_min_fields {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  phone_number: String
   service_provider_type: String
 }
 
@@ -19723,6 +20167,7 @@ input restaurant_restaurant_min_order_by {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: order_by
+  phone_number: order_by
   service_provider_type: order_by
 }
 
@@ -19781,6 +20226,7 @@ input restaurant_restaurant_order_by {
   name: order_by
   open_status: order_by
   orders_aggregate: restaurant_order_aggregate_order_by
+  phone_number: order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
   reviews_aggregate: review_aggregate_order_by
   schedule: order_by
@@ -19856,6 +20302,9 @@ enum restaurant_restaurant_select_column {
   open_status
 
   """column name"""
+  phone_number
+
+  """column name"""
   schedule
 
   """column name"""
@@ -19927,6 +20376,7 @@ input restaurant_restaurant_set_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  phone_number: String
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
@@ -20027,6 +20477,7 @@ input restaurant_restaurant_stream_cursor_value_input {
 
   """open, closed_temporarily, closed_indefinitely"""
   open_status: String
+  phone_number: String
   schedule: jsonb
   self_delivery: Boolean
   service_provider_type: String
@@ -20102,6 +20553,9 @@ enum restaurant_restaurant_update_column {
 
   """column name"""
   open_status
+
+  """column name"""
+  phone_number
 
   """column name"""
   schedule
@@ -22805,6 +23259,65 @@ type subscription_root {
     """filter the rows returned"""
     where: customer_customer_bool_exp
   ): [customer_customer!]!
+
+  """
+  fetch data from the table: "customer.favourited_item"
+  """
+  customer_favourited_item(
+    """distinct select on columns"""
+    distinct_on: [customer_favourited_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_favourited_item_order_by!]
+
+    """filter the rows returned"""
+    where: customer_favourited_item_bool_exp
+  ): [customer_favourited_item!]!
+
+  """
+  fetch aggregated fields from the table: "customer.favourited_item"
+  """
+  customer_favourited_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_favourited_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_favourited_item_order_by!]
+
+    """filter the rows returned"""
+    where: customer_favourited_item_bool_exp
+  ): customer_favourited_item_aggregate!
+
+  """
+  fetch data from the table: "customer.favourited_item" using primary key columns
+  """
+  customer_favourited_item_by_pk(id: Int!): customer_favourited_item
+
+  """
+  fetch data from the table in a streaming manner: "customer.favourited_item"
+  """
+  customer_favourited_item_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [customer_favourited_item_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: customer_favourited_item_bool_exp
+  ): [customer_favourited_item!]!
 
   """
   fetch data from the table: "customer.saved_location"

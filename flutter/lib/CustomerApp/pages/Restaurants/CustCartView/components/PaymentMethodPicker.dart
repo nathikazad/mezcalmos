@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/StripeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:sizer/sizer.dart';
 
 //

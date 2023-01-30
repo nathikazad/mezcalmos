@@ -3,7 +3,6 @@ import 'package:graphql/src/core/query_result.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/location/__generated/service_provider_location.graphql.dart';
-import 'package:mezcalmos/Shared/helpers/ErrorHandlingHelpers.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
