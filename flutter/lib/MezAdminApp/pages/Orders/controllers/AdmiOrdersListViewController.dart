@@ -1,36 +1,67 @@
-import 'package:get/state_manager.dart';
+import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
+import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/orders/hsAdminOrders.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class AdmiOrdersListViewController {
+  HasuraDb hasuraDb = Get.find<HasuraDb>();
+
   late AdminTabsViewController adminTabsViewController;
   // obs //
-  Rxn<List<MinimalOrder>> _restaurantOrders = Rxn();
-  Rxn<List<MinimalOrder>> _deliveryOrders = Rxn();
+  Rxn<List<MinimalOrder>> restaurantOrders = Rxn();
+  Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
+  // streams
+  StreamSubscription<List<MinimalOrder>?>? rOrdersStream;
+  StreamSubscription<List<MinimalOrder>?>? dvOrdersStream;
+  String? subscriptionId;
+
 // getters //
   ServiceProviderType get currentService =>
       adminTabsViewController.selectedServiceProviderType.value;
-  List<MinimalOrder> get orders {
-    switch (currentService) {
-      case ServiceProviderType.Restaurant:
-        return _restaurantOrders.value ?? [];
-      case ServiceProviderType.Delivery_company:
-        return _deliveryOrders.value ?? [];
-
-      default:
-        return [];
-    }
-  }
 
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    _restaurantOrders.value =
+    restaurantOrders.value =
         await get_admin_restaurant_orders(inProcess: true, withCache: false);
-
-    _deliveryOrders.value =
+    deliveryOrders.value =
         await get_admin_dv_orders(inProcess: true, withCache: false);
+    subscriptionId = hasuraDb.createSubscription(start: () {
+      rOrdersStream = listen_on_admin_restaurant_orders(inProcess: true)
+          .listen((List<MinimalOrder>? event) {
+        if (event != null) {
+          restaurantOrders.value?.clear();
+          restaurantOrders.value?.addAll(event);
+          restaurantOrders.refresh();
+        }
+      });
+      dvOrdersStream = listen_on_admin_dv_orders(inProcess: true)
+          .listen((List<MinimalOrder>? event) {
+        if (event != null) {
+          deliveryOrders.value?.clear();
+          deliveryOrders.value?.addAll(event);
+          deliveryOrders.refresh();
+        }
+      });
+    }, cancel: () {
+      dvOrdersStream?.cancel();
+      dvOrdersStream = null;
+      rOrdersStream?.cancel();
+      rOrdersStream = null;
+    });
+    await _startRestaurantOrders();
+  }
+
+  Future<void> _startRestaurantOrders() async {
+    subscriptionId = hasuraDb.createSubscription(
+        start: () {},
+        cancel: () {
+          rOrdersStream?.cancel();
+          rOrdersStream = null;
+        });
   }
 }

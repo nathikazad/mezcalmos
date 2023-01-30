@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
@@ -27,6 +26,7 @@ class CustomerCartController extends GetxController {
   Future<void> onInit() async {
     if (_auth.hasuraUserId != null) {
       await _initCart();
+      cart.refresh();
     }
     super.onInit();
   }

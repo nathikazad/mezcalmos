@@ -169,6 +169,7 @@ Stream<List<MinimalOrder>?> listen_on_admin_restaurant_orders({
 Future<List<MinimalOrder>?> get_admin_service__orders({
   required bool inProcess,
   required int serviceProviderId,
+  required int limit,
   required ServiceProviderType serviceProviderType,
 }) async {
   final QueryResult<Query$admin_get_service__orders> queryResult =
@@ -176,6 +177,7 @@ Future<List<MinimalOrder>?> get_admin_service__orders({
           Options$Query$admin_get_service__orders(
               variables: Variables$Query$admin_get_service__orders(
                   inProccess: inProcess,
+                  limit: limit,
                   serviceProviderId: serviceProviderId,
                   serviceProviderType:
                       serviceProviderType.toFirebaseFormatString())));

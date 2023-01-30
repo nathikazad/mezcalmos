@@ -15,7 +15,8 @@ enum ParticipantType {
   Restaurant,
   DeliveryDriver,
   LaundryOperator,
-  RestaurantOperator
+  RestaurantOperator,
+  MezAdmin
 }
 
 extension HasuraAppTypeIdParser on String {

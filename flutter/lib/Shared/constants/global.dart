@@ -162,6 +162,8 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.TaxiAdmin;
       case AppType.DeliveryAdminApp:
         return ParticipantType.DeliveryAdmin;
+      case AppType.MezAdminApp:
+        return ParticipantType.MezAdmin;
       default:
         return null;
     }

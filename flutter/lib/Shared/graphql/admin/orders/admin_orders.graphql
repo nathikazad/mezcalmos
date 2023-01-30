@@ -94,13 +94,15 @@ query admin_get_service__orders(
   $serviceProviderType: String!
   $serviceProviderId: Int!
   $inProccess: Boolean!
+  $limit: Int!
 ) {
   delivery_order(
     where: {
       service_provider_type: { _eq: $serviceProviderType }
       service_provider_id: { _eq: $serviceProviderId }
       in_process: { _eq: $inProccess }
-    }
+    },
+    limit: $limit
   ) {
     id
     order_time

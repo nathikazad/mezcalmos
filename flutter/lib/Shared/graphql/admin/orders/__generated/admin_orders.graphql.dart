@@ -4433,11 +4433,13 @@ class Variables$Query$admin_get_service__orders {
     required String serviceProviderType,
     required int serviceProviderId,
     required bool inProccess,
+    required int limit,
   }) =>
       Variables$Query$admin_get_service__orders._({
         r'serviceProviderType': serviceProviderType,
         r'serviceProviderId': serviceProviderId,
         r'inProccess': inProccess,
+        r'limit': limit,
       });
 
   Variables$Query$admin_get_service__orders._(this._$data);
@@ -4451,6 +4453,8 @@ class Variables$Query$admin_get_service__orders {
     result$data['serviceProviderId'] = (l$serviceProviderId as int);
     final l$inProccess = data['inProccess'];
     result$data['inProccess'] = (l$inProccess as bool);
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
     return Variables$Query$admin_get_service__orders._(result$data);
   }
 
@@ -4459,6 +4463,7 @@ class Variables$Query$admin_get_service__orders {
   String get serviceProviderType => (_$data['serviceProviderType'] as String);
   int get serviceProviderId => (_$data['serviceProviderId'] as int);
   bool get inProccess => (_$data['inProccess'] as bool);
+  int get limit => (_$data['limit'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$serviceProviderType = serviceProviderType;
@@ -4467,6 +4472,8 @@ class Variables$Query$admin_get_service__orders {
     result$data['serviceProviderId'] = l$serviceProviderId;
     final l$inProccess = inProccess;
     result$data['inProccess'] = l$inProccess;
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
     return result$data;
   }
 
@@ -4500,6 +4507,11 @@ class Variables$Query$admin_get_service__orders {
     if (l$inProccess != lOther$inProccess) {
       return false;
     }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
     return true;
   }
 
@@ -4508,10 +4520,12 @@ class Variables$Query$admin_get_service__orders {
     final l$serviceProviderType = serviceProviderType;
     final l$serviceProviderId = serviceProviderId;
     final l$inProccess = inProccess;
+    final l$limit = limit;
     return Object.hashAll([
       l$serviceProviderType,
       l$serviceProviderId,
       l$inProccess,
+      l$limit,
     ]);
   }
 }
@@ -4529,6 +4543,7 @@ abstract class CopyWith$Variables$Query$admin_get_service__orders<TRes> {
     String? serviceProviderType,
     int? serviceProviderId,
     bool? inProccess,
+    int? limit,
   });
 }
 
@@ -4549,6 +4564,7 @@ class _CopyWithImpl$Variables$Query$admin_get_service__orders<TRes>
     Object? serviceProviderType = _undefined,
     Object? serviceProviderId = _undefined,
     Object? inProccess = _undefined,
+    Object? limit = _undefined,
   }) =>
       _then(Variables$Query$admin_get_service__orders._({
         ..._instance._$data,
@@ -4558,6 +4574,7 @@ class _CopyWithImpl$Variables$Query$admin_get_service__orders<TRes>
           'serviceProviderId': (serviceProviderId as int),
         if (inProccess != _undefined && inProccess != null)
           'inProccess': (inProccess as bool),
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
       }));
 }
 
@@ -4571,6 +4588,7 @@ class _CopyWithStubImpl$Variables$Query$admin_get_service__orders<TRes>
     String? serviceProviderType,
     int? serviceProviderId,
     bool? inProccess,
+    int? limit,
   }) =>
       _res;
 }
@@ -4763,6 +4781,15 @@ const documentNodeQueryadmin_get_service__orders = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -4803,7 +4830,11 @@ const documentNodeQueryadmin_get_service__orders = DocumentNode(definitions: [
                 ]),
               ),
             ]),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
