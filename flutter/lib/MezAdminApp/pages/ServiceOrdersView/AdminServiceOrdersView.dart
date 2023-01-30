@@ -4,6 +4,7 @@ import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminS
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 
 class AdminServiceOrdersView extends StatefulWidget {
@@ -106,6 +107,18 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                               order: viewController.pastOrders.value![index],
                               onTap: () {})),
                     ),
+                    if (viewController.pastOrders.value!.length ==
+                        viewController.pastOrders.value)
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: MezButton(
+                          label: "View more",
+                          onClick: () async {
+                            viewController.pastOrdersLimit.value += 10;
+                            await viewController.fetchPastOrders();
+                          },
+                        ),
+                      ),
                   ],
                 )
               : (viewController.currentOrders.value!.isEmpty)

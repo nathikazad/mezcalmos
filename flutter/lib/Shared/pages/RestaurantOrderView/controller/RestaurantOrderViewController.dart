@@ -69,7 +69,9 @@ class RestaurantOrderViewController {
     }
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    await _initMap();
+    if (order.value != null) {
+      await _initMap();
+    }
   }
 
   Future<void> _initMap() async {

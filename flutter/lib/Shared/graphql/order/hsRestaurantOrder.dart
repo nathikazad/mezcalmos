@@ -5,9 +5,9 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/order/__generated/restaurant_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -150,7 +150,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         cost: orderData.delivery_cost,
         restaurant: ServiceInfo(
           location: Location(
-            orderData.restaurant.location.address!,
+            orderData.restaurant.location.address,
             orderData.restaurant.location.gps.toLocationData(),
           ),
           firebaseId: orderData.restaurant.firebase_id,
@@ -341,7 +341,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         : null,
     restaurant: ServiceInfo(
       location: Location(
-        orderData.restaurant.location.address!,
+        orderData.restaurant.location.address,
         orderData.restaurant.location.gps.toLocationData(),
       ),
       firebaseId: orderData.restaurant.firebase_id,

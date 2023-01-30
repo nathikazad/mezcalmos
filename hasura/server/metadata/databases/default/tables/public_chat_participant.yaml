@@ -46,7 +46,10 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
+        - chat_id
+        - id
         - participant_id
+        - app_type_id
       filter:
         chat:
           chat_participants:

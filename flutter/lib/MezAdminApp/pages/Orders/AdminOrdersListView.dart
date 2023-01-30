@@ -4,6 +4,7 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
@@ -32,33 +33,58 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
         children: [
           Obx(() => Column(
                 children: [
-                  viewController.orders.isNotEmpty
-                      ? Column(
-                          children: List.generate(viewController.orders.length,
-                              (int index) {
-                            return MinimalOrderCard(
-                              order: viewController.orders[index],
-                              onTap: () {
-                                if (viewController.currentService ==
-                                    ServiceProviderType.Delivery_company) {
-                                  MezRouter.toNamed(getDvCompanyOrderRoute(
-                                      viewController.orders[index].id));
-                                } else {
-                                  MezRouter.toNamed(getRestaurantOrderRoute(
-                                      viewController.orders[index].id));
-                                }
-                              },
-                            );
-                          }),
-                        )
-                      : Container(
-                          margin: EdgeInsets.only(top: 10.h),
-                          alignment: Alignment.center,
-                          child: Center(child: NoOrdersComponent())),
+                  if (viewController.currentService ==
+                      ServiceProviderType.Restaurant)
+                    _buildRestuarntOrders(),
+                  if (viewController.currentService ==
+                      ServiceProviderType.Delivery_company)
+                    _buildDeliveryOrders(),
                 ],
               )),
         ],
       ),
+    );
+  }
+
+  Widget _buildRestuarntOrders() {
+    return Container(
+      child: (viewController.restaurantOrders.value?.isNotEmpty == true)
+          ? Column(
+              children: List.generate(
+                  viewController.restaurantOrders.value!.length,
+                  (int index) => MinimalOrderCard(
+                      order: viewController.restaurantOrders.value![index],
+                      onTap: () {
+                        mezDbgPrint(
+                            "ID ====>${viewController.restaurantOrders.value![index].id}");
+                        MezRouter.toNamed(getRestaurantOrderRoute(
+                            viewController.restaurantOrders.value![index].id));
+                      })),
+            )
+          : Container(
+              margin: EdgeInsets.only(top: 10.h),
+              alignment: Alignment.center,
+              child: Center(child: NoOrdersComponent())),
+    );
+  }
+
+  Widget _buildDeliveryOrders() {
+    return Container(
+      child: (viewController.deliveryOrders.value?.isNotEmpty == true)
+          ? Column(
+              children: List.generate(
+                  viewController.deliveryOrders.value!.length,
+                  (int index) => MinimalOrderCard(
+                      order: viewController.deliveryOrders.value![index],
+                      onTap: () {
+                        MezRouter.toNamed(getDvCompanyOrderRoute(
+                            viewController.deliveryOrders.value![index].id));
+                      })),
+            )
+          : Container(
+              margin: EdgeInsets.only(top: 10.h),
+              alignment: Alignment.center,
+              child: Center(child: NoOrdersComponent())),
     );
   }
 }
