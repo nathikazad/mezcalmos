@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -72,6 +73,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
           primaryIcon: Icons.flatware,
           showSmallIcon: false,
           primaryCallBack: () {
+            Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
             popEverythingAndNavigateTo(kTabsView);
           },
           status: "Your restaurant is under review",
@@ -81,7 +83,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
       } else {
         // handle error
       }
-    } else
+    } else {
       await viewController.handleNext();
+    }
   }
 }

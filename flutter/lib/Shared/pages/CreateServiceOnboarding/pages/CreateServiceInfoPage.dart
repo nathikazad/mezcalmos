@@ -20,89 +20,117 @@ class CreateServiceInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CreateServiceImageComponent(viewController: viewController),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            "${viewController.serviceType.toNormalString()} Name",
-            style: Get.textTheme.bodyText1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            controller: viewController.serviceName,
-            style: Get.textTheme.bodyText1,
-            decoration: InputDecoration(
-                hintStyle: Get.textTheme.bodyText2,
-                hintText:
-                    "Your ${viewController.serviceType.toNormalString()} name"),
-          ),
-          SizedBox(
-            height: 25,
-          ),
-          Text(
-            "${viewController.serviceType.toNormalString()} Location",
-            style: Get.textTheme.bodyText1,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          _locationCard(),
-        ],
+      child: Form(
+        key: viewController.infoFromKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CreateServiceImageComponent(viewController: viewController),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "${viewController.serviceType.toNormalString()} Name",
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: viewController.serviceName,
+              validator: (String? v) {
+                if (v == null || v.isEmpty) {
+                  return "Please provide a name ";
+                }
+                return null;
+              },
+              style: Get.textTheme.bodyText1,
+              decoration: InputDecoration(
+                  hintStyle: Get.textTheme.bodyText2,
+                  hintText:
+                      "Your ${viewController.serviceType.toNormalString()} name"),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+            Text(
+              "${viewController.serviceType.toNormalString()} Location",
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _locationCard(),
+          ],
+        ),
       ),
     );
   }
 
   Widget _locationCard() {
-    return Obx(
-      () => Card(
-        color: Colors.grey.shade200,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(10),
-          onTap: () async {
-            final Location? newLoc =
-                await MezRouter.toNamed(kPickLocationNew) as Location?;
+    return FormField(validator: (Object? value) {
+      if (viewController.newLocation.value == null) {
+        return "Location is required";
+      }
+      return null;
+    }, builder: (FormFieldState<Object?> state) {
+      return Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              color: Colors.grey.shade200,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () async {
+                  final Location? newLoc =
+                      await MezRouter.toNamed(kPickLocationNew) as Location?;
 
-            if (newLoc != null) {
-              viewController.setNewLocation(newLoc);
-            }
-          },
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            width: double.infinity,
-            child: Row(
-              children: [
-                Icon(
-                  Icons.place_rounded,
-                  color: primaryBlueColor,
+                  if (newLoc != null) {
+                    viewController.setNewLocation(newLoc);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.place_rounded,
+                        color: primaryBlueColor,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Flexible(
+                          flex: 5,
+                          fit: FlexFit.tight,
+                          child: Text(
+                            viewController.newLocation.value?.address ??
+                                'Pick new location',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: primaryBlueColor,
+                      )
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                    flex: 5,
-                    fit: FlexFit.tight,
-                    child: Text(
-                      viewController.newLocation.value?.address ??
-                          'Pick new location',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    )),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: primaryBlueColor,
-                )
-              ],
+              ),
             ),
-          ),
+            if (!state.isValid)
+              Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    state.errorText ?? "",
+                    style: Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+                  ))
+          ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

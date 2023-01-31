@@ -24,6 +24,7 @@ class CreateServiceViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   PageController pageController = PageController(initialPage: 0);
   GlobalKey<FormState> costFormKey = GlobalKey();
+  GlobalKey<FormState> infoFromKey = GlobalKey();
   // text inputs //
   TextEditingController serviceName = TextEditingController();
   TextEditingController freeKmRange = TextEditingController();
@@ -180,7 +181,8 @@ class CreateServiceViewController {
   }
 
   void handleInfoPageNext() {
-    if (_infoIsValid) {
+    mezDbgPrint("Here");
+    if (infoFromKey.currentState?.validate() == true) {
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
@@ -204,7 +206,7 @@ class CreateServiceViewController {
   bool isFormValid() {
     switch (currentPage.value) {
       case 0:
-        return _infoIsValid;
+        return infoFromKey.currentState?.validate() == true;
       case 1:
         return true;
       case 2:
