@@ -1,3 +1,21 @@
+class ServerResponse {
+  ServerResponseStatus status;
+  String? errorMessage;
+  String? errorCode;
+  string] [key;
+  ServerResponse(this.status, this.errorMessage, this.errorCode, this.[key);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "status": status,
+      "errorMessage": errorMessage,
+      "errorCode": errorCode,
+      "[key": [key};
+  }
+factory ServerResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ServerResponse(json["status"], json["errorMessage?"], json["errorCode?"], json["[key"], json["nullableField"]);
+  }
+}
+
 enum OrderType { Taxi, Restaurant, Laundry, Water }
 extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
@@ -25,6 +43,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "lng": lng,
       "address": address};
   }
+
 }
 
 class DeliveryDetails {
@@ -42,6 +61,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "freeDeliveryMinimumCost": freeDeliveryMinimumCost,
       "freeDeliveryKmRange": freeDeliveryKmRange};
   }
+
 }
 
 enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin }
@@ -68,6 +88,18 @@ extension ParseDeliveryTypeToString on DeliveryType {
   }
 }
 
+class CheckoutResponse {
+  num orderId;
+  CheckoutResponse(this.orderId);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "orderId": orderId};
+  }
+factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return CheckoutResponse(json["orderId"], json["nullableField"]);
+  }
+}
+
 class NotificationInfo {
   String token;
   bool turnOffNotifications;
@@ -79,6 +111,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "turnOffNotifications": turnOffNotifications,
       "appType": appType};
   }
+
 }
 
 enum DeliveryDriverType { RestaurantOperator, DeliveryDriver }
