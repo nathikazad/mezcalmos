@@ -131,10 +131,7 @@ select_permissions:
         - name
         - open_status
         - service_provider_type
-      filter:
-        delivery_drivers:
-          user_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_operator
     permission:
       columns:

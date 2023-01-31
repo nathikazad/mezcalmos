@@ -230,24 +230,14 @@ class ROpEditInfoController {
       case 0:
         return '${_i18n()["dashboard"]}';
         break;
+
       case 1:
-        return '${_i18n()["informations"]}';
-        break;
-      case 2:
         return '${_i18n()["schedule"]}';
         break;
-      case 3:
-        return '${_i18n()["payments"]}';
-        break;
-      case 4:
+      case 2:
         return 'Reviews';
-      case 5:
-        return 'Operators';
-      case 6:
-        return 'Drivers';
-      case 7:
-        return 'Delivery Cost';
         break;
+
       default:
         return "";
     }

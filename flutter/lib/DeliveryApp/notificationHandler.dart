@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
@@ -17,14 +18,16 @@ Notification deliveryDriverNotificationHandler(String key, value) {
   final NotificationType notificationType =
       value['notificationType'].toString().toNotificationType();
 
+  mezDbgPrint("👋 new notification 👋\n $value");
+
   switch (notificationType) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          icon:
-              (value['orderType'].toString().toOrderType() == OrderType.Laundry)
-                  ? mat.Icons.local_laundry_service
-                  : mat.Icons.flatware,
+          // icon:
+          //     (value['orderType'].toString().toOrderType() == OrderType.Laundry)
+          //         ? mat.Icons.local_laundry_service
+          //         : mat.Icons.flatware,
           linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
               value['orderId']), // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed

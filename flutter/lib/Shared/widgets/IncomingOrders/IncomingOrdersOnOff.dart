@@ -7,11 +7,13 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
   String title;
   final Function onTurnedOn;
   final Function onTurnedOff;
+  bool isLoading;
   TitleWithOnOffSwitcher({
     required this.title,
     this.initialSwitcherValue = false,
     required this.onTurnedOn,
     required this.onTurnedOff,
+    this.isLoading = false,
     Key? key,
   }) : super(key: key);
 
@@ -49,16 +51,19 @@ class TitleWithOnOffSwitcher extends StatelessWidget {
           initialPosition:
               initialSwitcherValue, //_taxiAuthController.taxiState?.isLooking ?? false,
           values: <String>['ON', 'OFF'],
-          onToggleCallback: (int v) {
-            // turn ut ON
-            if (v == 0) {
-              onTurnedOn();
-            } else {
-              onTurnedOff();
-            }
-          },
-          buttonColor:
-              initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
+          onToggleCallback: (isLoading)
+              ? (int v) {}
+              : (int v) {
+                  // turn ut ON
+                  if (v == 0) {
+                    onTurnedOn();
+                  } else {
+                    onTurnedOff();
+                  }
+                },
+          buttonColor: (isLoading)
+              ? Colors.grey.shade300
+              : initialSwitcherValue //_taxiAuthController.taxiState?.isLooking == true
                   ? Colors.green
                   : Colors.red,
           backgroundColor: Colors.transparent,

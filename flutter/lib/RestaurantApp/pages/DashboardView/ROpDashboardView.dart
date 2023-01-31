@@ -72,13 +72,9 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                   viewController: editInfoController,
                   pageController: _pageController,
                 ),
-
-                //
                 ROpSchedulePage(
                   editInfoController: editInfoController,
                 ),
-                //
-
                 ROpReviewsView(restId: restaurantID!),
               ],
             ),
