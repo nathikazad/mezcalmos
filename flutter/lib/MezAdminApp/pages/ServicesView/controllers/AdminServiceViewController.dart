@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -58,5 +57,11 @@ class AdminServicesViewController {
               (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
       unawaited(_fetchCompanies());
     }
+  }
+
+  Future<void> approveService({required Restaurant restaurant}) async {
+    await update_restaurant_info(
+        id: restaurant.restaurantId, restaurant: restaurant, approved: true);
+    unawaited(_fetchRestaurants());
   }
 }

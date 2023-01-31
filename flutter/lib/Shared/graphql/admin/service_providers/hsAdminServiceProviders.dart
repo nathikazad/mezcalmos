@@ -26,6 +26,7 @@ Future<List<Restaurant>> admin_get_restaurants({bool withCache = true}) async {
   final List<Restaurant> returnedList = data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
           Restaurant(
+              deliveryDetailsId: data.delivery_details_id,
               userInfo: ServiceInfo(
                   location: Location.fromHasura(
                       data.location.gps, data.location.address),

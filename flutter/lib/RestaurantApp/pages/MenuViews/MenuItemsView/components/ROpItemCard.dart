@@ -82,13 +82,13 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       width: 15,
                     ),
                     Flexible(
+                      fit: FlexFit.tight,
                       child: Text(
                         widget.item.name[userLanguage] ?? "",
                         style: Get.textTheme.bodyText1,
                         maxLines: 2,
                       ),
                     ),
-                    Spacer(),
                     (widget.viewController.reOrderMode.isTrue)
                         ? ROpRerorderIcon()
                         : Text(

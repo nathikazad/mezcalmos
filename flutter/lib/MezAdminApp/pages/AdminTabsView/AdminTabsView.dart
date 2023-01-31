@@ -6,9 +6,11 @@ import 'package:mezcalmos/MezAdminApp/pages/Orders/AdminOrdersListView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ['AdminTabsView'];
@@ -34,7 +36,11 @@ class _AdminTabsViewState extends State<AdminTabsView>
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-          bottomNavigationBar: _navBar(), appBar: _appBar(), body: _getBody()),
+          key: Get.find<SideMenuDrawerController>().getNewKey(),
+          drawer: MezSideMenu(),
+          bottomNavigationBar: _navBar(),
+          appBar: _appBar(),
+          body: _getBody()),
     );
   }
 
@@ -91,7 +97,7 @@ class _AdminTabsViewState extends State<AdminTabsView>
       preferredSize: Size.fromHeight(viewController.getAppbarHeight),
       child: mezcalmosAppBar(
         AppBarLeftButtonType.Menu,
-        title:viewController.getTitle(),
+        title: viewController.getTitle(),
         tabBar: viewController.showAppBarTabs
             ? TabBar(
                 //isScrollable: true,

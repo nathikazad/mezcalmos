@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -26,82 +27,117 @@ class AdminRestaurantServiceCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       child: Container(
         margin: const EdgeInsets.all(8),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 20.w,
-              height: 12.h,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image:
-                          CachedNetworkImageProvider(restaurant.info.image))),
-            ),
-            Flexible(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Row(
               children: [
-                Row(
-                  children: [
-                    Flexible(
-                      fit: FlexFit.tight,
-                      child: Text(
-                        restaurant.info.name,
-                        style: Get.textTheme.bodyText1,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 18,
-                      child: Switch(
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        value: restaurant.state.status == ServiceStatus.Open,
-                        onChanged: (bool v) {
-                          viewController.switchServiceStatus(
-                              serviceId: restaurant.info.hasuraId,
-                              providerType: ServiceProviderType.Restaurant,
-                              value: v);
-                        },
-                        activeColor: primaryBlueColor,
-                      ),
-                    )
-                  ],
-                ),
                 Container(
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    child: Text(restaurant.info.name)),
-                Row(
+                  width: 20.w,
+                  height: 12.h,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: CachedNetworkImageProvider(
+                              restaurant.info.image))),
+                ),
+                Flexible(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _smallBtn(
-                        icon: Icons.flatware,
-                        label: "Menu",
-                        ontap: () {
-                          MezRouter.toNamed(getRestaurantMenuRoute(
-                              restaurantId: restaurant.info.hasuraId));
-                        }),
-                    _smallBtn(
-                        icon: Icons.history,
-                        label: "Orders",
-                        ontap: () {
-                          getserviceOrdersRoute(
-                              serviceName: restaurant.info.name,
-                              serviceProviderId: restaurant.info.hasuraId,
-                              serviceProviderType:
-                                  ServiceProviderType.Restaurant);
-                        }),
-                    _smallBtn(
-                        icon: Icons.food_bank,
-                        label: "Profile",
-                        ontap: () {
-                          navigateToServiceInfoEdit(
-                              serviceProviderId: restaurant.info.hasuraId,
-                              serviceProviderType:
-                                  ServiceProviderType.Restaurant);
-                        }),
+                    Row(
+                      children: [
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Text(
+                            restaurant.info.name,
+                            style: Get.textTheme.bodyText1,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 18,
+                          child: Switch(
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            value:
+                                restaurant.state.status == ServiceStatus.Open,
+                            onChanged: (bool v) {
+                              viewController.switchServiceStatus(
+                                  serviceId: restaurant.info.hasuraId,
+                                  providerType: ServiceProviderType.Restaurant,
+                                  value: v);
+                            },
+                            activeColor: primaryBlueColor,
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(restaurant.info.name)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _smallBtn(
+                            icon: Icons.flatware,
+                            label: "Menu",
+                            ontap: () {
+                              MezRouter.toNamed(getRestaurantMenuRoute(
+                                  restaurantId: restaurant.info.hasuraId));
+                            }),
+                        _smallBtn(
+                            icon: Icons.history,
+                            label: "Orders",
+                            ontap: () {
+                              getserviceOrdersRoute(
+                                  serviceName: restaurant.info.name,
+                                  serviceProviderId: restaurant.info.hasuraId,
+                                  serviceProviderType:
+                                      ServiceProviderType.Restaurant);
+                            }),
+                        _smallBtn(
+                            icon: Icons.food_bank,
+                            label: "Profile",
+                            ontap: () {
+                              navigateToServiceInfoEdit(
+                                  serviceProviderId: restaurant.info.hasuraId,
+                                  serviceProviderType:
+                                      ServiceProviderType.Restaurant);
+                            }),
+                      ],
+                    ),
+                  ],
+                ))
+              ],
+            ),
+            if (restaurant.state.isAuthorized == false)
+              Container(
+                margin: const EdgeInsets.all(5),
+                child: Row(
+                  children: [
+                    Flexible(
+                        child: MezButton(
+                            height: 45,
+                            backgroundColor: offRedColor,
+                            textColor: Colors.red,
+                            label: "Reject",
+                            onClick: () async {})),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Flexible(
+                        child: MezButton(
+                            height: 45,
+                            backgroundColor: primaryBlueColor,
+                            textColor: Colors.white,
+                            label: "Approve",
+                            onClick: () async {
+                              await viewController.approveService(
+                                  restaurant: restaurant);
+                            })),
                   ],
                 ),
-              ],
-            ))
+              )
           ],
         ),
       ),
