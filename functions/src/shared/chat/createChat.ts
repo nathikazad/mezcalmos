@@ -2,7 +2,7 @@ import { createDirectChat, createMezAdminChat, createRestaurantCustomerChat } fr
 import { getRestaurant } from "../graphql/restaurant/getRestaurant";
 import { getCustomer } from "../graphql/user/customer/getCustomer";
 import { getUser } from "../graphql/user/getUser";
-import { getMezAdmins } from "../graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../graphql/user/mezAdmin/getMezAdmin";
 import { AppType } from "../models/Generic/Generic";
 import { ServiceProviderType } from "../models/Services/Service";
 

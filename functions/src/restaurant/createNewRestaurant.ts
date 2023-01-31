@@ -7,7 +7,7 @@ import { MezAdmin } from "../shared/models/Generic/User";
 import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
 import { restaurantUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
-import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmins";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
 
