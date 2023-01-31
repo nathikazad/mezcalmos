@@ -96,7 +96,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(2,
+                    await pageController.animateToPage(1,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },
@@ -146,7 +146,7 @@ class ROpDashboardPage extends StatelessWidget {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await pageController.animateToPage(4,
+                    await pageController.animateToPage(2,
                         duration: Duration(milliseconds: 1),
                         curve: Curves.easeIn);
                   },

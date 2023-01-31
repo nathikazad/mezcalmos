@@ -4,6 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpSchedu
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpScheduleController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -26,6 +27,7 @@ class _ROpSchedulePageState extends State<ROpSchedulePage> {
   late ROpScheduleController viewController;
   @override
   void initState() {
+    mezDbgPrint("INIT SCHEDULE 😡😡😡😡😡😡😡😡😡");
     viewController =
         ROpScheduleController(editInfoController: widget.editInfoController);
     viewWidgets =
@@ -75,7 +77,7 @@ class _ROpSchedulePageState extends State<ROpSchedulePage> {
         MezButton(
           label: '${_i18n()["saveInfo"]}',
           borderRadius: 0,
-          withGradient: true,
+          withGradient: false,
           height: 70,
           onClick: () async {
             await viewController.updateSchedule().then((bool value) =>
