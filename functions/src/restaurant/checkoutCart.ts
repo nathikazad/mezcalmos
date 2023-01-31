@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { Location, AppType, ServerResponse, ServerResponseStatus, Language } from "../shared/models/Generic/Generic";
+import { Location, AppType,Language, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
 import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
@@ -37,8 +37,11 @@ export interface CheckoutRequest {
   stripePaymentId?: string,
   stripeFees?: number,
 }
+export interface CheckoutResponse {
+  orderId: number,
+}
 
-export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<ServerResponse> {
+export async function checkout(customerId: number, checkoutRequest: CheckoutRequest)/*: Promise<CheckoutResponse> */{
   try {
 
     console.log("\n\n[+] CustomerId ==> \n\n", customerId);
@@ -95,11 +98,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
     notifyOperators(restaurantOrder.orderId!, restaurant);
 
-    let assignDetails: AssignCompanyDetails = {
-      deliveryCompanyId: restaurant.deliveryPartnerId!,
-      restaurantOrderId: restaurantOrder.orderId!
+    if(restaurant.selfDelivery == false) {
+      let assignDetails: AssignCompanyDetails = {
+        deliveryCompanyId: restaurant.deliveryPartnerId!,
+        restaurantOrderId: restaurantOrder.orderId!
+      }
+      await assignDeliveryCompany(0, assignDetails)
     }
-    await assignDeliveryCompany(0, assignDetails)
     
     let paymentDetails: PaymentDetails = {
       orderId: restaurantOrder.orderId!,
@@ -112,6 +117,9 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
    
     // clear user cart 
     clearCart(customerId);
+    // return <CheckoutResponse> {
+    //   orderId: restaurantOrder.orderId
+    // }
     return <ServerResponse> {
       status: ServerResponseStatus.Success,
       orderId: restaurantOrder.orderId
