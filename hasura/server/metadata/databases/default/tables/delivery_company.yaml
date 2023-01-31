@@ -30,6 +30,37 @@ array_relationships:
           name: operator
           schema: delivery
 select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - approved
+        - delivery_details_id
+        - description_id
+        - id
+        - location_id
+        - image
+        - name
+        - open_status
+        - service_provider_type
+        - creation_time
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - approved
+        - delivery_details_id
+        - description_id
+        - id
+        - location_id
+        - image
+        - name
+        - open_status
+        - service_provider_type
+        - creation_time
+      filter:
+        delivery_drivers:
+          user_id:
+            _eq: X-Hasura-User-Id
   - role: delivery_operator
     permission:
       columns:

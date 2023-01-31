@@ -36,7 +36,9 @@ class CreateServiceInfoPage extends StatelessWidget {
           ),
           TextFormField(
             controller: viewController.serviceName,
+            style: Get.textTheme.bodyText1,
             decoration: InputDecoration(
+                hintStyle: Get.textTheme.bodyText2,
                 hintText:
                     "Your ${viewController.serviceType.toNormalString()} name"),
           ),

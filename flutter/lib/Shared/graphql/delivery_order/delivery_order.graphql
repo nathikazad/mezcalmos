@@ -238,7 +238,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
   delivery_order(
     where: {
       delivery_driver_id: { _eq: $driverId }
-      in_process: { _eq: false }
+      in_process: { _eq: true }
     }
   ) {
     id

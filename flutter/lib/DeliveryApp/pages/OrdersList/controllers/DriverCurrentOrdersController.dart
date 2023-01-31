@@ -19,6 +19,7 @@ class DriverCurrentOrdersController {
   RxBool initalized = RxBool(false);
   late int driverId;
   RxBool _isOnline = RxBool(true);
+  RxBool onlineClicked = RxBool(false);
 // streams
   StreamSubscription? currentOrdersListener;
   String? subscriptionId;
@@ -64,9 +65,12 @@ class DriverCurrentOrdersController {
   }
 
   Future<void> switchOnlineStatus(bool value) async {
+    onlineClicked.value = true;
     _isOnline.value = await switch_driver_online_status_by_id(
             driverId: driverId, online: value) ??
         opAuthController.driverState!.isOnline;
+    _isOnline.refresh();
+    onlineClicked.value = false;
   }
 
   void dispose() {

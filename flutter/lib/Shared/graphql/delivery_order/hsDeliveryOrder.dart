@@ -42,6 +42,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
     }
     return DeliveryOrder(
         id: orderData.id,
+        orderType: orderData.order_type.toOrderType(),
         stripeOrderPaymentInfo: _paymentInfo,
         driverAssigned: orderData.delivery_driver != null,
         serviceOrderId: orderData.restaurant_order?.id,
@@ -119,6 +120,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
   }
   return DeliveryOrder(
       id: orderData.id,
+      orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
       driverAssigned: orderData.delivery_driver != null,

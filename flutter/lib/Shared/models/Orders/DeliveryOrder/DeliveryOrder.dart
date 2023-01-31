@@ -3,6 +3,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -10,6 +11,8 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class DeliveryOrder {
   int id;
+  OrderType orderType;
+
   ServiceProviderType? serviceProviderType;
   UserInfo deliveryCompany;
   UserInfo? driverInfo;
@@ -34,6 +37,7 @@ class DeliveryOrder {
   DateTime? estimatedPackageReadyTime;
   bool driverAssigned;
   DeliveryOrder({
+    required this.orderType,
     required this.id,
     required this.deliveryCompany,
     required this.serviceInfo,
@@ -85,6 +89,7 @@ class DeliveryOrder {
   }) {
     return DeliveryOrder(
       id: id ?? this.id,
+      orderType: orderType,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,
       status: status,

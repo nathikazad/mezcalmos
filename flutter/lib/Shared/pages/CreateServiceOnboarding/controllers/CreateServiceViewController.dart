@@ -170,11 +170,13 @@ class CreateServiceViewController {
 
   DeliveryCost _constructDeliveryCost() {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
+    mezDbgPrint("min.text =====> [BBB] ===> ${minCost.text}");
+    mezDbgPrint("cost.text =====> [BBB] ===> ${costPerKm.text}");
     return DeliveryCost(
         id: null,
         minimumCost: double.parse(minCost.text),
-        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
-        costPerKm: double.parse(costPerKm.text));
+        freeDeliveryKmRange: num.tryParse(freeKmRange.text)?.toDouble(),
+        costPerKm: num.parse(costPerKm.text).toDouble());
   }
 
   void handleInfoPageNext() {
@@ -231,6 +233,7 @@ class CreateServiceViewController {
   }
 
   Future<ServerResponse> _createService() async {
+    mezDbgPrint("Clciked");
     if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
       serviceInput.value.deliveryPartnerId = null;
       serviceInput.value.selfDeliveryCost = _constructDeliveryCost();
