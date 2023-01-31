@@ -289,6 +289,18 @@ const documentNodeSubscriptionadmin_listen_on_dv_orders =
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'delivery_company',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
                 name: NameNode(value: 'in_process'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
@@ -296,7 +308,7 @@ const documentNodeSubscriptionadmin_listen_on_dv_orders =
                     value: VariableNode(name: NameNode(value: 'inProccess')),
                   )
                 ]),
-              )
+              ),
             ]),
           )
         ],
@@ -1403,6 +1415,18 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
             name: NameNode(value: 'where'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'delivery_company',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
                 name: NameNode(value: 'in_process'),
                 value: ObjectValueNode(fields: [
                   ObjectFieldNode(
@@ -1410,7 +1434,7 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
                     value: VariableNode(name: NameNode(value: 'inProccess')),
                   )
                 ]),
-              )
+              ),
             ]),
           )
         ],

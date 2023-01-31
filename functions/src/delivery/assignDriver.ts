@@ -15,6 +15,7 @@ import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat
 import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { OperatorStatus } from "../shared/models/Services/Restaurant/Restaurant";
+import { isMezAdmin } from "../shared/helper";
 
 export interface AssignDriverDetails {
   deliveryOrderId: number,
@@ -39,37 +40,39 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
         "delivery order does not have a service provider"
       );
     }
-    // let operator;
-    // if(deliveryOrder.serviceProviderType == DeliveryServiceProviderType.DeliveryCompany) {
-    //   operator = await getDeliveryOperatorByUserId(userId);
-    //   if(operator.status != DeliveryOperatorStatus.Authorized) {
-    //     throw new HttpsError(
-    //       "internal",
-    //       "delivery operator not authorized"
-    //     );
-    //   }
-    //   if(operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
-    //     throw new HttpsError(
-    //       "internal",
-    //       "delivery company assigned to order and that of operator do not match"
-    //     );
-    //   }
-    // } else {
-    //   operator = await getRestaurantOperatorByUserId(userId);
-    
-    //   if(operator.status != OperatorStatus.Authorized) {
-    //     throw new HttpsError(
-    //       "internal",
-    //       "Restaurant operator not authorized"
-    //     );
-    //   }
-    //   if(operator.restaurantId != deliveryOrder.serviceProviderId) {
-    //     throw new HttpsError(
-    //       "internal",
-    //       "Restaurant belonging to this order and the restaurant of operator do not match"
-    //     );
-    //   }
-    // }
+    if(!isMezAdmin(userId)) {
+      let operator;
+      if(deliveryOrder.serviceProviderType == DeliveryServiceProviderType.DeliveryCompany) {
+        operator = await getDeliveryOperatorByUserId(userId);
+        if(operator.status != DeliveryOperatorStatus.Authorized) {
+          throw new HttpsError(
+            "internal",
+            "delivery operator not authorized"
+          );
+        }
+        if(operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
+          throw new HttpsError(
+            "internal",
+            "delivery company assigned to order and that of operator do not match"
+          );
+        }
+      } else {
+        operator = await getRestaurantOperatorByUserId(userId);
+      
+        if(operator.status != OperatorStatus.Authorized) {
+          throw new HttpsError(
+            "internal",
+            "Restaurant operator not authorized"
+          );
+        }
+        if(operator.restaurantId != deliveryOrder.serviceProviderId) {
+          throw new HttpsError(
+            "internal",
+            "Restaurant belonging to this order and the restaurant of operator do not match"
+          );
+        }
+      }
+    }
     if(deliveryOrder.status != DeliveryOrderStatus.OrderReceived && 
       deliveryOrder.status != DeliveryOrderStatus.PackageReady) {
       throw new HttpsError(
