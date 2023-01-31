@@ -64,6 +64,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 children: [
                   TitleWithOnOffSwitcher(
                       title: "${_i18n()["title"]}",
+                      isLoading: viewController.onlineClicked.value,
                       onTurnedOn: () {
                         viewController.switchOnlineStatus(true);
                       },
@@ -71,8 +72,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                         viewController.switchOnlineStatus(false);
                       },
                       initialSwitcherValue: viewController.isOnline),
-                  if (viewController.isOnline != true &&
-                      viewController.currentOrders.isEmpty)
+                  if (viewController.isOnline != true)
                     Container(
                       height: 60.h,
                       child: IncomingOrdersStatus(

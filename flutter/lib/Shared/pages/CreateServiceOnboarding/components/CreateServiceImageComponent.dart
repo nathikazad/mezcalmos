@@ -13,13 +13,13 @@ class CreateServiceImageComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-      // validator: (Object? value) {
-      //   if (viewController.newImageFile.value == null &&
-      //       viewController.newImageUrl.value == null) {
-      //     return "Image is required";
-      //   }
-      //   return null;
-      // },
+      validator: (Object? value) {
+        if (viewController.newImageFile.value == null &&
+            viewController.newImageUrl.value == null) {
+          return "Image is required";
+        }
+        return null;
+      },
       builder: (FormFieldState state) {
         return Obx(
           () => Column(
@@ -81,14 +81,14 @@ class CreateServiceImageComponent extends StatelessWidget {
                   ],
                 ),
               ),
-              // if (!state.isValid)
-              //   Container(
-              //       margin: const EdgeInsets.only(top: 5),
-              //       child: Text(
-              //         state.errorText ?? "",
-              //         style:
-              //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
-              //       ))
+              if (!state.isValid)
+                Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      state.errorText ?? "",
+                      style:
+                          Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+                    ))
             ],
           ),
         );

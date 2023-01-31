@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -7,7 +8,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceSchedulePage.dart';
-import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliveryCostSettingView.dart';
+import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliverySettingView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -72,6 +73,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
           primaryIcon: Icons.flatware,
           showSmallIcon: false,
           primaryCallBack: () {
+            Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
             popEverythingAndNavigateTo(kTabsView);
           },
           status: "Your restaurant is under review",
@@ -81,7 +83,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
       } else {
         // handle error
       }
-    } else
+    } else {
       await viewController.handleNext();
+    }
   }
 }

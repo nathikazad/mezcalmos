@@ -9,9 +9,9 @@ import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 class PickDriverViewController {
   final MGoogleMapController mapController = MGoogleMapController();
@@ -50,7 +50,7 @@ class PickDriverViewController {
         FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
     try {
       final HttpsCallableResult response = await cloudFunction.call({
-        "orderType": order.value!.serviceProviderType!.toFirebaseFormatString(),
+        "orderType": order.value!.orderType.toFirebaseFormatString(),
         "deliveryOrderId": order.value!.id,
         "deliveryDriverId": driver.deliveryDriverId,
         "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,

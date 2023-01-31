@@ -24,6 +24,7 @@ class CreateServiceViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   PageController pageController = PageController(initialPage: 0);
   GlobalKey<FormState> costFormKey = GlobalKey();
+  GlobalKey<FormState> infoFromKey = GlobalKey();
   // text inputs //
   TextEditingController serviceName = TextEditingController();
   TextEditingController freeKmRange = TextEditingController();
@@ -170,15 +171,18 @@ class CreateServiceViewController {
 
   DeliveryCost _constructDeliveryCost() {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
+    mezDbgPrint("min.text =====> [BBB] ===> ${minCost.text}");
+    mezDbgPrint("cost.text =====> [BBB] ===> ${costPerKm.text}");
     return DeliveryCost(
         id: null,
         minimumCost: double.parse(minCost.text),
-        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
-        costPerKm: double.parse(costPerKm.text));
+        freeDeliveryKmRange: num.tryParse(freeKmRange.text)?.toDouble(),
+        costPerKm: num.parse(costPerKm.text).toDouble());
   }
 
   void handleInfoPageNext() {
-    if (_infoIsValid) {
+    mezDbgPrint("Here");
+    if (infoFromKey.currentState?.validate() == true) {
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
@@ -202,7 +206,7 @@ class CreateServiceViewController {
   bool isFormValid() {
     switch (currentPage.value) {
       case 0:
-        return _infoIsValid;
+        return infoFromKey.currentState?.validate() == true;
       case 1:
         return true;
       case 2:
@@ -231,6 +235,7 @@ class CreateServiceViewController {
   }
 
   Future<ServerResponse> _createService() async {
+    mezDbgPrint("Clciked");
     if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
       serviceInput.value.deliveryPartnerId = null;
       serviceInput.value.selfDeliveryCost = _constructDeliveryCost();

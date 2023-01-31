@@ -19,10 +19,11 @@ class DeliverySettingsViewController {
   GlobalKey<FormState> costFormKey = GlobalKey();
   // text inputs //
 
-  TextEditingController freeKmRange = TextEditingController();
-  TextEditingController minCost = TextEditingController();
-  TextEditingController costPerKm = TextEditingController();
-  TextEditingController distancePreview = TextEditingController();
+  TextEditingController _freeKmRange = TextEditingController();
+  TextEditingController _minCost = TextEditingController();
+  TextEditingController _costPerKm = TextEditingController();
+  TextEditingController _distancePreview = TextEditingController();
+
   // state vars //
   Rxn<Restaurant> restaurant = Rxn();
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
@@ -68,10 +69,10 @@ class DeliverySettingsViewController {
   }
 
   void _assignDeliveryCost() {
-    freeKmRange.text =
+    _freeKmRange.text =
         deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
-    minCost.text = deliveryCost.value!.minimumCost.toString();
-    costPerKm.text = deliveryCost.value!.costPerKm.toString();
+    _minCost.text = deliveryCost.value!.minimumCost.toString();
+    _costPerKm.text = deliveryCost.value!.costPerKm.toString();
   }
 
   Future<void> getDeliveryCompanies() async {
@@ -150,24 +151,24 @@ class DeliverySettingsViewController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
-        minimumCost: double.parse(minCost.text),
-        freeDeliveryKmRange: double.tryParse(freeKmRange.text),
-        costPerKm: double.parse(costPerKm.text));
+        minimumCost: double.parse(_minCost.text),
+        freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
+        costPerKm: double.parse(_costPerKm.text));
   }
 
   bool get isCreatingNewService => createServiceViewController != null;
   void calculatePreview() {
-    final double dist = double.parse(distancePreview.text);
-    final double kmCost = double.parse(costPerKm.text);
-    final double min = double.parse(costPerKm.text);
+    final double dist = double.parse(_distancePreview.text);
+    final double kmCost = double.parse(_costPerKm.text);
+    final double min = double.parse(_costPerKm.text);
     final double cost = dist * kmCost;
     previewCost.value = cost > min ? cost : min;
   }
 
   bool get canCalculate {
-    return double.tryParse(costPerKm.text) != null &&
-        double.tryParse(minCost.text) != null &&
-        double.tryParse(costPerKm.text) != null;
+    return double.tryParse(_costPerKm.text) != null &&
+        double.tryParse(_minCost.text) != null &&
+        double.tryParse(_costPerKm.text) != null;
   }
 
   //
@@ -191,4 +192,15 @@ class DeliverySettingsViewController {
 
   bool get isSelfDelivery =>
       getDeliveryType == ServiceDeliveryType.Self_delivery;
+  TextEditingController get freeKmRange => (isCreatingNewService)
+      ? createServiceViewController!.freeKmRange
+      : _freeKmRange;
+  TextEditingController get minCost =>
+      (isCreatingNewService) ? createServiceViewController!.minCost : _minCost;
+  TextEditingController get costPerKm => (isCreatingNewService)
+      ? createServiceViewController!.costPerKm
+      : _costPerKm;
+  TextEditingController get distancePreview => (isCreatingNewService)
+      ? createServiceViewController!.distancePreview
+      : _distancePreview;
 }
