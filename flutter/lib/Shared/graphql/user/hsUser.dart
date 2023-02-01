@@ -30,7 +30,7 @@ Future<UserInfo> get_user_by_hasura_id({required int hasuraId}) async {
   }
 }
 
-Future<void> change_user_language({
+Future<LanguageType> change_user_language({
   required int userId,
   required LanguageType language,
 }) async {
@@ -44,15 +44,12 @@ Future<void> change_user_language({
     ),
   );
 
-  if (_res.hasException) {
-    mezDbgPrint(
-        "[ERROR] CALLED :: change_user_language :: EXCEPTION :: ${_res.exception}");
-  } else {
-    mezDbgPrint(
-        "[SUCCESS] CALLED :: change_user_language :: DATA :: ${_res.data}");
-
-    // Get.find<LanguageController>().setLanguage(language);
+  if (_res.parsedData?.update_user_by_pk == null) {
+    throwError(_res.exception);
   }
+  return _res.parsedData!.update_user_by_pk!.language_id.toLanguageType();
+
+  // Get.find<LanguageController>().setLanguage(language);
 }
 
 Future<String> change_username({

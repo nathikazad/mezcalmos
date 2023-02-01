@@ -12,8 +12,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/LocationSearchComponent.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -61,11 +61,35 @@ class _PickLocationViewState extends State<PickLocationView> {
         }
       });
     } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-      final int? x = int.tryParse(Get.parameters["id"] ?? "");
-      if (x == null) {
+      final int? id = int.tryParse(Get.parameters["id"] ?? "");
+      if (id == null) {
         mezDbgPrint("Get.parameters['id'] - Location ID Was null!");
         MezRouter.back<void>();
       }
+      _initEditMode(id);
+    } else {
+      GeoLoc.Location()
+          .getLocation()
+          .timeout(Duration(seconds: 10))
+          .then((GeoLoc.LocationData value) {
+        currentLatLng = LatLng(value.latitude!, value.longitude!);
+        geoCodeAndSetLocation(currentLatLng!);
+      }).catchError((Object error) {
+        if (error.runtimeType == TimeoutException) {
+          locationPickerController.location.value = Location.fromFirebaseData({
+            "address": savedLocation!.location.address,
+            "lat": 15.872141,
+            "lng": -97.076737,
+          });
+        }
+      });
+    }
+    mezDbgPrint('LOOOOOOOOC ' + locationPickerController.location.toString());
+    super.initState();
+  }
+
+  void _initEditMode(int? x) {
+    Get.find<CustomerAuthController>().fetchSavedLocations().whenComplete(() {
       savedLocation = Get.find<CustomerAuthController>()
           .customer!
           .savedLocations
@@ -87,25 +111,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           geoCodeAndSetLocation(currentLatLng!);
         }
       });
-    } else {
-      GeoLoc.Location()
-          .getLocation()
-          .timeout(Duration(seconds: 10))
-          .then((GeoLoc.LocationData value) {
-        currentLatLng = LatLng(value.latitude!, value.longitude!);
-        geoCodeAndSetLocation(currentLatLng!);
-      }).catchError((Object error) {
-        if (error.runtimeType == TimeoutException) {
-          locationPickerController.location.value = Location.fromFirebaseData({
-            "address": savedLocation!.location.address,
-            "lat": 15.872141,
-            "lng": -97.076737,
-          });
-        }
-      });
-    }
-    mezDbgPrint('LOOOOOOOOC ' + locationPickerController.location.toString());
-    super.initState();
+    });
   }
 
   Future<void> geoCodeAndSetLocation(LatLng currentLoc) async {
@@ -133,7 +139,8 @@ class _PickLocationViewState extends State<PickLocationView> {
     return Scaffold(
       bottomNavigationBar: Obx(
         () => MezButton(
-          height: 70,
+          height: 75,
+          borderRadius: 0,
           enabled: !showScreenLoading &&
               locationPickerController.location.value != null &&
               locationPickerController.isMapReady,

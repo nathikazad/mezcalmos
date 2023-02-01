@@ -121,10 +121,10 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         DropDownLocationList(
           onValueChangeCallback: ({Location? location}) {
             if (location != null && location.isValidLocation()) {
-              viewController.cart.toLocation = location;
+              viewController.switchLocation(location);
 
               // ignore: unawaited_futures
-              viewController.updateShippingPrice();
+
               mezDbgPrint(
                   "Should update cart location 🥸🥸🥸 ===> ${viewController.cart.toLocation}");
             }
@@ -160,22 +160,20 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   Widget _footerButton() {
     return Obx(
       () {
+        mezDbgPrint("Can order from view =========>${viewController.canOrder}");
         if (viewController.cart.cartItems.length > 0) {
           return MezButton(
             label: (viewController.cart.restaurant?.isOpen() == false)
                 ? '${_i18n()["scheduleOrder"]}'
                 : '${_i18n()["orderNow"]}',
-            enabled: viewController.canOrder &&
-                !viewController.clickedCheckout.value,
+            enabled: viewController.canOrder,
             withGradient: true,
             borderRadius: 0,
-            onClick: viewController.clickedCheckout.value
+            height: 75,
+            onClick: !viewController.canOrder
                 ? null
                 : () async {
-                    mezDbgPrint(viewController.cart.toLocation
-                        ?.toFirebaseFormattedJson());
-                    if (viewController.canOrder &&
-                        !viewController.clickedCheckout.value) {
+                    if (viewController.canOrder) {
                       await viewController.checkoutActionButton();
                     }
                   },
