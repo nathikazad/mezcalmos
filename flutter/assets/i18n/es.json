@@ -2240,6 +2240,17 @@
         }
     },
     "MezAdmin" : {
+        "notificationHandler" : {
+            "onTheWayTitle": "En camino",
+            "onTheWayBody": "Tu pedido está en camino",
+            "deliveredTitle": "Entregada",
+            "deliveredBody": "Su pedido ha sido entregado",
+            "newOrderTitle": "Orden recibida",
+            "newOrderBody": "Tienes un nuevo pedido",
+            "canceledOrderTitle": "Orden cancelada",
+            "canceledOrderBody": "Su pedido ha sido cancelado"
+           
+        },
         "pages" : {
             "AdminTabsView" : {
                 "orders" : "Pedidos",
@@ -2247,6 +2258,25 @@
                 "messages"  : "Mensajes",
                 "profile":"Perfil"
 
+            },
+            "AdminServiceOrdersView" :{
+                "currentOrders" : "Órdenes actuales",
+                "pastOrders" :"Órdenes pasadas"
+            },
+            "AdminServicesView" : {
+                "AdminServicesView" : {
+                    "search" : "Buscar"
+                },
+                "components" : {
+                    "adminServiceCard" : {
+                        "menu" : "Menú",
+                        "orders" : "Pedidos",
+                        "profile" : "Perfil",
+                        "costs" : "Costo",
+                        "accept" : "Aceptar",
+                        "reject" : "Rechazar" 
+                    }
+                }
             }
         }
     },

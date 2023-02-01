@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/controllers/AdminServiceOrdersViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:sizer/sizer.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ["AdminServiceOrdersView"];
+
+//
 class AdminServiceOrdersView extends StatefulWidget {
   const AdminServiceOrdersView({super.key});
 
@@ -71,7 +79,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Current Orders",
+                  "${_i18n()['currentOrders']}",
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
@@ -94,7 +102,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Past Orders",
+                      "${_i18n()['pastOrders']}",
                       style: Get.textTheme.bodyText1,
                     ),
                     SizedBox(
@@ -123,26 +131,9 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                 )
               : (viewController.currentOrders.value!.isEmpty)
                   ? Container(
-                      margin: const EdgeInsets.all(16),
+                      margin: EdgeInsets.only(top: 10.h),
                       alignment: Alignment.center,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "No orders yet ...",
-                            style: Get.textTheme.bodyText1,
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "this service provider have no orders",
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    )
+                      child: Center(child: NoOrdersComponent()))
                   : SizedBox()
         ],
       ),

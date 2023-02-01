@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ['AdminTabsView'];
 
 class AdminTabsViewController {
 // instances //
@@ -9,7 +13,6 @@ class AdminTabsViewController {
 // vars//
   List<ServiceProviderType> serviceTypes = [
     ServiceProviderType.Restaurant,
-    ServiceProviderType.Laundry,
     ServiceProviderType.Delivery_company
   ];
   // obs //
@@ -31,15 +34,15 @@ class AdminTabsViewController {
   String getTitle() {
     switch (bottomTabIndex.value) {
       case 0:
-        return "Orders";
+        return "${_i18n()['orders']}";
 
         break;
       case 1:
-        return "Services";
+        return "${_i18n()['services']}";
 
         break;
       case 2:
-        return "Messages";
+        return "${_i18n()['messages']}";
 
         break;
       default:

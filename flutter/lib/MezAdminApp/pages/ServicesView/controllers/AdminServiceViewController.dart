@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -16,6 +15,8 @@ class AdminServicesViewController {
   // obs //
   Rxn<List<Restaurant>> _restaurants = Rxn();
   Rxn<List<DeliveryCompany>> _dvCompanies = Rxn();
+  RxInt restLimit = RxInt(5);
+  RxInt dvLimit = RxInt(5);
 // getters //
   bool get hasData => _dvCompanies.value != null && _restaurants.value != null;
   ServiceProviderType get currentService =>
@@ -26,19 +27,21 @@ class AdminServicesViewController {
   Future<void> init(
       {required AdminTabsViewController adminTabsViewController}) async {
     this.adminTabsViewController = adminTabsViewController;
-    await _fetchRestaurants();
+    await fetchRestaurants();
 
-    await _fetchCompanies();
+    await fetchCompanies();
   }
 
-  Future<void> _fetchCompanies() async {
+  Future<void> fetchCompanies() async {
     _dvCompanies.value?.clear();
-    _dvCompanies.value = await admin_get_dv_companies(withCache: false);
+    _dvCompanies.value =
+        await admin_get_dv_companies(withCache: false, limit: dvLimit.value);
   }
 
-  Future<void> _fetchRestaurants() async {
+  Future<void> fetchRestaurants() async {
     _restaurants.value?.clear();
-    _restaurants.value = await admin_get_restaurants(withCache: false);
+    _restaurants.value =
+        await admin_get_restaurants(withCache: false, limit: restLimit.value);
   }
 
   Future<void> switchServiceStatus(
@@ -50,13 +53,19 @@ class AdminServicesViewController {
           id: serviceId,
           status:
               (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
-      unawaited(_fetchRestaurants());
+      unawaited(fetchRestaurants());
     } else {
       await update_deliveryCompany_status(
           id: serviceId,
           status:
               (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
-      unawaited(_fetchCompanies());
+      unawaited(fetchCompanies());
     }
+  }
+
+  Future<void> approveService({required Restaurant restaurant}) async {
+    await update_restaurant_info(
+        id: restaurant.restaurantId, restaurant: restaurant, approved: true);
+    unawaited(fetchRestaurants());
   }
 }

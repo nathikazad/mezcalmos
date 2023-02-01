@@ -34,17 +34,14 @@ class ROpScheduleController {
   }
 
   Future<void> fetchSchedule() async {
-    await editInfoController.fetchRestaurant();
-    if (restaurant.value != null && restaurant.value!.schedule != null) {
+    if (restaurant.value != null) {
+      final Schedule? schedule = await get_restaurant_schedule(
+          restaurantId: restaurant.value!.restaurantId, withCache: false);
       mezDbgPrint(
           "Restaurant schedule ===================> ${restaurant.value!.schedule!.toFirebaseFormattedJson()}");
-      oldSchedule.value = Schedule.clone(restaurant.value!.schedule!);
-      newSchedule.value = Schedule.clone(restaurant.value!.schedule!);
-      schedulePreview.value = Schedule.clone(newSchedule.value!);
-    } else if (restaurant.value!.schedule == null) {
-      oldSchedule.value = Schedule.fromData(_defaultSchedule);
-      newSchedule.value = Schedule.fromData(_defaultSchedule);
-      schedulePreview.value = Schedule.fromData(_defaultSchedule);
+      oldSchedule.value = Schedule.clone(schedule!);
+      newSchedule.value = Schedule.clone(schedule);
+      schedulePreview.value = Schedule.clone(schedule);
     }
   }
 
@@ -52,6 +49,7 @@ class ROpScheduleController {
     await update_restaurant_info(
         id: editInfoController.restaurantId,
         restaurant: restaurant.value!.copyWith(schedule: newSchedule.value));
+
     await fetchSchedule();
     return true;
   }

@@ -12,10 +12,12 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
-Future<List<Restaurant>> admin_get_restaurants({bool withCache = true}) async {
+Future<List<Restaurant>> admin_get_restaurants(
+    {bool withCache = true, required int limit}) async {
   final QueryResult<Query$admin_get_restaurants> result = await _hasuraDb
       .graphQLClient
       .query$admin_get_restaurants(Options$Query$admin_get_restaurants(
+          variables: Variables$Query$admin_get_restaurants(limit: limit),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.restaurant_restaurant == null) {
@@ -26,6 +28,7 @@ Future<List<Restaurant>> admin_get_restaurants({bool withCache = true}) async {
   final List<Restaurant> returnedList = data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
           Restaurant(
+              deliveryDetailsId: data.delivery_details_id,
               userInfo: ServiceInfo(
                   location: Location.fromHasura(
                       data.location.gps, data.location.address),
@@ -44,10 +47,11 @@ Future<List<Restaurant>> admin_get_restaurants({bool withCache = true}) async {
 }
 
 Future<List<DeliveryCompany>> admin_get_dv_companies(
-    {bool withCache = true}) async {
+    {required int limit, bool withCache = true}) async {
   final QueryResult<Query$admin_get_dv_companies> result = await _hasuraDb
       .graphQLClient
       .query$admin_get_dv_companies(Options$Query$admin_get_dv_companies(
+          variables: Variables$Query$admin_get_dv_companies(limit: limit),
           fetchPolicy:
               withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
   if (result.parsedData?.delivery_company == null) {

@@ -17,8 +17,11 @@ Future<int?> get_service_delivery_partner(
   if (res.parsedData?.service_provider_delivery_partner == null) {
     throwError(res.exception);
   }
-  return res
-      .parsedData!.service_provider_delivery_partner.first.delivery_company_id;
+  if (res.parsedData!.service_provider_delivery_partner.isNotEmpty) {
+    return res.parsedData!.service_provider_delivery_partner.first
+        .delivery_company_id;
+  }
+  return null;
 }
 
 Future<int?> update_service_delivery_partner(

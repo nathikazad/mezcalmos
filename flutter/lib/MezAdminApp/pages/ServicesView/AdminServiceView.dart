@@ -4,7 +4,13 @@ import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsV
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminDeliveryCompanyServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminRestaurantServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ["AdminServicesView"]["AdminServicesView"];
 
 class AdminServicesView extends StatefulWidget {
   const AdminServicesView({super.key, required this.adminTabsViewController});
@@ -45,18 +51,57 @@ class _AdminServicesViewState extends State<AdminServicesView> {
   Container _buildServices() {
     return Container(
       child: (viewController.currentService == ServiceProviderType.Restaurant)
-          ? Column(
-              children: List.generate(
-                  viewController.restaurants!.length,
-                  (int index) => AdminRestaurantServiceCard(
-                      viewController: viewController,
-                      restaurant: viewController.restaurants![index])))
-          : Column(
-              children: List.generate(
-                  viewController.companies!.length,
-                  (int index) => AdminDeliveryCompanyServiceCard(
-                      viewController: viewController,
-                      company: viewController.companies![index]))),
+          ? _buildRestaurants()
+          : _buildCompanies(),
+    );
+  }
+
+  Column _buildRestaurants() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+            children: List.generate(
+                viewController.restaurants!.length,
+                (int index) => AdminRestaurantServiceCard(
+                    viewController: viewController,
+                    restaurant: viewController.restaurants![index]))),
+        if (viewController.restaurants!.length ==
+            viewController.restLimit.value)
+          MezButton(
+            label: "View more",
+            backgroundColor: secondaryLightBlueColor,
+            textColor: primaryBlueColor,
+            onClick: () async {
+              viewController.restLimit.value += 5;
+              await viewController.fetchRestaurants();
+            },
+          )
+      ],
+    );
+  }
+
+  Column _buildCompanies() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+            children: List.generate(
+                viewController.companies!.length,
+                (int index) => AdminDeliveryCompanyServiceCard(
+                    viewController: viewController,
+                    company: viewController.companies![index]))),
+        if (viewController.companies!.length == viewController.dvLimit.value)
+          MezButton(
+            label: "View more",
+            backgroundColor: secondaryLightBlueColor,
+            textColor: primaryBlueColor,
+            onClick: () async {
+              viewController.dvLimit.value += 5;
+              await viewController.fetchCompanies();
+            },
+          )
+      ],
     );
   }
 
@@ -80,7 +125,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
             hintStyle: TextStyle(
               color: Colors.grey.shade500,
             ),
-            hintText: "Search"),
+            hintText: "${_i18n()['search']}"),
       ),
     );
   }
