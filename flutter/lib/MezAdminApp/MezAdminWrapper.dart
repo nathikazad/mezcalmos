@@ -1,10 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/models/MezAdmin.dart';
+import 'package:mezcalmos/MezAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/mezAdminNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
+    as MezNotification;
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 class MezAdminWrapper extends StatefulWidget {
@@ -15,23 +23,28 @@ class MezAdminWrapper extends StatefulWidget {
 }
 
 class _MezAdminWrapperState extends State<MezAdminWrapper> {
+  final String userId = Get.find<AuthController>().fireAuthUser!.uid;
   MezAdminAuthController _adminAuthController =
       Get.find<MezAdminAuthController>();
+  StreamSubscription<MezNotification.Notification>?
+      _notificationsStreamListener;
   @override
   void initState() {
     mezDbgPrint("[MMM] => MezAdminWrapper :: INIT");
-    Future<void>.microtask(() {
-      final MezAdmin? _admin = _adminAuthController.admin;
-      if (_admin != null) {
-        MezRouter.toNamed(kTabsView);
-      } else {
-        _adminAuthController.adminStream.first.then((MezAdmin? _mAdmin) {
-          if (_mAdmin != null && !MezRouter.isRouteInStack(kTabsView)) {
-            MezRouter.toNamed(kTabsView);
-          }
-        });
-      }
-    });
+
+    final MezAdmin? _admin = _adminAuthController.admin;
+    if (_admin != null) {
+      MezRouter.toNamed(kTabsView);
+    } else {
+      _adminAuthController.getMezAdmin().then((value) {
+        if (_adminAuthController.admin != null) {
+          MezRouter.toNamed(kTabsView);
+        }
+      });
+    }
+    Get.find<ForegroundNotificationsController>()
+        .startListeningForNotificationsFromFirebase(
+            mezAdminNotificationsNode(userId), mezAdminNotificationHandler);
 
     super.initState();
   }

@@ -98,6 +98,7 @@ class _AdminTabsViewState extends State<AdminTabsView>
       child: mezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         title: viewController.getTitle(),
+        showNotifications: true,
         tabBar: viewController.showAppBarTabs
             ? TabBar(
                 //isScrollable: true,
