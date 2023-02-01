@@ -10,9 +10,9 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
@@ -68,8 +68,10 @@ class CustCartViewController {
         customerAuthController.customer?.defaultLocation?.location;
     if (orderToLocation.value != null) {
       _cartRxn.value?.toLocation = orderToLocation.value;
+
+      // ignore: unawaited_futures
+      updateShippingPrice();
     }
-    unawaited(updateShippingPrice());
 
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
       savedCardChoice =
@@ -83,7 +85,7 @@ class CustCartViewController {
     await getCustomerCards();
     await _addingValusToOptions();
     pickerChoice.value = options.first;
-    _cartRxn.refresh();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _cartRxn.refresh());
   }
 
   Future<void> _setDefaultOptions() async {
@@ -312,6 +314,8 @@ class CustCartViewController {
   }
 
   bool get canOrder {
+    mezDbgPrint(
+        "From can order====================>>>>${cart.toFirebaseFormattedJson()}");
     return cart.toLocation != null &&
         _orderDistanceInKm <= 10 &&
         isShippingSet.isTrue &&
@@ -415,6 +419,12 @@ class CustCartViewController {
     } else {
       return true;
     }
+  }
+
+  void switchLocation(loc.Location location) {
+    _cartRxn.value?.toLocation = location;
+    _cartRxn.refresh();
+    updateShippingPrice();
   }
 }
 
