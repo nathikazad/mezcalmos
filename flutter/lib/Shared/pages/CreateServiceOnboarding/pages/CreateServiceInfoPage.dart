@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/components/CreateServiceImageComponent.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
+    ["CreateServiceView"]["pages"]["CreateServiceInfoPage"];
+
+//
 class CreateServiceInfoPage extends StatelessWidget {
   const CreateServiceInfoPage({
     Key? key,
@@ -30,7 +35,7 @@ class CreateServiceInfoPage extends StatelessWidget {
               height: 25,
             ),
             Text(
-              "${viewController.serviceType.toNormalString()} Name",
+              "${_i18n()['name']}",
               style: Get.textTheme.bodyText1,
             ),
             SizedBox(
@@ -40,21 +45,20 @@ class CreateServiceInfoPage extends StatelessWidget {
               controller: viewController.serviceName,
               validator: (String? v) {
                 if (v == null || v.isEmpty) {
-                  return "Please provide a name ";
+                  return "${_i18n()['nameError']}";
                 }
                 return null;
               },
               style: Get.textTheme.bodyText1,
               decoration: InputDecoration(
                   hintStyle: Get.textTheme.bodyText2,
-                  hintText:
-                      "Your ${viewController.serviceType.toNormalString()} name"),
+                  hintText: "${_i18n()['name']}"),
             ),
             SizedBox(
               height: 25,
             ),
             Text(
-              "${viewController.serviceType.toNormalString()} Location",
+              "${_i18n()['location']}",
               style: Get.textTheme.bodyText1,
             ),
             SizedBox(
@@ -70,7 +74,7 @@ class CreateServiceInfoPage extends StatelessWidget {
   Widget _locationCard() {
     return FormField(validator: (Object? value) {
       if (viewController.newLocation.value == null) {
-        return "Location is required";
+        return "${_i18n()['locationError']}";
       }
       return null;
     }, builder: (FormFieldState<Object?> state) {
@@ -107,7 +111,7 @@ class CreateServiceInfoPage extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Text(
                             viewController.newLocation.value?.address ??
-                                'Pick new location',
+                                "${_i18n()['pickLoc']}",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           )),

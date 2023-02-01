@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
@@ -10,6 +12,11 @@ import 'package:mezcalmos/Shared/pages/DeliverySettingsView/controllers/Delivery
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']["pages"]
+    ["DeliverySettingsView"]["DeliverySettingsView"];
+
+//
 class DeliverySettingsView extends StatefulWidget {
   const DeliverySettingsView({
     Key? key,
@@ -54,24 +61,17 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
       appBar: viewController.isCreatingNewService
           ? null
           : mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "Delivery"),
+              onClick: MezRouter.back, title: "${_i18n()['delivery']}"),
       bottomSheet: viewController.isCreatingNewService
           ? null
           : MezButton(
               borderRadius: 0,
               height: 75,
-              label: "Save",
+              label: "${_i18n()['save']}",
               onClick: () async {
                 final bool res = await viewController.handleSave();
                 if (res) {
-                  Get.snackbar("Saved", "your settings has been updated}",
-                      backgroundColor: Colors.black,
-                      colorText: Colors.white,
-                      shouldIconPulse: false,
-                      icon: Icon(
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ));
+                  showSavedSnackBar();
                 }
               },
             ),
@@ -82,7 +82,7 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("How would you like to deliver?"),
+                Text("${_i18n()['title']}"),
                 SizedBox(
                   height: 10,
                 ),

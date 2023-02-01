@@ -121,6 +121,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                   }
                 },
           title: editInfoController.getPageTitle(),
+          showOrders: false,
           bottom: (editInfoController.isApproved.isFalse)
               ? PreferredSize(
                   preferredSize: Size(double.infinity, kToolbarHeight),

@@ -1,13 +1,18 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -18,6 +23,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['CreateServiceView'];
 
 class CreateServiceViewController {
   // instances //
@@ -70,10 +78,8 @@ class CreateServiceViewController {
 
   Future<void> _setImage() async {
     if (newImageFile.value != null) {
-      // todo compress and upload image to db and set it to the object
-      //   newImageUrl.value = await _authController.uploadUserImgToFbStorage(
-      //       imageFile: newImageFile.value!, isCompressed: false);
-      // }
+      newImageUrl.value = await uploadServiceImgToFbStorage(
+          imageFile: newImageFile.value!, isCompressed: false);
     }
   }
 
@@ -111,11 +117,11 @@ class CreateServiceViewController {
   String getTitle() {
     switch (currentPage.value) {
       case 0:
-        return "Informations";
+        return "${_i18n()['info']}";
       case 1:
-        return "Schedule";
+        return "${_i18n()['schedule']}";
       case 2:
-        return "Delivery";
+        return "${_i18n()['delivery']}";
 
       default:
         return "";
@@ -124,9 +130,9 @@ class CreateServiceViewController {
 
   String getSaveButtonTitle() {
     if (currentPage.value == 2) {
-      return "Save";
+      return "${_i18n()['save']}";
     } else
-      return "Next";
+      return "${_i18n()['next']}";
   }
 
   void handleBack() {
@@ -143,7 +149,7 @@ class CreateServiceViewController {
   Future<ServerResponse?> handleNext() async {
     switch (currentPage.value) {
       case 0:
-        handleInfoPageNext();
+        await handleInfoPageNext();
         break;
       case 1:
         handleScheduleNext();
@@ -170,9 +176,6 @@ class CreateServiceViewController {
   }
 
   DeliveryCost _constructDeliveryCost() {
-    mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
-    mezDbgPrint("min.text =====> [BBB] ===> ${minCost.text}");
-    mezDbgPrint("cost.text =====> [BBB] ===> ${costPerKm.text}");
     return DeliveryCost(
         id: null,
         minimumCost: double.parse(minCost.text),
@@ -180,18 +183,19 @@ class CreateServiceViewController {
         costPerKm: num.parse(costPerKm.text).toDouble());
   }
 
-  void handleInfoPageNext() {
-    mezDbgPrint("Here");
+  Future<void> handleInfoPageNext() async {
     if (infoFromKey.currentState?.validate() == true) {
+      await _setImage();
       serviceInput.value.serviceInfo = ServiceInfo(
           location: newLocation.value!,
           hasuraId: Random().nextInt(5),
           image: newImageUrl.value,
           name: serviceName.text);
-      pageController
+      unawaited(pageController
           .animateToPage(currentPage.value + 1,
               duration: Duration(milliseconds: 500), curve: Curves.easeIn)
-          .whenComplete(() => currentPage.value = pageController.page!.toInt());
+          .whenComplete(
+              () => currentPage.value = pageController.page!.toInt()));
     }
   }
 
@@ -212,8 +216,8 @@ class CreateServiceViewController {
       case 2:
         if (!serviceInput.value.isSelfDelivery) {
           if (serviceInput.value.deliveryPartnerId == null) {
-            Get.snackbar(
-                "Select a company", "you need to select a delivery company",
+            Get.snackbar("${_i18n()['selectCompany']}",
+                "${_i18n()['selectCompanyText']}",
                 backgroundColor: Colors.black, colorText: Colors.white);
           }
           return serviceInput.value.isValid;
@@ -280,5 +284,39 @@ class CreateServiceViewController {
       "deliveryPartnerId": serviceInput.value.deliveryPartnerId,
       "deliveryDetails": serviceInput.value.selfDeliveryCost?.toJson(),
     };
+  }
+
+  Future<String> uploadServiceImgToFbStorage({
+    required File imageFile,
+    bool isCompressed = false,
+  }) async {
+    File compressedFile = imageFile;
+    if (isCompressed == false) {
+      // this holds userImgBytes of the original
+      final Uint8List originalBytes = await imageFile.readAsBytes();
+      // this is the bytes of our compressed image .
+      final Uint8List _compressedVersion =
+          await compressImageBytes(originalBytes);
+      // Get the actual File compressed
+      compressedFile = await writeFileFromBytesAndReturnIt(
+          filePath: imageFile.path, imgBytes: _compressedVersion);
+    }
+    String _uploadedImgUrl;
+    final List<String> splitted = imageFile.path.split('.');
+    final String imgPath =
+        "restaurants/$serviceName/avatar/$serviceName.${isCompressed ? 'compressed' : 'original'}.${splitted[splitted.length - 1]}";
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .putFile(compressedFile);
+    } on firebase_core.FirebaseException catch (e) {
+      mezDbgPrint(e.message.toString());
+    } finally {
+      _uploadedImgUrl = await firebase_storage.FirebaseStorage.instance
+          .ref(imgPath)
+          .getDownloadURL();
+    }
+
+    return _uploadedImgUrl;
   }
 }

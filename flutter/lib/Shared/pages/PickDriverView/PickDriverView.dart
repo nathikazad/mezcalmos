@@ -67,8 +67,6 @@ class _PickDriverViewState extends State<PickDriverView> {
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   children: [
-                    // forward to mezcalmos //
-
                     // drivers map //
                     ROpDriversMapComponent(
                       viewController: viewController,

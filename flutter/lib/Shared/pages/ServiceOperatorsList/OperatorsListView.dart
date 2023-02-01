@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpDriversView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['OperatorsListView'];
 
 class OperatorsListView extends StatefulWidget {
   const OperatorsListView({
@@ -65,7 +65,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
     return Scaffold(
         appBar: (showAppBar)
             ? mezcalmosAppBar(AppBarLeftButtonType.Back,
-                onClick: MezRouter.back, title: "Operators")
+                onClick: MezRouter.back, title: "${_i18n()['operators']}")
             : null,
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -77,7 +77,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                   // await viewController.fetchServiceLinks();
                   // await _addOperatorSheet();
                 },
-                title: "Add operator",
+                title: "${_i18n()['addOperator']}",
               ),
               SizedBox(
                 height: 15,
@@ -116,7 +116,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                     margin: const EdgeInsets.only(top: 5, bottom: 8),
                     alignment: Alignment.center,
                     child: Text(
-                      'Ask your operator to scan this QR code on their phone',
+                      "${_i18n()['title']}",
                       style: Get.textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),
@@ -143,7 +143,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                     height: 25,
                   ),
                   MezButton(
-                    label: 'Copy link',
+                    label: "${_i18n()['copyLink']}",
                     icon: Icons.copy,
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
@@ -163,7 +163,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                   ),
                   MezButton(
                     icon: Ionicons.logo_whatsapp,
-                    label: 'Share on whatsapp',
+                    label: "${_i18n()['shrWhatsapp']}",
                     textColor: Color(0xFF219125),
                     backgroundColor: Color(0xFFE3FFE4),
                     onClick: () async {
@@ -182,7 +182,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
 }
 
 SnackbarController _copiedSnackBar() {
-  return Get.snackbar('Copied', 'Link copied successfuly',
+  return Get.snackbar("${_i18n()['copied']}", "${_i18n()['copiedText']}",
       backgroundColor: Colors.black,
       colorText: Colors.white,
       shouldIconPulse: false,

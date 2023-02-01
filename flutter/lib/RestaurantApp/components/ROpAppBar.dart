@@ -31,6 +31,6 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
         tabBar: bottom,
         onClick: () => onClick?.call(),
         showNotifications: true,
-        ordersRoute: kPastOrdersListView);
+        ordersRoute: (showOrders) ? kPastOrdersListView : null);
   }
 }
