@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -104,10 +103,8 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             icon: Icons.food_bank,
                             label: "${_i18n()['profile']}",
                             ontap: () {
-                              navigateToServiceInfoEdit(
-                                  serviceProviderId: restaurant.info.hasuraId,
-                                  serviceProviderType:
-                                      ServiceProviderType.Restaurant);
+                              MezRouter.toNamed(getROpEditInfoRoute(
+                                  restaurantId: restaurant.info.hasuraId));
                             }),
                       ],
                     ),

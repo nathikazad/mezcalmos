@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServicePaymentsView']['components']['ServiceAcceptedPayments'];
 
 class ServiceAcceptedPayments extends StatefulWidget {
   const ServiceAcceptedPayments({Key? key, required this.viewController})

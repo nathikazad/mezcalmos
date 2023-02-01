@@ -84,7 +84,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                   const Spacer(),
                   Container(
                     child: Text(
-                      "${getLocationNumbers()}}",
+                      "${getLocationNumbers()}",
                       style: txt.headline4!
                           .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
                       textAlign: TextAlign.center,

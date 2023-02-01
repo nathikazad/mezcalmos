@@ -684,6 +684,8 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
+                "saved": "Saved",
+                "savedTitle": "Your information has been saved",
                 "yesCancel": "Yes, cancel order",
                 "no": "No",
                 "cancelOrder": "Cancel Order",
@@ -724,15 +726,110 @@
             }
         },
         "pages": {
-            "ServiceInfoEditView" : {
-                "name" : "Name",
-                "location" :"Location",
-                "description" :"Description in",
-                "info" : "Info",
-                "save" :"Save",
-                "saved" : "Saved",
-                "error" : "Error",
-                "savedSuccess" : "Your information has been successfully saved "
+            "CreateServiceView": {
+                "pages": {
+                    "CreateServiceInfoPage": {
+                        "name": "Name",
+                        "nameError": "Please provide a name",
+                        "location": "Name",
+                        "locationError": "Please provide a name",
+                        "pickLoc" : "Pick location",
+                        "imageError" : "Image is required"
+                    }
+                },
+                "info": "Information",
+                "schedule": "Schedule",
+                "delivery": "Delivery",
+                "save": "Save",
+                "next": "Next",
+                "ok": "Ok",
+                "selectCompany": "Select a company",
+                "selectCompanyText": "you need to select a delivery company",
+                "restTitle": "Your restaurant is under review",
+                "restBody": "You can start adding items to your menu and you’ll be notified once your restaurant is approved."
+            },
+            "DeliveryCostSettingView": {
+                "dvCost": "Delivery cost",
+                "km": "Km",
+                "minCost": "Minimum Cost",
+                "costPerKm": "Cost per km",
+                "freeKmRange": "Free delivery range",
+                "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
+                "numberError": "Please enter a valid number",
+                "preview": "Preview",
+                "custDistance": "Customer distance",
+                "save": "Save",
+                "cost": "Cost"
+            },
+            "DeliverySettingsView": {
+                "DeliverySettingsView": {
+                    "delivery": "Delivery",
+                    "save": "Save",
+                    "title": "How would you like to deliver ?"
+                },
+                "components": {
+                    "DeliverySettingsCompaniesList": {
+                        "title": "Delivery partner next to you",
+                        "notFoundTitle": "No delivery partners found",
+                        "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
+                        "joinded": "Joined"
+                    }
+                }
+            },
+            "ServicePaymentsView": {
+                "payments": "Payments",
+                "components": {
+                    "ServiceAcceptedPayments": {
+                        "bankName": "Bank name",
+                        "bankNumber": "Account number",
+                        "bankTitle": "Bank account informations",
+                        "confirm": "Confirm",
+                        "cancel": "Cancel",
+                        "error": "Error",
+                        "bankTransfer": "Bank Transfer",
+                        "bankError": "Account number is not valid",
+                        "cash": "Cash",
+                        "card": "Card",
+                        "requirements": "Requirements",
+                        "acceptedPayments": "Accepted payments",
+                        "setup": "Setup",
+                        "fees": "Fees",
+                        "chargeCustomer": "charge customer processing fees",
+                        "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
+                        "reqs": "Requirements",
+                        "emailId": "Email ID",
+                        "empty": "Empty",
+                        "reqsHelper": "Please sign in to your stripe account and make sure you fill in all the requiremnts below"
+                    }
+                }
+            },
+            "OperatorsListView": {
+                "operators": "Operators",
+                "addOpertaor": "Add operator",
+                "title": "Ask your operator to scan this QR code on their phone",
+                "copyLink": "Copy link",
+                "shrWhatsapp": "Share on WhatsApp",
+                "copied": "Copied",
+                "copiedText": "Link copied successfuly"
+            },
+            "ServiceDriversListView": {
+                "drivers": "Drivers",
+                "addDriver": "Add driver",
+                "title": "Ask your operator to scan this QR code on their phone",
+                "copyLink": "Copy link",
+                "shrWhatsapp": "Share on WhatsApp",
+                "copied": "Copied",
+                "copiedText": "Link copied successfuly"
+            },
+            "ServiceInfoEditView": {
+                "name": "Name",
+                "location": "Location",
+                "description": "Description in",
+                "info": "Info",
+                "save": "Save",
+                "saved": "Saved",
+                "error": "Error",
+                "savedSuccess": "Your information has been successfully saved "
             },
             "SomethingWentWrongScreen": {
                 "noRestaurantFoundOnOperator": "No restaurant found on your operator",
@@ -2158,7 +2255,7 @@
             "atPickupBody": "Your driver arrived at pickup location"
         }
     },
-    "MezAdmin" : {
+    "MezAdmin": {
         "notificationHandler": {
             "onTheWayTitle": "On the Way",
             "onTheWayBody": "Your order is on the way",
@@ -2168,33 +2265,30 @@
             "newOrderBody": "You got a new order",
             "canceledOrderTitle": "Order cancelled",
             "canceledOrderBody": "Your order has been cancelled"
-           
         },
-        "pages" : {
-
-            "AdminTabsView" : {
-                "orders" : "Orders",
-                "services" :"Services",
-                "messages"  : "Messages",
-                "profile":"Profile"
-
+        "pages": {
+            "AdminTabsView": {
+                "orders": "Orders",
+                "services": "Services",
+                "messages": "Messages",
+                "profile": "Profile"
             },
-            "AdminServiceOrdersView" :{
-                "currentOrders" : "Current orders",
-                "pastOrders" :"Past orders"
+            "AdminServiceOrdersView": {
+                "currentOrders": "Current orders",
+                "pastOrders": "Past orders"
             },
-            "AdminServicesView" : {
-                "AdminServicesView" : {
-                    "search" : "Search"
+            "AdminServicesView": {
+                "AdminServicesView": {
+                    "search": "Search"
                 },
-                "components" : {
-                    "adminServiceCard" : {
-                        "menu" : "Menu",
-                        "orders" : "Orders",
-                        "profile" : "Profile",
-                        "costs" : "Costs",
-                        "accept" : "Accept",
-                        "reject" : "Reject" 
+                "components": {
+                    "adminServiceCard": {
+                        "menu": "Menu",
+                        "orders": "Orders",
+                        "profile": "Profile",
+                        "costs": "Costs",
+                        "accept": "Accept",
+                        "reject": "Reject"
                     }
                 }
             }

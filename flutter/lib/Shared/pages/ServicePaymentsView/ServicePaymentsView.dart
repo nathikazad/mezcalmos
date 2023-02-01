@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceStr
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServicePaymentsView'];
 
 class ServicePaymentsView extends StatefulWidget {
   const ServicePaymentsView({

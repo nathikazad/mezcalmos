@@ -87,13 +87,19 @@ select_permissions:
       columns:
         - accepted_payments
         - approved
+        - creation_time
+        - customer_pickup
+        - delivery
+        - delivery_details_id
         - description_id
         - firebase_id
         - id
         - image
         - language_id
+        - location_id
         - name
         - open_status
+        - phone_number
         - schedule
         - self_delivery
         - service_provider_type

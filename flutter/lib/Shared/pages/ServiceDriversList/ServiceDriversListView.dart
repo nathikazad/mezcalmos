@@ -15,8 +15,8 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpDriversView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServiceDriversListView'];
 
 class ServiceDriversListView extends StatefulWidget {
   const ServiceDriversListView({
@@ -63,7 +63,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
       appBar: mezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: asTab ? null : MezRouter.back,
-          title: "Drivers"),
+          title: "${_i18n()['drivers']}"),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       body: SingleChildScrollView(
@@ -122,7 +122,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                     margin: const EdgeInsets.only(top: 5, bottom: 8),
                     alignment: Alignment.center,
                     child: Text(
-                      'Ask your driver to scan this QR code on their phone',
+                      "${_i18n()['title']}",
                       style: Get.textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),
@@ -135,28 +135,28 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                     () => Container(
                       height: 25.h,
                       width: 25.h,
-                      child:
-                          viewController.serviceLink.value?.driverQrImageLink !=
-                                  null
-                              ? CachedNetworkImage(
-                                  imageUrl: viewController
-                                      .serviceLink.value!.driverQrImageLink!,
-                                )
-                              : CircularProgressIndicator(),
+                      child: viewController
+                                  .serviceLink.value?.operatorQrImageLink !=
+                              null
+                          ? CachedNetworkImage(
+                              imageUrl: viewController
+                                  .serviceLink.value!.operatorQrImageLink!,
+                            )
+                          : CircularProgressIndicator(),
                     ),
                   ),
                   const SizedBox(
                     height: 25,
                   ),
                   MezButton(
-                    label: 'Copy link',
+                    label: "${_i18n()['copyLink']}",
                     icon: Icons.copy,
                     backgroundColor: secondaryLightBlueColor,
                     textColor: primaryBlueColor,
                     onClick: () async {
                       await Clipboard.setData(ClipboardData(
                               text: viewController
-                                  .serviceLink.value!.driverDeepLink
+                                  .serviceLink.value!.operatorDeepLink
                                   .toString()))
                           .whenComplete(() {
                         MezRouter.back();
@@ -169,7 +169,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
                   ),
                   MezButton(
                     icon: Ionicons.logo_whatsapp,
-                    label: 'Share on whatsapp',
+                    label: "${_i18n()['shrWhatsapp']}",
                     textColor: Color(0xFF219125),
                     backgroundColor: Color(0xFFE3FFE4),
                     onClick: () async {
@@ -188,7 +188,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
 }
 
 SnackbarController _copiedSnackBar() {
-  return Get.snackbar('Copied', 'Link copied successfuly',
+  return Get.snackbar("${_i18n()['copied']}", "${_i18n()['copiedText']}",
       backgroundColor: Colors.black,
       colorText: Colors.white,
       shouldIconPulse: false,
