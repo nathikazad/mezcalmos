@@ -18,10 +18,12 @@ final HasuraDb _hasuraDb = Get.find<HasuraDb>();
 ///
 /// [customer_id] is the user's hasuraId
 Future<List<SavedLocation>> get_customer_locations(
-    {required int customer_id}) async {
+    {required int customer_id, bool withCache = true}) async {
   final QueryResult<Query$get_customer_locations> res = await _hasuraDb
       .graphQLClient
       .query$get_customer_locations(Options$Query$get_customer_locations(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
           variables: Variables$Query$get_customer_locations(
               customer_id: customer_id)));
   if (res.parsedData?.customer_saved_location == null) {
