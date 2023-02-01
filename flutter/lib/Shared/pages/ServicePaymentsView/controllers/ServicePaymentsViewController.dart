@@ -13,7 +13,11 @@ class ServicePaymentsViewController {
   WebViewController webViewController = WebViewController();
 
   // state variables //
-
+  Map<PaymentType, bool> _cloneAcceptedPayments = <PaymentType, bool>{
+    PaymentType.Card: false,
+    PaymentType.BankTransfer: false,
+    PaymentType.Cash: true,
+  };
   final Rxn<PaymentInfo> _paymentInfo = Rxn();
   final RxBool showStripeReqs = RxBool(false);
   final RxBool showSetupStripe = RxBool(false);
@@ -34,12 +38,13 @@ class ServicePaymentsViewController {
   Future<void> init({required int serviceProviderId}) async {
     this.serviceProviderId = serviceProviderId;
     // get payment info //
-    await _fetchPayment(withCache: true);
+    await _fetchPayment(withCache: false);
   }
 
   Future<void> _fetchPayment({bool withCache = true}) async {
     _paymentInfo.value = await get_restaurant_payment_info(
         serviceProviderId: serviceProviderId, withCache: withCache);
+    _cloneAcceptedPayments = _paymentInfo.value!.acceptedPayments;
   }
 
   void checkStripe() {
@@ -54,8 +59,14 @@ class ServicePaymentsViewController {
   }
 
   Future<void> handleCardCheckBoxClick(bool v) async {
-    _paymentInfo.value?.acceptedPayments[PaymentType.Card] = v;
-    mezDbgPrint("PAYMENT CARD ======>${paymentInfo?.acceptedPayments}");
+    mezDbgPrint("Heeerrererrere =>${_paymentInfo.value}");
+    final Map<PaymentType, bool> newMap = {
+      ...paymentInfo!.acceptedPayments,
+      PaymentType.Card: v
+    };
+    _paymentInfo.value!.acceptedPayments = newMap;
+
+    mezDbgPrint("Heeerrererrere =>${_paymentInfo.value!}");
     try {
       _paymentInfo.value = await update_restaurant_payment_info(
           id: serviceProviderId, paymentInfo: paymentInfo!);
@@ -63,6 +74,7 @@ class ServicePaymentsViewController {
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
+    mezDbgPrint("PAYMENT CARD ======>${_paymentInfo.value?.acceptedPayments}");
   }
 
   void handleStripeUrlChanges(String url) {
@@ -189,7 +201,13 @@ class ServicePaymentsViewController {
 
   pushBankInfos({required String bankName, required num bankNumber}) {}
 
-  removeBank() {}
+  void removeBank() {
+    final Map<Object, dynamic> newMap = {
+      ...paymentInfo!.acceptedPayments,
+      PaymentType.Card: true
+    };
+    mezDbgPrint(newMap);
+  }
 
   void dspose() {}
 }

@@ -833,7 +833,7 @@
             },
             "OperatorsListView" : {
                 "operators" : "Operadoras",
-                "addOpertaor" : "Agregar operador",
+                "addOperator" : "Agregar operador",
                 "title" : "Pídale a su operador que escanee este código QR en su teléfono",
                 "copyLink": "Copiar link",
                 "shrWhatsapp" : "Compartir en WhatsApp",

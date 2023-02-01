@@ -805,7 +805,7 @@
             },
             "OperatorsListView": {
                 "operators": "Operators",
-                "addOpertaor": "Add operator",
+                "addOperator": "Add operator",
                 "title": "Ask your operator to scan this QR code on their phone",
                 "copyLink": "Copy link",
                 "shrWhatsapp": "Share on WhatsApp",
