@@ -11,8 +11,8 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]["ServicesView"];
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ["AdminServicesView"]["components"]["adminServiceCard"];
 
 class AdminDeliveryCompanyServiceCard extends StatelessWidget {
   const AdminDeliveryCompanyServiceCard(
@@ -84,14 +84,14 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                     //     ontap: () {}),
                     _smallBtn(
                         icon: Icons.price_check,
-                        label: "Costs",
+                        label: "${_i18n()['costs']}",
                         ontap: () {
                           navigateToDeliveryCost(
                               deliveryDetailsId: company.deliveryDetailsId!);
                         }),
                     _smallBtn(
                         icon: Icons.history,
-                        label: "Orders",
+                        label: "${_i18n()['orders']}",
                         ontap: () {
                           getserviceOrdersRoute(
                               serviceName: company.info.name,
@@ -101,7 +101,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         }),
                     _smallBtn(
                         icon: Icons.person,
-                        label: "Profile",
+                        label: "${_i18n()['profile']}",
                         ontap: () {
                           navigateToServiceInfoEdit(
                               serviceProviderId: company.info.hasuraId,

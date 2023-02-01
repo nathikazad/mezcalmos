@@ -1,5 +1,5 @@
-query admin_get_dv_companies {
-  delivery_company {
+query admin_get_dv_companies($limit: Int!) {
+  delivery_company (limit: $limit) {
     approved
     image
     name
@@ -12,8 +12,8 @@ query admin_get_dv_companies {
     address}   
   }
 }
-query admin_get_restaurants {
-  restaurant_restaurant {
+query admin_get_restaurants($limit: Int!) {
+  restaurant_restaurant(limit: $limit) {
     approved
     firebase_id
     id

@@ -13,8 +13,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
-    ["pages"]["ServicesView"];
+dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
+    ["AdminServicesView"]["components"]["adminServiceCard"];
 
 class AdminRestaurantServiceCard extends StatelessWidget {
   const AdminRestaurantServiceCard(
@@ -34,11 +34,16 @@ class AdminRestaurantServiceCard extends StatelessWidget {
               children: [
                 Container(
                   width: 20.w,
-                  height: 12.h,
+                  height: 10.h,
                   decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(
+                          fit: BoxFit.cover,
                           image: CachedNetworkImageProvider(
                               restaurant.info.image))),
+                ),
+                SizedBox(
+                  width: 10,
                 ),
                 Flexible(
                     child: Column(
@@ -80,14 +85,14 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                       children: [
                         _smallBtn(
                             icon: Icons.flatware,
-                            label: "Menu",
+                            label: "${_i18n()['menu']}",
                             ontap: () {
                               MezRouter.toNamed(getRestaurantMenuRoute(
                                   restaurantId: restaurant.info.hasuraId));
                             }),
                         _smallBtn(
                             icon: Icons.history,
-                            label: "Orders",
+                            label: "${_i18n()['orders']}",
                             ontap: () {
                               getserviceOrdersRoute(
                                   serviceName: restaurant.info.name,
@@ -97,7 +102,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             }),
                         _smallBtn(
                             icon: Icons.food_bank,
-                            label: "Profile",
+                            label: "${_i18n()['profile']}",
                             ontap: () {
                               navigateToServiceInfoEdit(
                                   serviceProviderId: restaurant.info.hasuraId,
@@ -120,7 +125,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             height: 45,
                             backgroundColor: offRedColor,
                             textColor: Colors.red,
-                            label: "Reject",
+                            label: "${_i18n()['reject']}",
                             onClick: () async {})),
                     SizedBox(
                       width: 8,
@@ -130,7 +135,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             height: 45,
                             backgroundColor: primaryBlueColor,
                             textColor: Colors.white,
-                            label: "Approve",
+                            label: "${_i18n()['accept']}",
                             onClick: () async {
                               await viewController.approveService(
                                   restaurant: restaurant);

@@ -7,7 +7,6 @@ import 'package:mezcalmos/MezAdminApp/pages/ServicesView/AdminServiceView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -108,7 +107,6 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 labelStyle: Get.textTheme.bodyText1,
                 unselectedLabelStyle: Get.textTheme.bodyText2,
                 onTap: (int value) {
-                  mezDbgPrint("Value ==>$value");
                   viewController.selectedServiceProviderType.value =
                       viewController.serviceTypes[value];
                   //  viewController.selectedServiceProviderType.refresh();
