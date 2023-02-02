@@ -1,19 +1,28 @@
 
-import { OrderType, PaymentType, TwoWayDeliverableOrder } from '../../Generic/Order';
+import { Order, OrderType, PaymentType } from '../../Generic/Order';
 import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
 import { RouteInformation } from '../../Generic/RouteInformation';
+import { Laundry, LaundryCategory } from './Laundry';
 
-export interface LaundryOrder extends TwoWayDeliverableOrder {
-  laundry: UserInfo;
-  notes?: string;
+export interface LaundryOrder extends Order {
+  storeId: number;
+  customerLocation: Location;
+  estimatedReadyTime: string;
+  actualReadyTime: string;
+  fromCustomerDeliveryId?: number;
+  toCustomerDeliveryId?: number;
   status: LaundryOrderStatus;
-  shippingCost: number;
-  costPerKilo: number;
-  routeInformation?: RouteInformation;
-  costsByType?: CostsByType;
-  estimatedLaundryReadyTime?: string
+  categories: Array<OrderCategory>;
+  laundryStore: Laundry;
+  // routeInformation?: RouteInformation;
+  // costsByType?: CostsByType;
+}
+export interface OrderCategory extends LaundryCategory {
+  orderCategoryId?: number;
+  orderId?: number;
+  weightInKilo: number;
 }
 export interface CostsByType {
   byType: any;

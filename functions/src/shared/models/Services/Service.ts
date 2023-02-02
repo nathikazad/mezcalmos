@@ -1,7 +1,54 @@
 import { ServiceProviderStripeInfo } from "../../../utilities/stripe/model";
-import { AuthorizationStatus, Language } from "../Generic/Generic";
+import { DeliveryDetails } from "../Generic/Delivery";
+import { AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
 import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
+
+export interface ServiceProvider {
+  id?: number;
+  name: string;
+  image: string;
+  phoneNumber?: string;
+  firebaseId?: string;
+  selfDelivery: boolean;
+  location: Location;
+  description?: Record<Language, string>;
+  openStatus?: OpenStatus;
+  stripeInfo?: ServiceProviderStripeInfo;
+  acceptedPayments?: Record<PaymentType, boolean>;
+  approved?: boolean;
+  links?: ServiceLink;
+  creationTime?: string;
+  language: Language;
+  schedule?: any;
+  deliveryPartnerId?: number;
+  delivery: boolean;
+  customerPickup: boolean;
+  deliveryDetails?: DeliveryDetails;
+}
+
+export interface Operator {
+  id?: number;
+  userId: number;
+  status: OperatorStatus;
+  owner?: boolean;
+  appVersion?: string;
+  currentGps?: Location;
+  notificationInfo?: NotificationInfo;
+  user?: UserInfo;
+}
+
+export enum OperatorStatus {
+  AwaitingApproval = "awaiting_approval",
+  Authorized = "authorized",
+  Banned = "banned"
+}
+
+export enum OpenStatus {
+  Open = "open",
+  ClosedTemporarily = "closed_temporarily",
+  ClosedIndefinitely = "closed_indefinitely",
+}
 
 export interface State {
   authorizationStatus: AuthorizationStatus;

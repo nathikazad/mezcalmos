@@ -5,11 +5,11 @@ import { Keys } from '../../shared/models/Generic/Keys';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
 import { StripeStatus } from './model';
 import { CustomerInfo } from '../../shared/models/Generic/User';
-import { OperatorStatus } from '../../shared/models/Services/Restaurant/Restaurant';
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
+import { OperatorStatus } from '../../shared/models/Services/Service';
 let keys: Keys = getKeys();
 
 export interface SetupDetails {

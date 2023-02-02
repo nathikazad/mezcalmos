@@ -14,8 +14,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat/deleteChatMessages";
 import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { OperatorStatus } from "../shared/models/Services/Restaurant/Restaurant";
 import { isMezAdmin } from "../shared/helper";
+import { OperatorStatus } from "../shared/models/Services/Service";
 
 export interface AssignDriverDetails {
   deliveryOrderId: number,

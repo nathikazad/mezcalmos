@@ -2,8 +2,9 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, Location } from "../../../models/Generic/Generic";
 import { PaymentType } from "../../../models/Generic/Order";
-import { OperatorStatus, RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
+import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus, DeliveryType } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { OperatorStatus } from "../../../models/Services/Service";
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
   let chain = getHasura();
@@ -144,6 +145,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         },
         delivery: true,
         customer_pickup: true,
+        language_id: true,
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -220,7 +222,8 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         location: o.restaurant.location.gps as Location,
         restaurantOperators,
         delivery: o.restaurant.delivery,
-        customerPickup: o.restaurant.customer_pickup
+        customerPickup: o.restaurant.customer_pickup,
+        language: o.restaurant.language_id as Language
       }
     }
   })

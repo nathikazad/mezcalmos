@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
 import * as rootNodes from "../shared/databaseNodes/root";
-import * as customerNodes from "../shared/databaseNodes/customer";
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType } from "../shared/models/Generic/Order";
 // import { pushNotification } from "../utilities/senders/notifyUser";
@@ -53,8 +52,8 @@ export async function expireOrder(orderId: string) {
 
     rootNodes.openOrders(OrderType.Taxi, orderId).remove();
     rootNodes.pastOrders(OrderType.Taxi, orderId).set(order);
-    customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
-    customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
+    // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
+    // customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order);
 
 
 

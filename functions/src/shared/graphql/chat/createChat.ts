@@ -20,7 +20,7 @@ export async function createRestaurantCustomerChat(restaurant: Restaurant, custo
         insert_service_provider_customer_chat_one: [{
             object: {
                 customer_id: customer.id,
-                service_provider_id: restaurant.restaurantId,
+                service_provider_id: restaurant.id,
                 service_provider_type: ServiceProviderType.Restaurant,
                 chat: {
                     data: {

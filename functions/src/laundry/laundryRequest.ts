@@ -18,6 +18,8 @@
 // import { getLaundry } from "./laundryController";
 // // import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
+import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
+
 // export async function requestLaundry(userId: string, data: any) {
 
 //   // let response = isSignedIn(userId)
@@ -150,3 +152,15 @@
 //   //   pushNotification(participantId, notification, participantType);
 //   // }
 // }
+export interface LaundryRequestDetails {
+    storeId: number,
+    
+}
+
+export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails)/*: Promise<CheckoutResponse> */{
+    await getLaundryStore(laundryRequestDetails.storeId);
+    
+    // let laundryOrder: LaundryOrder = {
+
+    // }
+}

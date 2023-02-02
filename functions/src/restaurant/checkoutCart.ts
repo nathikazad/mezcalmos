@@ -186,7 +186,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restau
       restaurant: {
         name: restaurant.name,
         image: restaurant.image,
-        id: restaurant.restaurantId
+        id: restaurant.id
       }
     },
     background: {
@@ -217,7 +217,7 @@ function notifyOperators(orderId: number, restaurant: Restaurant) {
       restaurant: {
         name: restaurant.name,
         image: restaurant.image,
-        id: restaurant.restaurantId
+        id: restaurant.id
       }
     },
     background: {
