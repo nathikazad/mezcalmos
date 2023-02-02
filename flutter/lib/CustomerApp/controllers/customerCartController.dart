@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
+    as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
@@ -143,29 +146,30 @@ class CustomerCartController extends GetxController {
     return null;
   }
 
-  Future<int?> checkout({String? stripePaymentId}) async {
+  Future<num?> checkout({String? stripePaymentId}) async {
     try {
       final Map<String, dynamic> payload = _contructCart(stripePaymentId);
 
       mezDbgPrint("[+] -> payload :: $payload");
-      // final cloudFunctionModels.CheckoutResponse res =
-      //     await CloudFunctions.restaurant2_checkoutCart(
-      //         customerAppType: cloudFunctionModels.AppType.Customer,
-      //         customerLocation: cloudFunctionModels.Location(
-      //             cart.value?.toLocation!.latitude,
-      //             cart.value?.toLocation!.longitude,
-      //             cart.value?.toLocation!.address),
-      //         deliveryCost: cart.value!.shippingCost!,
-      //         paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
-      //         notes: cart.value?.notes,
-      //         restaurantId: cart.value!.restaurant!.info.hasuraId,
-      //         tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
-      //         tripDuration: cart.value!.getRouteInfo!.duration.seconds,
-      //         tripPolyline: cart.value!.getRouteInfo!.polyline,
-      //         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
-      //         scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
-      //         stripePaymentId: stripePaymentId,
-      //         stripeFees: cart.value?.stripeFees);
+      final cloudFunctionModels.CheckoutResponse res =
+          await CloudFunctions.restaurant2_checkoutCart(
+              customerAppType: cloudFunctionModels.AppType.Customer,
+              customerLocation: cloudFunctionModels.Location(
+                  cart.value?.toLocation!.latitude,
+                  cart.value?.toLocation!.longitude,
+                  cart.value?.toLocation!.address),
+              deliveryCost: cart.value!.shippingCost!,
+              paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
+              notes: cart.value?.notes,
+              restaurantId: cart.value!.restaurant!.info.hasuraId,
+              tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
+              tripDuration: cart.value!.getRouteInfo!.duration.seconds,
+              tripPolyline: cart.value!.getRouteInfo!.polyline,
+              deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+              scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+              stripePaymentId: stripePaymentId,
+              stripeFees: cart.value?.stripeFees);
+      return res.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");
       mezDbgPrint(e);
