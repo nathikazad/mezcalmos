@@ -833,7 +833,7 @@
             },
             "OperatorsListView" : {
                 "operators" : "Operadoras",
-                "addOpertaor" : "Agregar operador",
+                "addOperator" : "Agregar operador",
                 "title" : "Pídale a su operador que escanee este código QR en su teléfono",
                 "copyLink": "Copiar link",
                 "shrWhatsapp" : "Compartir en WhatsApp",
@@ -978,6 +978,7 @@
                 "reconnecting": "Reconectando"
             },
             "MessagingScreen": {
+                "viewOrder" :"Ver detalles de la orden",
                 "order": "Orden",
                 "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
             },
@@ -2007,6 +2008,22 @@
     },
     "RestaurantApp": {
         "pages": {
+            "ROpChoiceView" :{
+                "newChoice" : "Nueva elección",
+                "required" : "Requerida",
+                "save" : "Guardar elección",
+                "saved" : "Salvado",
+                "savedText" : "La elección se ha guardado con éxito",
+                "added" : "Agregada",
+                "addedText" : "La elección se ha agregado con éxito",
+                "choiceName" : "Nombre de elección",
+                "choiceNameIn": "Nombre de elección en",
+                "choicePrice" : "Precio de elección",
+                "deleteChoice" : "Eliminar la elección",
+                "yDeleteChoice" : "SÍ ELECHE ELECCIÓN",
+                "helperText" : "¿Estás seguro de que quieres eliminar esta elección?"
+
+            }, 
             "ROpReviewsView": {
                 "reviews": "Reseñas",
                 "base": "Basado en",

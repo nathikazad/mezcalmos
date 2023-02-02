@@ -145,16 +145,19 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                           )
                         ],
                       ),
-                      Row(
-                        children: [
-                          if (widget.viewController.showStatusIcon)
-                            _stripeStatusWidget(context),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          if (widget.viewController.showSetupBtn)
-                            _stripeSetupBtn()
-                        ],
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            if (widget.viewController.showStatusIcon)
+                              _stripeStatusWidget(context),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            if (widget.viewController.showSetupBtn)
+                              _stripeSetupBtn()
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -166,7 +169,9 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                             ?.acceptedPayments[PaymentType.Card] ==
                         true,
                     onChanged: (bool? v) {
-                      widget.viewController.handleCardCheckBoxClick(v!);
+                      if (v != null) {
+                        widget.viewController.handleCardCheckBoxClick(v);
+                      }
                     }),
               ],
             ),

@@ -14,7 +14,7 @@ types = {"number": "num", "string": "String", "boolean": "bool"}
 def searchForModel(search):  
   typeDictionary = {"values":{}}
   found = False
-  for folder, dirs, files in os.walk("./shared/models"):
+  for folder, dirs, files in os.walk("./"):
     for file in files:
       # print(file)
       fullpath = os.path.join(folder, file)
@@ -48,6 +48,7 @@ def getFileName(corresponding):
     return onlyFunctionImports[pre]
 
 def getArguments(corresponding):
+  # print(corresponding)
   fileName = getFileName(corresponding)
   searchFor = corresponding.split("(")[0]+"("
   if "." in corresponding.split("(")[0]:
@@ -57,7 +58,6 @@ def getArguments(corresponding):
       for line in f:
         if searchFor in line:
           interface = line.split(")")[0].split("(")[1].split(",")[1].split(":")[1].strip()
-          
           with open(fileName+".ts", 'r') as f2:
             found = False
             arguments = {}
@@ -82,6 +82,32 @@ def getArguments(corresponding):
     print()
     sys.exit()
 
+def getReturnType(corresponding):
+  # print(corresponding)
+  fileName = getFileName(corresponding)
+  searchFor = corresponding.split("(")[0]+"("
+  if "." in corresponding.split("(")[0]:
+    searchFor = corresponding.split("(")[0].split(".")[1]+"("
+  if "data" in corresponding:
+    with open(fileName+".ts", 'r') as f:
+      for line in f:
+        if searchFor in line:
+          returnType = line.split(")")[1].split("{")[0].strip()
+          # @sanchit find return type checkoutResponse
+          if returnType:
+            returnType = returnType.split(":")[1].strip()
+            if "Promise" in returnType:
+              returnType = returnType.split("<")[1].split(">")[0]
+            print(returnType)
+            if "void" in returnType:
+              returnType = ""
+            # returnType = "CheckoutResponse"
+          if returnType:
+            uniqueTypes[returnType] = True
+            return returnType
+          return None
+
+
 def getCorrespondingFnName(functionGroupName, line, authenticated):
   functionName = line.strip().split(":")[0]
   fullFunctionName = functionGroupName+"-"+functionName
@@ -92,6 +118,8 @@ def getCorrespondingFnName(functionGroupName, line, authenticated):
     corresponding = corresponding[:-2]
   # functionNamesGroup2[functionGroupName][functionName]["functionName"] = corresponding.split("(")[0][:-1]
   functionNamesGroup2[fullFunctionName]["arguments"] = getArguments(corresponding)
+  functionNamesGroup2[fullFunctionName]["returnType"] = getReturnType(corresponding)
+  # print(functionNamesGroup2[fullFunctionName]["returnType"])
 
 
 def extractFunctionNamesGroupAsDictionary():
@@ -122,6 +150,10 @@ def extractFunctionNamesGroupAsString(line):
     exportConstStarted = True
     exportConstValue = line   
 
+
+# fills the following
+#  onlyFunctionImports = {} like import { createNewRestaurant } from "./restaurant/createNewRestaurant";
+# fileImports = {} import * as restaurantStatusChange from './restaurant/adminStatusChanges'
 def extractImports(line):
   if "import" in line and "//" not in line:
     bits = line.split("from")
@@ -165,7 +197,9 @@ def printDartFormatEnum(key, values):
   return str+converter+"\n\n"
 
 def printDartFormatFunction(key, value):
-  str = "  static Future<ServerResponse> "+key.replace("-","_")+"(\n"
+  str = "  static Future<void> "+key.replace("-","_")+"(\n"
+  if value["returnType"] != None:
+    str = str.replace("void", value["returnType"])
   if value["arguments"] != None:
     str += "      {"
     for v in value["arguments"]:
@@ -192,11 +226,18 @@ def printDartFormatFunction(key, value):
       toAdd = toAdd.replace("JSON", "Map<String, dynamic>")
       str += toAdd
     str = str[:-8]+"}"
-  str += "  ) {\n"
-  body = '''    return callCloudFunction(
+  str += "  ) async {\n"
+  body = "    return "
+  if value["returnType"] != None:
+    body += value["returnType"]
+    body += ".fromFirebaseFormattedJson("
+  body += "await callCloudFunction("
+  body +='''
       functionName: "fnxxx",
       parameters: <String, dynamic>{});
   }'''
+  if value["returnType"] != None:
+    body = body.replace("parameters: <String, dynamic>{});","parameters: <String, dynamic>{}));")
   body = body.replace("fnxxx", key)
   params = "<String, dynamic>{\n        "
   if value["arguments"] != None:
@@ -237,7 +278,21 @@ def getModels():
       for v in models[key]["values"]:
         toWriteModel +=  "\""+v.replace("?","")+"\": "+v.replace("?","")+",\n      "
       toWriteModel = toWriteModel[:-8]
-      toWriteModel +=  "};\n  }\n}\n\n"
+      toWriteModel +=  "};\n  }\n"
+      if "Response" in key:
+        print(key)
+        toWriteModel += "factory "+key+".fromFirebaseFormattedJson(dynamic json) { "
+        toWriteModel += "\n   return "+key+"("
+        for v in models[key]["values"]:
+          toWriteModel += '''json["'''+v+'''"], '''
+        toWriteModel += '''json["nullableField"]);
+  }'''
+      ## @sanchit todo
+      ## add Factory
+  #       factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
+  #   return CheckoutResponse(json["orderId"], json["nullableField"]);
+  # }
+      toWriteModel +=  "\n}\n\n"
     if models[key]["type"] == "enum":
       toWriteModel +=  printDartFormatEnum(key, models[key]["values"])
   return toWriteModel
@@ -248,7 +303,7 @@ def getIndex():
   import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
   import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
   class CloudFunctions {
-    static Future<ServerResponse> callCloudFunction(
+    static Future<dynamic> callCloudFunction(
         {required String functionName, Map<String, dynamic>? parameters}) async {
       final Map<String, dynamic> finalParams = <String, dynamic>{
         'versionNumber': '0.0.0'
@@ -257,9 +312,7 @@ def getIndex():
       final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
           .httpsCallable(functionName)
           .call(finalParams);
-      print(response.data);
-
-      return ServerResponse.fromJson(response.data);
+      return response.data;
     }
 
   '''
@@ -280,7 +333,6 @@ if __name__ == "__main__":
       extractImports(line)
       extractFunctionNamesGroupAsString(line)
   extractFunctionNamesGroupAsDictionary()
-
   for key in uniqueTypes:
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
       models[key] = searchForModel(key)

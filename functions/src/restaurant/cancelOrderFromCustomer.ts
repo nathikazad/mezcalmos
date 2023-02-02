@@ -24,127 +24,118 @@ interface CancelOrderDetails {
 }
 
 export async function cancelOrderFromCustomer(userId: number, data: CancelOrderDetails) {
-  try {
 
-    if (data.orderId == null) {
-      throw new HttpsError(
-        "internal", 
-        `Expected order id`,
-      );
-    }
-
-    let mezAdminPromise = getMezAdmins();
-    console.log("[+] getMezAdmins " , mezAdminPromise);
-
-    let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
-    console.log("[+] getRestaurantOrder " , order);
-
-    let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
-    console.log("[+] getRestaurantOperators " , restaurantOperatorsPromise);
-
-    let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
-    let mezAdmins: MezAdmin[] = promiseResponse[0];
-    let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
-    if (order == null) {
-      throw new HttpsError(
-        "internal",
-        `Order does not exist`,
-      );
-    }
-
-    if (order.customerId != userId) {
-      throw new HttpsError(
-        "internal",
-        `Order does not belong to customer`,
-      );
-    }
-
-    if (!orderInProcess(order.status)) {
-      throw new HttpsError(
-        "internal",
-        `Order cannot be cancelled because it is not in process`,
-      );
-    }
-    let paymentDetails: PaymentDetails = {
-      orderId: order.orderId!,
-      orderType: OrderType.Restaurant,
-      serviceProviderId: order.restaurantId,
-      orderStripePaymentInfo: order.stripeInfo
-    }
-    switch (order.status) {
-      case RestaurantOrderStatus.OrderReceived:
-        if (order.paymentType == PaymentType.Card) {
-          capturePayment(paymentDetails, 0)
-        }
-        console.log("cancelling while order received")
-        console.log(order.totalCost)
-        order.refundAmount = order.totalCost;
-        console.log(order.refundAmount)
-        break;
-      case RestaurantOrderStatus.PreparingOrder:
-      case RestaurantOrderStatus.ReadyForPickup:
-        if (order.paymentType == PaymentType.Card) {
-          capturePayment(paymentDetails, order.itemsCost)
-        }
-        order.refundAmount = (order.refundAmount ?? 0) + order.deliveryCost;
-        break;
-      case RestaurantOrderStatus.OnTheWay:
-        if (order.paymentType == PaymentType.Card) {
-          capturePayment(paymentDetails, order.totalCost)
-        }
-        break;
-      default:
-        break;
-    }
-
-    order.status = RestaurantOrderStatus.CancelledByCustomer;
-
-    updateRestaurantOrderStatus(order)
-    
-    
-    let notification: Notification = {
-      foreground: <RestaurantOrderStatusChangeNotification>{
-        status: RestaurantOrderStatus.CancelledByCustomer,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.OrderStatusChange,
-        orderType: OrderType.Restaurant,
-        notificationAction: NotificationAction.ShowPopUp,
-        orderId: data.orderId
-      },
-      background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer],
-      linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
-    }
-    mezAdmins.forEach((m) => {
-        pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
-    });
-    restaurantOperators.forEach((r) => {
-      pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
-    });
-
-    if(order.deliveryType == DeliveryType.Delivery && order.deliveryId) {
-
-      let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
-
-      deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
-      updateDeliveryOrderStatus(deliveryOrder);
-      if(deliveryOrder.deliveryDriver != undefined) {
-        notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-        pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!, 
-          notification, 
-          deliveryOrder.deliveryDriver.notificationInfo,
-          ParticipantType.DeliveryDriver,
-          deliveryOrder.deliveryDriver.user?.language,
-        );
-      }
-    }
-    
-    return { status: ServerResponseStatus.Success, orderId: data.orderId }
-  } catch(error) {
-    console.log("error =>", error);
+  if (data.orderId == null) {
     throw new HttpsError(
-      "unknown",
-      "Request was not authenticated.",
-      error
+      "internal", 
+      `Expected order id`,
     );
   }
+
+  let mezAdminPromise = getMezAdmins();
+  console.log("[+] getMezAdmins " , mezAdminPromise);
+
+  let order: RestaurantOrder = await getRestaurantOrder(data.orderId);
+  console.log("[+] getRestaurantOrder " , order);
+
+  let restaurantOperatorsPromise = getRestaurantOperators(order.restaurantId);
+  console.log("[+] getRestaurantOperators " , restaurantOperatorsPromise);
+
+  let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
+  let mezAdmins: MezAdmin[] = promiseResponse[0];
+  let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
+  if (order == null) {
+    throw new HttpsError(
+      "internal",
+      `Order does not exist`,
+    );
+  }
+
+  if (order.customerId != userId) {
+    throw new HttpsError(
+      "internal",
+      `Order does not belong to customer`,
+    );
+  }
+
+  if (!orderInProcess(order.status)) {
+    throw new HttpsError(
+      "internal",
+      `Order cannot be cancelled because it is not in process`,
+    );
+  }
+  let paymentDetails: PaymentDetails = {
+    orderId: order.orderId!,
+    orderType: OrderType.Restaurant,
+    serviceProviderId: order.restaurantId,
+    orderStripePaymentInfo: order.stripeInfo
+  }
+  switch (order.status) {
+    case RestaurantOrderStatus.OrderReceived:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(paymentDetails, 0)
+      }
+      console.log("cancelling while order received")
+      console.log(order.totalCost)
+      order.refundAmount = order.totalCost;
+      console.log(order.refundAmount)
+      break;
+    case RestaurantOrderStatus.PreparingOrder:
+    case RestaurantOrderStatus.ReadyForPickup:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(paymentDetails, order.itemsCost)
+      }
+      order.refundAmount = (order.refundAmount ?? 0) + order.deliveryCost;
+      break;
+    case RestaurantOrderStatus.OnTheWay:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(paymentDetails, order.totalCost)
+      }
+      break;
+    default:
+      break;
+  }
+
+  order.status = RestaurantOrderStatus.CancelledByCustomer;
+
+  updateRestaurantOrderStatus(order)
+  
+  
+  let notification: Notification = {
+    foreground: <RestaurantOrderStatusChangeNotification>{
+      status: RestaurantOrderStatus.CancelledByCustomer,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Restaurant,
+      notificationAction: NotificationAction.ShowPopUp,
+      orderId: data.orderId
+    },
+    background: restaurantOrderStatusChangeMessages[RestaurantOrderStatus.CancelledByCustomer],
+    linkUrl: orderUrl(OrderType.Restaurant, data.orderId)
+  }
+  mezAdmins.forEach((m) => {
+      pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+  });
+  restaurantOperators.forEach((r) => {
+    pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
+  });
+
+  if(order.deliveryType == DeliveryType.Delivery && order.deliveryId) {
+
+    let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
+
+    deliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+    updateDeliveryOrderStatus(deliveryOrder);
+    if(deliveryOrder.deliveryDriver != undefined) {
+      notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
+      pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!, 
+        notification, 
+        deliveryOrder.deliveryDriver.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        deliveryOrder.deliveryDriver.user?.language,
+      );
+    }
+  }
+  
+  return { status: ServerResponseStatus.Success, orderId: data.orderId }
 };

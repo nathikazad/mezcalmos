@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/controllers/CustCardsListViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -45,7 +40,9 @@ class _CustCardsListViewState extends State<CustCardsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          title: '${_i18n()["cards"]}', onClick: MezRouter.back),
+          title: '${_i18n()["cards"]}',
+          onClick: MezRouter.back,
+          showNotifications: true),
       body: Obx(
         () => SingleChildScrollView(
             padding: const EdgeInsets.all(12),
@@ -96,38 +93,38 @@ class _CustCardsListViewState extends State<CustCardsListView> {
               fit: FlexFit.tight,
               child: Text("•" * 12 + "${card.last4}"),
             ),
-            InkWell(
-              customBorder: CircleBorder(),
-              onTap: () {
-                showConfirmationDialog(context,
-                    title: '${_i18n()["removeTitle"]}',
-                    helperText: '${_i18n()["removeDesc"]}',
-                    primaryButtonText: '${_i18n()["removeBtn"]}',
-                    onYesClick: () async {
-                  await viewController
-                      .deleteCard(cardId: card.id)
-                      .then((bool response) {
-                    if (!response) {
-                      MezSnackbar("Error", "error");
-                    } else {
-                      MezRouter.popDialog(closeOverlays: true);
-                    }
-                  });
-                });
-              },
-              child: Ink(
-                padding: const EdgeInsets.all(7),
-                decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: offRedColor),
-                child: Center(
-                  child: Icon(
-                    FontAwesomeIcons.trashCan,
-                    size: 14.sp,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
-            )
+            // InkWell(
+            //   customBorder: CircleBorder(),
+            //   onTap: () {
+            //     showConfirmationDialog(context,
+            //         title: '${_i18n()["removeTitle"]}',
+            //         helperText: '${_i18n()["removeDesc"]}',
+            //         primaryButtonText: '${_i18n()["removeBtn"]}',
+            //         onYesClick: () async {
+            //       await viewController
+            //           .deleteCard(cardId: card.id)
+            //           .then((bool response) {
+            //         if (!response) {
+            //           MezSnackbar("Error", "error");
+            //         } else {
+            //           MezRouter.popDialog(closeOverlays: true);
+            //         }
+            //       });
+            //     });
+            //   },
+            //   child: Ink(
+            //     padding: const EdgeInsets.all(7),
+            //     decoration:
+            //         BoxDecoration(shape: BoxShape.circle, color: offRedColor),
+            //     child: Center(
+            //       child: Icon(
+            //         FontAwesomeIcons.trashCan,
+            //         size: 14.sp,
+            //         color: Colors.red,
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
