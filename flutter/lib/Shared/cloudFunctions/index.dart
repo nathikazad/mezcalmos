@@ -1,59 +1,85 @@
-// import 'dart:convert';
+import 'package:cloud_functions/cloud_functions.dart';
+import 'dart:convert';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+class CloudFunctions {
+  static Future<dynamic> callCloudFunction(
+      {required String functionName, Map<String, dynamic>? parameters}) async {
+    final Map<String, dynamic> finalParams = <String, dynamic>{
+      'versionNumber': '0.0.0'
+    };
+    finalParams.addAll(parameters ?? <String, dynamic>{});
+    final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
+        .httpsCallable(functionName)
+        .call(finalParams);
+    return response.data;
+  }
 
-// import 'package:cloud_functions/cloud_functions.dart';
-// import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+  static Future<void> user_addHasuraClaim(
+  ) async {
+    return await callCloudFunction(
+      functionName: "user-addHasuraClaim",
+      parameters: <String, dynamic>{});
+  }
 
-// class CloudFunctions {
-//   static Future<dynamic> callCloudFunction(
-//       {required String functionName, Map<String, dynamic>? parameters}) async {
-//     final Map<String, dynamic> finalParams = <String, dynamic>{
-//       'versionNumber': '0.0.0'
-//     };
-//     finalParams.addAll(parameters ?? <String, dynamic>{});
-//     final HttpsCallableResult<dynamic> response = await FirebaseFunctions
-//         .instance
-//         .httpsCallable(functionName)
-//         .call(finalParams);
-//     return response.data;
-//   }
+  static Future<void> otp_sendOTPForLogin(
+      {required String language,
+      required String phoneNumber}  ) async {
+    return await callCloudFunction(
+      functionName: "otp-sendOTPForLogin",
+      parameters: <String, dynamic>{
+        "language":language,
+        "phoneNumber":phoneNumber,
+      });
+  }
 
-//   static Future<void> user_addHasuraClaim() async {
-//     return await callCloudFunction(
-//         functionName: "user-addHasuraClaim", parameters: <String, dynamic>{});
-//   }
+  static Future<AuthResponse> otp_getAuthUsingOTP(
+      {required String phoneNumber,
+      required String OTPCode}  ) async {
+    return AuthResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "otp-getAuthUsingOTP",
+      parameters: <String, dynamic>{
+        "phoneNumber":phoneNumber,
+        "OTPCode":OTPCode,
+      }));
+  }
 
-//   static Future<ServerResponse> otp_sendOTPForLogin(
-//       {required String language, required String phoneNumber}) async {
-//     return ServerResponse.fromFirebaseFormattedJson(await callCloudFunction(
-//         functionName: "otp-sendOTPForLogin",
-//         parameters: <String, dynamic>{
-//           "language": language,
-//           "phoneNumber": phoneNumber,
-//         }));
-//   }
+  static Future<PaymentIntentResponse> stripe_getPaymentIntent(
+      {required num serviceProviderId,
+      required OrderType orderType,
+      required num paymentAmount}  ) async {
+    return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "stripe-getPaymentIntent",
+      parameters: <String, dynamic>{
+        "serviceProviderId":serviceProviderId,
+        "orderType":orderType.toFirebaseFormatString(),
+        "paymentAmount":paymentAmount,
+      }));
+  }
 
-//   static Future<void> otp_getAuthUsingOTP(
-//       {required String phoneNumber, required String OTPCode}) async {
-//     return await callCloudFunction(
-//         functionName: "otp-getAuthUsingOTP",
-//         parameters: <String, dynamic>{
-//           "phoneNumber": phoneNumber,
-//           "OTPCode": OTPCode,
-//         });
-//   }
+  static Future<AddCardResponse> stripe_addCard(
+      {required String paymentMethod}  ) async {
+    return AddCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "stripe-addCard",
+      parameters: <String, dynamic>{
+        "paymentMethod":paymentMethod,
+      }));
+  }
 
-//   static Future<void> stripe_getPaymentIntent(
-//       {required num serviceProviderId,
-//       required OrderType orderType,
-//       required num paymentAmount}) async {
-//     return await callCloudFunction(
-//         functionName: "stripe-getPaymentIntent",
-//         parameters: <String, dynamic>{
-//           "serviceProviderId": serviceProviderId,
-//           "orderType": orderType.toFirebaseFormatString(),
-//           "paymentAmount": paymentAmount,
-//         });
-//   }
+  static Future<ChargeCardResponse> stripe_chargeCard(
+      {required num serviceProviderId,
+      required String cardId,
+      required OrderType orderType,
+      required num paymentAmount}  ) async {
+    return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "stripe-chargeCard",
+      parameters: <String, dynamic>{
+        "serviceProviderId":serviceProviderId,
+        "cardId":cardId,
+        "orderType":orderType.toFirebaseFormatString(),
+        "paymentAmount":paymentAmount,
+      }));
+  }
 
 //   static Future<void> stripe_addCard({required String paymentMethod}) async {
 //     return await callCloudFunction(
@@ -63,20 +89,18 @@
 //         });
 //   }
 
-//   static Future<void> stripe_chargeCard(
-//       {required num serviceProviderId,
-//       required String cardId,
-//       required OrderType orderType,
-//       required num paymentAmount}) async {
-//     return await callCloudFunction(
-//         functionName: "stripe-chargeCard",
-//         parameters: <String, dynamic>{
-//           "serviceProviderId": serviceProviderId,
-//           "cardId": cardId,
-//           "orderType": orderType.toFirebaseFormatString(),
-//           "paymentAmount": paymentAmount,
-//         });
-//   }
+  static Future<SetupResponse> stripe_setupServiceProvider(
+      {required num serviceProviderId,
+      required OrderType orderType,
+      Map<PaymentType,bool>? acceptedPayments}  ) async {
+    return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "stripe-setupServiceProvider",
+      parameters: <String, dynamic>{
+        "serviceProviderId":serviceProviderId,
+        "orderType":orderType.toFirebaseFormatString(),
+        "acceptedPayments":acceptedPayments,
+      }));
+  }
 
 //   static Future<void> stripe_removeCard({required String cardId}) async {
 //     return await callCloudFunction(
@@ -86,18 +110,16 @@
 //         });
 //   }
 
-//   static Future<void> stripe_setupServiceProvider(
-//       {required num serviceProviderId,
-//       required OrderType orderType,
-//       Map<PaymentType, bool>? acceptedPayments}) async {
-//     return await callCloudFunction(
-//         functionName: "stripe-setupServiceProvider",
-//         parameters: <String, dynamic>{
-//           "serviceProviderId": serviceProviderId,
-//           "orderType": orderType.toFirebaseFormatString(),
-//           "acceptedPayments": acceptedPayments,
-//         });
-//   }
+  static Future<CallUserResponse> agora_callChatUser(
+      {required num chatId,
+      required ParticipantType callerParticipantType}  ) async {
+    return CallUserResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "agora-callChatUser",
+      parameters: <String, dynamic>{
+        "chatId":chatId,
+        "callerParticipantType":callerParticipantType.toFirebaseFormatString(),
+      }));
+  }
 
 //   static Future<void> stripe_updateServiceProvider(
 //       {required num serviceProviderId, required OrderType orderType}) async {

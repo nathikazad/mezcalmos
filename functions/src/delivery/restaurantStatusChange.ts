@@ -1,4 +1,3 @@
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -29,22 +28,17 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> =
     DeliveryOrderStatus.Delivered
   ]
 export async function deliveryDriverAtPickup(userId: number, data: ChangeDeliveryStatusDetails) {
-  let response: ServerResponse = await changeStatus(data, DeliveryOrderStatus.AtPickup, userId)
-  return response
+  await changeStatus(data, DeliveryOrderStatus.AtPickup, userId)
 };
 export async function startDelivery(userId: number, data: ChangeDeliveryStatusDetails) {
-  let response: ServerResponse = await changeStatus(data, DeliveryOrderStatus.OnTheWayToDropoff, userId)
-  return response
+  await changeStatus(data, DeliveryOrderStatus.OnTheWayToDropoff, userId)
 };
 export async function deliveryDriverAtDropoff(userId: number, data: ChangeDeliveryStatusDetails) {
-  let response: ServerResponse = await changeStatus(data, DeliveryOrderStatus.AtDropoff, userId)
-  return response
+  await changeStatus(data, DeliveryOrderStatus.AtDropoff, userId)
 };
 export async function finishDelivery(userId: number, data: ChangeDeliveryStatusDetails) {
-  let response: ServerResponse = await changeStatus(data, DeliveryOrderStatus.Delivered, userId)
-  return response
+  await changeStatus(data, DeliveryOrderStatus.Delivered, userId)
 };
-
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
   if ((newStatus == DeliveryOrderStatus.AtPickup)
@@ -74,7 +68,7 @@ async function changeStatus(
   changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
   newStatus: DeliveryOrderStatus,
   userId: number
-): Promise<ServerResponse> {
+) {
 
   let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
   let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
@@ -167,6 +161,4 @@ async function changeStatus(
       capturePayment(paymentDetails, restaurantOrder.totalCost)
     }
   }
-
-  return { status: ServerResponseStatus.Success }
 }

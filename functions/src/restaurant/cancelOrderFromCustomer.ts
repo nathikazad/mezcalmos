@@ -1,5 +1,4 @@
 import { DeliveryType, orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -136,6 +135,4 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
       );
     }
   }
-  
-  return { status: ServerResponseStatus.Success, orderId: data.orderId }
 };

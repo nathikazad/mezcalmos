@@ -285,7 +285,8 @@ def getModels():
         toWriteModel += "\n   return "+key+"("
         for v in models[key]["values"]:
           toWriteModel += '''json["'''+v+'''"], '''
-        toWriteModel += '''json["nullableField"]);
+        toWriteModel = toWriteModel[:-2]
+        toWriteModel += ''');
   }'''
       ## @sanchit todo
       ## add Factory
@@ -299,23 +300,23 @@ def getModels():
 
 def getIndex():
   toWriteIndex = '''import 'package:cloud_functions/cloud_functions.dart';
-  import 'dart:convert';
-  import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
-  import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-  class CloudFunctions {
-    static Future<dynamic> callCloudFunction(
-        {required String functionName, Map<String, dynamic>? parameters}) async {
-      final Map<String, dynamic> finalParams = <String, dynamic>{
-        'versionNumber': '0.0.0'
-      };
-      finalParams.addAll(parameters ?? <String, dynamic>{});
-      final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
-          .httpsCallable(functionName)
-          .call(finalParams);
-      return response.data;
-    }
+import 'dart:convert';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+class CloudFunctions {
+  static Future<dynamic> callCloudFunction(
+      {required String functionName, Map<String, dynamic>? parameters}) async {
+    final Map<String, dynamic> finalParams = <String, dynamic>{
+      'versionNumber': '0.0.0'
+    };
+    finalParams.addAll(parameters ?? <String, dynamic>{});
+    final HttpsCallableResult<dynamic> response = await FirebaseFunctions.instance
+        .httpsCallable(functionName)
+        .call(finalParams);
+    return response.data;
+  }
 
-  '''
+'''
   
 
 

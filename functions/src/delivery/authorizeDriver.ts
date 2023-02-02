@@ -8,7 +8,6 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 export interface AuthorizeDetails {
     deliveryDriverId: number,
@@ -85,5 +84,4 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
           deliveryDriver.user.language,
       );
   }
-  return { status: ServerResponseStatus.Success }
 }

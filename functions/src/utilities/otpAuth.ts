@@ -1,5 +1,6 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
+import { HttpsError } from "firebase-functions/v1/auth";
 import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
@@ -13,12 +14,16 @@ interface verifyOtpInterface {
   OTPCode: string
 }
 
-export async function sendOTPForLogin(_:any, data: sendOtpInterface): Promise<ServerResponse> {
+export async function sendOTPForLogin(_:any, data: sendOtpInterface) {
   if (!data.phoneNumber) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Required phone number"
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: "Required phone number"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Required phone number"
+    );
   }
 
   let user;
@@ -34,16 +39,24 @@ export async function sendOTPForLogin(_:any, data: sendOtpInterface): Promise<Se
         firebase.database().ref(`/users/${user.uid}/info/phoneNumber`).set(data.phoneNumber);
       } catch (a) {
         let e: any = a;
-        return {
-          status: ServerResponseStatus.Error,
-          errorMessage: e.errorInfo.message,
-        }
+        // return {
+        //   status: ServerResponseStatus.Error,
+        //   errorMessage: e.errorInfo.message,
+        // }
+        throw new HttpsError(
+          "internal",
+          e.errorInfo.message
+        );
       }
     } else {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "User not found",
-    }
+      // return {
+      //   status: ServerResponseStatus.Error,
+      //   errorMessage: "User not found",
+      // }
+      throw new HttpsError(
+        "internal",
+        "User not found"
+      );
     }
   }
 
@@ -52,18 +65,22 @@ export async function sendOTPForLogin(_:any, data: sendOtpInterface): Promise<Se
   if (response != undefined) {
     return response
   }
-
-  return {
-    status: ServerResponseStatus.Success
-  }
+  return
 }
 
-export async function getAuthUsingOTP(_:any, data: verifyOtpInterface) {
+export interface AuthResponse {
+  token: string | undefined
+}
+export async function getAuthUsingOTP(_:any, data: verifyOtpInterface): Promise<AuthResponse> {
   if (!data.phoneNumber || !data.OTPCode) {
-    return {
-      status: "Error",
-      errorMessage: "Required phone number and OTPCode"
-    }
+    // return {
+    //   status: "Error",
+    //   errorMessage: "Required phone number and OTPCode"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Required phone number and OTPCode"
+    );
   }
   let user
   try {
@@ -71,31 +88,44 @@ export async function getAuthUsingOTP(_:any, data: verifyOtpInterface) {
   } catch (a) {
     let e: any = a;
     if (e.errorInfo.code == 'auth/user-not-found') {
-      return {
-        status: 'Error',
-        errorMessage: 'Invalid OTP Code'
-      }
+      // return {
+      //   status: 'Error',
+      //   errorMessage: 'Invalid OTP Code'
+      // }
+      throw new HttpsError(
+        "internal",
+        "Invalid OTP Code"
+      );
     } else {
-      return {
-        status: ServerResponseStatus.Error,
-        // errorMessage: e.errorInfo.message
-      }
+      // return {
+      //   status: ServerResponseStatus.Error,
+      //   errorMessage: e.errorInfo.message
+      // }
+      throw new HttpsError(
+        "internal",
+        e.errorInfo.message
+      );
     }
   }
 
   // this condition for google to gain instant Access.
   if (data.phoneNumber != "+21650914839" && user.uid != "tSG0eSFZNGNA7grjBPFEBbpYwjE3" && user.uid != "xlS6U3OW10P30kgSF6htS63ChHD3") {
-    let response = await confirmOTP(data, user.uid);
-    if (response) {
-      return response;
-    }
+    // let response = 
+    await confirmOTP(data, user.uid);
+    // if (response) {
+    //   return response;
+    // }
   }
   else {
     if (data.OTPCode != "111111") {
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: "Invalid OTP Code"
-      }
+      // return {
+      //   status: ServerResponseStatus.Error,
+      //   errorMessage: "Invalid OTP Code"
+      // }
+      throw new HttpsError(
+        "internal",
+        "Invalid OTP Code"
+      );
     }
   }
 
@@ -106,7 +136,6 @@ export async function getAuthUsingOTP(_:any, data: verifyOtpInterface) {
   firebase.database().ref(`users/${user.uid}/auth`).remove()
 
   return {
-    status: ServerResponseStatus.Success,
     token: customToken
   }
 }
@@ -154,21 +183,29 @@ async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerRe
 }
 
 
-async function confirmOTP(data: verifyOtpInterface, userId: string): Promise<ServerResponse | undefined> {
+async function confirmOTP(data: verifyOtpInterface, userId: string) {
 
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (!auth || !auth.OTPCode || !auth.codeGeneratedTime) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Invalid OTP Code"
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: "Invalid OTP Code"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Invalid OTP Code"
+    );
   }
 
   if (parseInt(auth.attempts) > 3) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Exceeded number of tries"
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: "Exceeded number of tries"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Exceeded number of tries"
+    );
   }
 
   firebase.database().ref(`users/${userId}/auth/attempts`).set(parseInt(auth.attempts + 1))
@@ -176,18 +213,24 @@ async function confirmOTP(data: verifyOtpInterface, userId: string): Promise<Ser
   let generatedTime = new Date(auth.codeGeneratedTime)
   let expirationTime = new Date(generatedTime.getTime() + 10 * 60 * 1000)
   if (new Date() > expirationTime) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Invalid OTP Code"
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: "Invalid OTP Code"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Invalid OTP Code"
+    );
   }
 
   if (auth.OTPCode != data.OTPCode) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Invalid OTP Code"
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: "Invalid OTP Code"
+    // }
+    throw new HttpsError(
+      "internal",
+      "Invalid OTP Code"
+    );
   }
-
-  return
 }
