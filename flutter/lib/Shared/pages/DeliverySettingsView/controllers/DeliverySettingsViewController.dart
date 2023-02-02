@@ -65,7 +65,8 @@ class DeliverySettingsViewController {
 
   Future<void> _getDeliveryCost() async {
     deliveryCost.value = await get_delivery_cost(
-        deliveryDetailsId: restaurant.value!.deliveryDetailsId!);
+        deliveryDetailsId: restaurant.value!.deliveryDetailsId!,
+        withCache: false);
   }
 
   void _assignDeliveryCost() {
@@ -135,7 +136,7 @@ class DeliverySettingsViewController {
       } else {
         await update_delivery_cost(
             deliveryCostId: deliveryCost.value!.id!,
-            deliveryCost: deliveryCost.value!);
+            deliveryCost: _constructDeliveryCost());
         await update_restaurant_info(
             id: serviceProviderId!,
             restaurant: restaurant.value!.copyWith(

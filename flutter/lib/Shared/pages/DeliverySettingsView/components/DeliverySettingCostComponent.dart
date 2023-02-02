@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['DeliveryCostSettingView'];
 
 class DeliverySettingCostComponent extends StatefulWidget {
   const DeliverySettingCostComponent({super.key, required this.viewController});
@@ -33,12 +37,12 @@ class _DeliverySettingCostComponentState
                     _costComponent(
                         controller: widget.viewController.freeKmRange,
                         suffixTitle: 'Km',
-                        title: 'Free Delivery range'),
+                        title: "${_i18n()['freeKmRange']}"),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "Within this distance, the customer won’t be charged for the delivery.",
+                      "${_i18n()['freeKmRangeText']}",
                       style: Get.textTheme.bodyText2,
                     ),
                     Divider(
@@ -49,14 +53,14 @@ class _DeliverySettingCostComponentState
                 _costComponent(
                     controller: widget.viewController.minCost,
                     suffixTitle: '\$',
-                    title: 'Minimum cost'),
+                    title: "${_i18n()['minCost']}"),
                 const SizedBox(
                   height: 15,
                 ),
                 _costComponent(
                     controller: widget.viewController.costPerKm,
                     suffixTitle: '\$/Km',
-                    title: 'Cost per km'),
+                    title: "${_i18n()['costPerKm']}"),
               ],
             ),
           ),
@@ -77,7 +81,7 @@ class _DeliverySettingCostComponentState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Preview"),
+          Text("${_i18n()['preview']}"),
           SizedBox(
             height: 15,
           ),
@@ -87,7 +91,7 @@ class _DeliverySettingCostComponentState
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  "Customer distance",
+                  "${_i18n()['custDistance']}",
                   style: Get.textTheme.bodyText1,
                 ),
               ),
@@ -134,7 +138,7 @@ class _DeliverySettingCostComponentState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Cost",
+                "${_i18n()['cost']}",
                 style: Get.textTheme.bodyText1,
               ),
               Obx(
@@ -175,7 +179,7 @@ class _DeliverySettingCostComponentState
 
               validator: (String? value) {
                 if (value == null || double.tryParse(value) == null) {
-                  return "Please enter a vaild number";
+                  return "${_i18n()['numberError']}";
                 }
                 return null;
               },

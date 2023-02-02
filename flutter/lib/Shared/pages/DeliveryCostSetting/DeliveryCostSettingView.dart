@@ -5,14 +5,15 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/controllers/DeliveryCostSettingViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['DeliveryCostSettingView'];
 
 class DeliveryCostSettingView extends StatefulWidget {
   const DeliveryCostSettingView({
@@ -58,28 +59,20 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
       appBar: mezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: asTab ? null : MezRouter.back,
-          title: "Delivery Costs"),
+          title: "${_i18n()['dvCost']}"),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
       bottomSheet: asTab
           ? null
           : MezButton(
-              label: 'Save',
+              label: "${_i18n()['save']}",
               borderRadius: 0,
               withGradient: true,
               height: 70,
               onClick: () async {
                 await viewController.saveDeliveryCost().then((bool? value) {
                   if (value == true) {
-                    return Get.snackbar(
-                        'Saved', 'Delivery cost have been saved',
-                        backgroundColor: Colors.black,
-                        colorText: Colors.white,
-                        shouldIconPulse: false,
-                        icon: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                        ));
+                    showSavedSnackBar();
                   }
                 });
               },
@@ -96,14 +89,14 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
                   _costComponent(
                       controller: viewController.minCost,
                       suffixTitle: '\$',
-                      title: 'Minimum cost'),
+                      title: "${_i18n()['minCost']}"),
                   const SizedBox(
                     height: 15,
                   ),
                   _costComponent(
                       controller: viewController.costPerKm,
                       suffixTitle: '\$/Km',
-                      title: 'Cost per km'),
+                      title: "${_i18n()['costPerKm']}"),
                 ],
               ),
             ),
@@ -112,22 +105,14 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               Container(
                 margin: const EdgeInsets.all(18),
                 child: MezButton(
-                  label: 'Save',
+                  label: "${_i18n()['save']}",
                   borderRadius: 15,
                   withGradient: true,
                   height: 70,
                   onClick: () async {
                     await viewController.saveDeliveryCost().then((bool? value) {
                       if (value == true) {
-                        return Get.snackbar(
-                            'Saved', 'Delivery cost have been saved',
-                            backgroundColor: Colors.black,
-                            colorText: Colors.white,
-                            shouldIconPulse: false,
-                            icon: Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                            ));
+                        showSavedSnackBar();
                       }
                     });
                   },
@@ -147,7 +132,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Preview"),
+          Text("${_i18n()['preview']}"),
           SizedBox(
             height: 15,
           ),
@@ -157,7 +142,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
               Flexible(
                 fit: FlexFit.tight,
                 child: Text(
-                  "Customer distance",
+                  "${_i18n()['custDistance']}",
                   style: Get.textTheme.bodyText1,
                 ),
               ),
@@ -204,7 +189,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Cost",
+                "${_i18n()['cost']}",
                 style: Get.textTheme.bodyText1,
               ),
               Obx(

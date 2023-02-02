@@ -169,12 +169,12 @@ class _CustItemViewState extends State<CustItemView> {
             InkWell(
               borderRadius: BorderRadius.circular(18),
               onTap: () {
-                MezRouter.toNamed(
-                  getRestaurantRoute(
-                    viewController.restaurant.value!.restaurantId,
-                  ),
-                  arguments: viewController.restaurant.value!,
-                );
+                MezRouter.toNamed<void>(
+                    getRestaurantRoute(
+                        viewController.restaurant.value!.restaurantId),
+                    arguments: {
+                      "restaurant": viewController.restaurant.value!
+                    });
               },
               child: Ink(
                 padding:

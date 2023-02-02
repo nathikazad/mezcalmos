@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -13,6 +14,11 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['CreateServiceView'];
+
+//
 class CreateServiceView extends StatefulWidget {
   const CreateServiceView({super.key});
 
@@ -69,16 +75,15 @@ class _CreateServiceViewState extends State<CreateServiceView> {
       if (res?.success == true) {
         await showStatusInfoDialog(
           context,
-          primaryClickTitle: "OK",
+          primaryClickTitle: "${_i18n()['ok']}",
           primaryIcon: Icons.flatware,
           showSmallIcon: false,
           primaryCallBack: () {
             Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
             popEverythingAndNavigateTo(kTabsView);
           },
-          status: "Your restaurant is under review",
-          description:
-              "You can start adding items to your menu and you’ll be notified once your restaurant is approved.",
+          status: "${_i18n()['restTitle']}",
+          description: "${_i18n()['restBody']}",
         );
       } else {
         // handle error

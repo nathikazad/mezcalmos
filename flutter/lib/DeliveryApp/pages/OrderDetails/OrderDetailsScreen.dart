@@ -57,23 +57,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                // if (_getDeliveryTime() != null)
-                //   Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         '${_i18n()["dvTime"]}',
-                //         style: Get.textTheme.bodyText1,
-                //       ),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Text(_getDeliveryTime()!),
-                //       const SizedBox(
-                //         height: 20,
-                //       ),
-                //     ],
-                //   ),
+
                 Text(
                   "${_i18n()["from"]}",
                   style: Get.textTheme.bodyText1,

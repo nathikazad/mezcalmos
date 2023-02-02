@@ -8,7 +8,6 @@ import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages"
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 export interface AssignCompanyDetails {
     deliveryCompanyId: number,
@@ -16,42 +15,33 @@ export interface AssignCompanyDetails {
 }
 
 export async function assignDeliveryCompany(operatorUserId: number | undefined, assignDetails: AssignCompanyDetails) {
-    try {
-        let restaurantOrder = await getRestaurantOrder(assignDetails.restaurantOrderId);
 
-        if(!(restaurantOrder.deliveryId)) {
-            throw new HttpsError(
-                "internal",
-                "restaurant order delivery id is not set"
-            );
-        }
-        updateDeliveryOrderCompany(restaurantOrder.deliveryId, assignDetails.deliveryCompanyId);
+    let restaurantOrder = await getRestaurantOrder(assignDetails.restaurantOrderId);
 
-        //notify delivery operator  
-        let deliveryOperators = await getDeliveryOperators(assignDetails.deliveryCompanyId);
-
-        let notification: Notification = {
-            foreground: <OrderNotification>{
-            time: (new Date()).toISOString(),
-            notificationType: NotificationType.NewOrder,
-            orderType: OrderType.Restaurant,
-            notificationAction: NotificationAction.ShowPopUp,
-            orderId: restaurantOrder.deliveryId
-            },
-            background: deliveryNewOrderMessage,
-            linkUrl: orderUrl(OrderType.Restaurant, assignDetails.restaurantOrderId)
-        }
-
-        deliveryOperators.forEach((d) => {
-            pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
-        });
-        return { status: ServerResponseStatus.Success }
-    } catch(error) {
-        console.log("error =>", error);
+    if(!(restaurantOrder.deliveryId)) {
         throw new HttpsError(
-            "unknown",
-            "Request was not authenticated.",
-            error
+            "internal",
+            "restaurant order delivery id is not set"
         );
     }
+    updateDeliveryOrderCompany(restaurantOrder.deliveryId, assignDetails.deliveryCompanyId);
+
+    //notify delivery operator  
+    let deliveryOperators = await getDeliveryOperators(assignDetails.deliveryCompanyId);
+
+    let notification: Notification = {
+        foreground: <OrderNotification>{
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.NewOrder,
+        orderType: OrderType.Restaurant,
+        notificationAction: NotificationAction.ShowPopUp,
+        orderId: restaurantOrder.deliveryId
+        },
+        background: deliveryNewOrderMessage,
+        linkUrl: orderUrl(OrderType.Restaurant, assignDetails.restaurantOrderId)
+    }
+
+    deliveryOperators.forEach((d) => {
+        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
+    });
 }

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
+    ["CreateServiceView"]["pages"]["CreateServiceInfoPage"];
 
 class CreateServiceImageComponent extends StatelessWidget {
   const CreateServiceImageComponent({
@@ -16,7 +20,7 @@ class CreateServiceImageComponent extends StatelessWidget {
       validator: (Object? value) {
         if (viewController.newImageFile.value == null &&
             viewController.newImageUrl.value == null) {
-          return "Image is required";
+          return "${_i18n()['imageError']}";
         }
         return null;
       },

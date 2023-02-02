@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -24,12 +25,12 @@ class LanguageController extends GetxController {
 
   LanguageController() {
     final LanguageType? lang =
-        Get.deviceLocale?.languageCode.substring(0, 2).toLanguageType();
+        GetStorage().read("lang").toString().toLanguageType();
+    if (lang != null) {
+      _userLanguageKey.value = lang;
+    }
 
-    mezDbgPrint("\n\n\n\n\nUSER LANGUAGE [[ $lang ]]\n\n\n\n\n");
-    if (lang == LanguageType.EN)
-      _userLanguageKey.value = LanguageType
-          .EN; // to avoid diffrent other languages diffrent than en and es
+    mezDbgPrint(" 🗿🗿🗿🗿🗿 USER LANGUAGE [[ $lang ]]🗿🗿🗿🗿🗿🗿🗿🗿");
   }
 
   Map<LanguageType, dynamic> languageDetails = {
@@ -68,29 +69,39 @@ class LanguageController extends GetxController {
       : usaFlagAsset;
 
   Future<void> changeUserLanguage({LanguageType? language = null}) async {
-    // TODO: fix this
-    if (language == null) {
-      if (Get.find<AuthController>().user?.language == LanguageType.ES) {
-        language = LanguageType.EN;
-      } else {
-        language = LanguageType.ES;
-      }
-      if (Get.find<AuthController>().user != null) {
-        Get.find<AuthController>().user!.language = language;
-
-        unawaited(Get.find<AuthController>().changeLanguage(language));
-        _userLanguageKey.value = language;
-      } else {
-        mezDbgPrint("[=] INSIDE (else)");
-
-        // welse so we can still update the user language locally but not in db!
-        _userLanguageKey.value = oppositLangKey;
-      }
-    } else if (Get.find<AuthController>().user == null) {
-      mezDbgPrint("[=] INSIDE (else if)");
-
-      _userLanguageKey.value = language;
+    if (Get.find<AuthController>().isUserSignedIn) {
+      await Get.find<AuthController>()
+          .changeLanguage(_userLanguageKey.value.toOpLang())
+          .then((LanguageType value) => _userLanguageKey.value = value);
+    } else {
+      _userLanguageKey.value = _userLanguageKey.value.toOpLang();
     }
+    await GetStorage()
+        .write("lang", _userLanguageKey.value.toFirebaseFormatString());
+    _userLanguageKey.refresh();
+
+    // if (language == null) {
+    //   if (Get.find<AuthController>().user?.language == LanguageType.ES) {
+    //     language = LanguageType.EN;
+    //   } else {
+    //     language = LanguageType.ES;
+    //   }
+    //   if (Get.find<AuthController>().user != null) {
+    //     Get.find<AuthController>().user!.language = language;
+
+    //     unawaited(Get.find<AuthController>().changeLanguage(language));
+    //     _userLanguageKey.value = language;
+    //   } else {
+    //     mezDbgPrint("[=] INSIDE (else)");
+
+    //     // welse so we can still update the user language locally but not in db!
+    //     _userLanguageKey.value = oppositLangKey;
+    //   }
+    // } else if (Get.find<AuthController>().user == null) {
+    //   mezDbgPrint("[=] INSIDE (else if)");
+
+    //   _userLanguageKey.value = language;
+    // }
   }
 
   ///this function [changeLangForWeb] used only for web

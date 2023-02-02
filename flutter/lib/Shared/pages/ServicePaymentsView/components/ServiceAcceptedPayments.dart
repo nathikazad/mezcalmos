@@ -8,8 +8,8 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['components']['ROpAcceptedPayments'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServicePaymentsView']['components']['ServiceAcceptedPayments'];
 
 class ServiceAcceptedPayments extends StatefulWidget {
   const ServiceAcceptedPayments({Key? key, required this.viewController})
@@ -145,16 +145,19 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                           )
                         ],
                       ),
-                      Row(
-                        children: [
-                          if (widget.viewController.showStatusIcon)
-                            _stripeStatusWidget(context),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          if (widget.viewController.showSetupBtn)
-                            _stripeSetupBtn()
-                        ],
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            if (widget.viewController.showStatusIcon)
+                              _stripeStatusWidget(context),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            if (widget.viewController.showSetupBtn)
+                              _stripeSetupBtn()
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -166,7 +169,9 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                             ?.acceptedPayments[PaymentType.Card] ==
                         true,
                     onChanged: (bool? v) {
-                      widget.viewController.handleCardCheckBoxClick(v!);
+                      if (v != null) {
+                        widget.viewController.handleCardCheckBoxClick(v);
+                      }
                     }),
               ],
             ),

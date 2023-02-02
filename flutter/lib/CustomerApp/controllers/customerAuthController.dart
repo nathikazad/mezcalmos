@@ -50,8 +50,7 @@ class CustomerAuthController extends GetxController {
       _cus = await set_customer_info(
           app_version: _appVersion, user_id: _authController.hasuraUserId!);
     }
-    _cus?.savedLocations = await get_customer_locations(
-        customer_id: _authController.hasuraUserId!);
+    await fetchSavedLocations();
 
     _customer.value = _cus;
     _customer.value?.savedLocations = _cus?.savedLocations ?? [];
@@ -68,6 +67,12 @@ class CustomerAuthController extends GetxController {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
       unawaited(saveNotificationToken());
     }
+  }
+
+  Future<void> fetchSavedLocations() async {
+    _customer.value?.savedLocations = await get_customer_locations(
+            customer_id: _authController.hasuraUserId!, withCache: false) ??
+        [];
   }
 
   Future<void> saveNotificationToken() async {

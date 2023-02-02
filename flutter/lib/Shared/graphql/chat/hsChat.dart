@@ -68,11 +68,11 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
       "[666] ${Get.find<SettingsController>().appType.toNormalString()} ");
   mezDbgPrint("[666] ${_chat.data}");
   if (_chat.hasException || _chat.parsedData?.chat_by_pk == null) {
-    mezDbgPrint("[+] called get_chat_info :: Exception :: ${_chat.exception}");
+    throwError(_chat.exception);
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
     mezDbgPrint(
-        " 📥📥📥 Chat info ===> ${_chat.parsedData!.chat_by_pk!.chat_info}");
+        " chat ✅ info ===> ${_chat.parsedData!.chat_by_pk!.chat_info[Get.find<SettingsController>().appType.toNormalString()]}");
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!.chat_info![

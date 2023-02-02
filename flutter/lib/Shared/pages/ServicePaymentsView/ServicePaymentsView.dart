@@ -7,8 +7,8 @@ import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceStr
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
-    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
+    ['ServicePaymentsView'];
 
 class ServicePaymentsView extends StatefulWidget {
   const ServicePaymentsView({
@@ -55,7 +55,7 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
       } else
         return Scaffold(
           appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "Payments "),
+              onClick: MezRouter.back, title: "${_i18n()['payments']}"),
           body: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
             child: Column(

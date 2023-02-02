@@ -2,6 +2,103 @@ import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
+class Variables$Query$admin_get_dv_companies {
+  factory Variables$Query$admin_get_dv_companies({required int limit}) =>
+      Variables$Query$admin_get_dv_companies._({
+        r'limit': limit,
+      });
+
+  Variables$Query$admin_get_dv_companies._(this._$data);
+
+  factory Variables$Query$admin_get_dv_companies.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    return Variables$Query$admin_get_dv_companies._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get limit => (_$data['limit'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$admin_get_dv_companies<
+          Variables$Query$admin_get_dv_companies>
+      get copyWith => CopyWith$Variables$Query$admin_get_dv_companies(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$admin_get_dv_companies) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$limit = limit;
+    return Object.hashAll([l$limit]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
+  factory CopyWith$Variables$Query$admin_get_dv_companies(
+    Variables$Query$admin_get_dv_companies instance,
+    TRes Function(Variables$Query$admin_get_dv_companies) then,
+  ) = _CopyWithImpl$Variables$Query$admin_get_dv_companies;
+
+  factory CopyWith$Variables$Query$admin_get_dv_companies.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$admin_get_dv_companies;
+
+  TRes call({int? limit});
+}
+
+class _CopyWithImpl$Variables$Query$admin_get_dv_companies<TRes>
+    implements CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
+  _CopyWithImpl$Variables$Query$admin_get_dv_companies(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$admin_get_dv_companies _instance;
+
+  final TRes Function(Variables$Query$admin_get_dv_companies) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? limit = _undefined}) =>
+      _then(Variables$Query$admin_get_dv_companies._({
+        ..._instance._$data,
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$admin_get_dv_companies<TRes>
+    implements CopyWith$Variables$Query$admin_get_dv_companies<TRes> {
+  _CopyWithStubImpl$Variables$Query$admin_get_dv_companies(this._res);
+
+  TRes _res;
+
+  call({int? limit}) => _res;
+}
+
 class Query$admin_get_dv_companies {
   Query$admin_get_dv_companies({
     required this.delivery_company,
@@ -163,13 +260,28 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'admin_get_dv_companies'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
         name: NameNode(value: 'delivery_company'),
         alias: null,
-        arguments: [],
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          )
+        ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
@@ -278,6 +390,7 @@ class Options$Query$admin_get_dv_companies
     extends graphql.QueryOptions<Query$admin_get_dv_companies> {
   Options$Query$admin_get_dv_companies({
     String? operationName,
+    required Variables$Query$admin_get_dv_companies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -285,6 +398,7 @@ class Options$Query$admin_get_dv_companies
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -301,6 +415,7 @@ class WatchOptions$Query$admin_get_dv_companies
     extends graphql.WatchQueryOptions<Query$admin_get_dv_companies> {
   WatchOptions$Query$admin_get_dv_companies({
     String? operationName,
+    required Variables$Query$admin_get_dv_companies variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -311,6 +426,7 @@ class WatchOptions$Query$admin_get_dv_companies
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -328,10 +444,12 @@ class WatchOptions$Query$admin_get_dv_companies
 
 class FetchMoreOptions$Query$admin_get_dv_companies
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$admin_get_dv_companies(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$admin_get_dv_companies({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$admin_get_dv_companies variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables.toJson(),
           document: documentNodeQueryadmin_get_dv_companies,
         );
 }
@@ -340,29 +458,36 @@ extension ClientExtension$Query$admin_get_dv_companies
     on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$admin_get_dv_companies>>
       query$admin_get_dv_companies(
-              [Options$Query$admin_get_dv_companies? options]) async =>
-          await this.query(options ?? Options$Query$admin_get_dv_companies());
-  graphql.ObservableQuery<
-      Query$admin_get_dv_companies> watchQuery$admin_get_dv_companies(
-          [WatchOptions$Query$admin_get_dv_companies? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$admin_get_dv_companies());
+              Options$Query$admin_get_dv_companies options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$admin_get_dv_companies>
+      watchQuery$admin_get_dv_companies(
+              WatchOptions$Query$admin_get_dv_companies options) =>
+          this.watchQuery(options);
   void writeQuery$admin_get_dv_companies({
     required Query$admin_get_dv_companies data,
+    required Variables$Query$admin_get_dv_companies variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation: graphql.Operation(
-                document: documentNodeQueryadmin_get_dv_companies)),
+          operation: graphql.Operation(
+              document: documentNodeQueryadmin_get_dv_companies),
+          variables: variables.toJson(),
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$admin_get_dv_companies? readQuery$admin_get_dv_companies(
-      {bool optimistic = true}) {
+  Query$admin_get_dv_companies? readQuery$admin_get_dv_companies({
+    required Variables$Query$admin_get_dv_companies variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryadmin_get_dv_companies)),
+        operation: graphql.Operation(
+            document: documentNodeQueryadmin_get_dv_companies),
+        variables: variables.toJson(),
+      ),
       optimistic: optimistic,
     );
     return result == null
@@ -828,6 +953,103 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$location<
       _res;
 }
 
+class Variables$Query$admin_get_restaurants {
+  factory Variables$Query$admin_get_restaurants({required int limit}) =>
+      Variables$Query$admin_get_restaurants._({
+        r'limit': limit,
+      });
+
+  Variables$Query$admin_get_restaurants._(this._$data);
+
+  factory Variables$Query$admin_get_restaurants.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    return Variables$Query$admin_get_restaurants._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get limit => (_$data['limit'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$admin_get_restaurants<
+          Variables$Query$admin_get_restaurants>
+      get copyWith => CopyWith$Variables$Query$admin_get_restaurants(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$admin_get_restaurants) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$limit = limit;
+    return Object.hashAll([l$limit]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$admin_get_restaurants<TRes> {
+  factory CopyWith$Variables$Query$admin_get_restaurants(
+    Variables$Query$admin_get_restaurants instance,
+    TRes Function(Variables$Query$admin_get_restaurants) then,
+  ) = _CopyWithImpl$Variables$Query$admin_get_restaurants;
+
+  factory CopyWith$Variables$Query$admin_get_restaurants.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$admin_get_restaurants;
+
+  TRes call({int? limit});
+}
+
+class _CopyWithImpl$Variables$Query$admin_get_restaurants<TRes>
+    implements CopyWith$Variables$Query$admin_get_restaurants<TRes> {
+  _CopyWithImpl$Variables$Query$admin_get_restaurants(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$admin_get_restaurants _instance;
+
+  final TRes Function(Variables$Query$admin_get_restaurants) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? limit = _undefined}) =>
+      _then(Variables$Query$admin_get_restaurants._({
+        ..._instance._$data,
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$admin_get_restaurants<TRes>
+    implements CopyWith$Variables$Query$admin_get_restaurants<TRes> {
+  _CopyWithStubImpl$Variables$Query$admin_get_restaurants(this._res);
+
+  TRes _res;
+
+  call({int? limit}) => _res;
+}
+
 class Query$admin_get_restaurants {
   Query$admin_get_restaurants({
     required this.restaurant_restaurant,
@@ -994,13 +1216,28 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
   OperationDefinitionNode(
     type: OperationType.query,
     name: NameNode(value: 'admin_get_restaurants'),
-    variableDefinitions: [],
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
         name: NameNode(value: 'restaurant_restaurant'),
         alias: null,
-        arguments: [],
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          )
+        ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
@@ -1116,6 +1353,7 @@ class Options$Query$admin_get_restaurants
     extends graphql.QueryOptions<Query$admin_get_restaurants> {
   Options$Query$admin_get_restaurants({
     String? operationName,
+    required Variables$Query$admin_get_restaurants variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1123,6 +1361,7 @@ class Options$Query$admin_get_restaurants
     Duration? pollInterval,
     graphql.Context? context,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1139,6 +1378,7 @@ class WatchOptions$Query$admin_get_restaurants
     extends graphql.WatchQueryOptions<Query$admin_get_restaurants> {
   WatchOptions$Query$admin_get_restaurants({
     String? operationName,
+    required Variables$Query$admin_get_restaurants variables,
     graphql.FetchPolicy? fetchPolicy,
     graphql.ErrorPolicy? errorPolicy,
     graphql.CacheRereadPolicy? cacheRereadPolicy,
@@ -1149,6 +1389,7 @@ class WatchOptions$Query$admin_get_restaurants
     bool carryForwardDataOnException = true,
     bool fetchResults = false,
   }) : super(
+          variables: variables.toJson(),
           operationName: operationName,
           fetchPolicy: fetchPolicy,
           errorPolicy: errorPolicy,
@@ -1166,10 +1407,12 @@ class WatchOptions$Query$admin_get_restaurants
 
 class FetchMoreOptions$Query$admin_get_restaurants
     extends graphql.FetchMoreOptions {
-  FetchMoreOptions$Query$admin_get_restaurants(
-      {required graphql.UpdateQuery updateQuery})
-      : super(
+  FetchMoreOptions$Query$admin_get_restaurants({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$admin_get_restaurants variables,
+  }) : super(
           updateQuery: updateQuery,
+          variables: variables.toJson(),
           document: documentNodeQueryadmin_get_restaurants,
         );
 }
@@ -1177,29 +1420,36 @@ class FetchMoreOptions$Query$admin_get_restaurants
 extension ClientExtension$Query$admin_get_restaurants on graphql.GraphQLClient {
   Future<graphql.QueryResult<Query$admin_get_restaurants>>
       query$admin_get_restaurants(
-              [Options$Query$admin_get_restaurants? options]) async =>
-          await this.query(options ?? Options$Query$admin_get_restaurants());
-  graphql.ObservableQuery<
-      Query$admin_get_restaurants> watchQuery$admin_get_restaurants(
-          [WatchOptions$Query$admin_get_restaurants? options]) =>
-      this.watchQuery(options ?? WatchOptions$Query$admin_get_restaurants());
+              Options$Query$admin_get_restaurants options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$admin_get_restaurants>
+      watchQuery$admin_get_restaurants(
+              WatchOptions$Query$admin_get_restaurants options) =>
+          this.watchQuery(options);
   void writeQuery$admin_get_restaurants({
     required Query$admin_get_restaurants data,
+    required Variables$Query$admin_get_restaurants variables,
     bool broadcast = true,
   }) =>
       this.writeQuery(
         graphql.Request(
-            operation: graphql.Operation(
-                document: documentNodeQueryadmin_get_restaurants)),
+          operation: graphql.Operation(
+              document: documentNodeQueryadmin_get_restaurants),
+          variables: variables.toJson(),
+        ),
         data: data.toJson(),
         broadcast: broadcast,
       );
-  Query$admin_get_restaurants? readQuery$admin_get_restaurants(
-      {bool optimistic = true}) {
+  Query$admin_get_restaurants? readQuery$admin_get_restaurants({
+    required Variables$Query$admin_get_restaurants variables,
+    bool optimistic = true,
+  }) {
     final result = this.readQuery(
       graphql.Request(
-          operation: graphql.Operation(
-              document: documentNodeQueryadmin_get_restaurants)),
+        operation:
+            graphql.Operation(document: documentNodeQueryadmin_get_restaurants),
+        variables: variables.toJson(),
+      ),
       optimistic: optimistic,
     );
     return result == null ? null : Query$admin_get_restaurants.fromJson(result);

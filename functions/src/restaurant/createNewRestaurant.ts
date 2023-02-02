@@ -1,4 +1,4 @@
-import { Language, Location, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { Language, Location } from "../shared/models/Generic/Generic";
 import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -27,24 +27,24 @@ export interface RestaurantDetails {
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
-  try {
-    if(restaurantDetails.delivery) {
-      if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
-        throw new HttpsError(
-          "unknown",
-          "Restaurant delivery details not provided"
-        );
-      } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
-        throw new HttpsError(
-          "unknown",
-          "delivery partner not specified"
-        );
-      }
+
+  if(restaurantDetails.delivery) {
+    if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
+      throw new HttpsError(
+        "unknown",
+        "Restaurant delivery details not provided"
+      );
+    } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+      throw new HttpsError(
+        "unknown",
+        "delivery partner not specified"
+      );
     }
-    let userPromise = getUser(userId);
-    let mezAdminsPromise = getMezAdmins();
-    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
-    let mezAdmins: MezAdmin[] = promiseResponse[1];
+  }
+  let userPromise = getUser(userId);
+  let mezAdminsPromise = getMezAdmins();
+  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+  let mezAdmins: MezAdmin[] = promiseResponse[1];
 
     let restaurant: Restaurant = {
       name: restaurantDetails.name,
@@ -60,15 +60,9 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
     }
     restaurant.firebaseId = restaurantDetails.firebaseId
 
-    await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
-    
-    notifyAdmins(mezAdmins, restaurant);
-
-    return { status: ServerResponseStatus.Success };
-  } catch(error) {
-    console.log("error =>", error);
-    throw error;
-  }
+  await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+  
+  notifyAdmins(mezAdmins, restaurant);
 };
 
 function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {

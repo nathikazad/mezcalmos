@@ -268,6 +268,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id!,
+    
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)

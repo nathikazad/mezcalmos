@@ -97,6 +97,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
           formattedOrderStatus: _getOrderStatus(),
 
           order: widget.order,
+          
           // card Settings
           isCustomerRowFirst: false,
           showMsgIconInOneLine: !widget.order.inProcess(),

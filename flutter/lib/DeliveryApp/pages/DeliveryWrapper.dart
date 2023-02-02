@@ -28,7 +28,7 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
   final DeliveryDeepLinkHandler _deepLinkHandler = DeliveryDeepLinkHandler();
   DeliveryAuthController _deliveryAuthController =
       Get.find<DeliveryAuthController>();
-
+  final String userId = Get.find<AuthController>().fireAuthUser!.uid;
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
   StreamSubscription<bool>? _locationStreamSub;
@@ -41,7 +41,6 @@ class _DeliveryWrapperState extends State<DeliveryWrapper> {
       _deliveryAuthController.setupDeliveryDriver().then((_) => handleState());
     });
 
-    final String userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
 
     Get.find<ForegroundNotificationsController>()

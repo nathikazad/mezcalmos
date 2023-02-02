@@ -189,18 +189,21 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                   Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(top: 5),
-                    child: (notification.imgUrl.isURL)
-                        ? CircleAvatar(
-                            radius: 23,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                CachedNetworkImageProvider(notification.imgUrl),
-                          )
-                        : CircleAvatar(
-                            radius: 23,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage(notification.imgUrl),
-                          ),
+                    child: (notification.notifWidget != null)
+                        ? notification.notifWidget
+                        : (notification.imgUrl!.isURL)
+                            ? CircleAvatar(
+                                radius: 23,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: CachedNetworkImageProvider(
+                                    notification.imgUrl!),
+                              )
+                            : CircleAvatar(
+                                radius: 23,
+                                backgroundColor: Colors.transparent,
+                                backgroundImage:
+                                    AssetImage(notification.imgUrl!),
+                              ),
                   )
                 ],
               ),
