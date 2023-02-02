@@ -170,9 +170,16 @@ def printDartFormatDeclaration(name, typ):
   nullable = ""
   if "?" in name:
     nullable = "?"
+
   prefix = typ
-  if typ in types:
-    prefix = types[typ]
+  if "null" in typ:
+    nullable = "?"
+    prefix = prefix.strip()[:-4].strip()[:-1].strip()
+  if "undefined" in typ:
+    nullable = "?"
+    prefix = prefix.strip()[:-9].strip()[:-1].strip()
+  if prefix in types:
+    prefix = types[prefix]
   return "  "+prefix+nullable+" "+name.replace("?","")+";"
 
 def printDartFormatClassInit(clas, instances):
@@ -261,12 +268,12 @@ def printDartFormatFunction(key, value):
       # params = params.replace("?","")
     body = body.replace("<String, dynamic>{}",params[:-2]+"}")
 
-  return str+body+"\n\n";
+  return str+body+"\n\n"; 
 
 def getModels():
   toWriteModel = ""
   for key in models:
-    # print(models[key])
+    # print(key)
     if models[key]["type"] == "interface":
       toWriteModel += "class "+key+" {"+"\n"
       for v in models[key]["values"]:
@@ -335,6 +342,7 @@ if __name__ == "__main__":
       extractFunctionNamesGroupAsString(line)
   extractFunctionNamesGroupAsDictionary()
   for key in uniqueTypes:
+    # print(key)
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
       models[key] = searchForModel(key)
 

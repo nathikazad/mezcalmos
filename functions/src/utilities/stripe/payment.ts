@@ -20,8 +20,8 @@ export interface PaymentIntentDetails {
 }
 export interface PaymentIntentResponse {
   paymentIntent: string | null,
-  ephemeralKey: string | undefined,
-  customer: string | undefined,
+  ephemeralKey?: string,
+  customer?: string,
   publishableKey: string,
   stripeAccountId: string
 }
