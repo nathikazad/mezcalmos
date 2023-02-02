@@ -24,10 +24,10 @@ Notification deliveryDriverNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          // icon:
-          //     (value['orderType'].toString().toOrderType() == OrderType.Laundry)
-          //         ? mat.Icons.local_laundry_service
-          //         : mat.Icons.flatware,
+          icon:
+              (value['orderType'].toString().toOrderType() == OrderType.Laundry)
+                  ? mat.Icons.local_laundry_service
+                  : mat.Icons.flatware,
           linkUrl: getLinkUrl(value['orderType'].toString().toOrderType(),
               value['orderId']), // needs to be changed, need to add laundry
           body: '${_i18n()['driverNotifBody']}', // needs to be changed

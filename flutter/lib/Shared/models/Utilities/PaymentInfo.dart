@@ -5,8 +5,6 @@
 
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/BankInfo.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
-    as cloudFunctionModels;
 
 enum PaymentType { Cash, Card, BankTransfer }
 
@@ -23,16 +21,16 @@ extension ParsePaymentTypeToString on PaymentType {
     return str;
   }
 
-  cloudFunctionModels.PaymentType toFirebaseFormatEnum() {
-    switch (this) {
-      case PaymentType.Cash:
-        return cloudFunctionModels.PaymentType.Cash;
-      case PaymentType.Card:
-        return cloudFunctionModels.PaymentType.Card;
-      default:
-        return cloudFunctionModels.PaymentType.Card;
-    }
-  }
+  // cloudFunctionModels.PaymentType toFirebaseFormatEnum() {
+  //   switch (this) {
+  //     case PaymentType.Cash:
+  //       return cloudFunctionModels.PaymentType.Cash;
+  //     case PaymentType.Card:
+  //       return cloudFunctionModels.PaymentType.Card;
+  //     default:
+  //       return cloudFunctionModels.PaymentType.Card;
+  //   }
+  // }
 }
 
 extension ParseStringToPaymentType on String {
