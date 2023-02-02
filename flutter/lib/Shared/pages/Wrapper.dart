@@ -153,8 +153,8 @@ class _WrapperState extends State<Wrapper> {
 
       */
       // We pop everything till wrapper and push kHomeRoute
-      MezRouter.offNamedUntil<void>(
-          kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      // MezRouter.offNamedUntil<void>(
+      //     kHomeRoute, ModalRoute.withName(kWrapperRoute));
 
       // then we push kUserProfile on top of kHomeRoute
       MezRouter.toNamed<void>(kUserWelcomeRoute);

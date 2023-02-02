@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 enum UserProfileViewMode { Editing, FirstTime, None }
 
@@ -67,7 +68,8 @@ class UserProfileViewController {
     if (mode == UserProfileViewMode.Editing) {
       switchMode(UserProfileViewMode.None);
     } else if (mode == UserProfileViewMode.FirstTime) {
-      MezRouter.back();
+      // ignore: inference_failure_on_function_invocation
+      await MezRouter.offAndToNamed(kHomeRoute);
     }
   }
 

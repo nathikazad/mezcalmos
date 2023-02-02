@@ -68,7 +68,9 @@ class UserProfileImage extends StatelessWidget {
                             child: InkWell(
                               customBorder: CircleBorder(),
                               onTap: () {
-                                viewController.editImage(context);
+                                //  viewController.editImage(context);
+                                viewController.newImageUrl.value =
+                                    "https://pm1.narvii.com/7153/e8bbf2c5f5214e36a4c05cc247b54819b1ddc5c4r1-720-1280v2_hq.jpg";
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(8),

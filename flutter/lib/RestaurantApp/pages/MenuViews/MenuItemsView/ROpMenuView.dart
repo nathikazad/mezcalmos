@@ -14,7 +14,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -61,11 +60,15 @@ class _ROpMenuViewState extends State<ROpMenuView>
       onWillPop: () async {
         return widget.canGoBack;
       },
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(double.infinity, kToolbarHeight * 2),
-          child: Obx(
-            () => mezcalmosAppBar(
+      child: Obx(
+        () => Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(
+                double.infinity,
+                (viewController.reOrderMode.isFalse)
+                    ? kToolbarHeight * 2
+                    : kToolbarHeight),
+            child: mezcalmosAppBar(
               !widget.canGoBack && viewController.reOrderMode.isFalse
                   ? AppBarLeftButtonType.Menu
                   : AppBarLeftButtonType.Back,
@@ -76,92 +79,106 @@ class _ROpMenuViewState extends State<ROpMenuView>
               //     widget.canGoBack == false,
               title: '${_i18n()["menu"]}',
               showNotifications: true,
-              tabBar: _tabBar(),
+              tabBar: (viewController.reOrderMode.isFalse) ? _tabBar() : null,
             ),
           ),
-        ),
-        key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: ROpDrawer(),
-        body: Obx(
-          () {
-            if (viewController.pageLoaded.value) {
-              return TabBarView(
-                controller: _tabController,
-                children: [
-                  // Items view //
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.all(12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        MezAddButton(
-                          onClick: () async {
-                            mezDbgPrint("Tapped");
-
-                            final bool? newCategoryAdded =
-                                await MezRouter.toNamed(getROpCategoryRoute(
-                                    restaurantId: restaurantID!)) as bool?;
-                            if (newCategoryAdded == true) {
-                              await viewController.fetchCategories();
-                            }
-                          },
-                          title: '${_i18n()["addCategory"]}',
-                          btnColor: primaryBlueColor,
-                          primaryColor: Colors.white,
-                        ),
-                        MezAddButton(
-                          onClick: () async {
-                            final bool? newItemAdded = await MezRouter.toNamed(
-                                getROpAddItemRoute(
-                                    restaurantId: restaurantID!)) as bool?;
-                            if (newItemAdded == true) {
-                              await viewController.fetchCategories();
-                              // await viewController.fetchCategories();
-                            }
-                          },
-                          title: '${_i18n()["addItem"]}',
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              '${_i18n()["categories"]}',
-                              style: Get.textTheme.bodyText1,
-                            ),
-                            (viewController.reOrderMode.isTrue)
-                                ? SizedBox()
-                                : _reorderBtn()
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        _categoriesItemsList(),
-                        _noCategoryItemsList()
-                      ],
-                    ),
-                  ),
-                  // specials view //
-                  ROpSpecialsComponent(
-                    restaurantID: restaurantID!,
-                    viewController: viewController,
-                  ),
-                ],
-              );
-            } else {
-              return MezLogoAnimation(
-                centered: true,
-              );
-            }
-          },
+          key: Get.find<SideMenuDrawerController>().getNewKey(),
+          drawer: ROpDrawer(),
+          body: Container(
+              child: (viewController.pageLoaded.value)
+                  ? _buildMenu()
+                  : Container(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(),
+                    )),
         ),
       ),
+    );
+  }
+
+  TabBarView _buildMenu() {
+    return TabBarView(
+      physics: NeverScrollableScrollPhysics(),
+      controller: _tabController,
+      children: [
+        // Items view //
+        SingleChildScrollView(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              if (viewController.reOrderMode.isTrue)
+                MezAddButton(
+                  onClick: () async {
+                    mezDbgPrint("Tapped");
+
+                    await viewController.saveReorder();
+                  },
+                  title: '${_i18n()["saveOrder"]}',
+                  btnColor: primaryBlueColor,
+                  icon: Icons.check,
+                  primaryColor: Colors.white,
+                ),
+              if (viewController.reOrderMode.isFalse)
+                MezAddButton(
+                  onClick: () async {
+                    mezDbgPrint("Tapped");
+
+                    final bool? newCategoryAdded = await MezRouter.toNamed(
+                            getROpCategoryRoute(restaurantId: restaurantID!))
+                        as bool?;
+                    if (newCategoryAdded == true) {
+                      await viewController.fetchCategories();
+                    }
+                  },
+                  title: '${_i18n()["addCategory"]}',
+                  btnColor: primaryBlueColor,
+                  primaryColor: Colors.white,
+                ),
+              if (viewController.reOrderMode.isFalse)
+                MezAddButton(
+                  onClick: () async {
+                    final bool? newItemAdded = await MezRouter.toNamed(
+                            getROpAddItemRoute(restaurantId: restaurantID!))
+                        as bool?;
+                    if (newItemAdded == true) {
+                      await viewController.fetchCategories();
+                    }
+                  },
+                  title: '${_i18n()["addItem"]}',
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${_i18n()["categories"]}',
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  (viewController.reOrderMode.isTrue)
+                      ? SizedBox()
+                      : _reorderBtn()
+                ],
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              _categoriesItemsList(),
+              _noCategoryItemsList()
+            ],
+          ),
+        ),
+        // specials view //
+        ROpSpecialsComponent(
+          restaurantID: restaurantID!,
+          viewController: viewController,
+        ),
+      ],
     );
   }
 
@@ -230,38 +247,36 @@ class _ROpMenuViewState extends State<ROpMenuView>
     return Obx(
       () => Container(
         alignment: Alignment.centerLeft,
-        child:
-            // (viewController.reOrderMode.isTrue)
-            //     ? ReorderableListView(
-            //         shrinkWrap: true,
-            //         physics: NeverScrollableScrollPhysics(),
-            //         children: <Widget>[
-            //           for (int index = 0;
-            //               index < viewController.rOcategories.length;
-            //               index += 1)
-            //             ROpCategoryItems(
-            //                 key: Key('$index'),
-            //                 category: viewController.rOcategories[index],
-            //                 restaurantId: restaurantID!,
-            //                 viewController: viewController)
-            //         ],
-            //         onReorder: (int oldIndex, int newIndex) {
-            //           // to avoid last element missbehavior
-            //           if (oldIndex < newIndex) {
-            //             newIndex -= 1;
-            //           }
-            //           viewController.rorderSingleCategory(
-            //               oldIndex: oldIndex, newIndex: newIndex);
-            //         })
-            //     :
-            Column(
-          children: List.generate(
-              viewController.mainCategories.length,
-              (int index) => ROpCategoryItems(
-                  viewController: viewController,
-                  restaurantId: restaurantID!,
-                  category: viewController.mainCategories[index])),
-        ),
+        child: (viewController.reOrderMode.isTrue)
+            ? ReorderableListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  for (int index = 0;
+                      index < viewController.rOcategories.length;
+                      index += 1)
+                    ROpCategoryItems(
+                        key: Key('$index'),
+                        category: viewController.rOcategories[index],
+                        restaurantId: restaurantID!,
+                        viewController: viewController)
+                ],
+                onReorder: (int oldIndex, int newIndex) {
+                  // to avoid last element missbehavior
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  viewController.rorderSingleCategory(
+                      oldIndex: oldIndex, newIndex: newIndex);
+                })
+            : Column(
+                children: List.generate(
+                    viewController.mainCategories.length,
+                    (int index) => ROpCategoryItems(
+                        viewController: viewController,
+                        restaurantId: restaurantID!,
+                        category: viewController.mainCategories[index])),
+              ),
       ),
     );
   }
