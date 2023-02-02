@@ -3,16 +3,13 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
-    as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/cart/hsCart.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class CustomerCartController extends GetxController {
 // instances //
@@ -146,60 +143,62 @@ class CustomerCartController extends GetxController {
     return null;
   }
 
-  Future<ServerResponse> checkout({String? stripePaymentId}) async {
+  Future<int?> checkout({String? stripePaymentId}) async {
     try {
-      final Map<String, dynamic> payload = <String, dynamic>{
-        // "customerId": _authController.user!.hasuraId,
-        // "checkoutRequest": <String, dynamic>{
-        "stripePaymentId": stripePaymentId,
-        "stripeFees": cart.value?.stripeFees,
-        "customerAppType": "customer",
-
-        "customerLocation": cart.value?.toLocation?.toFirebaseFormattedJson() ??
-            LocModel.Location(
-              "Test _ Location ",
-              LocationData.fromMap(
-                {
-                  "latitude": 15.872451864887513,
-                  "longitude": -97.0771243663329
-                },
-              ),
-            ).toFirebaseFormattedJson(),
-        "deliveryCost": cart.value?.shippingCost ?? 0,
-        "itemsCost": cart.value?.itemsCost(),
-        "scheduledTime": cart.value?.deliveryTime?.toUtc().toString(),
-        "paymentType": cart.value?.paymentType.toFirebaseFormatString(),
-        "notes": cart.value?.notes,
-        "restaurantId": cart.value?.restaurant!.info.hasuraId,
-
-        "restaurantOrderType": "pickup",
-      };
+      final Map<String, dynamic> payload = _contructCart(stripePaymentId);
 
       mezDbgPrint("[+] -> payload :: $payload");
-      final ServerResponse res = await CloudFunctions.restaurant2_checkoutCart(
-          customerAppType: cloudFunctionModels.AppType.Customer,
-          customerLocation: cloudFunctionModels.Location(
-              cart.value?.toLocation!.latitude,
-              cart.value?.toLocation!.longitude,
-              cart.value?.toLocation!.address),
-          deliveryCost: cart.value!.shippingCost!,
-          paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
-          notes: cart.value?.notes,
-          restaurantId: cart.value!.restaurant!.info.hasuraId,
-          tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
-          tripDuration: cart.value!.getRouteInfo!.duration.seconds,
-          tripPolyline: cart.value!.getRouteInfo!.polyline,
-          deliveryType: cloudFunctionModels.DeliveryType.Delivery,
-          scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
-          stripePaymentId: stripePaymentId,
-          stripeFees: cart.value?.stripeFees);
-
-      return res;
-    } catch (e) {
+      // final cloudFunctionModels.CheckoutResponse res =
+      //     await CloudFunctions.restaurant2_checkoutCart(
+      //         customerAppType: cloudFunctionModels.AppType.Customer,
+      //         customerLocation: cloudFunctionModels.Location(
+      //             cart.value?.toLocation!.latitude,
+      //             cart.value?.toLocation!.longitude,
+      //             cart.value?.toLocation!.address),
+      //         deliveryCost: cart.value!.shippingCost!,
+      //         paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
+      //         notes: cart.value?.notes,
+      //         restaurantId: cart.value!.restaurant!.info.hasuraId,
+      //         tripDistance: cart.value!.getRouteInfo!.distance.distanceInMeters,
+      //         tripDuration: cart.value!.getRouteInfo!.duration.seconds,
+      //         tripPolyline: cart.value!.getRouteInfo!.polyline,
+      //         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
+      //         scheduledTime: cart.value?.deliveryTime?.toUtc().toString(),
+      //         stripePaymentId: stripePaymentId,
+      //         stripeFees: cart.value?.stripeFees);
+    } catch (e, stk) {
       mezDbgPrint("error function");
       mezDbgPrint(e);
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorTitle: e.toString());
     }
+    return null;
+  }
+
+  Map<String, dynamic> _contructCart(String? stripePaymentId) {
+    final Map<String, dynamic> payload = <String, dynamic>{
+      // "customerId": _authController.user!.hasuraId,
+      // "checkoutRequest": <String, dynamic>{
+      "stripePaymentId": stripePaymentId,
+      "stripeFees": cart.value?.stripeFees,
+      "customerAppType": "customer",
+
+      "customerLocation": cart.value?.toLocation?.toFirebaseFormattedJson() ??
+          LocModel.Location(
+            "Test _ Location ",
+            LocationData.fromMap(
+              {"latitude": 15.872451864887513, "longitude": -97.0771243663329},
+            ),
+          ).toFirebaseFormattedJson(),
+      "deliveryCost": cart.value?.shippingCost ?? 0,
+      "itemsCost": cart.value?.itemsCost(),
+      "scheduledTime": cart.value?.deliveryTime?.toUtc().toString(),
+      "paymentType": cart.value?.paymentType.toFirebaseFormatString(),
+      "notes": cart.value?.notes,
+      "restaurantId": cart.value?.restaurant!.info.hasuraId,
+
+      "restaurantOrderType": "pickup",
+    };
+    return payload;
   }
 }

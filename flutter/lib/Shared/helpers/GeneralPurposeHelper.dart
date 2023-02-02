@@ -700,3 +700,15 @@ SnackbarController showSavedSnackBar() {
         color: Colors.green,
       ));
 }
+
+SnackbarController showErrorSnackBar(
+    {String errorTitle = "Error", String errorText = ""}) {
+  return Get.snackbar(errorTitle, errorText,
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      shouldIconPulse: false,
+      icon: Icon(
+        Icons.cancel,
+        color: Colors.redAccent,
+      ));
+}

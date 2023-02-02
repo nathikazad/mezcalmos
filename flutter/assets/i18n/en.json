@@ -941,6 +941,7 @@
                 "reconnecting": "Reconnecting"
             },
             "MessagingScreen": {
+                "viewOrder" :"View order details",
                 "order": "Order",
                 "writeMsgPlaceholder": "Write your message here ..."
             },
@@ -1932,6 +1933,22 @@
     },
     "RestaurantApp": {
         "pages": {
+            "ROpChoiceView" :{
+                "newChoice" : "New choice",
+                "required" : "Required",
+                "save" : "Save choice",
+                "saved" : "Saved",
+                "savedText" : "Choice has been saved successfuly",
+                "added" : "Added",
+                "addedText" : "Choice has been added successfuly",
+                "choiceName" : "Choice name",
+                "choiceNameIn": "Choice name in",
+                "choicePrice" : "Choice price",
+                "deleteChoice" : "Delete choice",
+                "yDeleteChoice" : "Yes delete choice",
+                "helperText" : "Are you sure you want to delete this choice"
+
+            }, 
             "ROpReviewsView": {
                 "reviews": "Reviews",
                 "base": "Base on",

@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpChoiceView"];
 
 class ROpChoiceViewController {
   // vars //
@@ -108,7 +112,7 @@ class ROpChoiceViewController {
     final bool response =
         await update_choice_by_id(choice.value!.id, _contructChoice());
     if (response) {
-      Get.snackbar('Saved', 'Choice has been saved successfuly',
+      Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedText']}",
           backgroundColor: Colors.black,
           colorText: Colors.white,
           shouldIconPulse: false,
@@ -126,7 +130,7 @@ class ROpChoiceViewController {
         optionId: int.parse(optionId!),
         restaurantId: restaurantId);
     if (newChoiceId != null) {
-      Get.snackbar('Added', 'Choice has been added successfuly',
+      Get.snackbar("${_i18n()['added']}", "${_i18n()['addedText']}",
           backgroundColor: Colors.black,
           colorText: Colors.white,
           shouldIconPulse: false,

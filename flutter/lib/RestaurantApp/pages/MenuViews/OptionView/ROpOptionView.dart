@@ -93,7 +93,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
       borderRadius: 0,
       withGradient: true,
       onClick: () async {
-        await _handleSaveBtn().whenComplete(() => _tabController.animateTo(0));
+        await _handleSaveBtn();
       },
       label: (_viewController.editMode.isTrue)
           ? '${_i18n()["editOption"]}'
@@ -320,6 +320,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
       }
     } else {
       await _viewController.saveOption();
+      _tabController.animateTo(0);
     }
   }
 
@@ -338,7 +339,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
   Future<void> _handleSecondTab() async {
     if (_viewController.firstTabValid == true &&
         _scFormKey.currentState?.validate() == true) {
-      //  MezRouter.back(result: _viewController.saveOption());
+      //  MezRouter.back(result: viewController.saveOption());
     } else if (_scFormKey.currentState?.validate() == true &&
         _prFormKey.currentState?.validate() != true) {
       _viewController.secondTabValid = true;
@@ -351,7 +352,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
         (_scFormKey.currentState?.validate() == true ||
             _viewController.secondTabValid)) {
       await _viewController.saveOption();
-      // MezRouter.back(result: _viewController.saveOption());
+      // MezRouter.back(result: viewController.saveOption());
     } else if (_prFormKey.currentState?.validate() == true &&
         _scFormKey.currentState?.validate() != true) {
       _viewController.firstTabValid = true;

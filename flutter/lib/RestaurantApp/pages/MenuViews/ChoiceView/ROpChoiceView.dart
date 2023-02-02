@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/components/RO
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/controllers/ROpChoiceViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -12,6 +13,11 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
+//
+dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
+    ["pages"]["ROpChoiceView"];
+
+//
 class ROpChoiceView extends StatefulWidget {
   const ROpChoiceView({super.key});
 
@@ -77,7 +83,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         height: 20,
                       ),
                       Text(
-                        "Choice name",
+                        "${_i18n()['choiceName']}",
                         style: Get.textTheme.bodyText1,
                       ),
                       SizedBox(
@@ -88,7 +94,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         style: Get.textTheme.bodyText1,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
-                            return "Required";
+                            return "${_i18n()['required']}";
                           }
                           return null;
                         },
@@ -97,7 +103,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         height: 20,
                       ),
                       Text(
-                        "Choice price",
+                        "${_i18n()['choicePrice']}",
                         style: Get.textTheme.bodyText1,
                       ),
                       SizedBox(
@@ -108,7 +114,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         style: Get.textTheme.bodyText1,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
-                            return "Required";
+                            return "${_i18n()['required']}";
                           }
                           return null;
                         },
@@ -125,24 +131,25 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         height: 35,
                       ),
                       MezButton(
-                        label: "Delete choice",
+                        label: "${_i18n()['deleteChoice']}",
                         backgroundColor: offRedColor,
                         textColor: Colors.red,
                         onClick: () async {
-                          await showConfirmationDialog(context,
-                              onYesClick: () async {
-                            await viewController
-                                .deleteChoice()
-                                .then((bool? hasBennDeleted) {
-                              if (hasBennDeleted == true) {
-                                MezRouter.back(result: true);
-                              }
-                            });
-                          },
-                              primaryButtonText: 'Yes, delete choice',
-                              title: 'Delete choice',
-                              helperText:
-                                  "Are you sure you want to delete this choice");
+                          await showConfirmationDialog(
+                            context,
+                            onYesClick: () async {
+                              await viewController
+                                  .deleteChoice()
+                                  .then((bool? hasBennDeleted) {
+                                if (hasBennDeleted == true) {
+                                  MezRouter.back(result: true);
+                                }
+                              });
+                            },
+                            primaryButtonText: "${_i18n()['yDeleteChoice']}",
+                            title: "${_i18n()['deleteChoice']}",
+                            helperText: "${_i18n()['helperText']}",
+                          );
                         },
                       )
                     ],
@@ -161,7 +168,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                       ),
                       Obx(
                         () => Text(
-                          "Choice name in ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
+                          "${_i18n()['choiceNameIn']} ${viewController.secondaryLang.value.toLanguageName() ?? ""}",
                           style: Get.textTheme.bodyText1,
                         ),
                       ),
@@ -173,7 +180,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
                         style: Get.textTheme.bodyText1,
                         validator: (String? v) {
                           if (v == null || v.isEmpty) {
-                            return "Required";
+                            return "${_i18n()['required']}";
                           }
                           return null;
                         },
@@ -187,7 +194,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
 
   Widget _choiceSaveBtn() {
     return MezButton(
-      label: "Save choice",
+      label: "${_i18n()['save']}",
       withGradient: true,
       borderRadius: 0,
       onClick: () async {
@@ -216,7 +223,9 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
         if (viewController.editMode.isTrue) {
           return Text(viewController.choice.value!.name[userLanguage]!);
         } else {
-          return Text("New choice");
+          return Text(
+            "${_i18n()['newChoice']}",
+          );
         }
       }),
     );
@@ -237,6 +246,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
       }
     } else {
       await viewController.saveChoice();
+      tabController.animateTo(0);
     }
   }
 

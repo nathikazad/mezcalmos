@@ -210,28 +210,15 @@ class CustCartViewController {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(getCardChoice);
       mezDbgPrint("✅ Stripe payment id ====================>>>");
-      final ServerResponse _serverResponse =
+      final int? newOrderId =
           await cartController.checkout(stripePaymentId: stripePaymentId);
 
-      mezDbgPrint("datatatatataat => ${_serverResponse.data}");
-
-      if (_serverResponse.success) {
+      if (newOrderId != null) {
         popEverythingAndNavigateTo(
           getRestaurantOrderRoute(
-            _serverResponse.data["orderId"],
+            newOrderId,
           ),
         );
-      } else {
-        print(_serverResponse);
-        if (_serverResponse.errorCode == "serverError") {
-          // do something
-        } else if (_serverResponse.errorCode == "inMoreThanThreeOrders") {
-          // do something
-        } else if (_serverResponse.errorCode == "restaurantClosed") {
-          // do something
-        } else {
-          // do something
-        }
       }
 
       mezDbgPrint("success funish checkout");
