@@ -6,7 +6,6 @@ import {
 } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { updateRestaurantOperatorStatusToAuthorized } from "../shared/graphql/restaurant/operators/updateOperatorStatus";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import {
   Notification,
   NotificationAction,
@@ -78,6 +77,4 @@ export async function authorizeRestaurantOperator(ownerUserId: number, authorize
       operator.user.language
     );
   }
-
-  return { status: ServerResponseStatus.Success };
 }

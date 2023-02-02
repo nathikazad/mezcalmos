@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { CustomerCard, emptyIdsWithServiceProvider, StripeStatus } from './model';
@@ -17,7 +16,10 @@ let keys: Keys = getKeys();
 export interface CardDetails {
   paymentMethod: string,
 }
-export async function addCard(userId: number, cardDetails: CardDetails) {
+export interface AddCardResponse {
+  cardId: string
+}
+export async function addCard(userId: number, cardDetails: CardDetails): Promise<AddCardResponse> {
 
   let stripeOptions = { apiVersion: <any>'2020-08-27' };
   const stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
@@ -41,7 +43,6 @@ export async function addCard(userId: number, cardDetails: CardDetails) {
   updateCustomerStripe(customer);
 
   return {
-    status: ServerResponseStatus.Success,
     cardId: paymentMethod.id
   }
 };
@@ -52,7 +53,13 @@ export interface ChargeCardDetails {
   orderType: OrderType,
   paymentAmount: number
 }
-export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDetails) {
+export interface ChargeCardResponse {
+  paymentIntent: string | null,
+  customer: string,
+  publishableKey: string,
+  stripeAccountId: string
+}
+export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDetails): Promise<ChargeCardResponse> {
 
   let serviceProvider;
   if(chargeCardDetails.orderType == OrderType.Restaurant) {
@@ -113,7 +120,6 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
     await stripe.paymentIntents.confirm(paymentIntent.id, stripeOptions);
   }
   return {
-    status: ServerResponseStatus.Success,
     paymentIntent: paymentIntent.client_secret,
     customer: stripeCustomerId,
     publishableKey: keys.stripe.publickey,
@@ -181,10 +187,6 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
   }
   delete customer.stripeInfo.cards[removeCardDetails.cardId];
   await updateCustomerStripe(customer);
-
-  return {
-    status: ServerResponseStatus.Success,
-  }
 };
 
 export async function verifyCustomerStripeInfo(customerInfo: CustomerInfo, stripe: Stripe): Promise<CustomerInfo> {

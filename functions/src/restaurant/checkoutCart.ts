@@ -1,6 +1,6 @@
 import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { Location, AppType,Language, ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { Location, AppType,Language } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
 import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
@@ -40,7 +40,7 @@ export interface CheckoutResponse {
   orderId: number,
 }
 
-export async function checkout(customerId: number, checkoutRequest: CheckoutRequest)/*: Promise<CheckoutResponse> */{
+export async function checkout(customerId: number, checkoutRequest: CheckoutRequest): Promise<CheckoutResponse> {
 
   console.log("\n\n[+] CustomerId ==> \n\n", customerId);
   console.log("\n\n[+] CustomerId ==> \n\n", checkoutRequest.scheduledTime);
@@ -118,9 +118,8 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   // return <CheckoutResponse> {
   //   orderId: restaurantOrder.orderId
   // }
-  return <ServerResponse> {
-    status: ServerResponseStatus.Success,
-    orderId: restaurantOrder.orderId
+  return {
+    orderId: restaurantOrder.orderId!
   }
 }
 function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {

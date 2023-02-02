@@ -1,4 +1,3 @@
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { DeliveryType, orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { passChecksForRestaurant } from "./helper";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -30,29 +29,26 @@ interface ChangeStatusDetails {
 }
 
 export async function prepareOrder(userId: number, data: ChangeStatusDetails) {
-  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.PreparingOrder, userId)
-  return response;
+  await changeStatus(data.orderId, RestaurantOrderStatus.PreparingOrder, userId)
 }
 
 export async function cancelOrder(userId: number, data: ChangeStatusDetails) {
-  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.CancelledByAdmin, userId)
-  return response;
+  await changeStatus(data.orderId, RestaurantOrderStatus.CancelledByAdmin, userId)
 }
 
 export async function readyForPickupOrder(userId: number, data: ChangeStatusDetails) {
-  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
-  return response
+  await changeStatus(data.orderId, RestaurantOrderStatus.ReadyForPickup, userId)
 }
+
 export async function orderPickedUpByCustomer(userId: number, data: ChangeStatusDetails) {
-  let response: ServerResponse = await changeStatus(data.orderId, RestaurantOrderStatus.Delivered, userId)
-  return response
+  await changeStatus(data.orderId, RestaurantOrderStatus.Delivered, userId)
 }
 
 function expectedPreviousStatus(status: RestaurantOrderStatus): RestaurantOrderStatus {
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, userId: number): Promise<ServerResponse> {
+async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, userId: number) {
 
   await passChecksForRestaurant(orderId, userId);
 
@@ -138,8 +134,6 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       );
     }
   }
-
-  return { status: ServerResponseStatus.Success }
 }
 
 // export async function refundCustomerCustomAmount(userId: number, data: any) {

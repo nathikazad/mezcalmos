@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
@@ -17,8 +16,13 @@ export interface SetupDetails {
   orderType: OrderType,
   acceptedPayments?: Record<PaymentType, boolean>
 }
-
-export async function setupServiceProvider(userId: number, setupDetails: SetupDetails) {
+export interface SetupResponse {
+  object: string,
+  created: number,
+  expires_at: number,
+  url: string
+}
+export async function setupServiceProvider(userId: number, setupDetails: SetupDetails): Promise<SetupResponse> {
 
   let serviceProvider;
   let operator;
@@ -98,7 +102,6 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
   }, stripeOptions);
   console.log("accountLink: ", accountLink)
   return {
-    status: ServerResponseStatus.Success,
     ...accountLink
   }
 }
@@ -159,10 +162,6 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
   }
   if(updateDetails.orderType == OrderType.Restaurant)
     updateRestaurantStripe(serviceProvider);
-
-  return {
-    status: ServerResponseStatus.Success
-  }
 }
 
 export async function verifyCustomerIdForServiceAccount(
