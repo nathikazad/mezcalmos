@@ -2,10 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/controllers/DeliverySettingsViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['Shared']["pages"]
+    ["DeliverySettingsView"]["components"]["DeliverySettingsCompaniesList"];
 
 class DeliverySettingsCompaniesList extends StatefulWidget {
   const DeliverySettingsCompaniesList(
@@ -41,7 +45,7 @@ class _DeliverySettingsCompaniesListState
                 Container(
                     margin: const EdgeInsets.all(5),
                     child: Text(
-                      "Delivery partner next to you",
+                      "${_i18n()['title']}",
                       style: Get.textTheme.bodyText1,
                     )),
                 SizedBox(
@@ -100,7 +104,7 @@ class _DeliverySettingsCompaniesListState
                     height: 15,
                   ),
                   Text(
-                    "No delivery partners found",
+                    "${_i18n()['notFoundTitle']}",
                     style: Get.textTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
@@ -108,7 +112,7 @@ class _DeliverySettingsCompaniesListState
                     height: 5,
                   ),
                   Text(
-                    "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
+                    "${_i18n()['notFoundBody']}",
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -162,7 +166,7 @@ class _DeliverySettingsCompaniesListState
                     style: Get.textTheme.bodyText1,
                   ),
                   Text(
-                      "Joined ${DateFormat.yMMMEd().format(company.creationTime)}")
+                      "${_i18n()["joined"]} ${DateFormat.yMMMEd().format(company.creationTime)}")
                 ],
               ),
             ),

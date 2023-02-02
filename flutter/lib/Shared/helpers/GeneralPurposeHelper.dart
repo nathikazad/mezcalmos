@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -689,4 +688,15 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
       size: 33,
     );
   }
+}
+
+SnackbarController showSavedSnackBar() {
+  return Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedTitle']}",
+      backgroundColor: Colors.black,
+      colorText: Colors.white,
+      shouldIconPulse: false,
+      icon: Icon(
+        Icons.check_circle,
+        color: Colors.green,
+      ));
 }

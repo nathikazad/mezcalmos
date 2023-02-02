@@ -167,7 +167,6 @@ Future<Restaurant?> get_restaurant_by_id(
       mezDbgPrint(
           "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
       return Restaurant(
-        
           deliveryDetailsId: data.delivery_details_id,
           deliveryCost: (data.delivery_details_of_deliverer == null)
               ? null
@@ -183,7 +182,7 @@ Future<Restaurant?> get_restaurant_by_id(
                       .free_delivery_km_range,
                 ),
           userInfo: ServiceInfo(
-            locationId: data.location_id,
+              locationId: data.location_id,
               hasuraId: data.id,
               image: data.image,
               description: (data.description?.translations != null)
@@ -256,6 +255,7 @@ Future<Schedule?> get_restaurant_schedule(
 Future<Restaurant> update_restaurant_info({
   required int id,
   required Restaurant restaurant,
+  bool? approved,
 }) async {
   mezDbgPrint(
       "Location before saving 📍 ${restaurant.info.location.toFirebaseFormattedJson()}");
@@ -266,6 +266,7 @@ Future<Restaurant> update_restaurant_info({
           variables: Variables$Mutation$updateRestaurantInfo(
               id: id,
               data: Input$restaurant_restaurant_set_input(
+                  approved: approved,
                   name: restaurant.info.name,
                   image: restaurant.info.image,
                   delivery_details_id: restaurant.deliveryDetailsId,
@@ -296,6 +297,7 @@ Future<Restaurant> update_restaurant_info({
   }
 
   return Restaurant(
+      deliveryDetailsId: data.delivery_details_of_deliverer?.first.id,
       userInfo: ServiceInfo(
           hasuraId: data.id,
           image: data.image,

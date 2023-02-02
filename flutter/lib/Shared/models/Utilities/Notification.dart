@@ -55,11 +55,12 @@ class Notification {
   dynamic variableParams;
   bool isEmpty = false;
   DateTime timestamp;
+  Widget? notifWidget;
   IconData? icon;
   IconData? secondaryIcon;
   String title;
   String body;
-  String imgUrl;
+  String? imgUrl;
   String linkUrl;
   String? linkText;
   NotificationType notificationType;
@@ -78,6 +79,7 @@ class Notification {
       this.variableParams,
       this.icon,
       this.secondaryIcon,
+      this.notifWidget,
       required this.timestamp,
       required this.title,
       required this.body,

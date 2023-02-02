@@ -708,6 +708,8 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
+                "saved" : "Salvado",
+                "savedTitle" : "tu información ha sido guardada",
                 "yesCancel": "Sí, Cancelar pedido",
                 "no": "No",
                 "cancelOrder": "Cancelar orden",
@@ -749,6 +751,104 @@
             }
         },
         "pages": {
+            "CreateServiceView" :{
+                "pages": {
+                    "CreateServiceInfoPage": {
+                        "name": "Nombre",
+                        "nameError": "Proporcione un nombre",
+                        "location": "Nombre",
+                        "locationError": "Proporcione una ubicación",
+                        "pickLoc" : "Ubicación de selección",
+                        "imageError" : "Se requiere una imagen"
+                    }
+                },
+                "info" : "Información",
+                "schedule" : "Calendario",
+                "delivery" : "Entrega",
+                "save" : "Salvar",
+                "next" :"Próxima",
+                "ok" : "OK",
+                "selectCompany": "Seleccione una empresa",
+                "selectCompanyText": "Necesita seleccionar una empresa de entrega",
+                "restTitle" : "Tu restaurante está en revisión",
+                "restBody" : "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado."
+            },
+            "DeliveryCostSettingView" : {
+                "dvCost" : "Coste de envío",
+                "km" : "km",
+                "minCost" : "Costo mínimo",
+                "costPerKm" : "Costo por km",
+                "freeKmRange" : "Gama de entrega gratuita" ,
+                "freeKmRangeText" : "Dentro de esta distancia, al cliente no se le cobrará por la entrega." ,
+                "numberError" : "por favor ingrese un número valido",
+                "preview" : "Avance",
+                "custDistance" : "Distancia del cliente",
+                "save" : "Salvar",
+                "cost" : "Costo"
+                
+            },
+            "DeliverySettingsView": {
+                "DeliverySettingsView": {
+                    "delivery": "Entrega",
+                    "save": "Salvar",
+                    "title": "¿Cómo le gustaría entregar?"
+                },
+                "components": {
+                    "DeliverySettingsCompaniesList": {
+                        "title": "Compañero de entrega a su lado",
+                        "notFoundTitle": "No se encontraron socios de entrega",
+                        "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
+                        "joinded": "Unida"
+                    }
+                }
+            },
+            "ServicePaymentsView" : {
+                "payments" : "Pagos",
+                "components" : {
+                    "ServiceAcceptedPayments" : {
+                        "bankName": "Nombre del banco",
+                        "bankNumber": "Número de cuenta",
+                        "bankTitle": "Información de la cuenta bancaria",
+                        "confirm": "Confirmar",
+                        "cancel": "Cancelar",
+                        "error": "Error",
+                        "bankTransfer": "Transferencia bancaria",
+                        "bankError": "El número de cuenta no es válido",
+                        "cash": "Dinero",
+                        "card": "Tarjeta",
+                        "requirements": "Requisitos",
+                        "acceptedPayments": "Pagos aceptados",
+                        "setup": "configurar",
+                        "fees": "Tarifa",
+                        "chargeCustomer": "cobrar tarifas de procesamiento del cliente",
+
+                        "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
+                        "reqs": "Requisitos",
+                        "emailId": "Identificación de correo",
+                        "empty": "Vacía",
+                        "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
+                 
+                    }
+                }
+            },
+            "OperatorsListView" : {
+                "operators" : "Operadoras",
+                "addOperator" : "Agregar operador",
+                "title" : "Pídale a su operador que escanee este código QR en su teléfono",
+                "copyLink": "Copiar link",
+                "shrWhatsapp" : "Compartir en WhatsApp",
+                "copied" : "Copiada",
+                "copiedText" : "Enlace copiado con éxito"
+            }, 
+             "ServiceDriversListView" : {
+                "drivers" : "Conductoras",
+                "addDriver" : "Agregar controlador",
+                "title" : "Pídale a su operador que escanee este código QR en su teléfono",
+                "copyLink": "Copiar link",
+                "shrWhatsapp" : "Compartir en WhatsApp",
+                "copied" : "Copiada",
+                "copiedText" : "Enlace copiado con éxito"
+            },
             "ServiceInfoEditView" : {
                 "name" : "Nombre",
                 "location" :"Localización",
@@ -2240,6 +2340,17 @@
         }
     },
     "MezAdmin" : {
+        "notificationHandler" : {
+            "onTheWayTitle": "En camino",
+            "onTheWayBody": "Tu pedido está en camino",
+            "deliveredTitle": "Entregada",
+            "deliveredBody": "Su pedido ha sido entregado",
+            "newOrderTitle": "Orden recibida",
+            "newOrderBody": "Tienes un nuevo pedido",
+            "canceledOrderTitle": "Orden cancelada",
+            "canceledOrderBody": "Su pedido ha sido cancelado"
+           
+        },
         "pages" : {
             "AdminTabsView" : {
                 "orders" : "Pedidos",
@@ -2247,6 +2358,25 @@
                 "messages"  : "Mensajes",
                 "profile":"Perfil"
 
+            },
+            "AdminServiceOrdersView" :{
+                "currentOrders" : "Órdenes actuales",
+                "pastOrders" :"Órdenes pasadas"
+            },
+            "AdminServicesView" : {
+                "AdminServicesView" : {
+                    "search" : "Buscar"
+                },
+                "components" : {
+                    "adminServiceCard" : {
+                        "menu" : "Menú",
+                        "orders" : "Pedidos",
+                        "profile" : "Perfil",
+                        "costs" : "Costo",
+                        "accept" : "Aceptar",
+                        "reject" : "Rechazar" 
+                    }
+                }
             }
         }
     },

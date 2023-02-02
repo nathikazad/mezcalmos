@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -11,7 +12,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart' as notifs;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['helpers']
     ["NotificationsHelper"];
@@ -36,11 +36,7 @@ Future<void> _displayNotification(notifs.Notification notification) async {
   if (notification.notificationAction == notifs.NotificationAction.ShowPopUp) {
     await decideWhichButtonDialogToUse(notification);
   } else {
-    notificationSnackBar(notification.imgUrl, notification.title,
-        notification.body, notification.formattedTime, () async {
-      // mezDbgPrint("Notification route ===> ${notification.linkUrl} !");
-      await MezRouter.toNamed(notification.linkUrl);
-    });
+    notificationSnackBar(notification);
   }
 }
 
@@ -68,45 +64,46 @@ Future<void> decideWhichButtonDialogToUse(
     );
 }
 
-void notificationSnackBar(
-    String imgUrl, String title, String msg, String time, Function onClick) {
+void notificationSnackBar(notifs.Notification notification) {
   Get.rawSnackbar(
     onTap: (_) async {
       mezDbgPrint("ONTAP ====> $_");
 
-      await onClick();
+      await MezRouter.toNamed(notification.linkUrl);
     },
     maxWidth: Get.width,
     margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
     duration: Duration(milliseconds: 5000),
-    icon: Container(
-      height: 50,
-      width: 10,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.grey.shade100,
-          width: 1,
-          style: BorderStyle.solid,
-        ),
-      ),
-      child: imgUrl.startsWith("http")
-          ? Image.network(
-              imgUrl,
-              fit: BoxFit.cover,
-              height: 50,
-              width: 10,
-            )
-          : Image.asset(imgUrl),
-    ),
+    icon: (notification.notifWidget != null)
+        ? notification.notifWidget
+        : Container(
+            height: 50,
+            width: 10,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.grey.shade100,
+                width: 1,
+                style: BorderStyle.solid,
+              ),
+            ),
+            child: notification.imgUrl!.startsWith("http")
+                ? Image.network(
+                    notification.imgUrl!,
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 10,
+                  )
+                : Image.asset(notification.imgUrl!),
+          ),
     backgroundColor: Colors.black,
     borderWidth: 1,
     borderColor: Colors.black,
     borderRadius: 12,
     messageText: Text(
-      msg,
+      notification.body,
       style: TextStyle(color: Colors.white),
     ),
     titleText: Row(
@@ -115,12 +112,12 @@ void notificationSnackBar(
       children: <Widget>[
         Flexible(
           child: Text(
-            title,
+            notification.title,
             style: TextStyle(fontFamily: 'psb', color: Colors.white),
           ),
         ),
         Text(
-          time,
+          notification.formattedTime,
           style: TextStyle(color: Colors.white),
         ),
       ],
