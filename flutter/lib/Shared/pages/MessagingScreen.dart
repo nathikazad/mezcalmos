@@ -256,6 +256,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         ),
                       ),
                       Obx(() {
+                        mezDbgPrint("Linkkkkkkkk ⏰");
+                        mezDbgPrint(
+                            "${controller.chat.value?.chatInfo.parentlink}");
                         if (MezRouter.isRouteInStack(
                             controller.chat.value?.chatInfo.parentlink)) {
                           return SizedBox();
@@ -263,15 +266,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           return Center(
                             child: InkWell(
                               borderRadius: BorderRadius.circular(10),
-                              onTap: () => MezRouter.toNamed<void>(
-                                controller.chat.value!.chatInfo.parentlink,
-                              ),
+                              onTap: () {
+                                MezRouter.toNamed<void>(
+                                  controller.chat.value!.chatInfo.parentlink,
+                                );
+                              },
                               child: Ink(
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 6),
                                   child: Text(
-                                    "View order details",
+                                    "${_i18n()['viewOrder']}",
                                     style: Get.textTheme.bodyText1
                                         ?.copyWith(color: primaryBlueColor),
                                   ),

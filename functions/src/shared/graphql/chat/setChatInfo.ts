@@ -72,7 +72,7 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
               parentLink: `/Orders/${delivery.deliveryId}`
             },
             CustomerApp: {
-              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`,
+              parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver
             }
           })
@@ -96,11 +96,11 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
               parentLink: `/Orders/${delivery.deliveryId}`
             },
             RestaurantApp: {
-              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`,
+              parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver,
             },
             MezAdminApp: {
-              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`,
+              parentLink: `/restaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver,
             }
           })
