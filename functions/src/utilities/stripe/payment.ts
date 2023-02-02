@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import { ServerResponseStatus } from '../../shared/models/Generic/Generic';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
 import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
@@ -11,6 +10,7 @@ import { verifyCustomerStripeInfo } from './card';
 import { updateRestaurantOrderStripe } from '../../shared/graphql/restaurant/order/updateOrder';
 import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { CustomerInfo } from '../../shared/models/Generic/User';
+
 let keys: Keys = getKeys();
 
 export interface PaymentIntentDetails {
@@ -18,7 +18,15 @@ export interface PaymentIntentDetails {
   orderType: OrderType,
   paymentAmount: number,
 }
-export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails) {
+export interface PaymentIntentResponse {
+  paymentIntent: string | null,
+  ephemeralKey: string | undefined,
+  customer: string | undefined,
+  publishableKey: string,
+  stripeAccountId: string
+}
+export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails): Promise<PaymentIntentResponse> {
+
   let serviceProvider;
   if(paymentIntentDetails.orderType == OrderType.Restaurant) {
     serviceProvider = await getRestaurant(paymentIntentDetails.serviceProviderId);
@@ -65,8 +73,7 @@ export async function getPaymentIntent(userId: number, paymentIntentDetails: Pay
     capture_method: 'manual'
   }, stripeOptions);
 
-  return {
-    status: ServerResponseStatus.Success,
+  return <PaymentIntentResponse> {
     paymentIntent: paymentIntent.client_secret,
     ephemeralKey: ephemeralKey.secret,
     customer: stripeCustomerId,

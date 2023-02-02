@@ -1,4 +1,4 @@
-import { Language, Location, ServerResponseStatus } from "../shared/models/Generic/Generic";
+import { Language, Location } from "../shared/models/Generic/Generic";
 import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
@@ -61,8 +61,6 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
   await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
   
   notifyAdmins(mezAdmins, restaurant);
-
-  return { status: ServerResponseStatus.Success };
 };
 
 function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {

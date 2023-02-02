@@ -8,7 +8,6 @@ import { deliveryNewOrderMessage } from "../delivery/bgNotificationMessages"
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 
 export interface AssignCompanyDetails {
     deliveryCompanyId: number,
@@ -45,5 +44,4 @@ export async function assignDeliveryCompany(operatorUserId: number | undefined, 
     deliveryOperators.forEach((d) => {
         pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
     });
-    return { status: ServerResponseStatus.Success }
 }

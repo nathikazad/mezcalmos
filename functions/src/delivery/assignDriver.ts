@@ -1,5 +1,4 @@
 import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
@@ -146,8 +145,5 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
       deliveryDriver.notificationInfo, 
       participantType
     );
-  }
-  return {
-    status: ServerResponseStatus.Success,
   }
 };
