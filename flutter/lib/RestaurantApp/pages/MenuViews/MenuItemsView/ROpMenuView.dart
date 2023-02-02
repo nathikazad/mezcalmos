@@ -115,7 +115,10 @@ class _ROpMenuViewState extends State<ROpMenuView>
                   onClick: () async {
                     mezDbgPrint("Tapped");
 
-                    await viewController.saveReorder();
+                    bool res = await viewController.saveReorder();
+                    if (res) {
+                      viewController.cancelReoderMode();
+                    }
                   },
                   title: '${_i18n()["saveOrder"]}',
                   btnColor: primaryBlueColor,
