@@ -26,47 +26,43 @@ export interface RestaurantDetails {
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
-  try {
-    if(restaurantDetails.delivery) {
-      if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
-        throw new HttpsError(
-          "unknown",
-          "Restaurant delivery details not provided"
-        );
-      } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
-        throw new HttpsError(
-          "unknown",
-          "delivery partner not specified"
-        );
-      }
+
+  if(restaurantDetails.delivery) {
+    if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
+      throw new HttpsError(
+        "unknown",
+        "Restaurant delivery details not provided"
+      );
+    } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+      throw new HttpsError(
+        "unknown",
+        "delivery partner not specified"
+      );
     }
-    let userPromise = getUser(userId);
-    let mezAdminsPromise = getMezAdmins();
-    let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
-    let mezAdmins: MezAdmin[] = promiseResponse[1];
-
-    let restaurant: Restaurant = {
-      name: restaurantDetails.name,
-      image: restaurantDetails.image,
-      location: restaurantDetails.location,
-      schedule: restaurantDetails.schedule,
-      selfDelivery: restaurantDetails.selfDelivery ?? false,
-      customerPickup: restaurantDetails.customerPickup,
-      delivery: restaurantDetails.delivery,
-      deliveryPartnerId: restaurantDetails.deliveryPartnerId,
-      deliveryDetails: restaurantDetails.deliveryDetails
-    }
-    restaurant.firebaseId = restaurantDetails.firebaseId
-
-    await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
-    
-    notifyAdmins(mezAdmins, restaurant);
-
-    return { status: ServerResponseStatus.Success };
-  } catch(error) {
-    console.log("error =>", error);
-    throw error;
   }
+  let userPromise = getUser(userId);
+  let mezAdminsPromise = getMezAdmins();
+  let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
+  let mezAdmins: MezAdmin[] = promiseResponse[1];
+
+  let restaurant: Restaurant = {
+    name: restaurantDetails.name,
+    image: restaurantDetails.image,
+    location: restaurantDetails.location,
+    schedule: restaurantDetails.schedule,
+    selfDelivery: restaurantDetails.selfDelivery ?? false,
+    customerPickup: restaurantDetails.customerPickup,
+    delivery: restaurantDetails.delivery,
+    deliveryPartnerId: restaurantDetails.deliveryPartnerId,
+    deliveryDetails: restaurantDetails.deliveryDetails
+  }
+  restaurant.firebaseId = restaurantDetails.firebaseId
+
+  await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+  
+  notifyAdmins(mezAdmins, restaurant);
+
+  return { status: ServerResponseStatus.Success };
 };
 
 function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {

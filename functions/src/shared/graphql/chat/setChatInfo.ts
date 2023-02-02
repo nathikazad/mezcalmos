@@ -98,6 +98,10 @@ export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaur
             RestaurantApp: {
               parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`,
               participantType: ParticipantType.DeliveryDriver,
+            },
+            MezAdminApp: {
+              parentLink: `/RestaurantOrders/${restaurantOrder.orderId}`,
+              participantType: ParticipantType.DeliveryDriver,
             }
           })
         }
@@ -154,6 +158,12 @@ export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDrive
   chatInfo = JSON.parse(response.chat_by_pk?.chat_info)
   chatInfo.RestaurantApp = {
     ...chatInfo.RestaurantApp,
+    chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
+    chatImage: deliveryDriver.user?.image,
+    phoneNumber: deliveryDriver.user?.phoneNumber
+  }
+  chatInfo.MezAdminApp = {
+    ...chatInfo.MezAdminApp,
     chatTitle: deliveryDriver.user?.name ?? "Delivery Driver",
     chatImage: deliveryDriver.user?.image,
     phoneNumber: deliveryDriver.user?.phoneNumber

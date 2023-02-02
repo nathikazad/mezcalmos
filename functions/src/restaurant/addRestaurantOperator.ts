@@ -1,4 +1,3 @@
-import { HttpsError } from "firebase-functions/v1/auth"
 import { createRestaurantOperator } from "../shared/graphql/restaurant/operators/createRestaurantOperator"
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getUser } from "../shared/graphql/user/getUser"
@@ -14,57 +13,49 @@ export interface AddOperatorDetails {
     notificationInfo?: NotificationInfo,
 }
 export async function addRestaurantOperator(operatorUserId: number, addDriverDetails: AddOperatorDetails) {
-  try {
-    let operatorUserInfo: UserInfo = await getUser(operatorUserId);
-    
-    let newOperator: RestaurantOperator = {
-      userId: operatorUserId,
-      restaurantId: addDriverDetails.restaurantId,
-      status: OperatorStatus.AwaitingApproval,
-      notificationInfo: addDriverDetails.notificationInfo
-    }
-    await createRestaurantOperator(newOperator);
-    
-    let notification: Notification = {
-      foreground: <AuthorizeOperatorNotification>{
-        newOperatorName: operatorUserInfo.name,
-        newOperatorImage: operatorUserInfo.image,
-        serviceProviderId: addDriverDetails.restaurantId,
-        time: (new Date()).toISOString(),
-        notificationType: NotificationType.AuthorizeOperator,
-        notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
-      },
-      background:{
-        en: {
-          title: `Authorize Operator`,
-          body: `An operator named ${operatorUserInfo.name} is requesting to join`
-        },
-        es: {
-          title: `Authorize Operator`,
-          body: `An operator named ${operatorUserInfo.name} is requesting to join`
-        }
-      },
-      linkUrl: `/`
-    }
-    let operators = await getRestaurantOperators(addDriverDetails.restaurantId);
-    operators.forEach((o) => {
-      if(o.owner && o.user) {
-        pushNotification(
-          o.user.firebaseId, 
-          notification, 
-          o.notificationInfo, 
-          ParticipantType.RestaurantOperator,
-          o.user.language,
-        );
-      }
-    })
-    return { status: ServerResponseStatus.Success }
-  } catch(error) {
-    console.log("error =>", error);
-    throw new HttpsError(
-      "unknown",
-      "Request was not authenticated.",
-      error
-    );
+  let operatorUserInfo: UserInfo = await getUser(operatorUserId);
+  
+  let newOperator: RestaurantOperator = {
+    userId: operatorUserId,
+    restaurantId: addDriverDetails.restaurantId,
+    status: OperatorStatus.AwaitingApproval,
+    notificationInfo: addDriverDetails.notificationInfo
   }
+  await createRestaurantOperator(newOperator);
+  
+  let notification: Notification = {
+    foreground: <AuthorizeOperatorNotification>{
+      newOperatorName: operatorUserInfo.name,
+      newOperatorImage: operatorUserInfo.image,
+      serviceProviderId: addDriverDetails.restaurantId,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.AuthorizeOperator,
+      notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
+    },
+    background:{
+      en: {
+        title: `Authorize Operator`,
+        body: `An operator named ${operatorUserInfo.name} is requesting to join`
+      },
+      es: {
+        title: `Authorize Operator`,
+        body: `An operator named ${operatorUserInfo.name} is requesting to join`
+      }
+    },
+    linkUrl: `/`
+  }
+  let operators = await getRestaurantOperators(addDriverDetails.restaurantId);
+  operators.forEach((o) => {
+    if(o.owner && o.user) {
+      pushNotification(
+        o.user.firebaseId, 
+        notification, 
+        o.notificationInfo, 
+        ParticipantType.RestaurantOperator,
+        o.user.language,
+      );
+    }
+  })
+  return { status: ServerResponseStatus.Success }
+
 }
