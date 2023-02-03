@@ -7,7 +7,7 @@ import { createRestaurantOrder } from "../shared/graphql/restaurant/order/create
 import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { checkCart } from "../shared/graphql/restaurant/cart/checkCart";
 import { clearCart } from "../shared/graphql/restaurant/cart/clearCart";
-import { setOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
+import { setRestaurantOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
 import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
@@ -90,13 +90,13 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
 
   let deliveryOrder: DeliveryOrder = await createRestaurantOrder(restaurantOrder, restaurant, checkoutRequest, mezAdmins);
   console.log("🤑🤑🤑🤑🤑🤑🤑🤑")
-  setOrderChatInfo(restaurantOrder, restaurant, deliveryOrder, customer);
+  setRestaurantOrderChatInfo(restaurantOrder, restaurant, deliveryOrder, customer);
 
   notifyAdmins(mezAdmins, restaurantOrder.orderId!, restaurant);
 
   notifyOperators(restaurantOrder.orderId!, restaurant);
 
-  if(restaurant.selfDelivery == false) {
+  if(restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.selfDelivery == false) {
     let assignDetails: AssignCompanyDetails = {
       deliveryCompanyId: restaurant.deliveryPartnerId!,
       restaurantOrderId: restaurantOrder.orderId!
@@ -143,10 +143,9 @@ function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, c
       "Empty cart"
     );
   }
-
-  if(checkoutRequest.deliveryType == DeliveryType.Delivery) {
+  if(checkoutRequest.deliveryType == undefined || checkoutRequest.deliveryType == DeliveryType.Delivery) {
     if(restaurant.delivery) {
-      if(!(restaurant.selfDelivery)) {
+      if(restaurant.selfDelivery == false) {
         if(restaurant.deliveryPartnerId == null) {
           throw new HttpsError(
             "internal",

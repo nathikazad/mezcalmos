@@ -78,6 +78,11 @@ export function orderInProcess(status: LaundryOrderStatus): boolean {
 }
 
 export interface NewLaundryOrderNotification extends OrderNotification {
+  laundryStore?: {
+    name: string,
+    image: string,
+    id: number
+  }
 }
 
 export interface LaundryOrderStatusChangeNotification extends OrderNotification {
