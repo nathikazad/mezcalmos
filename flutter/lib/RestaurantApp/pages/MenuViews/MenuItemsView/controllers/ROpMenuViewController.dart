@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -146,17 +147,26 @@ class ROpMenuViewController {
     rOcategories.refresh();
   }
 
-  Future<void> saveReorder() async {
-    for (int i = 0; i < rOcategories.length; i++) {
-      // await restaurantInfoController!.editCategoryPosition(
-      //     position: rOcategories[i].position, categoryId: rOcategories[i].id!);
-      // for (int j = 0; j < rOcategories[i].items.length; j++) {
-      //   await restaurantInfoController!.editItemPosition(
-      //       position: rOcategories[i].items[j].position,
-      //       categoryId: rOcategories[i].id!,
-      //       itemId: rOcategories[i].items[j].id!);
-      // }
+  Future<bool> saveReorder() async {
+    try {
+      final bool catRes =
+          await update_category_positions(data: rOcategories.value);
+      return catRes;
+    } catch (e, stk) {
+      showErrorSnackBar(errorText: e.toString());
+      mezDbgPrint(stk);
+      return false;
     }
+    // for (int i = 0; i < rOcategories.length; i++) {
+    //   // await restaurantInfoController!.editCategoryPosition(
+    //   //     position: rOcategories[i].position, categoryId: rOcategories[i].id!);
+    //   // for (int j = 0; j < rOcategories[i].items.length; j++) {
+    //   //   await restaurantInfoController!.editItemPosition(
+    //   //       position: rOcategories[i].items[j].position,
+    //   //       categoryId: rOcategories[i].id!,
+    //   //       itemId: rOcategories[i].items[j].id!);
+    //   // }
+    // }
   }
 
   // when user clicks on the back button on reorder mode

@@ -40,7 +40,7 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
   void initState() {
     mezDbgPrint("RestaurantWrapper::init state");
 
-    Future(() async {
+    Future.microtask(() async {
       await rOpDeeplinkHandler.startDynamicLinkCheckRoutine();
       restaurantOpAuthController
           .setupRestaurantOperator()
