@@ -210,13 +210,13 @@ class CustCartViewController {
       final String? stripePaymentId =
           await acceptPaymentByCardChoice(getCardChoice);
       mezDbgPrint("✅ Stripe payment id ====================>>>");
-      final int? newOrderId =
+      final num? newOrderId =
           await cartController.checkout(stripePaymentId: stripePaymentId);
 
       if (newOrderId != null) {
         popEverythingAndNavigateTo(
           getRestaurantOrderRoute(
-            newOrderId,
+            newOrderId.toInt(),
           ),
         );
       }

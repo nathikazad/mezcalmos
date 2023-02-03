@@ -153,12 +153,12 @@ class _WrapperState extends State<Wrapper> {
 
       */
       // We pop everything till wrapper and push kHomeRoute
-      MezRouter.offNamedUntil<void>(
-          kHomeRoute, ModalRoute.withName(kWrapperRoute));
+      // MezRouter.offNamedUntil<void>(
+      //     kHomeRoute, ModalRoute.withName(kWrapperRoute));
 
       // then we push kUserProfile on top of kHomeRoute
       MezRouter.toNamed<void>(kUserWelcomeRoute);
-      // now the Nav Stack is correct and looks like this :  wrapper > kHomeRoute > kUserProfile
+      // now the Nav Stack is correct and looks like this :  wrapper > kuserwelcome
     } else {
       // if user has all infos set and a successfull SignIn then we proceed with the usual.
       checkIfSignInRouteOrRedirectToHome();

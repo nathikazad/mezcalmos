@@ -407,6 +407,7 @@ class _ROpItemViewState extends State<ROpItemView>
   Future<void> _handleSecondTab() async {
     if (isSecValid && isPrValid) {
       await viewController.saveItem();
+      _tabController.animateTo(1);
     } else if (!isSecValid) {
       _tabController.animateTo(1);
     } else if (!isPrValid) {
