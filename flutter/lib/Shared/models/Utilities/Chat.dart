@@ -23,11 +23,14 @@ extension HasuraAppTypeIdParser on String {
   ParticipantType toParticipantTypeFromHasuraAppTypeId() {
     final String _formatted = toLowerCase();
     switch (_formatted) {
-      case 'customer_mobile':
-      case 'customer_web':
+      case 'customer':
         return ParticipantType.Customer;
       case 'restaurant':
         return ParticipantType.Restaurant;
+      case 'mez_admin':
+        return ParticipantType.MezAdmin;
+      case 'delivery':
+        return ParticipantType.DeliveryDriver;
       default:
         return ParticipantType.Customer;
     }
@@ -56,6 +59,8 @@ extension AppTypeToParticipantType on AppType {
         return ParticipantType.LaundryOperator;
       case AppType.RestaurantApp:
         return ParticipantType.RestaurantOperator;
+      case AppType.MezAdminApp:
+        return ParticipantType.MezAdmin;
       default:
         throw Exception(
             "App type $this cannot be converted to participantType");
@@ -146,6 +151,7 @@ class HasuraChat {
   final HasuraChatInfo chatInfo;
   DateTime creationTime;
   List<Participant> _participants = [];
+  List<Participant> get participant => _participants;
 
   HasuraChat({
     required this.id,

@@ -35,28 +35,6 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     return RetMsgs;
   }
 
-  List<Participant> _get_participants(
-      List<Query$get_chat_info$chat_by_pk$chat_participants> participants) {
-    final List<Participant> RetParticipants = [];
-
-    if (participants.isNotEmpty) {
-      participants.forEach(
-          (Query$get_chat_info$chat_by_pk$chat_participants _participant) {
-        RetParticipants.add(
-          Participant(
-            image: _participant.user.image!,
-            name: _participant.user.name!,
-            participantType:
-                _participant.app_type_id.toParticipantTypeFromHasuraAppTypeId(),
-            id: _participant.user.id,
-          ),
-        );
-      });
-    }
-
-    return RetParticipants;
-  }
-
   final QueryResult<Query$get_chat_info> _chat =
       await _hasuraDb.graphQLClient.query$get_chat_info(
     Options$Query$get_chat_info(
@@ -71,8 +49,7 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     throwError(_chat.exception);
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
-    mezDbgPrint(
-        " chat ✅ info ===> ${_chat.parsedData!.chat_by_pk!.chat_info[Get.find<SettingsController>().appType.toNormalString()]}");
+
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!.chat_info![
@@ -148,4 +125,27 @@ Stream<List<Message>> listen_on_chat_messages({required int chatId}) {
     });
     return msgs;
   });
+}
+
+List<Participant> _get_participants(
+    List<Query$get_chat_info$chat_by_pk$chat_participants> participants) {
+  final List<Participant> retParticipants = [];
+
+  if (participants.isNotEmpty) {
+    participants.forEach(
+        (Query$get_chat_info$chat_by_pk$chat_participants _participant) {
+      retParticipants.add(
+        Participant(
+          image: _participant.user.image!,
+          name: _participant.user.name!,
+          participantType:
+              _participant.app_type_id.toParticipantTypeFromHasuraAppTypeId(),
+          id: _participant.user.id,
+        ),
+      );
+      
+    });
+  }
+
+  return retParticipants;
 }

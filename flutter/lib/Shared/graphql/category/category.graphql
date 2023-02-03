@@ -95,6 +95,7 @@ image
 
 mutation updateCategoryPositions($updates :  [restaurant_category_updates!]!) {
   update_restaurant_category_many(updates: $updates){affected_rows}
-}mutation updateItemsPositions($updates :  [restaurant_item_updates!]!) {
+}
+mutation updateItemsPositions($updates :  [restaurant_item_updates!]!) {
   update_restaurant_item_many(updates: $updates){affected_rows}
 }

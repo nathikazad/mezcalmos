@@ -26,6 +26,7 @@ class CustomerCartController extends GetxController {
   Future<void> onInit() async {
     if (_auth.hasuraUserId != null) {
       await _initCart();
+
       cart.refresh();
     }
     super.onInit();
@@ -82,6 +83,8 @@ class CustomerCartController extends GetxController {
       if (value != null) {
         cart.value = value;
         cart.value?.restaurant = value.restaurant;
+      } else {
+        await create_customer_cart();
       }
     }
   }
@@ -174,7 +177,9 @@ class CustomerCartController extends GetxController {
       mezDbgPrint("error function");
       mezDbgPrint(e);
       mezDbgPrint(stk);
-      showErrorSnackBar(errorTitle: e.toString());
+      showErrorSnackBar(
+        errorTitle: "Server error please try again",
+      );
     }
     return null;
   }

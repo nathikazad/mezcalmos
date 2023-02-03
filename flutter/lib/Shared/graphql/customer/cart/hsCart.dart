@@ -109,7 +109,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                   //   descriptionId: data.d,
                   location: Location.fromHasura(
                     cartData.restaurant!.location.gps,
-                    cartData.restaurant!.location.address!,
+                    cartData.restaurant!.location.address,
                   ),
                 ),
                 schedule: cartData.restaurant?.schedule != null
@@ -192,7 +192,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
   return null;
 }
 
-Future<int> create_customer_cart({int? restaurant_id}) async {
+Future<int?> create_customer_cart({int? restaurant_id}) async {
   mezDbgPrint(
       "[🗿🗿🗿🗿🗿🗿🗿] Called :: create_customer_cart! =======>${Get.find<AuthController>().hasuraUserId!}");
   final QueryResult<Mutation$create_customer_cart> res =
@@ -208,11 +208,11 @@ Future<int> create_customer_cart({int? restaurant_id}) async {
     ),
   );
 
-  if (res.parsedData?.insert_restaurant_cart_one?.restaurant_id == null) {
+  if (res.parsedData?.insert_restaurant_cart_one == null) {
     throw Exception(
         "🛑🛑🛑🛑 create_customer_cart :: exception ===> ${res.exception}!");
   } else {
-    return res.parsedData!.insert_restaurant_cart_one!.restaurant_id!;
+    return res.parsedData!.insert_restaurant_cart_one!.restaurant_id;
   }
 }
 
@@ -341,7 +341,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
             //   descriptionId: data.d,
             location: Location.fromHasura(
               _res.location.gps,
-              _res.location.address!,
+              _res.location.address,
             ),
           ),
           schedule:
