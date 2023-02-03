@@ -1,6 +1,6 @@
 import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
-import { Location, AppType,Language } from "../shared/models/Generic/Generic";
+import { Location, Language, CustomerAppType } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
 import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
@@ -22,7 +22,7 @@ import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/s
 import { DeliveryOrder } from "../shared/models/Generic/Delivery";
 
 export interface CheckoutRequest {
-  customerAppType: AppType,
+  customerAppType: CustomerAppType,
   customerLocation: Location,
   deliveryCost: number,
   paymentType: PaymentType,

@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType, Language, Location } from "../../../models/Generic/Generic";
+import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { PaymentType } from "../../../models/Generic/Order";
 import { OperatorStatus, RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus, DeliveryType } from "../../../models/Services/Restaurant/RestaurantOrder";
@@ -90,7 +90,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     estimatedFoodReadyTime: response.restaurant_order_by_pk.estimated_food_ready_time,
     status: response.restaurant_order_by_pk.status as RestaurantOrderStatus,
     deliveryType: response.restaurant_order_by_pk.delivery_type as DeliveryType,
-    customerAppType: response.restaurant_order_by_pk.customer_app_type as AppType,
+    customerAppType: response.restaurant_order_by_pk.customer_app_type as CustomerAppType,
     deliveryCost: parseFloat(response.restaurant_order_by_pk.delivery_cost.replace("$","")),
     items,
     stripeInfo: JSON.parse(response.restaurant_order_by_pk.stripe_info),
@@ -210,7 +210,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,
-      customerAppType: o.customer_app_type as AppType,
+      customerAppType: o.customer_app_type as CustomerAppType,
       deliveryCost: o.delivery_cost,
       items,
       restaurant: {
@@ -286,7 +286,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       orderTime: o.order_time,
       status: o.status as RestaurantOrderStatus,
       deliveryType: o.delivery_type as DeliveryType,
-      customerAppType: o.customer_app_type as AppType,
+      customerAppType: o.customer_app_type as CustomerAppType,
       deliveryCost: o.delivery_cost,
       items
     }
