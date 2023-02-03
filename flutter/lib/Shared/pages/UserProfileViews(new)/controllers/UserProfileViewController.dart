@@ -68,8 +68,8 @@ class UserProfileViewController {
     if (mode == UserProfileViewMode.Editing) {
       switchMode(UserProfileViewMode.None);
     } else if (mode == UserProfileViewMode.FirstTime) {
-      // ignore: inference_failure_on_function_invocation
-      await MezRouter.offAndToNamed(kHomeRoute);
+      // ignore: inference_failure_on_function_invocation, unawaited_futures
+      MezRouter.offAndToNamed(kHomeRoute);
     }
   }
 
