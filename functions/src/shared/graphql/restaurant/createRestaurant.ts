@@ -2,8 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType } from "../../models/Generic/Generic";
-import { OperatorStatus, Restaurant } from "../../models/Services/Restaurant/Restaurant";
-import { ServiceProviderType } from "../../models/Services/Service";
+import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
+import { OperatorStatus, ServiceProviderType } from "../../models/Services/Service";
 
 export async function createRestaurant(
   restaurant: Restaurant, 
@@ -113,5 +113,5 @@ export async function createRestaurant(
       }]
     });
   }
-  restaurant.restaurantId = response.insert_restaurant_restaurant_one.id
+  restaurant.id = response.insert_restaurant_restaurant_one.id
 }

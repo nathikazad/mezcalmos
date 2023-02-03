@@ -22,7 +22,8 @@ export interface RestaurantDetails {
   customerPickup: boolean,
   selfDelivery?: boolean,
   deliveryPartnerId?: number,
-  deliveryDetails?: DeliveryDetails
+  deliveryDetails?: DeliveryDetails,
+  language: Language
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
@@ -45,18 +46,19 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-  let restaurant: Restaurant = {
-    name: restaurantDetails.name,
-    image: restaurantDetails.image,
-    location: restaurantDetails.location,
-    schedule: restaurantDetails.schedule,
-    selfDelivery: restaurantDetails.selfDelivery ?? false,
-    customerPickup: restaurantDetails.customerPickup,
-    delivery: restaurantDetails.delivery,
-    deliveryPartnerId: restaurantDetails.deliveryPartnerId,
-    deliveryDetails: restaurantDetails.deliveryDetails
-  }
-  restaurant.firebaseId = restaurantDetails.firebaseId
+    let restaurant: Restaurant = {
+      name: restaurantDetails.name,
+      image: restaurantDetails.image,
+      location: restaurantDetails.location,
+      schedule: restaurantDetails.schedule,
+      selfDelivery: restaurantDetails.selfDelivery ?? false,
+      customerPickup: restaurantDetails.customerPickup,
+      delivery: restaurantDetails.delivery,
+      deliveryPartnerId: restaurantDetails.deliveryPartnerId,
+      deliveryDetails: restaurantDetails.deliveryDetails,
+      language: restaurantDetails.language
+    }
+    restaurant.firebaseId = restaurantDetails.firebaseId
 
   await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
   
@@ -65,7 +67,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
 
 function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
 
-  if(restaurant.restaurantId == undefined)
+  if(restaurant.id == undefined)
     return
   let notification: Notification = {
     foreground: <NewRestaurantNotification>{
@@ -74,7 +76,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
       notificationAction: NotificationAction.ShowSnackBarAlways,
       name: restaurant.name,
       image: restaurant.image,
-      id: restaurant.restaurantId
+      id: restaurant.id
     },
     background: {
       [Language.ES]: {
@@ -86,7 +88,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
         body: `There is a new restaurant`
       }
     },
-    linkUrl: restaurantUrl(restaurant.restaurantId)
+    linkUrl: restaurantUrl(restaurant.id)
   }
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

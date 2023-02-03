@@ -94,7 +94,6 @@ count?: [{	columns?:ValueTypes["app_type_select_column"][],	distinct?:boolean},t
 	["app_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["app_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["app_type_bool_exp"]
 };
 	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -502,7 +501,6 @@ count?: [{	columns?:ValueTypes["chat_participant_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["chat_participant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["chat_participant_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["chat_participant_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -618,7 +616,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["chat_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -926,7 +923,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["customer_customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_customer_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_customer_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1110,7 +1106,6 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 	_inc?:ValueTypes["customer_favourited_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_favourited_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_favourited_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1389,7 +1384,6 @@ count?: [{	columns?:ValueTypes["customer_saved_location_select_column"][],	disti
 	_inc?:ValueTypes["customer_saved_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_saved_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["customer_saved_location_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -1796,7 +1790,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["delivery_company_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_company_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_company_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -2172,7 +2165,6 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	_inc?:ValueTypes["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_details_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -2591,7 +2583,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	_inc?:ValueTypes["delivery_driver_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_driver_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_driver_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -2950,7 +2941,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	_inc?:ValueTypes["delivery_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_operator_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -3863,7 +3853,6 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	_inc?:ValueTypes["delivery_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_order_public_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -4171,7 +4160,6 @@ cancelledByServiceProvider */
 	_inc?:ValueTypes["delivery_order_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["delivery_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -4458,7 +4446,6 @@ count?: [{	columns?:ValueTypes["direct_chat_select_column"][],	distinct?:boolean
 	_inc?:ValueTypes["direct_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["direct_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["direct_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -4493,6 +4480,19 @@ count?: [{	columns?:ValueTypes["direct_chat_select_column"][],	distinct?:boolean
 	_lte?:number,
 	_neq?:number,
 	_nin?:number[]
+};
+	["float8"]:unknown;
+	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+["float8_comparison_exp"]: {
+	_eq?:ValueTypes["float8"],
+	_gt?:ValueTypes["float8"],
+	_gte?:ValueTypes["float8"],
+	_in?:ValueTypes["float8"][],
+	_is_null?:boolean,
+	_lt?:ValueTypes["float8"],
+	_lte?:ValueTypes["float8"],
+	_neq?:ValueTypes["float8"],
+	_nin?:ValueTypes["float8"][]
 };
 	["geography"]:unknown;
 	["geography_cast_exp"]: {
@@ -4695,9 +4695,1862 @@ count?: [{	columns?:ValueTypes["language_select_column"][],	distinct?:boolean},t
 	["language_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["language_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["language_bool_exp"]
 };
+	/** columns and relationships of "laundry.category" */
+["laundry_category"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	/** An object relationship */
+	name?:ValueTypes["translation"],
+	name_id?:true,
+	position?:true,
+	/** An object relationship */
+	store?:ValueTypes["laundry_store"],
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "laundry.category" */
+["laundry_category_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["laundry_category_aggregate_fields"],
+	nodes?:ValueTypes["laundry_category"],
+		__typename?: true
+}>;
+	/** aggregate fields of "laundry.category" */
+["laundry_category_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["laundry_category_avg_fields"],
+count?: [{	columns?:ValueTypes["laundry_category_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["laundry_category_max_fields"],
+	min?:ValueTypes["laundry_category_min_fields"],
+	stddev?:ValueTypes["laundry_category_stddev_fields"],
+	stddev_pop?:ValueTypes["laundry_category_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["laundry_category_stddev_samp_fields"],
+	sum?:ValueTypes["laundry_category_sum_fields"],
+	var_pop?:ValueTypes["laundry_category_var_pop_fields"],
+	var_samp?:ValueTypes["laundry_category_var_samp_fields"],
+	variance?:ValueTypes["laundry_category_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["laundry_category_avg_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "laundry.category". All fields are combined with a logical 'AND'. */
+["laundry_category_bool_exp"]: {
+	_and?:ValueTypes["laundry_category_bool_exp"][],
+	_not?:ValueTypes["laundry_category_bool_exp"],
+	_or?:ValueTypes["laundry_category_bool_exp"][],
+	cost_by_kilo?:ValueTypes["money_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	name?:ValueTypes["translation_bool_exp"],
+	name_id?:ValueTypes["Int_comparison_exp"],
+	position?:ValueTypes["Int_comparison_exp"],
+	store?:ValueTypes["laundry_store_bool_exp"],
+	store_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "laundry.category" */
+["laundry_category_constraint"]:laundry_category_constraint;
+	/** input type for incrementing numeric columns in table "laundry.category" */
+["laundry_category_inc_input"]: {
+	cost_by_kilo?:ValueTypes["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+};
+	/** input type for inserting data into table "laundry.category" */
+["laundry_category_insert_input"]: {
+	cost_by_kilo?:ValueTypes["money"],
+	id?:number,
+	name?:ValueTypes["translation_obj_rel_insert_input"],
+	name_id?:number,
+	position?:number,
+	store?:ValueTypes["laundry_store_obj_rel_insert_input"],
+	store_id?:number
+};
+	/** aggregate max on columns */
+["laundry_category_max_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["laundry_category_min_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "laundry.category" */
+["laundry_category_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["laundry_category"],
+		__typename?: true
+}>;
+	/** input type for inserting object relation for remote table "laundry.category" */
+["laundry_category_obj_rel_insert_input"]: {
+	data:ValueTypes["laundry_category_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_category_on_conflict"]
+};
+	/** on_conflict condition type for table "laundry.category" */
+["laundry_category_on_conflict"]: {
+	constraint:ValueTypes["laundry_category_constraint"],
+	update_columns:ValueTypes["laundry_category_update_column"][],
+	where?:ValueTypes["laundry_category_bool_exp"]
+};
+	/** Ordering options when selecting data from "laundry.category". */
+["laundry_category_order_by"]: {
+	cost_by_kilo?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	name?:ValueTypes["translation_order_by"],
+	name_id?:ValueTypes["order_by"],
+	position?:ValueTypes["order_by"],
+	store?:ValueTypes["laundry_store_order_by"],
+	store_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: laundry.category */
+["laundry_category_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "laundry.category" */
+["laundry_category_select_column"]:laundry_category_select_column;
+	/** input type for updating data in table "laundry.category" */
+["laundry_category_set_input"]: {
+	cost_by_kilo?:ValueTypes["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+};
+	/** aggregate stddev on columns */
+["laundry_category_stddev_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["laundry_category_stddev_pop_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["laundry_category_stddev_samp_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "laundry_category" */
+["laundry_category_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["laundry_category_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["laundry_category_stream_cursor_value_input"]: {
+	cost_by_kilo?:ValueTypes["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+};
+	/** aggregate sum on columns */
+["laundry_category_sum_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "laundry.category" */
+["laundry_category_update_column"]:laundry_category_update_column;
+	["laundry_category_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_category_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_category_set_input"],
+	where:ValueTypes["laundry_category_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["laundry_category_var_pop_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["laundry_category_var_samp_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["laundry_category_variance_fields"]: AliasType<{
+	cost_by_kilo?:true,
+	id?:true,
+	name_id?:true,
+	position?:true,
+	store_id?:true,
+		__typename?: true
+}>;
+	/** columns and relationships of "laundry.operator" */
+["laundry_operator"]: AliasType<{
+	app_type_id?:true,
+	app_version?:true,
+	current_gps?:true,
+	delivery_driver_type?:true,
+	id?:true,
+	/** An object relationship */
+	notification_info?:ValueTypes["notification_info"],
+	online?:true,
+	owner?:true,
+	status?:true,
+	/** An object relationship */
+	store?:ValueTypes["laundry_store"],
+	store_id?:true,
+	/** An object relationship */
+	user?:ValueTypes["user"],
+	user_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "laundry.operator" */
+["laundry_operator_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["laundry_operator_aggregate_fields"],
+	nodes?:ValueTypes["laundry_operator"],
+		__typename?: true
+}>;
+	["laundry_operator_aggregate_bool_exp"]: {
+	bool_and?:ValueTypes["laundry_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:ValueTypes["laundry_operator_aggregate_bool_exp_bool_or"],
+	count?:ValueTypes["laundry_operator_aggregate_bool_exp_count"]
+};
+	["laundry_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:ValueTypes["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["laundry_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:ValueTypes["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_operator_bool_exp"],
+	predicate:ValueTypes["Boolean_comparison_exp"]
+};
+	["laundry_operator_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["laundry_operator_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_operator_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
+	/** aggregate fields of "laundry.operator" */
+["laundry_operator_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["laundry_operator_avg_fields"],
+count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["laundry_operator_max_fields"],
+	min?:ValueTypes["laundry_operator_min_fields"],
+	stddev?:ValueTypes["laundry_operator_stddev_fields"],
+	stddev_pop?:ValueTypes["laundry_operator_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["laundry_operator_stddev_samp_fields"],
+	sum?:ValueTypes["laundry_operator_sum_fields"],
+	var_pop?:ValueTypes["laundry_operator_var_pop_fields"],
+	var_samp?:ValueTypes["laundry_operator_var_samp_fields"],
+	variance?:ValueTypes["laundry_operator_variance_fields"],
+		__typename?: true
+}>;
+	/** order by aggregate values of table "laundry.operator" */
+["laundry_operator_aggregate_order_by"]: {
+	avg?:ValueTypes["laundry_operator_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["laundry_operator_max_order_by"],
+	min?:ValueTypes["laundry_operator_min_order_by"],
+	stddev?:ValueTypes["laundry_operator_stddev_order_by"],
+	stddev_pop?:ValueTypes["laundry_operator_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["laundry_operator_stddev_samp_order_by"],
+	sum?:ValueTypes["laundry_operator_sum_order_by"],
+	var_pop?:ValueTypes["laundry_operator_var_pop_order_by"],
+	var_samp?:ValueTypes["laundry_operator_var_samp_order_by"],
+	variance?:ValueTypes["laundry_operator_variance_order_by"]
+};
+	/** input type for inserting array relation for remote table "laundry.operator" */
+["laundry_operator_arr_rel_insert_input"]: {
+	data:ValueTypes["laundry_operator_insert_input"][],
+	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_operator_on_conflict"]
+};
+	/** aggregate avg on columns */
+["laundry_operator_avg_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by avg() on columns of table "laundry.operator" */
+["laundry_operator_avg_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** Boolean expression to filter rows from the table "laundry.operator". All fields are combined with a logical 'AND'. */
+["laundry_operator_bool_exp"]: {
+	_and?:ValueTypes["laundry_operator_bool_exp"][],
+	_not?:ValueTypes["laundry_operator_bool_exp"],
+	_or?:ValueTypes["laundry_operator_bool_exp"][],
+	app_type_id?:ValueTypes["String_comparison_exp"],
+	app_version?:ValueTypes["String_comparison_exp"],
+	current_gps?:ValueTypes["geography_comparison_exp"],
+	delivery_driver_type?:ValueTypes["String_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	notification_info?:ValueTypes["notification_info_bool_exp"],
+	online?:ValueTypes["Boolean_comparison_exp"],
+	owner?:ValueTypes["Boolean_comparison_exp"],
+	status?:ValueTypes["String_comparison_exp"],
+	store?:ValueTypes["laundry_store_bool_exp"],
+	store_id?:ValueTypes["Int_comparison_exp"],
+	user?:ValueTypes["user_bool_exp"],
+	user_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** unique or primary key constraints on table "laundry.operator" */
+["laundry_operator_constraint"]:laundry_operator_constraint;
+	/** input type for incrementing numeric columns in table "laundry.operator" */
+["laundry_operator_inc_input"]: {
+	id?:number,
+	store_id?:number,
+	user_id?:number
+};
+	/** input type for inserting data into table "laundry.operator" */
+["laundry_operator_insert_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:ValueTypes["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store?:ValueTypes["laundry_store_obj_rel_insert_input"],
+	store_id?:number,
+	user?:ValueTypes["user_obj_rel_insert_input"],
+	user_id?:number
+};
+	/** aggregate max on columns */
+["laundry_operator_max_fields"]: AliasType<{
+	app_type_id?:true,
+	app_version?:true,
+	delivery_driver_type?:true,
+	id?:true,
+	status?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by max() on columns of table "laundry.operator" */
+["laundry_operator_max_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
+	app_version?:ValueTypes["order_by"],
+	delivery_driver_type?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** aggregate min on columns */
+["laundry_operator_min_fields"]: AliasType<{
+	app_type_id?:true,
+	app_version?:true,
+	delivery_driver_type?:true,
+	id?:true,
+	status?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by min() on columns of table "laundry.operator" */
+["laundry_operator_min_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
+	app_version?:ValueTypes["order_by"],
+	delivery_driver_type?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** response of any mutation on the table "laundry.operator" */
+["laundry_operator_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["laundry_operator"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "laundry.operator" */
+["laundry_operator_on_conflict"]: {
+	constraint:ValueTypes["laundry_operator_constraint"],
+	update_columns:ValueTypes["laundry_operator_update_column"][],
+	where?:ValueTypes["laundry_operator_bool_exp"]
+};
+	/** Ordering options when selecting data from "laundry.operator". */
+["laundry_operator_order_by"]: {
+	app_type_id?:ValueTypes["order_by"],
+	app_version?:ValueTypes["order_by"],
+	current_gps?:ValueTypes["order_by"],
+	delivery_driver_type?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	notification_info?:ValueTypes["notification_info_order_by"],
+	online?:ValueTypes["order_by"],
+	owner?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"],
+	store?:ValueTypes["laundry_store_order_by"],
+	store_id?:ValueTypes["order_by"],
+	user?:ValueTypes["user_order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: laundry.operator */
+["laundry_operator_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "laundry.operator" */
+["laundry_operator_select_column"]:laundry_operator_select_column;
+	/** select "laundry_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "laundry.operator" */
+["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns"]:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns;
+	/** select "laundry_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "laundry.operator" */
+["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns"]:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns;
+	/** input type for updating data in table "laundry.operator" */
+["laundry_operator_set_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:ValueTypes["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+};
+	/** aggregate stddev on columns */
+["laundry_operator_stddev_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by stddev() on columns of table "laundry.operator" */
+["laundry_operator_stddev_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** aggregate stddev_pop on columns */
+["laundry_operator_stddev_pop_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by stddev_pop() on columns of table "laundry.operator" */
+["laundry_operator_stddev_pop_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** aggregate stddev_samp on columns */
+["laundry_operator_stddev_samp_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by stddev_samp() on columns of table "laundry.operator" */
+["laundry_operator_stddev_samp_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** Streaming cursor of the table "laundry_operator" */
+["laundry_operator_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["laundry_operator_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["laundry_operator_stream_cursor_value_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:ValueTypes["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+};
+	/** aggregate sum on columns */
+["laundry_operator_sum_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by sum() on columns of table "laundry.operator" */
+["laundry_operator_sum_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** update columns of table "laundry.operator" */
+["laundry_operator_update_column"]:laundry_operator_update_column;
+	["laundry_operator_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_operator_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_operator_set_input"],
+	where:ValueTypes["laundry_operator_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["laundry_operator_var_pop_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by var_pop() on columns of table "laundry.operator" */
+["laundry_operator_var_pop_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** aggregate var_samp on columns */
+["laundry_operator_var_samp_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by var_samp() on columns of table "laundry.operator" */
+["laundry_operator_var_samp_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** aggregate variance on columns */
+["laundry_operator_variance_fields"]: AliasType<{
+	id?:true,
+	store_id?:true,
+	user_id?:true,
+		__typename?: true
+}>;
+	/** order by variance() on columns of table "laundry.operator" */
+["laundry_operator_variance_order_by"]: {
+	id?:ValueTypes["order_by"],
+	store_id?:ValueTypes["order_by"],
+	user_id?:ValueTypes["order_by"]
+};
+	/** columns and relationships of "laundry.order" */
+["laundry_order"]: AliasType<{
+	actual_ready_time?:true,
+	cancellation_time?:true,
+categories?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category"]],
+categories_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category_aggregate"]],
+	/** An object relationship */
+	chat?:ValueTypes["chat"],
+	chat_id?:true,
+	/** An object relationship */
+	customer?:ValueTypes["customer_customer"],
+	customer_address?:true,
+	customer_app_type?:true,
+	customer_id?:true,
+	customer_location_gps?:true,
+	delivery_cost?:true,
+	delivery_type?:true,
+	discount_value?:true,
+	estimated_ready_time?:true,
+	firebase_id?:true,
+	/** An object relationship */
+	from_customer_delivery?:ValueTypes["delivery_order"],
+	from_customer_delivery_id?:true,
+	id?:true,
+	notes?:true,
+	order_time?:true,
+	payment_type?:true,
+	refund_amount?:true,
+	/** An object relationship */
+	review?:ValueTypes["review"],
+	review_id?:true,
+	scheduled_time?:true,
+	status?:true,
+	/** An object relationship */
+	store?:ValueTypes["laundry_store"],
+	store_id?:true,
+	stripe_fees?:true,
+stripe_info?: [{	/** JSON select path */
+	path?:string},true],
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "laundry.order" */
+["laundry_order_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["laundry_order_aggregate_fields"],
+	nodes?:ValueTypes["laundry_order"],
+		__typename?: true
+}>;
+	/** aggregate fields of "laundry.order" */
+["laundry_order_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["laundry_order_avg_fields"],
+count?: [{	columns?:ValueTypes["laundry_order_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["laundry_order_max_fields"],
+	min?:ValueTypes["laundry_order_min_fields"],
+	stddev?:ValueTypes["laundry_order_stddev_fields"],
+	stddev_pop?:ValueTypes["laundry_order_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["laundry_order_stddev_samp_fields"],
+	sum?:ValueTypes["laundry_order_sum_fields"],
+	var_pop?:ValueTypes["laundry_order_var_pop_fields"],
+	var_samp?:ValueTypes["laundry_order_var_samp_fields"],
+	variance?:ValueTypes["laundry_order_variance_fields"],
+		__typename?: true
+}>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["laundry_order_append_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** aggregate avg on columns */
+["laundry_order_avg_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "laundry.order". All fields are combined with a logical 'AND'. */
+["laundry_order_bool_exp"]: {
+	_and?:ValueTypes["laundry_order_bool_exp"][],
+	_not?:ValueTypes["laundry_order_bool_exp"],
+	_or?:ValueTypes["laundry_order_bool_exp"][],
+	actual_ready_time?:ValueTypes["timestamptz_comparison_exp"],
+	cancellation_time?:ValueTypes["timestamptz_comparison_exp"],
+	categories?:ValueTypes["laundry_order_category_bool_exp"],
+	categories_aggregate?:ValueTypes["laundry_order_category_aggregate_bool_exp"],
+	chat?:ValueTypes["chat_bool_exp"],
+	chat_id?:ValueTypes["Int_comparison_exp"],
+	customer?:ValueTypes["customer_customer_bool_exp"],
+	customer_address?:ValueTypes["String_comparison_exp"],
+	customer_app_type?:ValueTypes["String_comparison_exp"],
+	customer_id?:ValueTypes["Int_comparison_exp"],
+	customer_location_gps?:ValueTypes["geography_comparison_exp"],
+	delivery_cost?:ValueTypes["money_comparison_exp"],
+	delivery_type?:ValueTypes["String_comparison_exp"],
+	discount_value?:ValueTypes["money_comparison_exp"],
+	estimated_ready_time?:ValueTypes["timestamptz_comparison_exp"],
+	firebase_id?:ValueTypes["String_comparison_exp"],
+	from_customer_delivery?:ValueTypes["delivery_order_bool_exp"],
+	from_customer_delivery_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	notes?:ValueTypes["String_comparison_exp"],
+	order_time?:ValueTypes["timestamptz_comparison_exp"],
+	payment_type?:ValueTypes["String_comparison_exp"],
+	refund_amount?:ValueTypes["money_comparison_exp"],
+	review?:ValueTypes["review_bool_exp"],
+	review_id?:ValueTypes["Int_comparison_exp"],
+	scheduled_time?:ValueTypes["timestamptz_comparison_exp"],
+	status?:ValueTypes["String_comparison_exp"],
+	store?:ValueTypes["laundry_store_bool_exp"],
+	store_id?:ValueTypes["Int_comparison_exp"],
+	stripe_fees?:ValueTypes["money_comparison_exp"],
+	stripe_info?:ValueTypes["jsonb_comparison_exp"],
+	tax?:ValueTypes["money_comparison_exp"],
+	to_customer_delivery_id?:ValueTypes["Int_comparison_exp"]
+};
+	/** columns and relationships of "laundry.order_category" */
+["laundry_order_category"]: AliasType<{
+	/** An object relationship */
+	category?:ValueTypes["laundry_category"],
+	category_id?:true,
+	id?:true,
+	/** An object relationship */
+	order?:ValueTypes["laundry_order"],
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "laundry.order_category" */
+["laundry_order_category_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["laundry_order_category_aggregate_fields"],
+	nodes?:ValueTypes["laundry_order_category"],
+		__typename?: true
+}>;
+	["laundry_order_category_aggregate_bool_exp"]: {
+	avg?:ValueTypes["laundry_order_category_aggregate_bool_exp_avg"],
+	corr?:ValueTypes["laundry_order_category_aggregate_bool_exp_corr"],
+	count?:ValueTypes["laundry_order_category_aggregate_bool_exp_count"],
+	covar_samp?:ValueTypes["laundry_order_category_aggregate_bool_exp_covar_samp"],
+	max?:ValueTypes["laundry_order_category_aggregate_bool_exp_max"],
+	min?:ValueTypes["laundry_order_category_aggregate_bool_exp_min"],
+	stddev_samp?:ValueTypes["laundry_order_category_aggregate_bool_exp_stddev_samp"],
+	sum?:ValueTypes["laundry_order_category_aggregate_bool_exp_sum"],
+	var_samp?:ValueTypes["laundry_order_category_aggregate_bool_exp_var_samp"]
+};
+	["laundry_order_category_aggregate_bool_exp_avg"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_corr"]: {
+	arguments:ValueTypes["laundry_order_category_aggregate_bool_exp_corr_arguments"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_corr_arguments"]: {
+	X:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"],
+	Y:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"]
+};
+	["laundry_order_category_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["laundry_order_category_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_covar_samp"]: {
+	arguments:ValueTypes["laundry_order_category_aggregate_bool_exp_covar_samp_arguments"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_covar_samp_arguments"]: {
+	X:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"],
+	Y:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"]
+};
+	["laundry_order_category_aggregate_bool_exp_max"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_min"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_stddev_samp"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_sum"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	["laundry_order_category_aggregate_bool_exp_var_samp"]: {
+	arguments:ValueTypes["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns"],
+	distinct?:boolean,
+	filter?:ValueTypes["laundry_order_category_bool_exp"],
+	predicate:ValueTypes["float8_comparison_exp"]
+};
+	/** aggregate fields of "laundry.order_category" */
+["laundry_order_category_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["laundry_order_category_avg_fields"],
+count?: [{	columns?:ValueTypes["laundry_order_category_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["laundry_order_category_max_fields"],
+	min?:ValueTypes["laundry_order_category_min_fields"],
+	stddev?:ValueTypes["laundry_order_category_stddev_fields"],
+	stddev_pop?:ValueTypes["laundry_order_category_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["laundry_order_category_stddev_samp_fields"],
+	sum?:ValueTypes["laundry_order_category_sum_fields"],
+	var_pop?:ValueTypes["laundry_order_category_var_pop_fields"],
+	var_samp?:ValueTypes["laundry_order_category_var_samp_fields"],
+	variance?:ValueTypes["laundry_order_category_variance_fields"],
+		__typename?: true
+}>;
+	/** order by aggregate values of table "laundry.order_category" */
+["laundry_order_category_aggregate_order_by"]: {
+	avg?:ValueTypes["laundry_order_category_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["laundry_order_category_max_order_by"],
+	min?:ValueTypes["laundry_order_category_min_order_by"],
+	stddev?:ValueTypes["laundry_order_category_stddev_order_by"],
+	stddev_pop?:ValueTypes["laundry_order_category_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["laundry_order_category_stddev_samp_order_by"],
+	sum?:ValueTypes["laundry_order_category_sum_order_by"],
+	var_pop?:ValueTypes["laundry_order_category_var_pop_order_by"],
+	var_samp?:ValueTypes["laundry_order_category_var_samp_order_by"],
+	variance?:ValueTypes["laundry_order_category_variance_order_by"]
+};
+	/** input type for inserting array relation for remote table "laundry.order_category" */
+["laundry_order_category_arr_rel_insert_input"]: {
+	data:ValueTypes["laundry_order_category_insert_input"][],
+	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_category_on_conflict"]
+};
+	/** aggregate avg on columns */
+["laundry_order_category_avg_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by avg() on columns of table "laundry.order_category" */
+["laundry_order_category_avg_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** Boolean expression to filter rows from the table "laundry.order_category". All fields are combined with a logical 'AND'. */
+["laundry_order_category_bool_exp"]: {
+	_and?:ValueTypes["laundry_order_category_bool_exp"][],
+	_not?:ValueTypes["laundry_order_category_bool_exp"],
+	_or?:ValueTypes["laundry_order_category_bool_exp"][],
+	category?:ValueTypes["laundry_category_bool_exp"],
+	category_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	order?:ValueTypes["laundry_order_bool_exp"],
+	order_id?:ValueTypes["Int_comparison_exp"],
+	weight_in_kilo?:ValueTypes["float8_comparison_exp"]
+};
+	/** unique or primary key constraints on table "laundry.order_category" */
+["laundry_order_category_constraint"]:laundry_order_category_constraint;
+	/** input type for incrementing numeric columns in table "laundry.order_category" */
+["laundry_order_category_inc_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:ValueTypes["float8"]
+};
+	/** input type for inserting data into table "laundry.order_category" */
+["laundry_order_category_insert_input"]: {
+	category?:ValueTypes["laundry_category_obj_rel_insert_input"],
+	category_id?:number,
+	id?:number,
+	order?:ValueTypes["laundry_order_obj_rel_insert_input"],
+	order_id?:number,
+	weight_in_kilo?:ValueTypes["float8"]
+};
+	/** aggregate max on columns */
+["laundry_order_category_max_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by max() on columns of table "laundry.order_category" */
+["laundry_order_category_max_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** aggregate min on columns */
+["laundry_order_category_min_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by min() on columns of table "laundry.order_category" */
+["laundry_order_category_min_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** response of any mutation on the table "laundry.order_category" */
+["laundry_order_category_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["laundry_order_category"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "laundry.order_category" */
+["laundry_order_category_on_conflict"]: {
+	constraint:ValueTypes["laundry_order_category_constraint"],
+	update_columns:ValueTypes["laundry_order_category_update_column"][],
+	where?:ValueTypes["laundry_order_category_bool_exp"]
+};
+	/** Ordering options when selecting data from "laundry.order_category". */
+["laundry_order_category_order_by"]: {
+	category?:ValueTypes["laundry_category_order_by"],
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order?:ValueTypes["laundry_order_order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: laundry.order_category */
+["laundry_order_category_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "laundry.order_category" */
+["laundry_order_category_select_column"]:laundry_order_category_select_column;
+	/** select "laundry_order_category_aggregate_bool_exp_avg_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_corr_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_max_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_min_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_sum_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns;
+	/** select "laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns;
+	/** input type for updating data in table "laundry.order_category" */
+["laundry_order_category_set_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:ValueTypes["float8"]
+};
+	/** aggregate stddev on columns */
+["laundry_order_category_stddev_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by stddev() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** aggregate stddev_pop on columns */
+["laundry_order_category_stddev_pop_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by stddev_pop() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_pop_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** aggregate stddev_samp on columns */
+["laundry_order_category_stddev_samp_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by stddev_samp() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_samp_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** Streaming cursor of the table "laundry_order_category" */
+["laundry_order_category_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["laundry_order_category_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["laundry_order_category_stream_cursor_value_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:ValueTypes["float8"]
+};
+	/** aggregate sum on columns */
+["laundry_order_category_sum_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by sum() on columns of table "laundry.order_category" */
+["laundry_order_category_sum_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** update columns of table "laundry.order_category" */
+["laundry_order_category_update_column"]:laundry_order_category_update_column;
+	["laundry_order_category_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_category_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_category_set_input"],
+	where:ValueTypes["laundry_order_category_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["laundry_order_category_var_pop_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by var_pop() on columns of table "laundry.order_category" */
+["laundry_order_category_var_pop_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** aggregate var_samp on columns */
+["laundry_order_category_var_samp_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by var_samp() on columns of table "laundry.order_category" */
+["laundry_order_category_var_samp_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** aggregate variance on columns */
+["laundry_order_category_variance_fields"]: AliasType<{
+	category_id?:true,
+	id?:true,
+	order_id?:true,
+	weight_in_kilo?:true,
+		__typename?: true
+}>;
+	/** order by variance() on columns of table "laundry.order_category" */
+["laundry_order_category_variance_order_by"]: {
+	category_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	order_id?:ValueTypes["order_by"],
+	weight_in_kilo?:ValueTypes["order_by"]
+};
+	/** unique or primary key constraints on table "laundry.order" */
+["laundry_order_constraint"]:laundry_order_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["laundry_order_delete_at_path_input"]: {
+	stripe_info?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["laundry_order_delete_elem_input"]: {
+	stripe_info?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["laundry_order_delete_key_input"]: {
+	stripe_info?:string
+};
+	/** input type for incrementing numeric columns in table "laundry.order" */
+["laundry_order_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:ValueTypes["money"],
+	discount_value?:ValueTypes["money"],
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:ValueTypes["money"],
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:ValueTypes["money"],
+	tax?:ValueTypes["money"],
+	to_customer_delivery_id?:number
+};
+	/** input type for inserting data into table "laundry.order" */
+["laundry_order_insert_input"]: {
+	actual_ready_time?:ValueTypes["timestamptz"],
+	cancellation_time?:ValueTypes["timestamptz"],
+	categories?:ValueTypes["laundry_order_category_arr_rel_insert_input"],
+	chat?:ValueTypes["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:ValueTypes["geography"],
+	delivery_cost?:ValueTypes["money"],
+	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery?:ValueTypes["delivery_order_obj_rel_insert_input"],
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:ValueTypes["timestamptz"],
+	payment_type?:string,
+	refund_amount?:ValueTypes["money"],
+	review?:ValueTypes["review_obj_rel_insert_input"],
+	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
+	status?:string,
+	store?:ValueTypes["laundry_store_obj_rel_insert_input"],
+	store_id?:number,
+	stripe_fees?:ValueTypes["money"],
+	stripe_info?:ValueTypes["jsonb"],
+	tax?:ValueTypes["money"],
+	to_customer_delivery_id?:number
+};
+	/** aggregate max on columns */
+["laundry_order_max_fields"]: AliasType<{
+	actual_ready_time?:true,
+	cancellation_time?:true,
+	chat_id?:true,
+	customer_address?:true,
+	customer_app_type?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	delivery_type?:true,
+	discount_value?:true,
+	estimated_ready_time?:true,
+	firebase_id?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	notes?:true,
+	order_time?:true,
+	payment_type?:true,
+	refund_amount?:true,
+	review_id?:true,
+	scheduled_time?:true,
+	status?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["laundry_order_min_fields"]: AliasType<{
+	actual_ready_time?:true,
+	cancellation_time?:true,
+	chat_id?:true,
+	customer_address?:true,
+	customer_app_type?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	delivery_type?:true,
+	discount_value?:true,
+	estimated_ready_time?:true,
+	firebase_id?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	notes?:true,
+	order_time?:true,
+	payment_type?:true,
+	refund_amount?:true,
+	review_id?:true,
+	scheduled_time?:true,
+	status?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "laundry.order" */
+["laundry_order_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["laundry_order"],
+		__typename?: true
+}>;
+	/** input type for inserting object relation for remote table "laundry.order" */
+["laundry_order_obj_rel_insert_input"]: {
+	data:ValueTypes["laundry_order_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_on_conflict"]
+};
+	/** on_conflict condition type for table "laundry.order" */
+["laundry_order_on_conflict"]: {
+	constraint:ValueTypes["laundry_order_constraint"],
+	update_columns:ValueTypes["laundry_order_update_column"][],
+	where?:ValueTypes["laundry_order_bool_exp"]
+};
+	/** Ordering options when selecting data from "laundry.order". */
+["laundry_order_order_by"]: {
+	actual_ready_time?:ValueTypes["order_by"],
+	cancellation_time?:ValueTypes["order_by"],
+	categories_aggregate?:ValueTypes["laundry_order_category_aggregate_order_by"],
+	chat?:ValueTypes["chat_order_by"],
+	chat_id?:ValueTypes["order_by"],
+	customer?:ValueTypes["customer_customer_order_by"],
+	customer_address?:ValueTypes["order_by"],
+	customer_app_type?:ValueTypes["order_by"],
+	customer_id?:ValueTypes["order_by"],
+	customer_location_gps?:ValueTypes["order_by"],
+	delivery_cost?:ValueTypes["order_by"],
+	delivery_type?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
+	estimated_ready_time?:ValueTypes["order_by"],
+	firebase_id?:ValueTypes["order_by"],
+	from_customer_delivery?:ValueTypes["delivery_order_order_by"],
+	from_customer_delivery_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	notes?:ValueTypes["order_by"],
+	order_time?:ValueTypes["order_by"],
+	payment_type?:ValueTypes["order_by"],
+	refund_amount?:ValueTypes["order_by"],
+	review?:ValueTypes["review_order_by"],
+	review_id?:ValueTypes["order_by"],
+	scheduled_time?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"],
+	store?:ValueTypes["laundry_store_order_by"],
+	store_id?:ValueTypes["order_by"],
+	stripe_fees?:ValueTypes["order_by"],
+	stripe_info?:ValueTypes["order_by"],
+	tax?:ValueTypes["order_by"],
+	to_customer_delivery_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: laundry.order */
+["laundry_order_pk_columns_input"]: {
+	id:number
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["laundry_order_prepend_input"]: {
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** select columns of table "laundry.order" */
+["laundry_order_select_column"]:laundry_order_select_column;
+	/** input type for updating data in table "laundry.order" */
+["laundry_order_set_input"]: {
+	actual_ready_time?:ValueTypes["timestamptz"],
+	cancellation_time?:ValueTypes["timestamptz"],
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:ValueTypes["geography"],
+	delivery_cost?:ValueTypes["money"],
+	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:ValueTypes["timestamptz"],
+	payment_type?:string,
+	refund_amount?:ValueTypes["money"],
+	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
+	status?:string,
+	store_id?:number,
+	stripe_fees?:ValueTypes["money"],
+	stripe_info?:ValueTypes["jsonb"],
+	tax?:ValueTypes["money"],
+	to_customer_delivery_id?:number
+};
+	/** aggregate stddev on columns */
+["laundry_order_stddev_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["laundry_order_stddev_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["laundry_order_stddev_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "laundry_order" */
+["laundry_order_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["laundry_order_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["laundry_order_stream_cursor_value_input"]: {
+	actual_ready_time?:ValueTypes["timestamptz"],
+	cancellation_time?:ValueTypes["timestamptz"],
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:ValueTypes["geography"],
+	delivery_cost?:ValueTypes["money"],
+	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
+	estimated_ready_time?:ValueTypes["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:ValueTypes["timestamptz"],
+	payment_type?:string,
+	refund_amount?:ValueTypes["money"],
+	review_id?:number,
+	scheduled_time?:ValueTypes["timestamptz"],
+	status?:string,
+	store_id?:number,
+	stripe_fees?:ValueTypes["money"],
+	stripe_info?:ValueTypes["jsonb"],
+	tax?:ValueTypes["money"],
+	to_customer_delivery_id?:number
+};
+	/** aggregate sum on columns */
+["laundry_order_sum_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "laundry.order" */
+["laundry_order_update_column"]:laundry_order_update_column;
+	["laundry_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_order_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_order_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_set_input"],
+	where:ValueTypes["laundry_order_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["laundry_order_var_pop_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["laundry_order_var_samp_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["laundry_order_variance_fields"]: AliasType<{
+	chat_id?:true,
+	customer_id?:true,
+	delivery_cost?:true,
+	discount_value?:true,
+	from_customer_delivery_id?:true,
+	id?:true,
+	refund_amount?:true,
+	review_id?:true,
+	store_id?:true,
+	stripe_fees?:true,
+	tax?:true,
+	to_customer_delivery_id?:true,
+		__typename?: true
+}>;
+	/** columns and relationships of "laundry.store" */
+["laundry_store"]: AliasType<{
+accepted_payments?: [{	/** JSON select path */
+	path?:string},true],
+	approved?:true,
+	creation_time?:true,
+	customer_pickup?:true,
+	delivery?:true,
+	/** An object relationship */
+	delivery_details?:ValueTypes["delivery_details"],
+	delivery_details_id?:true,
+	/** An object relationship */
+	delivery_partner?:ValueTypes["service_provider_delivery_partner"],
+	/** An object relationship */
+	description?:ValueTypes["translation"],
+	description_id?:true,
+	id?:true,
+	image?:true,
+	language_id?:true,
+	/** An object relationship */
+	location?:ValueTypes["service_provider_location"],
+	location_id?:true,
+	name?:true,
+	open_status?:true,
+operators?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator"]],
+operators_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_aggregate"]],
+	phone_number?:true,
+schedule?: [{	/** JSON select path */
+	path?:string},true],
+	self_delivery?:true,
+	service_provider_type?:true,
+stripe_info?: [{	/** JSON select path */
+	path?:string},true],
+		__typename?: true
+}>;
+	/** aggregated selection of "laundry.store" */
+["laundry_store_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["laundry_store_aggregate_fields"],
+	nodes?:ValueTypes["laundry_store"],
+		__typename?: true
+}>;
+	/** aggregate fields of "laundry.store" */
+["laundry_store_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["laundry_store_avg_fields"],
+count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["laundry_store_max_fields"],
+	min?:ValueTypes["laundry_store_min_fields"],
+	stddev?:ValueTypes["laundry_store_stddev_fields"],
+	stddev_pop?:ValueTypes["laundry_store_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["laundry_store_stddev_samp_fields"],
+	sum?:ValueTypes["laundry_store_sum_fields"],
+	var_pop?:ValueTypes["laundry_store_var_pop_fields"],
+	var_samp?:ValueTypes["laundry_store_var_samp_fields"],
+	variance?:ValueTypes["laundry_store_variance_fields"],
+		__typename?: true
+}>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["laundry_store_append_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
+	schedule?:ValueTypes["jsonb"],
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** aggregate avg on columns */
+["laundry_store_avg_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "laundry.store". All fields are combined with a logical 'AND'. */
+["laundry_store_bool_exp"]: {
+	_and?:ValueTypes["laundry_store_bool_exp"][],
+	_not?:ValueTypes["laundry_store_bool_exp"],
+	_or?:ValueTypes["laundry_store_bool_exp"][],
+	accepted_payments?:ValueTypes["jsonb_comparison_exp"],
+	approved?:ValueTypes["Boolean_comparison_exp"],
+	creation_time?:ValueTypes["timestamptz_comparison_exp"],
+	customer_pickup?:ValueTypes["Boolean_comparison_exp"],
+	delivery?:ValueTypes["Boolean_comparison_exp"],
+	delivery_details?:ValueTypes["delivery_details_bool_exp"],
+	delivery_details_id?:ValueTypes["Int_comparison_exp"],
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_bool_exp"],
+	description?:ValueTypes["translation_bool_exp"],
+	description_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	image?:ValueTypes["String_comparison_exp"],
+	language_id?:ValueTypes["String_comparison_exp"],
+	location?:ValueTypes["service_provider_location_bool_exp"],
+	location_id?:ValueTypes["Int_comparison_exp"],
+	name?:ValueTypes["String_comparison_exp"],
+	open_status?:ValueTypes["String_comparison_exp"],
+	operators?:ValueTypes["laundry_operator_bool_exp"],
+	operators_aggregate?:ValueTypes["laundry_operator_aggregate_bool_exp"],
+	phone_number?:ValueTypes["String_comparison_exp"],
+	schedule?:ValueTypes["jsonb_comparison_exp"],
+	self_delivery?:ValueTypes["Boolean_comparison_exp"],
+	service_provider_type?:ValueTypes["String_comparison_exp"],
+	stripe_info?:ValueTypes["jsonb_comparison_exp"]
+};
+	/** unique or primary key constraints on table "laundry.store" */
+["laundry_store_constraint"]:laundry_store_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["laundry_store_delete_at_path_input"]: {
+	accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["laundry_store_delete_elem_input"]: {
+	accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["laundry_store_delete_key_input"]: {
+	accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
+};
+	/** input type for incrementing numeric columns in table "laundry.store" */
+["laundry_store_inc_input"]: {
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+};
+	/** input type for inserting data into table "laundry.store" */
+["laundry_store_insert_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
+	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
+	delivery_details_id?:number,
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_obj_rel_insert_input"],
+	description?:ValueTypes["translation_obj_rel_insert_input"],
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location?:ValueTypes["service_provider_location_obj_rel_insert_input"],
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	operators?:ValueTypes["laundry_operator_arr_rel_insert_input"],
+	phone_number?:string,
+	schedule?:ValueTypes["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** aggregate max on columns */
+["laundry_store_max_fields"]: AliasType<{
+	creation_time?:true,
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	image?:true,
+	language_id?:true,
+	location_id?:true,
+	name?:true,
+	open_status?:true,
+	phone_number?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["laundry_store_min_fields"]: AliasType<{
+	creation_time?:true,
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	image?:true,
+	language_id?:true,
+	location_id?:true,
+	name?:true,
+	open_status?:true,
+	phone_number?:true,
+	service_provider_type?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "laundry.store" */
+["laundry_store_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["laundry_store"],
+		__typename?: true
+}>;
+	/** input type for inserting object relation for remote table "laundry.store" */
+["laundry_store_obj_rel_insert_input"]: {
+	data:ValueTypes["laundry_store_insert_input"],
+	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_store_on_conflict"]
+};
+	/** on_conflict condition type for table "laundry.store" */
+["laundry_store_on_conflict"]: {
+	constraint:ValueTypes["laundry_store_constraint"],
+	update_columns:ValueTypes["laundry_store_update_column"][],
+	where?:ValueTypes["laundry_store_bool_exp"]
+};
+	/** Ordering options when selecting data from "laundry.store". */
+["laundry_store_order_by"]: {
+	accepted_payments?:ValueTypes["order_by"],
+	approved?:ValueTypes["order_by"],
+	creation_time?:ValueTypes["order_by"],
+	customer_pickup?:ValueTypes["order_by"],
+	delivery?:ValueTypes["order_by"],
+	delivery_details?:ValueTypes["delivery_details_order_by"],
+	delivery_details_id?:ValueTypes["order_by"],
+	delivery_partner?:ValueTypes["service_provider_delivery_partner_order_by"],
+	description?:ValueTypes["translation_order_by"],
+	description_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	image?:ValueTypes["order_by"],
+	language_id?:ValueTypes["order_by"],
+	location?:ValueTypes["service_provider_location_order_by"],
+	location_id?:ValueTypes["order_by"],
+	name?:ValueTypes["order_by"],
+	open_status?:ValueTypes["order_by"],
+	operators_aggregate?:ValueTypes["laundry_operator_aggregate_order_by"],
+	phone_number?:ValueTypes["order_by"],
+	schedule?:ValueTypes["order_by"],
+	self_delivery?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"],
+	stripe_info?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: laundry.store */
+["laundry_store_pk_columns_input"]: {
+	id:number
+};
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["laundry_store_prepend_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
+	schedule?:ValueTypes["jsonb"],
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** select columns of table "laundry.store" */
+["laundry_store_select_column"]:laundry_store_select_column;
+	/** input type for updating data in table "laundry.store" */
+["laundry_store_set_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
+	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:ValueTypes["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** aggregate stddev on columns */
+["laundry_store_stddev_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["laundry_store_stddev_pop_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["laundry_store_stddev_samp_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "laundry_store" */
+["laundry_store_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["laundry_store_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["laundry_store_stream_cursor_value_input"]: {
+	accepted_payments?:ValueTypes["jsonb"],
+	approved?:boolean,
+	creation_time?:ValueTypes["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:ValueTypes["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:ValueTypes["jsonb"]
+};
+	/** aggregate sum on columns */
+["laundry_store_sum_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** update columns of table "laundry.store" */
+["laundry_store_update_column"]:laundry_store_update_column;
+	["laundry_store_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_store_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_store_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_store_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_store_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_store_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_store_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_store_set_input"],
+	where:ValueTypes["laundry_store_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["laundry_store_var_pop_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["laundry_store_var_samp_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["laundry_store_variance_fields"]: AliasType<{
+	delivery_details_id?:true,
+	description_id?:true,
+	id?:true,
+	location_id?:true,
+		__typename?: true
+}>;
 	/** columns and relationships of "mez_admin" */
 ["mez_admin"]: AliasType<{
 	app_type_id?:true,
@@ -4902,7 +6755,6 @@ count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:bool
 	_inc?:ValueTypes["mez_admin_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_admin_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -5025,7 +6877,6 @@ count?: [{	columns?:ValueTypes["mez_admin_chat_select_column"][],	distinct?:bool
 	_inc?:ValueTypes["mez_admin_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_admin_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -5149,7 +7000,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["mez_json_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_json_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["mez_json_bool_exp"]
 };
 	["money"]:unknown;
@@ -5209,6 +7059,21 @@ delete_direct_chat_by_pk?: [{	chat_id:number},ValueTypes["direct_chat"]],
 delete_language?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["language_bool_exp"]},ValueTypes["language_mutation_response"]],
 delete_language_by_pk?: [{	id:string},ValueTypes["language"]],
+delete_laundry_category?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category_mutation_response"]],
+delete_laundry_category_by_pk?: [{	id:number},ValueTypes["laundry_category"]],
+delete_laundry_operator?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_mutation_response"]],
+delete_laundry_operator_by_pk?: [{	id:number},ValueTypes["laundry_operator"]],
+delete_laundry_order?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order_mutation_response"]],
+delete_laundry_order_by_pk?: [{	id:number},ValueTypes["laundry_order"]],
+delete_laundry_order_category?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category_mutation_response"]],
+delete_laundry_order_category_by_pk?: [{	id:number},ValueTypes["laundry_order_category"]],
+delete_laundry_store?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store_mutation_response"]],
+delete_laundry_store_by_pk?: [{	id:number},ValueTypes["laundry_store"]],
 delete_mez_admin?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["mez_admin_bool_exp"]},ValueTypes["mez_admin_mutation_response"]],
 delete_mez_admin_by_pk?: [{	user_id:number},ValueTypes["mez_admin"]],
@@ -5371,6 +7236,36 @@ insert_language?: [{	/** the rows to be inserted */
 insert_language_one?: [{	/** the row to be inserted */
 	object:ValueTypes["language_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["language_on_conflict"]},ValueTypes["language"]],
+insert_laundry_category?: [{	/** the rows to be inserted */
+	objects:ValueTypes["laundry_category_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_category_on_conflict"]},ValueTypes["laundry_category_mutation_response"]],
+insert_laundry_category_one?: [{	/** the row to be inserted */
+	object:ValueTypes["laundry_category_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_category_on_conflict"]},ValueTypes["laundry_category"]],
+insert_laundry_operator?: [{	/** the rows to be inserted */
+	objects:ValueTypes["laundry_operator_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_operator_on_conflict"]},ValueTypes["laundry_operator_mutation_response"]],
+insert_laundry_operator_one?: [{	/** the row to be inserted */
+	object:ValueTypes["laundry_operator_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_operator_on_conflict"]},ValueTypes["laundry_operator"]],
+insert_laundry_order?: [{	/** the rows to be inserted */
+	objects:ValueTypes["laundry_order_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_on_conflict"]},ValueTypes["laundry_order_mutation_response"]],
+insert_laundry_order_category?: [{	/** the rows to be inserted */
+	objects:ValueTypes["laundry_order_category_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_category_on_conflict"]},ValueTypes["laundry_order_category_mutation_response"]],
+insert_laundry_order_category_one?: [{	/** the row to be inserted */
+	object:ValueTypes["laundry_order_category_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_category_on_conflict"]},ValueTypes["laundry_order_category"]],
+insert_laundry_order_one?: [{	/** the row to be inserted */
+	object:ValueTypes["laundry_order_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_order_on_conflict"]},ValueTypes["laundry_order"]],
+insert_laundry_store?: [{	/** the rows to be inserted */
+	objects:ValueTypes["laundry_store_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_store_on_conflict"]},ValueTypes["laundry_store_mutation_response"]],
+insert_laundry_store_one?: [{	/** the row to be inserted */
+	object:ValueTypes["laundry_store_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["laundry_store_on_conflict"]},ValueTypes["laundry_store"]],
 insert_mez_admin?: [{	/** the rows to be inserted */
 	objects:ValueTypes["mez_admin_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["mez_admin_on_conflict"]},ValueTypes["mez_admin_mutation_response"]],
@@ -5674,6 +7569,75 @@ update_language_by_pk?: [{	/** sets the columns of the filtered rows to the give
 	_set?:ValueTypes["language_set_input"],	pk_columns:ValueTypes["language_pk_columns_input"]},ValueTypes["language"]],
 update_language_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["language_updates"][]},ValueTypes["language_mutation_response"]],
+update_laundry_category?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_category_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_category_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category_mutation_response"]],
+update_laundry_category_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_category_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_category_set_input"],	pk_columns:ValueTypes["laundry_category_pk_columns_input"]},ValueTypes["laundry_category"]],
+update_laundry_category_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["laundry_category_updates"][]},ValueTypes["laundry_category_mutation_response"]],
+update_laundry_operator?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_operator_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_operator_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_mutation_response"]],
+update_laundry_operator_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_operator_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_operator_set_input"],	pk_columns:ValueTypes["laundry_operator_pk_columns_input"]},ValueTypes["laundry_operator"]],
+update_laundry_operator_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["laundry_operator_updates"][]},ValueTypes["laundry_operator_mutation_response"]],
+update_laundry_order?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order_mutation_response"]],
+update_laundry_order_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_order_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_order_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_order_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_order_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_order_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_set_input"],	pk_columns:ValueTypes["laundry_order_pk_columns_input"]},ValueTypes["laundry_order"]],
+update_laundry_order_category?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_category_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_category_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category_mutation_response"]],
+update_laundry_order_category_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_order_category_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_order_category_set_input"],	pk_columns:ValueTypes["laundry_order_category_pk_columns_input"]},ValueTypes["laundry_order_category"]],
+update_laundry_order_category_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["laundry_order_category_updates"][]},ValueTypes["laundry_order_category_mutation_response"]],
+update_laundry_order_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["laundry_order_updates"][]},ValueTypes["laundry_order_mutation_response"]],
+update_laundry_store?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_store_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_store_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_store_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_store_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_store_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_store_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_store_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store_mutation_response"]],
+update_laundry_store_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["laundry_store_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["laundry_store_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["laundry_store_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["laundry_store_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["laundry_store_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["laundry_store_prepend_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["laundry_store_set_input"],	pk_columns:ValueTypes["laundry_store_pk_columns_input"]},ValueTypes["laundry_store"]],
+update_laundry_store_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["laundry_store_updates"][]},ValueTypes["laundry_store_mutation_response"]],
 update_mez_admin?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["mez_admin_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["mez_admin_set_input"],	/** filter the rows which have to be updated */
@@ -6128,7 +8092,6 @@ count?: [{	columns?:ValueTypes["notification_info_select_column"][],	distinct?:b
 	_inc?:ValueTypes["notification_info_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["notification_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["notification_info_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -6348,6 +8311,71 @@ language_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["language_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["language_bool_exp"]},ValueTypes["language_aggregate"]],
 language_by_pk?: [{	id:string},ValueTypes["language"]],
+laundry_category?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category"]],
+laundry_category_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category_aggregate"]],
+laundry_category_by_pk?: [{	id:number},ValueTypes["laundry_category"]],
+laundry_operator?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator"]],
+laundry_operator_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_aggregate"]],
+laundry_operator_by_pk?: [{	id:number},ValueTypes["laundry_operator"]],
+laundry_order?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order"]],
+laundry_order_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order_aggregate"]],
+laundry_order_by_pk?: [{	id:number},ValueTypes["laundry_order"]],
+laundry_order_category?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category"]],
+laundry_order_category_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category_aggregate"]],
+laundry_order_category_by_pk?: [{	id:number},ValueTypes["laundry_order_category"]],
+laundry_store?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_store_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_store_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store"]],
+laundry_store_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_store_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_store_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store_aggregate"]],
+laundry_store_by_pk?: [{	id:number},ValueTypes["laundry_store"]],
 mez_admin?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -6749,6 +8777,7 @@ user_by_pk?: [{	id:number},ValueTypes["user"]],
 	/** An object relationship */
 	customer?:ValueTypes["customer_customer"],
 	customer_id?:true,
+	discount_value?:true,
 items?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_cart_item_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -6790,6 +8819,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	/** aggregate avg on columns */
 ["restaurant_cart_avg_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -6801,6 +8831,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	cost?:ValueTypes["money_comparison_exp"],
 	customer?:ValueTypes["customer_customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
+	discount_value?:ValueTypes["money_comparison_exp"],
 	items?:ValueTypes["restaurant_cart_item_bool_exp"],
 	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -6811,12 +8842,14 @@ count?: [{	columns?:ValueTypes["restaurant_cart_select_column"][],	distinct?:boo
 	/** input type for incrementing numeric columns in table "restaurant.cart" */
 ["restaurant_cart_inc_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** input type for inserting data into table "restaurant.cart" */
 ["restaurant_cart_insert_input"]: {
 	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	items?:ValueTypes["restaurant_cart_item_arr_rel_insert_input"],
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
 	restaurant_id?:number
@@ -7116,7 +9149,6 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	_inc?:ValueTypes["restaurant_cart_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_cart_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_cart_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -7173,12 +9205,14 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** aggregate max on columns */
 ["restaurant_cart_max_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["restaurant_cart_min_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -7207,6 +9241,7 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	cost?:ValueTypes["order_by"],
 	customer?:ValueTypes["customer_customer_order_by"],
 	customer_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	items_aggregate?:ValueTypes["restaurant_cart_item_aggregate_order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
 	restaurant_id?:ValueTypes["order_by"]
@@ -7220,23 +9255,27 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** input type for updating data in table "restaurant.cart" */
 ["restaurant_cart_set_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** aggregate stddev on columns */
 ["restaurant_cart_stddev_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["restaurant_cart_stddev_pop_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["restaurant_cart_stddev_samp_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -7250,11 +9289,13 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_cart_stream_cursor_value_input"]: {
 	customer_id?:number,
+	discount_value?:ValueTypes["money"],
 	restaurant_id?:number
 };
 	/** aggregate sum on columns */
 ["restaurant_cart_sum_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -7265,24 +9306,26 @@ count?: [{	columns?:ValueTypes["restaurant_cart_item_select_column"][],	distinct
 	_inc?:ValueTypes["restaurant_cart_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_cart_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_cart_bool_exp"]
 };
 	/** aggregate var_pop on columns */
 ["restaurant_cart_var_pop_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["restaurant_cart_var_samp_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["restaurant_cart_variance_fields"]: AliasType<{
 	customer_id?:true,
+	discount_value?:true,
 	restaurant_id?:true,
 		__typename?: true
 }>;
@@ -7609,7 +9652,6 @@ count?: [{	columns?:ValueTypes["restaurant_category_select_column"][],	distinct?
 	_inc?:ValueTypes["restaurant_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_category_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -7963,7 +10005,6 @@ count?: [{	columns?:ValueTypes["restaurant_choice_select_column"][],	distinct?:b
 	_inc?:ValueTypes["restaurant_choice_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_choice_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_choice_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -8543,7 +10584,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	_inc?:ValueTypes["restaurant_item_option_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_item_option_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_item_option_map_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -8754,7 +10794,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 	_inc?:ValueTypes["restaurant_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -9148,7 +11187,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	_inc?:ValueTypes["restaurant_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_operator_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -9591,7 +11629,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["restaurant_option_choice_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_option_choice_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_option_choice_map_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -9884,7 +11921,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["restaurant_option_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_option_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_option_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -9972,6 +12008,7 @@ All fields are combined with a logical 'AND'. */
 	delivery_cost?:true,
 	delivery_id?:true,
 	delivery_type?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -10078,6 +12115,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -10092,6 +12130,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -10115,6 +12154,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:ValueTypes["money_comparison_exp"],
 	delivery_id?:ValueTypes["Int_comparison_exp"],
 	delivery_type?:ValueTypes["String_comparison_exp"],
+	discount_value?:ValueTypes["money_comparison_exp"],
 	estimated_food_ready_time?:ValueTypes["timestamptz_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -10172,6 +12212,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
+	discount_value?:ValueTypes["money"],
 	id?:number,
 	refund_amount?:ValueTypes["money"],
 	restaurant_id?:number,
@@ -10192,6 +12233,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -10554,7 +12596,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	_inc?:ValueTypes["restaurant_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_item_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -10624,6 +12665,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery_cost?:true,
 	delivery_id?:true,
 	delivery_type?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -10651,6 +12693,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
 	delivery_type?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -10677,6 +12720,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery_cost?:true,
 	delivery_id?:true,
 	delivery_type?:true,
+	discount_value?:true,
 	estimated_food_ready_time?:true,
 	firebase_id?:true,
 	id?:true,
@@ -10704,6 +12748,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
 	delivery_type?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -10753,6 +12798,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_item_select_column"][],	distinc
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
 	delivery_type?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	estimated_food_ready_time?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -10974,7 +13020,6 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	_inc?:ValueTypes["restaurant_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_public_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -11010,6 +13055,7 @@ count?: [{	columns?:ValueTypes["restaurant_order_public_select_column"][],	disti
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -11038,6 +13084,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11052,6 +13099,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11065,6 +13113,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11079,6 +13128,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11092,6 +13142,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11106,6 +13157,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11130,6 +13182,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:ValueTypes["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:ValueTypes["money"],
 	estimated_food_ready_time?:ValueTypes["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -11158,6 +13211,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11172,6 +13226,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11197,7 +13252,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_order_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -11206,6 +13260,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11220,6 +13275,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11233,6 +13289,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11247,6 +13304,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11260,6 +13318,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:true,
 	delivery_cost?:true,
 	delivery_id?:true,
+	discount_value?:true,
 	id?:true,
 	refund_amount?:true,
 	restaurant_id?:true,
@@ -11274,6 +13333,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_id?:ValueTypes["order_by"],
+	discount_value?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	refund_amount?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -11902,7 +13962,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["restaurant_restaurant_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["restaurant_restaurant_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["restaurant_restaurant_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12245,7 +14304,6 @@ count?: [{	columns?:ValueTypes["review_select_column"][],	distinct?:boolean},tru
 	_inc?:ValueTypes["review_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["review_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["review_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12469,7 +14527,6 @@ count?: [{	columns?:ValueTypes["service_provider_customer_chat_select_column"][]
 	_inc?:ValueTypes["service_provider_customer_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_customer_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_customer_chat_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12665,7 +14722,6 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	_inc?:ValueTypes["service_provider_delivery_partner_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_delivery_partner_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_delivery_partner_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12843,7 +14899,6 @@ count?: [{	columns?:ValueTypes["service_provider_location_select_column"][],	dis
 	_inc?:ValueTypes["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_location_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -12869,6 +14924,7 @@ comments?: [{	/** JSON select path */
 	image?:true,
 likes?: [{	/** JSON select path */
 	path?:string},true],
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	/** An object relationship */
@@ -12920,6 +14976,7 @@ count?: [{	columns?:ValueTypes["service_provider_post_select_column"][],	distinc
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
 	likes?:ValueTypes["jsonb_comparison_exp"],
+	link?:ValueTypes["String_comparison_exp"],
 	message?:ValueTypes["String_comparison_exp"],
 	posted_on?:ValueTypes["timestamptz_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
@@ -12963,6 +15020,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
@@ -12973,6 +15031,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_post_max_fields"]: AliasType<{
 	id?:true,
 	image?:true,
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	service_provider_id?:true,
@@ -12983,6 +15042,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_post_min_fields"]: AliasType<{
 	id?:true,
 	image?:true,
+	link?:true,
 	message?:true,
 	posted_on?:true,
 	service_provider_id?:true,
@@ -13009,6 +15069,7 @@ end). throws an error if top level container is not an array */
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
 	likes?:ValueTypes["order_by"],
+	link?:ValueTypes["order_by"],
 	message?:ValueTypes["order_by"],
 	posted_on?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
@@ -13036,6 +15097,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	service_provider_id?:number,
@@ -13074,6 +15136,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:ValueTypes["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:ValueTypes["timestamptz"],
 	service_provider_id?:number,
@@ -13103,7 +15166,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:ValueTypes["service_provider_post_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_post_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_post_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -13329,7 +15391,6 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	_inc?:ValueTypes["service_provider_service_link_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_service_link_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_service_link_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -13526,7 +15587,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:ValueTypes["service_provider_subscriber_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_subscriber_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_subscriber_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -13844,6 +15904,91 @@ language_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["language_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["language_bool_exp"]},ValueTypes["language"]],
+laundry_category?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category"]],
+laundry_category_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category_aggregate"]],
+laundry_category_by_pk?: [{	id:number},ValueTypes["laundry_category"]],
+laundry_category_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["laundry_category_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_category_bool_exp"]},ValueTypes["laundry_category"]],
+laundry_operator?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator"]],
+laundry_operator_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_operator_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_aggregate"]],
+laundry_operator_by_pk?: [{	id:number},ValueTypes["laundry_operator"]],
+laundry_operator_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["laundry_operator_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator"]],
+laundry_order?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order"]],
+laundry_order_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order_aggregate"]],
+laundry_order_by_pk?: [{	id:number},ValueTypes["laundry_order"]],
+laundry_order_category?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category"]],
+laundry_order_category_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_order_category_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_order_category_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category_aggregate"]],
+laundry_order_category_by_pk?: [{	id:number},ValueTypes["laundry_order_category"]],
+laundry_order_category_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["laundry_order_category_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_category_bool_exp"]},ValueTypes["laundry_order_category"]],
+laundry_order_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["laundry_order_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_order_bool_exp"]},ValueTypes["laundry_order"]],
+laundry_store?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_store_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_store_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store"]],
+laundry_store_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["laundry_store_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["laundry_store_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store_aggregate"]],
+laundry_store_by_pk?: [{	id:number},ValueTypes["laundry_store"]],
+laundry_store_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["laundry_store_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["laundry_store_bool_exp"]},ValueTypes["laundry_store"]],
 mez_admin?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["mez_admin_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -14537,7 +16682,6 @@ count?: [{	columns?:ValueTypes["translation_select_column"][],	distinct?:boolean
 	_inc?:ValueTypes["translation_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["translation_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["translation_bool_exp"]
 };
 	/** columns and relationships of "translation_value" */
@@ -14752,7 +16896,6 @@ count?: [{	columns?:ValueTypes["translation_value_select_column"][],	distinct?:b
 	_inc?:ValueTypes["translation_value_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["translation_value_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["translation_value_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -15005,7 +17148,6 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 	_inc?:ValueTypes["user_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["user_set_input"],
-	/** filter the rows which have to be updated */
 	where:ValueTypes["user_bool_exp"]
 };
 	/** aggregate var_pop on columns */
@@ -15118,7 +17260,6 @@ export type PartialObjects = {
 	["app_type_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["app_type_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["app_type_bool_exp"]
 },
 	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
@@ -15516,7 +17657,6 @@ end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["chat_participant_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["chat_participant_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["chat_participant_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -15632,7 +17772,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["chat_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -15929,7 +18068,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["customer_customer_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_customer_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_customer_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -16113,7 +18251,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_favourited_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_favourited_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_favourited_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -16392,7 +18529,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["customer_saved_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["customer_saved_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["customer_saved_location_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -16783,7 +18919,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_company_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_company_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_company_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -17143,7 +19278,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_details_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_details_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_details_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -17562,7 +19696,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_driver_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_driver_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_driver_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -17921,7 +20054,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["delivery_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_operator_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -18834,7 +20966,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["delivery_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_order_public_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -19142,7 +21273,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["delivery_order_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["delivery_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["delivery_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -19429,7 +21559,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["direct_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["direct_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["direct_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -19464,6 +21593,19 @@ cancelledByServiceProvider */
 	_lte?:number,
 	_neq?:number,
 	_nin?:number[]
+},
+	["float8"]:any,
+	/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+["float8_comparison_exp"]: {
+	_eq?:PartialObjects["float8"],
+	_gt?:PartialObjects["float8"],
+	_gte?:PartialObjects["float8"],
+	_in?:PartialObjects["float8"][],
+	_is_null?:boolean,
+	_lt?:PartialObjects["float8"],
+	_lte?:PartialObjects["float8"],
+	_neq?:PartialObjects["float8"],
+	_nin?:PartialObjects["float8"][]
 },
 	["geography"]:any,
 	["geography_cast_exp"]: {
@@ -19666,9 +21808,1842 @@ cancelledByServiceProvider */
 	["language_updates"]: {
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["language_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["language_bool_exp"]
 },
+	/** columns and relationships of "laundry.category" */
+["laundry_category"]: {
+		__typename?: "laundry_category";
+			cost_by_kilo?:PartialObjects["money"],
+			id?:number,
+			/** An object relationship */
+	name?:PartialObjects["translation"],
+			name_id?:number,
+			position?:number,
+			/** An object relationship */
+	store?:PartialObjects["laundry_store"],
+			store_id?:number
+	},
+	/** aggregated selection of "laundry.category" */
+["laundry_category_aggregate"]: {
+		__typename?: "laundry_category_aggregate";
+			aggregate?:PartialObjects["laundry_category_aggregate_fields"],
+			nodes?:PartialObjects["laundry_category"][]
+	},
+	/** aggregate fields of "laundry.category" */
+["laundry_category_aggregate_fields"]: {
+		__typename?: "laundry_category_aggregate_fields";
+			avg?:PartialObjects["laundry_category_avg_fields"],
+			count?:number,
+			max?:PartialObjects["laundry_category_max_fields"],
+			min?:PartialObjects["laundry_category_min_fields"],
+			stddev?:PartialObjects["laundry_category_stddev_fields"],
+			stddev_pop?:PartialObjects["laundry_category_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["laundry_category_stddev_samp_fields"],
+			sum?:PartialObjects["laundry_category_sum_fields"],
+			var_pop?:PartialObjects["laundry_category_var_pop_fields"],
+			var_samp?:PartialObjects["laundry_category_var_samp_fields"],
+			variance?:PartialObjects["laundry_category_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["laundry_category_avg_fields"]: {
+		__typename?: "laundry_category_avg_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** Boolean expression to filter rows from the table "laundry.category". All fields are combined with a logical 'AND'. */
+["laundry_category_bool_exp"]: {
+	_and?:PartialObjects["laundry_category_bool_exp"][],
+	_not?:PartialObjects["laundry_category_bool_exp"],
+	_or?:PartialObjects["laundry_category_bool_exp"][],
+	cost_by_kilo?:PartialObjects["money_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	name?:PartialObjects["translation_bool_exp"],
+	name_id?:PartialObjects["Int_comparison_exp"],
+	position?:PartialObjects["Int_comparison_exp"],
+	store?:PartialObjects["laundry_store_bool_exp"],
+	store_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "laundry.category" */
+["laundry_category_constraint"]:laundry_category_constraint,
+	/** input type for incrementing numeric columns in table "laundry.category" */
+["laundry_category_inc_input"]: {
+	cost_by_kilo?:PartialObjects["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+},
+	/** input type for inserting data into table "laundry.category" */
+["laundry_category_insert_input"]: {
+	cost_by_kilo?:PartialObjects["money"],
+	id?:number,
+	name?:PartialObjects["translation_obj_rel_insert_input"],
+	name_id?:number,
+	position?:number,
+	store?:PartialObjects["laundry_store_obj_rel_insert_input"],
+	store_id?:number
+},
+	/** aggregate max on columns */
+["laundry_category_max_fields"]: {
+		__typename?: "laundry_category_max_fields";
+			cost_by_kilo?:PartialObjects["money"],
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** aggregate min on columns */
+["laundry_category_min_fields"]: {
+		__typename?: "laundry_category_min_fields";
+			cost_by_kilo?:PartialObjects["money"],
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** response of any mutation on the table "laundry.category" */
+["laundry_category_mutation_response"]: {
+		__typename?: "laundry_category_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["laundry_category"][]
+	},
+	/** input type for inserting object relation for remote table "laundry.category" */
+["laundry_category_obj_rel_insert_input"]: {
+	data:PartialObjects["laundry_category_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["laundry_category_on_conflict"]
+},
+	/** on_conflict condition type for table "laundry.category" */
+["laundry_category_on_conflict"]: {
+	constraint:PartialObjects["laundry_category_constraint"],
+	update_columns:PartialObjects["laundry_category_update_column"][],
+	where?:PartialObjects["laundry_category_bool_exp"]
+},
+	/** Ordering options when selecting data from "laundry.category". */
+["laundry_category_order_by"]: {
+	cost_by_kilo?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	name?:PartialObjects["translation_order_by"],
+	name_id?:PartialObjects["order_by"],
+	position?:PartialObjects["order_by"],
+	store?:PartialObjects["laundry_store_order_by"],
+	store_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: laundry.category */
+["laundry_category_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "laundry.category" */
+["laundry_category_select_column"]:laundry_category_select_column,
+	/** input type for updating data in table "laundry.category" */
+["laundry_category_set_input"]: {
+	cost_by_kilo?:PartialObjects["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+},
+	/** aggregate stddev on columns */
+["laundry_category_stddev_fields"]: {
+		__typename?: "laundry_category_stddev_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["laundry_category_stddev_pop_fields"]: {
+		__typename?: "laundry_category_stddev_pop_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["laundry_category_stddev_samp_fields"]: {
+		__typename?: "laundry_category_stddev_samp_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** Streaming cursor of the table "laundry_category" */
+["laundry_category_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["laundry_category_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["laundry_category_stream_cursor_value_input"]: {
+	cost_by_kilo?:PartialObjects["money"],
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+},
+	/** aggregate sum on columns */
+["laundry_category_sum_fields"]: {
+		__typename?: "laundry_category_sum_fields";
+			cost_by_kilo?:PartialObjects["money"],
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** update columns of table "laundry.category" */
+["laundry_category_update_column"]:laundry_category_update_column,
+	["laundry_category_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["laundry_category_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["laundry_category_set_input"],
+	where:PartialObjects["laundry_category_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["laundry_category_var_pop_fields"]: {
+		__typename?: "laundry_category_var_pop_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** aggregate var_samp on columns */
+["laundry_category_var_samp_fields"]: {
+		__typename?: "laundry_category_var_samp_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** aggregate variance on columns */
+["laundry_category_variance_fields"]: {
+		__typename?: "laundry_category_variance_fields";
+			cost_by_kilo?:number,
+			id?:number,
+			name_id?:number,
+			position?:number,
+			store_id?:number
+	},
+	/** columns and relationships of "laundry.operator" */
+["laundry_operator"]: {
+		__typename?: "laundry_operator";
+			app_type_id?:string,
+			app_version?:string,
+			current_gps?:PartialObjects["geography"],
+			delivery_driver_type?:string,
+			id?:number,
+			/** An object relationship */
+	notification_info?:PartialObjects["notification_info"],
+			online?:boolean,
+			owner?:boolean,
+			status?:string,
+			/** An object relationship */
+	store?:PartialObjects["laundry_store"],
+			store_id?:number,
+			/** An object relationship */
+	user?:PartialObjects["user"],
+			user_id?:number
+	},
+	/** aggregated selection of "laundry.operator" */
+["laundry_operator_aggregate"]: {
+		__typename?: "laundry_operator_aggregate";
+			aggregate?:PartialObjects["laundry_operator_aggregate_fields"],
+			nodes?:PartialObjects["laundry_operator"][]
+	},
+	["laundry_operator_aggregate_bool_exp"]: {
+	bool_and?:PartialObjects["laundry_operator_aggregate_bool_exp_bool_and"],
+	bool_or?:PartialObjects["laundry_operator_aggregate_bool_exp_bool_or"],
+	count?:PartialObjects["laundry_operator_aggregate_bool_exp_count"]
+},
+	["laundry_operator_aggregate_bool_exp_bool_and"]: {
+	arguments:PartialObjects["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["laundry_operator_aggregate_bool_exp_bool_or"]: {
+	arguments:PartialObjects["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_operator_bool_exp"],
+	predicate:PartialObjects["Boolean_comparison_exp"]
+},
+	["laundry_operator_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["laundry_operator_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_operator_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
+	/** aggregate fields of "laundry.operator" */
+["laundry_operator_aggregate_fields"]: {
+		__typename?: "laundry_operator_aggregate_fields";
+			avg?:PartialObjects["laundry_operator_avg_fields"],
+			count?:number,
+			max?:PartialObjects["laundry_operator_max_fields"],
+			min?:PartialObjects["laundry_operator_min_fields"],
+			stddev?:PartialObjects["laundry_operator_stddev_fields"],
+			stddev_pop?:PartialObjects["laundry_operator_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["laundry_operator_stddev_samp_fields"],
+			sum?:PartialObjects["laundry_operator_sum_fields"],
+			var_pop?:PartialObjects["laundry_operator_var_pop_fields"],
+			var_samp?:PartialObjects["laundry_operator_var_samp_fields"],
+			variance?:PartialObjects["laundry_operator_variance_fields"]
+	},
+	/** order by aggregate values of table "laundry.operator" */
+["laundry_operator_aggregate_order_by"]: {
+	avg?:PartialObjects["laundry_operator_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["laundry_operator_max_order_by"],
+	min?:PartialObjects["laundry_operator_min_order_by"],
+	stddev?:PartialObjects["laundry_operator_stddev_order_by"],
+	stddev_pop?:PartialObjects["laundry_operator_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["laundry_operator_stddev_samp_order_by"],
+	sum?:PartialObjects["laundry_operator_sum_order_by"],
+	var_pop?:PartialObjects["laundry_operator_var_pop_order_by"],
+	var_samp?:PartialObjects["laundry_operator_var_samp_order_by"],
+	variance?:PartialObjects["laundry_operator_variance_order_by"]
+},
+	/** input type for inserting array relation for remote table "laundry.operator" */
+["laundry_operator_arr_rel_insert_input"]: {
+	data:PartialObjects["laundry_operator_insert_input"][],
+	/** upsert condition */
+	on_conflict?:PartialObjects["laundry_operator_on_conflict"]
+},
+	/** aggregate avg on columns */
+["laundry_operator_avg_fields"]: {
+		__typename?: "laundry_operator_avg_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by avg() on columns of table "laundry.operator" */
+["laundry_operator_avg_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** Boolean expression to filter rows from the table "laundry.operator". All fields are combined with a logical 'AND'. */
+["laundry_operator_bool_exp"]: {
+	_and?:PartialObjects["laundry_operator_bool_exp"][],
+	_not?:PartialObjects["laundry_operator_bool_exp"],
+	_or?:PartialObjects["laundry_operator_bool_exp"][],
+	app_type_id?:PartialObjects["String_comparison_exp"],
+	app_version?:PartialObjects["String_comparison_exp"],
+	current_gps?:PartialObjects["geography_comparison_exp"],
+	delivery_driver_type?:PartialObjects["String_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	notification_info?:PartialObjects["notification_info_bool_exp"],
+	online?:PartialObjects["Boolean_comparison_exp"],
+	owner?:PartialObjects["Boolean_comparison_exp"],
+	status?:PartialObjects["String_comparison_exp"],
+	store?:PartialObjects["laundry_store_bool_exp"],
+	store_id?:PartialObjects["Int_comparison_exp"],
+	user?:PartialObjects["user_bool_exp"],
+	user_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** unique or primary key constraints on table "laundry.operator" */
+["laundry_operator_constraint"]:laundry_operator_constraint,
+	/** input type for incrementing numeric columns in table "laundry.operator" */
+["laundry_operator_inc_input"]: {
+	id?:number,
+	store_id?:number,
+	user_id?:number
+},
+	/** input type for inserting data into table "laundry.operator" */
+["laundry_operator_insert_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:PartialObjects["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store?:PartialObjects["laundry_store_obj_rel_insert_input"],
+	store_id?:number,
+	user?:PartialObjects["user_obj_rel_insert_input"],
+	user_id?:number
+},
+	/** aggregate max on columns */
+["laundry_operator_max_fields"]: {
+		__typename?: "laundry_operator_max_fields";
+			app_type_id?:string,
+			app_version?:string,
+			delivery_driver_type?:string,
+			id?:number,
+			status?:string,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by max() on columns of table "laundry.operator" */
+["laundry_operator_max_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
+	app_version?:PartialObjects["order_by"],
+	delivery_driver_type?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** aggregate min on columns */
+["laundry_operator_min_fields"]: {
+		__typename?: "laundry_operator_min_fields";
+			app_type_id?:string,
+			app_version?:string,
+			delivery_driver_type?:string,
+			id?:number,
+			status?:string,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by min() on columns of table "laundry.operator" */
+["laundry_operator_min_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
+	app_version?:PartialObjects["order_by"],
+	delivery_driver_type?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** response of any mutation on the table "laundry.operator" */
+["laundry_operator_mutation_response"]: {
+		__typename?: "laundry_operator_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["laundry_operator"][]
+	},
+	/** on_conflict condition type for table "laundry.operator" */
+["laundry_operator_on_conflict"]: {
+	constraint:PartialObjects["laundry_operator_constraint"],
+	update_columns:PartialObjects["laundry_operator_update_column"][],
+	where?:PartialObjects["laundry_operator_bool_exp"]
+},
+	/** Ordering options when selecting data from "laundry.operator". */
+["laundry_operator_order_by"]: {
+	app_type_id?:PartialObjects["order_by"],
+	app_version?:PartialObjects["order_by"],
+	current_gps?:PartialObjects["order_by"],
+	delivery_driver_type?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	notification_info?:PartialObjects["notification_info_order_by"],
+	online?:PartialObjects["order_by"],
+	owner?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"],
+	store?:PartialObjects["laundry_store_order_by"],
+	store_id?:PartialObjects["order_by"],
+	user?:PartialObjects["user_order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: laundry.operator */
+["laundry_operator_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "laundry.operator" */
+["laundry_operator_select_column"]:laundry_operator_select_column,
+	/** select "laundry_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "laundry.operator" */
+["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns"]:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	/** select "laundry_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "laundry.operator" */
+["laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns"]:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns,
+	/** input type for updating data in table "laundry.operator" */
+["laundry_operator_set_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:PartialObjects["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+},
+	/** aggregate stddev on columns */
+["laundry_operator_stddev_fields"]: {
+		__typename?: "laundry_operator_stddev_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by stddev() on columns of table "laundry.operator" */
+["laundry_operator_stddev_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_pop on columns */
+["laundry_operator_stddev_pop_fields"]: {
+		__typename?: "laundry_operator_stddev_pop_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by stddev_pop() on columns of table "laundry.operator" */
+["laundry_operator_stddev_pop_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_samp on columns */
+["laundry_operator_stddev_samp_fields"]: {
+		__typename?: "laundry_operator_stddev_samp_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by stddev_samp() on columns of table "laundry.operator" */
+["laundry_operator_stddev_samp_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** Streaming cursor of the table "laundry_operator" */
+["laundry_operator_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["laundry_operator_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["laundry_operator_stream_cursor_value_input"]: {
+	app_type_id?:string,
+	app_version?:string,
+	current_gps?:PartialObjects["geography"],
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+},
+	/** aggregate sum on columns */
+["laundry_operator_sum_fields"]: {
+		__typename?: "laundry_operator_sum_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by sum() on columns of table "laundry.operator" */
+["laundry_operator_sum_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** update columns of table "laundry.operator" */
+["laundry_operator_update_column"]:laundry_operator_update_column,
+	["laundry_operator_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["laundry_operator_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["laundry_operator_set_input"],
+	where:PartialObjects["laundry_operator_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["laundry_operator_var_pop_fields"]: {
+		__typename?: "laundry_operator_var_pop_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by var_pop() on columns of table "laundry.operator" */
+["laundry_operator_var_pop_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** aggregate var_samp on columns */
+["laundry_operator_var_samp_fields"]: {
+		__typename?: "laundry_operator_var_samp_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by var_samp() on columns of table "laundry.operator" */
+["laundry_operator_var_samp_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** aggregate variance on columns */
+["laundry_operator_variance_fields"]: {
+		__typename?: "laundry_operator_variance_fields";
+			id?:number,
+			store_id?:number,
+			user_id?:number
+	},
+	/** order by variance() on columns of table "laundry.operator" */
+["laundry_operator_variance_order_by"]: {
+	id?:PartialObjects["order_by"],
+	store_id?:PartialObjects["order_by"],
+	user_id?:PartialObjects["order_by"]
+},
+	/** columns and relationships of "laundry.order" */
+["laundry_order"]: {
+		__typename?: "laundry_order";
+			actual_ready_time?:PartialObjects["timestamptz"],
+			cancellation_time?:PartialObjects["timestamptz"],
+			/** An array relationship */
+	categories?:PartialObjects["laundry_order_category"][],
+			/** An aggregate relationship */
+	categories_aggregate?:PartialObjects["laundry_order_category_aggregate"],
+			/** An object relationship */
+	chat?:PartialObjects["chat"],
+			chat_id?:number,
+			/** An object relationship */
+	customer?:PartialObjects["customer_customer"],
+			customer_address?:string,
+			customer_app_type?:string,
+			customer_id?:number,
+			customer_location_gps?:PartialObjects["geography"],
+			delivery_cost?:PartialObjects["money"],
+			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
+			firebase_id?:string,
+			/** An object relationship */
+	from_customer_delivery?:PartialObjects["delivery_order"],
+			from_customer_delivery_id?:number,
+			id?:number,
+			notes?:string,
+			order_time?:PartialObjects["timestamptz"],
+			payment_type?:string,
+			refund_amount?:PartialObjects["money"],
+			/** An object relationship */
+	review?:PartialObjects["review"],
+			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
+			status?:string,
+			/** An object relationship */
+	store?:PartialObjects["laundry_store"],
+			store_id?:number,
+			stripe_fees?:PartialObjects["money"],
+			stripe_info?:PartialObjects["jsonb"],
+			tax?:PartialObjects["money"],
+			to_customer_delivery_id?:number
+	},
+	/** aggregated selection of "laundry.order" */
+["laundry_order_aggregate"]: {
+		__typename?: "laundry_order_aggregate";
+			aggregate?:PartialObjects["laundry_order_aggregate_fields"],
+			nodes?:PartialObjects["laundry_order"][]
+	},
+	/** aggregate fields of "laundry.order" */
+["laundry_order_aggregate_fields"]: {
+		__typename?: "laundry_order_aggregate_fields";
+			avg?:PartialObjects["laundry_order_avg_fields"],
+			count?:number,
+			max?:PartialObjects["laundry_order_max_fields"],
+			min?:PartialObjects["laundry_order_min_fields"],
+			stddev?:PartialObjects["laundry_order_stddev_fields"],
+			stddev_pop?:PartialObjects["laundry_order_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["laundry_order_stddev_samp_fields"],
+			sum?:PartialObjects["laundry_order_sum_fields"],
+			var_pop?:PartialObjects["laundry_order_var_pop_fields"],
+			var_samp?:PartialObjects["laundry_order_var_samp_fields"],
+			variance?:PartialObjects["laundry_order_variance_fields"]
+	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["laundry_order_append_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** aggregate avg on columns */
+["laundry_order_avg_fields"]: {
+		__typename?: "laundry_order_avg_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** Boolean expression to filter rows from the table "laundry.order". All fields are combined with a logical 'AND'. */
+["laundry_order_bool_exp"]: {
+	_and?:PartialObjects["laundry_order_bool_exp"][],
+	_not?:PartialObjects["laundry_order_bool_exp"],
+	_or?:PartialObjects["laundry_order_bool_exp"][],
+	actual_ready_time?:PartialObjects["timestamptz_comparison_exp"],
+	cancellation_time?:PartialObjects["timestamptz_comparison_exp"],
+	categories?:PartialObjects["laundry_order_category_bool_exp"],
+	categories_aggregate?:PartialObjects["laundry_order_category_aggregate_bool_exp"],
+	chat?:PartialObjects["chat_bool_exp"],
+	chat_id?:PartialObjects["Int_comparison_exp"],
+	customer?:PartialObjects["customer_customer_bool_exp"],
+	customer_address?:PartialObjects["String_comparison_exp"],
+	customer_app_type?:PartialObjects["String_comparison_exp"],
+	customer_id?:PartialObjects["Int_comparison_exp"],
+	customer_location_gps?:PartialObjects["geography_comparison_exp"],
+	delivery_cost?:PartialObjects["money_comparison_exp"],
+	delivery_type?:PartialObjects["String_comparison_exp"],
+	discount_value?:PartialObjects["money_comparison_exp"],
+	estimated_ready_time?:PartialObjects["timestamptz_comparison_exp"],
+	firebase_id?:PartialObjects["String_comparison_exp"],
+	from_customer_delivery?:PartialObjects["delivery_order_bool_exp"],
+	from_customer_delivery_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	notes?:PartialObjects["String_comparison_exp"],
+	order_time?:PartialObjects["timestamptz_comparison_exp"],
+	payment_type?:PartialObjects["String_comparison_exp"],
+	refund_amount?:PartialObjects["money_comparison_exp"],
+	review?:PartialObjects["review_bool_exp"],
+	review_id?:PartialObjects["Int_comparison_exp"],
+	scheduled_time?:PartialObjects["timestamptz_comparison_exp"],
+	status?:PartialObjects["String_comparison_exp"],
+	store?:PartialObjects["laundry_store_bool_exp"],
+	store_id?:PartialObjects["Int_comparison_exp"],
+	stripe_fees?:PartialObjects["money_comparison_exp"],
+	stripe_info?:PartialObjects["jsonb_comparison_exp"],
+	tax?:PartialObjects["money_comparison_exp"],
+	to_customer_delivery_id?:PartialObjects["Int_comparison_exp"]
+},
+	/** columns and relationships of "laundry.order_category" */
+["laundry_order_category"]: {
+		__typename?: "laundry_order_category";
+			/** An object relationship */
+	category?:PartialObjects["laundry_category"],
+			category_id?:number,
+			id?:number,
+			/** An object relationship */
+	order?:PartialObjects["laundry_order"],
+			order_id?:number,
+			weight_in_kilo?:PartialObjects["float8"]
+	},
+	/** aggregated selection of "laundry.order_category" */
+["laundry_order_category_aggregate"]: {
+		__typename?: "laundry_order_category_aggregate";
+			aggregate?:PartialObjects["laundry_order_category_aggregate_fields"],
+			nodes?:PartialObjects["laundry_order_category"][]
+	},
+	["laundry_order_category_aggregate_bool_exp"]: {
+	avg?:PartialObjects["laundry_order_category_aggregate_bool_exp_avg"],
+	corr?:PartialObjects["laundry_order_category_aggregate_bool_exp_corr"],
+	count?:PartialObjects["laundry_order_category_aggregate_bool_exp_count"],
+	covar_samp?:PartialObjects["laundry_order_category_aggregate_bool_exp_covar_samp"],
+	max?:PartialObjects["laundry_order_category_aggregate_bool_exp_max"],
+	min?:PartialObjects["laundry_order_category_aggregate_bool_exp_min"],
+	stddev_samp?:PartialObjects["laundry_order_category_aggregate_bool_exp_stddev_samp"],
+	sum?:PartialObjects["laundry_order_category_aggregate_bool_exp_sum"],
+	var_samp?:PartialObjects["laundry_order_category_aggregate_bool_exp_var_samp"]
+},
+	["laundry_order_category_aggregate_bool_exp_avg"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_corr"]: {
+	arguments:PartialObjects["laundry_order_category_aggregate_bool_exp_corr_arguments"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_corr_arguments"]: {
+	X:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"],
+	Y:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"]
+},
+	["laundry_order_category_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["laundry_order_category_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_covar_samp"]: {
+	arguments:PartialObjects["laundry_order_category_aggregate_bool_exp_covar_samp_arguments"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_covar_samp_arguments"]: {
+	X:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"],
+	Y:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"]
+},
+	["laundry_order_category_aggregate_bool_exp_max"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_min"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_stddev_samp"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_sum"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	["laundry_order_category_aggregate_bool_exp_var_samp"]: {
+	arguments:PartialObjects["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns"],
+	distinct?:boolean,
+	filter?:PartialObjects["laundry_order_category_bool_exp"],
+	predicate:PartialObjects["float8_comparison_exp"]
+},
+	/** aggregate fields of "laundry.order_category" */
+["laundry_order_category_aggregate_fields"]: {
+		__typename?: "laundry_order_category_aggregate_fields";
+			avg?:PartialObjects["laundry_order_category_avg_fields"],
+			count?:number,
+			max?:PartialObjects["laundry_order_category_max_fields"],
+			min?:PartialObjects["laundry_order_category_min_fields"],
+			stddev?:PartialObjects["laundry_order_category_stddev_fields"],
+			stddev_pop?:PartialObjects["laundry_order_category_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["laundry_order_category_stddev_samp_fields"],
+			sum?:PartialObjects["laundry_order_category_sum_fields"],
+			var_pop?:PartialObjects["laundry_order_category_var_pop_fields"],
+			var_samp?:PartialObjects["laundry_order_category_var_samp_fields"],
+			variance?:PartialObjects["laundry_order_category_variance_fields"]
+	},
+	/** order by aggregate values of table "laundry.order_category" */
+["laundry_order_category_aggregate_order_by"]: {
+	avg?:PartialObjects["laundry_order_category_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["laundry_order_category_max_order_by"],
+	min?:PartialObjects["laundry_order_category_min_order_by"],
+	stddev?:PartialObjects["laundry_order_category_stddev_order_by"],
+	stddev_pop?:PartialObjects["laundry_order_category_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["laundry_order_category_stddev_samp_order_by"],
+	sum?:PartialObjects["laundry_order_category_sum_order_by"],
+	var_pop?:PartialObjects["laundry_order_category_var_pop_order_by"],
+	var_samp?:PartialObjects["laundry_order_category_var_samp_order_by"],
+	variance?:PartialObjects["laundry_order_category_variance_order_by"]
+},
+	/** input type for inserting array relation for remote table "laundry.order_category" */
+["laundry_order_category_arr_rel_insert_input"]: {
+	data:PartialObjects["laundry_order_category_insert_input"][],
+	/** upsert condition */
+	on_conflict?:PartialObjects["laundry_order_category_on_conflict"]
+},
+	/** aggregate avg on columns */
+["laundry_order_category_avg_fields"]: {
+		__typename?: "laundry_order_category_avg_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by avg() on columns of table "laundry.order_category" */
+["laundry_order_category_avg_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** Boolean expression to filter rows from the table "laundry.order_category". All fields are combined with a logical 'AND'. */
+["laundry_order_category_bool_exp"]: {
+	_and?:PartialObjects["laundry_order_category_bool_exp"][],
+	_not?:PartialObjects["laundry_order_category_bool_exp"],
+	_or?:PartialObjects["laundry_order_category_bool_exp"][],
+	category?:PartialObjects["laundry_category_bool_exp"],
+	category_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	order?:PartialObjects["laundry_order_bool_exp"],
+	order_id?:PartialObjects["Int_comparison_exp"],
+	weight_in_kilo?:PartialObjects["float8_comparison_exp"]
+},
+	/** unique or primary key constraints on table "laundry.order_category" */
+["laundry_order_category_constraint"]:laundry_order_category_constraint,
+	/** input type for incrementing numeric columns in table "laundry.order_category" */
+["laundry_order_category_inc_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:PartialObjects["float8"]
+},
+	/** input type for inserting data into table "laundry.order_category" */
+["laundry_order_category_insert_input"]: {
+	category?:PartialObjects["laundry_category_obj_rel_insert_input"],
+	category_id?:number,
+	id?:number,
+	order?:PartialObjects["laundry_order_obj_rel_insert_input"],
+	order_id?:number,
+	weight_in_kilo?:PartialObjects["float8"]
+},
+	/** aggregate max on columns */
+["laundry_order_category_max_fields"]: {
+		__typename?: "laundry_order_category_max_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:PartialObjects["float8"]
+	},
+	/** order by max() on columns of table "laundry.order_category" */
+["laundry_order_category_max_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** aggregate min on columns */
+["laundry_order_category_min_fields"]: {
+		__typename?: "laundry_order_category_min_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:PartialObjects["float8"]
+	},
+	/** order by min() on columns of table "laundry.order_category" */
+["laundry_order_category_min_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** response of any mutation on the table "laundry.order_category" */
+["laundry_order_category_mutation_response"]: {
+		__typename?: "laundry_order_category_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["laundry_order_category"][]
+	},
+	/** on_conflict condition type for table "laundry.order_category" */
+["laundry_order_category_on_conflict"]: {
+	constraint:PartialObjects["laundry_order_category_constraint"],
+	update_columns:PartialObjects["laundry_order_category_update_column"][],
+	where?:PartialObjects["laundry_order_category_bool_exp"]
+},
+	/** Ordering options when selecting data from "laundry.order_category". */
+["laundry_order_category_order_by"]: {
+	category?:PartialObjects["laundry_category_order_by"],
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order?:PartialObjects["laundry_order_order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: laundry.order_category */
+["laundry_order_category_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "laundry.order_category" */
+["laundry_order_category_select_column"]:laundry_order_category_select_column,
+	/** select "laundry_order_category_aggregate_bool_exp_avg_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_corr_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_max_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_min_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_sum_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns,
+	/** select "laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns" columns of table "laundry.order_category" */
+["laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns"]:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns,
+	/** input type for updating data in table "laundry.order_category" */
+["laundry_order_category_set_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:PartialObjects["float8"]
+},
+	/** aggregate stddev on columns */
+["laundry_order_category_stddev_fields"]: {
+		__typename?: "laundry_order_category_stddev_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by stddev() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_pop on columns */
+["laundry_order_category_stddev_pop_fields"]: {
+		__typename?: "laundry_order_category_stddev_pop_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by stddev_pop() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_pop_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** aggregate stddev_samp on columns */
+["laundry_order_category_stddev_samp_fields"]: {
+		__typename?: "laundry_order_category_stddev_samp_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by stddev_samp() on columns of table "laundry.order_category" */
+["laundry_order_category_stddev_samp_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** Streaming cursor of the table "laundry_order_category" */
+["laundry_order_category_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["laundry_order_category_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["laundry_order_category_stream_cursor_value_input"]: {
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:PartialObjects["float8"]
+},
+	/** aggregate sum on columns */
+["laundry_order_category_sum_fields"]: {
+		__typename?: "laundry_order_category_sum_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:PartialObjects["float8"]
+	},
+	/** order by sum() on columns of table "laundry.order_category" */
+["laundry_order_category_sum_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** update columns of table "laundry.order_category" */
+["laundry_order_category_update_column"]:laundry_order_category_update_column,
+	["laundry_order_category_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["laundry_order_category_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["laundry_order_category_set_input"],
+	where:PartialObjects["laundry_order_category_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["laundry_order_category_var_pop_fields"]: {
+		__typename?: "laundry_order_category_var_pop_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by var_pop() on columns of table "laundry.order_category" */
+["laundry_order_category_var_pop_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** aggregate var_samp on columns */
+["laundry_order_category_var_samp_fields"]: {
+		__typename?: "laundry_order_category_var_samp_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by var_samp() on columns of table "laundry.order_category" */
+["laundry_order_category_var_samp_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** aggregate variance on columns */
+["laundry_order_category_variance_fields"]: {
+		__typename?: "laundry_order_category_variance_fields";
+			category_id?:number,
+			id?:number,
+			order_id?:number,
+			weight_in_kilo?:number
+	},
+	/** order by variance() on columns of table "laundry.order_category" */
+["laundry_order_category_variance_order_by"]: {
+	category_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	order_id?:PartialObjects["order_by"],
+	weight_in_kilo?:PartialObjects["order_by"]
+},
+	/** unique or primary key constraints on table "laundry.order" */
+["laundry_order_constraint"]:laundry_order_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["laundry_order_delete_at_path_input"]: {
+	stripe_info?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["laundry_order_delete_elem_input"]: {
+	stripe_info?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["laundry_order_delete_key_input"]: {
+	stripe_info?:string
+},
+	/** input type for incrementing numeric columns in table "laundry.order" */
+["laundry_order_inc_input"]: {
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:PartialObjects["money"],
+	discount_value?:PartialObjects["money"],
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:PartialObjects["money"],
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:PartialObjects["money"],
+	tax?:PartialObjects["money"],
+	to_customer_delivery_id?:number
+},
+	/** input type for inserting data into table "laundry.order" */
+["laundry_order_insert_input"]: {
+	actual_ready_time?:PartialObjects["timestamptz"],
+	cancellation_time?:PartialObjects["timestamptz"],
+	categories?:PartialObjects["laundry_order_category_arr_rel_insert_input"],
+	chat?:PartialObjects["chat_obj_rel_insert_input"],
+	chat_id?:number,
+	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:PartialObjects["geography"],
+	delivery_cost?:PartialObjects["money"],
+	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery?:PartialObjects["delivery_order_obj_rel_insert_input"],
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:PartialObjects["timestamptz"],
+	payment_type?:string,
+	refund_amount?:PartialObjects["money"],
+	review?:PartialObjects["review_obj_rel_insert_input"],
+	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
+	status?:string,
+	store?:PartialObjects["laundry_store_obj_rel_insert_input"],
+	store_id?:number,
+	stripe_fees?:PartialObjects["money"],
+	stripe_info?:PartialObjects["jsonb"],
+	tax?:PartialObjects["money"],
+	to_customer_delivery_id?:number
+},
+	/** aggregate max on columns */
+["laundry_order_max_fields"]: {
+		__typename?: "laundry_order_max_fields";
+			actual_ready_time?:PartialObjects["timestamptz"],
+			cancellation_time?:PartialObjects["timestamptz"],
+			chat_id?:number,
+			customer_address?:string,
+			customer_app_type?:string,
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
+			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
+			firebase_id?:string,
+			from_customer_delivery_id?:number,
+			id?:number,
+			notes?:string,
+			order_time?:PartialObjects["timestamptz"],
+			payment_type?:string,
+			refund_amount?:PartialObjects["money"],
+			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
+			status?:string,
+			store_id?:number,
+			stripe_fees?:PartialObjects["money"],
+			tax?:PartialObjects["money"],
+			to_customer_delivery_id?:number
+	},
+	/** aggregate min on columns */
+["laundry_order_min_fields"]: {
+		__typename?: "laundry_order_min_fields";
+			actual_ready_time?:PartialObjects["timestamptz"],
+			cancellation_time?:PartialObjects["timestamptz"],
+			chat_id?:number,
+			customer_address?:string,
+			customer_app_type?:string,
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
+			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
+			estimated_ready_time?:PartialObjects["timestamptz"],
+			firebase_id?:string,
+			from_customer_delivery_id?:number,
+			id?:number,
+			notes?:string,
+			order_time?:PartialObjects["timestamptz"],
+			payment_type?:string,
+			refund_amount?:PartialObjects["money"],
+			review_id?:number,
+			scheduled_time?:PartialObjects["timestamptz"],
+			status?:string,
+			store_id?:number,
+			stripe_fees?:PartialObjects["money"],
+			tax?:PartialObjects["money"],
+			to_customer_delivery_id?:number
+	},
+	/** response of any mutation on the table "laundry.order" */
+["laundry_order_mutation_response"]: {
+		__typename?: "laundry_order_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["laundry_order"][]
+	},
+	/** input type for inserting object relation for remote table "laundry.order" */
+["laundry_order_obj_rel_insert_input"]: {
+	data:PartialObjects["laundry_order_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["laundry_order_on_conflict"]
+},
+	/** on_conflict condition type for table "laundry.order" */
+["laundry_order_on_conflict"]: {
+	constraint:PartialObjects["laundry_order_constraint"],
+	update_columns:PartialObjects["laundry_order_update_column"][],
+	where?:PartialObjects["laundry_order_bool_exp"]
+},
+	/** Ordering options when selecting data from "laundry.order". */
+["laundry_order_order_by"]: {
+	actual_ready_time?:PartialObjects["order_by"],
+	cancellation_time?:PartialObjects["order_by"],
+	categories_aggregate?:PartialObjects["laundry_order_category_aggregate_order_by"],
+	chat?:PartialObjects["chat_order_by"],
+	chat_id?:PartialObjects["order_by"],
+	customer?:PartialObjects["customer_customer_order_by"],
+	customer_address?:PartialObjects["order_by"],
+	customer_app_type?:PartialObjects["order_by"],
+	customer_id?:PartialObjects["order_by"],
+	customer_location_gps?:PartialObjects["order_by"],
+	delivery_cost?:PartialObjects["order_by"],
+	delivery_type?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
+	estimated_ready_time?:PartialObjects["order_by"],
+	firebase_id?:PartialObjects["order_by"],
+	from_customer_delivery?:PartialObjects["delivery_order_order_by"],
+	from_customer_delivery_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	notes?:PartialObjects["order_by"],
+	order_time?:PartialObjects["order_by"],
+	payment_type?:PartialObjects["order_by"],
+	refund_amount?:PartialObjects["order_by"],
+	review?:PartialObjects["review_order_by"],
+	review_id?:PartialObjects["order_by"],
+	scheduled_time?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"],
+	store?:PartialObjects["laundry_store_order_by"],
+	store_id?:PartialObjects["order_by"],
+	stripe_fees?:PartialObjects["order_by"],
+	stripe_info?:PartialObjects["order_by"],
+	tax?:PartialObjects["order_by"],
+	to_customer_delivery_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: laundry.order */
+["laundry_order_pk_columns_input"]: {
+	id:number
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["laundry_order_prepend_input"]: {
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** select columns of table "laundry.order" */
+["laundry_order_select_column"]:laundry_order_select_column,
+	/** input type for updating data in table "laundry.order" */
+["laundry_order_set_input"]: {
+	actual_ready_time?:PartialObjects["timestamptz"],
+	cancellation_time?:PartialObjects["timestamptz"],
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:PartialObjects["geography"],
+	delivery_cost?:PartialObjects["money"],
+	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:PartialObjects["timestamptz"],
+	payment_type?:string,
+	refund_amount?:PartialObjects["money"],
+	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
+	status?:string,
+	store_id?:number,
+	stripe_fees?:PartialObjects["money"],
+	stripe_info?:PartialObjects["jsonb"],
+	tax?:PartialObjects["money"],
+	to_customer_delivery_id?:number
+},
+	/** aggregate stddev on columns */
+["laundry_order_stddev_fields"]: {
+		__typename?: "laundry_order_stddev_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["laundry_order_stddev_pop_fields"]: {
+		__typename?: "laundry_order_stddev_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["laundry_order_stddev_samp_fields"]: {
+		__typename?: "laundry_order_stddev_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** Streaming cursor of the table "laundry_order" */
+["laundry_order_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["laundry_order_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["laundry_order_stream_cursor_value_input"]: {
+	actual_ready_time?:PartialObjects["timestamptz"],
+	cancellation_time?:PartialObjects["timestamptz"],
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:PartialObjects["geography"],
+	delivery_cost?:PartialObjects["money"],
+	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
+	estimated_ready_time?:PartialObjects["timestamptz"],
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:PartialObjects["timestamptz"],
+	payment_type?:string,
+	refund_amount?:PartialObjects["money"],
+	review_id?:number,
+	scheduled_time?:PartialObjects["timestamptz"],
+	status?:string,
+	store_id?:number,
+	stripe_fees?:PartialObjects["money"],
+	stripe_info?:PartialObjects["jsonb"],
+	tax?:PartialObjects["money"],
+	to_customer_delivery_id?:number
+},
+	/** aggregate sum on columns */
+["laundry_order_sum_fields"]: {
+		__typename?: "laundry_order_sum_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
+			discount_value?:PartialObjects["money"],
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:PartialObjects["money"],
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:PartialObjects["money"],
+			tax?:PartialObjects["money"],
+			to_customer_delivery_id?:number
+	},
+	/** update columns of table "laundry.order" */
+["laundry_order_update_column"]:laundry_order_update_column,
+	["laundry_order_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["laundry_order_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["laundry_order_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["laundry_order_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["laundry_order_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["laundry_order_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["laundry_order_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["laundry_order_set_input"],
+	where:PartialObjects["laundry_order_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["laundry_order_var_pop_fields"]: {
+		__typename?: "laundry_order_var_pop_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** aggregate var_samp on columns */
+["laundry_order_var_samp_fields"]: {
+		__typename?: "laundry_order_var_samp_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** aggregate variance on columns */
+["laundry_order_variance_fields"]: {
+		__typename?: "laundry_order_variance_fields";
+			chat_id?:number,
+			customer_id?:number,
+			delivery_cost?:number,
+			discount_value?:number,
+			from_customer_delivery_id?:number,
+			id?:number,
+			refund_amount?:number,
+			review_id?:number,
+			store_id?:number,
+			stripe_fees?:number,
+			tax?:number,
+			to_customer_delivery_id?:number
+	},
+	/** columns and relationships of "laundry.store" */
+["laundry_store"]: {
+		__typename?: "laundry_store";
+			accepted_payments?:PartialObjects["jsonb"],
+			approved?:boolean,
+			creation_time?:PartialObjects["timestamptz"],
+			customer_pickup?:boolean,
+			delivery?:boolean,
+			/** An object relationship */
+	delivery_details?:PartialObjects["delivery_details"],
+			delivery_details_id?:number,
+			/** An object relationship */
+	delivery_partner?:PartialObjects["service_provider_delivery_partner"],
+			/** An object relationship */
+	description?:PartialObjects["translation"],
+			description_id?:number,
+			id?:number,
+			image?:string,
+			language_id?:string,
+			/** An object relationship */
+	location?:PartialObjects["service_provider_location"],
+			location_id?:number,
+			name?:string,
+			open_status?:string,
+			/** An array relationship */
+	operators?:PartialObjects["laundry_operator"][],
+			/** An aggregate relationship */
+	operators_aggregate?:PartialObjects["laundry_operator_aggregate"],
+			phone_number?:string,
+			schedule?:PartialObjects["jsonb"],
+			self_delivery?:boolean,
+			service_provider_type?:string,
+			stripe_info?:PartialObjects["jsonb"]
+	},
+	/** aggregated selection of "laundry.store" */
+["laundry_store_aggregate"]: {
+		__typename?: "laundry_store_aggregate";
+			aggregate?:PartialObjects["laundry_store_aggregate_fields"],
+			nodes?:PartialObjects["laundry_store"][]
+	},
+	/** aggregate fields of "laundry.store" */
+["laundry_store_aggregate_fields"]: {
+		__typename?: "laundry_store_aggregate_fields";
+			avg?:PartialObjects["laundry_store_avg_fields"],
+			count?:number,
+			max?:PartialObjects["laundry_store_max_fields"],
+			min?:PartialObjects["laundry_store_min_fields"],
+			stddev?:PartialObjects["laundry_store_stddev_fields"],
+			stddev_pop?:PartialObjects["laundry_store_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["laundry_store_stddev_samp_fields"],
+			sum?:PartialObjects["laundry_store_sum_fields"],
+			var_pop?:PartialObjects["laundry_store_var_pop_fields"],
+			var_samp?:PartialObjects["laundry_store_var_samp_fields"],
+			variance?:PartialObjects["laundry_store_variance_fields"]
+	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["laundry_store_append_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
+	schedule?:PartialObjects["jsonb"],
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** aggregate avg on columns */
+["laundry_store_avg_fields"]: {
+		__typename?: "laundry_store_avg_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** Boolean expression to filter rows from the table "laundry.store". All fields are combined with a logical 'AND'. */
+["laundry_store_bool_exp"]: {
+	_and?:PartialObjects["laundry_store_bool_exp"][],
+	_not?:PartialObjects["laundry_store_bool_exp"],
+	_or?:PartialObjects["laundry_store_bool_exp"][],
+	accepted_payments?:PartialObjects["jsonb_comparison_exp"],
+	approved?:PartialObjects["Boolean_comparison_exp"],
+	creation_time?:PartialObjects["timestamptz_comparison_exp"],
+	customer_pickup?:PartialObjects["Boolean_comparison_exp"],
+	delivery?:PartialObjects["Boolean_comparison_exp"],
+	delivery_details?:PartialObjects["delivery_details_bool_exp"],
+	delivery_details_id?:PartialObjects["Int_comparison_exp"],
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_bool_exp"],
+	description?:PartialObjects["translation_bool_exp"],
+	description_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	image?:PartialObjects["String_comparison_exp"],
+	language_id?:PartialObjects["String_comparison_exp"],
+	location?:PartialObjects["service_provider_location_bool_exp"],
+	location_id?:PartialObjects["Int_comparison_exp"],
+	name?:PartialObjects["String_comparison_exp"],
+	open_status?:PartialObjects["String_comparison_exp"],
+	operators?:PartialObjects["laundry_operator_bool_exp"],
+	operators_aggregate?:PartialObjects["laundry_operator_aggregate_bool_exp"],
+	phone_number?:PartialObjects["String_comparison_exp"],
+	schedule?:PartialObjects["jsonb_comparison_exp"],
+	self_delivery?:PartialObjects["Boolean_comparison_exp"],
+	service_provider_type?:PartialObjects["String_comparison_exp"],
+	stripe_info?:PartialObjects["jsonb_comparison_exp"]
+},
+	/** unique or primary key constraints on table "laundry.store" */
+["laundry_store_constraint"]:laundry_store_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["laundry_store_delete_at_path_input"]: {
+	accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["laundry_store_delete_elem_input"]: {
+	accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["laundry_store_delete_key_input"]: {
+	accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
+},
+	/** input type for incrementing numeric columns in table "laundry.store" */
+["laundry_store_inc_input"]: {
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+},
+	/** input type for inserting data into table "laundry.store" */
+["laundry_store_insert_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
+	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
+	delivery_details_id?:number,
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_obj_rel_insert_input"],
+	description?:PartialObjects["translation_obj_rel_insert_input"],
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location?:PartialObjects["service_provider_location_obj_rel_insert_input"],
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	operators?:PartialObjects["laundry_operator_arr_rel_insert_input"],
+	phone_number?:string,
+	schedule?:PartialObjects["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** aggregate max on columns */
+["laundry_store_max_fields"]: {
+		__typename?: "laundry_store_max_fields";
+			creation_time?:PartialObjects["timestamptz"],
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			image?:string,
+			language_id?:string,
+			location_id?:number,
+			name?:string,
+			open_status?:string,
+			phone_number?:string,
+			service_provider_type?:string
+	},
+	/** aggregate min on columns */
+["laundry_store_min_fields"]: {
+		__typename?: "laundry_store_min_fields";
+			creation_time?:PartialObjects["timestamptz"],
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			image?:string,
+			language_id?:string,
+			location_id?:number,
+			name?:string,
+			open_status?:string,
+			phone_number?:string,
+			service_provider_type?:string
+	},
+	/** response of any mutation on the table "laundry.store" */
+["laundry_store_mutation_response"]: {
+		__typename?: "laundry_store_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["laundry_store"][]
+	},
+	/** input type for inserting object relation for remote table "laundry.store" */
+["laundry_store_obj_rel_insert_input"]: {
+	data:PartialObjects["laundry_store_insert_input"],
+	/** upsert condition */
+	on_conflict?:PartialObjects["laundry_store_on_conflict"]
+},
+	/** on_conflict condition type for table "laundry.store" */
+["laundry_store_on_conflict"]: {
+	constraint:PartialObjects["laundry_store_constraint"],
+	update_columns:PartialObjects["laundry_store_update_column"][],
+	where?:PartialObjects["laundry_store_bool_exp"]
+},
+	/** Ordering options when selecting data from "laundry.store". */
+["laundry_store_order_by"]: {
+	accepted_payments?:PartialObjects["order_by"],
+	approved?:PartialObjects["order_by"],
+	creation_time?:PartialObjects["order_by"],
+	customer_pickup?:PartialObjects["order_by"],
+	delivery?:PartialObjects["order_by"],
+	delivery_details?:PartialObjects["delivery_details_order_by"],
+	delivery_details_id?:PartialObjects["order_by"],
+	delivery_partner?:PartialObjects["service_provider_delivery_partner_order_by"],
+	description?:PartialObjects["translation_order_by"],
+	description_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	image?:PartialObjects["order_by"],
+	language_id?:PartialObjects["order_by"],
+	location?:PartialObjects["service_provider_location_order_by"],
+	location_id?:PartialObjects["order_by"],
+	name?:PartialObjects["order_by"],
+	open_status?:PartialObjects["order_by"],
+	operators_aggregate?:PartialObjects["laundry_operator_aggregate_order_by"],
+	phone_number?:PartialObjects["order_by"],
+	schedule?:PartialObjects["order_by"],
+	self_delivery?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"],
+	stripe_info?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: laundry.store */
+["laundry_store_pk_columns_input"]: {
+	id:number
+},
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["laundry_store_prepend_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
+	schedule?:PartialObjects["jsonb"],
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** select columns of table "laundry.store" */
+["laundry_store_select_column"]:laundry_store_select_column,
+	/** input type for updating data in table "laundry.store" */
+["laundry_store_set_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
+	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:PartialObjects["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** aggregate stddev on columns */
+["laundry_store_stddev_fields"]: {
+		__typename?: "laundry_store_stddev_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** aggregate stddev_pop on columns */
+["laundry_store_stddev_pop_fields"]: {
+		__typename?: "laundry_store_stddev_pop_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** aggregate stddev_samp on columns */
+["laundry_store_stddev_samp_fields"]: {
+		__typename?: "laundry_store_stddev_samp_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** Streaming cursor of the table "laundry_store" */
+["laundry_store_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["laundry_store_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["laundry_store_stream_cursor_value_input"]: {
+	accepted_payments?:PartialObjects["jsonb"],
+	approved?:boolean,
+	creation_time?:PartialObjects["timestamptz"],
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:PartialObjects["jsonb"],
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:PartialObjects["jsonb"]
+},
+	/** aggregate sum on columns */
+["laundry_store_sum_fields"]: {
+		__typename?: "laundry_store_sum_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** update columns of table "laundry.store" */
+["laundry_store_update_column"]:laundry_store_update_column,
+	["laundry_store_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["laundry_store_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["laundry_store_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["laundry_store_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["laundry_store_delete_key_input"],
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["laundry_store_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["laundry_store_prepend_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["laundry_store_set_input"],
+	where:PartialObjects["laundry_store_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["laundry_store_var_pop_fields"]: {
+		__typename?: "laundry_store_var_pop_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** aggregate var_samp on columns */
+["laundry_store_var_samp_fields"]: {
+		__typename?: "laundry_store_var_samp_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
+	/** aggregate variance on columns */
+["laundry_store_variance_fields"]: {
+		__typename?: "laundry_store_variance_fields";
+			delivery_details_id?:number,
+			description_id?:number,
+			id?:number,
+			location_id?:number
+	},
 	/** columns and relationships of "mez_admin" */
 ["mez_admin"]: {
 		__typename?: "mez_admin";
@@ -19873,7 +23848,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["mez_admin_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_admin_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_admin_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -19996,7 +23970,6 @@ cancelledByServiceProvider */
 	_inc?:PartialObjects["mez_admin_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_admin_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_admin_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -20119,7 +24092,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["mez_json_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["mez_json_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["mez_json_bool_exp"]
 },
 	["money"]:any,
@@ -20192,6 +24164,26 @@ the end). throws an error if top level container is not an array */
 	delete_language?:PartialObjects["language_mutation_response"],
 			/** delete single row from the table: "language" */
 	delete_language_by_pk?:PartialObjects["language"],
+			/** delete data from the table: "laundry.category" */
+	delete_laundry_category?:PartialObjects["laundry_category_mutation_response"],
+			/** delete single row from the table: "laundry.category" */
+	delete_laundry_category_by_pk?:PartialObjects["laundry_category"],
+			/** delete data from the table: "laundry.operator" */
+	delete_laundry_operator?:PartialObjects["laundry_operator_mutation_response"],
+			/** delete single row from the table: "laundry.operator" */
+	delete_laundry_operator_by_pk?:PartialObjects["laundry_operator"],
+			/** delete data from the table: "laundry.order" */
+	delete_laundry_order?:PartialObjects["laundry_order_mutation_response"],
+			/** delete single row from the table: "laundry.order" */
+	delete_laundry_order_by_pk?:PartialObjects["laundry_order"],
+			/** delete data from the table: "laundry.order_category" */
+	delete_laundry_order_category?:PartialObjects["laundry_order_category_mutation_response"],
+			/** delete single row from the table: "laundry.order_category" */
+	delete_laundry_order_category_by_pk?:PartialObjects["laundry_order_category"],
+			/** delete data from the table: "laundry.store" */
+	delete_laundry_store?:PartialObjects["laundry_store_mutation_response"],
+			/** delete single row from the table: "laundry.store" */
+	delete_laundry_store_by_pk?:PartialObjects["laundry_store"],
 			/** delete data from the table: "mez_admin" */
 	delete_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** delete single row from the table: "mez_admin" */
@@ -20354,6 +24346,26 @@ the end). throws an error if top level container is not an array */
 	insert_language?:PartialObjects["language_mutation_response"],
 			/** insert a single row into the table: "language" */
 	insert_language_one?:PartialObjects["language"],
+			/** insert data into the table: "laundry.category" */
+	insert_laundry_category?:PartialObjects["laundry_category_mutation_response"],
+			/** insert a single row into the table: "laundry.category" */
+	insert_laundry_category_one?:PartialObjects["laundry_category"],
+			/** insert data into the table: "laundry.operator" */
+	insert_laundry_operator?:PartialObjects["laundry_operator_mutation_response"],
+			/** insert a single row into the table: "laundry.operator" */
+	insert_laundry_operator_one?:PartialObjects["laundry_operator"],
+			/** insert data into the table: "laundry.order" */
+	insert_laundry_order?:PartialObjects["laundry_order_mutation_response"],
+			/** insert data into the table: "laundry.order_category" */
+	insert_laundry_order_category?:PartialObjects["laundry_order_category_mutation_response"],
+			/** insert a single row into the table: "laundry.order_category" */
+	insert_laundry_order_category_one?:PartialObjects["laundry_order_category"],
+			/** insert a single row into the table: "laundry.order" */
+	insert_laundry_order_one?:PartialObjects["laundry_order"],
+			/** insert data into the table: "laundry.store" */
+	insert_laundry_store?:PartialObjects["laundry_store_mutation_response"],
+			/** insert a single row into the table: "laundry.store" */
+	insert_laundry_store_one?:PartialObjects["laundry_store"],
 			/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** insert data into the table: "mez_admin_chat" */
@@ -20544,6 +24556,36 @@ the end). throws an error if top level container is not an array */
 	update_language_by_pk?:PartialObjects["language"],
 			/** update multiples rows of table: "language" */
 	update_language_many?:(PartialObjects["language_mutation_response"] | undefined)[],
+			/** update data of the table: "laundry.category" */
+	update_laundry_category?:PartialObjects["laundry_category_mutation_response"],
+			/** update single row of the table: "laundry.category" */
+	update_laundry_category_by_pk?:PartialObjects["laundry_category"],
+			/** update multiples rows of table: "laundry.category" */
+	update_laundry_category_many?:(PartialObjects["laundry_category_mutation_response"] | undefined)[],
+			/** update data of the table: "laundry.operator" */
+	update_laundry_operator?:PartialObjects["laundry_operator_mutation_response"],
+			/** update single row of the table: "laundry.operator" */
+	update_laundry_operator_by_pk?:PartialObjects["laundry_operator"],
+			/** update multiples rows of table: "laundry.operator" */
+	update_laundry_operator_many?:(PartialObjects["laundry_operator_mutation_response"] | undefined)[],
+			/** update data of the table: "laundry.order" */
+	update_laundry_order?:PartialObjects["laundry_order_mutation_response"],
+			/** update single row of the table: "laundry.order" */
+	update_laundry_order_by_pk?:PartialObjects["laundry_order"],
+			/** update data of the table: "laundry.order_category" */
+	update_laundry_order_category?:PartialObjects["laundry_order_category_mutation_response"],
+			/** update single row of the table: "laundry.order_category" */
+	update_laundry_order_category_by_pk?:PartialObjects["laundry_order_category"],
+			/** update multiples rows of table: "laundry.order_category" */
+	update_laundry_order_category_many?:(PartialObjects["laundry_order_category_mutation_response"] | undefined)[],
+			/** update multiples rows of table: "laundry.order" */
+	update_laundry_order_many?:(PartialObjects["laundry_order_mutation_response"] | undefined)[],
+			/** update data of the table: "laundry.store" */
+	update_laundry_store?:PartialObjects["laundry_store_mutation_response"],
+			/** update single row of the table: "laundry.store" */
+	update_laundry_store_by_pk?:PartialObjects["laundry_store"],
+			/** update multiples rows of table: "laundry.store" */
+	update_laundry_store_many?:(PartialObjects["laundry_store_mutation_response"] | undefined)[],
 			/** update data of the table: "mez_admin" */
 	update_mez_admin?:PartialObjects["mez_admin_mutation_response"],
 			/** update single row of the table: "mez_admin" */
@@ -20871,7 +24913,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["notification_info_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["notification_info_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["notification_info_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -20982,6 +25023,36 @@ the end). throws an error if top level container is not an array */
 	language_aggregate?:PartialObjects["language_aggregate"],
 			/** fetch data from the table: "language" using primary key columns */
 	language_by_pk?:PartialObjects["language"],
+			/** fetch data from the table: "laundry.category" */
+	laundry_category?:PartialObjects["laundry_category"][],
+			/** fetch aggregated fields from the table: "laundry.category" */
+	laundry_category_aggregate?:PartialObjects["laundry_category_aggregate"],
+			/** fetch data from the table: "laundry.category" using primary key columns */
+	laundry_category_by_pk?:PartialObjects["laundry_category"],
+			/** fetch data from the table: "laundry.operator" */
+	laundry_operator?:PartialObjects["laundry_operator"][],
+			/** fetch aggregated fields from the table: "laundry.operator" */
+	laundry_operator_aggregate?:PartialObjects["laundry_operator_aggregate"],
+			/** fetch data from the table: "laundry.operator" using primary key columns */
+	laundry_operator_by_pk?:PartialObjects["laundry_operator"],
+			/** fetch data from the table: "laundry.order" */
+	laundry_order?:PartialObjects["laundry_order"][],
+			/** fetch aggregated fields from the table: "laundry.order" */
+	laundry_order_aggregate?:PartialObjects["laundry_order_aggregate"],
+			/** fetch data from the table: "laundry.order" using primary key columns */
+	laundry_order_by_pk?:PartialObjects["laundry_order"],
+			/** fetch data from the table: "laundry.order_category" */
+	laundry_order_category?:PartialObjects["laundry_order_category"][],
+			/** fetch aggregated fields from the table: "laundry.order_category" */
+	laundry_order_category_aggregate?:PartialObjects["laundry_order_category_aggregate"],
+			/** fetch data from the table: "laundry.order_category" using primary key columns */
+	laundry_order_category_by_pk?:PartialObjects["laundry_order_category"],
+			/** fetch data from the table: "laundry.store" */
+	laundry_store?:PartialObjects["laundry_store"][],
+			/** fetch aggregated fields from the table: "laundry.store" */
+	laundry_store_aggregate?:PartialObjects["laundry_store_aggregate"],
+			/** fetch data from the table: "laundry.store" using primary key columns */
+	laundry_store_by_pk?:PartialObjects["laundry_store"],
 			/** fetch data from the table: "mez_admin" */
 	mez_admin?:PartialObjects["mez_admin"][],
 			/** fetch aggregated fields from the table: "mez_admin" */
@@ -21163,6 +25234,7 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	customer?:PartialObjects["customer_customer"],
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			/** An array relationship */
 	items?:PartialObjects["restaurant_cart_item"][],
 			/** An aggregate relationship */
@@ -21196,6 +25268,7 @@ the end). throws an error if top level container is not an array */
 ["restaurant_cart_avg_fields"]: {
 		__typename?: "restaurant_cart_avg_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** Boolean expression to filter rows from the table "restaurant.cart". All fields are combined with a logical 'AND'. */
@@ -21206,6 +25279,7 @@ the end). throws an error if top level container is not an array */
 	cost?:PartialObjects["money_comparison_exp"],
 	customer?:PartialObjects["customer_customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
+	discount_value?:PartialObjects["money_comparison_exp"],
 	items?:PartialObjects["restaurant_cart_item_bool_exp"],
 	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_bool_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -21216,12 +25290,14 @@ the end). throws an error if top level container is not an array */
 	/** input type for incrementing numeric columns in table "restaurant.cart" */
 ["restaurant_cart_inc_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** input type for inserting data into table "restaurant.cart" */
 ["restaurant_cart_insert_input"]: {
 	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	items?:PartialObjects["restaurant_cart_item_arr_rel_insert_input"],
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
 	restaurant_id?:number
@@ -21521,7 +25597,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_cart_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_cart_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_cart_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -21579,12 +25654,14 @@ the end). throws an error if top level container is not an array */
 ["restaurant_cart_max_fields"]: {
 		__typename?: "restaurant_cart_max_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** aggregate min on columns */
 ["restaurant_cart_min_fields"]: {
 		__typename?: "restaurant_cart_min_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** response of any mutation on the table "restaurant.cart" */
@@ -21612,6 +25689,7 @@ the end). throws an error if top level container is not an array */
 	cost?:PartialObjects["order_by"],
 	customer?:PartialObjects["customer_customer_order_by"],
 	customer_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	items_aggregate?:PartialObjects["restaurant_cart_item_aggregate_order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
 	restaurant_id?:PartialObjects["order_by"]
@@ -21625,24 +25703,28 @@ the end). throws an error if top level container is not an array */
 	/** input type for updating data in table "restaurant.cart" */
 ["restaurant_cart_set_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** aggregate stddev on columns */
 ["restaurant_cart_stddev_fields"]: {
 		__typename?: "restaurant_cart_stddev_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["restaurant_cart_stddev_pop_fields"]: {
 		__typename?: "restaurant_cart_stddev_pop_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["restaurant_cart_stddev_samp_fields"]: {
 		__typename?: "restaurant_cart_stddev_samp_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** Streaming cursor of the table "restaurant_cart" */
@@ -21655,12 +25737,14 @@ the end). throws an error if top level container is not an array */
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_cart_stream_cursor_value_input"]: {
 	customer_id?:number,
+	discount_value?:PartialObjects["money"],
 	restaurant_id?:number
 },
 	/** aggregate sum on columns */
 ["restaurant_cart_sum_fields"]: {
 		__typename?: "restaurant_cart_sum_fields";
 			customer_id?:number,
+			discount_value?:PartialObjects["money"],
 			restaurant_id?:number
 	},
 	/** update columns of table "restaurant.cart" */
@@ -21670,25 +25754,27 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_cart_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_cart_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_cart_bool_exp"]
 },
 	/** aggregate var_pop on columns */
 ["restaurant_cart_var_pop_fields"]: {
 		__typename?: "restaurant_cart_var_pop_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate var_samp on columns */
 ["restaurant_cart_var_samp_fields"]: {
 		__typename?: "restaurant_cart_var_samp_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** aggregate variance on columns */
 ["restaurant_cart_variance_fields"]: {
 		__typename?: "restaurant_cart_variance_fields";
 			customer_id?:number,
+			discount_value?:number,
 			restaurant_id?:number
 	},
 	/** columns and relationships of "restaurant.category" */
@@ -22006,7 +26092,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_category_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_category_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_category_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -22352,7 +26437,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_choice_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_choice_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_choice_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -22916,7 +27000,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_item_option_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_item_option_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_item_option_map_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -23127,7 +27210,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -23521,7 +27603,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["restaurant_operator_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_operator_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_operator_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -23940,7 +28021,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["restaurant_option_choice_map_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_option_choice_map_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_option_choice_map_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -24233,7 +28313,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["restaurant_option_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_option_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_option_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -24322,6 +28401,7 @@ All fields are combined with a logical 'AND'. */
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
 			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -24423,6 +28503,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -24436,6 +28517,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -24459,6 +28541,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["money_comparison_exp"],
 	delivery_id?:PartialObjects["Int_comparison_exp"],
 	delivery_type?:PartialObjects["String_comparison_exp"],
+	discount_value?:PartialObjects["money_comparison_exp"],
 	estimated_food_ready_time?:PartialObjects["timestamptz_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -24516,6 +28599,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
+	discount_value?:PartialObjects["money"],
 	id?:number,
 	refund_amount?:PartialObjects["money"],
 	restaurant_id?:number,
@@ -24536,6 +28620,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -24897,7 +28982,6 @@ cancelled), serviceProviderAccount: string } */
 	_inc?:PartialObjects["restaurant_order_item_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_item_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_item_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -24968,6 +29052,7 @@ cancelled), serviceProviderAccount: string } */
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
 			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -24994,6 +29079,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
 	delivery_type?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -25021,6 +29107,7 @@ cancelled), serviceProviderAccount: string } */
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
 			delivery_type?:string,
+			discount_value?:PartialObjects["money"],
 			estimated_food_ready_time?:PartialObjects["timestamptz"],
 			firebase_id?:string,
 			id?:number,
@@ -25047,6 +29134,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
 	delivery_type?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -25096,6 +29184,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
 	delivery_type?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	estimated_food_ready_time?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -25309,7 +29398,6 @@ cancelled), serviceProviderAccount: string } */
 	_inc?:PartialObjects["restaurant_order_public_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_public_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_public_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -25345,6 +29433,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -25374,6 +29463,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25387,6 +29477,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25401,6 +29492,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25414,6 +29506,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25428,6 +29521,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25441,6 +29535,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25465,6 +29560,7 @@ cancelled), serviceProviderAccount: string } */
 	delivery_cost?:PartialObjects["money"],
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:PartialObjects["money"],
 	estimated_food_ready_time?:PartialObjects["timestamptz"],
 	firebase_id?:string,
 	id?:number,
@@ -25494,6 +29590,7 @@ cancelled), serviceProviderAccount: string } */
 			customer_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_id?:number,
+			discount_value?:PartialObjects["money"],
 			id?:number,
 			refund_amount?:PartialObjects["money"],
 			restaurant_id?:number,
@@ -25507,6 +29604,7 @@ cancelled), serviceProviderAccount: string } */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25532,7 +29630,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["restaurant_order_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_order_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_order_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -25542,6 +29639,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25555,6 +29653,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25569,6 +29668,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25582,6 +29682,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -25596,6 +29697,7 @@ the end). throws an error if top level container is not an array */
 			customer_id?:number,
 			delivery_cost?:number,
 			delivery_id?:number,
+			discount_value?:number,
 			id?:number,
 			refund_amount?:number,
 			restaurant_id?:number,
@@ -25609,6 +29711,7 @@ the end). throws an error if top level container is not an array */
 	customer_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_id?:PartialObjects["order_by"],
+	discount_value?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	refund_amount?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -26182,7 +30285,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["restaurant_restaurant_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["restaurant_restaurant_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["restaurant_restaurant_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -26525,7 +30627,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["review_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["review_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["review_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -26749,7 +30850,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_customer_chat_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_customer_chat_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_customer_chat_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -26945,7 +31045,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_delivery_partner_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_delivery_partner_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_delivery_partner_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27123,7 +31222,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_location_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_location_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_location_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27150,6 +31248,7 @@ the end). throws an error if top level container is not an array */
 			image?:string,
 			/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			/** An object relationship */
@@ -27200,6 +31299,7 @@ the end). throws an error if top level container is not an array */
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
 	likes?:PartialObjects["jsonb_comparison_exp"],
+	link?:PartialObjects["String_comparison_exp"],
 	message?:PartialObjects["String_comparison_exp"],
 	posted_on?:PartialObjects["timestamptz_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
@@ -27243,6 +31343,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
@@ -27254,6 +31355,7 @@ end). throws an error if top level container is not an array */
 		__typename?: "service_provider_post_max_fields";
 			id?:number,
 			image?:string,
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			service_provider_id?:number,
@@ -27264,6 +31366,7 @@ end). throws an error if top level container is not an array */
 		__typename?: "service_provider_post_min_fields";
 			id?:number,
 			image?:string,
+			link?:string,
 			message?:string,
 			posted_on?:PartialObjects["timestamptz"],
 			service_provider_id?:number,
@@ -27289,6 +31392,7 @@ end). throws an error if top level container is not an array */
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
 	likes?:PartialObjects["order_by"],
+	link?:PartialObjects["order_by"],
 	message?:PartialObjects["order_by"],
 	posted_on?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
@@ -27316,6 +31420,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	service_provider_id?:number,
@@ -27354,6 +31459,7 @@ end). throws an error if top level container is not an array */
 	image?:string,
 	/** Array of customerIds */
 	likes?:PartialObjects["jsonb"],
+	link?:string,
 	message?:string,
 	posted_on?:PartialObjects["timestamptz"],
 	service_provider_id?:number,
@@ -27383,7 +31489,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:PartialObjects["service_provider_post_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_post_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_post_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27609,7 +31714,6 @@ the end). throws an error if top level container is not an array */
 	_inc?:PartialObjects["service_provider_service_link_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_service_link_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_service_link_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27806,7 +31910,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["service_provider_subscriber_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_subscriber_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["service_provider_subscriber_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -27987,6 +32090,46 @@ All fields are combined with a logical 'AND'. */
 	language_by_pk?:PartialObjects["language"],
 			/** fetch data from the table in a streaming manner: "language" */
 	language_stream?:PartialObjects["language"][],
+			/** fetch data from the table: "laundry.category" */
+	laundry_category?:PartialObjects["laundry_category"][],
+			/** fetch aggregated fields from the table: "laundry.category" */
+	laundry_category_aggregate?:PartialObjects["laundry_category_aggregate"],
+			/** fetch data from the table: "laundry.category" using primary key columns */
+	laundry_category_by_pk?:PartialObjects["laundry_category"],
+			/** fetch data from the table in a streaming manner: "laundry.category" */
+	laundry_category_stream?:PartialObjects["laundry_category"][],
+			/** fetch data from the table: "laundry.operator" */
+	laundry_operator?:PartialObjects["laundry_operator"][],
+			/** fetch aggregated fields from the table: "laundry.operator" */
+	laundry_operator_aggregate?:PartialObjects["laundry_operator_aggregate"],
+			/** fetch data from the table: "laundry.operator" using primary key columns */
+	laundry_operator_by_pk?:PartialObjects["laundry_operator"],
+			/** fetch data from the table in a streaming manner: "laundry.operator" */
+	laundry_operator_stream?:PartialObjects["laundry_operator"][],
+			/** fetch data from the table: "laundry.order" */
+	laundry_order?:PartialObjects["laundry_order"][],
+			/** fetch aggregated fields from the table: "laundry.order" */
+	laundry_order_aggregate?:PartialObjects["laundry_order_aggregate"],
+			/** fetch data from the table: "laundry.order" using primary key columns */
+	laundry_order_by_pk?:PartialObjects["laundry_order"],
+			/** fetch data from the table: "laundry.order_category" */
+	laundry_order_category?:PartialObjects["laundry_order_category"][],
+			/** fetch aggregated fields from the table: "laundry.order_category" */
+	laundry_order_category_aggregate?:PartialObjects["laundry_order_category_aggregate"],
+			/** fetch data from the table: "laundry.order_category" using primary key columns */
+	laundry_order_category_by_pk?:PartialObjects["laundry_order_category"],
+			/** fetch data from the table in a streaming manner: "laundry.order_category" */
+	laundry_order_category_stream?:PartialObjects["laundry_order_category"][],
+			/** fetch data from the table in a streaming manner: "laundry.order" */
+	laundry_order_stream?:PartialObjects["laundry_order"][],
+			/** fetch data from the table: "laundry.store" */
+	laundry_store?:PartialObjects["laundry_store"][],
+			/** fetch aggregated fields from the table: "laundry.store" */
+	laundry_store_aggregate?:PartialObjects["laundry_store_aggregate"],
+			/** fetch data from the table: "laundry.store" using primary key columns */
+	laundry_store_by_pk?:PartialObjects["laundry_store"],
+			/** fetch data from the table in a streaming manner: "laundry.store" */
+	laundry_store_stream?:PartialObjects["laundry_store"][],
 			/** fetch data from the table: "mez_admin" */
 	mez_admin?:PartialObjects["mez_admin"][],
 			/** fetch aggregated fields from the table: "mez_admin" */
@@ -28397,7 +32540,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["translation_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["translation_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["translation_bool_exp"]
 },
 	/** columns and relationships of "translation_value" */
@@ -28612,7 +32754,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["translation_value_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["translation_value_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["translation_value_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -28865,7 +33006,6 @@ All fields are combined with a logical 'AND'. */
 	_inc?:PartialObjects["user_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["user_set_input"],
-	/** filter the rows which have to be updated */
 	where:PartialObjects["user_bool_exp"]
 },
 	/** aggregate var_pop on columns */
@@ -29002,7 +33142,6 @@ export enum app_type_update_column {
 export type app_type_updates = {
 		/** sets the columns of the filtered rows to the given values */
 	_set?:app_type_set_input,
-	/** filter the rows which have to be updated */
 	where:app_type_bool_exp
 }
 
@@ -29031,7 +33170,7 @@ export type chat = {
 	chat_type:string,
 	creation_time:timestamptz,
 	id:number,
-	messages:jsonb
+	messages?:jsonb
 }
 
 /** aggregated selection of "chat" */
@@ -29468,7 +33607,6 @@ export type chat_participant_updates = {
 	_inc?:chat_participant_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:chat_participant_set_input,
-	/** filter the rows which have to be updated */
 	where:chat_participant_bool_exp
 }
 
@@ -29614,7 +33752,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:chat_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:chat_set_input,
-	/** filter the rows which have to be updated */
 	where:chat_bool_exp
 }
 
@@ -29963,7 +34100,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:customer_customer_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_customer_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_customer_bool_exp
 }
 
@@ -30186,7 +34322,6 @@ export type customer_favourited_item_updates = {
 	_inc?:customer_favourited_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_favourited_item_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_favourited_item_bool_exp
 }
 
@@ -30527,7 +34662,6 @@ export type customer_saved_location_updates = {
 	_inc?:customer_saved_location_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:customer_saved_location_set_input,
-	/** filter the rows which have to be updated */
 	where:customer_saved_location_bool_exp
 }
 
@@ -30576,8 +34710,8 @@ export type delivery_company = {
 	approved:boolean,
 	creation_time:timestamptz,
 	/** An object relationship */
-	delivery_details:delivery_details,
-	delivery_details_id:number,
+	delivery_details?:delivery_details,
+	delivery_details_id?:number,
 	/** An array relationship */
 	delivery_drivers:delivery_driver[],
 	/** An aggregate relationship */
@@ -30994,7 +35128,6 @@ export type delivery_company_updates = {
 	_inc?:delivery_company_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_company_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_company_bool_exp
 }
 
@@ -31409,7 +35542,6 @@ export type delivery_details_updates = {
 	_inc?:delivery_details_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_details_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_details_bool_exp
 }
 
@@ -31903,7 +36035,6 @@ export type delivery_driver_updates = {
 	_inc?:delivery_driver_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_driver_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_driver_bool_exp
 }
 
@@ -32336,7 +36467,6 @@ export type delivery_operator_updates = {
 	_inc?:delivery_operator_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_operator_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_operator_bool_exp
 }
 
@@ -33320,7 +37450,6 @@ export type delivery_order_public_updates = {
 	_inc?:delivery_order_public_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_order_public_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_order_public_bool_exp
 }
 
@@ -33719,7 +37848,6 @@ export type delivery_order_updates = {
 	_inc?:delivery_order_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:delivery_order_set_input,
-	/** filter the rows which have to be updated */
 	where:delivery_order_bool_exp
 }
 
@@ -34047,7 +38175,6 @@ export type direct_chat_updates = {
 	_inc?:direct_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:direct_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:direct_chat_bool_exp
 }
 
@@ -34086,6 +38213,21 @@ export type Float_comparison_exp = {
 	_lte?:number,
 	_neq?:number,
 	_nin?:number[]
+}
+
+export type float8 = any
+
+/** Boolean expression to compare columns of type "float8". All fields are combined with logical 'AND'. */
+export type float8_comparison_exp = {
+		_eq?:float8,
+	_gt?:float8,
+	_gte?:float8,
+	_in?:float8[],
+	_is_null?:boolean,
+	_lt?:float8,
+	_lte?:float8,
+	_neq?:float8,
+	_nin?:float8[]
 }
 
 export type geography = any
@@ -34325,8 +38467,2211 @@ export enum language_update_column {
 export type language_updates = {
 		/** sets the columns of the filtered rows to the given values */
 	_set?:language_set_input,
-	/** filter the rows which have to be updated */
 	where:language_bool_exp
+}
+
+/** columns and relationships of "laundry.category" */
+export type laundry_category = {
+	__typename?: "laundry_category",
+	cost_by_kilo:money,
+	id:number,
+	/** An object relationship */
+	name:translation,
+	name_id:number,
+	position:number,
+	/** An object relationship */
+	store:laundry_store,
+	store_id:number
+}
+
+/** aggregated selection of "laundry.category" */
+export type laundry_category_aggregate = {
+	__typename?: "laundry_category_aggregate",
+	aggregate?:laundry_category_aggregate_fields,
+	nodes:laundry_category[]
+}
+
+/** aggregate fields of "laundry.category" */
+export type laundry_category_aggregate_fields = {
+	__typename?: "laundry_category_aggregate_fields",
+	avg?:laundry_category_avg_fields,
+	count:number,
+	max?:laundry_category_max_fields,
+	min?:laundry_category_min_fields,
+	stddev?:laundry_category_stddev_fields,
+	stddev_pop?:laundry_category_stddev_pop_fields,
+	stddev_samp?:laundry_category_stddev_samp_fields,
+	sum?:laundry_category_sum_fields,
+	var_pop?:laundry_category_var_pop_fields,
+	var_samp?:laundry_category_var_samp_fields,
+	variance?:laundry_category_variance_fields
+}
+
+/** aggregate avg on columns */
+export type laundry_category_avg_fields = {
+	__typename?: "laundry_category_avg_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** Boolean expression to filter rows from the table "laundry.category". All fields are combined with a logical 'AND'. */
+export type laundry_category_bool_exp = {
+		_and?:laundry_category_bool_exp[],
+	_not?:laundry_category_bool_exp,
+	_or?:laundry_category_bool_exp[],
+	cost_by_kilo?:money_comparison_exp,
+	id?:Int_comparison_exp,
+	name?:translation_bool_exp,
+	name_id?:Int_comparison_exp,
+	position?:Int_comparison_exp,
+	store?:laundry_store_bool_exp,
+	store_id?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "laundry.category" */
+export enum laundry_category_constraint {
+	type_pkey = "type_pkey"
+}
+
+/** input type for incrementing numeric columns in table "laundry.category" */
+export type laundry_category_inc_input = {
+		cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** input type for inserting data into table "laundry.category" */
+export type laundry_category_insert_input = {
+		cost_by_kilo?:money,
+	id?:number,
+	name?:translation_obj_rel_insert_input,
+	name_id?:number,
+	position?:number,
+	store?:laundry_store_obj_rel_insert_input,
+	store_id?:number
+}
+
+/** aggregate max on columns */
+export type laundry_category_max_fields = {
+	__typename?: "laundry_category_max_fields",
+	cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate min on columns */
+export type laundry_category_min_fields = {
+	__typename?: "laundry_category_min_fields",
+	cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** response of any mutation on the table "laundry.category" */
+export type laundry_category_mutation_response = {
+	__typename?: "laundry_category_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:laundry_category[]
+}
+
+/** input type for inserting object relation for remote table "laundry.category" */
+export type laundry_category_obj_rel_insert_input = {
+		data:laundry_category_insert_input,
+	/** upsert condition */
+	on_conflict?:laundry_category_on_conflict
+}
+
+/** on_conflict condition type for table "laundry.category" */
+export type laundry_category_on_conflict = {
+		constraint:laundry_category_constraint,
+	update_columns:laundry_category_update_column[],
+	where?:laundry_category_bool_exp
+}
+
+/** Ordering options when selecting data from "laundry.category". */
+export type laundry_category_order_by = {
+		cost_by_kilo?:order_by,
+	id?:order_by,
+	name?:translation_order_by,
+	name_id?:order_by,
+	position?:order_by,
+	store?:laundry_store_order_by,
+	store_id?:order_by
+}
+
+/** primary key columns input for table: laundry.category */
+export type laundry_category_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "laundry.category" */
+export enum laundry_category_select_column {
+	cost_by_kilo = "cost_by_kilo",
+	id = "id",
+	name_id = "name_id",
+	position = "position",
+	store_id = "store_id"
+}
+
+/** input type for updating data in table "laundry.category" */
+export type laundry_category_set_input = {
+		cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate stddev on columns */
+export type laundry_category_stddev_fields = {
+	__typename?: "laundry_category_stddev_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type laundry_category_stddev_pop_fields = {
+	__typename?: "laundry_category_stddev_pop_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type laundry_category_stddev_samp_fields = {
+	__typename?: "laundry_category_stddev_samp_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** Streaming cursor of the table "laundry_category" */
+export type laundry_category_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:laundry_category_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type laundry_category_stream_cursor_value_input = {
+		cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate sum on columns */
+export type laundry_category_sum_fields = {
+	__typename?: "laundry_category_sum_fields",
+	cost_by_kilo?:money,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** update columns of table "laundry.category" */
+export enum laundry_category_update_column {
+	cost_by_kilo = "cost_by_kilo",
+	id = "id",
+	name_id = "name_id",
+	position = "position",
+	store_id = "store_id"
+}
+
+export type laundry_category_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:laundry_category_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:laundry_category_set_input,
+	where:laundry_category_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type laundry_category_var_pop_fields = {
+	__typename?: "laundry_category_var_pop_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type laundry_category_var_samp_fields = {
+	__typename?: "laundry_category_var_samp_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** aggregate variance on columns */
+export type laundry_category_variance_fields = {
+	__typename?: "laundry_category_variance_fields",
+	cost_by_kilo?:number,
+	id?:number,
+	name_id?:number,
+	position?:number,
+	store_id?:number
+}
+
+/** columns and relationships of "laundry.operator" */
+export type laundry_operator = {
+	__typename?: "laundry_operator",
+	app_type_id:string,
+	app_version?:string,
+	current_gps?:geography,
+	delivery_driver_type:string,
+	id:number,
+	/** An object relationship */
+	notification_info?:notification_info,
+	online:boolean,
+	owner:boolean,
+	status:string,
+	/** An object relationship */
+	store:laundry_store,
+	store_id:number,
+	/** An object relationship */
+	user:user,
+	user_id:number
+}
+
+/** aggregated selection of "laundry.operator" */
+export type laundry_operator_aggregate = {
+	__typename?: "laundry_operator_aggregate",
+	aggregate?:laundry_operator_aggregate_fields,
+	nodes:laundry_operator[]
+}
+
+export type laundry_operator_aggregate_bool_exp = {
+		bool_and?:laundry_operator_aggregate_bool_exp_bool_and,
+	bool_or?:laundry_operator_aggregate_bool_exp_bool_or,
+	count?:laundry_operator_aggregate_bool_exp_count
+}
+
+export type laundry_operator_aggregate_bool_exp_bool_and = {
+		arguments:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type laundry_operator_aggregate_bool_exp_bool_or = {
+		arguments:laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_operator_bool_exp,
+	predicate:Boolean_comparison_exp
+}
+
+export type laundry_operator_aggregate_bool_exp_count = {
+		arguments?:laundry_operator_select_column[],
+	distinct?:boolean,
+	filter?:laundry_operator_bool_exp,
+	predicate:Int_comparison_exp
+}
+
+/** aggregate fields of "laundry.operator" */
+export type laundry_operator_aggregate_fields = {
+	__typename?: "laundry_operator_aggregate_fields",
+	avg?:laundry_operator_avg_fields,
+	count:number,
+	max?:laundry_operator_max_fields,
+	min?:laundry_operator_min_fields,
+	stddev?:laundry_operator_stddev_fields,
+	stddev_pop?:laundry_operator_stddev_pop_fields,
+	stddev_samp?:laundry_operator_stddev_samp_fields,
+	sum?:laundry_operator_sum_fields,
+	var_pop?:laundry_operator_var_pop_fields,
+	var_samp?:laundry_operator_var_samp_fields,
+	variance?:laundry_operator_variance_fields
+}
+
+/** order by aggregate values of table "laundry.operator" */
+export type laundry_operator_aggregate_order_by = {
+		avg?:laundry_operator_avg_order_by,
+	count?:order_by,
+	max?:laundry_operator_max_order_by,
+	min?:laundry_operator_min_order_by,
+	stddev?:laundry_operator_stddev_order_by,
+	stddev_pop?:laundry_operator_stddev_pop_order_by,
+	stddev_samp?:laundry_operator_stddev_samp_order_by,
+	sum?:laundry_operator_sum_order_by,
+	var_pop?:laundry_operator_var_pop_order_by,
+	var_samp?:laundry_operator_var_samp_order_by,
+	variance?:laundry_operator_variance_order_by
+}
+
+/** input type for inserting array relation for remote table "laundry.operator" */
+export type laundry_operator_arr_rel_insert_input = {
+		data:laundry_operator_insert_input[],
+	/** upsert condition */
+	on_conflict?:laundry_operator_on_conflict
+}
+
+/** aggregate avg on columns */
+export type laundry_operator_avg_fields = {
+	__typename?: "laundry_operator_avg_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by avg() on columns of table "laundry.operator" */
+export type laundry_operator_avg_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** Boolean expression to filter rows from the table "laundry.operator". All fields are combined with a logical 'AND'. */
+export type laundry_operator_bool_exp = {
+		_and?:laundry_operator_bool_exp[],
+	_not?:laundry_operator_bool_exp,
+	_or?:laundry_operator_bool_exp[],
+	app_type_id?:String_comparison_exp,
+	app_version?:String_comparison_exp,
+	current_gps?:geography_comparison_exp,
+	delivery_driver_type?:String_comparison_exp,
+	id?:Int_comparison_exp,
+	notification_info?:notification_info_bool_exp,
+	online?:Boolean_comparison_exp,
+	owner?:Boolean_comparison_exp,
+	status?:String_comparison_exp,
+	store?:laundry_store_bool_exp,
+	store_id?:Int_comparison_exp,
+	user?:user_bool_exp,
+	user_id?:Int_comparison_exp
+}
+
+/** unique or primary key constraints on table "laundry.operator" */
+export enum laundry_operator_constraint {
+	operator_pkey = "operator_pkey",
+	operator_user_id_key = "operator_user_id_key"
+}
+
+/** input type for incrementing numeric columns in table "laundry.operator" */
+export type laundry_operator_inc_input = {
+		id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** input type for inserting data into table "laundry.operator" */
+export type laundry_operator_insert_input = {
+		app_type_id?:string,
+	app_version?:string,
+	current_gps?:geography,
+	delivery_driver_type?:string,
+	id?:number,
+	notification_info?:notification_info_obj_rel_insert_input,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store?:laundry_store_obj_rel_insert_input,
+	store_id?:number,
+	user?:user_obj_rel_insert_input,
+	user_id?:number
+}
+
+/** aggregate max on columns */
+export type laundry_operator_max_fields = {
+	__typename?: "laundry_operator_max_fields",
+	app_type_id?:string,
+	app_version?:string,
+	delivery_driver_type?:string,
+	id?:number,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by max() on columns of table "laundry.operator" */
+export type laundry_operator_max_order_by = {
+		app_type_id?:order_by,
+	app_version?:order_by,
+	delivery_driver_type?:order_by,
+	id?:order_by,
+	status?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** aggregate min on columns */
+export type laundry_operator_min_fields = {
+	__typename?: "laundry_operator_min_fields",
+	app_type_id?:string,
+	app_version?:string,
+	delivery_driver_type?:string,
+	id?:number,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by min() on columns of table "laundry.operator" */
+export type laundry_operator_min_order_by = {
+		app_type_id?:order_by,
+	app_version?:order_by,
+	delivery_driver_type?:order_by,
+	id?:order_by,
+	status?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** response of any mutation on the table "laundry.operator" */
+export type laundry_operator_mutation_response = {
+	__typename?: "laundry_operator_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:laundry_operator[]
+}
+
+/** on_conflict condition type for table "laundry.operator" */
+export type laundry_operator_on_conflict = {
+		constraint:laundry_operator_constraint,
+	update_columns:laundry_operator_update_column[],
+	where?:laundry_operator_bool_exp
+}
+
+/** Ordering options when selecting data from "laundry.operator". */
+export type laundry_operator_order_by = {
+		app_type_id?:order_by,
+	app_version?:order_by,
+	current_gps?:order_by,
+	delivery_driver_type?:order_by,
+	id?:order_by,
+	notification_info?:notification_info_order_by,
+	online?:order_by,
+	owner?:order_by,
+	status?:order_by,
+	store?:laundry_store_order_by,
+	store_id?:order_by,
+	user?:user_order_by,
+	user_id?:order_by
+}
+
+/** primary key columns input for table: laundry.operator */
+export type laundry_operator_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "laundry.operator" */
+export enum laundry_operator_select_column {
+	app_type_id = "app_type_id",
+	app_version = "app_version",
+	current_gps = "current_gps",
+	delivery_driver_type = "delivery_driver_type",
+	id = "id",
+	online = "online",
+	owner = "owner",
+	status = "status",
+	store_id = "store_id",
+	user_id = "user_id"
+}
+
+/** select "laundry_operator_aggregate_bool_exp_bool_and_arguments_columns" columns of table "laundry.operator" */
+export enum laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns {
+	online = "online",
+	owner = "owner"
+}
+
+/** select "laundry_operator_aggregate_bool_exp_bool_or_arguments_columns" columns of table "laundry.operator" */
+export enum laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns {
+	online = "online",
+	owner = "owner"
+}
+
+/** input type for updating data in table "laundry.operator" */
+export type laundry_operator_set_input = {
+		app_type_id?:string,
+	app_version?:string,
+	current_gps?:geography,
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+}
+
+/** aggregate stddev on columns */
+export type laundry_operator_stddev_fields = {
+	__typename?: "laundry_operator_stddev_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by stddev() on columns of table "laundry.operator" */
+export type laundry_operator_stddev_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** aggregate stddev_pop on columns */
+export type laundry_operator_stddev_pop_fields = {
+	__typename?: "laundry_operator_stddev_pop_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by stddev_pop() on columns of table "laundry.operator" */
+export type laundry_operator_stddev_pop_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** aggregate stddev_samp on columns */
+export type laundry_operator_stddev_samp_fields = {
+	__typename?: "laundry_operator_stddev_samp_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by stddev_samp() on columns of table "laundry.operator" */
+export type laundry_operator_stddev_samp_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** Streaming cursor of the table "laundry_operator" */
+export type laundry_operator_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:laundry_operator_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type laundry_operator_stream_cursor_value_input = {
+		app_type_id?:string,
+	app_version?:string,
+	current_gps?:geography,
+	delivery_driver_type?:string,
+	id?:number,
+	online?:boolean,
+	owner?:boolean,
+	status?:string,
+	store_id?:number,
+	user_id?:number
+}
+
+/** aggregate sum on columns */
+export type laundry_operator_sum_fields = {
+	__typename?: "laundry_operator_sum_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by sum() on columns of table "laundry.operator" */
+export type laundry_operator_sum_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** update columns of table "laundry.operator" */
+export enum laundry_operator_update_column {
+	app_type_id = "app_type_id",
+	app_version = "app_version",
+	current_gps = "current_gps",
+	delivery_driver_type = "delivery_driver_type",
+	id = "id",
+	online = "online",
+	owner = "owner",
+	status = "status",
+	store_id = "store_id",
+	user_id = "user_id"
+}
+
+export type laundry_operator_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:laundry_operator_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:laundry_operator_set_input,
+	where:laundry_operator_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type laundry_operator_var_pop_fields = {
+	__typename?: "laundry_operator_var_pop_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by var_pop() on columns of table "laundry.operator" */
+export type laundry_operator_var_pop_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** aggregate var_samp on columns */
+export type laundry_operator_var_samp_fields = {
+	__typename?: "laundry_operator_var_samp_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by var_samp() on columns of table "laundry.operator" */
+export type laundry_operator_var_samp_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** aggregate variance on columns */
+export type laundry_operator_variance_fields = {
+	__typename?: "laundry_operator_variance_fields",
+	id?:number,
+	store_id?:number,
+	user_id?:number
+}
+
+/** order by variance() on columns of table "laundry.operator" */
+export type laundry_operator_variance_order_by = {
+		id?:order_by,
+	store_id?:order_by,
+	user_id?:order_by
+}
+
+/** columns and relationships of "laundry.order" */
+export type laundry_order = {
+	__typename?: "laundry_order",
+	actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	/** An array relationship */
+	categories:laundry_order_category[],
+	/** An aggregate relationship */
+	categories_aggregate:laundry_order_category_aggregate,
+	/** An object relationship */
+	chat?:chat,
+	chat_id?:number,
+	/** An object relationship */
+	customer:customer_customer,
+	customer_address?:string,
+	customer_app_type:string,
+	customer_id:number,
+	customer_location_gps?:geography,
+	delivery_cost:money,
+	delivery_type:string,
+	discount_value:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	/** An object relationship */
+	from_customer_delivery?:delivery_order,
+	from_customer_delivery_id?:number,
+	id:number,
+	notes?:string,
+	order_time:timestamptz,
+	payment_type:string,
+	refund_amount:money,
+	/** An object relationship */
+	review?:review,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status:string,
+	/** An object relationship */
+	store:laundry_store,
+	store_id:number,
+	stripe_fees:money,
+	stripe_info?:jsonb,
+	tax:money,
+	to_customer_delivery_id?:number
+}
+
+/** aggregated selection of "laundry.order" */
+export type laundry_order_aggregate = {
+	__typename?: "laundry_order_aggregate",
+	aggregate?:laundry_order_aggregate_fields,
+	nodes:laundry_order[]
+}
+
+/** aggregate fields of "laundry.order" */
+export type laundry_order_aggregate_fields = {
+	__typename?: "laundry_order_aggregate_fields",
+	avg?:laundry_order_avg_fields,
+	count:number,
+	max?:laundry_order_max_fields,
+	min?:laundry_order_min_fields,
+	stddev?:laundry_order_stddev_fields,
+	stddev_pop?:laundry_order_stddev_pop_fields,
+	stddev_samp?:laundry_order_stddev_samp_fields,
+	sum?:laundry_order_sum_fields,
+	var_pop?:laundry_order_var_pop_fields,
+	var_samp?:laundry_order_var_samp_fields,
+	variance?:laundry_order_variance_fields
+}
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type laundry_order_append_input = {
+		stripe_info?:jsonb
+}
+
+/** aggregate avg on columns */
+export type laundry_order_avg_fields = {
+	__typename?: "laundry_order_avg_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** Boolean expression to filter rows from the table "laundry.order". All fields are combined with a logical 'AND'. */
+export type laundry_order_bool_exp = {
+		_and?:laundry_order_bool_exp[],
+	_not?:laundry_order_bool_exp,
+	_or?:laundry_order_bool_exp[],
+	actual_ready_time?:timestamptz_comparison_exp,
+	cancellation_time?:timestamptz_comparison_exp,
+	categories?:laundry_order_category_bool_exp,
+	categories_aggregate?:laundry_order_category_aggregate_bool_exp,
+	chat?:chat_bool_exp,
+	chat_id?:Int_comparison_exp,
+	customer?:customer_customer_bool_exp,
+	customer_address?:String_comparison_exp,
+	customer_app_type?:String_comparison_exp,
+	customer_id?:Int_comparison_exp,
+	customer_location_gps?:geography_comparison_exp,
+	delivery_cost?:money_comparison_exp,
+	delivery_type?:String_comparison_exp,
+	discount_value?:money_comparison_exp,
+	estimated_ready_time?:timestamptz_comparison_exp,
+	firebase_id?:String_comparison_exp,
+	from_customer_delivery?:delivery_order_bool_exp,
+	from_customer_delivery_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
+	notes?:String_comparison_exp,
+	order_time?:timestamptz_comparison_exp,
+	payment_type?:String_comparison_exp,
+	refund_amount?:money_comparison_exp,
+	review?:review_bool_exp,
+	review_id?:Int_comparison_exp,
+	scheduled_time?:timestamptz_comparison_exp,
+	status?:String_comparison_exp,
+	store?:laundry_store_bool_exp,
+	store_id?:Int_comparison_exp,
+	stripe_fees?:money_comparison_exp,
+	stripe_info?:jsonb_comparison_exp,
+	tax?:money_comparison_exp,
+	to_customer_delivery_id?:Int_comparison_exp
+}
+
+/** columns and relationships of "laundry.order_category" */
+export type laundry_order_category = {
+	__typename?: "laundry_order_category",
+	/** An object relationship */
+	category:laundry_category,
+	category_id:number,
+	id:number,
+	/** An object relationship */
+	order:laundry_order,
+	order_id:number,
+	weight_in_kilo?:float8
+}
+
+/** aggregated selection of "laundry.order_category" */
+export type laundry_order_category_aggregate = {
+	__typename?: "laundry_order_category_aggregate",
+	aggregate?:laundry_order_category_aggregate_fields,
+	nodes:laundry_order_category[]
+}
+
+export type laundry_order_category_aggregate_bool_exp = {
+		avg?:laundry_order_category_aggregate_bool_exp_avg,
+	corr?:laundry_order_category_aggregate_bool_exp_corr,
+	count?:laundry_order_category_aggregate_bool_exp_count,
+	covar_samp?:laundry_order_category_aggregate_bool_exp_covar_samp,
+	max?:laundry_order_category_aggregate_bool_exp_max,
+	min?:laundry_order_category_aggregate_bool_exp_min,
+	stddev_samp?:laundry_order_category_aggregate_bool_exp_stddev_samp,
+	sum?:laundry_order_category_aggregate_bool_exp_sum,
+	var_samp?:laundry_order_category_aggregate_bool_exp_var_samp
+}
+
+export type laundry_order_category_aggregate_bool_exp_avg = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_corr = {
+		arguments:laundry_order_category_aggregate_bool_exp_corr_arguments,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_corr_arguments = {
+		X:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns,
+	Y:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns
+}
+
+export type laundry_order_category_aggregate_bool_exp_count = {
+		arguments?:laundry_order_category_select_column[],
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:Int_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_covar_samp = {
+		arguments:laundry_order_category_aggregate_bool_exp_covar_samp_arguments,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_covar_samp_arguments = {
+		X:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns,
+	Y:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns
+}
+
+export type laundry_order_category_aggregate_bool_exp_max = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_min = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_stddev_samp = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_sum = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+export type laundry_order_category_aggregate_bool_exp_var_samp = {
+		arguments:laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns,
+	distinct?:boolean,
+	filter?:laundry_order_category_bool_exp,
+	predicate:float8_comparison_exp
+}
+
+/** aggregate fields of "laundry.order_category" */
+export type laundry_order_category_aggregate_fields = {
+	__typename?: "laundry_order_category_aggregate_fields",
+	avg?:laundry_order_category_avg_fields,
+	count:number,
+	max?:laundry_order_category_max_fields,
+	min?:laundry_order_category_min_fields,
+	stddev?:laundry_order_category_stddev_fields,
+	stddev_pop?:laundry_order_category_stddev_pop_fields,
+	stddev_samp?:laundry_order_category_stddev_samp_fields,
+	sum?:laundry_order_category_sum_fields,
+	var_pop?:laundry_order_category_var_pop_fields,
+	var_samp?:laundry_order_category_var_samp_fields,
+	variance?:laundry_order_category_variance_fields
+}
+
+/** order by aggregate values of table "laundry.order_category" */
+export type laundry_order_category_aggregate_order_by = {
+		avg?:laundry_order_category_avg_order_by,
+	count?:order_by,
+	max?:laundry_order_category_max_order_by,
+	min?:laundry_order_category_min_order_by,
+	stddev?:laundry_order_category_stddev_order_by,
+	stddev_pop?:laundry_order_category_stddev_pop_order_by,
+	stddev_samp?:laundry_order_category_stddev_samp_order_by,
+	sum?:laundry_order_category_sum_order_by,
+	var_pop?:laundry_order_category_var_pop_order_by,
+	var_samp?:laundry_order_category_var_samp_order_by,
+	variance?:laundry_order_category_variance_order_by
+}
+
+/** input type for inserting array relation for remote table "laundry.order_category" */
+export type laundry_order_category_arr_rel_insert_input = {
+		data:laundry_order_category_insert_input[],
+	/** upsert condition */
+	on_conflict?:laundry_order_category_on_conflict
+}
+
+/** aggregate avg on columns */
+export type laundry_order_category_avg_fields = {
+	__typename?: "laundry_order_category_avg_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by avg() on columns of table "laundry.order_category" */
+export type laundry_order_category_avg_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** Boolean expression to filter rows from the table "laundry.order_category". All fields are combined with a logical 'AND'. */
+export type laundry_order_category_bool_exp = {
+		_and?:laundry_order_category_bool_exp[],
+	_not?:laundry_order_category_bool_exp,
+	_or?:laundry_order_category_bool_exp[],
+	category?:laundry_category_bool_exp,
+	category_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
+	order?:laundry_order_bool_exp,
+	order_id?:Int_comparison_exp,
+	weight_in_kilo?:float8_comparison_exp
+}
+
+/** unique or primary key constraints on table "laundry.order_category" */
+export enum laundry_order_category_constraint {
+	order_type_pkey = "order_type_pkey"
+}
+
+/** input type for incrementing numeric columns in table "laundry.order_category" */
+export type laundry_order_category_inc_input = {
+		category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** input type for inserting data into table "laundry.order_category" */
+export type laundry_order_category_insert_input = {
+		category?:laundry_category_obj_rel_insert_input,
+	category_id?:number,
+	id?:number,
+	order?:laundry_order_obj_rel_insert_input,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** aggregate max on columns */
+export type laundry_order_category_max_fields = {
+	__typename?: "laundry_order_category_max_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** order by max() on columns of table "laundry.order_category" */
+export type laundry_order_category_max_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** aggregate min on columns */
+export type laundry_order_category_min_fields = {
+	__typename?: "laundry_order_category_min_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** order by min() on columns of table "laundry.order_category" */
+export type laundry_order_category_min_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** response of any mutation on the table "laundry.order_category" */
+export type laundry_order_category_mutation_response = {
+	__typename?: "laundry_order_category_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:laundry_order_category[]
+}
+
+/** on_conflict condition type for table "laundry.order_category" */
+export type laundry_order_category_on_conflict = {
+		constraint:laundry_order_category_constraint,
+	update_columns:laundry_order_category_update_column[],
+	where?:laundry_order_category_bool_exp
+}
+
+/** Ordering options when selecting data from "laundry.order_category". */
+export type laundry_order_category_order_by = {
+		category?:laundry_category_order_by,
+	category_id?:order_by,
+	id?:order_by,
+	order?:laundry_order_order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** primary key columns input for table: laundry.order_category */
+export type laundry_order_category_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column {
+	category_id = "category_id",
+	id = "id",
+	order_id = "order_id",
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_avg_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_corr_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_max_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_min_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_sum_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** select "laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns" columns of table "laundry.order_category" */
+export enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns {
+	weight_in_kilo = "weight_in_kilo"
+}
+
+/** input type for updating data in table "laundry.order_category" */
+export type laundry_order_category_set_input = {
+		category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** aggregate stddev on columns */
+export type laundry_order_category_stddev_fields = {
+	__typename?: "laundry_order_category_stddev_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by stddev() on columns of table "laundry.order_category" */
+export type laundry_order_category_stddev_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** aggregate stddev_pop on columns */
+export type laundry_order_category_stddev_pop_fields = {
+	__typename?: "laundry_order_category_stddev_pop_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by stddev_pop() on columns of table "laundry.order_category" */
+export type laundry_order_category_stddev_pop_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** aggregate stddev_samp on columns */
+export type laundry_order_category_stddev_samp_fields = {
+	__typename?: "laundry_order_category_stddev_samp_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by stddev_samp() on columns of table "laundry.order_category" */
+export type laundry_order_category_stddev_samp_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** Streaming cursor of the table "laundry_order_category" */
+export type laundry_order_category_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:laundry_order_category_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type laundry_order_category_stream_cursor_value_input = {
+		category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** aggregate sum on columns */
+export type laundry_order_category_sum_fields = {
+	__typename?: "laundry_order_category_sum_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:float8
+}
+
+/** order by sum() on columns of table "laundry.order_category" */
+export type laundry_order_category_sum_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** update columns of table "laundry.order_category" */
+export enum laundry_order_category_update_column {
+	category_id = "category_id",
+	id = "id",
+	order_id = "order_id",
+	weight_in_kilo = "weight_in_kilo"
+}
+
+export type laundry_order_category_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:laundry_order_category_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:laundry_order_category_set_input,
+	where:laundry_order_category_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type laundry_order_category_var_pop_fields = {
+	__typename?: "laundry_order_category_var_pop_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by var_pop() on columns of table "laundry.order_category" */
+export type laundry_order_category_var_pop_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** aggregate var_samp on columns */
+export type laundry_order_category_var_samp_fields = {
+	__typename?: "laundry_order_category_var_samp_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by var_samp() on columns of table "laundry.order_category" */
+export type laundry_order_category_var_samp_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** aggregate variance on columns */
+export type laundry_order_category_variance_fields = {
+	__typename?: "laundry_order_category_variance_fields",
+	category_id?:number,
+	id?:number,
+	order_id?:number,
+	weight_in_kilo?:number
+}
+
+/** order by variance() on columns of table "laundry.order_category" */
+export type laundry_order_category_variance_order_by = {
+		category_id?:order_by,
+	id?:order_by,
+	order_id?:order_by,
+	weight_in_kilo?:order_by
+}
+
+/** unique or primary key constraints on table "laundry.order" */
+export enum laundry_order_constraint {
+	order_firebase_id_key = "order_firebase_id_key",
+	order_pkey = "order_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type laundry_order_delete_at_path_input = {
+		stripe_info?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type laundry_order_delete_elem_input = {
+		stripe_info?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type laundry_order_delete_key_input = {
+		stripe_info?:string
+}
+
+/** input type for incrementing numeric columns in table "laundry.order" */
+export type laundry_order_inc_input = {
+		chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:money,
+	discount_value?:money,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:money,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:money,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** input type for inserting data into table "laundry.order" */
+export type laundry_order_insert_input = {
+		actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	categories?:laundry_order_category_arr_rel_insert_input,
+	chat?:chat_obj_rel_insert_input,
+	chat_id?:number,
+	customer?:customer_customer_obj_rel_insert_input,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:geography,
+	delivery_cost?:money,
+	delivery_type?:string,
+	discount_value?:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	from_customer_delivery?:delivery_order_obj_rel_insert_input,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:timestamptz,
+	payment_type?:string,
+	refund_amount?:money,
+	review?:review_obj_rel_insert_input,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status?:string,
+	store?:laundry_store_obj_rel_insert_input,
+	store_id?:number,
+	stripe_fees?:money,
+	stripe_info?:jsonb,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate max on columns */
+export type laundry_order_max_fields = {
+	__typename?: "laundry_order_max_fields",
+	actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	delivery_cost?:money,
+	delivery_type?:string,
+	discount_value?:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:timestamptz,
+	payment_type?:string,
+	refund_amount?:money,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status?:string,
+	store_id?:number,
+	stripe_fees?:money,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate min on columns */
+export type laundry_order_min_fields = {
+	__typename?: "laundry_order_min_fields",
+	actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	delivery_cost?:money,
+	delivery_type?:string,
+	discount_value?:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:timestamptz,
+	payment_type?:string,
+	refund_amount?:money,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status?:string,
+	store_id?:number,
+	stripe_fees?:money,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** response of any mutation on the table "laundry.order" */
+export type laundry_order_mutation_response = {
+	__typename?: "laundry_order_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:laundry_order[]
+}
+
+/** input type for inserting object relation for remote table "laundry.order" */
+export type laundry_order_obj_rel_insert_input = {
+		data:laundry_order_insert_input,
+	/** upsert condition */
+	on_conflict?:laundry_order_on_conflict
+}
+
+/** on_conflict condition type for table "laundry.order" */
+export type laundry_order_on_conflict = {
+		constraint:laundry_order_constraint,
+	update_columns:laundry_order_update_column[],
+	where?:laundry_order_bool_exp
+}
+
+/** Ordering options when selecting data from "laundry.order". */
+export type laundry_order_order_by = {
+		actual_ready_time?:order_by,
+	cancellation_time?:order_by,
+	categories_aggregate?:laundry_order_category_aggregate_order_by,
+	chat?:chat_order_by,
+	chat_id?:order_by,
+	customer?:customer_customer_order_by,
+	customer_address?:order_by,
+	customer_app_type?:order_by,
+	customer_id?:order_by,
+	customer_location_gps?:order_by,
+	delivery_cost?:order_by,
+	delivery_type?:order_by,
+	discount_value?:order_by,
+	estimated_ready_time?:order_by,
+	firebase_id?:order_by,
+	from_customer_delivery?:delivery_order_order_by,
+	from_customer_delivery_id?:order_by,
+	id?:order_by,
+	notes?:order_by,
+	order_time?:order_by,
+	payment_type?:order_by,
+	refund_amount?:order_by,
+	review?:review_order_by,
+	review_id?:order_by,
+	scheduled_time?:order_by,
+	status?:order_by,
+	store?:laundry_store_order_by,
+	store_id?:order_by,
+	stripe_fees?:order_by,
+	stripe_info?:order_by,
+	tax?:order_by,
+	to_customer_delivery_id?:order_by
+}
+
+/** primary key columns input for table: laundry.order */
+export type laundry_order_pk_columns_input = {
+		id:number
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type laundry_order_prepend_input = {
+		stripe_info?:jsonb
+}
+
+/** select columns of table "laundry.order" */
+export enum laundry_order_select_column {
+	actual_ready_time = "actual_ready_time",
+	cancellation_time = "cancellation_time",
+	chat_id = "chat_id",
+	customer_address = "customer_address",
+	customer_app_type = "customer_app_type",
+	customer_id = "customer_id",
+	customer_location_gps = "customer_location_gps",
+	delivery_cost = "delivery_cost",
+	delivery_type = "delivery_type",
+	discount_value = "discount_value",
+	estimated_ready_time = "estimated_ready_time",
+	firebase_id = "firebase_id",
+	from_customer_delivery_id = "from_customer_delivery_id",
+	id = "id",
+	notes = "notes",
+	order_time = "order_time",
+	payment_type = "payment_type",
+	refund_amount = "refund_amount",
+	review_id = "review_id",
+	scheduled_time = "scheduled_time",
+	status = "status",
+	store_id = "store_id",
+	stripe_fees = "stripe_fees",
+	stripe_info = "stripe_info",
+	tax = "tax",
+	to_customer_delivery_id = "to_customer_delivery_id"
+}
+
+/** input type for updating data in table "laundry.order" */
+export type laundry_order_set_input = {
+		actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:geography,
+	delivery_cost?:money,
+	delivery_type?:string,
+	discount_value?:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:timestamptz,
+	payment_type?:string,
+	refund_amount?:money,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status?:string,
+	store_id?:number,
+	stripe_fees?:money,
+	stripe_info?:jsonb,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate stddev on columns */
+export type laundry_order_stddev_fields = {
+	__typename?: "laundry_order_stddev_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type laundry_order_stddev_pop_fields = {
+	__typename?: "laundry_order_stddev_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type laundry_order_stddev_samp_fields = {
+	__typename?: "laundry_order_stddev_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** Streaming cursor of the table "laundry_order" */
+export type laundry_order_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:laundry_order_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type laundry_order_stream_cursor_value_input = {
+		actual_ready_time?:timestamptz,
+	cancellation_time?:timestamptz,
+	chat_id?:number,
+	customer_address?:string,
+	customer_app_type?:string,
+	customer_id?:number,
+	customer_location_gps?:geography,
+	delivery_cost?:money,
+	delivery_type?:string,
+	discount_value?:money,
+	estimated_ready_time?:timestamptz,
+	firebase_id?:string,
+	from_customer_delivery_id?:number,
+	id?:number,
+	notes?:string,
+	order_time?:timestamptz,
+	payment_type?:string,
+	refund_amount?:money,
+	review_id?:number,
+	scheduled_time?:timestamptz,
+	status?:string,
+	store_id?:number,
+	stripe_fees?:money,
+	stripe_info?:jsonb,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate sum on columns */
+export type laundry_order_sum_fields = {
+	__typename?: "laundry_order_sum_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:money,
+	discount_value?:money,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:money,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:money,
+	tax?:money,
+	to_customer_delivery_id?:number
+}
+
+/** update columns of table "laundry.order" */
+export enum laundry_order_update_column {
+	actual_ready_time = "actual_ready_time",
+	cancellation_time = "cancellation_time",
+	chat_id = "chat_id",
+	customer_address = "customer_address",
+	customer_app_type = "customer_app_type",
+	customer_id = "customer_id",
+	customer_location_gps = "customer_location_gps",
+	delivery_cost = "delivery_cost",
+	delivery_type = "delivery_type",
+	discount_value = "discount_value",
+	estimated_ready_time = "estimated_ready_time",
+	firebase_id = "firebase_id",
+	from_customer_delivery_id = "from_customer_delivery_id",
+	id = "id",
+	notes = "notes",
+	order_time = "order_time",
+	payment_type = "payment_type",
+	refund_amount = "refund_amount",
+	review_id = "review_id",
+	scheduled_time = "scheduled_time",
+	status = "status",
+	store_id = "store_id",
+	stripe_fees = "stripe_fees",
+	stripe_info = "stripe_info",
+	tax = "tax",
+	to_customer_delivery_id = "to_customer_delivery_id"
+}
+
+export type laundry_order_updates = {
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:laundry_order_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:laundry_order_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:laundry_order_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:laundry_order_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:laundry_order_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:laundry_order_prepend_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:laundry_order_set_input,
+	where:laundry_order_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type laundry_order_var_pop_fields = {
+	__typename?: "laundry_order_var_pop_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type laundry_order_var_samp_fields = {
+	__typename?: "laundry_order_var_samp_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** aggregate variance on columns */
+export type laundry_order_variance_fields = {
+	__typename?: "laundry_order_variance_fields",
+	chat_id?:number,
+	customer_id?:number,
+	delivery_cost?:number,
+	discount_value?:number,
+	from_customer_delivery_id?:number,
+	id?:number,
+	refund_amount?:number,
+	review_id?:number,
+	store_id?:number,
+	stripe_fees?:number,
+	tax?:number,
+	to_customer_delivery_id?:number
+}
+
+/** columns and relationships of "laundry.store" */
+export type laundry_store = {
+	__typename?: "laundry_store",
+	accepted_payments?:jsonb,
+	approved:boolean,
+	creation_time:timestamptz,
+	customer_pickup:boolean,
+	delivery:boolean,
+	/** An object relationship */
+	delivery_details?:delivery_details,
+	delivery_details_id?:number,
+	/** An object relationship */
+	delivery_partner?:service_provider_delivery_partner,
+	/** An object relationship */
+	description:translation,
+	description_id:number,
+	id:number,
+	image:string,
+	language_id:string,
+	/** An object relationship */
+	location:service_provider_location,
+	location_id:number,
+	name:string,
+	open_status:string,
+	/** An array relationship */
+	operators:laundry_operator[],
+	/** An aggregate relationship */
+	operators_aggregate:laundry_operator_aggregate,
+	phone_number?:string,
+	schedule?:jsonb,
+	self_delivery:boolean,
+	service_provider_type:string,
+	stripe_info?:jsonb
+}
+
+/** aggregated selection of "laundry.store" */
+export type laundry_store_aggregate = {
+	__typename?: "laundry_store_aggregate",
+	aggregate?:laundry_store_aggregate_fields,
+	nodes:laundry_store[]
+}
+
+/** aggregate fields of "laundry.store" */
+export type laundry_store_aggregate_fields = {
+	__typename?: "laundry_store_aggregate_fields",
+	avg?:laundry_store_avg_fields,
+	count:number,
+	max?:laundry_store_max_fields,
+	min?:laundry_store_min_fields,
+	stddev?:laundry_store_stddev_fields,
+	stddev_pop?:laundry_store_stddev_pop_fields,
+	stddev_samp?:laundry_store_stddev_samp_fields,
+	sum?:laundry_store_sum_fields,
+	var_pop?:laundry_store_var_pop_fields,
+	var_samp?:laundry_store_var_samp_fields,
+	variance?:laundry_store_variance_fields
+}
+
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type laundry_store_append_input = {
+		accepted_payments?:jsonb,
+	schedule?:jsonb,
+	stripe_info?:jsonb
+}
+
+/** aggregate avg on columns */
+export type laundry_store_avg_fields = {
+	__typename?: "laundry_store_avg_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** Boolean expression to filter rows from the table "laundry.store". All fields are combined with a logical 'AND'. */
+export type laundry_store_bool_exp = {
+		_and?:laundry_store_bool_exp[],
+	_not?:laundry_store_bool_exp,
+	_or?:laundry_store_bool_exp[],
+	accepted_payments?:jsonb_comparison_exp,
+	approved?:Boolean_comparison_exp,
+	creation_time?:timestamptz_comparison_exp,
+	customer_pickup?:Boolean_comparison_exp,
+	delivery?:Boolean_comparison_exp,
+	delivery_details?:delivery_details_bool_exp,
+	delivery_details_id?:Int_comparison_exp,
+	delivery_partner?:service_provider_delivery_partner_bool_exp,
+	description?:translation_bool_exp,
+	description_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
+	image?:String_comparison_exp,
+	language_id?:String_comparison_exp,
+	location?:service_provider_location_bool_exp,
+	location_id?:Int_comparison_exp,
+	name?:String_comparison_exp,
+	open_status?:String_comparison_exp,
+	operators?:laundry_operator_bool_exp,
+	operators_aggregate?:laundry_operator_aggregate_bool_exp,
+	phone_number?:String_comparison_exp,
+	schedule?:jsonb_comparison_exp,
+	self_delivery?:Boolean_comparison_exp,
+	service_provider_type?:String_comparison_exp,
+	stripe_info?:jsonb_comparison_exp
+}
+
+/** unique or primary key constraints on table "laundry.store" */
+export enum laundry_store_constraint {
+	store_delivery_details_id_key = "store_delivery_details_id_key",
+	store_location_id_key = "store_location_id_key",
+	store_pkey = "store_pkey"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type laundry_store_delete_at_path_input = {
+		accepted_payments?:string[],
+	schedule?:string[],
+	stripe_info?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type laundry_store_delete_elem_input = {
+		accepted_payments?:number,
+	schedule?:number,
+	stripe_info?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type laundry_store_delete_key_input = {
+		accepted_payments?:string,
+	schedule?:string,
+	stripe_info?:string
+}
+
+/** input type for incrementing numeric columns in table "laundry.store" */
+export type laundry_store_inc_input = {
+		delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** input type for inserting data into table "laundry.store" */
+export type laundry_store_insert_input = {
+		accepted_payments?:jsonb,
+	approved?:boolean,
+	creation_time?:timestamptz,
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details?:delivery_details_obj_rel_insert_input,
+	delivery_details_id?:number,
+	delivery_partner?:service_provider_delivery_partner_obj_rel_insert_input,
+	description?:translation_obj_rel_insert_input,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location?:service_provider_location_obj_rel_insert_input,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	operators?:laundry_operator_arr_rel_insert_input,
+	phone_number?:string,
+	schedule?:jsonb,
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:jsonb
+}
+
+/** aggregate max on columns */
+export type laundry_store_max_fields = {
+	__typename?: "laundry_store_max_fields",
+	creation_time?:timestamptz,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	service_provider_type?:string
+}
+
+/** aggregate min on columns */
+export type laundry_store_min_fields = {
+	__typename?: "laundry_store_min_fields",
+	creation_time?:timestamptz,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	service_provider_type?:string
+}
+
+/** response of any mutation on the table "laundry.store" */
+export type laundry_store_mutation_response = {
+	__typename?: "laundry_store_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:laundry_store[]
+}
+
+/** input type for inserting object relation for remote table "laundry.store" */
+export type laundry_store_obj_rel_insert_input = {
+		data:laundry_store_insert_input,
+	/** upsert condition */
+	on_conflict?:laundry_store_on_conflict
+}
+
+/** on_conflict condition type for table "laundry.store" */
+export type laundry_store_on_conflict = {
+		constraint:laundry_store_constraint,
+	update_columns:laundry_store_update_column[],
+	where?:laundry_store_bool_exp
+}
+
+/** Ordering options when selecting data from "laundry.store". */
+export type laundry_store_order_by = {
+		accepted_payments?:order_by,
+	approved?:order_by,
+	creation_time?:order_by,
+	customer_pickup?:order_by,
+	delivery?:order_by,
+	delivery_details?:delivery_details_order_by,
+	delivery_details_id?:order_by,
+	delivery_partner?:service_provider_delivery_partner_order_by,
+	description?:translation_order_by,
+	description_id?:order_by,
+	id?:order_by,
+	image?:order_by,
+	language_id?:order_by,
+	location?:service_provider_location_order_by,
+	location_id?:order_by,
+	name?:order_by,
+	open_status?:order_by,
+	operators_aggregate?:laundry_operator_aggregate_order_by,
+	phone_number?:order_by,
+	schedule?:order_by,
+	self_delivery?:order_by,
+	service_provider_type?:order_by,
+	stripe_info?:order_by
+}
+
+/** primary key columns input for table: laundry.store */
+export type laundry_store_pk_columns_input = {
+		id:number
+}
+
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type laundry_store_prepend_input = {
+		accepted_payments?:jsonb,
+	schedule?:jsonb,
+	stripe_info?:jsonb
+}
+
+/** select columns of table "laundry.store" */
+export enum laundry_store_select_column {
+	accepted_payments = "accepted_payments",
+	approved = "approved",
+	creation_time = "creation_time",
+	customer_pickup = "customer_pickup",
+	delivery = "delivery",
+	delivery_details_id = "delivery_details_id",
+	description_id = "description_id",
+	id = "id",
+	image = "image",
+	language_id = "language_id",
+	location_id = "location_id",
+	name = "name",
+	open_status = "open_status",
+	phone_number = "phone_number",
+	schedule = "schedule",
+	self_delivery = "self_delivery",
+	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info"
+}
+
+/** input type for updating data in table "laundry.store" */
+export type laundry_store_set_input = {
+		accepted_payments?:jsonb,
+	approved?:boolean,
+	creation_time?:timestamptz,
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:jsonb,
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:jsonb
+}
+
+/** aggregate stddev on columns */
+export type laundry_store_stddev_fields = {
+	__typename?: "laundry_store_stddev_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type laundry_store_stddev_pop_fields = {
+	__typename?: "laundry_store_stddev_pop_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type laundry_store_stddev_samp_fields = {
+	__typename?: "laundry_store_stddev_samp_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** Streaming cursor of the table "laundry_store" */
+export type laundry_store_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:laundry_store_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type laundry_store_stream_cursor_value_input = {
+		accepted_payments?:jsonb,
+	approved?:boolean,
+	creation_time?:timestamptz,
+	customer_pickup?:boolean,
+	delivery?:boolean,
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	image?:string,
+	language_id?:string,
+	location_id?:number,
+	name?:string,
+	open_status?:string,
+	phone_number?:string,
+	schedule?:jsonb,
+	self_delivery?:boolean,
+	service_provider_type?:string,
+	stripe_info?:jsonb
+}
+
+/** aggregate sum on columns */
+export type laundry_store_sum_fields = {
+	__typename?: "laundry_store_sum_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** update columns of table "laundry.store" */
+export enum laundry_store_update_column {
+	accepted_payments = "accepted_payments",
+	approved = "approved",
+	creation_time = "creation_time",
+	customer_pickup = "customer_pickup",
+	delivery = "delivery",
+	delivery_details_id = "delivery_details_id",
+	description_id = "description_id",
+	id = "id",
+	image = "image",
+	language_id = "language_id",
+	location_id = "location_id",
+	name = "name",
+	open_status = "open_status",
+	phone_number = "phone_number",
+	schedule = "schedule",
+	self_delivery = "self_delivery",
+	service_provider_type = "service_provider_type",
+	stripe_info = "stripe_info"
+}
+
+export type laundry_store_updates = {
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:laundry_store_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:laundry_store_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:laundry_store_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:laundry_store_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:laundry_store_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:laundry_store_prepend_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:laundry_store_set_input,
+	where:laundry_store_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type laundry_store_var_pop_fields = {
+	__typename?: "laundry_store_var_pop_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** aggregate var_samp on columns */
+export type laundry_store_var_samp_fields = {
+	__typename?: "laundry_store_var_samp_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
+}
+
+/** aggregate variance on columns */
+export type laundry_store_variance_fields = {
+	__typename?: "laundry_store_variance_fields",
+	delivery_details_id?:number,
+	description_id?:number,
+	id?:number,
+	location_id?:number
 }
 
 /** columns and relationships of "mez_admin" */
@@ -34571,7 +40916,6 @@ export type mez_admin_chat_updates = {
 	_inc?:mez_admin_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_admin_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_admin_chat_bool_exp
 }
 
@@ -34726,7 +41070,6 @@ export type mez_admin_updates = {
 	_inc?:mez_admin_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_admin_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_admin_bool_exp
 }
 
@@ -34879,7 +41222,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:mez_json_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:mez_json_set_input,
-	/** filter the rows which have to be updated */
 	where:mez_json_bool_exp
 }
 
@@ -34955,6 +41297,26 @@ export type mutation_root = {
 	delete_language?:language_mutation_response,
 	/** delete single row from the table: "language" */
 	delete_language_by_pk?:language,
+	/** delete data from the table: "laundry.category" */
+	delete_laundry_category?:laundry_category_mutation_response,
+	/** delete single row from the table: "laundry.category" */
+	delete_laundry_category_by_pk?:laundry_category,
+	/** delete data from the table: "laundry.operator" */
+	delete_laundry_operator?:laundry_operator_mutation_response,
+	/** delete single row from the table: "laundry.operator" */
+	delete_laundry_operator_by_pk?:laundry_operator,
+	/** delete data from the table: "laundry.order" */
+	delete_laundry_order?:laundry_order_mutation_response,
+	/** delete single row from the table: "laundry.order" */
+	delete_laundry_order_by_pk?:laundry_order,
+	/** delete data from the table: "laundry.order_category" */
+	delete_laundry_order_category?:laundry_order_category_mutation_response,
+	/** delete single row from the table: "laundry.order_category" */
+	delete_laundry_order_category_by_pk?:laundry_order_category,
+	/** delete data from the table: "laundry.store" */
+	delete_laundry_store?:laundry_store_mutation_response,
+	/** delete single row from the table: "laundry.store" */
+	delete_laundry_store_by_pk?:laundry_store,
 	/** delete data from the table: "mez_admin" */
 	delete_mez_admin?:mez_admin_mutation_response,
 	/** delete single row from the table: "mez_admin" */
@@ -35117,6 +41479,26 @@ export type mutation_root = {
 	insert_language?:language_mutation_response,
 	/** insert a single row into the table: "language" */
 	insert_language_one?:language,
+	/** insert data into the table: "laundry.category" */
+	insert_laundry_category?:laundry_category_mutation_response,
+	/** insert a single row into the table: "laundry.category" */
+	insert_laundry_category_one?:laundry_category,
+	/** insert data into the table: "laundry.operator" */
+	insert_laundry_operator?:laundry_operator_mutation_response,
+	/** insert a single row into the table: "laundry.operator" */
+	insert_laundry_operator_one?:laundry_operator,
+	/** insert data into the table: "laundry.order" */
+	insert_laundry_order?:laundry_order_mutation_response,
+	/** insert data into the table: "laundry.order_category" */
+	insert_laundry_order_category?:laundry_order_category_mutation_response,
+	/** insert a single row into the table: "laundry.order_category" */
+	insert_laundry_order_category_one?:laundry_order_category,
+	/** insert a single row into the table: "laundry.order" */
+	insert_laundry_order_one?:laundry_order,
+	/** insert data into the table: "laundry.store" */
+	insert_laundry_store?:laundry_store_mutation_response,
+	/** insert a single row into the table: "laundry.store" */
+	insert_laundry_store_one?:laundry_store,
 	/** insert data into the table: "mez_admin" */
 	insert_mez_admin?:mez_admin_mutation_response,
 	/** insert data into the table: "mez_admin_chat" */
@@ -35307,6 +41689,36 @@ export type mutation_root = {
 	update_language_by_pk?:language,
 	/** update multiples rows of table: "language" */
 	update_language_many?:(language_mutation_response | undefined)[],
+	/** update data of the table: "laundry.category" */
+	update_laundry_category?:laundry_category_mutation_response,
+	/** update single row of the table: "laundry.category" */
+	update_laundry_category_by_pk?:laundry_category,
+	/** update multiples rows of table: "laundry.category" */
+	update_laundry_category_many?:(laundry_category_mutation_response | undefined)[],
+	/** update data of the table: "laundry.operator" */
+	update_laundry_operator?:laundry_operator_mutation_response,
+	/** update single row of the table: "laundry.operator" */
+	update_laundry_operator_by_pk?:laundry_operator,
+	/** update multiples rows of table: "laundry.operator" */
+	update_laundry_operator_many?:(laundry_operator_mutation_response | undefined)[],
+	/** update data of the table: "laundry.order" */
+	update_laundry_order?:laundry_order_mutation_response,
+	/** update single row of the table: "laundry.order" */
+	update_laundry_order_by_pk?:laundry_order,
+	/** update data of the table: "laundry.order_category" */
+	update_laundry_order_category?:laundry_order_category_mutation_response,
+	/** update single row of the table: "laundry.order_category" */
+	update_laundry_order_category_by_pk?:laundry_order_category,
+	/** update multiples rows of table: "laundry.order_category" */
+	update_laundry_order_category_many?:(laundry_order_category_mutation_response | undefined)[],
+	/** update multiples rows of table: "laundry.order" */
+	update_laundry_order_many?:(laundry_order_mutation_response | undefined)[],
+	/** update data of the table: "laundry.store" */
+	update_laundry_store?:laundry_store_mutation_response,
+	/** update single row of the table: "laundry.store" */
+	update_laundry_store_by_pk?:laundry_store,
+	/** update multiples rows of table: "laundry.store" */
+	update_laundry_store_many?:(laundry_store_mutation_response | undefined)[],
 	/** update data of the table: "mez_admin" */
 	update_mez_admin?:mez_admin_mutation_response,
 	/** update single row of the table: "mez_admin" */
@@ -35675,7 +42087,6 @@ export type notification_info_updates = {
 	_inc?:notification_info_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:notification_info_set_input,
-	/** filter the rows which have to be updated */
 	where:notification_info_bool_exp
 }
 
@@ -35798,6 +42209,36 @@ export type query_root = {
 	language_aggregate:language_aggregate,
 	/** fetch data from the table: "language" using primary key columns */
 	language_by_pk?:language,
+	/** fetch data from the table: "laundry.category" */
+	laundry_category:laundry_category[],
+	/** fetch aggregated fields from the table: "laundry.category" */
+	laundry_category_aggregate:laundry_category_aggregate,
+	/** fetch data from the table: "laundry.category" using primary key columns */
+	laundry_category_by_pk?:laundry_category,
+	/** fetch data from the table: "laundry.operator" */
+	laundry_operator:laundry_operator[],
+	/** fetch aggregated fields from the table: "laundry.operator" */
+	laundry_operator_aggregate:laundry_operator_aggregate,
+	/** fetch data from the table: "laundry.operator" using primary key columns */
+	laundry_operator_by_pk?:laundry_operator,
+	/** fetch data from the table: "laundry.order" */
+	laundry_order:laundry_order[],
+	/** fetch aggregated fields from the table: "laundry.order" */
+	laundry_order_aggregate:laundry_order_aggregate,
+	/** fetch data from the table: "laundry.order" using primary key columns */
+	laundry_order_by_pk?:laundry_order,
+	/** fetch data from the table: "laundry.order_category" */
+	laundry_order_category:laundry_order_category[],
+	/** fetch aggregated fields from the table: "laundry.order_category" */
+	laundry_order_category_aggregate:laundry_order_category_aggregate,
+	/** fetch data from the table: "laundry.order_category" using primary key columns */
+	laundry_order_category_by_pk?:laundry_order_category,
+	/** fetch data from the table: "laundry.store" */
+	laundry_store:laundry_store[],
+	/** fetch aggregated fields from the table: "laundry.store" */
+	laundry_store_aggregate:laundry_store_aggregate,
+	/** fetch data from the table: "laundry.store" using primary key columns */
+	laundry_store_by_pk?:laundry_store,
 	/** fetch data from the table: "mez_admin" */
 	mez_admin:mez_admin[],
 	/** fetch aggregated fields from the table: "mez_admin" */
@@ -35980,6 +42421,7 @@ export type restaurant_cart = {
 	/** An object relationship */
 	customer:customer_customer,
 	customer_id:number,
+	discount_value:money,
 	/** An array relationship */
 	items:restaurant_cart_item[],
 	/** An aggregate relationship */
@@ -36016,6 +42458,7 @@ export type restaurant_cart_aggregate_fields = {
 export type restaurant_cart_avg_fields = {
 	__typename?: "restaurant_cart_avg_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36027,6 +42470,7 @@ export type restaurant_cart_bool_exp = {
 	cost?:money_comparison_exp,
 	customer?:customer_customer_bool_exp,
 	customer_id?:Int_comparison_exp,
+	discount_value?:money_comparison_exp,
 	items?:restaurant_cart_item_bool_exp,
 	items_aggregate?:restaurant_cart_item_aggregate_bool_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -36041,6 +42485,7 @@ export enum restaurant_cart_constraint {
 /** input type for incrementing numeric columns in table "restaurant.cart" */
 export type restaurant_cart_inc_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -36048,6 +42493,7 @@ export type restaurant_cart_inc_input = {
 export type restaurant_cart_insert_input = {
 		customer?:customer_customer_obj_rel_insert_input,
 	customer_id?:number,
+	discount_value?:money,
 	items?:restaurant_cart_item_arr_rel_insert_input,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
 	restaurant_id?:number
@@ -36401,7 +42847,6 @@ export type restaurant_cart_item_updates = {
 	_inc?:restaurant_cart_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_cart_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_cart_item_bool_exp
 }
 
@@ -36466,6 +42911,7 @@ export type restaurant_cart_item_variance_order_by = {
 export type restaurant_cart_max_fields = {
 	__typename?: "restaurant_cart_max_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -36473,6 +42919,7 @@ export type restaurant_cart_max_fields = {
 export type restaurant_cart_min_fields = {
 	__typename?: "restaurant_cart_min_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -36504,6 +42951,7 @@ export type restaurant_cart_order_by = {
 		cost?:order_by,
 	customer?:customer_customer_order_by,
 	customer_id?:order_by,
+	discount_value?:order_by,
 	items_aggregate?:restaurant_cart_item_aggregate_order_by,
 	restaurant?:restaurant_restaurant_order_by,
 	restaurant_id?:order_by
@@ -36517,12 +42965,14 @@ export type restaurant_cart_pk_columns_input = {
 /** select columns of table "restaurant.cart" */
 export enum restaurant_cart_select_column {
 	customer_id = "customer_id",
+	discount_value = "discount_value",
 	restaurant_id = "restaurant_id"
 }
 
 /** input type for updating data in table "restaurant.cart" */
 export type restaurant_cart_set_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -36530,6 +42980,7 @@ export type restaurant_cart_set_input = {
 export type restaurant_cart_stddev_fields = {
 	__typename?: "restaurant_cart_stddev_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36537,6 +42988,7 @@ export type restaurant_cart_stddev_fields = {
 export type restaurant_cart_stddev_pop_fields = {
 	__typename?: "restaurant_cart_stddev_pop_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36544,6 +42996,7 @@ export type restaurant_cart_stddev_pop_fields = {
 export type restaurant_cart_stddev_samp_fields = {
 	__typename?: "restaurant_cart_stddev_samp_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36558,6 +43011,7 @@ export type restaurant_cart_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type restaurant_cart_stream_cursor_value_input = {
 		customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
@@ -36565,12 +43019,14 @@ export type restaurant_cart_stream_cursor_value_input = {
 export type restaurant_cart_sum_fields = {
 	__typename?: "restaurant_cart_sum_fields",
 	customer_id?:number,
+	discount_value?:money,
 	restaurant_id?:number
 }
 
 /** update columns of table "restaurant.cart" */
 export enum restaurant_cart_update_column {
 	customer_id = "customer_id",
+	discount_value = "discount_value",
 	restaurant_id = "restaurant_id"
 }
 
@@ -36579,7 +43035,6 @@ export type restaurant_cart_updates = {
 	_inc?:restaurant_cart_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_cart_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_cart_bool_exp
 }
 
@@ -36587,6 +43042,7 @@ export type restaurant_cart_updates = {
 export type restaurant_cart_var_pop_fields = {
 	__typename?: "restaurant_cart_var_pop_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36594,6 +43050,7 @@ export type restaurant_cart_var_pop_fields = {
 export type restaurant_cart_var_samp_fields = {
 	__typename?: "restaurant_cart_var_samp_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36601,6 +43058,7 @@ export type restaurant_cart_var_samp_fields = {
 export type restaurant_cart_variance_fields = {
 	__typename?: "restaurant_cart_variance_fields",
 	customer_id?:number,
+	discount_value?:number,
 	restaurant_id?:number
 }
 
@@ -36970,7 +43428,6 @@ export type restaurant_category_updates = {
 	_inc?:restaurant_category_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_category_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_category_bool_exp
 }
 
@@ -37379,7 +43836,6 @@ export type restaurant_choice_updates = {
 	_inc?:restaurant_choice_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_choice_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_choice_bool_exp
 }
 
@@ -38022,7 +44478,6 @@ export type restaurant_item_option_map_updates = {
 	_inc?:restaurant_item_option_map_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_item_option_map_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_item_option_map_bool_exp
 }
 
@@ -38291,7 +44746,6 @@ export type restaurant_item_updates = {
 	_inc?:restaurant_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_item_bool_exp
 }
 
@@ -38762,7 +45216,6 @@ export type restaurant_operator_updates = {
 	_inc?:restaurant_operator_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_operator_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_operator_bool_exp
 }
 
@@ -39245,7 +45698,6 @@ export type restaurant_option_choice_map_updates = {
 	_inc?:restaurant_option_choice_map_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_option_choice_map_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_option_choice_map_bool_exp
 }
 
@@ -39591,7 +46043,6 @@ export type restaurant_option_updates = {
 	_inc?:restaurant_option_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_option_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_option_bool_exp
 }
 
@@ -39687,6 +46138,7 @@ export type restaurant_order = {
 	delivery_cost:money,
 	delivery_id?:number,
 	delivery_type:string,
+	discount_value:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id:number,
@@ -39796,6 +46248,7 @@ export type restaurant_order_avg_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -39810,6 +46263,7 @@ export type restaurant_order_avg_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -39834,6 +46288,7 @@ export type restaurant_order_bool_exp = {
 	delivery_cost?:money_comparison_exp,
 	delivery_id?:Int_comparison_exp,
 	delivery_type?:String_comparison_exp,
+	discount_value?:money_comparison_exp,
 	estimated_food_ready_time?:timestamptz_comparison_exp,
 	firebase_id?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -39900,6 +46355,7 @@ export type restaurant_order_inc_input = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	id?:number,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -39921,6 +46377,7 @@ export type restaurant_order_insert_input = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -40347,7 +46804,6 @@ export type restaurant_order_item_updates = {
 	_inc?:restaurant_order_item_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_item_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_item_bool_exp
 }
 
@@ -40425,6 +46881,7 @@ export type restaurant_order_max_fields = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -40452,6 +46909,7 @@ export type restaurant_order_max_order_by = {
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
 	delivery_type?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -40480,6 +46938,7 @@ export type restaurant_order_min_fields = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -40507,6 +46966,7 @@ export type restaurant_order_min_order_by = {
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
 	delivery_type?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -40560,6 +47020,7 @@ export type restaurant_order_order_by = {
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
 	delivery_type?:order_by,
+	discount_value?:order_by,
 	estimated_food_ready_time?:order_by,
 	firebase_id?:order_by,
 	id?:order_by,
@@ -40803,7 +47264,6 @@ export type restaurant_order_public_updates = {
 	_inc?:restaurant_order_public_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_public_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_public_bool_exp
 }
 
@@ -40841,6 +47301,7 @@ export enum restaurant_order_select_column {
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
 	delivery_type = "delivery_type",
+	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -40869,6 +47330,7 @@ export type restaurant_order_set_input = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -40899,6 +47361,7 @@ export type restaurant_order_stddev_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -40913,6 +47376,7 @@ export type restaurant_order_stddev_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -40928,6 +47392,7 @@ export type restaurant_order_stddev_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -40942,6 +47407,7 @@ export type restaurant_order_stddev_pop_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -40957,6 +47423,7 @@ export type restaurant_order_stddev_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -40971,6 +47438,7 @@ export type restaurant_order_stddev_samp_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -40997,6 +47465,7 @@ export type restaurant_order_stream_cursor_value_input = {
 	delivery_cost?:money,
 	delivery_id?:number,
 	delivery_type?:string,
+	discount_value?:money,
 	estimated_food_ready_time?:timestamptz,
 	firebase_id?:string,
 	id?:number,
@@ -41027,6 +47496,7 @@ export type restaurant_order_sum_fields = {
 	customer_id?:number,
 	delivery_cost?:money,
 	delivery_id?:number,
+	discount_value?:money,
 	id?:number,
 	refund_amount?:money,
 	restaurant_id?:number,
@@ -41041,6 +47511,7 @@ export type restaurant_order_sum_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -41059,6 +47530,7 @@ export enum restaurant_order_update_column {
 	delivery_cost = "delivery_cost",
 	delivery_id = "delivery_id",
 	delivery_type = "delivery_type",
+	discount_value = "discount_value",
 	estimated_food_ready_time = "estimated_food_ready_time",
 	firebase_id = "firebase_id",
 	id = "id",
@@ -41093,7 +47565,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:restaurant_order_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_order_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_order_bool_exp
 }
 
@@ -41104,6 +47575,7 @@ export type restaurant_order_var_pop_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -41118,6 +47590,7 @@ export type restaurant_order_var_pop_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -41133,6 +47606,7 @@ export type restaurant_order_var_samp_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -41147,6 +47621,7 @@ export type restaurant_order_var_samp_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -41162,6 +47637,7 @@ export type restaurant_order_variance_fields = {
 	customer_id?:number,
 	delivery_cost?:number,
 	delivery_id?:number,
+	discount_value?:number,
 	id?:number,
 	refund_amount?:number,
 	restaurant_id?:number,
@@ -41176,6 +47652,7 @@ export type restaurant_order_variance_order_by = {
 	customer_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_id?:order_by,
+	discount_value?:order_by,
 	id?:order_by,
 	refund_amount?:order_by,
 	restaurant_id?:order_by,
@@ -41851,7 +48328,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:restaurant_restaurant_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:restaurant_restaurant_set_input,
-	/** filter the rows which have to be updated */
 	where:restaurant_restaurant_bool_exp
 }
 
@@ -42256,7 +48732,6 @@ export type review_updates = {
 	_inc?:review_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:review_set_input,
-	/** filter the rows which have to be updated */
 	where:review_bool_exp
 }
 
@@ -42523,7 +48998,6 @@ export type service_provider_customer_chat_updates = {
 	_inc?:service_provider_customer_chat_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_customer_chat_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_customer_chat_bool_exp
 }
 
@@ -42760,7 +49234,6 @@ export type service_provider_delivery_partner_updates = {
 	_inc?:service_provider_delivery_partner_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_delivery_partner_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_delivery_partner_bool_exp
 }
 
@@ -42976,7 +49449,6 @@ export type service_provider_location_updates = {
 	_inc?:service_provider_location_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_location_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_location_bool_exp
 }
 
@@ -43007,6 +49479,7 @@ export type service_provider_post = {
 	image?:string,
 	/** Array of customerIds */
 	likes?:jsonb,
+	link?:string,
 	message:string,
 	posted_on:timestamptz,
 	/** An object relationship */
@@ -43062,6 +49535,7 @@ export type service_provider_post_bool_exp = {
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
 	likes?:jsonb_comparison_exp,
+	link?:String_comparison_exp,
 	message?:String_comparison_exp,
 	posted_on?:timestamptz_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
@@ -43113,6 +49587,7 @@ export type service_provider_post_insert_input = {
 	image?:string,
 	/** Array of customerIds */
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
@@ -43125,6 +49600,7 @@ export type service_provider_post_max_fields = {
 	__typename?: "service_provider_post_max_fields",
 	id?:number,
 	image?:string,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -43136,6 +49612,7 @@ export type service_provider_post_min_fields = {
 	__typename?: "service_provider_post_min_fields",
 	id?:number,
 	image?:string,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -43164,6 +49641,7 @@ export type service_provider_post_order_by = {
 	id?:order_by,
 	image?:order_by,
 	likes?:order_by,
+	link?:order_by,
 	message?:order_by,
 	posted_on?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
@@ -43190,6 +49668,7 @@ export enum service_provider_post_select_column {
 	id = "id",
 	image = "image",
 	likes = "likes",
+	link = "link",
 	message = "message",
 	posted_on = "posted_on",
 	service_provider_id = "service_provider_id",
@@ -43204,6 +49683,7 @@ export type service_provider_post_set_input = {
 	image?:string,
 	/** Array of customerIds */
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -43247,6 +49727,7 @@ export type service_provider_post_stream_cursor_value_input = {
 	image?:string,
 	/** Array of customerIds */
 	likes?:jsonb,
+	link?:string,
 	message?:string,
 	posted_on?:timestamptz,
 	service_provider_id?:number,
@@ -43266,6 +49747,7 @@ export enum service_provider_post_update_column {
 	id = "id",
 	image = "image",
 	likes = "likes",
+	link = "link",
 	message = "message",
 	posted_on = "posted_on",
 	service_provider_id = "service_provider_id",
@@ -43288,7 +49770,6 @@ the end). throws an error if top level container is not an array */
 	_prepend?:service_provider_post_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_post_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_post_bool_exp
 }
 
@@ -43564,7 +50045,6 @@ export type service_provider_service_link_updates = {
 	_inc?:service_provider_service_link_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_service_link_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_service_link_bool_exp
 }
 
@@ -43801,7 +50281,6 @@ export type service_provider_subscriber_updates = {
 	_inc?:service_provider_subscriber_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_subscriber_set_input,
-	/** filter the rows which have to be updated */
 	where:service_provider_subscriber_bool_exp
 }
 
@@ -43989,6 +50468,46 @@ export type subscription_root = {
 	language_by_pk?:language,
 	/** fetch data from the table in a streaming manner: "language" */
 	language_stream:language[],
+	/** fetch data from the table: "laundry.category" */
+	laundry_category:laundry_category[],
+	/** fetch aggregated fields from the table: "laundry.category" */
+	laundry_category_aggregate:laundry_category_aggregate,
+	/** fetch data from the table: "laundry.category" using primary key columns */
+	laundry_category_by_pk?:laundry_category,
+	/** fetch data from the table in a streaming manner: "laundry.category" */
+	laundry_category_stream:laundry_category[],
+	/** fetch data from the table: "laundry.operator" */
+	laundry_operator:laundry_operator[],
+	/** fetch aggregated fields from the table: "laundry.operator" */
+	laundry_operator_aggregate:laundry_operator_aggregate,
+	/** fetch data from the table: "laundry.operator" using primary key columns */
+	laundry_operator_by_pk?:laundry_operator,
+	/** fetch data from the table in a streaming manner: "laundry.operator" */
+	laundry_operator_stream:laundry_operator[],
+	/** fetch data from the table: "laundry.order" */
+	laundry_order:laundry_order[],
+	/** fetch aggregated fields from the table: "laundry.order" */
+	laundry_order_aggregate:laundry_order_aggregate,
+	/** fetch data from the table: "laundry.order" using primary key columns */
+	laundry_order_by_pk?:laundry_order,
+	/** fetch data from the table: "laundry.order_category" */
+	laundry_order_category:laundry_order_category[],
+	/** fetch aggregated fields from the table: "laundry.order_category" */
+	laundry_order_category_aggregate:laundry_order_category_aggregate,
+	/** fetch data from the table: "laundry.order_category" using primary key columns */
+	laundry_order_category_by_pk?:laundry_order_category,
+	/** fetch data from the table in a streaming manner: "laundry.order_category" */
+	laundry_order_category_stream:laundry_order_category[],
+	/** fetch data from the table in a streaming manner: "laundry.order" */
+	laundry_order_stream:laundry_order[],
+	/** fetch data from the table: "laundry.store" */
+	laundry_store:laundry_store[],
+	/** fetch aggregated fields from the table: "laundry.store" */
+	laundry_store_aggregate:laundry_store_aggregate,
+	/** fetch data from the table: "laundry.store" using primary key columns */
+	laundry_store_by_pk?:laundry_store,
+	/** fetch data from the table in a streaming manner: "laundry.store" */
+	laundry_store_stream:laundry_store[],
 	/** fetch data from the table: "mez_admin" */
 	mez_admin:mez_admin[],
 	/** fetch aggregated fields from the table: "mez_admin" */
@@ -44436,7 +50955,6 @@ export type translation_updates = {
 	_inc?:translation_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:translation_set_input,
-	/** filter the rows which have to be updated */
 	where:translation_bool_exp
 }
 
@@ -44696,7 +51214,6 @@ export type translation_value_updates = {
 	_inc?:translation_value_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:translation_value_set_input,
-	/** filter the rows which have to be updated */
 	where:translation_value_bool_exp
 }
 
@@ -45007,7 +51524,6 @@ export type user_updates = {
 	_inc?:user_inc_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:user_set_input,
-	/** filter the rows which have to be updated */
 	where:user_bool_exp
 }
 
@@ -55678,6 +62194,63 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	float8: "String",
+	float8_comparison_exp:{
+		_eq:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gt:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_gte:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_in:{
+			type:"float8",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_is_null:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lt:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_lte:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_neq:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_nin:{
+			type:"float8",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	geography: "String",
 	geography_cast_exp:{
 		geometry:{
@@ -56248,6 +62821,4459 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		where:{
 			type:"language_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_category_aggregate_fields:{
+		count:{
+			columns:{
+				type:"laundry_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_category_bool_exp:{
+		_and:{
+			type:"laundry_category_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"laundry_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"laundry_category_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		cost_by_kilo:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_constraint: "enum",
+	laundry_category_inc_input:{
+		cost_by_kilo:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_insert_input:{
+		cost_by_kilo:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_obj_rel_insert_input:{
+		data:{
+			type:"laundry_category_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"laundry_category_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_on_conflict:{
+		constraint:{
+			type:"laundry_category_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"laundry_category_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"laundry_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_order_by:{
+		cost_by_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"translation_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_category_select_column: "enum",
+	laundry_category_set_input:{
+		cost_by_kilo:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_stream_cursor_input:{
+		initial_value:{
+			type:"laundry_category_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_stream_cursor_value_input:{
+		cost_by_kilo:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		position:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_category_update_column: "enum",
+	laundry_category_updates:{
+		_inc:{
+			type:"laundry_category_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"laundry_category_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"laundry_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_aggregate_bool_exp:{
+		bool_and:{
+			type:"laundry_operator_aggregate_bool_exp_bool_and",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		bool_or:{
+			type:"laundry_operator_aggregate_bool_exp_bool_or",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"laundry_operator_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_aggregate_bool_exp_bool_and:{
+		arguments:{
+			type:"laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_aggregate_bool_exp_bool_or:{
+		arguments:{
+			type:"laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_aggregate_bool_exp_count:{
+		arguments:{
+			type:"laundry_operator_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_aggregate_fields:{
+		count:{
+			columns:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_operator_aggregate_order_by:{
+		avg:{
+			type:"laundry_operator_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"laundry_operator_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"laundry_operator_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"laundry_operator_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"laundry_operator_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"laundry_operator_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"laundry_operator_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"laundry_operator_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"laundry_operator_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"laundry_operator_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_arr_rel_insert_input:{
+		data:{
+			type:"laundry_operator_insert_input",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		on_conflict:{
+			type:"laundry_operator_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_avg_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_bool_exp:{
+		_and:{
+			type:"laundry_operator_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"laundry_operator_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		app_type_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		current_gps:{
+			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info:{
+			type:"notification_info_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		online:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		owner:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_constraint: "enum",
+	laundry_operator_inc_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_insert_input:{
+		app_type_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		current_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info:{
+			type:"notification_info_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		online:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		owner:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_max_order_by:{
+		app_type_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_min_order_by:{
+		app_type_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_on_conflict:{
+		constraint:{
+			type:"laundry_operator_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"laundry_operator_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_order_by:{
+		app_type_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		current_gps:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notification_info:{
+			type:"notification_info_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		online:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		owner:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user:{
+			type:"user_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_select_column: "enum",
+	laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_and_arguments_columns: "enum",
+	laundry_operator_select_column_laundry_operator_aggregate_bool_exp_bool_or_arguments_columns: "enum",
+	laundry_operator_set_input:{
+		app_type_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		current_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		online:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		owner:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_stddev_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_stddev_pop_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_stddev_samp_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_stream_cursor_input:{
+		initial_value:{
+			type:"laundry_operator_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_stream_cursor_value_input:{
+		app_type_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		app_version:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		current_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_driver_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		online:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		owner:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_sum_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_update_column: "enum",
+	laundry_operator_updates:{
+		_inc:{
+			type:"laundry_operator_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"laundry_operator_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_operator_var_pop_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_var_samp_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_operator_variance_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		user_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order:{
+		categories:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		categories_aggregate:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		stripe_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_order_aggregate_fields:{
+		count:{
+			columns:{
+				type:"laundry_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_order_append_input:{
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_bool_exp:{
+		_and:{
+			type:"laundry_order_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"laundry_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"laundry_order_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		actual_ready_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cancellation_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		categories:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		categories_aggregate:{
+			type:"laundry_order_category_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_address:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_app_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_location_gps:{
+			type:"geography_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		firebase_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery:{
+			type:"delivery_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notes:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_aggregate_bool_exp:{
+		avg:{
+			type:"laundry_order_category_aggregate_bool_exp_avg",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		corr:{
+			type:"laundry_order_category_aggregate_bool_exp_corr",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"laundry_order_category_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		covar_samp:{
+			type:"laundry_order_category_aggregate_bool_exp_covar_samp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"laundry_order_category_aggregate_bool_exp_max",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"laundry_order_category_aggregate_bool_exp_min",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"laundry_order_category_aggregate_bool_exp_stddev_samp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"laundry_order_category_aggregate_bool_exp_sum",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"laundry_order_category_aggregate_bool_exp_var_samp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_avg:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_corr:{
+		arguments:{
+			type:"laundry_order_category_aggregate_bool_exp_corr_arguments",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_corr_arguments:{
+		X:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		Y:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_count:{
+		arguments:{
+			type:"laundry_order_category_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_covar_samp:{
+		arguments:{
+			type:"laundry_order_category_aggregate_bool_exp_covar_samp_arguments",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_covar_samp_arguments:{
+		X:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		Y:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_max:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_min:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_stddev_samp:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_sum:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_bool_exp_var_samp:{
+		arguments:{
+			type:"laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_aggregate_fields:{
+		count:{
+			columns:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_order_category_aggregate_order_by:{
+		avg:{
+			type:"laundry_order_category_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"laundry_order_category_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"laundry_order_category_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"laundry_order_category_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"laundry_order_category_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"laundry_order_category_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"laundry_order_category_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"laundry_order_category_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"laundry_order_category_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"laundry_order_category_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_arr_rel_insert_input:{
+		data:{
+			type:"laundry_order_category_insert_input",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		on_conflict:{
+			type:"laundry_order_category_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_avg_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_bool_exp:{
+		_and:{
+			type:"laundry_order_category_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"laundry_order_category_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		category:{
+			type:"laundry_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		category_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order:{
+			type:"laundry_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"float8_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_constraint: "enum",
+	laundry_order_category_inc_input:{
+		category_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_insert_input:{
+		category:{
+			type:"laundry_category_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		category_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order:{
+			type:"laundry_order_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_max_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_min_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_on_conflict:{
+		constraint:{
+			type:"laundry_order_category_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"laundry_order_category_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_order_by:{
+		category:{
+			type:"laundry_category_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order:{
+			type:"laundry_order_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_select_column: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns: "enum",
+	laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns: "enum",
+	laundry_order_category_set_input:{
+		category_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_stddev_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_stddev_pop_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_stddev_samp_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_stream_cursor_input:{
+		initial_value:{
+			type:"laundry_order_category_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_stream_cursor_value_input:{
+		category_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"float8",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_sum_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_update_column: "enum",
+	laundry_order_category_updates:{
+		_inc:{
+			type:"laundry_order_category_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"laundry_order_category_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"laundry_order_category_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_category_var_pop_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_var_samp_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_category_variance_order_by:{
+		category_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		weight_in_kilo:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_constraint: "enum",
+	laundry_order_delete_at_path_input:{
+		stripe_info:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_delete_elem_input:{
+		stripe_info:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_delete_key_input:{
+		stripe_info:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_inc_input:{
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_insert_input:{
+		actual_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cancellation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		categories:{
+			type:"laundry_order_category_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_address:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		firebase_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery:{
+			type:"delivery_order_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notes:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review:{
+			type:"review_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_obj_rel_insert_input:{
+		data:{
+			type:"laundry_order_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"laundry_order_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_on_conflict:{
+		constraint:{
+			type:"laundry_order_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"laundry_order_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"laundry_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_order_by:{
+		actual_ready_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cancellation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		categories_aggregate:{
+			type:"laundry_order_category_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat:{
+			type:"chat_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_address:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_app_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_location_gps:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		firebase_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery:{
+			type:"delivery_order_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notes:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review:{
+			type:"review_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store:{
+			type:"laundry_store_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_order_prepend_input:{
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_select_column: "enum",
+	laundry_order_set_input:{
+		actual_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cancellation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_address:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		firebase_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notes:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_stream_cursor_input:{
+		initial_value:{
+			type:"laundry_order_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_stream_cursor_value_input:{
+		actual_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cancellation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		chat_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_address:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_app_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_location_gps:{
+			type:"geography",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		estimated_ready_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		firebase_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		from_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		notes:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		refund_amount:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		review_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		scheduled_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		store_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_fees:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		tax:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_customer_delivery_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_order_update_column: "enum",
+	laundry_order_updates:{
+		_append:{
+			type:"laundry_order_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"laundry_order_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"laundry_order_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"laundry_order_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_inc:{
+			type:"laundry_order_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"laundry_order_prepend_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"laundry_order_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"laundry_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_store:{
+		accepted_payments:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		operators:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		operators_aggregate:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		schedule:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		stripe_info:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_store_aggregate_fields:{
+		count:{
+			columns:{
+				type:"laundry_store_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	laundry_store_append_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_bool_exp:{
+		_and:{
+			type:"laundry_store_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"laundry_store_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"laundry_store_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		accepted_payments:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		approved:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description:{
+			type:"translation_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		language_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"service_provider_location_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		open_status:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		operators:{
+			type:"laundry_operator_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		operators_aggregate:{
+			type:"laundry_operator_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		phone_number:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		self_delivery:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_constraint: "enum",
+	laundry_store_delete_at_path_input:{
+		accepted_payments:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		schedule:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		stripe_info:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_store_delete_elem_input:{
+		accepted_payments:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_delete_key_input:{
+		accepted_payments:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_inc_input:{
+		delivery_details_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_insert_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		approved:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details:{
+			type:"delivery_details_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description:{
+			type:"translation_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		language_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"service_provider_location_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		open_status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		operators:{
+			type:"laundry_operator_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		phone_number:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		self_delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_obj_rel_insert_input:{
+		data:{
+			type:"laundry_store_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		on_conflict:{
+			type:"laundry_store_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_on_conflict:{
+		constraint:{
+			type:"laundry_store_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"laundry_store_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"laundry_store_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_order_by:{
+		accepted_payments:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		approved:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details:{
+			type:"delivery_details_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partner:{
+			type:"service_provider_delivery_partner_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description:{
+			type:"translation_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		language_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location:{
+			type:"service_provider_location_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		open_status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		operators_aggregate:{
+			type:"laundry_operator_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		phone_number:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		self_delivery:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	laundry_store_prepend_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_select_column: "enum",
+	laundry_store_set_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		approved:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		language_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		open_status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		phone_number:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		self_delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_stream_cursor_input:{
+		initial_value:{
+			type:"laundry_store_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_stream_cursor_value_input:{
+		accepted_payments:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		approved:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		creation_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_pickup:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		description_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		language_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		location_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		open_status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		phone_number:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		schedule:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		self_delivery:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_info:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	laundry_store_update_column: "enum",
+	laundry_store_updates:{
+		_append:{
+			type:"laundry_store_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"laundry_store_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"laundry_store_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"laundry_store_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_inc:{
+			type:"laundry_store_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"laundry_store_prepend_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"laundry_store_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"laundry_store_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -57232,6 +68258,86 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_laundry_category:{
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_operator:{
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_operator_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_order:{
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_order_category:{
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_order_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_store:{
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_laundry_store_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_mez_admin:{
 			where:{
 				type:"mez_admin_bool_exp",
@@ -58037,6 +69143,146 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"language_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_category:{
+			objects:{
+				type:"laundry_category_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_category_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_category_one:{
+			object:{
+				type:"laundry_category_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_category_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_operator:{
+			objects:{
+				type:"laundry_operator_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_operator_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_operator_one:{
+			object:{
+				type:"laundry_operator_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_operator_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_order:{
+			objects:{
+				type:"laundry_order_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_order_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_order_category:{
+			objects:{
+				type:"laundry_order_category_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_order_category_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_order_category_one:{
+			object:{
+				type:"laundry_order_category_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_order_category_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_order_one:{
+			object:{
+				type:"laundry_order_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_order_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_store:{
+			objects:{
+				type:"laundry_store_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_store_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_laundry_store_one:{
+			object:{
+				type:"laundry_store_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"laundry_store_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -59529,6 +70775,366 @@ export const AllTypesProps: Record<string,any> = {
 		update_language_many:{
 			updates:{
 				type:"language_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_laundry_category:{
+			_inc:{
+				type:"laundry_category_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_category_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_category_by_pk:{
+			_inc:{
+				type:"laundry_category_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_category_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"laundry_category_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_category_many:{
+			updates:{
+				type:"laundry_category_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_laundry_operator:{
+			_inc:{
+				type:"laundry_operator_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_operator_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_operator_by_pk:{
+			_inc:{
+				type:"laundry_operator_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_operator_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"laundry_operator_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_operator_many:{
+			updates:{
+				type:"laundry_operator_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_laundry_order:{
+			_append:{
+				type:"laundry_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"laundry_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"laundry_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"laundry_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"laundry_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"laundry_order_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_order_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_order_by_pk:{
+			_append:{
+				type:"laundry_order_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"laundry_order_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"laundry_order_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"laundry_order_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"laundry_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"laundry_order_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_order_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"laundry_order_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_order_category:{
+			_inc:{
+				type:"laundry_order_category_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_order_category_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_order_category_by_pk:{
+			_inc:{
+				type:"laundry_order_category_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_order_category_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"laundry_order_category_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_order_category_many:{
+			updates:{
+				type:"laundry_order_category_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_laundry_order_many:{
+			updates:{
+				type:"laundry_order_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_laundry_store:{
+			_append:{
+				type:"laundry_store_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"laundry_store_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"laundry_store_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"laundry_store_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"laundry_store_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"laundry_store_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_store_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_store_by_pk:{
+			_append:{
+				type:"laundry_store_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"laundry_store_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"laundry_store_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"laundry_store_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_inc:{
+				type:"laundry_store_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"laundry_store_prepend_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"laundry_store_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"laundry_store_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_laundry_store_many:{
+			updates:{
+				type:"laundry_store_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -62404,6 +74010,366 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		laundry_category:{
+			distinct_on:{
+				type:"laundry_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_category_aggregate:{
+			distinct_on:{
+				type:"laundry_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_operator:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_operator_aggregate:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_operator_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_order:{
+			distinct_on:{
+				type:"laundry_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_aggregate:{
+			distinct_on:{
+				type:"laundry_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_order_category:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_category_aggregate:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_store:{
+			distinct_on:{
+				type:"laundry_store_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_store_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_store_aggregate:{
+			distinct_on:{
+				type:"laundry_store_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_store_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_store_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		mez_admin:{
 			distinct_on:{
 				type:"mez_admin_select_column",
@@ -64694,6 +76660,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items:{
 			type:"restaurant_cart_item_bool_exp",
 			array:false,
@@ -64727,6 +76699,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_id:{
 			type:"Int",
 			array:false,
@@ -64743,6 +76721,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		customer_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -65664,6 +77648,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		items_aggregate:{
 			type:"restaurant_cart_item_aggregate_order_by",
 			array:false,
@@ -65699,6 +77689,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		restaurant_id:{
 			type:"Int",
 			array:false,
@@ -65723,6 +77719,12 @@ export const AllTypesProps: Record<string,any> = {
 	restaurant_cart_stream_cursor_value_input:{
 		customer_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -72901,6 +84903,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -73019,6 +85027,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_type:{
 			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -73212,6 +85226,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -73312,6 +85332,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -74517,6 +86543,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		estimated_food_ready_time:{
 			type:"order_by",
 			array:false,
@@ -74646,6 +86678,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -74832,6 +86870,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -75435,6 +87479,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		estimated_food_ready_time:{
 			type:"timestamptz",
 			array:false,
@@ -75557,6 +87607,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -75619,6 +87675,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -75676,6 +87738,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -75777,6 +87845,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
+			type:"money",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -75903,6 +87977,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -76016,6 +88096,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -76078,6 +88164,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		discount_value:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -76135,6 +88227,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		discount_value:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -80057,6 +92155,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		link:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		message:{
 			type:"String_comparison_exp",
 			array:false,
@@ -80170,6 +92274,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		message:{
 			type:"String",
 			array:false,
@@ -80241,6 +92351,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		likes:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		link:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -80325,6 +92441,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		link:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		message:{
 			type:"String",
 			array:false,
@@ -80385,6 +92507,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		likes:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		link:{
+			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -82699,6 +94827,466 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"language_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_category:{
+			distinct_on:{
+				type:"laundry_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_category_aggregate:{
+			distinct_on:{
+				type:"laundry_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_category_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"laundry_category_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_operator:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_operator_aggregate:{
+			distinct_on:{
+				type:"laundry_operator_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_operator_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_operator_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_operator_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"laundry_operator_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_operator_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order:{
+			distinct_on:{
+				type:"laundry_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_aggregate:{
+			distinct_on:{
+				type:"laundry_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_order_category:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_category_aggregate:{
+			distinct_on:{
+				type:"laundry_order_category_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_order_category_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_category_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_order_category_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"laundry_order_category_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_category_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_order_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"laundry_order_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_store:{
+			distinct_on:{
+				type:"laundry_store_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_store_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_store_aggregate:{
+			distinct_on:{
+				type:"laundry_store_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"laundry_store_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_store_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		laundry_store_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		laundry_store_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"laundry_store_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"laundry_store_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -88106,6 +100694,630 @@ export const ReturnTypes: Record<string,any> = {
 		affected_rows:"Int",
 		returning:"language"
 	},
+	laundry_category:{
+		cost_by_kilo:"money",
+		id:"Int",
+		name:"translation",
+		name_id:"Int",
+		position:"Int",
+		store:"laundry_store",
+		store_id:"Int"
+	},
+	laundry_category_aggregate:{
+		aggregate:"laundry_category_aggregate_fields",
+		nodes:"laundry_category"
+	},
+	laundry_category_aggregate_fields:{
+		avg:"laundry_category_avg_fields",
+		count:"Int",
+		max:"laundry_category_max_fields",
+		min:"laundry_category_min_fields",
+		stddev:"laundry_category_stddev_fields",
+		stddev_pop:"laundry_category_stddev_pop_fields",
+		stddev_samp:"laundry_category_stddev_samp_fields",
+		sum:"laundry_category_sum_fields",
+		var_pop:"laundry_category_var_pop_fields",
+		var_samp:"laundry_category_var_samp_fields",
+		variance:"laundry_category_variance_fields"
+	},
+	laundry_category_avg_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_max_fields:{
+		cost_by_kilo:"money",
+		id:"Int",
+		name_id:"Int",
+		position:"Int",
+		store_id:"Int"
+	},
+	laundry_category_min_fields:{
+		cost_by_kilo:"money",
+		id:"Int",
+		name_id:"Int",
+		position:"Int",
+		store_id:"Int"
+	},
+	laundry_category_mutation_response:{
+		affected_rows:"Int",
+		returning:"laundry_category"
+	},
+	laundry_category_stddev_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_stddev_pop_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_stddev_samp_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_sum_fields:{
+		cost_by_kilo:"money",
+		id:"Int",
+		name_id:"Int",
+		position:"Int",
+		store_id:"Int"
+	},
+	laundry_category_var_pop_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_var_samp_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_category_variance_fields:{
+		cost_by_kilo:"Float",
+		id:"Float",
+		name_id:"Float",
+		position:"Float",
+		store_id:"Float"
+	},
+	laundry_operator:{
+		app_type_id:"String",
+		app_version:"String",
+		current_gps:"geography",
+		delivery_driver_type:"String",
+		id:"Int",
+		notification_info:"notification_info",
+		online:"Boolean",
+		owner:"Boolean",
+		status:"String",
+		store:"laundry_store",
+		store_id:"Int",
+		user:"user",
+		user_id:"Int"
+	},
+	laundry_operator_aggregate:{
+		aggregate:"laundry_operator_aggregate_fields",
+		nodes:"laundry_operator"
+	},
+	laundry_operator_aggregate_fields:{
+		avg:"laundry_operator_avg_fields",
+		count:"Int",
+		max:"laundry_operator_max_fields",
+		min:"laundry_operator_min_fields",
+		stddev:"laundry_operator_stddev_fields",
+		stddev_pop:"laundry_operator_stddev_pop_fields",
+		stddev_samp:"laundry_operator_stddev_samp_fields",
+		sum:"laundry_operator_sum_fields",
+		var_pop:"laundry_operator_var_pop_fields",
+		var_samp:"laundry_operator_var_samp_fields",
+		variance:"laundry_operator_variance_fields"
+	},
+	laundry_operator_avg_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_max_fields:{
+		app_type_id:"String",
+		app_version:"String",
+		delivery_driver_type:"String",
+		id:"Int",
+		status:"String",
+		store_id:"Int",
+		user_id:"Int"
+	},
+	laundry_operator_min_fields:{
+		app_type_id:"String",
+		app_version:"String",
+		delivery_driver_type:"String",
+		id:"Int",
+		status:"String",
+		store_id:"Int",
+		user_id:"Int"
+	},
+	laundry_operator_mutation_response:{
+		affected_rows:"Int",
+		returning:"laundry_operator"
+	},
+	laundry_operator_stddev_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_stddev_pop_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_stddev_samp_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_sum_fields:{
+		id:"Int",
+		store_id:"Int",
+		user_id:"Int"
+	},
+	laundry_operator_var_pop_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_var_samp_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_operator_variance_fields:{
+		id:"Float",
+		store_id:"Float",
+		user_id:"Float"
+	},
+	laundry_order:{
+		actual_ready_time:"timestamptz",
+		cancellation_time:"timestamptz",
+		categories:"laundry_order_category",
+		categories_aggregate:"laundry_order_category_aggregate",
+		chat:"chat",
+		chat_id:"Int",
+		customer:"customer_customer",
+		customer_address:"String",
+		customer_app_type:"String",
+		customer_id:"Int",
+		customer_location_gps:"geography",
+		delivery_cost:"money",
+		delivery_type:"String",
+		discount_value:"money",
+		estimated_ready_time:"timestamptz",
+		firebase_id:"String",
+		from_customer_delivery:"delivery_order",
+		from_customer_delivery_id:"Int",
+		id:"Int",
+		notes:"String",
+		order_time:"timestamptz",
+		payment_type:"String",
+		refund_amount:"money",
+		review:"review",
+		review_id:"Int",
+		scheduled_time:"timestamptz",
+		status:"String",
+		store:"laundry_store",
+		store_id:"Int",
+		stripe_fees:"money",
+		stripe_info:"jsonb",
+		tax:"money",
+		to_customer_delivery_id:"Int"
+	},
+	laundry_order_aggregate:{
+		aggregate:"laundry_order_aggregate_fields",
+		nodes:"laundry_order"
+	},
+	laundry_order_aggregate_fields:{
+		avg:"laundry_order_avg_fields",
+		count:"Int",
+		max:"laundry_order_max_fields",
+		min:"laundry_order_min_fields",
+		stddev:"laundry_order_stddev_fields",
+		stddev_pop:"laundry_order_stddev_pop_fields",
+		stddev_samp:"laundry_order_stddev_samp_fields",
+		sum:"laundry_order_sum_fields",
+		var_pop:"laundry_order_var_pop_fields",
+		var_samp:"laundry_order_var_samp_fields",
+		variance:"laundry_order_variance_fields"
+	},
+	laundry_order_avg_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_category:{
+		category:"laundry_category",
+		category_id:"Int",
+		id:"Int",
+		order:"laundry_order",
+		order_id:"Int",
+		weight_in_kilo:"float8"
+	},
+	laundry_order_category_aggregate:{
+		aggregate:"laundry_order_category_aggregate_fields",
+		nodes:"laundry_order_category"
+	},
+	laundry_order_category_aggregate_fields:{
+		avg:"laundry_order_category_avg_fields",
+		count:"Int",
+		max:"laundry_order_category_max_fields",
+		min:"laundry_order_category_min_fields",
+		stddev:"laundry_order_category_stddev_fields",
+		stddev_pop:"laundry_order_category_stddev_pop_fields",
+		stddev_samp:"laundry_order_category_stddev_samp_fields",
+		sum:"laundry_order_category_sum_fields",
+		var_pop:"laundry_order_category_var_pop_fields",
+		var_samp:"laundry_order_category_var_samp_fields",
+		variance:"laundry_order_category_variance_fields"
+	},
+	laundry_order_category_avg_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_max_fields:{
+		category_id:"Int",
+		id:"Int",
+		order_id:"Int",
+		weight_in_kilo:"float8"
+	},
+	laundry_order_category_min_fields:{
+		category_id:"Int",
+		id:"Int",
+		order_id:"Int",
+		weight_in_kilo:"float8"
+	},
+	laundry_order_category_mutation_response:{
+		affected_rows:"Int",
+		returning:"laundry_order_category"
+	},
+	laundry_order_category_stddev_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_stddev_pop_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_stddev_samp_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_sum_fields:{
+		category_id:"Int",
+		id:"Int",
+		order_id:"Int",
+		weight_in_kilo:"float8"
+	},
+	laundry_order_category_var_pop_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_var_samp_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_category_variance_fields:{
+		category_id:"Float",
+		id:"Float",
+		order_id:"Float",
+		weight_in_kilo:"Float"
+	},
+	laundry_order_max_fields:{
+		actual_ready_time:"timestamptz",
+		cancellation_time:"timestamptz",
+		chat_id:"Int",
+		customer_address:"String",
+		customer_app_type:"String",
+		customer_id:"Int",
+		delivery_cost:"money",
+		delivery_type:"String",
+		discount_value:"money",
+		estimated_ready_time:"timestamptz",
+		firebase_id:"String",
+		from_customer_delivery_id:"Int",
+		id:"Int",
+		notes:"String",
+		order_time:"timestamptz",
+		payment_type:"String",
+		refund_amount:"money",
+		review_id:"Int",
+		scheduled_time:"timestamptz",
+		status:"String",
+		store_id:"Int",
+		stripe_fees:"money",
+		tax:"money",
+		to_customer_delivery_id:"Int"
+	},
+	laundry_order_min_fields:{
+		actual_ready_time:"timestamptz",
+		cancellation_time:"timestamptz",
+		chat_id:"Int",
+		customer_address:"String",
+		customer_app_type:"String",
+		customer_id:"Int",
+		delivery_cost:"money",
+		delivery_type:"String",
+		discount_value:"money",
+		estimated_ready_time:"timestamptz",
+		firebase_id:"String",
+		from_customer_delivery_id:"Int",
+		id:"Int",
+		notes:"String",
+		order_time:"timestamptz",
+		payment_type:"String",
+		refund_amount:"money",
+		review_id:"Int",
+		scheduled_time:"timestamptz",
+		status:"String",
+		store_id:"Int",
+		stripe_fees:"money",
+		tax:"money",
+		to_customer_delivery_id:"Int"
+	},
+	laundry_order_mutation_response:{
+		affected_rows:"Int",
+		returning:"laundry_order"
+	},
+	laundry_order_stddev_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_stddev_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_stddev_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_sum_fields:{
+		chat_id:"Int",
+		customer_id:"Int",
+		delivery_cost:"money",
+		discount_value:"money",
+		from_customer_delivery_id:"Int",
+		id:"Int",
+		refund_amount:"money",
+		review_id:"Int",
+		store_id:"Int",
+		stripe_fees:"money",
+		tax:"money",
+		to_customer_delivery_id:"Int"
+	},
+	laundry_order_var_pop_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_var_samp_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_order_variance_fields:{
+		chat_id:"Float",
+		customer_id:"Float",
+		delivery_cost:"Float",
+		discount_value:"Float",
+		from_customer_delivery_id:"Float",
+		id:"Float",
+		refund_amount:"Float",
+		review_id:"Float",
+		store_id:"Float",
+		stripe_fees:"Float",
+		tax:"Float",
+		to_customer_delivery_id:"Float"
+	},
+	laundry_store:{
+		accepted_payments:"jsonb",
+		approved:"Boolean",
+		creation_time:"timestamptz",
+		customer_pickup:"Boolean",
+		delivery:"Boolean",
+		delivery_details:"delivery_details",
+		delivery_details_id:"Int",
+		delivery_partner:"service_provider_delivery_partner",
+		description:"translation",
+		description_id:"Int",
+		id:"Int",
+		image:"String",
+		language_id:"String",
+		location:"service_provider_location",
+		location_id:"Int",
+		name:"String",
+		open_status:"String",
+		operators:"laundry_operator",
+		operators_aggregate:"laundry_operator_aggregate",
+		phone_number:"String",
+		schedule:"jsonb",
+		self_delivery:"Boolean",
+		service_provider_type:"String",
+		stripe_info:"jsonb"
+	},
+	laundry_store_aggregate:{
+		aggregate:"laundry_store_aggregate_fields",
+		nodes:"laundry_store"
+	},
+	laundry_store_aggregate_fields:{
+		avg:"laundry_store_avg_fields",
+		count:"Int",
+		max:"laundry_store_max_fields",
+		min:"laundry_store_min_fields",
+		stddev:"laundry_store_stddev_fields",
+		stddev_pop:"laundry_store_stddev_pop_fields",
+		stddev_samp:"laundry_store_stddev_samp_fields",
+		sum:"laundry_store_sum_fields",
+		var_pop:"laundry_store_var_pop_fields",
+		var_samp:"laundry_store_var_samp_fields",
+		variance:"laundry_store_variance_fields"
+	},
+	laundry_store_avg_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_max_fields:{
+		creation_time:"timestamptz",
+		delivery_details_id:"Int",
+		description_id:"Int",
+		id:"Int",
+		image:"String",
+		language_id:"String",
+		location_id:"Int",
+		name:"String",
+		open_status:"String",
+		phone_number:"String",
+		service_provider_type:"String"
+	},
+	laundry_store_min_fields:{
+		creation_time:"timestamptz",
+		delivery_details_id:"Int",
+		description_id:"Int",
+		id:"Int",
+		image:"String",
+		language_id:"String",
+		location_id:"Int",
+		name:"String",
+		open_status:"String",
+		phone_number:"String",
+		service_provider_type:"String"
+	},
+	laundry_store_mutation_response:{
+		affected_rows:"Int",
+		returning:"laundry_store"
+	},
+	laundry_store_stddev_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_stddev_pop_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_stddev_samp_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_sum_fields:{
+		delivery_details_id:"Int",
+		description_id:"Int",
+		id:"Int",
+		location_id:"Int"
+	},
+	laundry_store_var_pop_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_var_samp_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
+	laundry_store_variance_fields:{
+		delivery_details_id:"Float",
+		description_id:"Float",
+		id:"Float",
+		location_id:"Float"
+	},
 	mez_admin:{
 		app_type_id:"String",
 		notification_info:"notification_info",
@@ -88280,6 +101492,16 @@ export const ReturnTypes: Record<string,any> = {
 		delete_direct_chat_by_pk:"direct_chat",
 		delete_language:"language_mutation_response",
 		delete_language_by_pk:"language",
+		delete_laundry_category:"laundry_category_mutation_response",
+		delete_laundry_category_by_pk:"laundry_category",
+		delete_laundry_operator:"laundry_operator_mutation_response",
+		delete_laundry_operator_by_pk:"laundry_operator",
+		delete_laundry_order:"laundry_order_mutation_response",
+		delete_laundry_order_by_pk:"laundry_order",
+		delete_laundry_order_category:"laundry_order_category_mutation_response",
+		delete_laundry_order_category_by_pk:"laundry_order_category",
+		delete_laundry_store:"laundry_store_mutation_response",
+		delete_laundry_store_by_pk:"laundry_store",
 		delete_mez_admin:"mez_admin_mutation_response",
 		delete_mez_admin_by_pk:"mez_admin",
 		delete_mez_admin_chat:"mez_admin_chat_mutation_response",
@@ -88361,6 +101583,16 @@ export const ReturnTypes: Record<string,any> = {
 		insert_direct_chat_one:"direct_chat",
 		insert_language:"language_mutation_response",
 		insert_language_one:"language",
+		insert_laundry_category:"laundry_category_mutation_response",
+		insert_laundry_category_one:"laundry_category",
+		insert_laundry_operator:"laundry_operator_mutation_response",
+		insert_laundry_operator_one:"laundry_operator",
+		insert_laundry_order:"laundry_order_mutation_response",
+		insert_laundry_order_category:"laundry_order_category_mutation_response",
+		insert_laundry_order_category_one:"laundry_order_category",
+		insert_laundry_order_one:"laundry_order",
+		insert_laundry_store:"laundry_store_mutation_response",
+		insert_laundry_store_one:"laundry_store",
 		insert_mez_admin:"mez_admin_mutation_response",
 		insert_mez_admin_chat:"mez_admin_chat_mutation_response",
 		insert_mez_admin_chat_one:"mez_admin_chat",
@@ -88456,6 +101688,21 @@ export const ReturnTypes: Record<string,any> = {
 		update_language:"language_mutation_response",
 		update_language_by_pk:"language",
 		update_language_many:"language_mutation_response",
+		update_laundry_category:"laundry_category_mutation_response",
+		update_laundry_category_by_pk:"laundry_category",
+		update_laundry_category_many:"laundry_category_mutation_response",
+		update_laundry_operator:"laundry_operator_mutation_response",
+		update_laundry_operator_by_pk:"laundry_operator",
+		update_laundry_operator_many:"laundry_operator_mutation_response",
+		update_laundry_order:"laundry_order_mutation_response",
+		update_laundry_order_by_pk:"laundry_order",
+		update_laundry_order_category:"laundry_order_category_mutation_response",
+		update_laundry_order_category_by_pk:"laundry_order_category",
+		update_laundry_order_category_many:"laundry_order_category_mutation_response",
+		update_laundry_order_many:"laundry_order_mutation_response",
+		update_laundry_store:"laundry_store_mutation_response",
+		update_laundry_store_by_pk:"laundry_store",
+		update_laundry_store_many:"laundry_store_mutation_response",
 		update_mez_admin:"mez_admin_mutation_response",
 		update_mez_admin_by_pk:"mez_admin",
 		update_mez_admin_chat:"mez_admin_chat_mutation_response",
@@ -88653,6 +101900,21 @@ export const ReturnTypes: Record<string,any> = {
 		language:"language",
 		language_aggregate:"language_aggregate",
 		language_by_pk:"language",
+		laundry_category:"laundry_category",
+		laundry_category_aggregate:"laundry_category_aggregate",
+		laundry_category_by_pk:"laundry_category",
+		laundry_operator:"laundry_operator",
+		laundry_operator_aggregate:"laundry_operator_aggregate",
+		laundry_operator_by_pk:"laundry_operator",
+		laundry_order:"laundry_order",
+		laundry_order_aggregate:"laundry_order_aggregate",
+		laundry_order_by_pk:"laundry_order",
+		laundry_order_category:"laundry_order_category",
+		laundry_order_category_aggregate:"laundry_order_category_aggregate",
+		laundry_order_category_by_pk:"laundry_order_category",
+		laundry_store:"laundry_store",
+		laundry_store_aggregate:"laundry_store_aggregate",
+		laundry_store_by_pk:"laundry_store",
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
@@ -88744,6 +102006,7 @@ export const ReturnTypes: Record<string,any> = {
 		cost:"money",
 		customer:"customer_customer",
 		customer_id:"Int",
+		discount_value:"money",
 		items:"restaurant_cart_item",
 		items_aggregate:"restaurant_cart_item_aggregate",
 		restaurant:"restaurant_restaurant",
@@ -88768,6 +102031,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_avg_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_item:{
@@ -88876,10 +102140,12 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_max_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_min_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_mutation_response:{
@@ -88888,30 +102154,37 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	restaurant_cart_stddev_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_stddev_pop_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_stddev_samp_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_sum_fields:{
 		customer_id:"Int",
+		discount_value:"money",
 		restaurant_id:"Int"
 	},
 	restaurant_cart_var_pop_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_var_samp_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_cart_variance_fields:{
 		customer_id:"Float",
+		discount_value:"Float",
 		restaurant_id:"Float"
 	},
 	restaurant_category:{
@@ -89686,6 +102959,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_id:"Int",
 		delivery_type:"String",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -89732,6 +103006,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -89864,6 +103139,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_id:"Int",
 		delivery_type:"String",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -89888,6 +103164,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_id:"Int",
 		delivery_type:"String",
+		discount_value:"money",
 		estimated_food_ready_time:"timestamptz",
 		firebase_id:"String",
 		id:"Int",
@@ -90002,6 +103279,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90014,6 +103292,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90026,6 +103305,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90038,6 +103318,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Int",
 		delivery_cost:"money",
 		delivery_id:"Int",
+		discount_value:"money",
 		id:"Int",
 		refund_amount:"money",
 		restaurant_id:"Int",
@@ -90050,6 +103331,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90062,6 +103344,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90074,6 +103357,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_id:"Float",
 		delivery_cost:"Float",
 		delivery_id:"Float",
+		discount_value:"Float",
 		id:"Float",
 		refund_amount:"Float",
 		restaurant_id:"Float",
@@ -90544,6 +103828,7 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Int",
 		image:"String",
 		likes:"jsonb",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		restaurant:"restaurant_restaurant",
@@ -90574,6 +103859,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_post_max_fields:{
 		id:"Int",
 		image:"String",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		service_provider_id:"Int",
@@ -90582,6 +103868,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_post_min_fields:{
 		id:"Int",
 		image:"String",
+		link:"String",
 		message:"String",
 		posted_on:"timestamptz",
 		service_provider_id:"Int",
@@ -90847,6 +104134,26 @@ export const ReturnTypes: Record<string,any> = {
 		language_aggregate:"language_aggregate",
 		language_by_pk:"language",
 		language_stream:"language",
+		laundry_category:"laundry_category",
+		laundry_category_aggregate:"laundry_category_aggregate",
+		laundry_category_by_pk:"laundry_category",
+		laundry_category_stream:"laundry_category",
+		laundry_operator:"laundry_operator",
+		laundry_operator_aggregate:"laundry_operator_aggregate",
+		laundry_operator_by_pk:"laundry_operator",
+		laundry_operator_stream:"laundry_operator",
+		laundry_order:"laundry_order",
+		laundry_order_aggregate:"laundry_order_aggregate",
+		laundry_order_by_pk:"laundry_order",
+		laundry_order_category:"laundry_order_category",
+		laundry_order_category_aggregate:"laundry_order_category_aggregate",
+		laundry_order_category_by_pk:"laundry_order_category",
+		laundry_order_category_stream:"laundry_order_category",
+		laundry_order_stream:"laundry_order",
+		laundry_store:"laundry_store",
+		laundry_store_aggregate:"laundry_store_aggregate",
+		laundry_store_by_pk:"laundry_store",
+		laundry_store_stream:"laundry_store",
 		mez_admin:"mez_admin",
 		mez_admin_aggregate:"mez_admin_aggregate",
 		mez_admin_by_pk:"mez_admin",
@@ -91685,4 +104992,4 @@ subscription: ZeusSelect<ValueTypes["subscription_root"]>()
 };
   
 
-export const Gql = Chain('https://mez-staging.hasura.app/v1/graphql')
+export const Gql = Chain('http://localhost:8080/v1/graphql')

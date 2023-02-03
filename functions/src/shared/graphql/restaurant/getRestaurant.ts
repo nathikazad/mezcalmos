@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
-import { OpenStatus, OperatorStatus, Restaurant, RestaurantOperator } from "../../models/Services/Restaurant/Restaurant";
+import { Restaurant, RestaurantOperator } from "../../models/Services/Restaurant/Restaurant";
+import { OperatorStatus, OpenStatus } from "../../models/Services/Service";
 
 export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   let chain = getHasura();
@@ -26,6 +27,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
       approved: true,
       stripe_info: [{}, true],
       accepted_payments: [{}, true],
+      language_id: true,
       restaurant_operators: [{}, {
         id: true,
         user_id: true,
@@ -86,7 +88,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
   });
 
   let restaurant: Restaurant = {
-    restaurantId: response.restaurant_restaurant_by_pk.id,
+    id: response.restaurant_restaurant_by_pk.id,
     name: response.restaurant_restaurant_by_pk.name,
     image: response.restaurant_restaurant_by_pk.image,
     selfDelivery:response.restaurant_restaurant_by_pk.self_delivery,
@@ -108,7 +110,8 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     restaurantOperators,
     deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partner?.delivery_company_id,
     customerPickup: response.restaurant_restaurant_by_pk.customer_pickup,
-    delivery: response.restaurant_restaurant_by_pk.delivery
+    delivery: response.restaurant_restaurant_by_pk.delivery,
+    language: response.restaurant_restaurant_by_pk.language_id as Language
   }
 
   return restaurant;

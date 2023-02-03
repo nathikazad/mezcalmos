@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { OperatorStatus, RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
+import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
+import { OperatorStatus } from "../../../models/Services/Service";
 
 
 export async function getRestaurantOperators(restaurantId: number): Promise<RestaurantOperator[]> {

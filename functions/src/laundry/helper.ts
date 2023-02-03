@@ -1,17 +1,14 @@
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
-import * as customerNodes from "../shared/databaseNodes/customer";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
-import * as laundryNodes from "../shared/databaseNodes/services/laundry";
 import { OrderType } from "../shared/models/Generic/Order";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
-import { ServerResponse, ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
+import { ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
 
 export async function finishOrder(
   order: LaundryOrder,
   orderId: string) {
   // moving the order node from /customers/inProcessOrders => /customers/pastOrders/
-  await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order)
-  await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
+  // await customerNodes.pastOrders(order.customer.firebaseId!, orderId).set(order)
+  // await customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).remove();
 
 
   // and finally remove from root /inProcessOrders   
@@ -19,23 +16,23 @@ export async function finishOrder(
   await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).remove();
 
 
-  if (order.laundry) {
-    laundryNodes.pastOrders(order.laundry.firebaseId, orderId).set(order);
-    laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).remove();
-  }
+  // if (order.laundry) {
+  //   laundryNodes.pastOrders(order.laundry.firebaseId, orderId).set(order);
+  //   laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).remove();
+  // }
 
-  if (order.dropoffDriver) {
-    await deliveryDriverNodes.pastOrders(order.dropoffDriver.firebaseId!, orderId).update(order)
-    await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId!, orderId).remove();
-  }
-  if (order.pickupDriver) {
-    await deliveryDriverNodes.pastOrders(order.pickupDriver.firebaseId!, orderId).update(order)
-    await deliveryDriverNodes.inProcessOrders(order.pickupDriver.firebaseId!, orderId).remove();
-  }
+  // if (order.dropoffDriver) {
+  //   await deliveryDriverNodes.pastOrders(order.dropoffDriver.firebaseId!, orderId).update(order)
+  //   await deliveryDriverNodes.inProcessOrders(order.dropoffDriver.firebaseId!, orderId).remove();
+  // }
+  // if (order.pickupDriver) {
+  //   await deliveryDriverNodes.pastOrders(order.pickupDriver.firebaseId!, orderId).update(order)
+  //   await deliveryDriverNodes.inProcessOrders(order.pickupDriver.firebaseId!, orderId).remove();
+  // }
 }
 
 let statusArrayInSeq: Array<LaundryOrderStatus> =
-  [LaundryOrderStatus.OrderReceieved,
+  [LaundryOrderStatus.OrderReceived,
   LaundryOrderStatus.OtwPickupFromCustomer,
   LaundryOrderStatus.PickedUpFromCustomer,
   LaundryOrderStatus.AtLaundry,
@@ -49,17 +46,17 @@ export function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrder
   return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
 }
 
-async function checkLaundryOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
-  let operator = (await laundryNodes.laundryOperators(laundryId, operatorId).once('value')).val();
-  let isOperator = operator != null && operator == true
-  if (!isOperator) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: "Only authorized laundry operators can run this operation"
-    }
-  }
-  return undefined;
-}
+// async function checkLaundryOperator(laundryId: string, operatorId: string): Promise<ServerResponse | undefined> {
+//   let operator = (await laundryNodes.laundryOperators(laundryId, operatorId).once('value')).val();
+//   let isOperator = operator != null && operator == true
+//   if (!isOperator) {
+//     return {
+//       status: ServerResponseStatus.Error,
+//       errorMessage: "Only authorized laundry operators can run this operation"
+//     }
+//   }
+//   return undefined;
+// }
 
 export async function passChecksForLaundry(data: any, userId: string): Promise<ValidationPass> {
   let response 
@@ -95,7 +92,7 @@ export async function passChecksForLaundry(data: any, userId: string): Promise<V
   }
 
   if (data.fromLaundryOperator) {
-    response = await checkLaundryOperator(order.laundry.firebaseId, userId)
+    // response = await checkLaundryOperator(order.laundry.firebaseId, userId)
     if (response != undefined) {
       return {
         ok: false,

@@ -1,0 +1,10 @@
+table:
+  name: order_category
+  schema: laundry
+object_relationships:
+  - name: category
+    using:
+      foreign_key_constraint_on: category_id
+  - name: order
+    using:
+      foreign_key_constraint_on: order_id

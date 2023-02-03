@@ -1,0 +1,27 @@
+table:
+  name: order
+  schema: laundry
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id
+  - name: customer
+    using:
+      foreign_key_constraint_on: customer_id
+  - name: from_customer_delivery
+    using:
+      foreign_key_constraint_on: from_customer_delivery_id
+  - name: review
+    using:
+      foreign_key_constraint_on: review_id
+  - name: store
+    using:
+      foreign_key_constraint_on: store_id
+array_relationships:
+  - name: categories
+    using:
+      foreign_key_constraint_on:
+        column: order_id
+        table:
+          name: order_category
+          schema: laundry

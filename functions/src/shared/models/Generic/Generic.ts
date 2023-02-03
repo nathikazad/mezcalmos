@@ -46,11 +46,11 @@ export interface Operator {
   versionNumber: string,
   notificationInfo: NotificationInfo
 }
-export interface LaundryOperator extends Operator {
-  state: {
-    laundryId: string
-  }
-}
+// export interface LaundryOperator extends Operator {
+//   state: {
+//     laundryId: string
+//   }
+// }
 
 export interface ServerResponse {
   status: ServerResponseStatus

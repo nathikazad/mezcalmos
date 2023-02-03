@@ -1,38 +1,19 @@
-import { PaymentType } from '../../Generic/Order';
+import { Order } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
-import { CustomerAppType, Language, Location } from '../../Generic/Generic';
+import { Language, Location } from '../../Generic/Generic';
 import { Restaurant } from './Restaurant';
-import { OrderStripeInfo } from '../../../../utilities/stripe/model';
 import { DeliveryOrderStatus } from '../../Generic/Delivery';
 
-export interface RestaurantOrder {
-  orderId?: number;
-  customerId: number;
+export interface RestaurantOrder extends Order {
   restaurantId: number;
-  
-  paymentType: PaymentType;
   toLocation: Location;
   estimatedFoodReadyTime?: string;
   actualFoodReadyTime?: string;
-  stripePaymentId?: number;
-  refundAmount?: number;
-  deliveryId?: number;
   status: RestaurantOrderStatus;
-  reviewId?: number;
-  deliveryType: DeliveryType;
-  orderTime?: string;
-  firebaseId?: string;
-  customerAppType: CustomerAppType;
-  notes?: string;
-  tax?: number;
   items: Array<OrderItem>;
-  deliveryCost: number;
   itemsCost?: number;
   totalCost?: number;
-  chatId?: number;
-  scheduledTime?: string;
   restaurant?: Restaurant;
-  stripeInfo?: OrderStripeInfo;
 }
 export interface OrderItem {
   orderItemId?: number;
@@ -69,11 +50,6 @@ export enum DeliveryMode {
   SelfDeliveryByRestaurant = "selfDeliveryByRestaurant",
   SelfDeliveryByDriver = "SelfDeliveryByDriver",
   None = "none",
-}
-
-export enum DeliveryType {
-  Pickup = "pickup",
-  Delivery = "delivery",
 }
 
 export function orderInProcess(status: RestaurantOrderStatus): boolean {

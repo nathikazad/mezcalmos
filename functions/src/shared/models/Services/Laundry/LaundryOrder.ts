@@ -1,19 +1,30 @@
 
-import { OrderType, PaymentType, TwoWayDeliverableOrder } from '../../Generic/Order';
+import { Order, OrderType, PaymentType } from '../../Generic/Order';
 import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
 import { RouteInformation } from '../../Generic/RouteInformation';
+import { Laundry } from './Laundry';
 
-export interface LaundryOrder extends TwoWayDeliverableOrder {
-  laundry: UserInfo;
-  notes?: string;
+export interface LaundryOrder extends Order {
+  storeId: number;
+  customerLocation: Location;
+  estimatedReadyTime?: string;
+  actualReadyTime?: string;
+  fromCustomerDeliveryId?: number;
+  toCustomerDeliveryId?: number;
   status: LaundryOrderStatus;
-  shippingCost: number;
-  costPerKilo: number;
-  routeInformation?: RouteInformation;
-  costsByType?: CostsByType;
-  estimatedLaundryReadyTime?: string
+  categories: Array<OrderCategory>;
+  laundryStore?: Laundry;
+  // routeInformation?: RouteInformation;
+  // costsByType?: CostsByType;
+}
+export interface OrderCategory {
+  orderCategoryId?: number;
+  categoryId: number;
+  orderId?: number;
+  weightInKilo?: number;
+  costByKilo?: number;
 }
 export interface CostsByType {
   byType: any;
@@ -21,7 +32,7 @@ export interface CostsByType {
 }
 
 export enum LaundryOrderStatus {
-  OrderReceieved = "orderReceieved",
+  OrderReceived = "orderReceived",
   OtwPickupFromCustomer = "otwPickupFromCustomer",
   PickedUpFromCustomer = "pickedUpFromCustomer",
   AtLaundry = "atLaundry",
@@ -46,7 +57,7 @@ export function constructLaundryOrder(
   return <LaundryOrder><unknown>{
     customer: customer,
     orderType: OrderType.Laundry,
-    status: LaundryOrderStatus.OrderReceieved,
+    status: LaundryOrderStatus.OrderReceived,
     orderTime: (new Date()).toISOString(),
     notes: params.notes,
     laundry: laundry,

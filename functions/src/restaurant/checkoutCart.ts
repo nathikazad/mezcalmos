@@ -1,5 +1,5 @@
-import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { Location, Language, CustomerAppType } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
@@ -175,7 +175,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restau
       restaurant: {
         name: restaurant.name,
         image: restaurant.image,
-        id: restaurant.restaurantId
+        id: restaurant.id
       }
     },
     background: {
@@ -206,7 +206,7 @@ function notifyOperators(orderId: number, restaurant: Restaurant) {
       restaurant: {
         name: restaurant.name,
         image: restaurant.image,
-        id: restaurant.restaurantId
+        id: restaurant.id
       }
     },
     background: {

@@ -1,23 +1,31 @@
 import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { DeliveryDriverType } from "./Delivery";
-import { Location } from "./Generic";
+import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
 export interface Order {
-  orderType: OrderType,
-  serviceProviderId?: number,
-  cost: number;
-  paymentType: PaymentType,
-  to: Location,
-  customer: UserInfo,
-  orderTime: string,
-  secondaryChats: Record<SecondaryChat, string | null>,
-  estimatedDeliveryTimes: Partial<Record<DeliveryDriverType, Record<DeliveryAction, string | null>>>,
-  stripePaymentInfo?: OrderStripeInfo,
-  totalCostBeforeShipping: number;
-  totalCost: number;
-  refundAmount: number,
-  costToCustomer: number,
+  orderId?: number;
+  customerId: number;
+  paymentType: PaymentType;
+  refundAmount?: number;
+  reviewId?: number;
+  deliveryType: DeliveryType;
+  orderTime?: string;
+  firebaseId?: string;
+  customerAppType: CustomerAppType;
+  notes?: string;
+  tax?: number;
+  deliveryCost: number;
+  chatId?: number;
+  scheduledTime?: string;
+  stripeInfo?: OrderStripeInfo;
+  stripeFees?: number;
+  cancellationTime?: string;
+  discountValue?: number;
+  deliveryId?: number;
+}
+export enum DeliveryType {
+  Pickup = "pickup",
+  Delivery = "delivery",
 }
 
 export enum DeliveryAction {

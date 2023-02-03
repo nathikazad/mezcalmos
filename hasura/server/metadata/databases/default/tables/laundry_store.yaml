@@ -1,0 +1,31 @@
+table:
+  name: store
+  schema: laundry
+object_relationships:
+  - name: delivery_details
+    using:
+      foreign_key_constraint_on: delivery_details_id
+  - name: delivery_partner
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: delivery_partner
+          schema: service_provider
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+array_relationships:
+  - name: operators
+    using:
+      foreign_key_constraint_on:
+        column: store_id
+        table:
+          name: operator
+          schema: laundry

@@ -1,8 +1,8 @@
-import { DeliveryType, orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
+import { orderInProcess, RestaurantOrder, RestaurantOrderStatus, RestaurantOrderStatusChangeNotification } from "../shared/models/Services/Restaurant/RestaurantOrder";
 import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder"
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { restaurantOrderStatusChangeMessages } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";

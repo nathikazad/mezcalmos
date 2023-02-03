@@ -4,7 +4,7 @@ import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
 
 export async function updateRestaurantStripe(restaurant: Restaurant) {
     let chain = getHasura();
-    if(!(restaurant.restaurantId)) {
+    if(!(restaurant.id)) {
         throw new HttpsError(
             "internal",
             "restaurant id not found"
@@ -13,7 +13,7 @@ export async function updateRestaurantStripe(restaurant: Restaurant) {
     let response = await chain.mutation({
         update_restaurant_restaurant_by_pk: [{
             pk_columns: {
-                id: restaurant.restaurantId
+                id: restaurant.id
             },
             _set: {
                 stripe_info: JSON.stringify(restaurant.stripeInfo),
