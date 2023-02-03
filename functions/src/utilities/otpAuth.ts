@@ -1,7 +1,6 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
 interface sendOtpInterface {
@@ -60,12 +59,13 @@ export async function sendOTPForLogin(_:any, data: sendOtpInterface) {
     }
   }
 
-  let response = await sendOTP(data, user.uid)
+  // let response = 
+  await sendOTP(data, user.uid)
 
-  if (response != undefined) {
-    return response
-  }
-  return
+  // if (response != undefined) {
+  //   return response
+  // }
+  // return
 }
 
 export interface AuthResponse {
@@ -140,18 +140,22 @@ export async function getAuthUsingOTP(_:any, data: verifyOtpInterface): Promise<
   }
 }
 
-async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerResponse | undefined> {
+async function sendOTP(data: sendOtpInterface, userId: string) {
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (auth && auth.codeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
     if (new Date() < validTimeForNextCodeGeneration) {
       let secondsLeft = (validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000;
-      return {
-        status: ServerResponseStatus.Error,
-        errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
-        secondsLeft: secondsLeft
-      }
+      // return {
+      //   status: ServerResponseStatus.Error,
+      //   errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
+      //   secondsLeft: secondsLeft
+      // }
+      throw new HttpsError(
+        "internal",
+        `Cannot generate another code for ${secondsLeft} seconds`
+      );
     }
   }
   let randomNumber: number = Math.trunc(Math.random() * 1000000)
@@ -167,10 +171,14 @@ async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerRe
   } catch (error) {
     functions.logger.error(error);
     // console.log(error)
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `SMS Send Error`
-    }
+    // return {
+    //   status: ServerResponseStatus.Error,
+    //   errorMessage: `SMS Send Error`
+    // }
+    throw new HttpsError(
+      "internal",
+      `SMS Send Error`
+    );
   }
 
   let newCodeEntry = {
@@ -179,7 +187,6 @@ async function sendOTP(data: sendOtpInterface, userId: string): Promise<ServerRe
     attempts: 0
   }
   firebase.database().ref(`users/${userId}/auth`).set(newCodeEntry)
-  return undefined;
 }
 
 
