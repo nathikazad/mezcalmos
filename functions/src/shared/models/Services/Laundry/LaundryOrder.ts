@@ -9,13 +9,13 @@ import { Laundry, LaundryCategory } from './Laundry';
 export interface LaundryOrder extends Order {
   storeId: number;
   customerLocation: Location;
-  estimatedReadyTime: string;
-  actualReadyTime: string;
+  estimatedReadyTime?: string;
+  actualReadyTime?: string;
   fromCustomerDeliveryId?: number;
   toCustomerDeliveryId?: number;
   status: LaundryOrderStatus;
   categories: Array<OrderCategory>;
-  laundryStore: Laundry;
+  laundryStore?: Laundry;
   // routeInformation?: RouteInformation;
   // costsByType?: CostsByType;
 }
@@ -30,7 +30,7 @@ export interface CostsByType {
 }
 
 export enum LaundryOrderStatus {
-  OrderReceieved = "orderReceieved",
+  OrderReceived = "orderReceived",
   OtwPickupFromCustomer = "otwPickupFromCustomer",
   PickedUpFromCustomer = "pickedUpFromCustomer",
   AtLaundry = "atLaundry",
@@ -55,7 +55,7 @@ export function constructLaundryOrder(
   return <LaundryOrder><unknown>{
     customer: customer,
     orderType: OrderType.Laundry,
-    status: LaundryOrderStatus.OrderReceieved,
+    status: LaundryOrderStatus.OrderReceived,
     orderTime: (new Date()).toISOString(),
     notes: params.notes,
     laundry: laundry,

@@ -1,5 +1,4 @@
 import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { DeliveryType } from "../Services/Restaurant/RestaurantOrder";
 import { AppType } from "./Generic";
 import { UserInfo } from "./User";
 
@@ -22,6 +21,10 @@ export interface Order {
   stripeFees?: number;
   cancellationTime?: string;
   discountValue?: number;
+}
+export enum DeliveryType {
+  Pickup = "pickup",
+  Delivery = "delivery",
 }
 
 export enum DeliveryAction {

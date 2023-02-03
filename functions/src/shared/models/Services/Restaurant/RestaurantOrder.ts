@@ -53,11 +53,6 @@ export enum DeliveryMode {
   None = "none",
 }
 
-export enum DeliveryType {
-  Pickup = "pickup",
-  Delivery = "delivery",
-}
-
 export function orderInProcess(status: RestaurantOrderStatus): boolean {
   return !(status == RestaurantOrderStatus.CancelledByAdmin ||
     status == RestaurantOrderStatus.CancelledByCustomer ||

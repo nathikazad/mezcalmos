@@ -19,6 +19,9 @@
 // // import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
+import { Location } from "../shared/models/Generic/Generic";
+import { DeliveryType, PaymentType } from "../shared/models/Generic/Order";
+import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../shared/models/Services/Laundry/LaundryOrder";
 
 // export async function requestLaundry(userId: string, data: any) {
 
@@ -154,13 +157,37 @@ import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 // }
 export interface LaundryRequestDetails {
     storeId: number,
-    
+    paymentType: PaymentType,  
+    deliveryType: DeliveryType,
+    notes?: string;
+    tax?: number;
+    scheduledTime?: string;
+    stripeFees?: number;
+    discountValue?: number;
+    customerLocation: Location;
+    deliveryCost: number;
+    status: LaundryOrderStatus;
+    categories: Array<OrderCategory>;
 }
 
 export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails)/*: Promise<CheckoutResponse> */{
     await getLaundryStore(laundryRequestDetails.storeId);
     
-    // let laundryOrder: LaundryOrder = {
-
-    // }
+    let laundryOrder: LaundryOrder = {
+        customerId,
+        storeId: laundryRequestDetails.storeId,
+        paymentType: laundryRequestDetails.paymentType,
+        deliveryType: laundryRequestDetails.deliveryType,
+        customerAppType: ,
+        notes: laundryRequestDetails.notes,
+        tax: laundryRequestDetails.tax,
+        scheduledTime: laundryRequestDetails.scheduledTime,
+        stripeFees: laundryRequestDetails.stripeFees,
+        discountValue: laundryRequestDetails.discountValue,
+        customerLocation: laundryRequestDetails.customerLocation,
+        deliveryCost: laundryRequestDetails.deliveryCost,
+        status: LaundryOrderStatus.OrderReceived,
+        categories: laundryRequestDetails.categories,
+    }
+    
 }
