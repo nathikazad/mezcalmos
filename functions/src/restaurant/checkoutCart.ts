@@ -1,5 +1,5 @@
-import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, DeliveryType, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
-import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { NewRestaurantOrderNotification, RestaurantOrder, RestaurantOrderStatus, OrderItem } from '../shared/models/Services/Restaurant/RestaurantOrder';
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { Location, Language, CustomerAppType } from "../shared/models/Generic/Generic";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";

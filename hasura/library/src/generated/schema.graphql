@@ -6889,8 +6889,14 @@ columns and relationships of "laundry.category"
 type laundry_category {
   cost_by_kilo: money!
   id: Int!
+
+  """An object relationship"""
+  name: translation!
   name_id: Int!
   position: Int!
+
+  """An object relationship"""
+  store: laundry_store!
   store_id: Int!
 }
 
@@ -6937,8 +6943,10 @@ input laundry_category_bool_exp {
   _or: [laundry_category_bool_exp!]
   cost_by_kilo: money_comparison_exp
   id: Int_comparison_exp
+  name: translation_bool_exp
   name_id: Int_comparison_exp
   position: Int_comparison_exp
+  store: laundry_store_bool_exp
   store_id: Int_comparison_exp
 }
 
@@ -6969,8 +6977,10 @@ input type for inserting data into table "laundry.category"
 input laundry_category_insert_input {
   cost_by_kilo: money
   id: Int
+  name: translation_obj_rel_insert_input
   name_id: Int
   position: Int
+  store: laundry_store_obj_rel_insert_input
   store_id: Int
 }
 
@@ -7004,6 +7014,16 @@ type laundry_category_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "laundry.category"
+"""
+input laundry_category_obj_rel_insert_input {
+  data: laundry_category_insert_input!
+
+  """upsert condition"""
+  on_conflict: laundry_category_on_conflict
+}
+
+"""
 on_conflict condition type for table "laundry.category"
 """
 input laundry_category_on_conflict {
@@ -7016,8 +7036,10 @@ input laundry_category_on_conflict {
 input laundry_category_order_by {
   cost_by_kilo: order_by
   id: order_by
+  name: translation_order_by
   name_id: order_by
   position: order_by
+  store: laundry_store_order_by
   store_id: order_by
 }
 
@@ -7178,10 +7200,19 @@ type laundry_operator {
   current_gps: geography
   delivery_driver_type: String!
   id: Int!
+
+  """An object relationship"""
+  notification_info: notification_info
   online: Boolean!
   owner: Boolean!
   status: String!
+
+  """An object relationship"""
+  store: laundry_store!
   store_id: Int!
+
+  """An object relationship"""
+  user: user!
   user_id: Int!
 }
 
@@ -7292,10 +7323,13 @@ input laundry_operator_bool_exp {
   current_gps: geography_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
+  notification_info: notification_info_bool_exp
   online: Boolean_comparison_exp
   owner: Boolean_comparison_exp
   status: String_comparison_exp
+  store: laundry_store_bool_exp
   store_id: Int_comparison_exp
+  user: user_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -7332,10 +7366,13 @@ input laundry_operator_insert_input {
   current_gps: geography
   delivery_driver_type: String
   id: Int
+  notification_info: notification_info_obj_rel_insert_input
   online: Boolean
   owner: Boolean
   status: String
+  store: laundry_store_obj_rel_insert_input
   store_id: Int
+  user: user_obj_rel_insert_input
   user_id: Int
 }
 
@@ -7414,10 +7451,13 @@ input laundry_operator_order_by {
   current_gps: order_by
   delivery_driver_type: order_by
   id: order_by
+  notification_info: notification_info_order_by
   online: order_by
   owner: order_by
   status: order_by
+  store: laundry_store_order_by
   store_id: order_by
+  user: user_order_by
   user_id: order_by
 }
 
@@ -7686,7 +7726,49 @@ columns and relationships of "laundry.order"
 type laundry_order {
   actual_ready_time: timestamptz
   cancellation_time: timestamptz
+
+  """An array relationship"""
+  categories(
+    """distinct select on columns"""
+    distinct_on: [laundry_order_category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [laundry_order_category_order_by!]
+
+    """filter the rows returned"""
+    where: laundry_order_category_bool_exp
+  ): [laundry_order_category!]!
+
+  """An aggregate relationship"""
+  categories_aggregate(
+    """distinct select on columns"""
+    distinct_on: [laundry_order_category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [laundry_order_category_order_by!]
+
+    """filter the rows returned"""
+    where: laundry_order_category_bool_exp
+  ): laundry_order_category_aggregate!
+
+  """An object relationship"""
+  chat: chat
   chat_id: Int
+
+  """An object relationship"""
+  customer: customer_customer!
   customer_address: String
   customer_app_type: String!
   customer_id: Int!
@@ -7696,15 +7778,24 @@ type laundry_order {
   discount_value: money!
   estimated_ready_time: timestamptz
   firebase_id: String
+
+  """An object relationship"""
+  from_customer_delivery: delivery_order
   from_customer_delivery_id: Int
   id: Int!
   notes: String
   order_time: timestamptz!
   payment_type: String!
   refund_amount: money!
+
+  """An object relationship"""
+  review: review
   review_id: Int
   scheduled_time: timestamptz
   status: String!
+
+  """An object relationship"""
+  store: laundry_store!
   store_id: Int!
   stripe_fees: money!
   stripe_info(
@@ -7770,7 +7861,11 @@ input laundry_order_bool_exp {
   _or: [laundry_order_bool_exp!]
   actual_ready_time: timestamptz_comparison_exp
   cancellation_time: timestamptz_comparison_exp
+  categories: laundry_order_category_bool_exp
+  categories_aggregate: laundry_order_category_aggregate_bool_exp
+  chat: chat_bool_exp
   chat_id: Int_comparison_exp
+  customer: customer_customer_bool_exp
   customer_address: String_comparison_exp
   customer_app_type: String_comparison_exp
   customer_id: Int_comparison_exp
@@ -7780,15 +7875,18 @@ input laundry_order_bool_exp {
   discount_value: money_comparison_exp
   estimated_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
+  from_customer_delivery: delivery_order_bool_exp
   from_customer_delivery_id: Int_comparison_exp
   id: Int_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
   payment_type: String_comparison_exp
   refund_amount: money_comparison_exp
+  review: review_bool_exp
   review_id: Int_comparison_exp
   scheduled_time: timestamptz_comparison_exp
   status: String_comparison_exp
+  store: laundry_store_bool_exp
   store_id: Int_comparison_exp
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
@@ -7800,10 +7898,15 @@ input laundry_order_bool_exp {
 columns and relationships of "laundry.order_category"
 """
 type laundry_order_category {
+  """An object relationship"""
+  category: laundry_category!
   category_id: Int!
   id: Int!
+
+  """An object relationship"""
+  order: laundry_order!
   order_id: Int!
-  weight_in_kilo: float8!
+  weight_in_kilo: float8
 }
 
 """
@@ -7812,6 +7915,91 @@ aggregated selection of "laundry.order_category"
 type laundry_order_category_aggregate {
   aggregate: laundry_order_category_aggregate_fields
   nodes: [laundry_order_category!]!
+}
+
+input laundry_order_category_aggregate_bool_exp {
+  avg: laundry_order_category_aggregate_bool_exp_avg
+  corr: laundry_order_category_aggregate_bool_exp_corr
+  count: laundry_order_category_aggregate_bool_exp_count
+  covar_samp: laundry_order_category_aggregate_bool_exp_covar_samp
+  max: laundry_order_category_aggregate_bool_exp_max
+  min: laundry_order_category_aggregate_bool_exp_min
+  stddev_samp: laundry_order_category_aggregate_bool_exp_stddev_samp
+  sum: laundry_order_category_aggregate_bool_exp_sum
+  var_samp: laundry_order_category_aggregate_bool_exp_var_samp
+}
+
+input laundry_order_category_aggregate_bool_exp_avg {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_corr {
+  arguments: laundry_order_category_aggregate_bool_exp_corr_arguments!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_corr_arguments {
+  X: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns!
+  Y: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns!
+}
+
+input laundry_order_category_aggregate_bool_exp_count {
+  arguments: [laundry_order_category_select_column!]
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_covar_samp {
+  arguments: laundry_order_category_aggregate_bool_exp_covar_samp_arguments!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_covar_samp_arguments {
+  X: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns!
+  Y: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns!
+}
+
+input laundry_order_category_aggregate_bool_exp_max {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_min {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_stddev_samp {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_sum {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
+}
+
+input laundry_order_category_aggregate_bool_exp_var_samp {
+  arguments: laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns!
+  distinct: Boolean
+  filter: laundry_order_category_bool_exp
+  predicate: float8_comparison_exp!
 }
 
 """
@@ -7831,6 +8019,33 @@ type laundry_order_category_aggregate_fields {
   variance: laundry_order_category_variance_fields
 }
 
+"""
+order by aggregate values of table "laundry.order_category"
+"""
+input laundry_order_category_aggregate_order_by {
+  avg: laundry_order_category_avg_order_by
+  count: order_by
+  max: laundry_order_category_max_order_by
+  min: laundry_order_category_min_order_by
+  stddev: laundry_order_category_stddev_order_by
+  stddev_pop: laundry_order_category_stddev_pop_order_by
+  stddev_samp: laundry_order_category_stddev_samp_order_by
+  sum: laundry_order_category_sum_order_by
+  var_pop: laundry_order_category_var_pop_order_by
+  var_samp: laundry_order_category_var_samp_order_by
+  variance: laundry_order_category_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "laundry.order_category"
+"""
+input laundry_order_category_arr_rel_insert_input {
+  data: [laundry_order_category_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: laundry_order_category_on_conflict
+}
+
 """aggregate avg on columns"""
 type laundry_order_category_avg_fields {
   category_id: Float
@@ -7840,14 +8055,26 @@ type laundry_order_category_avg_fields {
 }
 
 """
+order by avg() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_avg_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
+"""
 Boolean expression to filter rows from the table "laundry.order_category". All fields are combined with a logical 'AND'.
 """
 input laundry_order_category_bool_exp {
   _and: [laundry_order_category_bool_exp!]
   _not: laundry_order_category_bool_exp
   _or: [laundry_order_category_bool_exp!]
+  category: laundry_category_bool_exp
   category_id: Int_comparison_exp
   id: Int_comparison_exp
+  order: laundry_order_bool_exp
   order_id: Int_comparison_exp
   weight_in_kilo: float8_comparison_exp
 }
@@ -7876,8 +8103,10 @@ input laundry_order_category_inc_input {
 input type for inserting data into table "laundry.order_category"
 """
 input laundry_order_category_insert_input {
+  category: laundry_category_obj_rel_insert_input
   category_id: Int
   id: Int
+  order: laundry_order_obj_rel_insert_input
   order_id: Int
   weight_in_kilo: float8
 }
@@ -7890,12 +8119,32 @@ type laundry_order_category_max_fields {
   weight_in_kilo: float8
 }
 
+"""
+order by max() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_max_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
 """aggregate min on columns"""
 type laundry_order_category_min_fields {
   category_id: Int
   id: Int
   order_id: Int
   weight_in_kilo: float8
+}
+
+"""
+order by min() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_min_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
 }
 
 """
@@ -7920,8 +8169,10 @@ input laundry_order_category_on_conflict {
 
 """Ordering options when selecting data from "laundry.order_category"."""
 input laundry_order_category_order_by {
+  category: laundry_category_order_by
   category_id: order_by
   id: order_by
+  order: laundry_order_order_by
   order_id: order_by
   weight_in_kilo: order_by
 }
@@ -7949,6 +8200,70 @@ enum laundry_order_category_select_column {
 }
 
 """
+select "laundry_order_category_aggregate_bool_exp_avg_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_avg_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_corr_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_corr_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_covar_samp_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_max_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_max_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_min_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_min_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_stddev_samp_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_sum_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_sum_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
+select "laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns" columns of table "laundry.order_category"
+"""
+enum laundry_order_category_select_column_laundry_order_category_aggregate_bool_exp_var_samp_arguments_columns {
+  """column name"""
+  weight_in_kilo
+}
+
+"""
 input type for updating data in table "laundry.order_category"
 """
 input laundry_order_category_set_input {
@@ -7966,6 +8281,16 @@ type laundry_order_category_stddev_fields {
   weight_in_kilo: Float
 }
 
+"""
+order by stddev() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_stddev_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type laundry_order_category_stddev_pop_fields {
   category_id: Float
@@ -7974,12 +8299,32 @@ type laundry_order_category_stddev_pop_fields {
   weight_in_kilo: Float
 }
 
+"""
+order by stddev_pop() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_stddev_pop_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type laundry_order_category_stddev_samp_fields {
   category_id: Float
   id: Float
   order_id: Float
   weight_in_kilo: Float
+}
+
+"""
+order by stddev_samp() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_stddev_samp_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
 }
 
 """
@@ -8007,6 +8352,16 @@ type laundry_order_category_sum_fields {
   id: Int
   order_id: Int
   weight_in_kilo: float8
+}
+
+"""
+order by sum() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_sum_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
 }
 
 """
@@ -8043,6 +8398,16 @@ type laundry_order_category_var_pop_fields {
   weight_in_kilo: Float
 }
 
+"""
+order by var_pop() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_var_pop_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
 """aggregate var_samp on columns"""
 type laundry_order_category_var_samp_fields {
   category_id: Float
@@ -8051,12 +8416,32 @@ type laundry_order_category_var_samp_fields {
   weight_in_kilo: Float
 }
 
+"""
+order by var_samp() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_var_samp_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
+}
+
 """aggregate variance on columns"""
 type laundry_order_category_variance_fields {
   category_id: Float
   id: Float
   order_id: Float
   weight_in_kilo: Float
+}
+
+"""
+order by variance() on columns of table "laundry.order_category"
+"""
+input laundry_order_category_variance_order_by {
+  category_id: order_by
+  id: order_by
+  order_id: order_by
+  weight_in_kilo: order_by
 }
 
 """
@@ -8120,7 +8505,10 @@ input type for inserting data into table "laundry.order"
 input laundry_order_insert_input {
   actual_ready_time: timestamptz
   cancellation_time: timestamptz
+  categories: laundry_order_category_arr_rel_insert_input
+  chat: chat_obj_rel_insert_input
   chat_id: Int
+  customer: customer_customer_obj_rel_insert_input
   customer_address: String
   customer_app_type: String
   customer_id: Int
@@ -8130,15 +8518,18 @@ input laundry_order_insert_input {
   discount_value: money
   estimated_ready_time: timestamptz
   firebase_id: String
+  from_customer_delivery: delivery_order_obj_rel_insert_input
   from_customer_delivery_id: Int
   id: Int
   notes: String
   order_time: timestamptz
   payment_type: String
   refund_amount: money
+  review: review_obj_rel_insert_input
   review_id: Int
   scheduled_time: timestamptz
   status: String
+  store: laundry_store_obj_rel_insert_input
   store_id: Int
   stripe_fees: money
   stripe_info: jsonb
@@ -8214,6 +8605,16 @@ type laundry_order_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "laundry.order"
+"""
+input laundry_order_obj_rel_insert_input {
+  data: laundry_order_insert_input!
+
+  """upsert condition"""
+  on_conflict: laundry_order_on_conflict
+}
+
+"""
 on_conflict condition type for table "laundry.order"
 """
 input laundry_order_on_conflict {
@@ -8226,7 +8627,10 @@ input laundry_order_on_conflict {
 input laundry_order_order_by {
   actual_ready_time: order_by
   cancellation_time: order_by
+  categories_aggregate: laundry_order_category_aggregate_order_by
+  chat: chat_order_by
   chat_id: order_by
+  customer: customer_customer_order_by
   customer_address: order_by
   customer_app_type: order_by
   customer_id: order_by
@@ -8236,15 +8640,18 @@ input laundry_order_order_by {
   discount_value: order_by
   estimated_ready_time: order_by
   firebase_id: order_by
+  from_customer_delivery: delivery_order_order_by
   from_customer_delivery_id: order_by
   id: order_by
   notes: order_by
   order_time: order_by
   payment_type: order_by
   refund_amount: order_by
+  review: review_order_by
   review_id: order_by
   scheduled_time: order_by
   status: order_by
+  store: laundry_store_order_by
   store_id: order_by
   stripe_fees: order_by
   stripe_info: order_by
@@ -8662,6 +9069,9 @@ type laundry_store {
   delivery_details_id: Int
 
   """An object relationship"""
+  delivery_partner: service_provider_delivery_partner
+
+  """An object relationship"""
   description: translation!
   description_id: Int!
   id: Int!
@@ -8715,6 +9125,7 @@ type laundry_store {
     path: String
   ): jsonb
   self_delivery: Boolean!
+  service_provider_type: String!
   stripe_info(
     """JSON select path"""
     path: String
@@ -8775,6 +9186,7 @@ input laundry_store_bool_exp {
   delivery: Boolean_comparison_exp
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
+  delivery_partner: service_provider_delivery_partner_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -8789,6 +9201,7 @@ input laundry_store_bool_exp {
   phone_number: String_comparison_exp
   schedule: jsonb_comparison_exp
   self_delivery: Boolean_comparison_exp
+  service_provider_type: String_comparison_exp
   stripe_info: jsonb_comparison_exp
 }
 
@@ -8861,6 +9274,7 @@ input laundry_store_insert_input {
   delivery: Boolean
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
+  delivery_partner: service_provider_delivery_partner_obj_rel_insert_input
   description: translation_obj_rel_insert_input
   description_id: Int
   id: Int
@@ -8874,6 +9288,7 @@ input laundry_store_insert_input {
   phone_number: String
   schedule: jsonb
   self_delivery: Boolean
+  service_provider_type: String
   stripe_info: jsonb
 }
 
@@ -8889,6 +9304,7 @@ type laundry_store_max_fields {
   name: String
   open_status: String
   phone_number: String
+  service_provider_type: String
 }
 
 """aggregate min on columns"""
@@ -8903,6 +9319,7 @@ type laundry_store_min_fields {
   name: String
   open_status: String
   phone_number: String
+  service_provider_type: String
 }
 
 """
@@ -8914,6 +9331,16 @@ type laundry_store_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [laundry_store!]!
+}
+
+"""
+input type for inserting object relation for remote table "laundry.store"
+"""
+input laundry_store_obj_rel_insert_input {
+  data: laundry_store_insert_input!
+
+  """upsert condition"""
+  on_conflict: laundry_store_on_conflict
 }
 
 """
@@ -8934,6 +9361,7 @@ input laundry_store_order_by {
   delivery: order_by
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
+  delivery_partner: service_provider_delivery_partner_order_by
   description: translation_order_by
   description_id: order_by
   id: order_by
@@ -8947,6 +9375,7 @@ input laundry_store_order_by {
   phone_number: order_by
   schedule: order_by
   self_delivery: order_by
+  service_provider_type: order_by
   stripe_info: order_by
 }
 
@@ -9015,6 +9444,9 @@ enum laundry_store_select_column {
   self_delivery
 
   """column name"""
+  service_provider_type
+
+  """column name"""
   stripe_info
 }
 
@@ -9038,6 +9470,7 @@ input laundry_store_set_input {
   phone_number: String
   schedule: jsonb
   self_delivery: Boolean
+  service_provider_type: String
   stripe_info: jsonb
 }
 
@@ -9094,6 +9527,7 @@ input laundry_store_stream_cursor_value_input {
   phone_number: String
   schedule: jsonb
   self_delivery: Boolean
+  service_provider_type: String
   stripe_info: jsonb
 }
 
@@ -9156,6 +9590,9 @@ enum laundry_store_update_column {
 
   """column name"""
   self_delivery
+
+  """column name"""
+  service_provider_type
 
   """column name"""
   stripe_info

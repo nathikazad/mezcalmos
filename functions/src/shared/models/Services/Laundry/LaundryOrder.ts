@@ -4,7 +4,7 @@ import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
 import { RouteInformation } from '../../Generic/RouteInformation';
-import { Laundry, LaundryCategory } from './Laundry';
+import { Laundry } from './Laundry';
 
 export interface LaundryOrder extends Order {
   storeId: number;
@@ -19,10 +19,12 @@ export interface LaundryOrder extends Order {
   // routeInformation?: RouteInformation;
   // costsByType?: CostsByType;
 }
-export interface OrderCategory extends LaundryCategory {
+export interface OrderCategory {
   orderCategoryId?: number;
+  categoryId: number;
   orderId?: number;
-  weightInKilo: number;
+  weightInKilo?: number;
+  costByKilo?: number;
 }
 export interface CostsByType {
   byType: any;

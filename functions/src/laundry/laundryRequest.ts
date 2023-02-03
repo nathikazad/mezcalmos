@@ -18,10 +18,14 @@
 // import { getLaundry } from "./laundryController";
 // // import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
+import { HttpsError } from "firebase-functions/v1/auth";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { CustomerAppType, Location } from "../shared/models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../shared/models/Generic/Order";
+import { MezAdmin } from "../shared/models/Generic/User";
+import { Laundry } from "../shared/models/Services/Laundry/Laundry";
 import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../shared/models/Services/Laundry/LaundryOrder";
 
 // export async function requestLaundry(userId: string, data: any) {
@@ -163,18 +167,29 @@ export interface LaundryRequestDetails {
     customerLocation: Location,
     deliveryCost: number,
     status: LaundryOrderStatus,
-    categories: Array<OrderCategory>,
+    categories: Array<number>,
     customerAppType: CustomerAppType,
     notes?: string,
     tax?: number,
     scheduledTime?: string,
     stripeFees?: number,
     discountValue?: number,
+    tripDistance: number,
+    tripDuration: number,
+    tripPolyline: string
 }
 
 export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails)/*: Promise<CheckoutResponse> */{
-    await getLaundryStore(laundryRequestDetails.storeId);
+    let laundryStore: Laundry = await getLaundryStore(laundryRequestDetails.storeId);
+    let mezAdmins: MezAdmin[] = await getMezAdmins();
+
+    errorChecks(laundryStore, laundryRequestDetails);
     
+    let categories: OrderCategory[] = laundryRequestDetails.categories.map((c) => {
+        return {
+            categoryId: c,
+        }
+    })
     let laundryOrder: LaundryOrder = {
         customerId,
         storeId: laundryRequestDetails.storeId,
@@ -189,7 +204,50 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         customerLocation: laundryRequestDetails.customerLocation,
         deliveryCost: laundryRequestDetails.deliveryCost,
         status: LaundryOrderStatus.OrderReceived,
-        categories: laundryRequestDetails.categories,
+        categories
     }
-    createLaundryOrder()
+    // let deliveryOrder: DeliveryOrder = 
+    await createLaundryOrder(laundryOrder, laundryStore, mezAdmins, laundryRequestDetails);
+
+    
+}
+
+function errorChecks(laundryStore: Laundry, laundryRequestDetails: LaundryRequestDetails) {
+
+    if(laundryStore.approved == false) {
+      throw new HttpsError(
+        "internal",
+        "Laundry store is not approved and taking orders right now"
+      );
+    }
+    if(laundryStore.openStatus != "open") {
+      throw new HttpsError(
+        "internal",
+        "Laundry store is closed"
+      );
+    }
+    if((laundryRequestDetails.categories.length ?? 0) == 0) {
+      throw new HttpsError(
+        "internal",
+        "No category selected"
+      );
+    }
+  
+    if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
+        if(laundryStore.delivery) {
+            if(!(laundryStore.selfDelivery)) {
+                if(laundryStore.deliveryPartnerId == null) {
+                    throw new HttpsError(
+                        "internal",
+                        "No delivery partner"
+                    );
+                }
+            }
+        } else {
+            throw new HttpsError(
+                "internal",
+                "Laundry store not accepting delivery orders"
+            );
+        }
+    }
 }

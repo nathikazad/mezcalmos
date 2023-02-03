@@ -9,7 +9,6 @@ export interface RestaurantOrder extends Order {
   toLocation: Location;
   estimatedFoodReadyTime?: string;
   actualFoodReadyTime?: string;
-  deliveryId?: number;
   status: RestaurantOrderStatus;
   items: Array<OrderItem>;
   itemsCost?: number;

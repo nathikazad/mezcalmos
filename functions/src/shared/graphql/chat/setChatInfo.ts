@@ -2,9 +2,10 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
+import { DeliveryType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
 import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
-import { DeliveryType, RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
+import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
 
 export async function setOrderChatInfo(restaurantOrder: RestaurantOrder, restaurant: Restaurant, delivery: DeliveryOrder, customer: CustomerInfo) {
 

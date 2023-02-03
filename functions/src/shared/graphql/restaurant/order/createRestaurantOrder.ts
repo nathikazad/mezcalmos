@@ -3,10 +3,11 @@ import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
 import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
 import { AppType } from "../../../models/Generic/Generic";
-import { OrderType } from "../../../models/Generic/Order";
+import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
-import { DeliveryType, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { ServiceProviderType } from "../../../models/Services/Service";
 
 
 export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
@@ -40,7 +41,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             chat_participants: {
               data: [{
                 participant_id: restaurantOrder.customerId,
-                app_type_id: restaurantOrder.customerAppType
+                app_type_id: AppType.Customer
               },
               ...restaurantOperatorsDetails,
               ...mezAdminDetails]
@@ -68,7 +69,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
                 chat_participants: {
                   data: [{
                     participant_id: restaurantOrder.customerId,
-                    app_type_id: restaurantOrder.customerAppType
+                    app_type_id: AppType.Customer
                   },]
                 }
               }
@@ -85,7 +86,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
           
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
-            service_provider_type: "restaurant",
+            service_provider_type: ServiceProviderType.Restaurant,
             
             scheduled_time: restaurantOrder.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
@@ -174,7 +175,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     status: DeliveryOrderStatus.OrderReceived,
     customerId: restaurantOrder.customerId,
     deliveryCost: restaurantOrder.deliveryCost,
-    packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
+    packageCost: restaurantOrder.paymentType == PaymentType.Cash ? response.insert_restaurant_order_one.items_cost : 0,
     orderTime: response.insert_restaurant_order_one.order_time,
     tripDistance : checkoutReq.tripDistance,
     tripDuration : checkoutReq.tripDuration,
