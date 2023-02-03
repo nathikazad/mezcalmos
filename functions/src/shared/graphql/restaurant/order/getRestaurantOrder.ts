@@ -1,9 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
-import { PaymentType } from "../../../models/Generic/Order";
+import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
-import { OrderItem, RestaurantOrder, RestaurantOrderStatus, DeliveryType } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 import { OperatorStatus } from "../../../models/Services/Service";
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {

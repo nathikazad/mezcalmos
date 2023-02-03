@@ -19,7 +19,8 @@
 // // import { updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
-import { Location } from "../shared/models/Generic/Generic";
+import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
+import { CustomerAppType, Location } from "../shared/models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../shared/models/Generic/Order";
 import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../shared/models/Services/Laundry/LaundryOrder";
 
@@ -159,15 +160,16 @@ export interface LaundryRequestDetails {
     storeId: number,
     paymentType: PaymentType,  
     deliveryType: DeliveryType,
-    notes?: string;
-    tax?: number;
-    scheduledTime?: string;
-    stripeFees?: number;
-    discountValue?: number;
-    customerLocation: Location;
-    deliveryCost: number;
-    status: LaundryOrderStatus;
-    categories: Array<OrderCategory>;
+    customerLocation: Location,
+    deliveryCost: number,
+    status: LaundryOrderStatus,
+    categories: Array<OrderCategory>,
+    customerAppType: CustomerAppType,
+    notes?: string,
+    tax?: number,
+    scheduledTime?: string,
+    stripeFees?: number,
+    discountValue?: number,
 }
 
 export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails)/*: Promise<CheckoutResponse> */{
@@ -178,7 +180,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         storeId: laundryRequestDetails.storeId,
         paymentType: laundryRequestDetails.paymentType,
         deliveryType: laundryRequestDetails.deliveryType,
-        customerAppType: ,
+        customerAppType: laundryRequestDetails.customerAppType,
         notes: laundryRequestDetails.notes,
         tax: laundryRequestDetails.tax,
         scheduledTime: laundryRequestDetails.scheduledTime,
@@ -189,5 +191,5 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         status: LaundryOrderStatus.OrderReceived,
         categories: laundryRequestDetails.categories,
     }
-    
+    createLaundryOrder()
 }

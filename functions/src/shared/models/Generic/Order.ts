@@ -1,5 +1,5 @@
 import { OrderStripeInfo } from "../../../utilities/stripe/model";
-import { AppType } from "./Generic";
+import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
 export interface Order {
@@ -11,7 +11,7 @@ export interface Order {
   deliveryType: DeliveryType;
   orderTime?: string;
   firebaseId?: string;
-  customerAppType: AppType;
+  customerAppType: CustomerAppType;
   notes?: string;
   tax?: number;
   deliveryCost: number;
