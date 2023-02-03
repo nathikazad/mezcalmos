@@ -1,6 +1,7 @@
 // import { checkDeliveryAdmin } from "../shared/helper/authorizer";
 import { getRestaurantCheckDetails } from "../shared/graphql/restaurant/restaurantCheck";
 import { HttpsError } from "firebase-functions/v1/auth";
+import { isMezAdmin } from "../shared/helper";
 
 export async function passChecksForRestaurant(orderId: any, userId: number) {
 
@@ -21,19 +22,17 @@ export async function passChecksForRestaurant(orderId: any, userId: number) {
     );
   }
 
-  if (response.restaurant_operator[0]) {
-
+  if((await isMezAdmin(userId)) == false) {
+    if (response.restaurant_operator.length == 0) {
+      throw new HttpsError(
+        "internal",
+        "Only authorized restaurant operators or MezAdmin can run this operation"
+      );
+    }
     if(response.restaurant_operator[0].restaurant_id != order.restaurant_id) {
       throw new HttpsError(
         "internal",
         "Only authorized restaurant operators can run this operation"
-      );
-    }
-  } else {
-    if (response.mez_admin_by_pk == null) {
-      throw new HttpsError(
-        "internal",
-        "Only admins can run this operation"
       );
     }
   }

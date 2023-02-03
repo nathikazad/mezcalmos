@@ -17,10 +17,5 @@ export async function getRestaurantCheckDetails(orderId: number, userId: number)
       }, {
         restaurant_id: true
       }],
-      mez_admin_by_pk: [
-        { user_id: userId }, {
-          user_id: true
-        }
-      ]
     })
   }
