@@ -59,9 +59,7 @@ class CustItemViewController {
     if (Get.find<AuthController>().isUserSignedIn) {
       cartController = Get.find<CustomerCartController>();
     }
-    if (cartController != null && cart.value == null) {
-      await create_customer_cart(restaurant_id: restaurantId);
-    }
+    await _createCart();
     // check and update cart restaurant id to current item restaurant if no cart items are there
     if (cartController != null && shouldUpdateRestaurantId()) {
       await cartController!.setCartRestaurantId(restaurantId!);
@@ -99,6 +97,14 @@ class CustItemViewController {
     }
   }
 
+  Future<void> _createCart() async {
+    if (cartController != null &&
+        (cart.value == null || cart.value!.restaurant == null)) {
+      mezDbgPrint("creating cart rn .....✅");
+      await create_customer_cart(restaurant_id: itemRestaurantId);
+    }
+  }
+
   Future<void> _fetchRestaurant(int restaurantId) async {
     try {
       restaurant.value = await get_restaurant_by_id(id: restaurantId);
@@ -118,8 +124,16 @@ class CustItemViewController {
 
   Future<int?> handleAddItem() async {
     cartItem.value?.notes = notesController.text;
-    // todo
-    return await cartController?.addCartItem(cartItem.value!);
+    if (Get.find<AuthController>().isUserSignedIn) {
+      cartController = Get.find<CustomerCartController>();
+    }
+    if (cartController != null && shouldUpdateRestaurantId()) {
+      await cartController!.setCartRestaurantId(itemRestaurantId!);
+    }
+    mezDbgPrint(
+        "🥸⏰ 🥸⏰  Handle add item to this cart =================>$cartController");
+    final int? id = await cartController?.addCartItem(cartItem.value!);
+    return id;
   }
 
   //  helpers //
@@ -135,8 +149,8 @@ class CustItemViewController {
     return (itemRestaurantId != null && cart.value?.restaurant == null) ||
         (itemRestaurantId != null &&
             cart.value != null &&
-            cart.value!.restaurant?.restaurantId != itemRestaurantId &&
-            cart.value!.cartItems.isEmpty);
+            (cart.value!.restaurant?.restaurantId != itemRestaurantId ||
+                cart.value!.cartItems.isEmpty));
   }
 
   bool checkAddSpecialItemConflict() {
@@ -146,7 +160,7 @@ class CustItemViewController {
 
   bool differentRestaurantIds() {
     mezDbgPrint(
-        "different restaurant case =:==========>${cart.value!.restaurant}");
+        "different restaurant case =:==========>${cart.value?.restaurant}");
     return cart.value != null &&
         cart.value!.restaurant?.restaurantId != itemRestaurantId;
   }
