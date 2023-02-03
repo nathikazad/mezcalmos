@@ -101,9 +101,12 @@ update_permissions:
       columns:
         - messages
       filter:
-        chat_participants:
-          user:
-            id:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
               _eq: X-Hasura-User-Id
       check: null
   - role: restaurant_operator
@@ -111,18 +114,12 @@ update_permissions:
       columns:
         - messages
       filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
+        chat_participants:
+          user:
+            id:
               _eq: X-Hasura-User-Id
       check:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
+        chat_participants:
+          user:
+            id:
               _eq: X-Hasura-User-Id

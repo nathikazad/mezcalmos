@@ -67,10 +67,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
     // orderType = Get.parameters['orderType']?.toString().toOrderType();
     // if (Get.parameters['recipientId'] != null)
     //   recipientId = Get.parameters['recipientId'];
-    // else if (Get.parameters['recipientType'] != null) {
-    //   recipientType =
-    //       Get.parameters['recipientType']!.toString().toParticipantType();
-    // }
+    if (Get.parameters['recipientType'] != null) {
+      recipientType =
+          Get.parameters['recipientType']!.toString().toParticipantType();
+    }
     controller.clearMessageNotifications(chatId: chatId);
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
@@ -113,11 +113,21 @@ class _MessagingScreenState extends State<MessagingScreen> {
           message: message.message,
           time: intl.DateFormat('hh:mm a').format(message.timestamp.toLocal()),
           isMe: message.userId == _authController.user!.hasuraId,
-          userImage: controller.chat.value?.chatInfo.chatImg,
+          userImage: getchatImg(message),
         );
       },
     ));
     scrollDown();
+  }
+
+  String? getchatImg(Message message) {
+    final Participant? messageSender = controller.chat.value?.participant
+        .firstWhereOrNull(
+            (Participant element) => element.id == message.userId);
+    if (messageSender?.participantType == recipientType) {
+      return controller.chat.value!.chatInfo.chatImg;
+    } else
+      return messageSender?.image;
   }
 
   /// Using this for now, to limit the calls only between deliveryDrivers<->Customers

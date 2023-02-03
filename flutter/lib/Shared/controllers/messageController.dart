@@ -34,6 +34,7 @@ class MessageController extends GetxController {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
     appType = Get.find<SettingsController>().appType;
+    
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
