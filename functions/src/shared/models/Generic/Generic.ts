@@ -26,6 +26,10 @@ export enum AppType {
   DeliveryAdmin = "delivery_admin",
   MezAdmin = "mez_admin"
 }
+export enum CustomerAppType {
+  Native = "native",
+  Mobile = "mobile"
+}
 
 export interface NotificationInfo {
   token: string;

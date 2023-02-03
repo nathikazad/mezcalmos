@@ -1,6 +1,6 @@
 import { PaymentType } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
-import { AppType, Language, Location } from '../../Generic/Generic';
+import { CustomerAppType, Language, Location } from '../../Generic/Generic';
 import { Restaurant } from './Restaurant';
 import { OrderStripeInfo } from '../../../../utilities/stripe/model';
 import { DeliveryOrderStatus } from '../../Generic/Delivery';
@@ -22,7 +22,7 @@ export interface RestaurantOrder {
   deliveryType: DeliveryType;
   orderTime?: string;
   firebaseId?: string;
-  customerAppType: AppType;
+  customerAppType: CustomerAppType;
   notes?: string;
   tax?: number;
   items: Array<OrderItem>;
