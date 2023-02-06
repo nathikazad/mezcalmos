@@ -98,8 +98,7 @@ class CustItemViewController {
   }
 
   Future<void> _createCart() async {
-    if (cartController != null &&
-        (cart.value == null || cart.value!.restaurant == null)) {
+    if (cartController != null && cart.value == null) {
       mezDbgPrint("creating cart rn .....✅");
       await create_customer_cart(restaurant_id: itemRestaurantId);
     }
