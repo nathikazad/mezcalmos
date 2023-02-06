@@ -135,7 +135,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     }],
   });
 
-  if(response.insert_restaurant_order_one == null || response.insert_restaurant_order_one.delivery == null) {
+  if(response.insert_restaurant_order_one == null) {
     throw new HttpsError(
       "internal",
       "order creation error"
@@ -143,9 +143,15 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   }
   restaurantOrder.orderId = response.insert_restaurant_order_one.id;
   restaurantOrder.chatId = response.insert_restaurant_order_one.chat_id;
-  restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
 
   if(restaurantOrder.deliveryType == DeliveryType.Delivery) {
+    if(response.insert_restaurant_order_one.delivery == null) {
+      throw new HttpsError(
+        "internal",
+        "order creation error"
+      );
+    }
+    restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
     return {
       deliveryId: response.insert_restaurant_order_one.delivery.id,
       orderType: OrderType.Restaurant,

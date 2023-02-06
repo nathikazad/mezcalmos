@@ -135,7 +135,7 @@ export async function createLaundryOrder(
     }
     laundryOrder.orderId = response.insert_laundry_order_one.id;
     laundryOrder.chatId = response.insert_laundry_order_one.chat_id;
-    laundryOrder.deliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
+    laundryOrder.fromCustomerDeliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
 
     if(laundryOrder.deliveryType == DeliveryType.Delivery) {
         return {

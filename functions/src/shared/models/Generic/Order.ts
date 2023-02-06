@@ -21,7 +21,7 @@ export interface Order {
   stripeFees?: number;
   cancellationTime?: string;
   discountValue?: number;
-  deliveryId?: number;
+  totalCost?: number;
 }
 export enum DeliveryType {
   Pickup = "pickup",
