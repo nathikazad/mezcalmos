@@ -68,9 +68,6 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
     );
   }
-
-  order.status = newStatus;
-  updateRestaurantOrderStatus(order);
   
   if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
     if (order.paymentType == PaymentType.Card) {
@@ -81,10 +78,12 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
         orderStripePaymentInfo: order.stripeInfo!
       }
       capturePayment(paymentDetails, 0)
-      // TODO: cancel or capture shipping payment depending on status
     }
     order.refundAmount = order.totalCost;
   }
+
+  order.status = newStatus;
+  updateRestaurantOrderStatus(order);
     
   let notification: Notification = {
     foreground: <RestaurantOrderStatusChangeNotification>{
@@ -94,7 +93,7 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       orderType: OrderType.Restaurant,
       notificationAction: newStatus != RestaurantOrderStatus.CancelledByAdmin
         ? NotificationAction.ShowSnackBarAlways : NotificationAction.ShowPopUp,
-      orderId: order.orderId
+      orderId: orderId
     },
     background: restaurantOrderStatusChangeMessages[newStatus],
     linkUrl: orderUrl(OrderType.Restaurant, orderId)
