@@ -17,6 +17,9 @@ object_relationships:
   - name: store
     using:
       foreign_key_constraint_on: store_id
+  - name: to_customer_delivery
+    using:
+      foreign_key_constraint_on: to_customer_delivery_id
 array_relationships:
   - name: categories
     using:

@@ -1,9 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType } from "../../../models/Generic/Generic";
-import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
+import { Operator } from "../../../models/Services/Service";
 
-export async function createRestaurantOperator(operator: RestaurantOperator) {
+export async function createRestaurantOperator(operator: Operator) {
 
   let chain = getHasura();
   let response = await chain.query({
@@ -13,7 +13,7 @@ export async function createRestaurantOperator(operator: RestaurantOperator) {
                 _eq: operator.userId,
             },
             restaurant_id: {
-                _eq: operator.restaurantId
+                _eq: operator.serviceProviderId
             }
         }
     }, {
@@ -43,7 +43,7 @@ export async function createRestaurantOperator(operator: RestaurantOperator) {
     insert_restaurant_operator_one: [{
       object: {
         user_id: operator.userId,
-        restaurant_id: operator.restaurantId,
+        restaurant_id: operator.serviceProviderId,
         status: operator.status,
       }
     }, {

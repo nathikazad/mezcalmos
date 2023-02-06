@@ -12,6 +12,7 @@ import {
   NotificationType,
 } from "../shared/models/Notification";
 import { RestaurantOperatorApprovedNotification } from "../shared/models/Services/Restaurant/Restaurant";
+import { Operator } from "../shared/models/Services/Service";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
 export interface AuthorizeDetails {
@@ -22,9 +23,9 @@ export interface AuthorizeDetails {
 export async function authorizeRestaurantOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
 
   console.log("Starting authorize restaurant operator");
-  let operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
+  let operator: Operator = await getRestaurantOperator(authorizeDetails.newOperatorId);
 
-  let restaurantOwner = await getRestaurantOperatorByUserId(ownerUserId);
+  let restaurantOwner: Operator = await getRestaurantOperatorByUserId(ownerUserId);
   console.log("hasura fetch");
   if (!restaurantOwner.owner) {
     throw new HttpsError("internal", "Only owner can add operators");
@@ -52,8 +53,8 @@ export async function authorizeRestaurantOperator(ownerUserId: number, authorize
             body: `You have been approved as an operator`,
           },
           es: {
-            title: `Authorized`,
-            body: `You have been approved as an operator`,
+            title: `Autorizado`,
+            body: `Has sido aprobado como operador`,
           },
         }
       : {
@@ -62,8 +63,8 @@ export async function authorizeRestaurantOperator(ownerUserId: number, authorize
             body: `Your request to become an operator has been denied`,
           },
           es: {
-            title: `Not approved`,
-            body: `Your request to become an operator has been denied`,
+            title: `No aprovado`,
+            body: `Tu solicitud para convertirte en operador ha sido denegada`,
           },
         },
     linkUrl: `/`,

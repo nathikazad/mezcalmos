@@ -100,3 +100,71 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
 
     return laundryOrder;
 }
+
+export async function getCustomerLaundryOrders(customerId: number): Promise<LaundryOrder[]> {
+  let chain = getHasura();
+
+  let response =  await chain.query({
+    laundry_order: [{
+      where: {
+        customer_id: {
+          _eq: customerId
+        }
+      }
+    }, {
+      id: true,
+      store_id: true,
+      delivery_type: true,
+      status: true,
+      payment_type: true,
+      refund_amount: true,
+      customer_id: true,
+      customer_location_gps: true,
+      customer_address: true,
+      order_time: true,
+      to_customer_delivery_id: true,
+      from_customer_delivery_id: true,
+      to_location_address: true,
+      estimated_food_ready_time: true,
+      customer_app_type: true,
+      delivery_cost: true,
+      stripe_info: [{}, true],
+      categories: [{}, {
+        id: true,
+        category_id: true,
+        weight_in_kilo: true,
+        category: {
+          cost_by_kilo: true,
+        }
+      }],
+    }]
+  });
+  return response.laundry_order.map((o): LaundryOrder => {
+    let categories: OrderCategory[] = o.categories.map((c) => {
+      return {
+        orderCategoryId: c.id,
+        categoryId: c.category_id,
+        orderId: o.id,
+        weightInKilo: c.weight_in_kilo,
+        costByKilo: c.category.cost_by_kilo
+      }
+    })
+    return {
+      orderId: o.id,
+      customerId: o.customer_id,
+      storeId: o.store_id,
+      paymentType: o.payment_type as PaymentType,
+      customerLocation: {
+        lat: o.customer_location_gps.coordinates[1],
+        lng: o.customer_location_gps.coordinates[0],
+        address: o.customer_address
+      },
+      orderTime: o.order_time,
+      status: o.status as LaundryOrderStatus,
+      deliveryType: o.delivery_type as DeliveryType,
+      customerAppType: o.customer_app_type as CustomerAppType,
+      deliveryCost: o.delivery_cost,
+      categories
+    }
+  })
+}

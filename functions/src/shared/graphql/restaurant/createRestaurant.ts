@@ -2,11 +2,10 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType } from "../../models/Generic/Generic";
-import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
-import { OperatorStatus, ServiceProviderType } from "../../models/Services/Service";
+import { OperatorStatus, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
 export async function createRestaurant(
-  restaurant: Restaurant, 
+  restaurant: ServiceProvider, 
   restaurantOperatorUserId: number, 
   restaurantOperatorNotificationToken?: string 
 ) {

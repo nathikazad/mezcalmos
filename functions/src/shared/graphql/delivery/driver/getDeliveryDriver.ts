@@ -1,13 +1,14 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { DeliveryDriverType, DeliveryDriver, DeliveryCompanyType } from "../../../models/Generic/Delivery";
+import { DeliveryDriver, DeliveryCompanyType } from "../../../models/Generic/Delivery";
+import { ParticipantType } from "../../../models/Generic/Chat";
 
-export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: DeliveryDriverType): Promise<DeliveryDriver> {
+export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriverType: ParticipantType): Promise<DeliveryDriver> {
 
   let chain = getHasura();
   let response;
-  if (deliveryDriverType == DeliveryDriverType.RestaurantOperator) {
+  if (deliveryDriverType == ParticipantType.RestaurantOperator) {
     response = await chain.query({
       restaurant_operator_by_pk: [{
         id: deliveryDriverId
@@ -47,7 +48,7 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         token: response.restaurant_operator_by_pk.notification_info.token,
         turnOffNotifications: response.restaurant_operator_by_pk.notification_info.turn_off_notifications
       } : undefined,
-      deliveryDriverType: DeliveryDriverType.RestaurantOperator
+      deliveryDriverType: ParticipantType.RestaurantOperator
     }
   }
   else {
@@ -99,7 +100,7 @@ export async function getDeliveryDriver(deliveryDriverId: number, deliveryDriver
         token: response.delivery_driver_by_pk.notification_info.token,
         turnOffNotifications: response.delivery_driver_by_pk.notification_info.turn_off_notifications
       } : undefined,
-      deliveryDriverType: DeliveryDriverType.DeliveryDriver
+      deliveryDriverType: ParticipantType.DeliveryDriver
     }
   }
 }

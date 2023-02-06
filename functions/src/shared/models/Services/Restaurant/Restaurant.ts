@@ -1,13 +1,12 @@
 import { ForegroundNotification, NotificationForQueue } from "../../Notification";
-import { Operator, ServiceProvider } from "../Service";
 
-export interface Restaurant extends ServiceProvider {
-  restaurantOperators?: Array<RestaurantOperator>
-}
+// export interface Restaurant extends ServiceProvider {
+//   restaurantOperators?: Array<RestaurantOperator>
+// }
 
-export interface RestaurantOperator extends Operator {
-  restaurantId: number;
-}
+// export interface RestaurantOperator extends Operator {
+//   restaurantId: number;
+// }
 
 export interface NewRestaurantNotificationForQueue extends NotificationForQueue {
   name: string,

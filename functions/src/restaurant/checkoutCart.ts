@@ -4,7 +4,6 @@ import { Location, Language, CustomerAppType } from "../shared/models/Generic/Ge
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getRestaurant } from "../shared/graphql/restaurant/getRestaurant";
 import { createRestaurantOrder } from "../shared/graphql/restaurant/order/createRestaurantOrder";
-import { Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
 import { checkCart } from "../shared/graphql/restaurant/cart/checkCart";
 import { clearCart } from "../shared/graphql/restaurant/cart/clearCart";
 import { setRestaurantOrderChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -12,14 +11,17 @@ import { getCart } from "../shared/graphql/restaurant/cart/getCart";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
-import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
 import { Cart } from "../shared/models/Services/Restaurant/Cart";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { AssignCompanyDetails, assignDeliveryCompany } from "./assignDeliveryCompany";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 import { DeliveryOrder } from "../shared/models/Generic/Delivery";
+import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
+import { deliveryNewOrderMessage } from '../delivery/bgNotificationMessages';
+import { getDeliveryOperators } from '../shared/graphql/delivery/operator/getDeliveryOperator';
+import { ServiceProvider } from '../shared/models/Services/Service';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -52,7 +54,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   let mezAdminsPromise = getMezAdmins();
 
   let response = await Promise.all([restaurantPromise, customerCartPromise, customerPromise, mezAdminsPromise])
-  let restaurant: Restaurant = response[0];
+  let restaurant: ServiceProvider = response[0];
   let customerCart: Cart = response[1];
   let customer: CustomerInfo = response[2];
   let mezAdmins: MezAdmin[] = response[3];
@@ -97,19 +99,18 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   notifyOperators(restaurantOrder.orderId!, restaurant);
 
   if(restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.selfDelivery == false) {
-    let assignDetails: AssignCompanyDetails = {
-      deliveryCompanyId: restaurant.deliveryPartnerId!,
-      restaurantOrderId: restaurantOrder.orderId!
-    }
-    await assignDeliveryCompany(0, assignDetails)
+
+    updateDeliveryOrderCompany(restaurantOrder.deliveryId!, restaurant.deliveryPartnerId!);
+    notifyDeliveryOperators(restaurantOrder, restaurant.deliveryPartnerId!);
   }
   
-  let paymentDetails: PaymentDetails = {
-    orderId: restaurantOrder.orderId!,
-    orderType: OrderType.Restaurant,
-    serviceProviderId: checkoutRequest.restaurantId
-  }
+ 
   if(checkoutRequest.paymentType == PaymentType.Card) {
+    let paymentDetails: PaymentDetails = {
+      orderId: restaurantOrder.orderId!,
+      orderType: OrderType.Restaurant,
+      serviceProviderId: checkoutRequest.restaurantId
+    }
     await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
   }
   
@@ -122,7 +123,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
     orderId: restaurantOrder.orderId!
   }
 }
-function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {
+function errorChecks(restaurant: ServiceProvider, checkoutRequest: CheckoutRequest, customerId: number, cart: Cart) {
 
   checkCart(customerId, checkoutRequest.restaurantId);
   if(restaurant.approved == false) {
@@ -162,7 +163,7 @@ function errorChecks(restaurant: Restaurant, checkoutRequest: CheckoutRequest, c
   }
 }
 
-function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restaurant) {
+function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: ServiceProvider) {
 
   let notification: Notification = {
     foreground: <NewRestaurantOrderNotification>{
@@ -194,7 +195,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], orderId: number, restaurant: Restau
   });
 }
 
-function notifyOperators(orderId: number, restaurant: Restaurant) {
+function notifyOperators(orderId: number, restaurant: ServiceProvider) {
   let notification: Notification = {
     foreground: <NewRestaurantOrderNotification>{
       time: (new Date()).toISOString(),
@@ -220,11 +221,31 @@ function notifyOperators(orderId: number, restaurant: Restaurant) {
     },
     linkUrl: orderUrl(OrderType.Restaurant, orderId)
   }
-  if(restaurant.restaurantOperators != undefined) {
-    restaurant.restaurantOperators.forEach((r) => {
+  if(restaurant.operators != undefined) {
+    restaurant.operators.forEach((r) => {
       if(r.user) {
         pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.RestaurantOperator);
       }
     });
   }
+}
+
+async function notifyDeliveryOperators(restaurantOrder: RestaurantOrder, deliveryPartnerId: number) {
+  let deliveryOperators = await getDeliveryOperators(deliveryPartnerId);
+
+    let notification: Notification = {
+        foreground: <OrderNotification>{
+        time: (new Date()).toISOString(),
+        notificationType: NotificationType.NewOrder,
+        orderType: OrderType.Restaurant,
+        notificationAction: NotificationAction.ShowPopUp,
+        orderId: restaurantOrder.deliveryId
+        },
+        background: deliveryNewOrderMessage,
+        linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId!)
+    }
+
+    deliveryOperators.forEach((d) => {
+        pushNotification(d.user?.firebaseId!, notification, d.notificationInfo, ParticipantType.DeliveryOperator);
+    });
 }

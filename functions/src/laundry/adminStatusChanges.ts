@@ -1,5 +1,5 @@
 import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { orderInProcess, LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { expectedPreviousStatus, passChecksForLaundry } from "./helper";
@@ -85,34 +85,6 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     ParticipantType.Customer, 
     customer.language
   )
-
-  if(order.deliveryType == DeliveryType.Delivery) {
-    // Delivery order status change
-    // if(!(order.deliveryId)) {
-    //   throw new HttpsError(
-    //     "internal",
-    //     "No delivery id"
-    //   );
-    // }
-    // let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
-    // if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    //   deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-    //   updateDeliveryOrderStatus(deliveryOrder);
-    // }
-    // if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
-    //   deliveryOrder.status = DeliveryOrderStatus.PackageReady;
-    //   updateDeliveryOrderStatus(deliveryOrder);
-    // }
-    // if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
-    //   notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-    //   pushNotification(deliveryOrder.deliveryDriver.user.firebaseId, 
-    //     notification, 
-    //     deliveryOrder.deliveryDriver.notificationInfo,
-    //     ParticipantType.DeliveryDriver,
-    //     deliveryOrder.deliveryDriver.user?.language,
-    //   );
-    // }
-  }
 }
 
 export async function setWeight(userId: number, data: any) {

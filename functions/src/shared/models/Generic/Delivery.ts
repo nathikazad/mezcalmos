@@ -2,12 +2,13 @@ import { Location, NotificationInfo } from "./Generic";
 import { OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../Notification";
+import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
     deliveryId?: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    deliveryDriverType?: DeliveryDriverType
+    deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
     
@@ -52,7 +53,7 @@ export interface DeliveryDriver {
     user?: UserInfo,
     online?: boolean,
     notificationInfo?: NotificationInfo,
-    deliveryDriverType: DeliveryDriverType
+    deliveryDriverType: ParticipantType
 }
 export enum DeliveryCompanyType {
     DeliveryCompany = "delivery_company",
@@ -103,21 +104,21 @@ export enum DeliveryOrderStatus {
 }
 
 export enum DeliveryServiceProviderType {
-    Restaurnt = "restaurant",
+    Restaurant = "restaurant",
     DeliveryCompany = "delivery_company"
 }
 
-export enum DeliveryDriverType {
-    RestaurantOperator = "restaurant_operator",
-    DeliveryDriver = "delivery_driver"
-}
+// export enum DeliveryDriverType {
+//     RestaurantOperator = "restaurant_operator",
+//     DeliveryDriver = "delivery_driver"
+// }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: DeliveryDriverType
+    deliveryDriverType: ParticipantType
 }
   
 export interface CancelDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: DeliveryDriverType
+    deliveryDriverType: ParticipantType
 }
 
 export interface DeliveryOrderStatusChangeNotification extends OrderNotification {

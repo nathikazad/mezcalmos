@@ -8,9 +8,13 @@ import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateC
 import { HttpsError } from 'firebase-functions/v1/auth';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { getCustomerRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
-import { RestaurantOrderStatus } from '../../shared/models/Services/Restaurant/RestaurantOrder';
+import { RestaurantOrder, RestaurantOrderStatus } from '../../shared/models/Services/Restaurant/RestaurantOrder';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
+import { ServiceProvider } from '../../shared/models/Services/Service';
+import { getLaundryStore } from '../../shared/graphql/laundry/getLaundry';
+import { getCustomerLaundryOrders } from '../../shared/graphql/laundry/order/getLaundryOrder';
+import { LaundryOrder, LaundryOrderStatus } from '../../shared/models/Services/Laundry/LaundryOrder';
 let keys: Keys = getKeys();
 
 export interface CardDetails {
@@ -61,14 +65,19 @@ export interface ChargeCardResponse {
 }
 export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDetails): Promise<ChargeCardResponse> {
 
-  let serviceProvider;
-  if(chargeCardDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderId);
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
+  let serviceProvider: ServiceProvider;
+  switch (chargeCardDetails.orderType) {
+    case OrderType.Restaurant:
+      serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderId);
+      break;
+    case OrderType.Laundry:
+      serviceProvider = await getLaundryStore(chargeCardDetails.serviceProviderId);
+      break;
+    default:
+      throw new HttpsError(
+        "internal",
+        "invalid order type"
+      );
   }
   if (!(serviceProvider.stripeInfo)
     || !(serviceProvider.acceptedPayments)
@@ -128,17 +137,21 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
 };
 export interface RemoveCardDetails {
   cardId: string,
-
 }
 export async function removeCard(userId: number, removeCardDetails: RemoveCardDetails) {
 
-  //Restaurant order
-  let restaurantOrders = await getCustomerRestaurantOrders(userId);
+  let response = await Promise.all([getCustomerRestaurantOrders(userId), getCustomerLaundryOrders(userId)])
+  let restaurantOrders: RestaurantOrder[] = response[0];
+  let laundryOrders: LaundryOrder[] = response[1];
   restaurantOrders.filter((o) => ((o.status != RestaurantOrderStatus.Delivered) 
     && (o.status != RestaurantOrderStatus.CancelledByAdmin)
     && (o.status != RestaurantOrderStatus.CancelledByCustomer)
   ))
-  if(restaurantOrders.length) {
+  laundryOrders.filter((o) => ((o.status != LaundryOrderStatus.Delivered) 
+    && (o.status != LaundryOrderStatus.CancelledByAdmin)
+    && (o.status != LaundryOrderStatus.CancelledByCustomer)
+  ))
+  if(restaurantOrders.length || laundryOrders.length) {
     throw new HttpsError(
       "internal",
       "Can't remove cards with in process orders, please wait till you finish your order"
@@ -166,14 +179,20 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
     let orderType: OrderType = orderTypeId as OrderType;
     for (let serviceProviderId in card.idsWithServiceProvider[orderType]) {
       let clonedCardId = card.idsWithServiceProvider[orderType][serviceProviderId];
-      let serviceProvider;
-      if(orderType == OrderType.Restaurant)
-        serviceProvider = await getRestaurant(parseInt(serviceProviderId));
-      else 
-        throw new HttpsError(
-          "internal",
-          "invalid order type"
-        );
+      let serviceProvider: ServiceProvider;
+      switch (orderType) {
+        case OrderType.Restaurant:
+          serviceProvider = await getRestaurant(parseInt(serviceProviderId));
+          break;
+        case OrderType.Laundry:
+          serviceProvider = await getLaundryStore(parseInt(serviceProviderId));
+          break;
+        default:
+          throw new HttpsError(
+            "internal",
+            "invalid order type"
+          );
+      }
       
       if (!clonedCardId || !(serviceProvider.stripeInfo))
         continue

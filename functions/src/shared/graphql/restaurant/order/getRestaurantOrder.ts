@@ -2,9 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
-import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { OperatorStatus } from "../../../models/Services/Service";
+import { Operator, OperatorStatus } from "../../../models/Services/Service";
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
   let chain = getHasura();
@@ -169,11 +168,11 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
   });
 
  return  response.restaurant_order.map((o ): RestaurantOrder => {
-    let restaurantOperators: RestaurantOperator[] = o.restaurant.restaurant_operators.map((r) => {
-      return <RestaurantOperator>{
+    let restaurantOperators: Operator[] = o.restaurant.restaurant_operators.map((r) => {
+      return <Operator>{
         id: r.id,
         userId: r.user_id,
-        restaurantId: o.restaurant_id,
+        serviceProviderId: o.restaurant_id,
         
         status: r.status as OperatorStatus,
         owner: r.owner,
@@ -220,7 +219,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
         location: o.restaurant.location.gps as Location,
-        restaurantOperators,
+        operators: restaurantOperators,
         delivery: o.restaurant.delivery,
         customerPickup: o.restaurant.customer_pickup,
         language: o.restaurant.language_id as Language

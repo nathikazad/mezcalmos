@@ -3,12 +3,11 @@ import { DirectChatDetails } from "../../chat/createChat";
 import { ChatType, AppParticipant, AppTypeToChatInfoAppName, ChatInfoAppName } from "../../models/Generic/Chat";
 import { AppType } from "../../models/Generic/Generic";
 import { CustomerInfo, MezAdmin, UserInfo } from "../../models/Generic/User";
-import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
-import { ServiceProviderType } from "../../models/Services/Service";
+import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
-export async function createRestaurantCustomerChat(restaurant: Restaurant, customer: CustomerInfo) {
+export async function createRestaurantCustomerChat(restaurant: ServiceProvider, customer: CustomerInfo) {
     let chain = getHasura();
-    let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((r) => {
+    let restaurantOperatorsDetails = restaurant.operators!.map((r) => {
         return {
             participant_id: r.userId,
             app_type_id: AppType.RestaurantApp

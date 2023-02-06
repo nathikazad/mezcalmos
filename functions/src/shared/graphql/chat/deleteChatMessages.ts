@@ -1,7 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { DeliveryOrder } from "../../models/Generic/Delivery";
-import { AppType } from "../../models/Generic/Generic";
 
 export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: DeliveryOrder/*, deliveryDriver: DeliveryDriver*/) {
   let chain = getHasura();
@@ -26,15 +25,13 @@ export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: De
     delete_chat_participant: [{
       where: {
         _and: [{
+          participant_id: {
+            _eq: deliveryOrder.deliveryDriverId
+          },
           chat_id: {
             _eq: deliveryOrder.chatWithCustomerId
           },
-        },{
-          app_type_id: {
-            _eq: AppType.DeliveryApp
-          } 
-        }]
-        
+        }] 
       }
     }, {
       affected_rows: true
@@ -56,15 +53,13 @@ export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: De
     delete_chat_participant: [{
       where: {
         _and: [{
+          participant_id: {
+            _eq: deliveryOrder.deliveryDriverId
+          },
           chat_id: {
             _eq: deliveryOrder.chatWithServiceProviderId
           },
-        },{
-          app_type_id: {
-            _eq: AppType.DeliveryApp
-          } 
         }]
-        
       }
     }, {
       affected_rows: true

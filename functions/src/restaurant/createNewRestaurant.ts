@@ -1,5 +1,5 @@
 import { Language, Location } from "../shared/models/Generic/Generic";
-import { NewRestaurantNotification, Restaurant } from "../shared/models/Services/Restaurant/Restaurant";
+import { NewRestaurantNotification } from "../shared/models/Services/Restaurant/Restaurant";
 import { createRestaurant } from "../shared/graphql/restaurant/createRestaurant";
 import { getUser } from "../shared/graphql/user/getUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
@@ -10,6 +10,7 @@ import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { DeliveryDetails } from "../shared/models/Generic/Delivery";
+import { ServiceProvider } from "../shared/models/Services/Service";
 
 export interface RestaurantDetails {
   name: string,
@@ -46,7 +47,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-    let restaurant: Restaurant = {
+    let restaurant: ServiceProvider = {
       name: restaurantDetails.name,
       image: restaurantDetails.image,
       location: restaurantDetails.location,
@@ -62,13 +63,6 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
 
   await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
   
-  notifyAdmins(mezAdmins, restaurant);
-};
-
-function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
-
-  if(restaurant.id == undefined)
-    return
   let notification: Notification = {
     foreground: <NewRestaurantNotification>{
       time: (new Date()).toISOString(),
@@ -88,7 +82,7 @@ function notifyAdmins(mezAdmins: MezAdmin[], restaurant: Restaurant) {
         body: `There is a new restaurant`
       }
     },
-    linkUrl: restaurantUrl(restaurant.id)
+    linkUrl: restaurantUrl(restaurant.id!)
   }
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

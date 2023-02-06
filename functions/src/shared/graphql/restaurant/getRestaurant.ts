@@ -1,10 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
-import { Restaurant, RestaurantOperator } from "../../models/Services/Restaurant/Restaurant";
-import { OperatorStatus, OpenStatus } from "../../models/Services/Service";
+import { OperatorStatus, OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
 
-export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
+export async function getRestaurant(restaurantId: number): Promise<ServiceProvider> {
   let chain = getHasura();
   let response = await chain.query({
     restaurant_restaurant_by_pk: [{
@@ -64,11 +63,11 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     );
   }
 
-  let restaurantOperators: RestaurantOperator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r): RestaurantOperator => {
+  let operators: Operator[] = response.restaurant_restaurant_by_pk.restaurant_operators.map((r): Operator => {
     return {
       id: r.id,
       userId: r.user_id,
-      restaurantId: restaurantId,
+      serviceProviderId: restaurantId,
       status: r.status as OperatorStatus,
       owner: r.owner,
       notificationInfo: (r.notification_info) ? {
@@ -87,7 +86,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     }
   });
 
-  let restaurant: Restaurant = {
+  let restaurant: ServiceProvider = {
     id: response.restaurant_restaurant_by_pk.id,
     name: response.restaurant_restaurant_by_pk.name,
     image: response.restaurant_restaurant_by_pk.image,
@@ -107,7 +106,7 @@ export async function getRestaurant(restaurantId: number): Promise<Restaurant> {
     approved: response.restaurant_restaurant_by_pk.approved,
     stripeInfo: JSON.parse(response.restaurant_restaurant_by_pk.stripe_info),
     acceptedPayments: JSON.parse(response.restaurant_restaurant_by_pk.accepted_payments),
-    restaurantOperators,
+    operators,
     deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partner?.delivery_company_id,
     customerPickup: response.restaurant_restaurant_by_pk.customer_pickup,
     delivery: response.restaurant_restaurant_by_pk.delivery,
