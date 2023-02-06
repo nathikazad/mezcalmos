@@ -12,8 +12,8 @@ export interface RestaurantOrder extends Order {
   status: RestaurantOrderStatus;
   items: Array<OrderItem>;
   itemsCost?: number;
-  totalCost?: number;
   restaurant?: Restaurant;
+  deliveryId?: number;
 }
 export interface OrderItem {
   orderItemId?: number;

@@ -33,8 +33,11 @@ export interface LaundryRequestDetails {
     tripDuration: number,
     tripPolyline: string
 }
+export interface ReqLaundryResponse {
+    orderId: number
+}
 
-export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails)/*: Promise<CheckoutResponse> */{
+export async function requestLaundry(customerId: number, laundryRequestDetails: LaundryRequestDetails): Promise<ReqLaundryResponse> {
     let laundryStore: Laundry = await getLaundryStore(laundryRequestDetails.storeId);
     let mezAdmins: MezAdmin[] = await getMezAdmins();
     let customer: CustomerInfo = await getCustomer(customerId);
@@ -105,6 +108,9 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
 
     // assign delivery company
     // payment
+    return {
+        orderId: laundryOrder.orderId!
+    }
 }
 
 function errorChecks(laundryStore: Laundry, laundryRequestDetails: LaundryRequestDetails) {

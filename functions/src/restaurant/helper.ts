@@ -3,14 +3,7 @@ import { getRestaurantCheckDetails } from "../shared/graphql/restaurant/restaura
 import { HttpsError } from "firebase-functions/v1/auth";
 import { isMezAdmin } from "../shared/helper";
 
-export async function passChecksForRestaurant(orderId: any, userId: number) {
-
-  if (orderId == null) {
-      throw new HttpsError(
-        "internal",
-        "order id not provided"
-      );
-  }
+export async function passChecksForRestaurant(orderId: number, userId: number) {
 
   let response = await getRestaurantCheckDetails(orderId, userId);
   let order = response.restaurant_order_by_pk;

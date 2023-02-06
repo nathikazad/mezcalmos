@@ -1,7 +1,9 @@
 import { LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
 import *  as rootDbNodes from "../shared/databaseNodes/root";
 import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponseStatus, ValidationPass } from "../shared/models/Generic/Generic";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getLaundryCheckDetails } from "../shared/graphql/laundry/laundryCheck";
+import { isMezAdmin } from "../shared/helper";
 
 export async function finishOrder(
   order: LaundryOrder,
@@ -58,59 +60,30 @@ export function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrder
 //   return undefined;
 // }
 
-export async function passChecksForLaundry(data: any, userId: string): Promise<ValidationPass> {
-  let response 
-  // = await isSignedIn(userId)
-  // if (response != undefined) {
-  //   return {
-  //     ok: false,
-  //     error: response
-  //   }
-  // }
-  if (data.orderId == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Expected order id`,
-        errorCode: "orderIdNotGiven"
-      }
-    }
-  }
+export async function passChecksForLaundry(orderId: number, userId: number) { 
 
-  let orderId: string = data.orderId;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
+  let response = await getLaundryCheckDetails(orderId, userId);
+  let order = response.laundry_order_by_pk;
+
   if (order == null) {
-    return {
-      ok: false,
-      error: {
-        status: ServerResponseStatus.Error,
-        errorMessage: `Order does not exist`,
-        errorCode: "orderDontExist"
-      }
-    }
+    throw new HttpsError(
+      "internal",
+      "order does not exist"
+    );
   }
 
-  if (data.fromLaundryOperator) {
-    // response = await checkLaundryOperator(order.laundry.firebaseId, userId)
-    if (response != undefined) {
-      return {
-        ok: false,
-        error: response
-      };
+  if((await isMezAdmin(userId)) == false) {
+    if (response.laundry_operator.length == 0) {
+      throw new HttpsError(
+        "internal",
+        "Only authorized laundry operators or MezAdmin can run this operation"
+      );
     }
-  } else {
-    // response = await checkDeliveryAdmin(userId)
-    // if (response != undefined) {
-    //   return {
-    //     ok: false,
-    //     error: response
-    //   };
-    // }
-  }
-
-  return {
-    ok: true,
-    order: order
+    if(response.laundry_operator[0].store_id != order.store_id) {
+      throw new HttpsError(
+        "internal",
+        "Only authorized laundry operators can run this operation"
+      );
+    }
   }
 }
