@@ -77,6 +77,11 @@ select_permissions:
         - service_provider_type
         - user_id
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - user_id
+      filter: {}
   - role: mez_admin
     permission:
       columns:

@@ -29,3 +29,81 @@ array_relationships:
         table:
           name: operator
           schema: laundry
+insert_permissions:
+  - role: laundry_operator
+    permission:
+      check:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - name
+        - image
+        - description_id
+        - open_status
+        - language_id
+        - approved
+        - self_delivery
+        - creation_time
+        - location_id
+        - phone_number
+        - schedule
+        - stripe_info
+        - accepted_payments
+        - delivery
+        - customer_pickup
+        - delivery_details_id
+        - service_provider_type
+select_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - name
+        - image
+        - description_id
+        - open_status
+        - language_id
+        - approved
+        - self_delivery
+        - creation_time
+        - location_id
+        - phone_number
+        - schedule
+        - stripe_info
+        - accepted_payments
+        - delivery
+        - customer_pickup
+        - delivery_details_id
+        - service_provider_type
+        - normal_delivery_time
+      filter:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+update_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - accepted_payments
+        - delivery_details_id
+        - description_id
+        - image
+        - language_id
+        - location_id
+        - name
+        - normal_delivery_time
+        - open_status
+        - phone_number
+        - schedule
+        - self_delivery
+        - stripe_info
+      filter:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id
+      check:
+        operators:
+          user_id:
+            _eq: X-Hasura-User-Id

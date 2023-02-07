@@ -40,7 +40,7 @@ class ROpDashboardPage extends StatelessWidget {
           ),
           Text(
             viewController.restaurant.value!.info.name,
-            style: Get.textTheme.headline3,
+            style: Get.textTheme.displaySmall,
           ),
           SizedBox(
             height: 30,
@@ -64,7 +64,7 @@ class ROpDashboardPage extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             '${_i18n()["settings"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         SizedBox(
@@ -88,7 +88,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.person,
                   titleWidget: Text(
                     '${_i18n()["restInfo"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -103,7 +103,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.business_outlined,
                   titleWidget: Text(
                     '${_i18n()["schedule"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -120,7 +120,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.people,
                   titleWidget: Text(
                     'Operators',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -138,7 +138,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.account_balance,
                   titleWidget: Text(
                     '${_i18n()["payments"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -153,7 +153,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.star_rate_rounded,
                   titleWidget: Text(
                     '${_i18n()["reviews"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -174,7 +174,7 @@ class ROpDashboardPage extends StatelessWidget {
                         icon: Icons.delivery_dining,
                         titleWidget: Text(
                           'Drivers',
-                          style: Get.textTheme.bodyText1?.copyWith(
+                          style: Get.textTheme.bodyLarge?.copyWith(
                               fontSize: 11.sp,
                               fontWeight: FontWeight.w600,
                               color: Colors.grey.shade900),
@@ -197,7 +197,7 @@ class ROpDashboardPage extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Text(
             '${_i18n()["shortcuts"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         SizedBox(
@@ -219,7 +219,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.share,
                   titleWidget: Text(
                     '${_i18n()["shareRest"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -237,7 +237,7 @@ class ROpDashboardPage extends StatelessWidget {
                     children: [
                       Text(
                         'Delivery',
-                        style: Get.textTheme.bodyText1?.copyWith(
+                        style: Get.textTheme.bodyLarge?.copyWith(
                             fontSize: 11.sp,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey.shade900),
@@ -263,7 +263,7 @@ class ROpDashboardPage extends StatelessWidget {
                   icon: Icons.privacy_tip,
                   titleWidget: Text(
                     '${_i18n()["privacyPolicies"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.grey.shade900),
@@ -277,7 +277,7 @@ class ROpDashboardPage extends StatelessWidget {
                   iconColor: Colors.red,
                   titleWidget: Text(
                     '${_i18n()["logout"]}',
-                    style: Get.textTheme.bodyText1?.copyWith(
+                    style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.red),
@@ -291,8 +291,6 @@ class ROpDashboardPage extends StatelessWidget {
 
   Divider _divider() {
     return Divider(
-      // endIndent: 16,
-      // indent: 16,
       height: 15,
       thickness: 0.2,
     );

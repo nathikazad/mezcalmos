@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -33,7 +32,6 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   final SideMenuDrawerController _drawerController =
       Get.find<SideMenuDrawerController>();
   AuthController authController = Get.find<AuthController>();
-  late OpLaundryInfoController laundryInfoController;
 
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
@@ -47,22 +45,14 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
   @override
   void initState() {
     // TODO: implement initState
-    Get.put(OpLaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<OpLaundryInfoController>();
-    laundryInfoController
-        .getLaundry(laundryOpAuthController.laundryId!)
-        .listen((Laundry? event) {
-      if (event != null) {
-        laundry.value = event;
-      }
-    });
+
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    Get.delete<OpLaundryInfoController>(force: true);
+
     super.dispose();
   }
 
@@ -91,7 +81,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
                       // Navigation links
                       if (laundryOpAuthController.operator.value != null &&
                           laundryOpAuthController
-                                  .operator.value?.state.laundryId !=
+                                  .operator.value?.state.serviceProviderId !=
                               null)
                         _operatorNavLinks(),
                       _navigationLink(

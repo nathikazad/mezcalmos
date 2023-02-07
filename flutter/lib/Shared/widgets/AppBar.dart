@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -209,10 +209,10 @@ Widget _notificationAppBarIcon() {
                 onTap: () {
                   MezRouter.toNamed(kNotificationsRoute);
                 },
-                child: Badge(
+                child: badge.Badge(
                   badgeColor: Colors.red,
                   showBadge: true,
-                  position: BadgePosition.topEnd(top: 8, end: 0),
+                  position: badge.BadgePosition.topEnd(top: 8, end: 0),
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(

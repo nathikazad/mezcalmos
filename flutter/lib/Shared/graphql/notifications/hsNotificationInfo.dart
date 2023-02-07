@@ -40,11 +40,13 @@ Future<void> update_notif_info(
   }
 }
 
-Future<NotificationInfo?> get_notif_info({required int userId}) async {
+Future<NotificationInfo?> get_notif_info(
+    {required int userId, required String appType}) async {
   final QueryResult<Query$getNotifInfoByUserId> res = await _db.graphQLClient
       .query$getNotifInfoByUserId(Options$Query$getNotifInfoByUserId(
           fetchPolicy: FetchPolicy.noCache,
-          variables: Variables$Query$getNotifInfoByUserId(userId: userId)));
+          variables: Variables$Query$getNotifInfoByUserId(
+              userId: userId, app_type_id: appType)));
   if (res.parsedData?.notification_info == null) {
     throw Exception("🚨 insert notif token failed =>${res.exception}");
   }

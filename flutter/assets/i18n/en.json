@@ -733,8 +733,8 @@
                         "nameError": "Please provide a name",
                         "location": "Name",
                         "locationError": "Please provide a name",
-                        "pickLoc" : "Pick location",
-                        "imageError" : "Image is required"
+                        "pickLoc": "Pick location",
+                        "imageError": "Image is required"
                     }
                 },
                 "info": "Information",
@@ -941,7 +941,7 @@
                 "reconnecting": "Reconnecting"
             },
             "MessagingScreen": {
-                "viewOrder" :"View order details",
+                "viewOrder": "View order details",
                 "order": "Order",
                 "writeMsgPlaceholder": "Write your message here ..."
             },
@@ -1742,6 +1742,12 @@
             }
         },
         "pages": {
+            "LaundryTabsView": {
+                "orders": "Orders",
+                "profile": "Profile",
+                "feed": "Feed",
+                "services": "Services"
+            },
             "CategoryView": {
                 "components": {
                     "AddCategorySlide": {
@@ -1933,22 +1939,21 @@
     },
     "RestaurantApp": {
         "pages": {
-            "ROpChoiceView" :{
-                "newChoice" : "New choice",
-                "required" : "Required",
-                "save" : "Save choice",
-                "saved" : "Saved",
-                "savedText" : "Choice has been saved successfuly",
-                "added" : "Added",
-                "addedText" : "Choice has been added successfuly",
-                "choiceName" : "Choice name",
+            "ROpChoiceView": {
+                "newChoice": "New choice",
+                "required": "Required",
+                "save": "Save choice",
+                "saved": "Saved",
+                "savedText": "Choice has been saved successfuly",
+                "added": "Added",
+                "addedText": "Choice has been added successfuly",
+                "choiceName": "Choice name",
                 "choiceNameIn": "Choice name in",
-                "choicePrice" : "Choice price",
-                "deleteChoice" : "Delete choice",
-                "yDeleteChoice" : "Yes delete choice",
-                "helperText" : "Are you sure you want to delete this choice"
-
-            }, 
+                "choicePrice": "Choice price",
+                "deleteChoice": "Delete choice",
+                "yDeleteChoice": "Yes delete choice",
+                "helperText": "Are you sure you want to delete this choice"
+            },
             "ROpReviewsView": {
                 "reviews": "Reviews",
                 "base": "Base on",

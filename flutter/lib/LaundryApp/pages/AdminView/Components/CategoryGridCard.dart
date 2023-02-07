@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -9,17 +10,20 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["components"]["CategoryGridCard"];
 
 class CategoryGridCard extends StatefulWidget {
-  const CategoryGridCard({Key? key, required this.item, required this.laundry})
+  const CategoryGridCard(
+      {Key? key,
+      required this.item,
+      required this.laundry,
+      required this.viewController})
       : super(key: key);
   final LaundryCostLineItem item;
   final Laundry laundry;
-
+  final LaundryOpAdminViewController viewController;
   @override
   State<CategoryGridCard> createState() => _CategoryGridCardState();
 }
@@ -50,7 +54,7 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
           children: [
             Text(
               _getRightName().inCaps,
-              style: Get.textTheme.headline3?.copyWith(fontSize: 12.sp),
+              style: Get.textTheme.displaySmall?.copyWith(fontSize: 12.sp),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
@@ -61,11 +65,15 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
               children: [
                 InkWell(
                   customBorder: CircleBorder(),
-                  onTap: () {
-                    mezDbgPrint(widget.item.id);
-                    MezRouter.toNamed(getCategoryRoute(
-                        laundryId: widget.laundry.info.hasuraId.toString(),
-                        categoryId: widget.item.id));
+                  onTap: () async {
+                    bool? refetch = await MezRouter.toNamed(getCategoryRoute(
+                        laundryId: widget.laundry.info.hasuraId,
+                        categoryId: widget.item.id)) as bool?;
+
+                    mezDbgPrint("RESULT ======>$refetch");
+                    if (refetch == true) {
+                      await widget.viewController.fetchCategories();
+                    }
                   },
                   child: Ink(
                     padding: const EdgeInsets.all(5),
@@ -117,27 +125,27 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
   }
 
   Future<void> deleteCategory({required LaundryCostLineItem item}) async {
-    Get.put(OpLaundryInfoController(), permanent: false);
-    final OpLaundryInfoController _laundryInfoController =
-        Get.find<OpLaundryInfoController>();
-    final List<LaundryCostLineItem> categories = [];
-    final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
+    // Get.put(OpLaundryInfoController(), permanent: false);
+    // final OpLaundryInfoController _laundryInfoController =
+    //     Get.find<OpLaundryInfoController>();
+    // final List<LaundryCostLineItem> categories = [];
+    // final LaundryCosts laundryCosts = widget.laundry.laundryCosts;
 
-    widget.laundry.laundryCosts.lineItems
-        .forEach((LaundryCostLineItem element) {
-      categories.add(element.copyWith());
-    });
+    // widget.laundry.laundryCosts.lineItems
+    //     .forEach((LaundryCostLineItem element) {
+    //   categories.add(element.copyWith());
+    // });
 
-    categories.removeWhere((LaundryCostLineItem element) =>
-        element.name[primaryLang] == item.name[primaryLang]);
+    // categories.removeWhere((LaundryCostLineItem element) =>
+    //     element.name[primaryLang] == item.name[primaryLang]);
 
-    laundryCosts.lineItems = categories;
+    // laundryCosts.lineItems = categories;
 
-    await _laundryInfoController.setCosts(
-        laundryCosts: laundryCosts,
-        laundryId: widget.laundry.info.hasuraId.toString());
+    // await _laundryInfoController.setCosts(
+    //     laundryCosts: laundryCosts,
+    //     laundryId: widget.laundry.info.hasuraId.toString());
 
-    await Get.delete<OpLaundryInfoController>(force: true);
+    // await Get.delete<OpLaundryInfoController>(force: true);
   }
 
   String _getRightName() {

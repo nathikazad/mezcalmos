@@ -1,118 +1,86 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
-import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
+import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
+import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class LaundryOpAuthController extends GetxController {
-  Rxn<LaundryOperator> operator = Rxn();
-  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  Rxn<Operator> operator = Rxn();
+  final int operatorUserId = Get.find<AuthController>().hasuraUserId!;
   AuthController _authController = Get.find<AuthController>();
-  // LaundryInfoController _laundryInfoController =
-  //     Get.find<LaundryInfoController>();
-  OrderController _orderController = Get.find<OrderController>();
+  // RestaurantInfoController _restaurantInfoController =
+  //     Get.find<RestaurantInfoController>();
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
-  String? laundryId;
-
-  LaundryOperatorState? get laundryOperatorState => operator.value?.state;
-  Stream<LaundryOperator?> get operatorInfoStream => operator.stream;
-
-  StreamSubscription<dynamic>? _LaundryOperatorNodeListener;
-
-  bool _checkedAppVersion = false;
-  String? _previousStateValue = "init";
+  RxnInt _laundryId = RxnInt();
+  int? get laundryId => _laundryId.value;
 
   @override
   void onInit() {
     // ------------------------------------------------------------------------
-    mezDbgPrint("LaundryAuthController: init $hashCode");
-    mezDbgPrint(
-        "LaundryAuthController: calling handle state change first time");
-    setupLaundryOperator(Get.find<AuthController>().fireAuthUser!);
+
+    mezDbgPrint("LaundryOperator: calling handle state change first time");
+    // Todo @m66are remove this restaurant id hard code
+
+    setupLaundryOperator().then((value) {
+      if (operator.value?.info.hasuraId != null) {
+        saveNotificationToken();
+      }
+    });
+
     super.onInit();
   }
 
-  Future<void> setupLaundryOperator(User user) async {
-    // mezDbgPrint(_authController.fireAuthUser);
+  Future<void> setupLaundryOperator() async {
+    operator.value = await get_laundry_operator(userId: operatorUserId);
+    if (operator.value != null) {
+      _laundryId.value = operator.value!.state.serviceProviderId;
+    }
 
-    mezDbgPrint(
-        "LaundryAuthController: laundryNode =======>>>>>> init ${operatorStateNode(operatorType: OperatorType.Laundry, uid: user.uid)}");
-    await _LaundryOperatorNodeListener?.cancel();
-    _LaundryOperatorNodeListener = null;
-
-    _LaundryOperatorNodeListener = _databaseHelper.firebaseDatabase
-        .ref()
-        .child(
-            operatorAuthNode(operatorType: OperatorType.Laundry, uid: user.uid))
-        .onValue
-        .listen((DatabaseEvent event) async {
-      if (event.snapshot.value.toString() == _previousStateValue) {
-        return;
-      }
-      _previousStateValue = event.snapshot.value.toString();
-
-      if (event.snapshot.value != null) {
-        operator.value =
-            LaundryOperator.fromData(user.uid, event.snapshot.value);
-
-        saveAppVersionIfNecessary();
-        unawaited(saveNotificationToken());
-        if (laundryId != operator.value!.state.laundryId) {
-          // init controllers with new id
-          laundryId = operator.value!.state.laundryId;
-          await _orderController.init(laundryId!);
-          // await _laundryInfoController.init(laundryId!);
-        }
-      }
-    });
+    mezDbgPrint("👑👑 laundry Operator :: ${operator.value?.toJson()}");
   }
 
   Future<void> saveNotificationToken() async {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    if (deviceNotificationToken != null) {
-      unawaited(_databaseHelper.firebaseDatabase
-          .ref()
-          .child(operatorNotificationInfoNode(
-              operatorType: OperatorType.Laundry,
-              uid: _authController.fireAuthUser!.uid))
-          .set(<String, String>{
-        'deviceNotificationToken': deviceNotificationToken
-      }));
-    }
-  }
-
-  void saveAppVersionIfNecessary() {
-    if (_checkedAppVersion == false) {
-      final String version = GetStorage().read(getxAppVersion);
-      _databaseHelper.firebaseDatabase
-          .ref()
-          .child(operatorAppVersionNode(
-              operatorType: OperatorType.Laundry,
-              uid: _authController.fireAuthUser!.uid))
-          .set(version);
-      _checkedAppVersion = true;
+    final NotificationInfo? notifInfo = await get_notif_info(
+        userId: operator.value!.info.hasuraId, appType: "laundry");
+    mezDbgPrint("inside save notif token=====>>>😍");
+    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
+    mezDbgPrint("inside save notif token=====>>>$deviceNotificationToken");
+    try {
+      if (notifInfo != null &&
+          deviceNotificationToken != null &&
+          notifInfo.token != deviceNotificationToken) {
+        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
+        // ignore: unawaited_futures
+        update_notif_info(
+            notificationInfo: NotificationInfo(
+                userId: operatorUserId,
+                appType: "laundry",
+                id: notifInfo.id,
+                token: deviceNotificationToken));
+      } else if (deviceNotificationToken != null && notifInfo == null) {
+        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: operatorUserId,
+            token: deviceNotificationToken,
+            appType: "laundry");
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
     }
   }
 
   @override
   void onClose() {
-    mezDbgPrint(
-        "[+] LaundryAuthController::dispose ---------> Was invoked ! $hashCode");
-
-    _LaundryOperatorNodeListener?.cancel();
-    _LaundryOperatorNodeListener = null;
     super.onClose();
   }
 }

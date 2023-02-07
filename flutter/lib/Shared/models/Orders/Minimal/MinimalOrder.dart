@@ -9,7 +9,7 @@ class MinimalOrder {
   String customerName;
   String? customerImage;
   MinimalOrderStatus status;
-  double totalCost;
+  double? totalCost;
   int? serviceProviderId;
   ServiceProviderType? serviceProviderType;
   MinimalOrder({

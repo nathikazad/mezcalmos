@@ -8,3 +8,50 @@ object_relationships:
   - name: store
     using:
       foreign_key_constraint_on: store_id
+insert_permissions:
+  - role: laundry_operator
+    permission:
+      check:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - cost_by_kilo
+        - name_id
+        - position
+        - store_id
+select_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - name_id
+        - position
+        - store_id
+        - cost_by_kilo
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - cost_by_kilo
+        - position
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: laundry_operator
+    permission:
+      filter:
+        store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id

@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.da
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/NotificationInfo.dart';
 
 class DeliveryOpAuthController extends GetxController {
@@ -23,14 +22,11 @@ class DeliveryOpAuthController extends GetxController {
   RxnInt _companyId = RxnInt();
   int? get companyId => _companyId.value;
 
-
   final AppLifeCycleController _appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
   String? _appLifeCyclePauseCallbackId;
   String? _appLifeCycleResumeCallbackId;
-
-
 
   @override
   void onInit() {
@@ -65,8 +61,8 @@ class DeliveryOpAuthController extends GetxController {
   Future<void> saveNotificationToken() async {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    final NotificationInfo? notifInfo =
-        await get_notif_info(userId: operator.value!.info.hasuraId);
+    final NotificationInfo? notifInfo = await get_notif_info(
+        userId: operator.value!.info.hasuraId, appType: "delivery_admin");
     mezDbgPrint("inside save notif token=====>>>😍");
     mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
     try {
@@ -106,7 +102,6 @@ class DeliveryOpAuthController extends GetxController {
       _appLifeCycleController.removeCallbackIdOfState(
           Material.AppLifecycleState.resumed, _appLifeCycleResumeCallbackId);
 
-    
     super.onClose();
   }
 }

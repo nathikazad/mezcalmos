@@ -5,21 +5,19 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/notificationHandler.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/operatorNodes.dart';
 import 'package:mezcalmos/Shared/helpers/NotificationsHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
-import 'package:mezcalmos/Shared/models/Operators/LaundryOperator.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class LaundryWrapper extends StatefulWidget {
   @override
@@ -27,54 +25,55 @@ class LaundryWrapper extends StatefulWidget {
 }
 
 class _LaundryWrapperState extends State<LaundryWrapper> {
+  Operator? restaurantOperator;
+
+  LaundryOpAuthController laundryOpAuthController =
+      Get.find<LaundryOpAuthController>();
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
-  StreamSubscription<bool>? _locationStreamSub;
-
   @override
   void initState() {
-    // Get.put(LaundryInfoController(), permanent: true);
-
     mezDbgPrint("LaundryWrapper::init state");
-    Future.microtask(() async {
-      mezDbgPrint("LaundryWrapper::microtask handleState first time");
-      LaundryOperator? laundryOperator =
-          Get.find<LaundryOpAuthController>().operator.value;
-      if (laundryOperator == null) {
-        Future.delayed(Duration(seconds: 5), () {
-          laundryOperator = Get.find<LaundryOpAuthController>().operator.value;
-          handleState(laundryOperator);
-        });
-      } else {
-        handleState(laundryOperator);
-      }
-    });
 
-    final String userId = Get.find<AuthController>().fireAuthUser!.uid;
-    _notificationsStreamListener = initializeShowNotificationsListener();
-    Get.find<ForegroundNotificationsController>()
-        .startListeningForNotificationsFromFirebase(
-      operatorNotificationsNode(
-          uid: userId, operatorType: OperatorType.Laundry),
-      laundryNotificationHandler,
-    );
+    Future.microtask(() async {
+      //   await rOpDeeplinkHandler.startDynamicLinkCheckRoutine();
+      await laundryOpAuthController
+          .setupLaundryOperator()
+          .then((_) => handleState());
+    });
+    _setupNotifications();
     super.initState();
   }
 
-  void handleState(LaundryOperator? operator) {
-    mezDbgPrint("LaundryWrapper::microtask data received");
-    mezDbgPrint(operator);
-    if (operator != null && operator.state.laundryId != null) {
-      // ignore: unawaited_futures, inference_failure_on_function_invocation
-      MezRouter.toNamed(kCurrentOrdersListView);
+  Future<void> handleState() async {
+    mezDbgPrint(
+        "🫡 Start routing process 🫡 =>${laundryOpAuthController.operator.value?.toJson()}");
+
+    if (laundryOpAuthController.operator.value == null) {
+      // todo navigate to unauth
+      // navigateToCreateService(
+      //     serviceProviderType: ServiceProviderType.Restaurant);
     } else {
-      MezRouter.toNamed(kUnauthorizedRoute);
+      await MezRouter.toNamed(kLaundryTabsView);
+    }
+  }
+
+  void _setupNotifications() {
+    if (Get.find<AuthController>().isUserSignedIn) {
+      mezDbgPrint("Setup notifs listener 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 ");
+      _notificationsStreamListener?.cancel();
+      _notificationsStreamListener = initializeShowNotificationsListener();
+      Get.find<ForegroundNotificationsController>()
+          .startListeningForNotificationsFromFirebase(
+              operatorNotificationsNode(
+                  uid: Get.find<AuthController>().fireAuthUser!.uid,
+                  operatorType: OperatorType.Restaurant),
+              laundryNotificationHandler);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    mezDbgPrint("LaundryWrapper:: build");
     return Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
@@ -88,8 +87,6 @@ class _LaundryWrapperState extends State<LaundryWrapper> {
   void dispose() {
     _notificationsStreamListener?.cancel();
     _notificationsStreamListener = null;
-    _locationStreamSub?.cancel();
-    _locationStreamSub = null;
     super.dispose();
   }
 }

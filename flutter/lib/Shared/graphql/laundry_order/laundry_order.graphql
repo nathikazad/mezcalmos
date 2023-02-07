@@ -1,0 +1,188 @@
+subscription liston_on_laundry_order_by_id($orderId: Int!) {
+  laundry_order_by_pk(id: $orderId) {
+    actual_ready_time
+    cancellation_time
+    chat_id
+    customer_address
+    customer_app_type
+    customer_id
+    customer_location_gps
+    delivery_cost
+    delivery_type
+    discount_value
+    estimated_ready_time
+    firebase_id
+    from_customer_delivery_id
+    id
+    notes
+    order_time
+    payment_type
+    refund_amount
+    scheduled_time
+    status
+    store_id
+    stripe_fees
+    stripe_info
+    tax
+    to_customer_delivery_id
+    review {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+          image
+          name
+          id
+        }
+      }
+    }
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    categories {
+      category_id
+      weight_in_kilo
+      order_id
+      id
+      category {
+        cost_by_kilo
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+          id
+        }
+        position
+        store_id
+      }
+    }
+  }
+}
+query get_laundry_order_by_id($orderId: Int!) {
+  laundry_order_by_pk(id: $orderId) {
+    actual_ready_time
+    cancellation_time
+    chat_id
+    customer_address
+    customer_app_type
+    customer_id
+    customer_location_gps
+    delivery_cost
+    delivery_type
+    discount_value
+    estimated_ready_time
+    firebase_id
+    from_customer_delivery_id
+    id
+    notes
+    order_time
+    payment_type
+    refund_amount
+    scheduled_time
+    status
+    store_id
+    stripe_fees
+    stripe_info
+    tax
+    to_customer_delivery_id
+    review {
+      created_at
+      from_entity_id
+      from_entity_type
+      id
+      note
+      rating
+      to_entity_id
+      to_entity_type
+      customer {
+        user {
+          image
+          name
+          id
+        }
+      }
+    }
+    customer {
+      user {
+        name
+        image
+      }
+    }
+    categories {
+      category_id
+      weight_in_kilo
+      order_id
+      id
+      category {
+        cost_by_kilo
+        id
+        name {
+          translations {
+            language_id
+            value
+          }
+          id
+        }
+        position
+        store_id
+      }
+    }
+  }
+}
+
+query get_laundry_orders($laundryStoreId: Int!, $inProcess: Boolean!) {
+  laundry_order(
+    where: {
+      store_id: { _eq: $laundryStoreId }
+      in_process: { _eq: $inProcess }
+    }
+  ) {
+    id
+    order_time
+    status
+
+    # total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+subscription listen_on_laundry_orders(
+  $laundryStoreId: Int!
+  $inProcess: Boolean!
+) {
+  laundry_order(
+    where: {
+      store_id: { _eq: $laundryStoreId }
+      in_process: { _eq: $inProcess }
+    }
+  ) {
+    id
+    order_time
+    status
+
+    # total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}

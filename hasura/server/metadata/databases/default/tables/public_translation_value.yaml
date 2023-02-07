@@ -35,6 +35,18 @@ insert_permissions:
         - translation_id
         - language_id
         - value
+  - role: laundry_operator
+    permission:
+      check:
+        translation_group:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - translation_id
+        - language_id
+        - value
   - role: mez_admin
     permission:
       check:
@@ -90,6 +102,13 @@ select_permissions:
         - language_id
         - value
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - translation_id
+        - language_id
+        - value
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -133,6 +152,23 @@ update_permissions:
         translation_group:
           delivery_company:
             delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - language_id
+        - value
+      filter:
+        translation_group:
+          laundry:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        translation_group:
+          laundry:
+            operators:
               user_id:
                 _eq: X-Hasura-User-Id
   - role: mez_admin

@@ -9,12 +9,14 @@ import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 class Laundry extends Service {
   LaundryCosts laundryCosts;
   num averageNumberOfDays = 2;
+  bool selfDelivery;
   Laundry(
       {required ServiceInfo userInfo,
-      required Schedule schedule,
+      required Schedule? schedule,
       required PaymentInfo paymentInfo,
       required ServiceState laundryState,
       this.averageNumberOfDays = 2,
+      required this.selfDelivery,
       required this.laundryCosts,
       required LanguageType primaryLanguage,
       LanguageType? secondaryLanguage})
@@ -62,6 +64,7 @@ class Laundry extends Service {
 
     final Laundry laundry = Laundry(
         userInfo: ServiceInfo.fromData(laundryData["info"]),
+        selfDelivery: true,
         schedule: schedule,
         paymentInfo: paymentInfo,
         laundryState: laundryState,
@@ -127,12 +130,20 @@ class LaundryCosts {
 }
 
 class LaundryCostLineItem {
-  String id;
+  int id;
   Map<LanguageType, String> name;
   num cost;
+  int? nameId;
+  int? storeId;
+  int position;
 
   LaundryCostLineItem(
-      {required this.name, required this.cost, required this.id});
+      {required this.name,
+      required this.cost,
+      required this.id,
+      this.position = 0,
+      this.nameId,
+      this.storeId});
 
   factory LaundryCostLineItem.fromData(laundryCostLineItemData) {
     return LaundryCostLineItem(

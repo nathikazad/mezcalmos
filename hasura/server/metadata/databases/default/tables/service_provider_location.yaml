@@ -9,6 +9,15 @@ object_relationships:
         table:
           name: company
           schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          id: location_id
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: restaurant
     using:
       foreign_key_constraint_on:
@@ -45,6 +54,13 @@ select_permissions:
         - id
         - address
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - gps
+        - id
+        - address
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -73,6 +89,21 @@ update_permissions:
       check:
         delivery_company:
           delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - address
+        - gps
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        laundry:
+          operators:
             user_id:
               _eq: X-Hasura-User-Id
   - role: mez_admin

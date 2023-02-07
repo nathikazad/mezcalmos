@@ -12,12 +12,14 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
   const LaundryOpNormalDeliveryTime(
       {Key? key,
       required this.data,
+      this.enabled = true,
       required this.onTapPlus,
       required this.onTapMinus})
       : super(key: key);
   final num data;
   final void Function()? onTapPlus;
   final void Function()? onTapMinus;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
       children: [
         Text(
           "${_i18n()["normalDeliverytime"]}",
-          style: Get.textTheme.bodyText1,
+          style: Get.textTheme.bodyLarge,
         ),
         SizedBox(
           height: 10,
@@ -43,27 +45,33 @@ class LaundryOpNormalDeliveryTime extends StatelessWidget {
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: secondaryLightBlueColor, shape: BoxShape.circle),
+                        color: enabled
+                            ? secondaryLightBlueColor
+                            : Colors.grey.shade300,
+                        shape: BoxShape.circle),
                     child: Icon(
                       Icons.remove,
-                      color: primaryBlueColor,
+                      color: enabled ? primaryBlueColor : Colors.grey.shade600,
                     ),
                   ),
                 ),
                 Text(
                   "$data ${_i18n()["days"]}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 InkWell(
                   customBorder: CircleBorder(),
-                  onTap: onTapPlus,
+                  onTap: enabled ? onTapPlus : null,
                   child: Ink(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
-                        color: secondaryLightBlueColor, shape: BoxShape.circle),
+                        color: enabled
+                            ? secondaryLightBlueColor
+                            : Colors.grey.shade300,
+                        shape: BoxShape.circle),
                     child: Icon(
                       Icons.add,
-                      color: primaryBlueColor,
+                      color: enabled ? primaryBlueColor : Colors.grey.shade600,
                     ),
                   ),
                 )

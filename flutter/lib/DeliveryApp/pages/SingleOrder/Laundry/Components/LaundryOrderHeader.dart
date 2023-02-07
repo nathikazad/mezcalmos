@@ -84,12 +84,12 @@ class LaundryOrderHeader extends StatelessWidget {
                   Icons.textsms_rounded,
                   color: Theme.of(context).primaryColorLight,
                 )),
-            Obx(
-              () => Get.find<OrderController>()
-                      .hasNewMessageNotification(order.orderId.toString())
-                  ? _newMessageRedDot(context)
-                  : Container(),
-            )
+            // Obx(
+            //   () => Get.find<OrderController>()
+            //           .hasNewMessageNotification(order.orderId.toString())
+            //       ? _newMessageRedDot(context)
+            //       : Container(),
+            // )
           ],
         ),
       ],

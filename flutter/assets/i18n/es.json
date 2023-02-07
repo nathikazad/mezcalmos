@@ -393,7 +393,7 @@
                     }
                 },
                 "SavedLocationView": {
-                    "title": "Ubicaciones guardadas",
+                    "title": "Ubicación",
                     "addNewLoc": "Añadir Nueva Ubicación"
                 }
             },
@@ -1801,6 +1801,12 @@
             }
         },
         "pages": {
+            "LaundryTabsView" : {
+                "orders" : "Pedidos",
+                "profile": "Perfil",
+                "feed" : "Alimentar",
+                "services": "Servicios"
+                             },
             "CategoryView": {
                 "components": {
                     "AddCategorySlide": {
