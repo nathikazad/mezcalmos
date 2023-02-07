@@ -27,11 +27,15 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
                 // },
                 to_customer_delivery_id: true,
                 from_customer_delivery_id: true,
-                to_location_address: true,
-                estimated_food_ready_time: true,
+                estimated_ready_time: true,
+                actual_ready_time: true,
+                notes: true,
+                tax: true,
                 customer_app_type: true,
                 delivery_cost: true,
                 stripe_info: [{}, true],
+                stripe_fees: true,
+                discount_value: true,
                 //   customer: {
                 //     user: {
                 //       firebase_id: true,
@@ -91,6 +95,11 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
       deliveryCost: parseFloat(response.laundry_order_by_pk.delivery_cost.replace("$","")),
       categories,
       stripeInfo: JSON.parse(response.laundry_order_by_pk.stripe_info),
+      estimatedReadyTime: response.laundry_order_by_pk.estimated_ready_time,
+      actualReadyTime: response.laundry_order_by_pk.actual_ready_time,
+      stripeFees: response.laundry_order_by_pk.stripe_fees,
+      discountValue: response.laundry_order_by_pk.discount_value,
+      tax: response.laundry_order_by_pk.tax
     }
     if(response.laundry_order_by_pk.from_customer_delivery_id != undefined)
         laundryOrder.fromCustomerDeliveryId = response.laundry_order_by_pk.from_customer_delivery_id

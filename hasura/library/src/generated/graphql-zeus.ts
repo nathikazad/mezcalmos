@@ -5313,6 +5313,8 @@ categories_aggregate?: [{	/** distinct select on columns */
 	id?:true,
 	/** A computed field, executes function "laundry.order_in_process" */
 	in_process?:true,
+	/** A computed field, executes function "laundry.itemscost" */
+	items_cost?:true,
 	notes?:true,
 	order_time?:true,
 	payment_type?:true,
@@ -5332,6 +5334,8 @@ stripe_info?: [{	/** JSON select path */
 	/** An object relationship */
 	to_customer_delivery?:ValueTypes["delivery_order"],
 	to_customer_delivery_id?:true,
+	/** A computed field, executes function "laundry.totalcost" */
+	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregated selection of "laundry.order" */
@@ -5400,6 +5404,7 @@ count?: [{	columns?:ValueTypes["laundry_order_select_column"][],	distinct?:boole
 	from_customer_delivery_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	in_process?:ValueTypes["Boolean_comparison_exp"],
+	items_cost?:ValueTypes["money_comparison_exp"],
 	notes?:ValueTypes["String_comparison_exp"],
 	order_time?:ValueTypes["timestamptz_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
@@ -5414,7 +5419,8 @@ count?: [{	columns?:ValueTypes["laundry_order_select_column"][],	distinct?:boole
 	stripe_info?:ValueTypes["jsonb_comparison_exp"],
 	tax?:ValueTypes["money_comparison_exp"],
 	to_customer_delivery?:ValueTypes["delivery_order_bool_exp"],
-	to_customer_delivery_id?:ValueTypes["Int_comparison_exp"]
+	to_customer_delivery_id?:ValueTypes["Int_comparison_exp"],
+	total_cost?:ValueTypes["money_comparison_exp"]
 };
 	/** columns and relationships of "laundry.order_category" */
 ["laundry_order_category"]: AliasType<{
@@ -5960,6 +5966,7 @@ end). throws an error if top level container is not an array */
 	from_customer_delivery_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	in_process?:ValueTypes["order_by"],
+	items_cost?:ValueTypes["order_by"],
 	notes?:ValueTypes["order_by"],
 	order_time?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
@@ -5974,7 +5981,8 @@ end). throws an error if top level container is not an array */
 	stripe_info?:ValueTypes["order_by"],
 	tax?:ValueTypes["order_by"],
 	to_customer_delivery?:ValueTypes["delivery_order_order_by"],
-	to_customer_delivery_id?:ValueTypes["order_by"]
+	to_customer_delivery_id?:ValueTypes["order_by"],
+	total_cost?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: laundry.order */
 ["laundry_order_pk_columns_input"]: {
@@ -22470,6 +22478,8 @@ cancelledByServiceProvider */
 			id?:number,
 			/** A computed field, executes function "laundry.order_in_process" */
 	in_process?:boolean,
+			/** A computed field, executes function "laundry.itemscost" */
+	items_cost?:PartialObjects["money"],
 			notes?:string,
 			order_time?:PartialObjects["timestamptz"],
 			payment_type?:string,
@@ -22487,7 +22497,9 @@ cancelledByServiceProvider */
 			tax?:PartialObjects["money"],
 			/** An object relationship */
 	to_customer_delivery?:PartialObjects["delivery_order"],
-			to_customer_delivery_id?:number
+			to_customer_delivery_id?:number,
+			/** A computed field, executes function "laundry.totalcost" */
+	total_cost?:PartialObjects["money"]
 	},
 	/** aggregated selection of "laundry.order" */
 ["laundry_order_aggregate"]: {
@@ -22555,6 +22567,7 @@ cancelledByServiceProvider */
 	from_customer_delivery_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	in_process?:PartialObjects["Boolean_comparison_exp"],
+	items_cost?:PartialObjects["money_comparison_exp"],
 	notes?:PartialObjects["String_comparison_exp"],
 	order_time?:PartialObjects["timestamptz_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
@@ -22569,7 +22582,8 @@ cancelledByServiceProvider */
 	stripe_info?:PartialObjects["jsonb_comparison_exp"],
 	tax?:PartialObjects["money_comparison_exp"],
 	to_customer_delivery?:PartialObjects["delivery_order_bool_exp"],
-	to_customer_delivery_id?:PartialObjects["Int_comparison_exp"]
+	to_customer_delivery_id?:PartialObjects["Int_comparison_exp"],
+	total_cost?:PartialObjects["money_comparison_exp"]
 },
 	/** columns and relationships of "laundry.order_category" */
 ["laundry_order_category"]: {
@@ -23115,6 +23129,7 @@ end). throws an error if top level container is not an array */
 	from_customer_delivery_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	in_process?:PartialObjects["order_by"],
+	items_cost?:PartialObjects["order_by"],
 	notes?:PartialObjects["order_by"],
 	order_time?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
@@ -23129,7 +23144,8 @@ end). throws an error if top level container is not an array */
 	stripe_info?:PartialObjects["order_by"],
 	tax?:PartialObjects["order_by"],
 	to_customer_delivery?:PartialObjects["delivery_order_order_by"],
-	to_customer_delivery_id?:PartialObjects["order_by"]
+	to_customer_delivery_id?:PartialObjects["order_by"],
+	total_cost?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: laundry.order */
 ["laundry_order_pk_columns_input"]: {
@@ -39299,6 +39315,8 @@ export type laundry_order = {
 	id:number,
 	/** A computed field, executes function "laundry.order_in_process" */
 	in_process?:boolean,
+	/** A computed field, executes function "laundry.itemscost" */
+	items_cost?:money,
 	notes?:string,
 	order_time:timestamptz,
 	payment_type:string,
@@ -39316,7 +39334,9 @@ export type laundry_order = {
 	tax:money,
 	/** An object relationship */
 	to_customer_delivery?:delivery_order,
-	to_customer_delivery_id?:number
+	to_customer_delivery_id?:number,
+	/** A computed field, executes function "laundry.totalcost" */
+	total_cost?:money
 }
 
 /** aggregated selection of "laundry.order" */
@@ -39389,6 +39409,7 @@ export type laundry_order_bool_exp = {
 	from_customer_delivery_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	in_process?:Boolean_comparison_exp,
+	items_cost?:money_comparison_exp,
 	notes?:String_comparison_exp,
 	order_time?:timestamptz_comparison_exp,
 	payment_type?:String_comparison_exp,
@@ -39403,7 +39424,8 @@ export type laundry_order_bool_exp = {
 	stripe_info?:jsonb_comparison_exp,
 	tax?:money_comparison_exp,
 	to_customer_delivery?:delivery_order_bool_exp,
-	to_customer_delivery_id?:Int_comparison_exp
+	to_customer_delivery_id?:Int_comparison_exp,
+	total_cost?:money_comparison_exp
 }
 
 /** columns and relationships of "laundry.order_category" */
@@ -40051,6 +40073,7 @@ export type laundry_order_order_by = {
 	from_customer_delivery_id?:order_by,
 	id?:order_by,
 	in_process?:order_by,
+	items_cost?:order_by,
 	notes?:order_by,
 	order_time?:order_by,
 	payment_type?:order_by,
@@ -40065,7 +40088,8 @@ export type laundry_order_order_by = {
 	stripe_info?:order_by,
 	tax?:order_by,
 	to_customer_delivery?:delivery_order_order_by,
-	to_customer_delivery_id?:order_by
+	to_customer_delivery_id?:order_by,
+	total_cost?:order_by
 }
 
 /** primary key columns input for table: laundry.order */
@@ -40358,8 +40382,8 @@ export type laundry_store = {
 	/** An object relationship */
 	delivery_partner?:service_provider_delivery_partner,
 	/** An object relationship */
-	description:translation,
-	description_id:number,
+	description?:translation,
+	description_id?:number,
 	id:number,
 	image:string,
 	language_id:string,
@@ -64472,6 +64496,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notes:{
 			type:"String_comparison_exp",
 			array:false,
@@ -64558,6 +64588,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		to_customer_delivery_id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -65970,6 +66006,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		items_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		notes:{
 			type:"order_by",
 			array:false,
@@ -66055,6 +66097,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		to_customer_delivery_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -101166,6 +101214,7 @@ export const ReturnTypes: Record<string,any> = {
 		from_customer_delivery_id:"Int",
 		id:"Int",
 		in_process:"Boolean",
+		items_cost:"money",
 		notes:"String",
 		order_time:"timestamptz",
 		payment_type:"String",
@@ -101180,7 +101229,8 @@ export const ReturnTypes: Record<string,any> = {
 		stripe_info:"jsonb",
 		tax:"money",
 		to_customer_delivery:"delivery_order",
-		to_customer_delivery_id:"Int"
+		to_customer_delivery_id:"Int",
+		total_cost:"money"
 	},
 	laundry_order_aggregate:{
 		aggregate:"laundry_order_aggregate_fields",

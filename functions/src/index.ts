@@ -13,7 +13,7 @@ import { checkout } from "./restaurant/checkoutCart";
 // import { acceptRide } from "./taxi/accept";
 // import { cancelTaxiFromCustomer } from "./taxi/cancelTaxiFromCustomer";
 // import * as adminStatusChanges from './taxi/adminStatusChanges'
-// import * as laundryStatusChange from './laundry/adminStatusChanges'
+import * as laundryStatusChange from './laundry/adminStatusChanges'
 // import { createLaundry } from "./laundry/createNewLaundry";
 // import { requestLaundry } from "./laundry/laundryRequest";
 // import { cancelFromCustomer } from "./laundry/cancelLaundryFromCustomer";
@@ -37,6 +37,7 @@ import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 import { deliveryDriverAtPickup, startDelivery, deliveryDriverAtDropoff, finishDelivery } from "./delivery/restaurantStatusChange";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
+import { createLaundry } from "./laundry/createNewLaundry";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -99,11 +100,11 @@ export const restaurant2 = {
 // }
 
 export const laundry = {
-//   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
+  createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
-//   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
+  readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
 //   cancelFromCustomer: authenticatedCall((userId, data) => cancelFromCustomer(userId, data)),
-//   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
+  cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
 //   setWeight: authenticatedCall((userId, data) => laundryStatusChange.setWeight(userId, data)),
 //   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
 }
