@@ -20,12 +20,13 @@ export async function createLaundryOrder(
             category_id: c.categoryId,
         }
     })
-    let laundryOperatorsDetails = laundryStore.operators!.map((v) => {
+    let laundryOperatorsDetails = laundryStore.operators?.map((v) => {
         return {
             participant_id: v.userId,
-            app_type_id: AppType.RestaurantApp
+            app_type_id: AppType.LaundryApp
         };
-    });
+    }) ?? [];
+
     let mezAdminDetails = mezAdmins!.map((m) => {
         return {
           participant_id: m.id,
@@ -176,10 +177,7 @@ export async function createLaundryOrder(
         }]
     })
 
-    if(response.insert_laundry_order_one == null 
-        || response.insert_laundry_order_one.from_customer_delivery == null
-        || response.insert_laundry_order_one.to_customer_delivery == null
-    ) {
+    if(response.insert_laundry_order_one == null) {
         throw new HttpsError(
             "internal",
             "order creation error"
@@ -187,10 +185,19 @@ export async function createLaundryOrder(
     }
     laundryOrder.orderId = response.insert_laundry_order_one.id;
     laundryOrder.chatId = response.insert_laundry_order_one.chat_id;
-    laundryOrder.fromCustomerDeliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
-    laundryOrder.toCustomerDeliveryId = response.insert_laundry_order_one.to_customer_delivery.id;
+    
 
     if(laundryOrder.deliveryType == DeliveryType.Delivery) {
+        if(response.insert_laundry_order_one.from_customer_delivery == null
+            || response.insert_laundry_order_one.to_customer_delivery == null
+        ) {
+            throw new HttpsError(
+                "internal",
+                "order creation error"
+            );
+        }
+        laundryOrder.fromCustomerDeliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
+        laundryOrder.toCustomerDeliveryId = response.insert_laundry_order_one.to_customer_delivery.id;
         return [{
             deliveryId: response.insert_laundry_order_one.from_customer_delivery.id,
             orderType: OrderType.Laundry,

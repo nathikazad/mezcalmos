@@ -25,7 +25,6 @@ export interface LaundryRequestDetails {
     deliveryType: DeliveryType,
     customerLocation: Location,
     deliveryCost: number,
-    status: LaundryOrderStatus,
     categories: Array<number>,
     customerAppType: CustomerAppType,
     notes?: string,
