@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class OrderInfosCard extends StatelessWidget {
@@ -62,6 +63,7 @@ class OrderInfosCard extends StatelessWidget {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                     fontSize: 17,
+                                    color: blackColor,
                                   ),
                                 ),
                               ),
@@ -69,24 +71,31 @@ class OrderInfosCard extends StatelessWidget {
                           ),
                           SizedBox(height: 5),
                           orderCardSubWidgets.primaryBodyContent,
-                          orderCardSubWidgets.secondaryBodyContent,
+                        orderCardSubWidgets.secondaryBodyContent,
                           // second line - from
                           SizedBox(height: 5),
                         ],
                       ),
                     ),
-
-                    Flexible(
-                      flex: 4,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          orderCardSubWidgets.cardTime,
-                          orderCardSubWidgets.rightImage,
-                        ],
-                      ),
-                    )
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        orderCardSubWidgets.cardTime,
+                        orderCardSubWidgets.rightImage,
+                      ],
+                    ),
+                    // Flexible(
+                    //   flex: 3,
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     crossAxisAlignment: CrossAxisAlignment.end,
+                    //     children: [
+                    //       orderCardSubWidgets.cardTime,
+                    //       orderCardSubWidgets.rightImage,
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
                 Divider(),

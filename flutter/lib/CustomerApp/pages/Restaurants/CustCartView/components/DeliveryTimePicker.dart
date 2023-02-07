@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/controllers/CustCartViewController.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -105,12 +104,18 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                       (widget.viewCartController.cart.deliveryTime == null)
                           ? Flexible(
                               fit: FlexFit.tight,
-                              child: Text((widget
-                                          .viewCartController.cart.restaurant
-                                          ?.isOpen() ==
-                                      false)
-                                  ? '${_i18n()["pickTime"]}'
-                                  : '${_i18n()["now"]}'))
+                              child: Text(
+                                (widget.viewCartController.cart.restaurant
+                                            ?.isOpen() ==
+                                        false)
+                                    ? '${_i18n()["pickTime"]}'
+                                    : '${_i18n()["now"]}',
+                                style: Get.textTheme.bodyText1?.copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            )
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(
@@ -127,41 +132,38 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                           },
                           customBorder: CircleBorder(),
                           child: Ink(
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                                color: secondaryLightBlueColor,
-                                shape: BoxShape.circle),
+                            // padding: const EdgeInsets.all(3),
+                            // decoration: BoxDecoration(
+                            //     color: secondaryLightBlueColor,
+                            //     shape: BoxShape.circle),
                             child: Icon(
-                              Icons.edit_outlined,
-                              size: 20,
-                              color: primaryBlueColor,
+                              Icons.expand_more,
+                              size: 24,
+                              color: Colors.grey.shade800,
                             ),
                           ),
                         ),
-                      if (widget.viewCartController.cart.deliveryTime != null &&
-                          widget.viewCartController.shoudSchedule == false)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: InkWell(
-                            customBorder: CircleBorder(),
-                            onTap: () {
-                              widget.viewCartController.cart.deliveryTime =
-                                  null;
-                              widget.viewCartController.cartController.cart
-                                  .refresh();
-                            },
-                            child: Ink(
-                              padding: const EdgeInsets.all(3),
-                              decoration: BoxDecoration(
-                                  color: offRedColor, shape: BoxShape.circle),
-                              child: Icon(
-                                Icons.close,
-                                size: 20,
-                                color: Colors.red,
-                              ),
-                            ),
-                          ),
-                        )
+                      // if (widget.viewCartController.cart.deliveryTime != null &&
+                      //     widget.viewCartController.shoudSchedule == false)
+                      //   Padding(
+                      //     padding: const EdgeInsets.only(left: 8),
+                      //     child: InkWell(
+                      //      // customBorder: CircleBorder(),
+                      //       onTap: () {
+                      //         widget.viewCartController.cart.deliveryTime =
+                      //             null;
+                      //         widget.viewCartController.cartController.cart
+                      //             .refresh();
+                      //       },
+                      //       child: Ink(
+                      //         child: Icon(
+                      //           Icons.expand_more,
+                      //           size: 24,
+                      //           color: Colors.grey.shade800,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   )
                     ],
                   ),
                 ),
@@ -181,6 +183,12 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
   Future<void> _pickDeliveryTime(BuildContext context) async {
     if (widget.viewCartController.cart.restaurant?.schedule != null) {
       await showModalBottomSheet<DateTime>(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0.sp),
+              topRight: Radius.circular(25.0.sp),
+            ), //for giving border to datePickerSheet
+          ),
           context: context,
           isDismissible: true,
           builder: (BuildContext ctx) {
@@ -207,7 +215,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
 
   Container _timeError() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.only(top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

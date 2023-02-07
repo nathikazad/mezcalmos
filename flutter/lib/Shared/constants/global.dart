@@ -179,8 +179,10 @@ extension StringToParseOrderType on String {
 
 const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
+const Color backgroundShadeColor = Color(0xFFEDEDED); 
 const Color secondaryLightBlueColor = Color(0xFFE1E4FF);
-const Color offRedColor = Color(0xFFF9D8D6);
+const Color offRedColor = Color(0xffF9D8D6);
+const Color blackColor = Colors.black;
 const LinearGradient bluePurpleGradient = LinearGradient(
   colors: [
     primaryBlueColor,

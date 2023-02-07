@@ -17,6 +17,9 @@ class MezServiceOpenHours extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+       SizedBox(
+          height: 8,
+        ),
         Container(
           child: Text(
             "${_i18n()["openHours"]}",

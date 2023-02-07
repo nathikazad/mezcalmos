@@ -41,10 +41,16 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 9,
+                    ),
                     if (_showFoodReadyTime()) _foodReadyTimeWidget(),
                     if (_showFoodReadyTime() && _getDeliveryTime() != null)
                       Divider(),
-                    if (_getDeliveryTime() != null) _deliveryTimeWidget()
+                    if (_getDeliveryTime() != null) _deliveryTimeWidget(),
+                    SizedBox(
+                      height: 9,
+                    ),
                   ],
                 )),
           ),

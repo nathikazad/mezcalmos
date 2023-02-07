@@ -69,6 +69,8 @@ dependencies:
   location: ^4.2.0
   geocoding: ^2.0.1
 
+  
+
   # GraphQL APIs
   graphql: ^5.1.1
 
@@ -107,8 +109,9 @@ dependencies:
   flutter_callkit_incoming: ^1.0.3+1
   html: ^0.15.0
 
-# dependency_overrides:
-#   firebase_core_platform_interface: 4.5.2
+dependency_overrides:
+  web_socket_channel: 2.2.0
+  #firebase_core_platform_interface: 4.5.2
 
 dev_dependencies:
   build_runner: ^2.3.2

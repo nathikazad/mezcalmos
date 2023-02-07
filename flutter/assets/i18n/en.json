@@ -271,7 +271,7 @@
                             "restaurant": "Restaurant"
                         },
                         "notesWidget": {
-                            "notes": "Order note :"
+                            "notes": "Order note"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancel Order",
@@ -371,6 +371,7 @@
                         "location": "Location"
                     },
                     "SavedLocationComponent": {
+                        "defaultAddressText":"Default",
                         "editLocation": "Edit Location",
                         "deleteLocation": "Delete Location"
                     },
@@ -381,7 +382,8 @@
                 },
                 "SavedLocationView": {
                     "title": "Saved Locations",
-                    "addNewLoc": "Add New Location"
+                    "addNewLoc": "Add New Location",
+                    "location":"Location"
                 }
             },
             "Taxi": {

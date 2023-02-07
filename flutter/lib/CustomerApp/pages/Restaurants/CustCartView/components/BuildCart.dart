@@ -23,6 +23,7 @@ class CartItemsHeader extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Row(
             children: <Widget>[
               Expanded(

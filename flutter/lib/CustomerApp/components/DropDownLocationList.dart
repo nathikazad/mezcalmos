@@ -266,7 +266,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               child: Text(
                 e.name,
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.bodyText2,
+                style: Get.textTheme.bodyText1, //for dropdownItems
               ),
             ),
           ),
@@ -299,8 +299,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                     child: Text(
                       item.name,
                       overflow: TextOverflow.ellipsis,
-                      style: Get.textTheme.bodyText2?.copyWith(
-                          fontSize: 12.sp, fontWeight: FontWeight.w600),
+                      style: Get.textTheme.bodyText1?.copyWith(
+                          fontSize: 12.sp, fontWeight: FontWeight.w600), //for dropDownShownValue
                     ),
                   ),
                 ],
@@ -313,7 +313,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
 
   Container _distanceError() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.only(top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

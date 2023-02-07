@@ -27,6 +27,7 @@ class OrderPaymentMethod extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
+            style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
             height: 10,

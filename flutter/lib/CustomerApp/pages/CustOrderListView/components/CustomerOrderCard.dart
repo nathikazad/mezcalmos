@@ -35,6 +35,7 @@ class CustomerOrderCard extends StatelessWidget {
           cardTime: Text(
             order.orderTime.getOrderTime().inCaps,
             maxLines: 1,
+            style: TextStyle(color: blackColor),
           ),
           rightImage: _rightImage()),
     );
@@ -68,15 +69,26 @@ class CustomerOrderCard extends StatelessWidget {
         return Container(
           child: Row(
             children: [
-              Icon(Icons.flatware),
+              Icon(
+                Icons.flatware,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
-              Text(order.cost.toPriceString()),
+              Text(
+                order.cost.toPriceString(),
+                style: TextStyle(
+                  color: blackColor,
+                ),
+              ),
               SizedBox(
                 width: 15,
               ),
-              Icon(Icons.delivery_dining),
+              Icon(
+                Icons.delivery_dining,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
@@ -87,10 +99,15 @@ class CustomerOrderCard extends StatelessWidget {
                       child: ShippingCostComponent(
                         shippingCost: (order as RestaurantOrder).shippingCost,
                         alignment: MainAxisAlignment.start,
+                        textStyle: TextStyle(color: blackColor),
                       ),
                     )
                   : Text(
-                      (order as RestaurantOrder).shippingCost.toPriceString())
+                      (order as RestaurantOrder).shippingCost.toPriceString(),
+                      style: TextStyle(
+                        color: blackColor,
+                      ),
+                    )
             ],
           ),
         );
@@ -99,19 +116,30 @@ class CustomerOrderCard extends StatelessWidget {
         return Container(
           child: Row(
             children: [
-              Icon(Icons.local_laundry_service),
+              Icon(
+                Icons.local_laundry_service,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
-              Text((order as LaundryOrder)
-                      .costsByType
-                      ?.weighedCost
-                      .toPriceString() ??
-                  "_"),
+              Text(
+                (order as LaundryOrder)
+                        .costsByType
+                        ?.weighedCost
+                        .toPriceString() ??
+                    "_",
+                style: TextStyle(
+                  color: blackColor,
+                ),
+              ),
               SizedBox(
                 width: 15,
               ),
-              Icon(Icons.delivery_dining),
+              Icon(
+                Icons.delivery_dining,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
@@ -121,6 +149,7 @@ class CustomerOrderCard extends StatelessWidget {
                       child: ShippingCostComponent(
                         shippingCost: (order as LaundryOrder).shippingCost,
                         alignment: MainAxisAlignment.start,
+                         textStyle: TextStyle(color: blackColor),
                       ),
                     )
                   : Text((order as LaundryOrder).shippingCost.toPriceString())
@@ -131,27 +160,39 @@ class CustomerOrderCard extends StatelessWidget {
         return Container(
           child: Row(
             children: [
-              Icon(Icons.route),
+              Icon(
+                Icons.route,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
-              Text((order as TaxiOrder)
-                      .routeInformation
-                      ?.distance
-                      .distanceStringInKm ??
-                  ""),
+              Text(
+                (order as TaxiOrder)
+                        .routeInformation
+                        ?.distance
+                        .distanceStringInKm ??
+                    "",
+                style: TextStyle(color: blackColor),
+              ),
               SizedBox(
                 width: 15,
               ),
-              Icon(Icons.watch_later),
+              Icon(
+                Icons.watch_later,
+                color: blackColor,
+              ),
               SizedBox(
                 width: 5,
               ),
-              Text((order as TaxiOrder)
-                      .routeInformation
-                      ?.duration
-                      .shortTextVersion ??
-                  "")
+              Text(
+                (order as TaxiOrder)
+                        .routeInformation
+                        ?.duration
+                        .shortTextVersion ??
+                    "",
+                style: TextStyle(color: blackColor),
+              )
             ],
           ),
         );

@@ -39,8 +39,9 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
         return false;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
-        bottomSheet: Obx(
+        floatingActionButton: Obx(
           () => MezButton(
             enabled: viewController.isInfoSet,
             borderRadius: 0,
@@ -51,54 +52,74 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
             },
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // bottomSheet: Obx(
+        //   () => MezButton(
+        //     enabled: viewController.isInfoSet,
+        //     borderRadius: 0,
+        //     height: 80,
+        //     label: "${_i18n()["save"]}",
+        //     onClick: () async {
+        //       await viewController.setInfo();
+        //     },
+        //   ),
+        // ),
+
         body: Obx(
           () => Container(
             padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${_i18n()["title"]}",
-                  style: Get.textTheme.headline3,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${_i18n()["subtitle"]}",
-                ),
-                SizedBox(
-                  height: 35,
-                ),
-                UserProfileImage(
-                  viewController: viewController,
-                ),
-                SizedBox(
-                  height: 35,
-                ),
-                Text(
-                  "${_i18n()["nameTitle"]}",
-                  style: Get.textTheme.bodyText1,
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: TextFormField(
-                    onChanged: (String v) {
-                      viewController.name.value = v;
-                    },
-                    inputFormatters: <TextInputFormatter>[
-                      UpperCaseTextFormatter()
-                    ],
-                    style: Get.textTheme.bodyText2?.copyWith(
-                        fontWeight: FontWeight.w500, color: Colors.black),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "${_i18n()["hint"]}",
+            child: SingleChildScrollView(
+              reverse: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${_i18n()["title"]}",
+                    style: Get.textTheme.headline3,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "${_i18n()["subtitle"]}",
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  UserProfileImage(
+                    viewController: viewController,
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Text(
+                    "${_i18n()["nameTitle"]}",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: TextFormField(
+                      onChanged: (String v) {
+                        viewController.name.value = v;
+                      },
+                      inputFormatters: <TextInputFormatter>[
+                        UpperCaseTextFormatter()
+                      ],
+                      style: Get.textTheme.bodyText2?.copyWith(
+                          fontWeight: FontWeight.w500, color: Colors.black),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: "${_i18n()["hint"]}",
+                      ),
                     ),
                   ),
-                )
-              ],
+                  Padding(
+                      padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ))
+                ],
+              ),
             ),
           ),
         ),

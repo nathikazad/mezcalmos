@@ -143,41 +143,25 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 20)),
+                                margin: const EdgeInsets.only(top: 10)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
                               margin: EdgeInsets.zero,
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 9),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
                               paymentType:
                                   viewController.order.value!.paymentType,
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 20,bottom: 20),
                             ),
                             if (viewController.order.value!.review != null)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Review : ",
-                                    style: Get.textTheme.bodyText1,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  ReviewCard(
-                                      review:
-                                          viewController.order.value!.review!),
-                                ],
-                              ),
+                              ReviewCard(
+                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(

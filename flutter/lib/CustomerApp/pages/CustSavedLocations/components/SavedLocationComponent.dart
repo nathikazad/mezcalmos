@@ -8,6 +8,8 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
 
@@ -27,7 +29,8 @@ class SavedLocationComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(5),
+      elevation: 1.0,
+      margin: const EdgeInsets.all(8),
       child: Container(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -41,39 +44,54 @@ class SavedLocationComponent extends StatelessWidget {
                   size: 18,
                 ),
                 SizedBox(
-                  width: 3,
+                  width: 4,
                 ),
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text(
                       savelocation.name,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyText1?.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
                     )),
                 InkWell(
                   onTap: () {
                     Get.find<CustomerAuthController>()
                         .setAsDefaultLocation(savelocation);
                   },
-                  borderRadius: BorderRadius.circular(16),
+                  //borderRadius: BorderRadius.circular(16),
                   child: Ink(
+                    height: 30.sp,
+                    //width: 59.sp,
+                    width: Get.find<LanguageController>().userLanguageKey ==
+                            LanguageType.EN
+                        ? 70.sp
+                        : 90.sp,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                     decoration: BoxDecoration(
                         color: (savelocation.defaultLocation)
                             ? primaryBlueColor
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Text(
-                      "Default",
-                      style: Get.textTheme.bodyText2?.copyWith(
+                            : backgroundShadeColor,
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    child: Center(
+                      child: Text(
+                        _i18n()["defaultAddressText"],
+                        style: TextStyle(
+                          fontFamily: "Montserrat",
                           color: (savelocation.defaultLocation)
                               ? Colors.white
-                              : Colors.black),
+                              : Color(0xFF787878),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11.sp,
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 11,
                 ),
                 InkWell(
                   onTap: () {
@@ -88,21 +106,23 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
+                      height: 30.sp,
+                      width: 30.sp,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: backgroundShadeColor,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Icon(
                           Icons.edit_outlined,
-                          color: Colors.black,
-                          size: 17.sp,
+                          color: Color(0xFF787878),
+                          size: 17.37.sp,
                         ),
                       )),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 11,
                 ),
                 InkWell(
                   onTap: () {
@@ -110,6 +130,8 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
+                      height: 30.sp,
+                      width: 30.sp,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: offRedColor,
@@ -118,17 +140,31 @@ class SavedLocationComponent extends StatelessWidget {
                       child: Center(
                         child: Icon(
                           Icons.delete_outline,
-                          color: Colors.red,
+                          color: Color(0xFFE21132),
                           size: 17.sp,
                         ),
                       )),
                 ),
               ],
             ),
+            SizedBox(
+              height: 8,
+            ),
             Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(top: 5),
-                child: Text(savelocation.location.address))
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(top: 5),
+              child: Text(
+                savelocation.location.address,
+                style: Get.textTheme.subtitle1?.copyWith(
+                  color: Color(0xFF494949),
+                  fontWeight: FontWeight.w600,
+                  // fontSize: 12.sp,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
           ],
         ),
       ),

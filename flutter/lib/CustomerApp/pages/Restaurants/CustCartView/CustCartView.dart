@@ -1,5 +1,7 @@
 // ignore_for_file: unawaited_futures
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -42,7 +44,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: CustomerAppBar(
         autoBack: true,
         title: "${_i18n()["myCart"]}",
@@ -50,6 +52,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       body: Obx(() {
         if (viewController.cart.cartItems.length > 0) {
           return SingleChildScrollView(
+            reverse: true,
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,39 +63,39 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   ),
                 Container(
                   margin: const EdgeInsets.only(
-                    bottom: 25,
+                    bottom: 12,
                   ),
                   child: DeliveryTimePicker(viewCartController: viewController),
                 ),
                 _deliveryLocation(),
                 SizedBox(
-                  height: 25,
+                  height: 12,
                 ),
                 Container(
                   child: PaymentMethodPicker(
                     viewCartController: viewController,
                   ),
                 ),
-                SizedBox(
-                  height: 25,
-                ),
+                // SizedBox(
+                //   height: 9,
+                // ),
                 Container(
-                  alignment: Alignment.centerLeft,
+                  //alignment: Alignment.centerLeft,
                   child: Text("${_i18n()['notesTitle']}",
                       style: Get.textTheme.bodyText1),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 12,
                 ),
                 _notesComponent(context),
                 SizedBox(
-                  height: 25,
+                  height: 12,
                 ),
                 CardSummaryCard(
                   controller: viewController,
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 75.sp,
                 ),
               ],
             ),
@@ -117,7 +120,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
             textAlign: TextAlign.left,
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 9),
         DropDownLocationList(
           onValueChangeCallback: ({MezLocation? location}) {
             if (location != null && location.isValidLocation()) {
@@ -139,19 +142,23 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget _notesComponent(BuildContext context) {
+    log(MediaQuery.of(context).viewInsets.bottom.toString());
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom * 0.1.sp,
+      ),
       child: TextFormField(
-        scrollPadding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20.h),
+        // scrollPadding: EdgeInsets.only(
+        //   bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
+        // ),
         style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
         controller: viewController.noteText,
         maxLines: 7,
-        minLines: 4,
+        minLines: 2,
         decoration: InputDecoration(
           hintText: "${_i18n()["notes"]}",
           fillColor: Colors.white,
+          hintStyle: Get.textTheme.bodyText2,
         ),
       ),
     );

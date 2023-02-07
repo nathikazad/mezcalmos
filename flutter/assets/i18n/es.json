@@ -282,7 +282,7 @@
                             "restaurant": "Restaurante"
                         },
                         "notesWidget": {
-                            "notes": "Nota de pedido:"
+                            "notes": "Nota de pedido"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancelar el pedido",
@@ -384,6 +384,7 @@
                         "location": "Ubicacion"
                     },
                     "SavedLocationComponent": {
+                        "defaultAddressText":"Por defecto",
                         "editLocation": "Editar ubicación",
                         "deleteLocation": "Eliminar ubicación"
                     },
@@ -393,7 +394,7 @@
                     }
                 },
                 "SavedLocationView": {
-                    "title": "Ubicación",
+                    "title": "Ubicaciones guardadas",
                     "addNewLoc": "Añadir Nueva Ubicación"
                 }
             },

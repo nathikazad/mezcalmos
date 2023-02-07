@@ -97,8 +97,10 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: _getIcon(
-                                        paymentType: value.entries.first.key,
-                                        card: value.entries.first.value),
+                                      paymentType: value.entries.first.key,
+                                      card: value.entries.first.value,
+                                      iconColor: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -111,21 +113,27 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                         : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
                                     style: Get.textTheme.bodyText2?.copyWith(
                                       fontWeight: FontWeight.w700,
+                                      color: Colors.black,
                                     )),
                                 if (value.entries.first.value != null)
                                   Container(
                                     margin: EdgeInsets.only(left: 5),
                                     child: Text(
-                                        "•" * 12 +
-                                            value.entries.first.value!.last4
-                                                .toString(),
-                                        style: Get.textTheme.bodyText2),
+                                      "*" * 12 +
+                                          value.entries.first.value!.last4
+                                              .toString(),
+                                      //style: Get.textTheme.bodyText2,
+                                      style: Get.textTheme.bodyText2,
+                                    ),
                                   ),
                               ],
                             ));
                       }).toList(),
                     );
                   },
+                ),
+                SizedBox(
+                  height: 12,
                 ),
               ],
             ),
@@ -136,29 +144,55 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
     );
   }
 
-  Widget _getIcon({required PickerChoice paymentType, CreditCard? card}) {
+  Widget _getIcon({
+    required PickerChoice paymentType,
+    CreditCard? card,
+    required Color iconColor,
+  }) {
     switch (paymentType) {
       case PickerChoice.SavedCard:
         if (card != null) {
-          return Icon(card.brand.toIcon());
+          return Icon(
+            card.brand.toIcon(),
+            color: iconColor,
+          );
         } else {
-          return Icon(Icons.credit_card);
+          return Icon(
+            Icons.credit_card,
+            color: iconColor,
+          );
         }
       case PickerChoice.SavedCard:
-        return Icon(Icons.credit_card);
+        return Icon(
+          Icons.credit_card,
+          color: iconColor,
+        );
       case PickerChoice.NewCard:
-        return Icon(Icons.add_card);
+        return Icon(
+          Icons.add_card,
+          color: iconColor,
+        );
       case PickerChoice.Cash:
-        return Icon(Icons.payments);
+        return Icon(
+          Icons.payments,
+          color: iconColor,
+        );
       case PickerChoice.BankTransfer:
-        return Icon(Icons.account_balance);
+        return Icon(
+          Icons.account_balance,
+          color: iconColor,
+        );
       case PickerChoice.ApplePay:
-        return Icon(Icons.apple);
+        return Icon(
+          Icons.apple,
+          color: iconColor,
+        );
       case PickerChoice.GooglePay:
         return Image.asset(
           aGpay,
           width: 14.w,
           height: 4.h,
+          color: iconColor,
         );
     }
   }

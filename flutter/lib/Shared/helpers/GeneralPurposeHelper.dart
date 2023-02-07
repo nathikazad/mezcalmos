@@ -465,7 +465,7 @@ Future<void> showStatusInfoDialog(
                               color: Color.fromRGBO(120, 120, 120, 1),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
-                              fontSize: 16.99,
+                              fontSize: 16.34,
                             ),
                           ),
                         ),
@@ -557,13 +557,15 @@ Future<int?> showReviewDialog(
                 style: TextStyle(
                   fontFamily: 'Nunito',
                   fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
                 ),
                 decoration: InputDecoration(
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
+                textStyle: TextStyle(
+                  fontSize: 16.99,
+                ),
                 label: "${_i18n()["review"]["send"]}",
                 height: 45,
                 textColor: primaryBlueColor,

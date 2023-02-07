@@ -35,7 +35,7 @@ class _ReviewCardState extends State<ReviewCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  radius: 18,
+                  radius: 28,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.review.customer!.image),
                 ),
@@ -49,11 +49,15 @@ class _ReviewCardState extends State<ReviewCard> {
                       children: [
                         Text(
                           widget.review.customer?.name ?? "",
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: 8,
                         ),
                         Text(
                           widget.review.reviewTime.timeAgo().toLowerCase(),
-                          style: Get.textTheme.subtitle1,
+                          style: Get.textTheme.subtitle2,
                         ),
                       ],
                     )),
@@ -64,7 +68,7 @@ class _ReviewCardState extends State<ReviewCard> {
                     color: primaryBlueColor,
                   ),
                   itemCount: 5,
-                  itemSize: 18.0,
+                  itemSize: 22.0,
                   direction: Axis.horizontal,
                 ),
               ],
@@ -74,7 +78,7 @@ class _ReviewCardState extends State<ReviewCard> {
             ),
             Text(
               widget.review.comment?.inCaps ?? "",
-              style: Get.textTheme.bodyText2,
+              style: Get.textTheme.subtitle2,
             ),
           ],
         ),

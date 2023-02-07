@@ -52,10 +52,10 @@ class RestaurantInfoTab extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
+              SizedBox(
+                height: 8,
+              ),
               Container(
-                margin: EdgeInsets.only(
-                  top: 10,
-                ),
                 child: Text(restaurant.info.description?[userLanguage] ?? ""),
               ),
             ],
@@ -63,7 +63,7 @@ class RestaurantInfoTab extends StatelessWidget {
         if (restaurant.schedule != null)
           MezServiceOpenHours(schedule: restaurant.schedule!),
         SizedBox(
-          height: 20,
+          height: 8,
         ),
         if (restaurant.info.location != null)
           ServiceLocationCard(

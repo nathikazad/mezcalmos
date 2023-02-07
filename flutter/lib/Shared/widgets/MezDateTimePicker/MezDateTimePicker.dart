@@ -68,7 +68,7 @@ class _MezDateTimePickerState extends State<MezDateTimePicker> {
                 style: Get.textTheme.headline3,
               ),
             ),
-            Divider(),
+           // Divider(),
             const SizedBox(
               height: 15,
             ),

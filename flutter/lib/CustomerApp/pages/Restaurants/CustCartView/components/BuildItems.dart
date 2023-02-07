@@ -33,7 +33,7 @@ class CartItemsBuilder extends StatelessWidget {
           CartItemsHeader(
             viewController: viewController,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 9),
           Column(
             children: viewController.cart.cartItems.fold<List<Widget>>(
                 <Widget>[], (List<Widget> children, CartItem cartItem) {
@@ -76,7 +76,7 @@ class CartItemsBuilder extends StatelessWidget {
               return children;
             }),
           ),
-          SizedBox(height: 25),
+          SizedBox(height: 22),
         ],
       ),
     );
