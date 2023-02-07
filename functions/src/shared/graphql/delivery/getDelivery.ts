@@ -2,7 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryCompanyType, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { ParticipantType } from "../../models/Generic/Chat";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -85,13 +86,13 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryCost: parseFloat(response.delivery_order_by_pk.delivery_cost.replace("$", "")),
     packageCost: parseFloat(response.delivery_order_by_pk.package_cost.replace("$", "")),
     orderTime: response.delivery_order_by_pk.order_time,
-    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as DeliveryDriverType,
+    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as ParticipantType,
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
   }
   if (!(response.delivery_order_by_pk.delivery_driver_id)) {
     return delivery;
   }
-  if (response.delivery_order_by_pk.delivery_driver_type == DeliveryDriverType.DeliveryDriver
+  if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.DeliveryDriver
     && response.delivery_order_by_pk.delivery_driver
   ) {
     delivery.deliveryDriver = {
@@ -110,10 +111,10 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         token: response.delivery_order_by_pk.delivery_driver.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.delivery_driver.notification_info.turn_off_notifications,
       } : undefined,
-      deliveryDriverType: DeliveryDriverType.DeliveryDriver
+      deliveryDriverType: ParticipantType.DeliveryDriver
 
     }
-  } else if (response.delivery_order_by_pk.delivery_driver_type == DeliveryDriverType.RestaurantOperator
+  } else if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.RestaurantOperator
     && response.delivery_order_by_pk.restaurant_operator
   ) {
     delivery.deliveryDriver = {
@@ -128,7 +129,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         token: response.delivery_order_by_pk.restaurant_operator.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.restaurant_operator.notification_info.turn_off_notifications
       } : undefined,
-      deliveryDriverType: DeliveryDriverType.RestaurantOperator
+      deliveryDriverType: ParticipantType.RestaurantOperator
     }
   }
   return delivery;
@@ -190,7 +191,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       orderType: d.order_type as OrderType,
       deliveryDriver: (d.delivery_driver) ? <DeliveryDriver>{
         userId: d.delivery_driver.user.id,
-        deliveryDriverType: d.delivery_driver.delivery_driver_type as DeliveryDriverType,
+        deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,
         user: {
           id: d.delivery_driver.user.id,
           firebaseId: d.delivery_driver.user.firebase_id,

@@ -5,17 +5,16 @@ import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Deli
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
-import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { ServiceProviderType } from "../../../models/Services/Service";
+import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
 
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
   : Promise<DeliveryOrder> {
 
   let chain = getHasura();
 
-  let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
+  let restaurantOperatorsDetails = restaurant.operators!.map((v) => {
     return {
       participant_id: v.userId,
       app_type_id: AppType.RestaurantApp
@@ -77,7 +76,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             chat_with_service_provider: {
               data: {
                 chat_participants: {
-                  data: restaurantOperatorsDetails
+                  data: [...restaurantOperatorsDetails, ...mezAdminDetails]
                 }
               }
             },

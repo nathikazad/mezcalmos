@@ -1,8 +1,8 @@
 import { Order } from '../../Generic/Order';
 import { OrderNotification } from '../../Notification';
 import { Language, Location } from '../../Generic/Generic';
-import { Restaurant } from './Restaurant';
 import { DeliveryOrderStatus } from '../../Generic/Delivery';
+import { ServiceProvider } from '../Service';
 
 export interface RestaurantOrder extends Order {
   restaurantId: number;
@@ -12,7 +12,7 @@ export interface RestaurantOrder extends Order {
   status: RestaurantOrderStatus;
   items: Array<OrderItem>;
   itemsCost?: number;
-  restaurant?: Restaurant;
+  restaurant?: ServiceProvider;
   deliveryId?: number;
 }
 export interface OrderItem {

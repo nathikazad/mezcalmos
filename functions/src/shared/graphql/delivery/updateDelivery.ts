@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { DeliveryOrder } from "../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
   let chain = getHasura();
@@ -33,7 +33,7 @@ export async function updateDeliveryOrderCompany(deliveryOrderId: number, delive
         id: deliveryOrderId
       },
       _set: {
-        service_provider_type: "delivery_company",
+        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
         service_provider_id: deliveryCompanyId
       }
     }, {

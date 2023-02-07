@@ -4,7 +4,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
+import { DeliveryDriver, DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
@@ -14,9 +14,9 @@ import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
+import { Operator } from "../shared/models/Services/Service";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> =
   [
@@ -60,7 +60,7 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
   deliveryDriverId: number,
-  deliveryDriverType: DeliveryDriverType,
+  deliveryDriverType: ParticipantType,
   restaurantOrderId: number
 }
 
@@ -77,7 +77,7 @@ async function changeStatus(
   let deliveryOrder: DeliveryOrder = promiseResponse[0];
   let deliveryDriver: DeliveryDriver = promiseResponse[1];
   let restaurantOrder: RestaurantOrder = promiseResponse[2];
-  let restaurantOperators: RestaurantOperator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
+  let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
   if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
     || DeliveryOrderStatus.CancelledByCustomer

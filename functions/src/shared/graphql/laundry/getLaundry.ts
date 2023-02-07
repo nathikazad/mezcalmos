@@ -1,10 +1,9 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Language } from "../../models/Generic/Generic";
-import { Laundry, LaundryOperator } from "../../models/Services/Laundry/Laundry";
-import { OpenStatus, OperatorStatus } from "../../models/Services/Service";
+import { OpenStatus, Operator, OperatorStatus, ServiceProvider } from "../../models/Services/Service";
 
-export async function getLaundryStore(storeId: number): Promise<Laundry> {
+export async function getLaundryStore(storeId: number): Promise<ServiceProvider> {
     let chain = getHasura();
 
     let response = await chain.query({
@@ -34,6 +33,9 @@ export async function getLaundryStore(storeId: number): Promise<Laundry> {
             schedule: [{}, true],
             delivery: true,
             customer_pickup: true,
+            delivery_partner: {
+                delivery_company_id: true,
+            },
             delivery_details: {
                 minimum_cost: true,
                 cost_per_km: true,
@@ -46,6 +48,10 @@ export async function getLaundryStore(storeId: number): Promise<Laundry> {
                 store_id: true,
                 user_id: true,
                 status: true,
+                user: {
+                    firebase_id: true,
+                    language_id: true
+                }
             }]
         }]
     });
@@ -55,15 +61,20 @@ export async function getLaundryStore(storeId: number): Promise<Laundry> {
             "No laundry store with that id found"
         );
     }
-    let laundryOperators: LaundryOperator[] = response.laundry_store_by_pk.operators.map((o) => {
+    let laundryOperators: Operator[] = response.laundry_store_by_pk.operators.map((o) => {
         return {
             id: o.id,
-            storeId: o.store_id,
+            serviceProviderId: o.store_id,
             userId: o.user_id,
             status: o.status as OperatorStatus,
+            user: {
+                id: o.user_id,
+                firebaseId: o.user.firebase_id,
+                language: o.user.language_id as Language
+            }
         }
     })
-    return <Laundry> {
+    return <ServiceProvider> {
         id: storeId,
         name: response.laundry_store_by_pk.name,
         image: response.laundry_store_by_pk.image,
@@ -87,6 +98,7 @@ export async function getLaundryStore(storeId: number): Promise<Laundry> {
         delivery: response.laundry_store_by_pk.delivery,
         customerPickup: response.laundry_store_by_pk.customer_pickup,
         // deliveryDetails?: DeliveryDetails;
-        laundryOperators
+        laundryOperators,
+        deliveryPartnerId: response.laundry_store_by_pk.delivery_partner?.delivery_company_id
     }
 }
