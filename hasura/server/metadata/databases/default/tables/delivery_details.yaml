@@ -66,6 +66,16 @@ select_permissions:
         - minimum_cost
         - radius
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - cost_per_km
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - radius
+      filter: {}
   - role: mez_admin
     permission:
       columns:
