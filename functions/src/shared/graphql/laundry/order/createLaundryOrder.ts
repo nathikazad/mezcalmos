@@ -1,12 +1,12 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryRequestDetails } from "../../../../laundry/laundryRequest";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
 import { LaundryOrder, LaundryOrderStatus } from "../../../models/Services/Laundry/LaundryOrder";
-import { ServiceProvider, ServiceProviderType } from "../../../models/Services/Service";
+import { ServiceProvider } from "../../../models/Services/Service";
 
 export async function createLaundryOrder(
     laundryOrder: LaundryOrder, 
@@ -15,11 +15,7 @@ export async function createLaundryOrder(
     laundryRequestDetails: LaundryRequestDetails
 ): Promise<DeliveryOrder[]> {
     let chain = getHasura();
-    let orderCategories = laundryOrder.categories.map((c) => {
-        return {
-            category_id: c.categoryId,
-        }
-    })
+
     let laundryOperatorsDetails = laundryStore.operators?.map((v) => {
         return {
             participant_id: v.userId,
@@ -54,9 +50,6 @@ export async function createLaundryOrder(
                 customer_address: laundryOrder.customerLocation.address,
                 delivery_cost: laundryOrder.deliveryCost,
                 status: LaundryOrderStatus.OrderReceived,
-                categories: {
-                    data: orderCategories
-                },
                 chat: {
                     data: {
                         chat_participants: {
@@ -102,11 +95,11 @@ export async function createLaundryOrder(
                             }
                         },
                         payment_type: laundryOrder.paymentType,
-                        delivery_cost: laundryOrder.deliveryCost,
+                        delivery_cost: laundryOrder.deliveryCost / 2,
                     
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: laundryOrder.storeId,
-                        service_provider_type: ServiceProviderType.Laundry,
+                        service_provider_type:  DeliveryServiceProviderType.Laundry,
                         
                         scheduled_time: laundryOrder.scheduledTime,
                         trip_distance: laundryRequestDetails.tripDistance,
@@ -147,11 +140,11 @@ export async function createLaundryOrder(
                             }
                         },
                         payment_type: laundryOrder.paymentType,
-                        delivery_cost: laundryOrder.deliveryCost,
+                        delivery_cost: laundryOrder.deliveryCost / 2,
                     
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: laundryOrder.storeId,
-                        service_provider_type: ServiceProviderType.Laundry,
+                        service_provider_type: DeliveryServiceProviderType.Laundry,
                         
                         scheduled_time: laundryOrder.scheduledTime,
                         trip_distance: laundryRequestDetails.tripDistance,
@@ -208,12 +201,14 @@ export async function createLaundryOrder(
             paymentType: laundryOrder.paymentType,
             status: DeliveryOrderStatus.OrderReceived,
             customerId: laundryOrder.customerId,
-            deliveryCost: laundryOrder.deliveryCost,
+            deliveryCost: laundryOrder.deliveryCost / 2,
             packageCost: 0,
             orderTime: response.insert_laundry_order_one.order_time,
             tripDistance : laundryRequestDetails.tripDistance,
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
+            serviceProviderType: DeliveryServiceProviderType.Laundry,
+            serviceProviderId: laundryStore.id!
         }, {
             deliveryId: response.insert_laundry_order_one.to_customer_delivery.id,
             orderType: OrderType.Laundry,
@@ -224,12 +219,14 @@ export async function createLaundryOrder(
             paymentType: laundryOrder.paymentType,
             status: DeliveryOrderStatus.OrderReceived,
             customerId: laundryOrder.customerId,
-            deliveryCost: laundryOrder.deliveryCost,
+            deliveryCost: laundryOrder.deliveryCost / 2,
             packageCost: 0,
             orderTime: response.insert_laundry_order_one.order_time,
             tripDistance : laundryRequestDetails.tripDistance,
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
+            serviceProviderType: DeliveryServiceProviderType.Laundry,
+            serviceProviderId: laundryStore.id!
         }]
     }
     return [{
@@ -248,5 +245,7 @@ export async function createLaundryOrder(
         tripDistance : laundryRequestDetails.tripDistance,
         tripDuration : laundryRequestDetails.tripDuration,
         tripPolyline : laundryRequestDetails.tripPolyline,
+        serviceProviderType: DeliveryServiceProviderType.Laundry,
+        serviceProviderId: laundryStore.id!
     }]
 }

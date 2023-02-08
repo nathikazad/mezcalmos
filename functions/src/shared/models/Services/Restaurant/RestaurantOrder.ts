@@ -11,7 +11,6 @@ export interface RestaurantOrder extends Order {
   actualFoodReadyTime?: string;
   status: RestaurantOrderStatus;
   items: Array<OrderItem>;
-  itemsCost?: number;
   restaurant?: ServiceProvider;
   deliveryId?: number;
 }

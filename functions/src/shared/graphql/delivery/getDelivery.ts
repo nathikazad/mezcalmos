@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryCompanyType, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { ParticipantType } from "../../models/Generic/Chat";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
@@ -97,7 +97,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
   ) {
     delivery.deliveryDriver = {
       id: response.delivery_order_by_pk.delivery_driver.id,
-      deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryCompanyType,
+      deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
       deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
       status: response.delivery_order_by_pk.delivery_driver.status,
       userId: response.delivery_order_by_pk.delivery_driver.user.id,
@@ -142,7 +142,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
     delivery_order: [{
       where: {
         service_provider_type: {
-          _eq: DeliveryCompanyType.DeliveryCompany,
+          _eq: DeliveryServiceProviderType.DeliveryCompany,
         }
       }
     }, {
@@ -156,6 +156,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       delivery_cost: true,
       order_time: true,
       order_type: true,
+      service_provider_id: true,
       delivery_driver: {
         delivery_driver_type: true,
         user: {
@@ -189,6 +190,8 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       deliveryCost: d.delivery_cost,
       orderTime: d.order_time,
       orderType: d.order_type as OrderType,
+      serviceProviderId: d.service_provider_id,
+      serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
       deliveryDriver: (d.delivery_driver) ? <DeliveryDriver>{
         userId: d.delivery_driver.user.id,
         deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,

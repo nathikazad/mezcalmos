@@ -14,7 +14,7 @@ export interface LaundryOrder extends Order {
   fromCustomerDeliveryId?: number;
   toCustomerDeliveryId?: number;
   status: LaundryOrderStatus;
-  categories: Array<OrderCategory>;
+  categories?: Array<OrderCategory>;
   laundryStore?: ServiceProvider;
   // routeInformation?: RouteInformation;
   // costsByType?: CostsByType;
