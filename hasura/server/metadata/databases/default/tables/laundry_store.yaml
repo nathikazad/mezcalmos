@@ -56,6 +56,29 @@ insert_permissions:
         - delivery_details_id
         - service_provider_type
 select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - approved
+        - customer_pickup
+        - delivery
+        - self_delivery
+        - delivery_details_id
+        - description_id
+        - id
+        - location_id
+        - accepted_payments
+        - schedule
+        - stripe_info
+        - image
+        - language_id
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - normal_delivery_time
+      filter: {}
   - role: laundry_operator
     permission:
       columns:
