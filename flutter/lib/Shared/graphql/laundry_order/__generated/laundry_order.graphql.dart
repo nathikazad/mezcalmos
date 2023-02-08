@@ -436,6 +436,64 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'store'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'stripe_fees'),
             alias: null,
             arguments: [],
@@ -886,6 +944,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     this.scheduled_time,
     required this.status,
     required this.store_id,
+    required this.store,
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
@@ -919,6 +978,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$scheduled_time = json['scheduled_time'];
     final l$status = json['status'];
     final l$store_id = json['store_id'];
+    final l$store = json['store'];
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
@@ -951,6 +1011,9 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       scheduled_time: (l$scheduled_time as String?),
       status: (l$status as String),
       store_id: (l$store_id as int),
+      store:
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+              .fromJson((l$store as Map<String, dynamic>)),
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
@@ -1012,6 +1075,9 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
   final String status;
 
   final int store_id;
+
+  final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+      store;
 
   final double stripe_fees;
 
@@ -1079,6 +1145,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     _resultData['status'] = l$status;
     final l$store_id = store_id;
     _resultData['store_id'] = l$store_id;
+    final l$store = store;
+    _resultData['store'] = l$store.toJson();
     final l$stripe_fees = stripe_fees;
     _resultData['stripe_fees'] = moneyToJson(l$stripe_fees);
     final l$stripe_info = stripe_info;
@@ -1122,6 +1190,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$scheduled_time = scheduled_time;
     final l$status = status;
     final l$store_id = store_id;
+    final l$store = store;
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
@@ -1152,6 +1221,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       l$scheduled_time,
       l$status,
       l$store_id,
+      l$store,
       l$stripe_fees,
       l$stripe_info,
       l$tax,
@@ -1278,6 +1348,11 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     if (l$store_id != lOther$store_id) {
       return false;
     }
+    final l$store = store;
+    final lOther$store = other.store;
+    if (l$store != lOther$store) {
+      return false;
+    }
     final l$stripe_fees = stripe_fees;
     final lOther$stripe_fees = other.stripe_fees;
     if (l$stripe_fees != lOther$stripe_fees) {
@@ -1375,6 +1450,7 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
     String? scheduled_time,
     String? status,
     int? store_id,
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store? store,
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
@@ -1387,6 +1463,8 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
         categories,
     String? $__typename,
   });
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+      TRes> get store;
   CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review<
       TRes> get review;
   CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$customer<
@@ -1439,6 +1517,7 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
     Object? scheduled_time = _undefined,
     Object? status = _undefined,
     Object? store_id = _undefined,
+    Object? store = _undefined,
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
@@ -1507,6 +1586,10 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
         store_id: store_id == _undefined || store_id == null
             ? _instance.store_id
             : (store_id as int),
+        store: store == _undefined || store == null
+            ? _instance.store
+            : (store
+                as Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store),
         stripe_fees: stripe_fees == _undefined || stripe_fees == null
             ? _instance.stripe_fees
             : (stripe_fees as double),
@@ -1533,6 +1616,13 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+      TRes> get store {
+    final local$store = _instance.store;
+    return CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+        local$store, (e) => call(store: e));
+  }
+
   CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review<
       TRes> get review {
     final local$review = _instance.review;
@@ -1596,6 +1686,7 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     String? scheduled_time,
     String? status,
     int? store_id,
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store? store,
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
@@ -1609,6 +1700,11 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+          TRes>
+      get store =>
+          CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+              .stub(_res);
   CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review<
           TRes>
       get review =>
@@ -1620,6 +1716,375 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
           CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$customer
               .stub(_res);
   categories(_fn) => _res;
+}
+
+class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store {
+  Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store({
+    required this.name,
+    required this.image,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+      name: (l$name as String),
+      image: (l$image as String),
+      location:
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+      location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+    on Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store {
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store>
+      get copyWith =>
+          CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+    TRes> {
+  factory CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+        instance,
+    TRes Function(
+            Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store)
+        then,
+  ) = _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store;
+
+  factory CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store;
+
+  TRes call({
+    String? name,
+    String? image,
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location?
+        location,
+    String? $__typename,
+  });
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+        TRes>
+    implements
+        CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+            TRes> {
+  _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store
+      _instance;
+
+  final TRes Function(
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+        TRes>
+    implements
+        CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store<
+            TRes> {
+  _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location?
+        location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+              .stub(_res);
+}
+
+class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location {
+  Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+    on Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location {
+  CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location>
+      get copyWith =>
+          CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+    TRes> {
+  factory CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+    Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+        instance,
+    TRes Function(
+            Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location)
+        then,
+  ) = _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location;
+
+  factory CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+        TRes>
+    implements
+        CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+            TRes> {
+  _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location
+      _instance;
+
+  final TRes Function(
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+        TRes>
+    implements
+        CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location<
+            TRes> {
+  _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$store$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review {
@@ -2635,7 +3100,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories 
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories(
       category_id: (l$category_id as int),
-      weight_in_kilo: (l$weight_in_kilo as String?),
+      weight_in_kilo: (l$weight_in_kilo as num?)?.toDouble(),
       order_id: (l$order_id as int),
       id: (l$id as int),
       category:
@@ -2647,7 +3112,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories 
 
   final int category_id;
 
-  final String? weight_in_kilo;
+  final double? weight_in_kilo;
 
   final int order_id;
 
@@ -2764,7 +3229,7 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
 
   TRes call({
     int? category_id,
-    String? weight_in_kilo,
+    double? weight_in_kilo,
     int? order_id,
     int? id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories$category?
@@ -2809,7 +3274,7 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
             : (category_id as int),
         weight_in_kilo: weight_in_kilo == _undefined
             ? _instance.weight_in_kilo
-            : (weight_in_kilo as String?),
+            : (weight_in_kilo as double?),
         order_id: order_id == _undefined || order_id == null
             ? _instance.order_id
             : (order_id as int),
@@ -2842,7 +3307,7 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
 
   call({
     int? category_id,
-    String? weight_in_kilo,
+    double? weight_in_kilo,
     int? order_id,
     int? id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories$category?
@@ -3880,6 +4345,64 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'store'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'stripe_fees'),
             alias: null,
             arguments: [],
@@ -4360,6 +4883,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     this.scheduled_time,
     required this.status,
     required this.store_id,
+    required this.store,
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
@@ -4393,6 +4917,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$scheduled_time = json['scheduled_time'];
     final l$status = json['status'];
     final l$store_id = json['store_id'];
+    final l$store = json['store'];
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
@@ -4425,6 +4950,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       scheduled_time: (l$scheduled_time as String?),
       status: (l$status as String),
       store_id: (l$store_id as int),
+      store: Query$get_laundry_order_by_id$laundry_order_by_pk$store.fromJson(
+          (l$store as Map<String, dynamic>)),
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
@@ -4486,6 +5013,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
   final String status;
 
   final int store_id;
+
+  final Query$get_laundry_order_by_id$laundry_order_by_pk$store store;
 
   final double stripe_fees;
 
@@ -4550,6 +5079,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     _resultData['status'] = l$status;
     final l$store_id = store_id;
     _resultData['store_id'] = l$store_id;
+    final l$store = store;
+    _resultData['store'] = l$store.toJson();
     final l$stripe_fees = stripe_fees;
     _resultData['stripe_fees'] = moneyToJson(l$stripe_fees);
     final l$stripe_info = stripe_info;
@@ -4593,6 +5124,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$scheduled_time = scheduled_time;
     final l$status = status;
     final l$store_id = store_id;
+    final l$store = store;
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
@@ -4623,6 +5155,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       l$scheduled_time,
       l$status,
       l$store_id,
+      l$store,
       l$stripe_fees,
       l$stripe_info,
       l$tax,
@@ -4748,6 +5281,11 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     if (l$store_id != lOther$store_id) {
       return false;
     }
+    final l$store = store;
+    final lOther$store = other.store;
+    if (l$store != lOther$store) {
+      return false;
+    }
     final l$stripe_fees = stripe_fees;
     final lOther$stripe_fees = other.stripe_fees;
     if (l$stripe_fees != lOther$stripe_fees) {
@@ -4843,6 +5381,7 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk<
     String? scheduled_time,
     String? status,
     int? store_id,
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store? store,
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
@@ -4853,6 +5392,8 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk<
         categories,
     String? $__typename,
   });
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<TRes>
+      get store;
   CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$review<TRes>
       get review;
   CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$customer<TRes>
@@ -4901,6 +5442,7 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     Object? scheduled_time = _undefined,
     Object? status = _undefined,
     Object? store_id = _undefined,
+    Object? store = _undefined,
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
@@ -4969,6 +5511,10 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
         store_id: store_id == _undefined || store_id == null
             ? _instance.store_id
             : (store_id as int),
+        store: store == _undefined || store == null
+            ? _instance.store
+            : (store
+                as Query$get_laundry_order_by_id$laundry_order_by_pk$store),
         stripe_fees: stripe_fees == _undefined || stripe_fees == null
             ? _instance.stripe_fees
             : (stripe_fees as double),
@@ -4995,6 +5541,13 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<TRes>
+      get store {
+    final local$store = _instance.store;
+    return CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+        local$store, (e) => call(store: e));
+  }
+
   CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$review<TRes>
       get review {
     final local$review = _instance.review;
@@ -5056,6 +5609,7 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     String? scheduled_time,
     String? status,
     int? store_id,
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store? store,
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
@@ -5067,6 +5621,10 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<TRes>
+      get store =>
+          CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store.stub(
+              _res);
   CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$review<TRes>
       get review =>
           CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$review
@@ -5076,6 +5634,360 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
           CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$customer
               .stub(_res);
   categories(_fn) => _res;
+}
+
+class Query$get_laundry_order_by_id$laundry_order_by_pk$store {
+  Query$get_laundry_order_by_id$laundry_order_by_pk$store({
+    required this.name,
+    required this.image,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$get_laundry_order_by_id$laundry_order_by_pk$store.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+      name: (l$name as String),
+      image: (l$image as String),
+      location: Query$get_laundry_order_by_id$laundry_order_by_pk$store$location
+          .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String name;
+
+  final String image;
+
+  final Query$get_laundry_order_by_id$laundry_order_by_pk$store$location
+      location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_laundry_order_by_id$laundry_order_by_pk$store) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_laundry_order_by_id$laundry_order_by_pk$store
+    on Query$get_laundry_order_by_id$laundry_order_by_pk$store {
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<
+          Query$get_laundry_order_by_id$laundry_order_by_pk$store>
+      get copyWith =>
+          CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<
+    TRes> {
+  factory CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store instance,
+    TRes Function(Query$get_laundry_order_by_id$laundry_order_by_pk$store) then,
+  ) = _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store;
+
+  factory CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store;
+
+  TRes call({
+    String? name,
+    String? image,
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store$location? location,
+    String? $__typename,
+  });
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store<
+        TRes>
+    implements
+        CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<TRes> {
+  _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_laundry_order_by_id$laundry_order_by_pk$store _instance;
+
+  final TRes Function(Query$get_laundry_order_by_id$laundry_order_by_pk$store)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$get_laundry_order_by_id$laundry_order_by_pk$store$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store<
+        TRes>
+    implements
+        CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store<TRes> {
+  _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+          TRes>
+      get location =>
+          CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location
+              .stub(_res);
+}
+
+class Query$get_laundry_order_by_id$laundry_order_by_pk$store$location {
+  Query$get_laundry_order_by_id$laundry_order_by_pk$store$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$get_laundry_order_by_id$laundry_order_by_pk$store$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_laundry_order_by_id$laundry_order_by_pk$store$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location
+    on Query$get_laundry_order_by_id$laundry_order_by_pk$store$location {
+  CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+          Query$get_laundry_order_by_id$laundry_order_by_pk$store$location>
+      get copyWith =>
+          CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+    TRes> {
+  factory CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+    Query$get_laundry_order_by_id$laundry_order_by_pk$store$location instance,
+    TRes Function(
+            Query$get_laundry_order_by_id$laundry_order_by_pk$store$location)
+        then,
+  ) = _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location;
+
+  factory CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+        TRes>
+    implements
+        CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+            TRes> {
+  _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_laundry_order_by_id$laundry_order_by_pk$store$location
+      _instance;
+
+  final TRes Function(
+      Query$get_laundry_order_by_id$laundry_order_by_pk$store$location) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+        TRes>
+    implements
+        CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location<
+            TRes> {
+  _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$store$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$review {
@@ -6067,7 +6979,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$categories {
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$categories(
       category_id: (l$category_id as int),
-      weight_in_kilo: (l$weight_in_kilo as String?),
+      weight_in_kilo: (l$weight_in_kilo as num?)?.toDouble(),
       order_id: (l$order_id as int),
       id: (l$id as int),
       category:
@@ -6079,7 +6991,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$categories {
 
   final int category_id;
 
-  final String? weight_in_kilo;
+  final double? weight_in_kilo;
 
   final int order_id;
 
@@ -6194,7 +7106,7 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$catego
 
   TRes call({
     int? category_id,
-    String? weight_in_kilo,
+    double? weight_in_kilo,
     int? order_id,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$categories$category?
@@ -6236,7 +7148,7 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$categories
             : (category_id as int),
         weight_in_kilo: weight_in_kilo == _undefined
             ? _instance.weight_in_kilo
-            : (weight_in_kilo as String?),
+            : (weight_in_kilo as double?),
         order_id: order_id == _undefined || order_id == null
             ? _instance.order_id
             : (order_id as int),
@@ -6269,7 +7181,7 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$catego
 
   call({
     int? category_id,
-    String? weight_in_kilo,
+    double? weight_in_kilo,
     int? order_id,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$categories$category?

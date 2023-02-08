@@ -235,10 +235,11 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
               orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: orderData.order_type.toOrderType(),
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
@@ -267,10 +268,11 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
         .map((Query$get_inprocess_driver_orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
@@ -299,10 +301,11 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
         ordersData.map((Query$get_past_driver_orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
@@ -378,10 +381,11 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
               orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: orderData.order_type.toOrderType(),
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
@@ -411,9 +415,10 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
       return MinimalOrder(
           id: orderData.id,
           toAdress: orderData.dropoff_address,
+          orderType: orderData.order_type.toOrderType(),
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
@@ -443,10 +448,11 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
         .map((Query$get_delivery_company_past_orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);

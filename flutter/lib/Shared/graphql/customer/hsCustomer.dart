@@ -7,6 +7,10 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/customer/__generated/customer.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryMode.dart';
@@ -166,11 +170,12 @@ Future<List<RestaurantOrder>> get_customer_orders(
     {required int customer_id}) async {
   final List<RestaurantOrder> _ret = [];
 
-  final QueryResult<Query$get_customer_orders> _res =
-      await _graphClient.query$get_customer_orders(
-    Options$Query$get_customer_orders(
+  final QueryResult<Query$get_customer_restaurant_orders> _res =
+      await _graphClient.query$get_customer_restaurant_orders(
+    Options$Query$get_customer_restaurant_orders(
       fetchPolicy: FetchPolicy.noCache,
-      variables: Variables$Query$get_customer_orders(customer_id: customer_id),
+      variables: Variables$Query$get_customer_restaurant_orders(
+          customer_id: customer_id),
     ),
   );
 
@@ -180,16 +185,17 @@ Future<List<RestaurantOrder>> get_customer_orders(
   } else {
     mezDbgPrint("[tt] Called :: get_customer_orders :: SUCCESS");
 
-    final List<Query$get_customer_orders$restaurant_order>? _orders =
+    final List<Query$get_customer_restaurant_orders$restaurant_order>? _orders =
         _res.parsedData?.restaurant_order;
     if (_orders != null) {
       mezDbgPrint(
           "[tt] found orders :: CUS_ID ($customer_id) :: len :: ${_orders.length}");
 
-      _orders.forEach((Query$get_customer_orders$restaurant_order _o) {
+      _orders
+          .forEach((Query$get_customer_restaurant_orders$restaurant_order _o) {
         num _itemsCost = 0;
-        _o.items
-            .forEach((Query$get_customer_orders$restaurant_order$items item) {
+        _o.items.forEach(
+            (Query$get_customer_restaurant_orders$restaurant_order$items item) {
           _itemsCost += (item.cost_per_one * item.quantity);
         });
         _ret.add(
@@ -256,6 +262,151 @@ Future<CustStripeInfo?> get_customer_stripe_info(
         id: res.parsedData!.customer_customer.first.stripe_info["id"],
         cards: cards);
     return stripeInfo;
+  }
+  return null;
+}
+
+Stream<List<MinimalOrder>?> listen_on_customer_rest_orders(
+    {required int customerId}) {
+  return _graphClient
+      .subscribe$listenOnCustomerRestaurantInProcessOrders(
+    Options$Subscription$listenOnCustomerRestaurantInProcessOrders(
+      variables:
+          Variables$Subscription$listenOnCustomerRestaurantInProcessOrders(
+              customerId: customerId, inprocess: true),
+    ),
+  )
+      .map<List<MinimalOrder>?>(
+          (QueryResult<Subscription$listenOnCustomerRestaurantInProcessOrders>
+              event) {
+    if (event.parsedData?.restaurant_order != null) {
+      final List<MinimalOrder> resOrders = event.parsedData!.restaurant_order
+          .map(
+              (Subscription$listenOnCustomerRestaurantInProcessOrders$restaurant_order
+                      order) =>
+                  MinimalOrder(
+                      id: order.id,
+                      toAdress: order.to_location_address,
+                      orderTime: DateTime.parse(order.order_time),
+                      title: order.restaurant.name,
+                      image: order.restaurant.image,
+                      status: order.status
+                          .toRestaurantOrderStatus()
+                          .toMinimalOrderStatus(),
+                      totalCost: order.total_cost,
+                      orderType: OrderType.Restaurant))
+          .toList();
+
+      return resOrders;
+    } else {
+      throwError(event.exception);
+    }
+    return null;
+  });
+}
+
+Stream<List<MinimalOrder>?> listen_on_customer_laundry_orders(
+    {required int customerId}) {
+  return _graphClient
+      .subscribe$listenOnCustomerLaundryInProcessOrders(
+    Options$Subscription$listenOnCustomerLaundryInProcessOrders(
+      variables: Variables$Subscription$listenOnCustomerLaundryInProcessOrders(
+          customerId: customerId, inprocess: true),
+    ),
+  )
+      .map<List<MinimalOrder>?>(
+          (QueryResult<Subscription$listenOnCustomerLaundryInProcessOrders>
+              event) {
+    if (event.parsedData?.laundry_order != null) {
+      mezDbgPrint("Laundry order event ============🌍=====>$event");
+      final List<MinimalOrder> laundryOrders = event.parsedData!.laundry_order
+          .map(
+              (Subscription$listenOnCustomerLaundryInProcessOrders$laundry_order
+                      order) =>
+                  MinimalOrder(
+                      id: order.id,
+                      toAdress: order.customer_address,
+                      orderTime: DateTime.parse(order.order_time),
+                      title: order.store.name,
+                      image: order.store.image,
+                      status: order.status
+                          .toLaundryOrderStatus()
+                          .toMinimalOrderStatus(),
+                      totalCost: 0,
+                      orderType: OrderType.Laundry))
+          .toList();
+
+      return laundryOrders;
+    } else {
+      throwError(event.exception);
+    }
+    return null;
+  });
+}
+
+Future<List<MinimalOrder>?> get_customer_rest_orders(
+    {required int customerId, bool inProcess = true}) async {
+  QueryResult<Query$getCustomerRestaurantInProcessOrders> res =
+      await _graphClient.query$getCustomerRestaurantInProcessOrders(
+    Options$Query$getCustomerRestaurantInProcessOrders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Query$getCustomerRestaurantInProcessOrders(
+          customerId: customerId, inprocess: inProcess),
+    ),
+  );
+
+  if (res.parsedData?.restaurant_order == null) {
+    throwError(res.exception);
+  } else {
+    final List<MinimalOrder> resOrders = res.parsedData!.restaurant_order
+        .map((Query$getCustomerRestaurantInProcessOrders$restaurant_order
+                order) =>
+            MinimalOrder(
+                id: order.id,
+                toAdress: order.to_location_address,
+                orderTime: DateTime.parse(order.order_time),
+                title: order.restaurant.name,
+                image: order.restaurant.image,
+                status: order.status
+                    .toRestaurantOrderStatus()
+                    .toMinimalOrderStatus(),
+                totalCost: order.total_cost,
+                orderType: OrderType.Restaurant))
+        .toList();
+    return resOrders;
+  }
+  return null;
+}
+
+Future<List<MinimalOrder>?> get_customer_laundry_orders(
+    {required int customerId, bool inProcess = true}) async {
+  QueryResult<Query$getCustomerLaundryInProcessOrders> res =
+      await _graphClient.query$getCustomerLaundryInProcessOrders(
+    Options$Query$getCustomerLaundryInProcessOrders(
+      fetchPolicy: FetchPolicy.noCache,
+      variables: Variables$Query$getCustomerLaundryInProcessOrders(
+          customerId: customerId, inprocess: inProcess),
+    ),
+  );
+
+  if (res.parsedData?.laundry_order == null) {
+    throwError(res.exception);
+  } else {
+    final List<MinimalOrder> laundryOrders = res.parsedData!.laundry_order
+        .map((Query$getCustomerLaundryInProcessOrders$laundry_order order) =>
+            MinimalOrder(
+                id: order.id,
+                toAdress: order.customer_address,
+                orderTime: DateTime.parse(order.order_time),
+                title: order.store.name,
+                image: order.store.image,
+                status: order.status
+                    .toRestaurantOrderStatus()
+                    .toMinimalOrderStatus(),
+                totalCost: 0,
+                orderType: OrderType.Laundry))
+        .toList();
+    return laundryOrders;
   }
   return null;
 }

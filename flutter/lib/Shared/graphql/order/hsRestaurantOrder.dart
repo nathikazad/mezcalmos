@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -268,7 +269,6 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id!,
-    
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)
@@ -391,10 +391,11 @@ Stream<List<MinimalOrder>?> listen_on_current_restaurant_orders(
               orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: OrderType.Restaurant,
             toAdress: orderData.to_location_address,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status: orderData.status
                 .toRestaurantOrderStatus()
                 .toMinimalOrderStatus(),
@@ -424,10 +425,11 @@ Future<List<MinimalOrder>?> get_current_restaurant_orders(
         .map((Query$get_restaurant_current_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: OrderType.Restaurant,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -457,10 +459,11 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
         .map((Query$get_restaurant_past_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: OrderType.Restaurant,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);

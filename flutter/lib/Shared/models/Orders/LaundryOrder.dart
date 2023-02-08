@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: constant_identifier_names, always_specify_types
 
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -293,6 +294,10 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
 class LaundryOrderCosts {
   List<LaundryOrderCostLineItem> lineItems = <LaundryOrderCostLineItem>[];
   num minimumCost = 0;
+  LaundryOrderCosts({
+    required this.lineItems,
+    this.minimumCost = 0,
+  });
   num get weighedCost {
     final num totalCost =
         lineItems.fold<num>(0, (sum, lineItem) => sum + lineItem.weighedCost);
@@ -318,8 +323,6 @@ class LaundryOrderCosts {
       return null;
     }
   }
-
-  LaundryOrderCosts();
 
   // factory LaundryOrderCosts.fromData(laundryCostsData) {
   //   // ignore: prefer_final_locals

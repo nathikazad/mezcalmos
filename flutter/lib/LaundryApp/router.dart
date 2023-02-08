@@ -2,6 +2,7 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
 import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
@@ -37,8 +38,8 @@ String getEditInfoRoute({required int laundryId}) {
   return kEditInfoView.replaceFirst(":laundryId", "$laundryId");
 }
 
-String getLaundryOpOrderRoute(String orderId) {
-  return kOrderView.replaceFirst(":orderId", orderId);
+String getLaundryOpOrderRoute(int orderId) {
+  return kOrderView.replaceFirst(":orderId", "$orderId");
 }
 
 // GetX based Router (For navigating)
@@ -56,7 +57,7 @@ class XRouter {
           name: kCategoryView,
           page: () => LaundrOpCategoryView(),
         ),
-        //   GetPage(name: kOrderView, page: () => LaundryOpOrderView())
+        GetPage(name: kOrderView, page: () => LaundryOpOrderView())
       ] +
       SharedRouter.sharedRoutes;
 }

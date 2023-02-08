@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
@@ -26,7 +25,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(laundry.info.hasuraId.toString());
+            MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry);
           },
           child: Container(
             child: _laundryInfoHeader(),
@@ -61,7 +60,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 7,
@@ -103,28 +102,28 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Flexible(
                               child: Text(
                                   ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                                  style: Get.textTheme.bodyText2)),
+                                  style: Get.textTheme.bodyMedium)),
                         ],
                       ),
                     ),
-                    Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.north_east_sharp,
-                            size: 18,
-                            color: Colors.grey.shade800,
-                          ),
-                          Flexible(
-                              child: Text(
-                                  '${laundry.getCheapestCategory.toPriceString()}/kg',
-                                  style: Get.textTheme.bodyText2)),
-                        ],
-                      ),
-                    ),
+                    // Flexible(
+                    //   flex: 4,
+                    //   fit: FlexFit.tight,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Icon(
+                    //         Icons.north_east_sharp,
+                    //         size: 18,
+                    //         color: Colors.grey.shade800,
+                    //       ),
+                    //       Flexible(
+                    //           child: Text(
+                    //               '${laundry.getCheapestCategory.toPriceString()}/kg',
+                    //               style: Get.textTheme.bodyText2)),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

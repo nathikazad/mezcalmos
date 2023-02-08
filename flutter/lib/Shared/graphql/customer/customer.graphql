@@ -77,7 +77,7 @@ mutation set_customer_stripe_info($user_id: Int!, $stripe_info: jsonb) {
 }
 
 # Get customer's order
-query get_customer_orders($customer_id: Int!) {
+query get_customer_restaurant_orders($customer_id: Int!) {
   restaurant_order(where: { customer_id: { _eq: $customer_id } }) {
     id
     restaurant {
@@ -148,4 +148,71 @@ query get_customer_orders($customer_id: Int!) {
       delivery_cost
     }
   }
+}
+subscription listenOnCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
+  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+    id
+    order_time
+    status
+delivery_cost
+    total_cost
+    to_location_address
+    restaurant {
+    
+        name
+        image
+      
+    }
+  }
+  
+}subscription listenOnCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
+ laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+     id
+    order_time
+    status
+delivery_cost
+    # total_cost
+    customer_address
+    store {
+     
+        name
+        image
+      
+    }
+  }
+  
+}
+query getCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
+  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+    id
+    order_time
+    status
+delivery_cost
+    total_cost
+    to_location_address
+    restaurant {
+     
+        name
+        image
+      
+    }
+  }
+  
+}
+query getCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
+ laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+     id
+    order_time
+    status
+delivery_cost
+    # total_cost
+    customer_address
+    store {
+      
+        name
+        image
+      
+    }
+  }
+  
 }

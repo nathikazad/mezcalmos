@@ -27,7 +27,6 @@ Future<Laundry?> get_laundry_store_by_id(
     ),
   );
 
-  mezDbgPrint("[+] -> id : $id");
   if (response.parsedData?.laundry_store_by_pk == null) {
     throw Exception("🚨🚨🚨🚨 Hasura querry error : ${response.exception}");
   } else if (response.parsedData != null) {
@@ -44,7 +43,7 @@ Future<Laundry?> get_laundry_store_by_id(
       paymentInfo.stripe = paymentInfo.parseServiceStripeInfo(data.stripe_info);
     }
     mezDbgPrint(
-        "response data ====> ${response.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
+        "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.schedule}");
     return Laundry(
         userInfo: ServiceInfo(
             locationId: data.location_id,
@@ -269,4 +268,58 @@ Future<LaundryCostLineItem?> update_laundry_category(
       id: data.id,
       nameId: data.name_id,
       storeId: data.store_id);
+}
+
+Future<List<Laundry>> get_laundries({bool withCache = true}) async {
+  QueryResult<Query$getLaundries> res = await _db.graphQLClient
+      .query$getLaundries(Options$Query$getLaundries(
+          fetchPolicy:
+              withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache));
+  if (res.parsedData?.laundry_store == null) {
+    throwError(res.exception);
+  }
+  List<Laundry> laundries = res.parsedData!.laundry_store
+      .map((Query$getLaundries$laundry_store data) {
+    final PaymentInfo paymentInfo = PaymentInfo();
+    if (data.accepted_payments != null) {
+      paymentInfo.acceptedPayments =
+          paymentInfo.parseAcceptedPayments(data.accepted_payments);
+    }
+    if (data.stripe_info != null) {
+      paymentInfo.stripe = paymentInfo.parseServiceStripeInfo(data.stripe_info);
+    }
+    mezDbgPrint(
+        "response data ====> ${res.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
+    return Laundry(
+        userInfo: ServiceInfo(
+            locationId: data.location_id,
+            hasuraId: data.id,
+            image: data.image,
+            description: (data.description.translations != null)
+                ? {
+                    data.description.translations.first.language_id
+                            .toLanguageType():
+                        data.description.translations.first.value,
+                    data.description.translations[1].language_id
+                            .toLanguageType():
+                        data.description.translations[1].value,
+                  }
+                : null,
+            name: data.name,
+            descriptionId: data.description_id,
+            location:
+                Location.fromHasura(data.location.gps, data.location.address)),
+        schedule:
+            data.schedule != null ? Schedule.fromData(data.schedule) : null,
+        paymentInfo: paymentInfo,
+        selfDelivery: data.self_delivery,
+        averageNumberOfDays: data.normal_delivery_time,
+        laundryState:
+            ServiceState(data.open_status.toServiceStatus(), data.approved),
+        primaryLanguage: data.language_id.toString().toLanguageType(),
+        secondaryLanguage:
+            data.language_id.toString().toLanguageType().toOpLang(),
+        laundryCosts: LaundryCosts());
+  }).toList();
+  return laundries;
 }

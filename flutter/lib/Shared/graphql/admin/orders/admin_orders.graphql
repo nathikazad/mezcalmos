@@ -14,6 +14,7 @@ subscription admin_listen_on_dv_orders(
     order_time
     status
     package_cost
+    order_type
     dropoff_address
     dropoff_gps
     customer {
@@ -39,6 +40,7 @@ query admin_get_dv_orders( $inProccess: Boolean!) {
     package_cost
     dropoff_address
     dropoff_gps
+    order_type
     customer {
       user {
         name
@@ -62,6 +64,7 @@ subscription admin_listen_on_restaurant_orders(
     restaurant_id
     order_time
     status
+    
     total_cost
     to_location_address
     customer {
@@ -80,6 +83,7 @@ query admin_get_restaurant_orders( $inProccess: Boolean!) {
     restaurant_id
     order_time
     status
+    
     total_cost
     to_location_address
     customer {
@@ -109,6 +113,7 @@ query admin_get_service__orders(
     status
     package_cost
     dropoff_address
+    order_type
     dropoff_gps
     customer {
       user {
