@@ -4559,14 +4559,14 @@ type delivery_order {
   """An object relationship"""
   restaurant_order: restaurant_order
   schedule_time: String
-  service_provider_id: Int
+  service_provider_id: Int!
 
   """An object relationship"""
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
 
   """restaurant, delivery_company"""
-  service_provider_type: String
+  service_provider_type: String!
 
   """
   orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,

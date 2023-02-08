@@ -28,8 +28,8 @@ export interface DeliveryOrder {
     serviceProviderReviewBydriverId?: number;
     customerReviewByDriverId?: number;
     customerId: number;
-    serviceProviderId?: number;
-    serviceProviderType?: DeliveryServiceProviderType;
+    serviceProviderId: number;
+    serviceProviderType: DeliveryServiceProviderType;
     tripPolyline?: string;
     deliveryCost: number;
     packageCost?: number;
@@ -45,7 +45,7 @@ export interface DeliveryOrder {
 export interface DeliveryDriver {
     id?: number,
     userId: number,
-    deliveryCompanyType?: DeliveryCompanyType,
+    deliveryCompanyType?: DeliveryServiceProviderType,
     deliveryCompanyId?: number,
     status?: string,
     appVersion?: string,
@@ -54,10 +54,6 @@ export interface DeliveryDriver {
     online?: boolean,
     notificationInfo?: NotificationInfo,
     deliveryDriverType: ParticipantType
-}
-export enum DeliveryCompanyType {
-    DeliveryCompany = "delivery_company",
-    Restaurant = "restaurant"
 }
 
 export interface DeliveryOperator {
@@ -93,6 +89,7 @@ export enum DeliveryOperatorStatus {
 
 export enum DeliveryOrderStatus {
     OrderReceived = "orderReceived",
+    OnTheWayToPickup = "onTheWayToPickup", 
     PackageReady = "packageReady", 
     AtPickup = "atPickup", 
     OnTheWayToDropoff = "onTheWayToDropoff", 
@@ -105,7 +102,8 @@ export enum DeliveryOrderStatus {
 
 export enum DeliveryServiceProviderType {
     Restaurant = "restaurant",
-    DeliveryCompany = "delivery_company"
+    DeliveryCompany = "delivery_company",
+    Laundry = "laundry"
 }
 
 // export enum DeliveryDriverType {

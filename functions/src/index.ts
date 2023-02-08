@@ -28,7 +28,6 @@ import * as userChanges from './utilities/userChanges'
 // import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 import { assignDriver } from "./delivery/assignDriver";
 import { addDriver } from "./delivery/addDriver";
-import { DeliveryCompanyType } from "./shared/models/Generic/Delivery";
 import { authorizeDriver } from "./delivery/authorizeDriver";
 import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
 import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
@@ -38,6 +37,8 @@ import { deliveryDriverAtPickup, startDelivery, deliveryDriverAtDropoff, finishD
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
 import { createLaundry } from "./laundry/createNewLaundry";
+import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
+import { DeliveryServiceProviderType } from "./shared/models/Generic/Delivery";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -82,8 +83,8 @@ export const restaurant2 = {
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
   authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
-  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.Restaurant)),
-  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.Restaurant)),
+  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryServiceProviderType.Restaurant)),
+  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryServiceProviderType.Restaurant)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
@@ -103,7 +104,7 @@ export const laundry = {
   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
-//   cancelFromCustomer: authenticatedCall((userId, data) => cancelFromCustomer(userId, data)),
+  cancelFromCustomer: authenticatedCall((userId, data) => cancelLaundryFromCustomer(userId, data)),
   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
 //   setWeight: authenticatedCall((userId, data) => laundryStatusChange.setWeight(userId, data)),
 //   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
@@ -113,8 +114,8 @@ export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
-  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
-  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryCompanyType.DeliveryCompany)),
+  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
+  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
   restaurantAtPickup: authenticatedCall((userId, data) => deliveryDriverAtPickup(userId, data)),
   restaurantAtDropoff: authenticatedCall((userId, data) => deliveryDriverAtDropoff(userId, data)),
   restaurantFinishDelivery: authenticatedCall((userId, data) => finishDelivery(userId, data)),

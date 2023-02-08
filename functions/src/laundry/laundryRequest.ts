@@ -13,7 +13,7 @@ import { CustomerAppType, Language, Location } from "../shared/models/Generic/Ge
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
-import { LaundryOrder, LaundryOrderStatus, NewLaundryOrderNotification, OrderCategory } from "../shared/models/Services/Laundry/LaundryOrder";
+import { LaundryOrder, LaundryOrderStatus, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import { ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -25,7 +25,6 @@ export interface LaundryRequestDetails {
     deliveryType: DeliveryType,
     customerLocation: Location,
     deliveryCost: number,
-    categories: Array<number>,
     customerAppType: CustomerAppType,
     notes?: string,
     tax?: number,
@@ -53,11 +52,6 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
 
     errorChecks(laundryStore, laundryRequestDetails);
     
-    let categories: OrderCategory[] = laundryRequestDetails.categories.map((c) => {
-        return {
-            categoryId: c,
-        }
-    })
     let laundryOrder: LaundryOrder = {
         customerId,
         storeId: laundryRequestDetails.storeId,
@@ -72,7 +66,6 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
         customerLocation: laundryRequestDetails.customerLocation,
         deliveryCost: laundryRequestDetails.deliveryCost,
         status: LaundryOrderStatus.OrderReceived,
-        categories
     }
     let deliveryOrders: DeliveryOrder[] = await createLaundryOrder(laundryOrder, laundryStore, mezAdmins, laundryRequestDetails);
 
@@ -114,12 +107,6 @@ function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: Laund
       throw new HttpsError(
         "internal",
         "Laundry store is closed"
-      );
-    }
-    if((laundryRequestDetails.categories.length ?? 0) == 0) {
-      throw new HttpsError(
-        "internal",
-        "No category selected"
       );
     }
     if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {

@@ -22,6 +22,7 @@ export interface Order {
   cancellationTime?: string;
   discountValue?: number;
   totalCost?: number;
+  itemsCost?: number;
 }
 export enum DeliveryType {
   Pickup = "pickup",

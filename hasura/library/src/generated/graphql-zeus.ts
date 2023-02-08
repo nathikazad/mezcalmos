@@ -36695,12 +36695,12 @@ export type delivery_order = {
 	/** An object relationship */
 	restaurant_order?:restaurant_order,
 	schedule_time?:string,
-	service_provider_id?:number,
+	service_provider_id:number,
 	/** An object relationship */
 	service_provider_review_by_driver?:review,
 	service_provider_review_by_driver_id?:number,
 	/** restaurant, delivery_company */
-	service_provider_type?:string,
+	service_provider_type:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
 cancelledByServiceProvider */
