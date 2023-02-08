@@ -49,7 +49,7 @@ class CreateServiceViewController {
 
   // info inputs //
 
-  final Rxn<Location> newLocation = Rxn();
+  final Rxn<MezLocation> newLocation = Rxn();
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
@@ -105,7 +105,7 @@ class CreateServiceViewController {
     }
   }
 
-  void setNewLocation(Location newLoc) {
+  void setNewLocation(MezLocation newLoc) {
     newLocation.value = newLoc;
   }
 

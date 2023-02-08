@@ -9,7 +9,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
 Future<bool> update_service_location(
-    {required int locationId, required Location location}) async {
+    {required int locationId, required MezLocation location}) async {
   mezDbgPrint("Updating service location ✅ ==== $locationId =====");
   final QueryResult<Mutation$updateServiceLocation> res = await _hasuraDb
       .graphQLClient

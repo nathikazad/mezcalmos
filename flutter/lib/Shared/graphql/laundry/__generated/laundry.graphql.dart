@@ -213,11 +213,61 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'normal_delivery_time'),
+            name: NameNode(value: 'delivery_details_of_deliverer'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_km_range'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'name'),
@@ -469,12 +519,13 @@ class Query$getLaundries$laundry_store {
     required this.normal_delivery_time,
     required this.location_id,
     this.delivery_details_id,
+    this.delivery_details_of_deliverer,
     required this.name,
     required this.location,
     required this.approved,
-    required this.description_id,
+    this.description_id,
     this.schedule,
-    required this.description,
+    this.description,
     this.accepted_payments,
     this.stripe_info,
     required this.self_delivery,
@@ -489,6 +540,8 @@ class Query$getLaundries$laundry_store {
     final l$normal_delivery_time = json['normal_delivery_time'];
     final l$location_id = json['location_id'];
     final l$delivery_details_id = json['delivery_details_id'];
+    final l$delivery_details_of_deliverer =
+        json['delivery_details_of_deliverer'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$approved = json['approved'];
@@ -507,14 +560,22 @@ class Query$getLaundries$laundry_store {
       normal_delivery_time: (l$normal_delivery_time as int),
       location_id: (l$location_id as int),
       delivery_details_id: (l$delivery_details_id as int?),
+      delivery_details_of_deliverer:
+          (l$delivery_details_of_deliverer as List<dynamic>?)
+              ?.map((e) =>
+                  Query$getLaundries$laundry_store$delivery_details_of_deliverer
+                      .fromJson((e as Map<String, dynamic>)))
+              .toList(),
       name: (l$name as String),
       location: Query$getLaundries$laundry_store$location.fromJson(
           (l$location as Map<String, dynamic>)),
       approved: (l$approved as bool),
-      description_id: (l$description_id as int),
+      description_id: (l$description_id as int?),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      description: Query$getLaundries$laundry_store$description.fromJson(
-          (l$description as Map<String, dynamic>)),
+      description: l$description == null
+          ? null
+          : Query$getLaundries$laundry_store$description.fromJson(
+              (l$description as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
@@ -536,17 +597,20 @@ class Query$getLaundries$laundry_store {
 
   final int? delivery_details_id;
 
+  final List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
+      delivery_details_of_deliverer;
+
   final String name;
 
   final Query$getLaundries$laundry_store$location location;
 
   final bool approved;
 
-  final int description_id;
+  final int? description_id;
 
   final dynamic? schedule;
 
-  final Query$getLaundries$laundry_store$description description;
+  final Query$getLaundries$laundry_store$description? description;
 
   final dynamic? accepted_payments;
 
@@ -572,6 +636,9 @@ class Query$getLaundries$laundry_store {
     _resultData['location_id'] = l$location_id;
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    _resultData['delivery_details_of_deliverer'] =
+        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -583,7 +650,7 @@ class Query$getLaundries$laundry_store {
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
-    _resultData['description'] = l$description.toJson();
+    _resultData['description'] = l$description?.toJson();
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
@@ -607,6 +674,7 @@ class Query$getLaundries$laundry_store {
     final l$normal_delivery_time = normal_delivery_time;
     final l$location_id = location_id;
     final l$delivery_details_id = delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$name = name;
     final l$location = location;
     final l$approved = approved;
@@ -625,6 +693,9 @@ class Query$getLaundries$laundry_store {
       l$normal_delivery_time,
       l$location_id,
       l$delivery_details_id,
+      l$delivery_details_of_deliverer == null
+          ? null
+          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
       l$name,
       l$location,
       l$approved,
@@ -676,6 +747,29 @@ class Query$getLaundries$laundry_store {
     final l$delivery_details_id = delivery_details_id;
     final lOther$delivery_details_id = other.delivery_details_id;
     if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final lOther$delivery_details_of_deliverer =
+        other.delivery_details_of_deliverer;
+    if (l$delivery_details_of_deliverer != null &&
+        lOther$delivery_details_of_deliverer != null) {
+      if (l$delivery_details_of_deliverer.length !=
+          lOther$delivery_details_of_deliverer.length) {
+        return false;
+      }
+      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
+        final l$delivery_details_of_deliverer$entry =
+            l$delivery_details_of_deliverer[i];
+        final lOther$delivery_details_of_deliverer$entry =
+            lOther$delivery_details_of_deliverer[i];
+        if (l$delivery_details_of_deliverer$entry !=
+            lOther$delivery_details_of_deliverer$entry) {
+          return false;
+        }
+      }
+    } else if (l$delivery_details_of_deliverer !=
+        lOther$delivery_details_of_deliverer) {
       return false;
     }
     final l$name = name;
@@ -762,6 +856,8 @@ abstract class CopyWith$Query$getLaundries$laundry_store<TRes> {
     int? normal_delivery_time,
     int? location_id,
     int? delivery_details_id,
+    List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? name,
     Query$getLaundries$laundry_store$location? location,
     bool? approved,
@@ -774,6 +870,12 @@ abstract class CopyWith$Query$getLaundries$laundry_store<TRes> {
     String? open_status,
     String? $__typename,
   });
+  TRes delivery_details_of_deliverer(
+      Iterable<Query$getLaundries$laundry_store$delivery_details_of_deliverer>? Function(
+              Iterable<
+                  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+                      Query$getLaundries$laundry_store$delivery_details_of_deliverer>>?)
+          _fn);
   CopyWith$Query$getLaundries$laundry_store$location<TRes> get location;
   CopyWith$Query$getLaundries$laundry_store$description<TRes> get description;
 }
@@ -798,6 +900,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
     Object? normal_delivery_time = _undefined,
     Object? location_id = _undefined,
     Object? delivery_details_id = _undefined,
+    Object? delivery_details_of_deliverer = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? approved = _undefined,
@@ -828,6 +931,11 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
         delivery_details_id: delivery_details_id == _undefined
             ? _instance.delivery_details_id
             : (delivery_details_id as int?),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Query$getLaundries$laundry_store$delivery_details_of_deliverer>?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -837,15 +945,15 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
-        description_id: description_id == _undefined || description_id == null
+        description_id: description_id == _undefined
             ? _instance.description_id
-            : (description_id as int),
+            : (description_id as int?),
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        description: description == _undefined || description == null
+        description: description == _undefined
             ? _instance.description
-            : (description as Query$getLaundries$laundry_store$description),
+            : (description as Query$getLaundries$laundry_store$description?),
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
@@ -862,6 +970,19 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes delivery_details_of_deliverer(
+          Iterable<Query$getLaundries$laundry_store$delivery_details_of_deliverer>? Function(
+                  Iterable<
+                      CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+                          Query$getLaundries$laundry_store$delivery_details_of_deliverer>>?)
+              _fn) =>
+      call(
+          delivery_details_of_deliverer: _fn(
+              _instance.delivery_details_of_deliverer?.map((e) =>
+                  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+                    e,
+                    (i) => i,
+                  )))?.toList());
   CopyWith$Query$getLaundries$laundry_store$location<TRes> get location {
     final local$location = _instance.location;
     return CopyWith$Query$getLaundries$laundry_store$location(
@@ -870,8 +991,11 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
 
   CopyWith$Query$getLaundries$laundry_store$description<TRes> get description {
     final local$description = _instance.description;
-    return CopyWith$Query$getLaundries$laundry_store$description(
-        local$description, (e) => call(description: e));
+    return local$description == null
+        ? CopyWith$Query$getLaundries$laundry_store$description.stub(
+            _then(_instance))
+        : CopyWith$Query$getLaundries$laundry_store$description(
+            local$description, (e) => call(description: e));
   }
 }
 
@@ -888,6 +1012,8 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store<TRes>
     int? normal_delivery_time,
     int? location_id,
     int? delivery_details_id,
+    List<Query$getLaundries$laundry_store$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? name,
     Query$getLaundries$laundry_store$location? location,
     bool? approved,
@@ -901,10 +1027,256 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store<TRes>
     String? $__typename,
   }) =>
       _res;
+  delivery_details_of_deliverer(_fn) => _res;
   CopyWith$Query$getLaundries$laundry_store$location<TRes> get location =>
       CopyWith$Query$getLaundries$laundry_store$location.stub(_res);
   CopyWith$Query$getLaundries$laundry_store$description<TRes> get description =>
       CopyWith$Query$getLaundries$laundry_store$description.stub(_res);
+}
+
+class Query$getLaundries$laundry_store$delivery_details_of_deliverer {
+  Query$getLaundries$laundry_store$delivery_details_of_deliverer({
+    required this.cost_per_km,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.minimum_cost,
+    required this.radius,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundries$laundry_store$delivery_details_of_deliverer.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final double minimum_cost;
+
+  final int radius;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$minimum_cost,
+      l$radius,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundries$laundry_store$delivery_details_of_deliverer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundries$laundry_store$delivery_details_of_deliverer
+    on Query$getLaundries$laundry_store$delivery_details_of_deliverer {
+  CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+          Query$getLaundries$laundry_store$delivery_details_of_deliverer>
+      get copyWith =>
+          CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+    TRes> {
+  factory CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+    Query$getLaundries$laundry_store$delivery_details_of_deliverer instance,
+    TRes Function(
+            Query$getLaundries$laundry_store$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer;
+
+  factory CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer;
+
+  TRes call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundries$laundry_store$delivery_details_of_deliverer
+      _instance;
+
+  final TRes Function(
+      Query$getLaundries$laundry_store$delivery_details_of_deliverer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getLaundries$laundry_store$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundries$laundry_store$delivery_details_of_deliverer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getLaundries$laundry_store$location {
@@ -1671,6 +2043,70 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_details_of_deliverer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_km_range'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'image'),
             alias: null,
             arguments: [],
@@ -1943,15 +2379,16 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     required this.location_id,
     this.delivery_details_id,
     required this.normal_delivery_time,
+    this.delivery_details_of_deliverer,
     required this.image,
     required this.language_id,
-    required this.description_id,
+    this.description_id,
     required this.location,
     required this.self_delivery,
     this.accepted_payments,
     this.stripe_info,
     required this.name,
-    required this.description,
+    this.description,
     required this.approved,
     this.schedule,
     required this.open_status,
@@ -1964,6 +2401,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$location_id = json['location_id'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$normal_delivery_time = json['normal_delivery_time'];
+    final l$delivery_details_of_deliverer =
+        json['delivery_details_of_deliverer'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$description_id = json['description_id'];
@@ -1982,9 +2421,15 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
       location_id: (l$location_id as int),
       delivery_details_id: (l$delivery_details_id as int?),
       normal_delivery_time: (l$normal_delivery_time as int),
+      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
+              as List<dynamic>?)
+          ?.map((e) =>
+              Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       image: (l$image as String),
       language_id: (l$language_id as String),
-      description_id: (l$description_id as int),
+      description_id: (l$description_id as int?),
       location: Query$getLaundryStoreById$laundry_store_by_pk$location.fromJson(
           (l$location as Map<String, dynamic>)),
       self_delivery: (l$self_delivery as bool),
@@ -1992,8 +2437,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       name: (l$name as String),
-      description:
-          Query$getLaundryStoreById$laundry_store_by_pk$description.fromJson(
+      description: l$description == null
+          ? null
+          : Query$getLaundryStoreById$laundry_store_by_pk$description.fromJson(
               (l$description as Map<String, dynamic>)),
       approved: (l$approved as bool),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
@@ -2010,11 +2456,15 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
 
   final int normal_delivery_time;
 
+  final List<
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
+      delivery_details_of_deliverer;
+
   final String image;
 
   final String language_id;
 
-  final int description_id;
+  final int? description_id;
 
   final Query$getLaundryStoreById$laundry_store_by_pk$location location;
 
@@ -2026,7 +2476,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
 
   final String name;
 
-  final Query$getLaundryStoreById$laundry_store_by_pk$description description;
+  final Query$getLaundryStoreById$laundry_store_by_pk$description? description;
 
   final bool approved;
 
@@ -2046,6 +2496,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$normal_delivery_time = normal_delivery_time;
     _resultData['normal_delivery_time'] = l$normal_delivery_time;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    _resultData['delivery_details_of_deliverer'] =
+        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language_id = language_id;
@@ -2065,7 +2518,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$name = name;
     _resultData['name'] = l$name;
     final l$description = description;
-    _resultData['description'] = l$description.toJson();
+    _resultData['description'] = l$description?.toJson();
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$schedule = schedule;
@@ -2083,6 +2536,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$location_id = location_id;
     final l$delivery_details_id = delivery_details_id;
     final l$normal_delivery_time = normal_delivery_time;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$image = image;
     final l$language_id = language_id;
     final l$description_id = description_id;
@@ -2101,6 +2555,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
       l$location_id,
       l$delivery_details_id,
       l$normal_delivery_time,
+      l$delivery_details_of_deliverer == null
+          ? null
+          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
       l$image,
       l$language_id,
       l$description_id,
@@ -2144,6 +2601,29 @@ class Query$getLaundryStoreById$laundry_store_by_pk {
     final l$normal_delivery_time = normal_delivery_time;
     final lOther$normal_delivery_time = other.normal_delivery_time;
     if (l$normal_delivery_time != lOther$normal_delivery_time) {
+      return false;
+    }
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final lOther$delivery_details_of_deliverer =
+        other.delivery_details_of_deliverer;
+    if (l$delivery_details_of_deliverer != null &&
+        lOther$delivery_details_of_deliverer != null) {
+      if (l$delivery_details_of_deliverer.length !=
+          lOther$delivery_details_of_deliverer.length) {
+        return false;
+      }
+      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
+        final l$delivery_details_of_deliverer$entry =
+            l$delivery_details_of_deliverer[i];
+        final lOther$delivery_details_of_deliverer$entry =
+            lOther$delivery_details_of_deliverer[i];
+        if (l$delivery_details_of_deliverer$entry !=
+            lOther$delivery_details_of_deliverer$entry) {
+          return false;
+        }
+      }
+    } else if (l$delivery_details_of_deliverer !=
+        lOther$delivery_details_of_deliverer) {
       return false;
     }
     final l$image = image;
@@ -2240,6 +2720,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
     int? location_id,
     int? delivery_details_id,
     int? normal_delivery_time,
+    List<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? image,
     String? language_id,
     int? description_id,
@@ -2254,6 +2736,12 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk<TRes> {
     String? open_status,
     String? $__typename,
   });
+  TRes delivery_details_of_deliverer(
+      Iterable<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>? Function(
+              Iterable<
+                  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+                      Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>>?)
+          _fn);
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$location<TRes>
       get location;
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description<TRes>
@@ -2278,6 +2766,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     Object? location_id = _undefined,
     Object? delivery_details_id = _undefined,
     Object? normal_delivery_time = _undefined,
+    Object? delivery_details_of_deliverer = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? description_id = _undefined,
@@ -2304,15 +2793,20 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
             normal_delivery_time == _undefined || normal_delivery_time == null
                 ? _instance.normal_delivery_time
                 : (normal_delivery_time as int),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
-        description_id: description_id == _undefined || description_id == null
+        description_id: description_id == _undefined
             ? _instance.description_id
-            : (description_id as int),
+            : (description_id as int?),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
@@ -2329,10 +2823,10 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
-        description: description == _undefined || description == null
+        description: description == _undefined
             ? _instance.description
             : (description
-                as Query$getLaundryStoreById$laundry_store_by_pk$description),
+                as Query$getLaundryStoreById$laundry_store_by_pk$description?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -2346,6 +2840,19 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes delivery_details_of_deliverer(
+          Iterable<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>? Function(
+                  Iterable<
+                      CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+                          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>>?)
+              _fn) =>
+      call(
+          delivery_details_of_deliverer: _fn(
+              _instance.delivery_details_of_deliverer?.map((e) =>
+                  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+                    e,
+                    (i) => i,
+                  )))?.toList());
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
@@ -2356,8 +2863,11 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description<TRes>
       get description {
     final local$description = _instance.description;
-    return CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description(
-        local$description, (e) => call(description: e));
+    return local$description == null
+        ? CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description
+            .stub(_then(_instance))
+        : CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description(
+            local$description, (e) => call(description: e));
   }
 }
 
@@ -2372,6 +2882,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     int? location_id,
     int? delivery_details_id,
     int? normal_delivery_time,
+    List<Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? image,
     String? language_id,
     int? description_id,
@@ -2387,6 +2899,7 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
     String? $__typename,
   }) =>
       _res;
+  delivery_details_of_deliverer(_fn) => _res;
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$location<TRes>
       get location =>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$location.stub(
@@ -2395,6 +2908,254 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk<TRes>
       get description =>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$description
               .stub(_res);
+}
+
+class Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer {
+  Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer({
+    required this.cost_per_km,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.minimum_cost,
+    required this.radius,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final double minimum_cost;
+
+  final int radius;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$minimum_cost,
+      l$radius,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
+    on Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer>
+      get copyWith =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+    TRes> {
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+    Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
+        instance,
+    TRes Function(
+            Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer;
+
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer;
+
+  TRes call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer
+      _instance;
+
+  final TRes Function(
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$delivery_details_of_deliverer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getLaundryStoreById$laundry_store_by_pk$location {
@@ -4876,6 +5637,70 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_details_of_deliverer'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'cost_per_km'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_km_range'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'free_delivery_minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'minimum_cost'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'radius'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'image'),
             alias: null,
             arguments: [],
@@ -5127,6 +5952,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     required this.id,
     required this.location_id,
     required this.normal_delivery_time,
+    this.delivery_details_id,
+    this.delivery_details_of_deliverer,
     required this.image,
     required this.language_id,
     required this.location,
@@ -5134,7 +5961,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     this.stripe_info,
     required this.name,
     this.schedule,
-    required this.description,
+    this.description,
     required this.approved,
     required this.open_status,
     required this.$__typename,
@@ -5145,6 +5972,9 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     final l$id = json['id'];
     final l$location_id = json['location_id'];
     final l$normal_delivery_time = json['normal_delivery_time'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$delivery_details_of_deliverer =
+        json['delivery_details_of_deliverer'];
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$location = json['location'];
@@ -5160,6 +5990,13 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
       id: (l$id as int),
       location_id: (l$location_id as int),
       normal_delivery_time: (l$normal_delivery_time as int),
+      delivery_details_id: (l$delivery_details_id as int?),
+      delivery_details_of_deliverer: (l$delivery_details_of_deliverer
+              as List<dynamic>?)
+          ?.map((e) =>
+              Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
       image: (l$image as String),
       language_id: (l$language_id as String),
       location: Mutation$updateLaundryInfo$update_laundry_store_by_pk$location
@@ -5169,8 +6006,9 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       name: (l$name as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      description:
-          Mutation$updateLaundryInfo$update_laundry_store_by_pk$description
+      description: l$description == null
+          ? null
+          : Mutation$updateLaundryInfo$update_laundry_store_by_pk$description
               .fromJson((l$description as Map<String, dynamic>)),
       approved: (l$approved as bool),
       open_status: (l$open_status as String),
@@ -5183,6 +6021,12 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
   final int location_id;
 
   final int normal_delivery_time;
+
+  final int? delivery_details_id;
+
+  final List<
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>?
+      delivery_details_of_deliverer;
 
   final String image;
 
@@ -5198,7 +6042,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
 
   final dynamic? schedule;
 
-  final Mutation$updateLaundryInfo$update_laundry_store_by_pk$description
+  final Mutation$updateLaundryInfo$update_laundry_store_by_pk$description?
       description;
 
   final bool approved;
@@ -5215,6 +6059,11 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     _resultData['location_id'] = l$location_id;
     final l$normal_delivery_time = normal_delivery_time;
     _resultData['normal_delivery_time'] = l$normal_delivery_time;
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    _resultData['delivery_details_of_deliverer'] =
+        l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language_id = language_id;
@@ -5232,7 +6081,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     final l$schedule = schedule;
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
-    _resultData['description'] = l$description.toJson();
+    _resultData['description'] = l$description?.toJson();
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$open_status = open_status;
@@ -5247,6 +6096,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     final l$id = id;
     final l$location_id = location_id;
     final l$normal_delivery_time = normal_delivery_time;
+    final l$delivery_details_id = delivery_details_id;
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$image = image;
     final l$language_id = language_id;
     final l$location = location;
@@ -5262,6 +6113,10 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
       l$id,
       l$location_id,
       l$normal_delivery_time,
+      l$delivery_details_id,
+      l$delivery_details_of_deliverer == null
+          ? null
+          : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
       l$image,
       l$language_id,
       l$location,
@@ -5298,6 +6153,34 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk {
     final l$normal_delivery_time = normal_delivery_time;
     final lOther$normal_delivery_time = other.normal_delivery_time;
     if (l$normal_delivery_time != lOther$normal_delivery_time) {
+      return false;
+    }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
+    final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
+    final lOther$delivery_details_of_deliverer =
+        other.delivery_details_of_deliverer;
+    if (l$delivery_details_of_deliverer != null &&
+        lOther$delivery_details_of_deliverer != null) {
+      if (l$delivery_details_of_deliverer.length !=
+          lOther$delivery_details_of_deliverer.length) {
+        return false;
+      }
+      for (int i = 0; i < l$delivery_details_of_deliverer.length; i++) {
+        final l$delivery_details_of_deliverer$entry =
+            l$delivery_details_of_deliverer[i];
+        final lOther$delivery_details_of_deliverer$entry =
+            lOther$delivery_details_of_deliverer[i];
+        if (l$delivery_details_of_deliverer$entry !=
+            lOther$delivery_details_of_deliverer$entry) {
+          return false;
+        }
+      }
+    } else if (l$delivery_details_of_deliverer !=
+        lOther$delivery_details_of_deliverer) {
       return false;
     }
     final l$image = image;
@@ -5385,6 +6268,9 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
     int? id,
     int? location_id,
     int? normal_delivery_time,
+    int? delivery_details_id,
+    List<Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? image,
     String? language_id,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$location? location,
@@ -5398,6 +6284,12 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
     String? open_status,
     String? $__typename,
   });
+  TRes delivery_details_of_deliverer(
+      Iterable<Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>? Function(
+              Iterable<
+                  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+                      Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>>?)
+          _fn);
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$location<TRes>
       get location;
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description<
@@ -5423,6 +6315,8 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<TRes>
     Object? id = _undefined,
     Object? location_id = _undefined,
     Object? normal_delivery_time = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? delivery_details_of_deliverer = _undefined,
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? location = _undefined,
@@ -5444,6 +6338,14 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<TRes>
             normal_delivery_time == _undefined || normal_delivery_time == null
                 ? _instance.normal_delivery_time
                 : (normal_delivery_time as int),
+        delivery_details_id: delivery_details_id == _undefined
+            ? _instance.delivery_details_id
+            : (delivery_details_id as int?),
+        delivery_details_of_deliverer: delivery_details_of_deliverer ==
+                _undefined
+            ? _instance.delivery_details_of_deliverer
+            : (delivery_details_of_deliverer as List<
+                Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>?),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -5466,10 +6368,10 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<TRes>
         schedule: schedule == _undefined
             ? _instance.schedule
             : (schedule as dynamic?),
-        description: description == _undefined || description == null
+        description: description == _undefined
             ? _instance.description
             : (description
-                as Mutation$updateLaundryInfo$update_laundry_store_by_pk$description),
+                as Mutation$updateLaundryInfo$update_laundry_store_by_pk$description?),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -5480,6 +6382,19 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  TRes delivery_details_of_deliverer(
+          Iterable<Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>? Function(
+                  Iterable<
+                      CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+                          Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>>?)
+              _fn) =>
+      call(
+          delivery_details_of_deliverer: _fn(
+              _instance.delivery_details_of_deliverer?.map((e) =>
+                  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+                    e,
+                    (i) => i,
+                  )))?.toList());
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$location<TRes>
       get location {
     final local$location = _instance.location;
@@ -5490,8 +6405,11 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<TRes>
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description<
       TRes> get description {
     final local$description = _instance.description;
-    return CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description(
-        local$description, (e) => call(description: e));
+    return local$description == null
+        ? CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description(
+            local$description, (e) => call(description: e));
   }
 }
 
@@ -5508,6 +6426,9 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
     int? id,
     int? location_id,
     int? normal_delivery_time,
+    int? delivery_details_id,
+    List<Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>?
+        delivery_details_of_deliverer,
     String? image,
     String? language_id,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$location? location,
@@ -5522,6 +6443,7 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
     String? $__typename,
   }) =>
       _res;
+  delivery_details_of_deliverer(_fn) => _res;
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$location<TRes>
       get location =>
           CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$location
@@ -5531,6 +6453,254 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk<
       get description =>
           CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$description
               .stub(_res);
+}
+
+class Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer {
+  Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer({
+    required this.cost_per_km,
+    this.free_delivery_km_range,
+    this.free_delivery_minimum_cost,
+    required this.id,
+    required this.minimum_cost,
+    required this.radius,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer.fromJson(
+      Map<String, dynamic> json) {
+    final l$cost_per_km = json['cost_per_km'];
+    final l$free_delivery_km_range = json['free_delivery_km_range'];
+    final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$id = json['id'];
+    final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+      cost_per_km: moneyFromJson(l$cost_per_km),
+      free_delivery_km_range: (l$free_delivery_km_range as num?)?.toDouble(),
+      free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
+          ? null
+          : moneyFromJson(l$free_delivery_minimum_cost),
+      id: (l$id as int),
+      minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double cost_per_km;
+
+  final double? free_delivery_km_range;
+
+  final double? free_delivery_minimum_cost;
+
+  final int id;
+
+  final double minimum_cost;
+
+  final int radius;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$cost_per_km = cost_per_km;
+    _resultData['cost_per_km'] = moneyToJson(l$cost_per_km);
+    final l$free_delivery_km_range = free_delivery_km_range;
+    _resultData['free_delivery_km_range'] = l$free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    _resultData['free_delivery_minimum_cost'] =
+        l$free_delivery_minimum_cost == null
+            ? null
+            : moneyToJson(l$free_delivery_minimum_cost);
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$minimum_cost = minimum_cost;
+    _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$cost_per_km = cost_per_km;
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$id = id;
+    final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$cost_per_km,
+      l$free_delivery_km_range,
+      l$free_delivery_minimum_cost,
+      l$id,
+      l$minimum_cost,
+      l$radius,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$cost_per_km = cost_per_km;
+    final lOther$cost_per_km = other.cost_per_km;
+    if (l$cost_per_km != lOther$cost_per_km) {
+      return false;
+    }
+    final l$free_delivery_km_range = free_delivery_km_range;
+    final lOther$free_delivery_km_range = other.free_delivery_km_range;
+    if (l$free_delivery_km_range != lOther$free_delivery_km_range) {
+      return false;
+    }
+    final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
+    if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$minimum_cost = minimum_cost;
+    final lOther$minimum_cost = other.minimum_cost;
+    if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer
+    on Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer {
+  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+    Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer
+        instance,
+    TRes Function(
+            Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer;
+
+  factory CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer;
+
+  TRes call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer
+      _instance;
+
+  final TRes Function(
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? cost_per_km = _undefined,
+    Object? free_delivery_km_range = _undefined,
+    Object? free_delivery_minimum_cost = _undefined,
+    Object? id = _undefined,
+    Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+        cost_per_km: cost_per_km == _undefined || cost_per_km == null
+            ? _instance.cost_per_km
+            : (cost_per_km as double),
+        free_delivery_km_range: free_delivery_km_range == _undefined
+            ? _instance.free_delivery_km_range
+            : (free_delivery_km_range as double?),
+        free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
+            ? _instance.free_delivery_minimum_cost
+            : (free_delivery_minimum_cost as double?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        minimum_cost: minimum_cost == _undefined || minimum_cost == null
+            ? _instance.minimum_cost
+            : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$delivery_details_of_deliverer(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? cost_per_km,
+    double? free_delivery_km_range,
+    double? free_delivery_minimum_cost,
+    int? id,
+    double? minimum_cost,
+    int? radius,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Mutation$updateLaundryInfo$update_laundry_store_by_pk$location {

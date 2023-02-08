@@ -129,7 +129,7 @@ class CustomerAuthController extends GetxController {
       delete_saved_location(saved_location_id: savedLocation.id!);
   }
 
-  Location? getLocationById(int locationId) {
+  MezLocation? getLocationById(int locationId) {
     // we get the user Location by it's id!
 
     return customer?.savedLocations.firstWhere((SavedLocation savedLocation) {

@@ -17,7 +17,7 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["components"]["DropDownLocationList"]; //
 
-typedef OnDropDownNewValue = void Function({locModel.Location? location});
+typedef OnDropDownNewValue = void Function({locModel.MezLocation? location});
 
 class DropDownLocationList extends StatefulWidget {
   DropDownLocationList({
@@ -31,8 +31,8 @@ class DropDownLocationList extends StatefulWidget {
 
   final OnDropDownNewValue? onValueChangeCallback;
 
-  locModel.Location? passedInLocation;
-  locModel.Location? serviceProviderLocation;
+  locModel.MezLocation? passedInLocation;
+  locModel.MezLocation? serviceProviderLocation;
   bool checkDistance;
   final Color bgColor;
 
@@ -59,7 +59,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     pickLocationPlaceholder = SavedLocation(
       name: _i18n()["pickLocation"],
       id: -1,
-      location: locModel.Location(
+      location: locModel.MezLocation(
         "",
         Location.LocationData.fromMap({"latitude": 0.0, "longitude": 0.0}),
       ),
@@ -163,7 +163,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     return widget.serviceProviderLocation != null && widget.checkDistance;
   }
 
-  Future<bool> _lessThanDistance(locModel.Location loc) async {
+  Future<bool> _lessThanDistance(locModel.MezLocation loc) async {
     MapHelper.Route? routeInfo;
     if (widget.serviceProviderLocation != null) {
       routeInfo = await MapHelper.getDurationAndDistance(

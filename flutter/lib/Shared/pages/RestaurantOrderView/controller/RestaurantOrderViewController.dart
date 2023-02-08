@@ -110,7 +110,7 @@ class RestaurantOrderViewController {
       if (_statusSnapshot != order.value!.status) {
         if (order.value?.restaurant.location != null) {
           mGoogleMapController.setLocation(
-            LocModel.Location(
+            LocModel.MezLocation(
               "_",
               LocationData.fromMap(
                 <String, dynamic>{

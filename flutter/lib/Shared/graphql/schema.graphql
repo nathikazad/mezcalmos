@@ -7820,6 +7820,11 @@ type laundry_order {
   A computed field, executes function "laundry.order_in_process"
   """
   in_process: Boolean
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz!
   payment_type: String!
@@ -7841,6 +7846,11 @@ type laundry_order {
   ): jsonb
   tax: money!
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -7916,6 +7926,7 @@ input laundry_order_bool_exp {
   from_customer_delivery_id: Int_comparison_exp
   id: Int_comparison_exp
   in_process: Boolean_comparison_exp
+  items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
   payment_type: String_comparison_exp
@@ -7930,6 +7941,7 @@ input laundry_order_bool_exp {
   stripe_info: jsonb_comparison_exp
   tax: money_comparison_exp
   to_customer_delivery_id: Int_comparison_exp
+  total_cost: money_comparison_exp
 }
 
 """
@@ -8684,6 +8696,7 @@ input laundry_order_order_by {
   from_customer_delivery_id: order_by
   id: order_by
   in_process: order_by
+  items_cost: order_by
   notes: order_by
   order_time: order_by
   payment_type: order_by
@@ -8698,6 +8711,7 @@ input laundry_order_order_by {
   stripe_info: order_by
   tax: order_by
   to_customer_delivery_id: order_by
+  total_cost: order_by
 }
 
 """primary key columns input for table: laundry.order"""
@@ -9111,12 +9125,32 @@ type laundry_store {
   delivery_details: delivery_details
   delivery_details_id: Int
 
+  """
+  A computed field, executes function "laundry_delivery_details"
+  """
+  delivery_details_of_deliverer(
+    """distinct select on columns"""
+    distinct_on: [delivery_details_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_details_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_details_bool_exp
+  ): [delivery_details!]
+
   """An object relationship"""
   delivery_partner: service_provider_delivery_partner
 
   """An object relationship"""
-  description: translation!
-  description_id: Int!
+  description: translation
+  description_id: Int
   id: Int!
   image: String!
   language_id: String!
@@ -9235,6 +9269,7 @@ input laundry_store_bool_exp {
   delivery: Boolean_comparison_exp
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
+  delivery_details_of_deliverer: delivery_details_bool_exp
   delivery_partner: service_provider_delivery_partner_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
@@ -9423,6 +9458,7 @@ input laundry_store_order_by {
   delivery: order_by
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
+  delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
   delivery_partner: service_provider_delivery_partner_order_by
   description: translation_order_by
   description_id: order_by

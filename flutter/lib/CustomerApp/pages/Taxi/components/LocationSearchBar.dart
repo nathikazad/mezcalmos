@@ -31,7 +31,7 @@ extension ParseSearchComponentTypeToString on SearchComponentType {
 }
 
 typedef SearchLocationNotifier = void Function(
-  Location? location,
+  MezLocation? location,
   SearchComponentType locationType,
 );
 
@@ -203,7 +203,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         onTextChange: textFieldOnTextChanged,
         onFocus: () => textFieldOnFocus(SearchComponentType.From),
         onFocusLost: textFieldOnFocusLost,
-        notifyParent: (Location? location) {
+        notifyParent: (MezLocation? location) {
           // This is notifying the parent when the user Clicks a suggestion from the suggestions list!
           widget.newLocationChosenEvent(
             location,
@@ -279,7 +279,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
         onTextChange: textFieldOnTextChanged,
         onFocus: () => textFieldOnFocus(SearchComponentType.To),
         onFocusLost: textFieldOnFocusLost,
-        notifyParent: (Location? location) {
+        notifyParent: (MezLocation? location) {
           widget.newLocationChosenEvent(location, SearchComponentType.To);
         },
       ),
@@ -402,7 +402,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
       <LocationDropDownItem>[
         LocationDropDownItem(
           function: () async {
-            final Location? _loc = await MapHelper.getCurrentLocation();
+            final MezLocation? _loc = await MapHelper.getCurrentLocation();
             mezDbgPrint("zlaganga::root : ${_loc?.address}");
             widget.newLocationChosenEvent(
                 _loc, locationSearchBarController.focusedTextField.value);
@@ -442,7 +442,7 @@ class LocationSearchBarState extends State<LocationSearchBar> {
           LocationDropDownItem(
             icon: Icon(MezcalmosIcons.search, size: 20, color: Colors.purple),
             function: () {
-              final Location? _savedLoc =
+              final MezLocation? _savedLoc =
                   _authController?.getLocationById(sLocation.id!);
               mezDbgPrint(
                   "${sLocation.id} Saved looooooooooooocccc =====>${_savedLoc?.toFirebaseFormattedJson()}");

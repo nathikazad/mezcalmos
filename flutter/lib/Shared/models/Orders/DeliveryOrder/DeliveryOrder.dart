@@ -26,8 +26,8 @@ class DeliveryOrder {
   DateTime orderTime;
   num deliveryCost;
   num packageCost;
-  Location pickupLocation;
-  Location dropoffLocation;
+  MezLocation pickupLocation;
+  MezLocation dropoffLocation;
   LatLng? driverLocation;
   int chatWithCustomerId;
   int? chatWithServiceProviderId;
@@ -76,9 +76,9 @@ class DeliveryOrder {
     DateTime? orderTime,
     num? deliveryCost,
     num? packageCost,
-    Location? pickupLocation,
+    MezLocation? pickupLocation,
     LatLng? driverLocation,
-    Location? dropoffLocation,
+    MezLocation? dropoffLocation,
     int? chatWithCustomerId,
     int? chatWithServiceProviderId,
     PaymentType? paymentType,

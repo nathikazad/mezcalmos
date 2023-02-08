@@ -160,7 +160,7 @@ class LocationSearchComponentState extends State<LocationSearchComponent> {
                     }
                   },
                   onTapCallback: (String placeId, String name) async {
-                    final Location? _loc =
+                    final MezLocation? _loc =
                         await MapHelper.getLocationFromPlaceId(placeId);
                     if (_loc != null) {
                       widget.notifyParent(_loc);

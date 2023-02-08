@@ -77,7 +77,7 @@ class DvOrderViewcontroller {
     Future<void>.microtask(
       () => deliveryAuthAuthController.currentLocation != null
           ? mapController.setLocation(
-              Location.fromLocationData(
+              MezLocation.fromLocationData(
                 deliveryAuthAuthController.currentLocation!,
               ),
             )

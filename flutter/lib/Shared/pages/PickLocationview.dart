@@ -70,7 +70,7 @@ class _PickLocationViewState extends State<PickLocationView> {
     final String? address = await getAdressFromLatLng(currentLoc);
 
     setState(() {
-      locationPickerController.setLocation(Location.fromFirebaseData({
+      locationPickerController.setLocation(MezLocation.fromFirebaseData({
         "address": address ??
             currentLoc.latitude.toString() + ", ${currentLoc.longitude}",
         "lat": currentLoc.latitude,
@@ -122,7 +122,7 @@ class _PickLocationViewState extends State<PickLocationView> {
   }
 
   void setNewLocationOnController({required LatLng latlng, String? address}) {
-    locationPickerController.setLocation(Location.fromFirebaseData({
+    locationPickerController.setLocation(MezLocation.fromFirebaseData({
       "address": address ??
           latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
       "lat": latlng.latitude,
@@ -143,14 +143,14 @@ class _PickLocationViewState extends State<PickLocationView> {
         // showScreenLoading = true;
       });
       if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        MezRouter.back<Location>(
+        MezRouter.back<MezLocation>(
             result: locationPickerController.location.value);
       } else if (widget.pickLocationMode == PickLocationMode.EditLocation) {
-        MezRouter.back<Location>(
+        MezRouter.back<MezLocation>(
             result: locationPickerController.location.value);
         mezDbgPrint(locationPickerController.location.value!.address);
       } else {
-        MezRouter.back<Location>(
+        MezRouter.back<MezLocation>(
             result: locationPickerController.location.value);
       }
     }
@@ -210,7 +210,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
-                notifyParent: (Location? location) {
+                notifyParent: (MezLocation? location) {
                   setState(() {
                     locationPickerController.setLocation(location!);
                     locationPickerController.moveToNewLatLng(
@@ -233,7 +233,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                     showBottomButton: false,
                     locationPickerMapController: locationPickerController,
                     notifyParentOfConfirm: (_) {},
-                    notifyParentOfLocationFinalized: (Location location) {
+                    notifyParentOfLocationFinalized: (MezLocation location) {
                       mezDbgPrint("NEwLOC notif");
                       setState(() {
                         locationPickerController.setLocation(location);

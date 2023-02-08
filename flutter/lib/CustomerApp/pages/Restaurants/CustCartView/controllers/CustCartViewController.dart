@@ -34,7 +34,7 @@ class CustCartViewController {
   Rxn<CustStripeInfo> custStripeInfo = Rxn();
   List<CreditCard>? get customerCards => custStripeInfo.value?.cards;
   RxList<PaymentOption> options = RxList<PaymentOption>();
-  Rxn<loc.Location> orderToLocation = Rxn();
+  Rxn<loc.MezLocation> orderToLocation = Rxn();
 
   CardChoice cartPaymentChoice = CardChoice.ApplePay;
   CreditCard? savedCardChoice;
@@ -331,7 +331,7 @@ class CustCartViewController {
 
   Future<bool> updateShippingPrice() async {
     isShippingSet.value = false;
-    final LocModel.Location? loc = cart.toLocation;
+    final LocModel.MezLocation? loc = cart.toLocation;
 
     if (loc != null && cart.restaurant != null) {
       final MapHelper.Route? routeInfo = await MapHelper.getDurationAndDistance(
@@ -408,7 +408,7 @@ class CustCartViewController {
     }
   }
 
-  void switchLocation(loc.Location location) {
+  void switchLocation(loc.MezLocation location) {
     _cartRxn.value?.toLocation = location;
     _cartRxn.refresh();
     updateShippingPrice();

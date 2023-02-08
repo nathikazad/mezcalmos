@@ -136,7 +136,8 @@ class CloudFunctions {
       required bool customerPickup,
       bool? selfDelivery,
       num? deliveryPartnerId,
-      DeliveryDetails? deliveryDetails}  ) async {
+      DeliveryDetails? deliveryDetails,
+      required Language language}  ) async {
     return await callCloudFunction(
       functionName: "restaurant2-createRestaurant",
       parameters: <String, dynamic>{
@@ -151,11 +152,12 @@ class CloudFunctions {
         "selfDelivery":selfDelivery,
         "deliveryPartnerId":deliveryPartnerId,
         "deliveryDetails":deliveryDetails?.toFirebaseFormattedJson(),
+        "language":language.toFirebaseFormatString(),
       });
   }
 
   static Future<CheckoutResponse> restaurant2_checkoutCart(
-      {required AppType customerAppType,
+      {required CustomerAppType customerAppType,
       required Location customerLocation,
       required num deliveryCost,
       required PaymentType paymentType,
@@ -276,11 +278,97 @@ class CloudFunctions {
       });
   }
 
+  static Future<void> laundry_createLaundry(
+      {required String name,
+      required String image,
+      required Location location,
+      required Map<String, dynamic> schedule,
+      String? laundryOperatorNotificationToken,
+      String? firebaseId,
+      required bool delivery,
+      required bool customerPickup,
+      bool? selfDelivery,
+      num? deliveryPartnerId,
+      DeliveryDetails? deliveryDetails,
+      required Language language}  ) async {
+    return await callCloudFunction(
+      functionName: "laundry-createLaundry",
+      parameters: <String, dynamic>{
+        "name":name,
+        "image":image,
+        "location":location.toFirebaseFormattedJson(),
+        "schedule":json.encode(schedule),
+        "laundryOperatorNotificationToken":laundryOperatorNotificationToken,
+        "firebaseId":firebaseId,
+        "delivery":delivery,
+        "customerPickup":customerPickup,
+        "selfDelivery":selfDelivery,
+        "deliveryPartnerId":deliveryPartnerId,
+        "deliveryDetails":deliveryDetails?.toFirebaseFormattedJson(),
+        "language":language.toFirebaseFormatString(),
+      });
+  }
+
+  static Future<ReqLaundryResponse> laundry_requestLaundry(
+      {required num storeId,
+      required PaymentType paymentType,
+      required DeliveryType deliveryType,
+      required Location customerLocation,
+      required num deliveryCost,
+      required CustomerAppType customerAppType,
+      String? notes,
+      num? tax,
+      String? scheduledTime,
+      num? stripeFees,
+      String? stripePaymentId,
+      num? discountValue,
+      required num tripDistance,
+      required num tripDuration,
+      required String tripPolyline}  ) async {
+    return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "laundry-requestLaundry",
+      parameters: <String, dynamic>{
+        "storeId":storeId,
+        "paymentType":paymentType.toFirebaseFormatString(),
+        "deliveryType":deliveryType.toFirebaseFormatString(),
+        "customerLocation":customerLocation.toFirebaseFormattedJson(),
+        "deliveryCost":deliveryCost,
+        "customerAppType":customerAppType.toFirebaseFormatString(),
+        "notes":notes,
+        "tax":tax,
+        "scheduledTime":scheduledTime,
+        "stripeFees":stripeFees,
+        "stripePaymentId":stripePaymentId,
+        "discountValue":discountValue,
+        "tripDistance":tripDistance,
+        "tripDuration":tripDuration,
+        "tripPolyline":tripPolyline,
+      }));
+  }
+
+  static Future<void> laundry_readyForDeliveryOrder(
+      {required num orderId}  ) async {
+    return await callCloudFunction(
+      functionName: "laundry-readyForDeliveryOrder",
+      parameters: <String, dynamic>{
+        "orderId":orderId,
+      });
+  }
+
+  static Future<void> laundry_cancelFromAdmin(
+      {required num orderId}  ) async {
+    return await callCloudFunction(
+      functionName: "laundry-cancelFromAdmin",
+      parameters: <String, dynamic>{
+        "orderId":orderId,
+      });
+  }
+
   static Future<void> delivery2_assignDriver(
       {required num deliveryOrderId,
       required num deliveryDriverId,
       required OrderType orderType,
-      required DeliveryDriverType deliveryDriverType,
+      required ParticipantType deliveryDriverType,
       bool? changeDriver,
       required num deliveryCompanyId}  ) async {
     return await callCloudFunction(
@@ -342,7 +430,7 @@ class CloudFunctions {
   static Future<void> delivery2_restaurantAtPickup(
       {required num deliveryId,
       required num deliveryDriverId,
-      required DeliveryDriverType deliveryDriverType,
+      required ParticipantType deliveryDriverType,
       required num restaurantOrderId}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-restaurantAtPickup",
@@ -357,7 +445,7 @@ class CloudFunctions {
   static Future<void> delivery2_restaurantAtDropoff(
       {required num deliveryId,
       required num deliveryDriverId,
-      required DeliveryDriverType deliveryDriverType,
+      required ParticipantType deliveryDriverType,
       required num restaurantOrderId}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-restaurantAtDropoff",
@@ -372,7 +460,7 @@ class CloudFunctions {
   static Future<void> delivery2_restaurantFinishDelivery(
       {required num deliveryId,
       required num deliveryDriverId,
-      required DeliveryDriverType deliveryDriverType,
+      required ParticipantType deliveryDriverType,
       required num restaurantOrderId}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-restaurantFinishDelivery",
@@ -387,7 +475,7 @@ class CloudFunctions {
   static Future<void> delivery2_restaurantStartDelivery(
       {required num deliveryId,
       required num deliveryDriverId,
-      required DeliveryDriverType deliveryDriverType,
+      required ParticipantType deliveryDriverType,
       required num restaurantOrderId}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-restaurantStartDelivery",

@@ -82,9 +82,9 @@ class LaundryOpOrderViewController {
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
 
     mGoogleMapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           _order.value!.to.latitude,
           _order.value!.to.longitude,
         ),

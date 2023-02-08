@@ -49,7 +49,7 @@ class Customer {
 class SavedLocation {
   String name;
   int? id;
-  LocModel.Location location;
+  LocModel.MezLocation location;
   bool defaultLocation;
 
   SavedLocation(
@@ -75,7 +75,7 @@ class SavedLocation {
   }) {
     return SavedLocation(
         name: data["name"],
-        location: LocModel.Location.fromFirebaseData(data),
+        location: LocModel.MezLocation.fromFirebaseData(data),
         id: id,
         defaultLocation: data["default"] ?? false);
   }

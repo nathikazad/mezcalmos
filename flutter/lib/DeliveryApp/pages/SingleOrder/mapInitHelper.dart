@@ -35,7 +35,7 @@ void initilizeMap(MGoogleMapController mapController, Rxn<DeliveryOrder> order,
   ]).then((_) {
     if (deliveryAuthAuthController.currentLocation != null)
       mapController.setLocation(
-        Location.fromLocationData(
+        MezLocation.fromLocationData(
           deliveryAuthAuthController.currentLocation!,
         ),
       );

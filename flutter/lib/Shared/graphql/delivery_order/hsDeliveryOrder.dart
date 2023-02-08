@@ -90,10 +90,10 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
             ? DateTime.parse(orderData.estimated_package_ready_time!)
             : null,
         packageCost: orderData.package_cost,
-        pickupLocation: Location(
+        pickupLocation: MezLocation(
             orderData.pickup_address, orderData.pickup_gps.toLocationData()),
         dropoffLocation:
-            Location(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+            MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
         chatWithServiceProviderId: orderData.chat_with_service_provider_id,
         paymentType: orderData.payment_type.toPaymentType());
@@ -169,8 +169,8 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
               orderData.delivery_driver!.current_location!.longitude)
           : null,
       pickupLocation:
-          Location(orderData.pickup_address, orderData.pickup_gps.toLocationData()),
-      dropoffLocation: Location(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+          MezLocation(orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+      dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
       paymentType: orderData.payment_type.toPaymentType());
@@ -203,7 +203,7 @@ ServiceInfo? _getServiceInfo(orderData) {
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
-          location: Location.fromHasura(
+          location: MezLocation.fromHasura(
               orderData.restaurant_order!.restaurant.location.gps,
               orderData.restaurant_order!.restaurant.location.address),
           hasuraId: orderData.restaurant_order!.restaurant.id,

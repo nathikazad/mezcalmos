@@ -18,7 +18,7 @@ class CardSummaryCard extends StatelessWidget {
     this.serviceLoc,
   }) : super(key: key);
 
-  final Location? serviceLoc;
+  final MezLocation? serviceLoc;
 
   final CustCartViewController controller;
 

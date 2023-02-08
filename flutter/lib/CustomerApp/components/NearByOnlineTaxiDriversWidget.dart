@@ -7,7 +7,7 @@ import 'package:mezcalmos/CustomerApp/pages/Taxi/helpers/OnlineDriversHelper.dar
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 class NearByOnlineTaxiDrivers extends StatefulWidget {
-  final Rxn<Location> centerLocation;
+  final Rxn<MezLocation> centerLocation;
   const NearByOnlineTaxiDrivers({
     required this.centerLocation,
     Key? key,

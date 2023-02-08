@@ -79,9 +79,9 @@ class CustLaundryOrderViewController {
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
 
     mGoogleMapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           order.value!.to.latitude,
           order.value!.to.longitude,
         ),

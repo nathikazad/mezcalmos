@@ -29,7 +29,7 @@ abstract class ServiceInfoEditViewController {
 
   Rxn<Service> service = Rxn<Service>();
   final Rxn<String> newImageUrl = Rxn();
-  final Rxn<Location> newLocation = Rxn();
+  final Rxn<MezLocation> newLocation = Rxn();
 
   final Rxn<LanguageType> primaryLang = Rxn();
   final Rxn<LanguageType> secondaryLang = Rxn();
@@ -122,7 +122,7 @@ abstract class ServiceInfoEditViewController {
     }
   }
 
-  void setNewLocation(Location? newLoc) {
+  void setNewLocation(MezLocation? newLoc) {
     if (newLoc != null) {
       newLocation.value = newLoc;
     }

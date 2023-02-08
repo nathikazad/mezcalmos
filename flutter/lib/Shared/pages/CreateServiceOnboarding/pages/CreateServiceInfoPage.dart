@@ -87,8 +87,8 @@ class CreateServiceInfoPage extends StatelessWidget {
               child: InkWell(
                 borderRadius: BorderRadius.circular(10),
                 onTap: () async {
-                  final Location? newLoc =
-                      await MezRouter.toNamed(kPickLocationNew) as Location?;
+                  final MezLocation? newLoc =
+                      await MezRouter.toNamed(kPickLocationNew) as MezLocation?;
 
                   if (newLoc != null) {
                     viewController.setNewLocation(newLoc);

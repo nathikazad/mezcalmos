@@ -1,10 +1,10 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/CustomerApp/models/OnlineTaxiDriver.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
+import 'package:mezcalmos/old/customerApp/taxi/TaxiController.dart';
 
 /// Call this to fetch online TaxiDrivers.
 ///
@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 Stream<List<OnlineTaxiDriver>> onlineTaxiDriversListener({
   Duration duration = const Duration(seconds: 10),
   double rangeInKm = 5,
-  required Rxn<LocModel.Location> centerLocation,
+  required Rxn<LocModel.MezLocation> centerLocation,
 }) async* {
   yield* Stream<Future<List<OnlineTaxiDriver>>>.periodic(duration, (_) {
     return Get.find<TaxiController>().fetchOnlineTaxiDrivers();
@@ -29,7 +29,7 @@ Stream<List<OnlineTaxiDriver>> onlineTaxiDriversListener({
 
 Future<List<OnlineTaxiDriver>> fetchOnlineTaxiDriversOnce({
   double rangeInKm = 5,
-  required Rxn<LocModel.Location> centerLocation,
+  required Rxn<LocModel.MezLocation> centerLocation,
 }) async {
   return _checkAndGetValidDrivers(
     taxis: (await Get.find<TaxiController>().fetchOnlineTaxiDrivers()),
@@ -40,7 +40,7 @@ Future<List<OnlineTaxiDriver>> fetchOnlineTaxiDriversOnce({
 
 List<OnlineTaxiDriver> _checkAndGetValidDrivers({
   required List<OnlineTaxiDriver> taxis,
-  required LocModel.Location? centerLocation,
+  required LocModel.MezLocation? centerLocation,
   required double rangeInKm,
 }) {
   final List<OnlineTaxiDriver> tmp = <OnlineTaxiDriver>[];
@@ -52,11 +52,11 @@ List<OnlineTaxiDriver> _checkAndGetValidDrivers({
             LatLng(driver.position['lat'], driver.position['lng']);
 
         final bool isWithinRange = MapHelper.calculateDistance(
-              LocModel.Location.buildLocationData(
+              LocModel.MezLocation.buildLocationData(
                 driverLocation.latitude,
                 driverLocation.longitude,
               ),
-              LocModel.Location.buildLocationData(
+              LocModel.MezLocation.buildLocationData(
                 centerLocation.latitude,
                 centerLocation.longitude,
               ),

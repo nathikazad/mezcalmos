@@ -16,7 +16,7 @@ abstract class Order {
   DateTime orderTime;
   UserInfo customer;
   UserInfo? serviceProvider;
-  Location to;
+  MezLocation to;
   num cost;
   RouteInformation? routeInformation;
   StripeOrderPaymentInfo? stripePaymentInfo;
@@ -84,7 +84,6 @@ abstract class Order {
     }
   }
 // Order.orderFromData(dynamic orderId, dynamic orderData){
-
 }
 
 // ignore: constant_identifier_names

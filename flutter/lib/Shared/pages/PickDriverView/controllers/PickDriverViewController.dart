@@ -76,9 +76,9 @@ class PickDriverViewController {
     mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           order.value?.dropoffLocation.latitude,
           order.value?.dropoffLocation.longitude,
         ),

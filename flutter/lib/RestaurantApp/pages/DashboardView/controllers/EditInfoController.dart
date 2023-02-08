@@ -35,7 +35,7 @@ class ROpEditInfoController {
 
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   final Rxn<String> newImageUrl = Rxn();
-  final Rxn<Location> newLocation = Rxn();
+  final Rxn<MezLocation> newLocation = Rxn();
 
   final Rxn<LanguageType> primaryLang = Rxn();
   final Rxn<LanguageType> secondaryLang = Rxn();
@@ -132,7 +132,7 @@ class ROpEditInfoController {
     isAvailable.value = value;
   }
 
-  void setNewLocation(Location? newLoc) {
+  void setNewLocation(MezLocation? newLoc) {
     if (newLoc != null) {
       newLocation.value = newLoc;
     }

@@ -15,7 +15,7 @@ class ServiceLocationCard extends StatefulWidget {
   const ServiceLocationCard({Key? key, required this.location})
       : super(key: key);
 
-  final Location location;
+  final MezLocation location;
 
   @override
   State<ServiceLocationCard> createState() => _ServiceLocationCardState();

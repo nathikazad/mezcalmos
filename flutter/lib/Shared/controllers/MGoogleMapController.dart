@@ -19,7 +19,7 @@ import 'package:sizer/sizer.dart';
 class MGoogleMapController {
   RxSet<Polyline> polylines = <Polyline>{}.obs;
   RxList<MezMarker> markers = <MezMarker>[].obs;
-  Rxn<Location> location = Rxn<Location>();
+  Rxn<MezLocation> location = Rxn<MezLocation>();
   RxBool animateMarkersPolyLinesBounds = false.obs;
   Rxn<GoogleMapController> controller = Rxn();
   late bool enableMezSmartPointer;
@@ -360,7 +360,7 @@ class MGoogleMapController {
     return centerLatLng;
   }
 
-  void setLocation(Location newLocation) {
+  void setLocation(MezLocation newLocation) {
     location.value = newLocation;
   }
 

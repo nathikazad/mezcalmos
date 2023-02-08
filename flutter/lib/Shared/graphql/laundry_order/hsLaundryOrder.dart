@@ -108,7 +108,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
                       weight: cat.weight_in_kilo!))
               .toList()),
       cost: 0,
-      to: Location.fromHasura(
+      to: MezLocation.fromHasura(
           orderData.customer_location_gps!, orderData.customer_address),
       orderTime: DateTime.parse(orderData.order_time),
       paymentType: orderData.payment_type.toPaymentType(),
@@ -119,7 +119,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         image: orderData.customer.user.image,
       ),
       laundry: ServiceInfo(
-          location: Location.fromHasura(
+          location: MezLocation.fromHasura(
               orderData.store.location.gps, orderData.store.location.address),
           hasuraId: orderData.store_id,
           image: orderData.store.image,
@@ -159,7 +159,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
                                   translations: cat.category.name.translations),
                               weight: cat.weight_in_kilo!))
                   .toList()),
-          to: Location.fromHasura(
+          to: MezLocation.fromHasura(
               orderData.customer_location_gps!, orderData.customer_address),
           orderTime: DateTime.parse(orderData.order_time),
           paymentType: orderData.payment_type.toPaymentType(),
@@ -170,7 +170,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             image: orderData.customer.user.image,
           ),
           laundry: ServiceInfo(
-              location: Location.fromHasura(orderData.store.location.gps,
+              location: MezLocation.fromHasura(orderData.store.location.gps,
                   orderData.store.location.address),
               hasuraId: orderData.store_id,
               image: orderData.store.image,
