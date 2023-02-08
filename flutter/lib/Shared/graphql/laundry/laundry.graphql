@@ -4,7 +4,9 @@ query getLaundries {
     image
     language_id
 normal_delivery_time
-
+    location_id
+    delivery_details_id
+normal_delivery_time
     name
     location {
       gps
@@ -21,6 +23,8 @@ normal_delivery_time
         value
       }
     }
+    accepted_payments
+    stripe_info
     self_delivery
     open_status
     schedule

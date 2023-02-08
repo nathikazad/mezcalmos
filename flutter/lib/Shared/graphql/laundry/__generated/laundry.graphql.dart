@@ -199,6 +199,27 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'location_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'normal_delivery_time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
@@ -298,6 +319,20 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'accepted_payments'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'stripe_info'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: 'self_delivery'),
@@ -432,12 +467,16 @@ class Query$getLaundries$laundry_store {
     required this.image,
     required this.language_id,
     required this.normal_delivery_time,
+    required this.location_id,
+    this.delivery_details_id,
     required this.name,
     required this.location,
     required this.approved,
     required this.description_id,
     this.schedule,
     required this.description,
+    this.accepted_payments,
+    this.stripe_info,
     required this.self_delivery,
     required this.open_status,
     required this.$__typename,
@@ -448,12 +487,16 @@ class Query$getLaundries$laundry_store {
     final l$image = json['image'];
     final l$language_id = json['language_id'];
     final l$normal_delivery_time = json['normal_delivery_time'];
+    final l$location_id = json['location_id'];
+    final l$delivery_details_id = json['delivery_details_id'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$approved = json['approved'];
     final l$description_id = json['description_id'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$self_delivery = json['self_delivery'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
@@ -462,6 +505,8 @@ class Query$getLaundries$laundry_store {
       image: (l$image as String),
       language_id: (l$language_id as String),
       normal_delivery_time: (l$normal_delivery_time as int),
+      location_id: (l$location_id as int),
+      delivery_details_id: (l$delivery_details_id as int?),
       name: (l$name as String),
       location: Query$getLaundries$laundry_store$location.fromJson(
           (l$location as Map<String, dynamic>)),
@@ -470,6 +515,9 @@ class Query$getLaundries$laundry_store {
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: Query$getLaundries$laundry_store$description.fromJson(
           (l$description as Map<String, dynamic>)),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       self_delivery: (l$self_delivery as bool),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -484,6 +532,10 @@ class Query$getLaundries$laundry_store {
 
   final int normal_delivery_time;
 
+  final int location_id;
+
+  final int? delivery_details_id;
+
   final String name;
 
   final Query$getLaundries$laundry_store$location location;
@@ -495,6 +547,10 @@ class Query$getLaundries$laundry_store {
   final dynamic? schedule;
 
   final Query$getLaundries$laundry_store$description description;
+
+  final dynamic? accepted_payments;
+
+  final dynamic? stripe_info;
 
   final bool self_delivery;
 
@@ -512,6 +568,10 @@ class Query$getLaundries$laundry_store {
     _resultData['language_id'] = l$language_id;
     final l$normal_delivery_time = normal_delivery_time;
     _resultData['normal_delivery_time'] = l$normal_delivery_time;
+    final l$location_id = location_id;
+    _resultData['location_id'] = l$location_id;
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$name = name;
     _resultData['name'] = l$name;
     final l$location = location;
@@ -524,6 +584,12 @@ class Query$getLaundries$laundry_store {
     _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$description = description;
     _resultData['description'] = l$description.toJson();
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] =
+        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$self_delivery = self_delivery;
     _resultData['self_delivery'] = l$self_delivery;
     final l$open_status = open_status;
@@ -539,12 +605,16 @@ class Query$getLaundries$laundry_store {
     final l$image = image;
     final l$language_id = language_id;
     final l$normal_delivery_time = normal_delivery_time;
+    final l$location_id = location_id;
+    final l$delivery_details_id = delivery_details_id;
     final l$name = name;
     final l$location = location;
     final l$approved = approved;
     final l$description_id = description_id;
     final l$schedule = schedule;
     final l$description = description;
+    final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$self_delivery = self_delivery;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
@@ -553,12 +623,16 @@ class Query$getLaundries$laundry_store {
       l$image,
       l$language_id,
       l$normal_delivery_time,
+      l$location_id,
+      l$delivery_details_id,
       l$name,
       l$location,
       l$approved,
       l$description_id,
       l$schedule,
       l$description,
+      l$accepted_payments,
+      l$stripe_info,
       l$self_delivery,
       l$open_status,
       l$$__typename,
@@ -594,6 +668,16 @@ class Query$getLaundries$laundry_store {
     if (l$normal_delivery_time != lOther$normal_delivery_time) {
       return false;
     }
+    final l$location_id = location_id;
+    final lOther$location_id = other.location_id;
+    if (l$location_id != lOther$location_id) {
+      return false;
+    }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
@@ -622,6 +706,16 @@ class Query$getLaundries$laundry_store {
     final l$description = description;
     final lOther$description = other.description;
     if (l$description != lOther$description) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$self_delivery = self_delivery;
@@ -666,12 +760,16 @@ abstract class CopyWith$Query$getLaundries$laundry_store<TRes> {
     String? image,
     String? language_id,
     int? normal_delivery_time,
+    int? location_id,
+    int? delivery_details_id,
     String? name,
     Query$getLaundries$laundry_store$location? location,
     bool? approved,
     int? description_id,
     dynamic? schedule,
     Query$getLaundries$laundry_store$description? description,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     bool? self_delivery,
     String? open_status,
     String? $__typename,
@@ -698,12 +796,16 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
     Object? image = _undefined,
     Object? language_id = _undefined,
     Object? normal_delivery_time = _undefined,
+    Object? location_id = _undefined,
+    Object? delivery_details_id = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
     Object? approved = _undefined,
     Object? description_id = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? self_delivery = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
@@ -720,6 +822,12 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
             normal_delivery_time == _undefined || normal_delivery_time == null
                 ? _instance.normal_delivery_time
                 : (normal_delivery_time as int),
+        location_id: location_id == _undefined || location_id == null
+            ? _instance.location_id
+            : (location_id as int),
+        delivery_details_id: delivery_details_id == _undefined
+            ? _instance.delivery_details_id
+            : (delivery_details_id as int?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -738,6 +846,12 @@ class _CopyWithImpl$Query$getLaundries$laundry_store<TRes>
         description: description == _undefined || description == null
             ? _instance.description
             : (description as Query$getLaundries$laundry_store$description),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info as dynamic?),
         self_delivery: self_delivery == _undefined || self_delivery == null
             ? _instance.self_delivery
             : (self_delivery as bool),
@@ -772,12 +886,16 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store<TRes>
     String? image,
     String? language_id,
     int? normal_delivery_time,
+    int? location_id,
+    int? delivery_details_id,
     String? name,
     Query$getLaundries$laundry_store$location? location,
     bool? approved,
     int? description_id,
     dynamic? schedule,
     Query$getLaundries$laundry_store$description? description,
+    dynamic? accepted_payments,
+    dynamic? stripe_info,
     bool? self_delivery,
     String? open_status,
     String? $__typename,

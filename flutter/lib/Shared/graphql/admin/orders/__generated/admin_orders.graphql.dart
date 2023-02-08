@@ -343,6 +343,13 @@ const documentNodeSubscriptionadmin_listen_on_dv_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -516,6 +523,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     required this.order_time,
     required this.status,
     required this.package_cost,
+    required this.order_type,
     required this.dropoff_address,
     required this.dropoff_gps,
     required this.customer,
@@ -530,6 +538,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$order_time = json['order_time'];
     final l$status = json['status'];
     final l$package_cost = json['package_cost'];
+    final l$order_type = json['order_type'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$customer = json['customer'];
@@ -541,6 +550,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
       order_time: (l$order_time as String),
       status: (l$status as String),
       package_cost: moneyFromJson(l$package_cost),
+      order_type: (l$order_type as String),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       customer: Subscription$admin_listen_on_dv_orders$delivery_order$customer
@@ -558,6 +568,8 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
   final String status;
 
   final double package_cost;
+
+  final String order_type;
 
   final String dropoff_address;
 
@@ -581,6 +593,8 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     _resultData['status'] = l$status;
     final l$package_cost = package_cost;
     _resultData['package_cost'] = moneyToJson(l$package_cost);
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$dropoff_gps = dropoff_gps;
@@ -602,6 +616,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$order_time = order_time;
     final l$status = status;
     final l$package_cost = package_cost;
+    final l$order_type = order_type;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     final l$customer = customer;
@@ -613,6 +628,7 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
       l$order_time,
       l$status,
       l$package_cost,
+      l$order_type,
       l$dropoff_address,
       l$dropoff_gps,
       l$customer,
@@ -649,6 +665,11 @@ class Subscription$admin_listen_on_dv_orders$delivery_order {
     final l$package_cost = package_cost;
     final lOther$package_cost = other.package_cost;
     if (l$package_cost != lOther$package_cost) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -712,6 +733,7 @@ abstract class CopyWith$Subscription$admin_listen_on_dv_orders$delivery_order<
     String? order_time,
     String? status,
     double? package_cost,
+    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     Subscription$admin_listen_on_dv_orders$delivery_order$customer? customer,
@@ -743,6 +765,7 @@ class _CopyWithImpl$Subscription$admin_listen_on_dv_orders$delivery_order<TRes>
     Object? order_time = _undefined,
     Object? status = _undefined,
     Object? package_cost = _undefined,
+    Object? order_type = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
     Object? customer = _undefined,
@@ -761,6 +784,9 @@ class _CopyWithImpl$Subscription$admin_listen_on_dv_orders$delivery_order<TRes>
         package_cost: package_cost == _undefined || package_cost == null
             ? _instance.package_cost
             : (package_cost as double),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -804,6 +830,7 @@ class _CopyWithStubImpl$Subscription$admin_listen_on_dv_orders$delivery_order<
     String? order_time,
     String? status,
     double? package_cost,
+    String? order_type,
     String? dropoff_address,
     Geography? dropoff_gps,
     Subscription$admin_listen_on_dv_orders$delivery_order$customer? customer,
@@ -1483,6 +1510,13 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'customer'),
             alias: null,
             arguments: [],
@@ -1672,6 +1706,7 @@ class Query$admin_get_dv_orders$delivery_order {
     required this.package_cost,
     required this.dropoff_address,
     required this.dropoff_gps,
+    required this.order_type,
     required this.customer,
     this.service_provider_id,
     this.service_provider_type,
@@ -1686,6 +1721,7 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$package_cost = json['package_cost'];
     final l$dropoff_address = json['dropoff_address'];
     final l$dropoff_gps = json['dropoff_gps'];
+    final l$order_type = json['order_type'];
     final l$customer = json['customer'];
     final l$service_provider_id = json['service_provider_id'];
     final l$service_provider_type = json['service_provider_type'];
@@ -1697,6 +1733,7 @@ class Query$admin_get_dv_orders$delivery_order {
       package_cost: moneyFromJson(l$package_cost),
       dropoff_address: (l$dropoff_address as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
+      order_type: (l$order_type as String),
       customer: Query$admin_get_dv_orders$delivery_order$customer.fromJson(
           (l$customer as Map<String, dynamic>)),
       service_provider_id: (l$service_provider_id as int?),
@@ -1716,6 +1753,8 @@ class Query$admin_get_dv_orders$delivery_order {
   final String dropoff_address;
 
   final Geography dropoff_gps;
+
+  final String order_type;
 
   final Query$admin_get_dv_orders$delivery_order$customer customer;
 
@@ -1739,6 +1778,8 @@ class Query$admin_get_dv_orders$delivery_order {
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$dropoff_gps = dropoff_gps;
     _resultData['dropoff_gps'] = geographyToJson(l$dropoff_gps);
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$customer = customer;
     _resultData['customer'] = l$customer.toJson();
     final l$service_provider_id = service_provider_id;
@@ -1758,6 +1799,7 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$package_cost = package_cost;
     final l$dropoff_address = dropoff_address;
     final l$dropoff_gps = dropoff_gps;
+    final l$order_type = order_type;
     final l$customer = customer;
     final l$service_provider_id = service_provider_id;
     final l$service_provider_type = service_provider_type;
@@ -1769,6 +1811,7 @@ class Query$admin_get_dv_orders$delivery_order {
       l$package_cost,
       l$dropoff_address,
       l$dropoff_gps,
+      l$order_type,
       l$customer,
       l$service_provider_id,
       l$service_provider_type,
@@ -1813,6 +1856,11 @@ class Query$admin_get_dv_orders$delivery_order {
     final l$dropoff_gps = dropoff_gps;
     final lOther$dropoff_gps = other.dropoff_gps;
     if (l$dropoff_gps != lOther$dropoff_gps) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$customer = customer;
@@ -1865,6 +1913,7 @@ abstract class CopyWith$Query$admin_get_dv_orders$delivery_order<TRes> {
     double? package_cost,
     String? dropoff_address,
     Geography? dropoff_gps,
+    String? order_type,
     Query$admin_get_dv_orders$delivery_order$customer? customer,
     int? service_provider_id,
     String? service_provider_type,
@@ -1893,6 +1942,7 @@ class _CopyWithImpl$Query$admin_get_dv_orders$delivery_order<TRes>
     Object? package_cost = _undefined,
     Object? dropoff_address = _undefined,
     Object? dropoff_gps = _undefined,
+    Object? order_type = _undefined,
     Object? customer = _undefined,
     Object? service_provider_id = _undefined,
     Object? service_provider_type = _undefined,
@@ -1916,6 +1966,9 @@ class _CopyWithImpl$Query$admin_get_dv_orders$delivery_order<TRes>
         dropoff_gps: dropoff_gps == _undefined || dropoff_gps == null
             ? _instance.dropoff_gps
             : (dropoff_gps as Geography),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         customer: customer == _undefined || customer == null
             ? _instance.customer
             : (customer as Query$admin_get_dv_orders$delivery_order$customer),
@@ -1950,6 +2003,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_orders$delivery_order<TRes>
     double? package_cost,
     String? dropoff_address,
     Geography? dropoff_gps,
+    String? order_type,
     Query$admin_get_dv_orders$delivery_order$customer? customer,
     int? service_provider_id,
     String? service_provider_type,
@@ -4898,6 +4952,13 @@ const documentNodeQueryadmin_get_service__orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'order_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_gps'),
             alias: null,
             arguments: [],
@@ -5096,6 +5157,7 @@ class Query$admin_get_service__orders$delivery_order {
     required this.status,
     required this.package_cost,
     required this.dropoff_address,
+    required this.order_type,
     required this.dropoff_gps,
     required this.customer,
     this.service_provider_id,
@@ -5110,6 +5172,7 @@ class Query$admin_get_service__orders$delivery_order {
     final l$status = json['status'];
     final l$package_cost = json['package_cost'];
     final l$dropoff_address = json['dropoff_address'];
+    final l$order_type = json['order_type'];
     final l$dropoff_gps = json['dropoff_gps'];
     final l$customer = json['customer'];
     final l$service_provider_id = json['service_provider_id'];
@@ -5121,6 +5184,7 @@ class Query$admin_get_service__orders$delivery_order {
       status: (l$status as String),
       package_cost: moneyFromJson(l$package_cost),
       dropoff_address: (l$dropoff_address as String),
+      order_type: (l$order_type as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
       customer:
           Query$admin_get_service__orders$delivery_order$customer.fromJson(
@@ -5140,6 +5204,8 @@ class Query$admin_get_service__orders$delivery_order {
   final double package_cost;
 
   final String dropoff_address;
+
+  final String order_type;
 
   final Geography dropoff_gps;
 
@@ -5163,6 +5229,8 @@ class Query$admin_get_service__orders$delivery_order {
     _resultData['package_cost'] = moneyToJson(l$package_cost);
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
+    final l$order_type = order_type;
+    _resultData['order_type'] = l$order_type;
     final l$dropoff_gps = dropoff_gps;
     _resultData['dropoff_gps'] = geographyToJson(l$dropoff_gps);
     final l$customer = customer;
@@ -5183,6 +5251,7 @@ class Query$admin_get_service__orders$delivery_order {
     final l$status = status;
     final l$package_cost = package_cost;
     final l$dropoff_address = dropoff_address;
+    final l$order_type = order_type;
     final l$dropoff_gps = dropoff_gps;
     final l$customer = customer;
     final l$service_provider_id = service_provider_id;
@@ -5194,6 +5263,7 @@ class Query$admin_get_service__orders$delivery_order {
       l$status,
       l$package_cost,
       l$dropoff_address,
+      l$order_type,
       l$dropoff_gps,
       l$customer,
       l$service_provider_id,
@@ -5234,6 +5304,11 @@ class Query$admin_get_service__orders$delivery_order {
     final l$dropoff_address = dropoff_address;
     final lOther$dropoff_address = other.dropoff_address;
     if (l$dropoff_address != lOther$dropoff_address) {
+      return false;
+    }
+    final l$order_type = order_type;
+    final lOther$order_type = other.order_type;
+    if (l$order_type != lOther$order_type) {
       return false;
     }
     final l$dropoff_gps = dropoff_gps;
@@ -5291,6 +5366,7 @@ abstract class CopyWith$Query$admin_get_service__orders$delivery_order<TRes> {
     String? status,
     double? package_cost,
     String? dropoff_address,
+    String? order_type,
     Geography? dropoff_gps,
     Query$admin_get_service__orders$delivery_order$customer? customer,
     int? service_provider_id,
@@ -5320,6 +5396,7 @@ class _CopyWithImpl$Query$admin_get_service__orders$delivery_order<TRes>
     Object? status = _undefined,
     Object? package_cost = _undefined,
     Object? dropoff_address = _undefined,
+    Object? order_type = _undefined,
     Object? dropoff_gps = _undefined,
     Object? customer = _undefined,
     Object? service_provider_id = _undefined,
@@ -5341,6 +5418,9 @@ class _CopyWithImpl$Query$admin_get_service__orders$delivery_order<TRes>
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
                 : (dropoff_address as String),
+        order_type: order_type == _undefined || order_type == null
+            ? _instance.order_type
+            : (order_type as String),
         dropoff_gps: dropoff_gps == _undefined || dropoff_gps == null
             ? _instance.dropoff_gps
             : (dropoff_gps as Geography),
@@ -5378,6 +5458,7 @@ class _CopyWithStubImpl$Query$admin_get_service__orders$delivery_order<TRes>
     String? status,
     double? package_cost,
     String? dropoff_address,
+    String? order_type,
     Geography? dropoff_gps,
     Query$admin_get_service__orders$delivery_order$customer? customer,
     int? service_provider_id,

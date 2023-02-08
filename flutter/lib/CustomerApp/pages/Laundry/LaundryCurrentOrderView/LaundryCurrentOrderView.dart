@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/CustomerLaundryEstTimes.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderFooterCard.dart';
-import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderNoteComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/LaundryOrderStatusCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/Components/OrderLaundryCard.dart';
+import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryCurrentOrderView/controllers/CustLaundryOrderViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -23,25 +23,27 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
 
-class LaundryCurrentOrderView extends StatefulWidget {
-  const LaundryCurrentOrderView({Key? key}) : super(key: key);
+class CustLaundryOrderView extends StatefulWidget {
+  const CustLaundryOrderView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryCurrentOrderView> createState() =>
-      _LaundryCurrentOrderViewState();
+  State<CustLaundryOrderView> createState() => _CustLaundryOrderViewState();
 }
 
-class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
-  late String orderId;
+class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
+  CustLaundryOrderViewController viewController =
+      CustLaundryOrderViewController();
+  late int orderId;
   LaundryOrderPhase? _phaseSnapshot;
 
-  Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
+  // Rxn<LaundryOrder> order = Rxn<LaundryOrder>();
   StreamSubscription<Order?>? _orderListener;
   //final OrderController controller = Get.find<OrderController>();
   final MGoogleMapController mapController = MGoogleMapController(
@@ -51,29 +53,30 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
   void initState() {
     // Handle Order id from the rooting
     if (Get.parameters['orderId'] != null) {
-      orderId = Get.parameters['orderId']!;
+      orderId = int.parse(Get.parameters['orderId']!);
+      viewController.init(orderId: orderId);
     } else {
       mezDbgPrint("Order id null from the parameters ######");
       MezRouter.back<void>();
     }
     // controller.clearOrderNotifications(int.tryParse(orderId));
-    // order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
+    // viewController.order.value = controller.getOrder(int.parse(orderId)) as LaundryOrder?;
 
     // _orderListener = controller
     //     .getOrderStream(int.parse(orderId))
     //     .listen((Order? newOrderEvent) {
     //   if (newOrderEvent != null) {
-    //     order.value = newOrderEvent as LaundryOrder?;
+    //     viewController.order.value = newOrderEvent as LaundryOrder?;
 
-    //     if (order.value!.inProcess()) {
+    //     if (viewController.order.value!.inProcess()) {
     //       // @here
-    //       updateMapByPhase(order.value!.getCurrentPhase());
+    //       updateMapByPhase(viewController.order.value!.getCurrentPhase());
     //     }
     //   }
     // });
 
     waitForOrderIfNotLoaded().then((void value) {
-      if (order.value == null) {
+      if (viewController.order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
           MezRouter.back<Null>();
@@ -81,14 +84,14 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         });
       } else {
         initMap();
-        updateMapByPhase(order.value!.getCurrentPhase());
+        updateMapByPhase(viewController.order.value!.getCurrentPhase());
       }
     });
     super.initState();
   }
 
   Future<void> waitForOrderIfNotLoaded() {
-    if (order.value != null) {
+    if (viewController.order.value != null) {
       return Future<void>.value(null);
     } else {
       final Completer<void> completer = Completer<void>();
@@ -112,7 +115,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       appBar: _appBar(),
       body: Obx(
         () {
-          if (order.value != null) {
+          if (viewController.order.value != null) {
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraint) {
                 return SingleChildScrollView(
@@ -129,15 +132,16 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                             ),
                             Obx(
                               () => LaundryOrderStatusCard(
-                                order: order.value!,
+                                order: viewController.order.value!,
                               ),
                             ),
                             CustomerLaundryOrderEst(
-                              order: order.value!,
+                              order: viewController.order.value!,
                             ),
-                            LaundryOrderDriverCard(order: order.value!),
+                            LaundryOrderDriverCard(
+                                order: viewController.order.value!),
                             // @ here
-                            if (order.value!.inDeliveryPhase())
+                            if (viewController.order.value!.inDeliveryPhase())
                               Column(
                                 children: [
                                   Column(
@@ -147,25 +151,28 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                                 ],
                               ),
 
-                            if (order.value!.laundry != null)
-                              OrderLaundryCard(order: order.value!),
+                            if (viewController.order.value!.laundry != null)
+                              OrderLaundryCard(
+                                  order: viewController.order.value!),
 
-                            LaundryOrderPricingComponent(order: order.value!),
+                            LaundryOrderPricingComponent(
+                                order: viewController.order.value!),
 
-                            LaundryOrderNoteComponent(order: order.value!),
+                            OrderNoteCard(
+                                note: viewController.order.value!.notes),
 
                             // OrderDeliveryLocation(
-                            //   order: order.value!,
+                            //   order: viewController.order.value!,
                             //   margin: const EdgeInsets.only(bottom: 20),
                             //   titleTextStyle: Get.textTheme.bodyText1,
                             // ),
                             // OrderPaymentMethod(
-                            //   order: order.value!,
+                            //   order: viewController.order.value!,
                             //   margin: const EdgeInsets.only(bottom: 20),
                             // ),
 
                             OrderSummaryCard(
-                              order: order.value!,
+                              order: viewController.order.value!,
                               margin: const EdgeInsets.only(bottom: 20),
                             ),
                             Spacer(),
@@ -173,7 +180,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: LaundryOrderFooterCard(
-                                  order: order.value!,
+                                  order: viewController.order.value!,
                                 ),
                               ),
                             ),
@@ -201,7 +208,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       autoBack: true,
       titleWidget: Obx(
         () => Text(
-          '${order.value?.laundry?.name ?? ""}',
+          '${viewController.order.value?.laundry?.name ?? ""}',
           style: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w600,
@@ -239,32 +246,34 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
       LocModel.Location(
         "",
         LocModel.Location.buildLocationData(
-          order.value!.to.latitude,
-          order.value!.to.longitude,
+          viewController.order.value!.to.latitude,
+          viewController.order.value!.to.longitude,
         ),
       ),
     );
 
     // restaurant ad customer's location are fixed (fit in bound at start)
     mapController.addOrUpdateUserMarker(
-      latLng: order.value?.laundry?.location.toLatLng(),
-      markerId: order.value?.laundry?.firebaseId,
-      customImgHttpUrl: order.value?.laundry?.image,
+      latLng: viewController.order.value?.laundry?.location.toLatLng(),
+      markerId: viewController.order.value?.laundry?.firebaseId,
+      customImgHttpUrl: viewController.order.value?.laundry?.image,
       fitWithinBounds: true,
     );
 
     // customer's
     mapController.addOrUpdatePurpleDestinationMarker(
-      latLng: order.value?.to.toLatLng(),
+      latLng: viewController.order.value?.to.toLatLng(),
       fitWithinBounds: true,
     );
 
-    if (order.value!.routeInformation != null)
+    if (viewController.order.value!.routeInformation != null)
       mapController.decodeAndAddPolyline(
-          encodedPolylineString: order.value!.routeInformation!.polyline);
+          encodedPolylineString:
+              viewController.order.value!.routeInformation!.polyline);
 
     mapController.animateAndUpdateBounds(
-      shouldFitPolylineInBound: order.value!.routeInformation != null,
+      shouldFitPolylineInBound:
+          viewController.order.value!.routeInformation != null,
     );
   }
 
@@ -275,23 +284,24 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           _phaseSnapshot = phase;
           // we ignore the marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.firebaseId,
-            customImgHttpUrl: order.value?.laundry?.image,
+            latLng: viewController.order.value?.laundry?.location.toLatLng(),
+            markerId: viewController.order.value?.laundry?.firebaseId,
+            customImgHttpUrl: viewController.order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.to.toLatLng(),
+            latLng: viewController.order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
         // only if pickUpDriver not null
-        if (order.value?.pickupDriver != null &&
-            order.value!.inDeliveryPhase()) {
+        if (viewController.order.value?.pickupDriver != null &&
+            viewController.order.value!.inDeliveryPhase()) {
           mapController.addOrUpdateUserMarker(
-            latLng: order.value?.pickupDriver?.location,
-            markerId: "pickup_driver", //order.value!.pickupDriver!.id,
-            customImgHttpUrl: order.value?.pickupDriver?.image,
+            latLng: viewController.order.value?.pickupDriver?.location,
+            markerId:
+                "pickup_driver", //viewController.order.value!.pickupDriver!.id,
+            customImgHttpUrl: viewController.order.value?.pickupDriver?.image,
             fitWithinBounds: true,
           );
         }
@@ -306,27 +316,28 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
           // mezDbgPrint("Phaaaaazeeee::_phaseSnapshot ==> $_phaseSnapshot");
           // we ignore the restaurant's marker within bounds
           mapController.addOrUpdateUserMarker(
-            latLng: order.value?.laundry?.location.toLatLng(),
-            markerId: order.value?.laundry?.firebaseId,
-            customImgHttpUrl: order.value?.laundry?.image,
+            latLng: viewController.order.value?.laundry?.location.toLatLng(),
+            markerId: viewController.order.value?.laundry?.firebaseId,
+            customImgHttpUrl: viewController.order.value?.laundry?.image,
             fitWithinBounds: true,
           );
           // we fit the destination into bounds
           mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.to.toLatLng(),
+            latLng: viewController.order.value?.to.toLatLng(),
             fitWithinBounds: true,
           );
         }
 
         // we keep updating the delivery's
-        if (order.value?.dropoffDriver != null) {
+        if (viewController.order.value?.dropoffDriver != null) {
           // mezDbgPrint(
-          //     "Phaaaaazeeee::dropoffDriver ==> ${order.value!.dropoffDriver?.location}");
+          //     "Phaaaaazeeee::dropoffDriver ==> ${viewController.order.value!.dropoffDriver?.location}");
 
           mapController.addOrUpdateUserMarker(
-            latLng: order.value?.dropoffDriver?.location,
-            markerId: "dropoff_driver", //order.value!.dropoffDriver!.id,
-            customImgHttpUrl: order.value?.dropoffDriver?.image,
+            latLng: viewController.order.value?.dropoffDriver?.location,
+            markerId:
+                "dropoff_driver", //viewController.order.value!.dropoffDriver!.id,
+            customImgHttpUrl: viewController.order.value?.dropoffDriver?.image,
             fitWithinBounds: true,
           );
         }
@@ -345,7 +356,7 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
         children: [
           Text(
             "${_i18n()['estimatedDeliveryTime']}",
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
           SizedBox(
             height: 5,
@@ -364,8 +375,8 @@ class _LaundryCurrentOrderViewState extends State<LaundryCurrentOrderView> {
                     width: 10,
                   ),
                   Text(
-                    "${DateFormat("dd MMMM yyyy hh:mm a").format(order.value!.estimatedLaundryReadyTime!.toLocal())}",
-                    style: Get.textTheme.bodyText1,
+                    "${DateFormat("dd MMMM yyyy hh:mm a").format(viewController.order.value!.estimatedLaundryReadyTime!.toLocal())}",
+                    style: Get.textTheme.bodyLarge,
                   )
                 ],
               ),

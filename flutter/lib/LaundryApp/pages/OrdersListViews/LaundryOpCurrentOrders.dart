@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundyOpDrawer.dart';
+import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpCurrentOrdersController.dart';
-import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
+import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -68,7 +67,7 @@ class _LaundryOpCurrentOrdersListViewState
               centered: true,
             );
           } else if (viewController.isAproved == false) {
-            return ROpWaitingForApproval();
+            return Container();
           } else {
             return Column(
               children: [
@@ -154,9 +153,8 @@ class _LaundryOpCurrentOrdersListViewState
                         return MinimalOrderCard(
                           order: viewController.currentOrders[index],
                           onTap: () {
-                            MezRouter.toNamed(getROpOrderRoute(viewController
-                                .currentOrders[index].id
-                                .toString()));
+                            MezRouter.toNamed(getLaundryOpOrderRoute(
+                                viewController.currentOrders[index].id));
                           },
                         );
                       }),

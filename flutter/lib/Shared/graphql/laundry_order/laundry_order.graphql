@@ -21,6 +21,14 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     scheduled_time
     status
     store_id
+     store{
+      name,
+      image,
+      location{
+        gps,
+        address
+      }
+    }
     stripe_fees
     stripe_info
     tax
@@ -92,6 +100,14 @@ query get_laundry_order_by_id($orderId: Int!) {
     scheduled_time
     status
     store_id
+    store{
+      name,
+      image,
+      location{
+        gps,
+        address
+      }
+    }
     stripe_fees
     stripe_info
     tax

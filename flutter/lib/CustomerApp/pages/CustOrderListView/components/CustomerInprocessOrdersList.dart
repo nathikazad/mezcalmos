@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -30,7 +33,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
-                style: txt.headline3,
+                style: txt.displaySmall,
               ),
             ),
             ListView.builder(
@@ -38,10 +41,21 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 physics: NeverScrollableScrollPhysics(),
                 reverse: true,
-                itemCount: viewController.currentOrders().length,
+                itemCount: viewController.inProcessOrder.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CustomerOrderCard(
-                      order: viewController.currentOrders[index]);
+                  return MinimalOrderCard(
+                    order: viewController.inProcessOrder[index],
+                    onTap: () {
+                      if (viewController.inProcessOrder[index].orderType ==
+                          OrderType.Laundry) {
+                        MezRouter.toNamed(getLaundryOrderRoute(
+                            viewController.inProcessOrder[index].id));
+                      } else {
+                        MezRouter.toNamed(getRestaurantOrderRoute(
+                            viewController.inProcessOrder[index].id));
+                      }
+                    },
+                  );
                 }),
             const SizedBox(height: 10)
           ],

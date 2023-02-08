@@ -7813,9 +7813,6 @@ type laundry_order {
     path: String
   ): jsonb
   tax: money!
-
-  """An object relationship"""
-  to_customer_delivery: delivery_order
   to_customer_delivery_id: Int
 
   """
@@ -7911,7 +7908,6 @@ input laundry_order_bool_exp {
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
   tax: money_comparison_exp
-  to_customer_delivery: delivery_order_bool_exp
   to_customer_delivery_id: Int_comparison_exp
   total_cost: money_comparison_exp
 }
@@ -8556,7 +8552,6 @@ input laundry_order_insert_input {
   stripe_fees: money
   stripe_info: jsonb
   tax: money
-  to_customer_delivery: delivery_order_obj_rel_insert_input
   to_customer_delivery_id: Int
 }
 
@@ -8681,7 +8676,6 @@ input laundry_order_order_by {
   stripe_fees: order_by
   stripe_info: order_by
   tax: order_by
-  to_customer_delivery: delivery_order_order_by
   to_customer_delivery_id: order_by
   total_cost: order_by
 }

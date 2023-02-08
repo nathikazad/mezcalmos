@@ -3,23 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
-import 'package:mezcalmos/old/customerApp/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/models/LaundryRequest.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+
+dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
+    ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
 class LaundryOrderRequestView extends StatefulWidget {
   const LaundryOrderRequestView({Key? key}) : super(key: key);
@@ -30,36 +31,21 @@ class LaundryOrderRequestView extends StatefulWidget {
 }
 
 class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
-  /// TextEditingController
   TextEditingController _orderNote = TextEditingController();
 
-  /// LocationPickerController
   final LocationPickerController locationPickerController =
       LocationPickerController();
 
-  /// AuthController
   final AuthController authController = Get.find<AuthController>();
-
-  /// LaundryController
-  LaundryController laundryController = Get.find<LaundryController>();
-
-  /// LanguageController
-  /// CustomerApp.pages.Laundry.LaundryRequestView.LaundryOrderRequestView
-  /// CustomerApp.pages.Laundry.LaundriesListView.LaundryRequestView.LaundryOrderRequestView
-  dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
-      ['pages']['Laundry']['LaundryRequestView']['LaundryOrderRequestView'];
 
   late Laundry selectedLaundry;
 
-  /// Customer's Location
   Location? customerLoc;
 
-  /// RxBool clicked
   RxBool clicked = false.obs;
 
   @override
   void initState() {
-    // TODO: implement initState
     selectedLaundry = Get.arguments;
     super.initState();
   }
@@ -70,7 +56,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
         appBar: CustomerAppBar(
           title: selectedLaundry.info.name,
         ),
-        //  bottomNavigationBar: bottomButton(context),
         body: Column(children: <Widget>[
           Expanded(
             child: SingleChildScrollView(
@@ -89,7 +74,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                     ),
                     Text(
                       selectedLaundry.info.name,
-                      style: Get.textTheme.headline3,
+                      style: Get.textTheme.displaySmall,
                     ),
                     SizedBox(
                       height: 10,
@@ -119,10 +104,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
                       height: 25,
                     ),
                     Container(
-                      //  margin: const EdgeInsets.all(8),
                       child: Text(
                         '${_i18n()["deliveryLocation"]}',
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),
                     SizedBox(
@@ -157,7 +141,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyText1),
+          Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyLarge),
           const SizedBox(height: 15),
           TextField(
             controller: _orderNote,
@@ -165,7 +149,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
             minLines: 3,
             decoration: InputDecoration(
               hintText: "${_i18n()["noteHint"]}",
-              hintStyle: Get.textTheme.bodyText2,
+              hintStyle: Get.textTheme.bodyMedium,
               filled: true,
               fillColor: Theme.of(context).primaryColor,
             ),
@@ -179,7 +163,6 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Card(
       child: InkWell(
         onTap: () async {
-          // ignore: prefer_final_locals
           Location? currentLoc =
               await MezRouter.toNamed(kPickLocationNotAuth) as Location?;
           if (currentLoc != null) {
@@ -223,11 +206,9 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     return Obx(
       () => Container(
         width: double.infinity,
-
         decoration: BoxDecoration(
             gradient:
                 LinearGradient(colors: [Colors.purple, primaryBlueColor])),
-        //  padding: const EdgeInsets.all(5),
         child: (authController.user != null)
             ? makeOrderButton(context)
             : TextButton(
@@ -286,7 +267,7 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
     clicked.value = true;
     final LaundryRequest _laundryRequest =
         LaundryRequest(laundryId: selectedLaundry.info.hasuraId.toString());
-    // get route info first
+
     await MapHelper.getDurationAndDistance(
             selectedLaundry.info.location, customerLoc!)
         .then((MapHelper.Route? route) {
@@ -305,33 +286,32 @@ class _LaundryOrderRequestViewState extends State<LaundryOrderRequestView> {
       _laundryRequest.notes = _orderNote.text;
       _laundryRequest.paymentType = PaymentType.Cash;
 
-      // Since routeInformation is nullable, we have to handle it in other apps.
       _sendLaundryRequest(_laundryRequest);
     });
   }
 
   void _sendLaundryRequest(LaundryRequest request) {
-    laundryController.requestLaundryService(request).then(
-      (ServerResponse response) {
-        mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
+    // laundryController.requestLaundryService(request).then(
+    //   (ServerResponse response) {
+    //     mezDbgPrint("rrrrrrrrrrrrrrrrrrrr ===> ${response.errorMessage}");
 
-        if (response.data['orderId'] != null) {
-          sharedRoute.popEverythingAndNavigateTo(
-            getLaundryOrderRoute(
-              response.data['orderId'],
-            ),
-          );
-        } else {
-          Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
-        }
-      },
-    ).whenComplete(() {
-      clicked.value = false;
-    }).onError((Object? error, StackTrace stackTrace) {
-      mezDbgPrint(
-          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
-      mezDbgPrint(
-          "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
-    });
+    //     if (response.data['orderId'] != null) {
+    //       sharedRoute.popEverythingAndNavigateTo(
+    //         getLaundryOrderRoute(
+    //           response.data['orderId'],
+    //         ),
+    //       );
+    //     } else {
+    //       Get.snackbar("${_i18n()["error"]}", "${_i18n()["errorText"]}");
+    //     }
+    //   },
+    // ).whenComplete(() {
+    //   clicked.value = false;
+    // }).onError((Object? error, StackTrace stackTrace) {
+    //   mezDbgPrint(
+    //       "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $error");
+    //   mezDbgPrint(
+    //       "Erorrrr ---------<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LAUNDRYREQ ============== $stackTrace");
+    // });
   }
 }

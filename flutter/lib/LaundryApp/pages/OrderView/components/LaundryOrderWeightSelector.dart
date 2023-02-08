@@ -1,128 +1,119 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-// import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-// import 'package:mezcalmos/Shared/constants/global.dart';
-// import 'package:mezcalmos/Shared/controllers/languageController.dart';
-// import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-// import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-// import 'package:sizer/sizer.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:sizer/sizer.dart';
 
-// class LaundryOrderWeightSelector extends StatefulWidget {
-//   const LaundryOrderWeightSelector({
-//     Key? key,
-//     required this.newCategory,
-//   }) : super(key: key);
-//   final Rxn<LaundryCostLineItem?> newCategory;
+class LaundryOrderWeightSelector extends StatefulWidget {
+  const LaundryOrderWeightSelector({
+    Key? key,
+    required this.newCategory,
+  }) : super(key: key);
+  final Rxn<LaundryCostLineItem?> newCategory;
 
-//   @override
-//   State<LaundryOrderWeightSelector> createState() =>
-//       _LaundryOrderWeightSelectorState();
-// }
+  @override
+  State<LaundryOrderWeightSelector> createState() =>
+      _LaundryOrderWeightSelectorState();
+}
 
-// class _LaundryOrderWeightSelectorState
-//     extends State<LaundryOrderWeightSelector> {
-//   final LanguageType userLanguage =
-//       Get.find<LanguageController>().userLanguageKey;
+class _LaundryOrderWeightSelectorState
+    extends State<LaundryOrderWeightSelector> {
+  LaundryOpAuthController opAuthController =
+      Get.find<LaundryOpAuthController>();
 
-//   late OpLaundryInfoController laundryInfoController;
-    
-//   LaundryOpAuthController opAuthController =
-//       Get.find<LaundryOpAuthController>();
+  RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
 
-//   RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
+  @override
+  void initState() {
+    getcatgeories();
+    super.initState();
+  }
 
-//   @override
-//   void initState() {
-//      Get.put(OpLaundryInfoController(), permanent: false);
-//     laundryInfoController = Get.find<OpLaundryInfoController>();
-//     getcatgeories();
-//     super.initState();
-//   }
+  Future<void> getcatgeories() async {
+    // final Laundry laundry = await laundryInfoController
+    //     .getLaundryAsFuture(opAuthController.laundryId!);
 
-//   Future<void> getcatgeories() async {
-//     final Laundry laundry = await laundryInfoController
-//         .getLaundryAsFuture(opAuthController.laundryId!);
+    // laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
+    //   laundryCategories.add(element);
+    // });
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
 
-//     laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
-//       laundryCategories.add(element);
-//     });
-//   }
-//   @override
-//   void dispose() {
-//     // TODO: implement dispose
-//     Get.delete<OpLaundryInfoController>(force: true);
-//     super.dispose();
-//   }
+    super.dispose();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: FormField<LaundryCostLineItem>(
-//         builder: (FormFieldState<LaundryCostLineItem> state) {
-//           return Obx(
-//             () => InputDecorator(
-//               decoration: InputDecoration(
-//                 errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-//                 filled: true,
-//                 fillColor: Colors.grey.shade200,
-//                 isDense: true,
-//                 label: Text("None"),
-//                 border: OutlineInputBorder(
-//                     borderSide: BorderSide.none,
-//                     borderRadius: BorderRadius.circular(8)),
-//                 floatingLabelBehavior: FloatingLabelBehavior.never,
-//               ),
-//               isEmpty: widget.newCategory.value == null,
-//               child: DropdownButtonHideUnderline(
-//                 child: DropdownButton<LaundryCostLineItem>(
-//                   value: widget.newCategory.value,
-//                   isExpanded: true,
-//                   isDense: true,
-//                   onChanged: (LaundryCostLineItem? newValue) {
-//                     if (newValue != null) {
-//                       setCategory(newValue);
-//                     }
-//                   },
-//                   items: laundryCategories.map((LaundryCostLineItem value) {
-//                     return DropdownMenuItem<LaundryCostLineItem>(
-//                       value: value,
-//                       child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.start,
-//                           children: [
-//                             Flexible(
-//                               flex: 3,
-//                               child: Text(
-//                                 value.name[userLanguage] ??
-//                                     "Error catgeory name",
-//                                 style: Get.textTheme.bodyText1
-//                                     ?.copyWith(fontSize: 11.sp),
-//                               ),
-//                             ),
-//                             SizedBox(
-//                               width: 20,
-//                             ),
-//                             if (value.cost > 0)
-//                               Text(
-//                                 " \$${value.cost}/KG",
-//                                 style: Theme.of(context)
-//                                     .textTheme
-//                                     .bodyText1!
-//                                     .copyWith(color: primaryBlueColor),
-//                               )
-//                           ]),
-//                     );
-//                   }).toList(),
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: FormField<LaundryCostLineItem>(
+        builder: (FormFieldState<LaundryCostLineItem> state) {
+          return Obx(
+            () => InputDecorator(
+              decoration: InputDecoration(
+                errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                isDense: true,
+                label: Text("None"),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(8)),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+              ),
+              isEmpty: widget.newCategory.value == null,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<LaundryCostLineItem>(
+                  value: widget.newCategory.value,
+                  isExpanded: true,
+                  isDense: true,
+                  onChanged: (LaundryCostLineItem? newValue) {
+                    if (newValue != null) {
+                      setCategory(newValue);
+                    }
+                  },
+                  items: laundryCategories.map((LaundryCostLineItem value) {
+                    return DropdownMenuItem<LaundryCostLineItem>(
+                      value: value,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              flex: 3,
+                              child: Text(
+                                value.name[userLanguage] ??
+                                    "Error catgeory name",
+                                style: Get.textTheme.bodyLarge
+                                    ?.copyWith(fontSize: 11.sp),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            if (value.cost > 0)
+                              Text(
+                                " \$${value.cost}/KG",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(color: primaryBlueColor),
+                              )
+                          ]),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 
-//   void setCategory(LaundryCostLineItem category) {
-//     widget.newCategory.value = category;
-//   }
-// }
+  void setCategory(LaundryCostLineItem category) {
+    widget.newCategory.value = category;
+  }
+}
