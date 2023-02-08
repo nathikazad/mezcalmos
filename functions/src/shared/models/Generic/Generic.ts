@@ -23,7 +23,8 @@ export enum AppType {
   RestaurantApp = "restaurant",
   DeliveryApp = "delivery",
   DeliveryAdmin = "delivery_admin",
-  MezAdmin = "mez_admin"
+  MezAdmin = "mez_admin",
+  LaundryApp = "laundry",
 }
 export enum CustomerAppType {
   Native = "native",

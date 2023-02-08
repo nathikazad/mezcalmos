@@ -31,6 +31,16 @@ computed_fields:
       function:
         name: order_in_process
         schema: laundry
+  - name: items_cost
+    definition:
+      function:
+        name: itemscost
+        schema: laundry
+  - name: total_cost
+    definition:
+      function:
+        name: totalcost
+        schema: laundry
 select_permissions:
   - role: customer
     permission:

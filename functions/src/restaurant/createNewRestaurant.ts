@@ -57,9 +57,9 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
       delivery: restaurantDetails.delivery,
       deliveryPartnerId: restaurantDetails.deliveryPartnerId,
       deliveryDetails: restaurantDetails.deliveryDetails,
-      language: restaurantDetails.language
+      language: restaurantDetails.language,
+      firebaseId: restaurantDetails.firebaseId
     }
-    restaurant.firebaseId = restaurantDetails.firebaseId
 
   await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
   

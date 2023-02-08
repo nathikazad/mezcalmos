@@ -8,6 +8,10 @@ export function restaurantUrl(restaurantId: number) {
   return `/Restaurants/${restaurantId}`
 }
 
+export function laundryUrl(laundryStoreId: number) {
+  return `/Laundry/${laundryStoreId}`
+}
+
 export function chatUrl(chatId: number): string {
   let str = `/messages/${chatId}`;
   // if (orderId != null)

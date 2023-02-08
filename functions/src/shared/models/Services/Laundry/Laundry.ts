@@ -1,4 +1,5 @@
 import { Language } from "../../Generic/Generic";
+import { ForegroundNotification } from "../../Notification";
 
 // export interface Laundry extends ServiceProvider {
 //     laundryOperators?: Array<LaundryOperator>
@@ -14,4 +15,10 @@ export interface LaundryCategory {
     storeId: number;
     costByKilo: number;
     position: number;
+}
+
+export interface NewLaundryNotification extends ForegroundNotification {
+    name: string,
+    image: string,
+    id: number,
 }

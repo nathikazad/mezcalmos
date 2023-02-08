@@ -128,12 +128,7 @@ export async function setLaundryOrderChatInfo(
       "No chat id"
     );
   }
-  if(fromCustomerDelivery.chatWithServiceProviderId == undefined || toCustomerDelivery.chatWithServiceProviderId == undefined ) {
-    throw new HttpsError(
-      "internal",
-      "No delivery chat with store id"
-    );
-  }
+  
   let chain = getHasura();
   
   chain.mutation({
@@ -171,6 +166,13 @@ export async function setLaundryOrderChatInfo(
     }]
   });
   if(laundryOrder.deliveryType == DeliveryType.Delivery) {
+    
+    if(fromCustomerDelivery.chatWithServiceProviderId == undefined || toCustomerDelivery.chatWithServiceProviderId == undefined ) {
+      throw new HttpsError(
+        "internal",
+        "No delivery chat with store id"
+      );
+    }
     let chatInfo: any = {
       DeliveryApp: {
         chatTitle: customer.name ?? "Customer",

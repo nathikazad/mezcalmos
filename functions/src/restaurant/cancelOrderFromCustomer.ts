@@ -24,13 +24,6 @@ interface CancelOrderDetails {
 
 export async function cancelOrderFromCustomer(userId: number, data: CancelOrderDetails) {
 
-  if (data.orderId == null) {
-    throw new HttpsError(
-      "internal", 
-      `Expected order id`,
-    );
-  }
-
   let mezAdminPromise = getMezAdmins();
   console.log("[+] getMezAdmins " , mezAdminPromise);
 
@@ -43,12 +36,6 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
   let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[0];
   let restaurantOperators: Operator[] = promiseResponse[1];
-  if (order == null) {
-    throw new HttpsError(
-      "internal",
-      `Order does not exist`,
-    );
-  }
 
   if (order.customerId != userId) {
     throw new HttpsError(
