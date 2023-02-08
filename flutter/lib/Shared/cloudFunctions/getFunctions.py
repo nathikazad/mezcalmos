@@ -98,7 +98,7 @@ def getReturnType(corresponding):
             returnType = returnType.split(":")[1].strip()
             if "Promise" in returnType:
               returnType = returnType.split("<")[1].split(">")[0]
-            print(returnType)
+            # print(returnType)
             if "void" in returnType:
               returnType = ""
             # returnType = "CheckoutResponse"
@@ -273,7 +273,6 @@ def printDartFormatFunction(key, value):
 def getModels():
   toWriteModel = ""
   for key in models:
-    # print(key)
     if models[key]["type"] == "interface":
       toWriteModel += "class "+key+" {"+"\n"
       for v in models[key]["values"]:
@@ -287,7 +286,7 @@ def getModels():
       toWriteModel = toWriteModel[:-8]
       toWriteModel +=  "};\n  }\n"
       if "Response" in key:
-        print(key)
+        # print(key)
         toWriteModel += "factory "+key+".fromFirebaseFormattedJson(dynamic json) { "
         toWriteModel += "\n   return "+key+"("
         for v in models[key]["values"]:
@@ -341,9 +340,11 @@ if __name__ == "__main__":
       extractImports(line)
       extractFunctionNamesGroupAsString(line)
   extractFunctionNamesGroupAsDictionary()
+  uniqueTypes["AppType"] = True
   for key in uniqueTypes:
-    # print(key)
+    print(key)
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
+      # print(key)
       models[key] = searchForModel(key)
 
   os.chdir('../../flutter/lib/Shared/cloudFunctions')

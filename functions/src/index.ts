@@ -33,12 +33,12 @@ import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
 import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
 import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
 import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
-import { deliveryDriverAtPickup, startDelivery, deliveryDriverAtDropoff, finishDelivery } from "./delivery/restaurantStatusChange";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
 import { createLaundry } from "./laundry/createNewLaundry";
 import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
 import { DeliveryServiceProviderType } from "./shared/models/Generic/Delivery";
+import { changeDeliveryStatus } from "./delivery/statusChange";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -116,10 +116,7 @@ export const delivery2 = {
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
   addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
   authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
-  restaurantAtPickup: authenticatedCall((userId, data) => deliveryDriverAtPickup(userId, data)),
-  restaurantAtDropoff: authenticatedCall((userId, data) => deliveryDriverAtDropoff(userId, data)),
-  restaurantFinishDelivery: authenticatedCall((userId, data) => finishDelivery(userId, data)),
-  restaurantStartDelivery: authenticatedCall((userId, data) => startDelivery(userId, data)),
+  changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
   // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),

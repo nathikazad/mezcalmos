@@ -28,7 +28,7 @@ export enum AppType {
 }
 export enum CustomerAppType {
   Native = "native",
-  Mobile = "mobile"
+  Web = "web"
 }
 
 export interface NotificationInfo {

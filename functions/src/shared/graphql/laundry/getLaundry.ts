@@ -74,7 +74,8 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             }
         }
     })
-    return <ServiceProvider> {
+
+    return {
         id: storeId,
         name: response.laundry_store_by_pk.name,
         image: response.laundry_store_by_pk.image,
@@ -98,7 +99,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         delivery: response.laundry_store_by_pk.delivery,
         customerPickup: response.laundry_store_by_pk.customer_pickup,
         // deliveryDetails?: DeliveryDetails;
-        laundryOperators,
+        operators: laundryOperators,
         deliveryPartnerId: response.laundry_store_by_pk.delivery_partner?.delivery_company_id
     }
 }
