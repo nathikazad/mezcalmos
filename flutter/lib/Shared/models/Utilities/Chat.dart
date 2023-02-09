@@ -63,6 +63,28 @@ extension AppTypeToParticipantType on AppType {
   }
 }
 
+extension AppTypeToCFParticipantType on AppType {
+  cf.ParticipantType toCFParticipantTypefromAppType() {
+    switch (this) {
+      case AppType.CustomerApp:
+        return cf.ParticipantType.Customer;
+      case AppType.TaxiApp:
+        return cf.ParticipantType.Taxi;
+      case AppType.DeliveryApp:
+        return cf.ParticipantType.DeliveryDriver;
+      // case AppType.DeliveryAdminApp:
+      //   return cf.ParticipantType.DeliveryAdmin;
+      case AppType.LaundryApp:
+        return cf.ParticipantType.LaundryOperator;
+      case AppType.RestaurantApp:
+        return cf.ParticipantType.RestaurantOperator;
+      default:
+        throw Exception(
+            "App type $this cannot be converted to participantType");
+    }
+  }
+}
+
 extension ParseStringToParticipantType on String {
   ParticipantType toParticipantType() {
     return ParticipantType.values.firstWhere(
