@@ -60,10 +60,14 @@
 	<string>App need access to PhotoLibrary in order to change User's profile pictures.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>App Needs camera access in case the user wanted to change his/her profile picture directly using his iPhone's camera.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
+		<string>voip</string>
+		<string>processing</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

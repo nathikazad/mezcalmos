@@ -304,8 +304,8 @@ class Launcher:
 	    # Getting rid of 8.0
         if os.path.exists('../ios/Pods/Pods.xcodeproj/project.pbxproj'):
             _pods_xcodeproj_project_pbxproj = open('../ios/Pods/Pods.xcodeproj/project.pbxproj').read()
-            open('../ios/Pods/Pods.xcodeproj/project.pbxproj', 'w+').write(_pods_xcodeproj_project_pbxproj.replace('IPHONEOS_DEPLOYMENT_TARGET = 8.0', 'IPHONEOS_DEPLOYMENT_TARGET = 12.0'))
-            PRINTLN('[+] UPDATED IPHONEOS_DEPLOYMENT_TARGET => 12.0')
+            open('../ios/Pods/Pods.xcodeproj/project.pbxproj', 'w+').write(_pods_xcodeproj_project_pbxproj.replace('IPHONEOS_DEPLOYMENT_TARGET = 8.0', 'IPHONEOS_DEPLOYMENT_TARGET = 13.0'))
+            PRINTLN('[+] UPDATED IPHONEOS_DEPLOYMENT_TARGET => 13.0')
             
     def __patch_gs__(self):
         '''If its staging mode Patch the Gpoogle-services.json'''

@@ -63,7 +63,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>asasas</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>asasas</string>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

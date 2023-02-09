@@ -50,11 +50,15 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app require PhotoLibrary Access</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need microphone access in order to give the ability for our customers to call their delivery drivers.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
 		<string>remote-notification</string>
+		<string>voip</string>
+		<string>processing</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App needs location when in use to update your customer about your location</string>
