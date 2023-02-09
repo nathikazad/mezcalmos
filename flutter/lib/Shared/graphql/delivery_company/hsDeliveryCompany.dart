@@ -35,8 +35,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
             ? toLanguageMap(translations: data.description!.translations)
             : null,
         descriptionId: data.description_id,
-        location:
-            Location.fromHasura(data.location.gps, data.location.address ?? ""),
+        location: Location.fromHasura(data.location.gps, data.location.address),
         name: data.name,
       ),
       state: ServiceState(
