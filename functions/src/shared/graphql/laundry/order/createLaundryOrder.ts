@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryRequestDetails } from "../../../../laundry/laundryRequest";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
@@ -39,10 +39,10 @@ export async function createLaundryOrder(
                 delivery_type: laundryOrder.deliveryType,
                 customer_app_type: laundryOrder.customerAppType,
                 notes: laundryOrder.notes,
-                tax: laundryOrder.tax,
+                tax: laundryOrder.tax ?? undefined,
                 scheduled_time: laundryOrder.scheduledTime,
-                stripe_fees: laundryOrder.stripeFees,
-                discount_value: laundryOrder.discountValue,
+                stripe_fees: laundryOrder.stripeFees ?? undefined,
+                discount_value: laundryOrder.discountValue ?? undefined,
                 customer_location_gps: JSON.stringify({
                     "type": "Point",
                     "coordinates": [laundryOrder.customerLocation.lng, laundryOrder.customerLocation.lat ],
@@ -208,7 +208,8 @@ export async function createLaundryOrder(
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
             serviceProviderType: DeliveryServiceProviderType.Laundry,
-            serviceProviderId: laundryStore.id!
+            serviceProviderId: laundryStore.id!,
+            direction: DeliveryDirection.FromCustomer
         }, {
             deliveryId: response.insert_laundry_order_one.to_customer_delivery.id,
             orderType: OrderType.Laundry,
@@ -226,7 +227,8 @@ export async function createLaundryOrder(
             tripDuration : laundryRequestDetails.tripDuration,
             tripPolyline : laundryRequestDetails.tripPolyline,
             serviceProviderType: DeliveryServiceProviderType.Laundry,
-            serviceProviderId: laundryStore.id!
+            serviceProviderId: laundryStore.id!,
+            direction: DeliveryDirection.ToCustomer
         }]
     }
     return [{
@@ -246,6 +248,7 @@ export async function createLaundryOrder(
         tripDuration : laundryRequestDetails.tripDuration,
         tripPolyline : laundryRequestDetails.tripPolyline,
         serviceProviderType: DeliveryServiceProviderType.Laundry,
-        serviceProviderId: laundryStore.id!
+        serviceProviderId: laundryStore.id!,
+        direction: DeliveryDirection.FromCustomer
     }]
 }

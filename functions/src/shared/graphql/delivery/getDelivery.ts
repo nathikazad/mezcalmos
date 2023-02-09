@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { ParticipantType } from "../../models/Generic/Chat";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
@@ -28,7 +28,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       order_time: true,
       delivery_driver_type: true,
       delivery_driver_id: true,
-
+      direction: true,
       order_type: true,
       delivery_driver: {
         id: true,
@@ -88,6 +88,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     orderTime: response.delivery_order_by_pk.order_time,
     deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as ParticipantType,
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
+    direction: response.delivery_order_by_pk.direction as DeliveryDirection
   }
   if (!(response.delivery_order_by_pk.delivery_driver_id)) {
     return delivery;
@@ -157,6 +158,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       order_time: true,
       order_type: true,
       service_provider_id: true,
+      direction: true,
       delivery_driver: {
         delivery_driver_type: true,
         user: {
@@ -192,6 +194,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       orderType: d.order_type as OrderType,
       serviceProviderId: d.service_provider_id,
       serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
+      direction: d.direction as DeliveryDirection,
       deliveryDriver: (d.delivery_driver) ? <DeliveryDriver>{
         userId: d.delivery_driver.user.id,
         deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,

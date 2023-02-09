@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
@@ -188,7 +188,8 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     tripDuration : checkoutReq.tripDuration,
     tripPolyline : checkoutReq.tripPolyline,
     serviceProviderId: restaurantOrder.restaurantId,
-    serviceProviderType: DeliveryServiceProviderType.Restaurant
+    serviceProviderType: DeliveryServiceProviderType.Restaurant,
+    direction: DeliveryDirection.ToCustomer
   }
 }
 

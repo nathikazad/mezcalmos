@@ -40,6 +40,11 @@ export interface DeliveryOrder {
     cancellationTime?: string;
     deliveryDriver?: DeliveryDriver;
     orderType: OrderType;
+    direction: DeliveryDirection;
+}
+export enum DeliveryDirection {
+    FromCustomer = "fromCustomer",
+    ToCustomer = "toCustomer"
 }
 
 export interface DeliveryDriver {

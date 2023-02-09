@@ -168,15 +168,6 @@ class DeliveryDetails {
   }
 }
 
-enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin }
-
-extension ParseAppTypeToString on AppType {
-  String toFirebaseFormatString() {
-    String str = toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
 enum Language { EN, ES }
 
 extension ParseLanguageToString on Language {
@@ -186,7 +177,7 @@ extension ParseLanguageToString on Language {
   }
 }
 
-enum CustomerAppType { Native, Mobile }
+enum CustomerAppType { Native, Web }
 
 extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
@@ -248,5 +239,41 @@ class ReqLaundryResponse {
 
   factory ReqLaundryResponse.fromFirebaseFormattedJson(json) {
     return ReqLaundryResponse(json["orderId"]);
+  }
+}
+
+enum DeliveryOrderStatus {
+  OrderReceived,
+  OnTheWayToPickup,
+  PackageReady,
+  AtPickup,
+  OnTheWayToDropoff,
+  AtDropoff,
+  Delivered,
+  CancelledByCustomer,
+  CancelledByDeliverer,
+  CancelledByServiceProvider
+}
+
+extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum AppType {
+  Customer,
+  RestaurantApp,
+  DeliveryApp,
+  DeliveryAdmin,
+  MezAdmin,
+  LaundryApp
+}
+
+extension ParseAppTypeToString on AppType {
+  String toFirebaseFormatString() {
+    String str = toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
