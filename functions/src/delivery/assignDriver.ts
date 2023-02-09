@@ -14,21 +14,21 @@ import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
 import { OperatorStatus } from "../shared/models/Services/Service";
-import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
   deliveryOrderId: number,
   deliveryDriverId: number,
   orderType: OrderType,
-  deliveryDriverType: ParticipantType,
+  // deliveryDriverType: ParticipantType,
   changeDriver?: boolean,
   deliveryCompanyId: number
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
-
+  // assignDriverDetails.deliveryDriverType = 'delivery_driver';
   let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
-  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
+  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId)//, assignDriverDetails.deliveryDriverType);
   let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
   let deliveryOrder: DeliveryOrder = promiseResponse[0];
   let deliveryDriver: DeliveryDriver = promiseResponse[1];
@@ -71,7 +71,7 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, assignDriverDe
         orderType: assignDriverDetails.orderType,
         notificationAction: NotificationAction.ShowPopUp,
         orderId: assignDriverDetails.deliveryOrderId,
-        deliveryDriverType: assignDriverDetails.deliveryDriverType
+        // deliveryDriverType: assignDriverDetails.deliveryDriverType
       },
       background: deliveryNewOrderMessage,
       linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)

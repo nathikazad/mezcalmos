@@ -47,7 +47,7 @@ export interface ChangeDeliveryStatusDetails {
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails) {
 
   let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
-  let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
+  let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId)//, changeDeliveryStatusDetails.deliveryDriverType);
   let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
   let deliveryOrder: DeliveryOrder = promiseResponse[0];
   let deliveryDriver: DeliveryDriver = promiseResponse[1];

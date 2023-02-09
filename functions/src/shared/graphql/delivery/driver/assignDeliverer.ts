@@ -12,7 +12,7 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
         id: assignDriverDetails.deliveryOrderId
       },
       _set: {
-        delivery_driver_type: assignDriverDetails.deliveryDriverType,
+        delivery_driver_type: 'delivery_driver',
         delivery_driver_id: assignDriverDetails.deliveryDriverId,
       }
     }, {

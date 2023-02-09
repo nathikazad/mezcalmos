@@ -16,7 +16,7 @@ export interface AuthorizeDetails {
 }
 
 export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails, deliveryServiceProviderType: DeliveryServiceProviderType) {
-  let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId, ParticipantType.DeliveryDriver);
+  let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
 
   await checkAuthorization();
 
