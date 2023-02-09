@@ -1,14 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: constant_identifier_names, always_specify_types
 
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 
 enum LaundryOrderStatus {
   OrderReceived,
@@ -87,87 +84,87 @@ class LaundryOrder extends TwoWayDeliverableOrder {
             serviceProviderId: laundry?.hasuraId,
             serviceProvider: laundry);
 
-  factory LaundryOrder.fromData(id, data) {
-    final dynamic _estimatedPickupFromServiceProviderTime =
-        data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
-    final dynamic _estimatedDropoffAtCustomerTime =
-        data["estimatedDeliveryTimes"]?["dropoff"]?["dropoff"];
-    final dynamic _estimatedPickupFromCustomerTime =
-        data["estimatedDeliveryTimes"]?["pickup"]?["pickup"];
-    final dynamic _estimatedDropoffAtServiceProviderTime =
-        data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
+  // factory LaundryOrder.fromData(id, data) {
+  //   final dynamic _estimatedPickupFromServiceProviderTime =
+  //       data["estimatedDeliveryTimes"]?["dropoff"]?["pickup"];
+  //   final dynamic _estimatedDropoffAtCustomerTime =
+  //       data["estimatedDeliveryTimes"]?["dropoff"]?["dropoff"];
+  //   final dynamic _estimatedPickupFromCustomerTime =
+  //       data["estimatedDeliveryTimes"]?["pickup"]?["pickup"];
+  //   final dynamic _estimatedDropoffAtServiceProviderTime =
+  //       data["estimatedDeliveryTimes"]?["pickup"]?["dropoff"];
 
-    final LaundryOrder laundryOrder = LaundryOrder(
-        chatId: 1,
-        orderId: id,
-        // TODO:544D-HASURA
-        customer: UserInfo(
-            firebaseId: "",
-            hasuraId: 2,
-            name: null,
-            image: null,
-            language: null),
-        // customer: UserInfo.fromData(data["customer"]),
-        status: data['status'].toString().toLaundryOrderStatus(),
-        cost: data['cost'],
-        to: Location.fromFirebaseData(data['to']),
-        orderTime: DateTime.parse(data["orderTime"]),
-        paymentType: data["paymentType"].toString().toPaymentType(),
-        shippingCost: data["shippingCost"] ?? 50,
-        notes: data["notes"],
-        costsByType: (data["costsByType"] != null)
-            ? LaundryOrderCosts.fromData(data["costsByType"])
-            : null,
-        estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
-            ? DateTime.parse(data["estimatedLaundryReadyTime"])
-            : null,
-        estimatedPickupFromServiceProviderTime:
-            (_estimatedPickupFromServiceProviderTime != null &&
-                    _estimatedPickupFromServiceProviderTime != "")
-                ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
-                : null,
-        estimatedDropoffAtCustomerTime:
-            (_estimatedDropoffAtCustomerTime != null &&
-                    _estimatedDropoffAtCustomerTime != "")
-                ? DateTime.parse(_estimatedDropoffAtCustomerTime)
-                : null,
-        estimatedPickupFromCustomerTime:
-            (_estimatedPickupFromCustomerTime != null &&
-                    _estimatedPickupFromCustomerTime != "")
-                ? DateTime.parse(_estimatedPickupFromCustomerTime)
-                : null,
-        estimatedDropoffAtServiceProviderTime:
-            (_estimatedDropoffAtServiceProviderTime != null &&
-                    _estimatedDropoffAtServiceProviderTime != "")
-                ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
-                : null,
-        laundry: (data["laundry"] != null) ? ServiceInfo.fromData(data["laundry"]) : null,
-        dropoffDriver: (data["dropoffDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"]) : null,
-        laundryDropOffDriverChatId: data['secondaryChats']?['serviceProviderDropOffDriver'],
-        customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],
-        pickupDriver: (data["pickupDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["pickupDriver"]) : null,
-        laundryPickupDriverChatId: data['secondaryChats']?['serviceProviderPickupDriver'],
-        customerPickupDriverChatId: data['secondaryChats']?['customerPickupDriver'],
-        notifiedAdmin: data['notified']?['admin'] ?? false,
-        notifiedOperator: data['notified']?['operator'] ?? false);
+  //   final LaundryOrder laundryOrder = LaundryOrder(
+  //       chatId: 1,
+  //       orderId: id,
+  //       // TODO:544D-HASURA
+  //       customer: UserInfo(
+  //           firebaseId: "",
+  //           hasuraId: 2,
+  //           name: null,
+  //           image: null,
+  //           language: null),
+  //       // customer: UserInfo.fromData(data["customer"]),
+  //       status: data['status'].toString().toLaundryOrderStatus(),
+  //       cost: data['cost'],
+  //       to: Location.fromFirebaseData(data['to']),
+  //       orderTime: DateTime.parse(data["orderTime"]),
+  //       paymentType: data["paymentType"].toString().toPaymentType(),
+  //       shippingCost: data["shippingCost"] ?? 50,
+  //       notes: data["notes"],
+  //       costsByType: (data["costsByType"] != null)
+  //           ? LaundryOrderCosts.fromData(data["costsByType"])
+  //           : null,
+  //       estimatedLaundryReadyTime: (data["estimatedLaundryReadyTime"] != null)
+  //           ? DateTime.parse(data["estimatedLaundryReadyTime"])
+  //           : null,
+  //       estimatedPickupFromServiceProviderTime:
+  //           (_estimatedPickupFromServiceProviderTime != null &&
+  //                   _estimatedPickupFromServiceProviderTime != "")
+  //               ? DateTime.parse(_estimatedPickupFromServiceProviderTime)
+  //               : null,
+  //       estimatedDropoffAtCustomerTime:
+  //           (_estimatedDropoffAtCustomerTime != null &&
+  //                   _estimatedDropoffAtCustomerTime != "")
+  //               ? DateTime.parse(_estimatedDropoffAtCustomerTime)
+  //               : null,
+  //       estimatedPickupFromCustomerTime:
+  //           (_estimatedPickupFromCustomerTime != null &&
+  //                   _estimatedPickupFromCustomerTime != "")
+  //               ? DateTime.parse(_estimatedPickupFromCustomerTime)
+  //               : null,
+  //       estimatedDropoffAtServiceProviderTime:
+  //           (_estimatedDropoffAtServiceProviderTime != null &&
+  //                   _estimatedDropoffAtServiceProviderTime != "")
+  //               ? DateTime.parse(_estimatedDropoffAtServiceProviderTime)
+  //               : null,
+  //       laundry: (data["laundry"] != null) ? ServiceInfo.fromData(data["laundry"]) : null,
+  //       dropoffDriver: (data["dropoffDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["dropoffDriver"]) : null,
+  //       laundryDropOffDriverChatId: data['secondaryChats']?['serviceProviderDropOffDriver'],
+  //       customerDropOffDriverChatId: data['secondaryChats']?['customerDropOffDriver'],
+  //       pickupDriver: (data["pickupDriver"] != null) ? DeliveryDriverUserInfo.fromData(data["pickupDriver"]) : null,
+  //       laundryPickupDriverChatId: data['secondaryChats']?['serviceProviderPickupDriver'],
+  //       customerPickupDriverChatId: data['secondaryChats']?['customerPickupDriver'],
+  //       notifiedAdmin: data['notified']?['admin'] ?? false,
+  //       notifiedOperator: data['notified']?['operator'] ?? false);
 
-    if (data["routeInformation"] != null) {
-      laundryOrder.routeInformation = RouteInformation(
-        polyline: data["routeInformation"]["polyline"],
-        distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
-        duration: RideDuration.fromJson(
-          data["routeInformation"]["duration"],
-        ),
-      );
-    }
+  //   if (data["routeInformation"] != null) {
+  //     laundryOrder.routeInformation = RouteInformation(
+  //       polyline: data["routeInformation"]["polyline"],
+  //       distance: RideDistance.fromJson(data["routeInformation"]["distance"]),
+  //       duration: RideDuration.fromJson(
+  //         data["routeInformation"]["duration"],
+  //       ),
+  //     );
+  //   }
 
-    if (data["stripePaymentInfo"] != null) {
-      laundryOrder.stripePaymentInfo =
-          StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
-    }
+  //   if (data["stripePaymentInfo"] != null) {
+  //     laundryOrder.stripePaymentInfo =
+  //         StripeOrderPaymentInfo.fromJson(data["stripePaymentInfo"]);
+  //   }
 
-    return laundryOrder;
-  }
+  //   return laundryOrder;
+  // }
 
   // Added for Debugging Perposes - Don't delete for now
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -263,26 +260,26 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
   num get weighedCost => weight * cost;
   LaundryOrderCostLineItem({
     required this.weight,
-    required String id,
+    required int id,
     required Map<LanguageType, String> name,
     required num cost,
   }) : super(cost: cost, name: name, id: id);
 
-  factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
-    final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
-      weight: laundryCostLineItemData["weight"],
-      id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
-      name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
-      cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost,
-    );
+  // factory LaundryOrderCostLineItem.fromData(laundryCostLineItemData) {
+  //   final LaundryOrderCostLineItem newLo = LaundryOrderCostLineItem(
+  //     weight: laundryCostLineItemData["weight"],
+  //     id: LaundryCostLineItem.fromData(laundryCostLineItemData).id,
+  //     name: LaundryCostLineItem.fromData(laundryCostLineItemData).name,
+  //     cost: LaundryCostLineItem.fromData(laundryCostLineItemData).cost,
+  //   );
 
-    // final LaundryOrderCostLineItem li =
-    //     LaundryCostLineItem.fromData(laundryCostLineItemData)
-    //         as LaundryOrderCostLineItem;
+  //   // final LaundryOrderCostLineItem li =
+  //   //     LaundryCostLineItem.fromData(laundryCostLineItemData)
+  //   //         as LaundryOrderCostLineItem;
 
-    // li.weight = laundryCostLineItemData["weight"];
-    return newLo;
-  }
+  //   // li.weight = laundryCostLineItemData["weight"];
+  //   return newLo;
+  // }
 
   @override
   Map<String, dynamic> toFirebaseFormat() {
@@ -297,6 +294,10 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
 class LaundryOrderCosts {
   List<LaundryOrderCostLineItem> lineItems = <LaundryOrderCostLineItem>[];
   num minimumCost = 0;
+  LaundryOrderCosts({
+    required this.lineItems,
+    this.minimumCost = 0,
+  });
   num get weighedCost {
     final num totalCost =
         lineItems.fold<num>(0, (sum, lineItem) => sum + lineItem.weighedCost);
@@ -323,19 +324,17 @@ class LaundryOrderCosts {
     }
   }
 
-  LaundryOrderCosts();
+  // factory LaundryOrderCosts.fromData(laundryCostsData) {
+  //   // ignore: prefer_final_locals
+  //   LaundryOrderCosts laundryCosts = LaundryOrderCosts();
+  //   laundryCosts.minimumCost = laundryCostsData['minimumCost'];
+  //   // ignore: avoid_annotating_with_dynamic
+  //   laundryCostsData["byType"]?.forEach((item) {
+  //     laundryCosts.lineItems.add(LaundryOrderCostLineItem.fromData(item));
+  //   });
 
-  factory LaundryOrderCosts.fromData(laundryCostsData) {
-    // ignore: prefer_final_locals
-    LaundryOrderCosts laundryCosts = LaundryOrderCosts();
-    laundryCosts.minimumCost = laundryCostsData['minimumCost'];
-    // ignore: avoid_annotating_with_dynamic
-    laundryCostsData["byType"]?.forEach((item) {
-      laundryCosts.lineItems.add(LaundryOrderCostLineItem.fromData(item));
-    });
-
-    return laundryCosts;
-  }
+  //   return laundryCosts;
+  // }
 
   Map<String, dynamic> toFirebasFormat() {
     return {

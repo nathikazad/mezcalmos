@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
@@ -25,7 +25,7 @@ class FloatingCartComponent extends StatelessWidget {
                 onPressed: () {
                   MezRouter.toNamed(kCartRoute);
                 },
-                child: Badge(
+                child: badge.Badge(
                   badgeContent: Text(
                     Get.find<CustomerCartController>()
                         .cart
@@ -33,10 +33,10 @@ class FloatingCartComponent extends StatelessWidget {
                         .cartItems
                         .length
                         .toStringAsFixed(0),
-                    style: Get.textTheme.bodyText1
+                    style: Get.textTheme.bodyLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
-                  position: BadgePosition.topEnd(top: -8, end: 0),
+                  position: badge.BadgePosition.topEnd(top: -8, end: 0),
                   badgeColor: secondaryLightBlueColor,
                   child: Container(
                     height: 60,

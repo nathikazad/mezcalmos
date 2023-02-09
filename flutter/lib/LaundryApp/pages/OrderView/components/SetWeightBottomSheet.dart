@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -14,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -43,9 +39,6 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       Get.find<LanguageController>().userLanguageKey;
   TextEditingController itemsWeightController = TextEditingController();
 
-  OrderController orderController = Get.find<OrderController>();
-  late OpLaundryInfoController laundryInfoController;
-
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
 
@@ -56,8 +49,6 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void initState() {
-    Get.put(OpLaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<OpLaundryInfoController>();
     if (widget.editMode && widget.oldItem != null) {
       newCategory.value = widget.oldItem;
       itemsWeightController.text = widget.oldItem!.weight.toString();
@@ -67,7 +58,6 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
   @override
   void dispose() {
-    Get.delete<OpLaundryInfoController>(force: true);
     itemsWeightController.dispose();
     newCategory.value = null;
     super.dispose();
@@ -90,7 +80,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                     (widget.editMode && widget.oldItem != null)
                         ? widget.oldItem!.name[userLanguage]!
                         : "${_i18n()["newItemsWeight"]}",
-                    style: Theme.of(context).textTheme.headline3,
+                    style: Theme.of(context).textTheme.displaySmall,
                     maxLines: 2,
                   )),
               SizedBox(
@@ -101,7 +91,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 children: [
                   Text(
                     "${_i18n()["itemsCategory"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   Spacer(),
                   if (widget.editMode)
@@ -118,13 +108,13 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
                           // ignore: unawaited_futures
 
-                          await deleteItem(widget.oldItem!)
-                              .then((Object? value) {
-                            MezRouter.untill((Route route) =>
-                                route.settings.name ==
-                                getLaundryOpOrderRoute(
-                                    widget.order.orderId.toString()));
-                          });
+                          // await deleteItem(widget.oldItem!)
+                          //     .then((Object? value) {
+                          //   MezRouter.untill((Route route) =>
+                          //       route.settings.name ==
+                          //       getLaundryOpOrderRoute(
+                          //           widget.order.orderId.toString()));
+                          // });
                         });
                       },
                       child: Ink(
@@ -137,7 +127,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                             ),
                             Text(
                               "${_i18n()["deleteItem"]}",
-                              style: Get.textTheme.bodyText2?.copyWith(
+                              style: Get.textTheme.bodyMedium?.copyWith(
                                   color: Colors.red,
                                   fontWeight: FontWeight.w700),
                             )
@@ -158,13 +148,13 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
               SizedBox(
                 height: 25,
               ),
-              Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyText1),
+              Text("${_i18n()["itemsWeight"]}", style: Get.textTheme.bodyLarge),
               SizedBox(
                 height: 10,
               ),
               TextFormField(
                 controller: itemsWeightController,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp('[0-9.,]')),
@@ -220,7 +210,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                                 (widget.editMode)
                                     ? "${_i18n()["editItemsWeight"]} "
                                     : "${_i18n()["saveItemsWeight"]}",
-                                style: Get.textTheme.bodyText1
+                                style: Get.textTheme.bodyLarge
                                     ?.copyWith(color: Colors.white)),
                       ),
                     )),
@@ -242,7 +232,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                         child: Text(
                       "${_i18n()["cancel"]}",
                       style:
-                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                          Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
                     )),
                   )),
             ],
@@ -277,8 +267,8 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.id == item.id);
 
-        await orderController.setOrderWeight(
-            widget.order.orderId.toString(), oldCosts);
+        // await orderController.setOrderWeight(
+        //     widget.order.orderId.toString(), oldCosts);
         mezDbgPrint("deleted");
       } else {
         Get.snackbar(
@@ -307,58 +297,58 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
 
 // handling when the weight and category is well formated and go throught the process of editing or adding new items weight
   Future<void> handlingNewOrderWeight() async {
-    final Laundry laundry = await laundryInfoController
-        .getLaundryAsFuture(opAuthController.laundryId!);
-    final LanguageType primaryLangauge = laundry.primaryLanguage;
+    // final Laundry laundry = await laundryInfoController
+    //     .getLaundryAsFuture(opAuthController.laundryId!);
+    // final LanguageType primaryLangauge = laundry.primaryLanguage;
     final LaundryOrderCostLineItem newCostLineItem = LaundryOrderCostLineItem(
         id: newCategory.value!.id,
         weight: num.parse(itemsWeightController.text),
         name: newCategory.value!.name,
         cost: newCategory.value!.cost);
 
-    final LaundryOrderCostLineItem? _tempCatgeory = widget
-        .order.costsByType?.lineItems
-        .firstWhereOrNull((LaundryOrderCostLineItem element) =>
-            element.name[primaryLangauge] ==
-            newCostLineItem.name[primaryLangauge]);
-    if (_tempCatgeory != null && !widget.editMode) {
-      handlingCategroryAlreadySelected();
-    } else if (_tempCatgeory != null &&
-        widget.editMode &&
-        _tempCatgeory.name != widget.oldItem!.name) {
-      handlingCategroryAlreadySelected();
-    } else {
-      await settingNewOrderWeight(newCostLineItem);
-    }
+    // final LaundryOrderCostLineItem? _tempCatgeory = widget
+    //     .order.costsByType?.lineItems
+    //     .firstWhereOrNull((LaundryOrderCostLineItem element) =>
+    //         element.name[primaryLangauge] ==
+    //         newCostLineItem.name[primaryLangauge]);
+    // if (_tempCatgeory != null && !widget.editMode) {
+    //   handlingCategroryAlreadySelected();
+    // } else if (_tempCatgeory != null &&
+    //     widget.editMode &&
+    //     _tempCatgeory.name != widget.oldItem!.name) {
+    //   handlingCategroryAlreadySelected();
+    // } else {
+    //   await settingNewOrderWeight(newCostLineItem);
+    // }
   }
 
 // final function that will trigger the order controller with setting the final order cost items
   Future<void> settingNewOrderWeight(
       LaundryOrderCostLineItem newCostLineItem) async {
-    final Laundry laundry = await laundryInfoController
-        .getLaundryAsFuture(opAuthController.laundryId!);
-    final LanguageType primaryLangauge = laundry.primaryLanguage;
-    LaundryOrderCosts? oldCosts = widget.order.costsByType;
-    if (oldCosts != null) {
-      if (widget.editMode) {
-        oldCosts.lineItems.removeWhere((LaundryOrderCostLineItem element) =>
-            element.name[primaryLangauge] ==
-            widget.oldItem!.name[primaryLangauge]);
-      }
-      oldCosts.lineItems.add(newCostLineItem);
-    } else {
-      oldCosts = LaundryOrderCosts();
-      oldCosts.lineItems.add(newCostLineItem);
-    }
+    // final Laundry laundry = await laundryInfoController
+    //     .getLaundryAsFuture(opAuthController.laundryId!);
+    // final LanguageType primaryLangauge = laundry.primaryLanguage;
+    // LaundryOrderCosts? oldCosts = widget.order.costsByType;
+    // if (oldCosts != null) {
+    //   if (widget.editMode) {
+    //     oldCosts.lineItems.removeWhere((LaundryOrderCostLineItem element) =>
+    //         element.name[primaryLangauge] ==
+    //         widget.oldItem!.name[primaryLangauge]);
+    //   }
+    //   oldCosts.lineItems.add(newCostLineItem);
+    // } else {
+    //   oldCosts = LaundryOrderCosts();
+    //   oldCosts.lineItems.add(newCostLineItem);
+    // }
 
-    await orderController
-        .setOrderWeight(widget.order.orderId.toString(), oldCosts)
-        .then((ServerResponse value) {
-      mezDbgPrint("Done");
+    // await orderController
+    //     .setOrderWeight(widget.order.orderId.toString(), oldCosts)
+    //     .then((ServerResponse value) {
+    //   mezDbgPrint("Done");
 
-      MezRouter.back();
-      // disposeBottomSheet();
-    }).whenComplete(() => isClicked.value = false);
+    //   MezRouter.back();
+    //   // disposeBottomSheet();
+    // }).whenComplete(() => isClicked.value = false);
   }
 
 // Showing snackbar saying that the this category already selected

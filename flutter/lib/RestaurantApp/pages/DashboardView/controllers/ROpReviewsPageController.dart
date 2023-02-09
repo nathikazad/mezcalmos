@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/controllers/restaurantInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';

@@ -42,8 +42,8 @@ export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDe
                 body: `You have been approved as an operator`
             },
             es: {
-                title: `Authorized`,
-                body: `You have been approved as an operator`
+                title: `Autorizado`,
+                body: `Has sido aprobado como operador`
             }
         } : {
             en: {
@@ -51,8 +51,8 @@ export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDe
                 body: `Your request to become an operator has been denied`
             },
             es: {
-                title: `Not approved`,
-                body: `Your request to become an operator has been denied`
+                title: `No aprovado`,
+                body: `Tu solicitud para convertirte en operador ha sido denegada`
             }
         },
         linkUrl: `/`

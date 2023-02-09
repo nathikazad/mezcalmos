@@ -8,7 +8,9 @@ import { HttpsError } from 'firebase-functions/v1/auth';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
-import { OperatorStatus } from '../../shared/models/Services/Service';
+import { Operator, OperatorStatus, ServiceProvider } from '../../shared/models/Services/Service';
+import { getLaundryStore } from '../../shared/graphql/laundry/getLaundry';
+import { updateLaundryStripe } from '../../shared/graphql/laundry/updateLaundry';
 let keys: Keys = getKeys();
 
 export interface SetupDetails {
@@ -24,18 +26,24 @@ export interface SetupResponse {
 }
 export async function setupServiceProvider(userId: number, setupDetails: SetupDetails): Promise<SetupResponse> {
 
-  let serviceProvider;
-  let operator;
+  let serviceProvider: ServiceProvider;
+  let operator: Operator;
 
-  if(setupDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
-    operator = serviceProvider.restaurantOperators?.filter((o) => o.userId == userId)[0];
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
+  switch (setupDetails.orderType) {
+    case OrderType.Restaurant:
+      serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
+      break;
+    case OrderType.Laundry:
+      serviceProvider = await getLaundryStore(setupDetails.serviceProviderId);
+      break;
+    default:
+      throw new HttpsError(
+        "internal",
+        "invalid order type"
+      );
   }
+  operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
+
   if(!operator) {
     throw new HttpsError(
       "internal",
@@ -53,8 +61,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 
   if(!(serviceProvider.stripeInfo)) {
     let owner;
-    if(setupDetails.orderType == OrderType.Restaurant)
-      owner = serviceProvider.restaurantOperators?.filter((o) => o.owner == true)[0];
+    owner = serviceProvider.operators?.filter((o) => o.owner == true)[0];
     
     const account = await stripe.accounts.create({
       type: 'standard',
@@ -90,8 +97,20 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       requirements: []
     }
     serviceProvider.acceptedPayments = setupDetails.acceptedPayments;
-    if(setupDetails.orderType == OrderType.Restaurant)
-      updateRestaurantStripe(serviceProvider);
+
+    switch (setupDetails.orderType) {
+      case OrderType.Restaurant:
+        updateRestaurantStripe(serviceProvider);
+        break;
+      case OrderType.Laundry:
+        updateLaundryStripe(serviceProvider);
+        break;
+      default:
+        throw new HttpsError(
+          "internal",
+          "invalid order type"
+        );
+    }
   }
 
   const accountLink = await stripe.accountLinks.create({
@@ -115,15 +134,21 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
   let serviceProvider;
   let operator;
 
-  if(updateDetails.orderType == OrderType.Restaurant) {
-    serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
-    operator = serviceProvider.restaurantOperators?.filter((o) => o.userId == userId)[0];
-  } else {
-    throw new HttpsError(
-      "internal",
-      "invalid order type"
-    );
+  switch (updateDetails.orderType) {
+    case OrderType.Restaurant:
+      serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
+      break;
+    case OrderType.Laundry:
+      serviceProvider = await getLaundryStore(updateDetails.serviceProviderId);
+      break;
+    default:
+      throw new HttpsError(
+        "internal",
+        "invalid order type"
+      );
   }
+  operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
+
   if(!operator) {
     throw new HttpsError(
       "internal",
@@ -160,8 +185,19 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
     chargesEnabled: account.charges_enabled,
     requirements: account.requirements?.currently_due
   }
-  if(updateDetails.orderType == OrderType.Restaurant)
-    updateRestaurantStripe(serviceProvider);
+  switch (updateDetails.orderType) {
+    case OrderType.Restaurant:
+      updateRestaurantStripe(serviceProvider);
+      break;
+    case OrderType.Laundry:
+      updateLaundryStripe(serviceProvider);
+      break;
+    default:
+      throw new HttpsError(
+        "internal",
+        "invalid order type"
+      );
+  }
 }
 
 export async function verifyCustomerIdForServiceAccount(

@@ -49,8 +49,8 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.order.customerName.inCaps,
-                          style: Get.textTheme.bodyText1,
+                          widget.order.title.inCaps,
+                          style: Get.textTheme.bodyLarge,
                         ),
                         SizedBox(
                           height: 5,
@@ -58,7 +58,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         if (widget.order.toAdress != null)
                           Text(
                             widget.order.toAdress!.inCaps,
-                            style: Get.textTheme.bodyText2,
+                            style: Get.textTheme.bodyMedium,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -69,13 +69,13 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(widget.order.orderTime.toDayAmPm()),
-                      if (widget.order.customerImage != null &&
-                          widget.order.customerImage!.isURL &&
+                      if (widget.order.image != null &&
+                          widget.order.image!.isURL &&
                           showImage)
                         CircleAvatar(
                           radius: 25,
-                          backgroundImage: CachedNetworkImageProvider(
-                              widget.order.customerImage!),
+                          backgroundImage:
+                              CachedNetworkImageProvider(widget.order.image!),
                           onBackgroundImageError: (Object e, StackTrace? stk) {
                             setState(() {
                               showImage = false;
@@ -99,7 +99,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                   ),
                   Text(
                     " \$${widget.order.totalCost}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   Spacer(),
                   getOrderWidget()
@@ -122,7 +122,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
-            style: Get.textTheme.bodyText1
+            style: Get.textTheme.bodyLarge
                 ?.copyWith(color: Colors.red, fontSize: 10.sp),
           ),
         );
@@ -135,7 +135,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
-            style: Get.textTheme.bodyText1
+            style: Get.textTheme.bodyLarge
                 ?.copyWith(color: Colors.green, fontSize: 10.sp),
           ),
         );
@@ -147,7 +147,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
-            style: Get.textTheme.bodyText1
+            style: Get.textTheme.bodyLarge
                 ?.copyWith(color: Colors.amber, fontSize: 10.sp),
           ),
         );

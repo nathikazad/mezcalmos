@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -25,11 +25,11 @@ class MessageButton extends StatelessWidget {
         customBorder: CircleBorder(),
         child: Ink(
             padding: withPadding ? const EdgeInsets.all(8) : null,
-            child: Badge(
+            child: badge.Badge(
               badgeColor: Colors.red,
               showBadge: Get.find<ForegroundNotificationsController>()
                   .hasNewMessageNotification(chatId),
-              position: BadgePosition(top: 0, end: 0),
+              position: badge.BadgePosition(top: 0, end: 0),
               child: Icon(
                 icon,
                 size: 30,

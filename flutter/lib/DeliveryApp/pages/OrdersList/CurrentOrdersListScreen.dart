@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/orderController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -26,7 +25,6 @@ class CurrentOrdersListScreen extends StatefulWidget {
 }
 
 class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
-  OrderController orderController = Get.find<OrderController>();
   DriverCurrentOrdersController viewController =
       DriverCurrentOrdersController();
   DeliveryAuthController _deliveryAuthController =
@@ -35,7 +33,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
   @override
   void initState() {
     Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
-    orderController.clearNewOrderNotificationsOfPastOrders();
+
     viewController.init();
 
     super.initState();
@@ -43,7 +41,6 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void dispose() {
-    orderController.dispose();
     super.dispose();
   }
 
@@ -109,7 +106,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
             padding: const EdgeInsets.all(5),
             child: Text(
               "${_i18n()["currentOrders"]}",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           SizedBox(height: 5),

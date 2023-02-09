@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,7 +67,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                           (controller.showInfo.value)
                               ? "${_i18n()["info"]}"
                               : controller.restaurant.value!.info.name,
-                          style: Get.textTheme.headline3
+                          style: Get.textTheme.displaySmall
                               ?.copyWith(color: Colors.white, fontSize: 14.sp),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -198,8 +198,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
               isScrollable: true,
               controller: controller.getTabController,
               labelColor: primaryBlueColor,
-              labelStyle: Get.textTheme.bodyText1,
-              unselectedLabelStyle: Get.textTheme.bodyText1?.copyWith(
+              labelStyle: Get.textTheme.bodyLarge,
+              unselectedLabelStyle: Get.textTheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.w500, color: Colors.grey.shade800),
               unselectedLabelColor: Colors.grey.shade700,
               indicatorPadding: const EdgeInsets.all(5),
@@ -275,7 +275,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
-                          ? Get.textTheme.bodyText1
+                          ? Get.textTheme.bodyLarge
                               ?.copyWith(color: primaryBlueColor)
                           : null,
                     ),
@@ -303,7 +303,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
-                          ? Get.textTheme.bodyText1
+                          ? Get.textTheme.bodyLarge
                               ?.copyWith(color: primaryBlueColor)
                           : null,
                     ),
@@ -408,10 +408,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
             onTap: () {
               MezRouter.toNamed(kNotificationsRoute);
             },
-            child: Badge(
+            child: badge.Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 0, end: 0),
+              position: badge.BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(

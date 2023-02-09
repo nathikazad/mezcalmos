@@ -1,0 +1,184 @@
+query getLaundries {
+  laundry_store {
+    id
+    image
+    language_id
+normal_delivery_time
+    location_id
+    delivery_details_id
+normal_delivery_time
+    name
+    location {
+      gps
+      address
+    }
+
+    approved
+
+    description_id
+    schedule
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    accepted_payments
+    stripe_info
+    self_delivery
+    open_status
+    schedule
+  }
+}
+
+query getLaundryStoreById($id: Int!) {
+  laundry_store_by_pk(id: $id) {
+    id
+    location_id
+    delivery_details_id
+normal_delivery_time
+
+    image
+    language_id
+    description_id
+    location {
+      gps
+      address
+    }
+    self_delivery
+    accepted_payments
+    stripe_info
+    name
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    approved
+    schedule
+    open_status
+  }
+}
+query getLaundryStatus($id: Int!) {
+  laundry_store_by_pk(id: $id) {
+    open_status
+  }
+}query getLaundryDays($id: Int!) {
+  laundry_store_by_pk(id: $id) {
+   normal_delivery_time
+
+  }
+}
+
+mutation switchLaundryAvailability($restauarntId: Int!, $value: String) {
+  update_laundry_store_by_pk(
+    pk_columns: { id: $restauarntId }
+    _set: { open_status: $value }
+  ) {
+    open_status
+  }
+}
+
+mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
+  update_laundry_store_by_pk(_set: $data, pk_columns: { id: $id }) {
+    id
+
+    location_id
+normal_delivery_time
+
+    image
+    language_id
+    location {
+      gps
+      address
+    }
+    accepted_payments
+    stripe_info
+    name
+    schedule
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+    approved
+    open_status
+    schedule
+  }
+}
+
+query getLaundryOperators($laundryStoreID: Int!) {
+  laundry_operator(where: { store_id: { _eq: $laundryStoreID } }) {
+    id
+    current_gps
+    status
+    store_id
+    owner
+    user {
+      phone
+      name
+      image
+      language_id
+      id
+    }
+  }
+}
+query getLaundryCategories($storeId: Int!) {
+  laundry_category(where: { store_id: { _eq: $storeId } }) {
+    cost_by_kilo
+    id
+    name_id
+    position
+    store_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+  }
+}
+query getLaundryCategoryById($categoryId: Int!) {
+  laundry_category_by_pk(id: $categoryId) {
+    cost_by_kilo
+    id
+    name_id
+    position
+    store_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+  }
+}
+mutation addLaundryCategory($data: laundry_category_insert_input!) {
+  insert_laundry_category_one(object: $data) {
+    id
+  }
+}
+mutation updateLaundryCategory(
+  $categoryId: Int!
+  $data: laundry_category_set_input!
+) {
+  update_laundry_category_by_pk(pk_columns: { id: $categoryId }, _set: $data) {
+    cost_by_kilo
+    id
+    name_id
+    position
+    store_id
+    name {
+      translations {
+        value
+        language_id
+      }
+    }
+  }
+}
+mutation deleteLaundryCategory($id: Int!) {
+  delete_laundry_category_by_pk(id: $id){id}
+}
+

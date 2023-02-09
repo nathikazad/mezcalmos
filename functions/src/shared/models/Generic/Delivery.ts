@@ -2,12 +2,13 @@ import { Location, NotificationInfo } from "./Generic";
 import { OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
 import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../Notification";
+import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
     deliveryId?: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    deliveryDriverType?: DeliveryDriverType
+    deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
     
@@ -27,8 +28,8 @@ export interface DeliveryOrder {
     serviceProviderReviewBydriverId?: number;
     customerReviewByDriverId?: number;
     customerId: number;
-    serviceProviderId?: number;
-    serviceProviderType?: DeliveryServiceProviderType;
+    serviceProviderId: number;
+    serviceProviderType: DeliveryServiceProviderType;
     tripPolyline?: string;
     deliveryCost: number;
     packageCost?: number;
@@ -39,12 +40,17 @@ export interface DeliveryOrder {
     cancellationTime?: string;
     deliveryDriver?: DeliveryDriver;
     orderType: OrderType;
+    direction: DeliveryDirection;
+}
+export enum DeliveryDirection {
+    FromCustomer = "fromCustomer",
+    ToCustomer = "toCustomer"
 }
 
 export interface DeliveryDriver {
     id?: number,
     userId: number,
-    deliveryCompanyType?: DeliveryCompanyType,
+    deliveryCompanyType?: DeliveryServiceProviderType,
     deliveryCompanyId?: number,
     status?: string,
     appVersion?: string,
@@ -52,11 +58,7 @@ export interface DeliveryDriver {
     user?: UserInfo,
     online?: boolean,
     notificationInfo?: NotificationInfo,
-    deliveryDriverType: DeliveryDriverType
-}
-export enum DeliveryCompanyType {
-    DeliveryCompany = "delivery_company",
-    Restaurant = "restaurant"
+    deliveryDriverType: ParticipantType
 }
 
 export interface DeliveryOperator {
@@ -92,6 +94,7 @@ export enum DeliveryOperatorStatus {
 
 export enum DeliveryOrderStatus {
     OrderReceived = "orderReceived",
+    OnTheWayToPickup = "onTheWayToPickup", 
     PackageReady = "packageReady", 
     AtPickup = "atPickup", 
     OnTheWayToDropoff = "onTheWayToDropoff", 
@@ -103,21 +106,22 @@ export enum DeliveryOrderStatus {
 }
 
 export enum DeliveryServiceProviderType {
-    Restaurnt = "restaurant",
-    DeliveryCompany = "delivery_company"
+    Restaurant = "restaurant",
+    DeliveryCompany = "delivery_company",
+    Laundry = "laundry"
 }
 
-export enum DeliveryDriverType {
-    RestaurantOperator = "restaurant_operator",
-    DeliveryDriver = "delivery_driver"
-}
+// export enum DeliveryDriverType {
+//     RestaurantOperator = "restaurant_operator",
+//     DeliveryDriver = "delivery_driver"
+// }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: DeliveryDriverType
+    deliveryDriverType: ParticipantType
 }
   
 export interface CancelDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: DeliveryDriverType
+    deliveryDriverType: ParticipantType
 }
 
 export interface DeliveryOrderStatusChangeNotification extends OrderNotification {

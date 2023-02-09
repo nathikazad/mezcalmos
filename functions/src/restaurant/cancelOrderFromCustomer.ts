@@ -9,13 +9,13 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
+import { Operator } from "../shared/models/Services/Service";
 
 // Customer Canceling
 interface CancelOrderDetails {
@@ -23,13 +23,6 @@ interface CancelOrderDetails {
 }
 
 export async function cancelOrderFromCustomer(userId: number, data: CancelOrderDetails) {
-
-  if (data.orderId == null) {
-    throw new HttpsError(
-      "internal", 
-      `Expected order id`,
-    );
-  }
 
   let mezAdminPromise = getMezAdmins();
   console.log("[+] getMezAdmins " , mezAdminPromise);
@@ -42,13 +35,7 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
 
   let promiseResponse = await Promise.all([mezAdminPromise, restaurantOperatorsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[0];
-  let restaurantOperators: RestaurantOperator[] = promiseResponse[1];
-  if (order == null) {
-    throw new HttpsError(
-      "internal",
-      `Order does not exist`,
-    );
-  }
+  let restaurantOperators: Operator[] = promiseResponse[1];
 
   if (order.customerId != userId) {
     throw new HttpsError(

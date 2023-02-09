@@ -12,6 +12,16 @@ object_relationships:
         remote_table:
           name: company
           schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: restaurant
     using:
       manual_configuration:
@@ -39,6 +49,17 @@ insert_permissions:
             user_id:
               _eq: X-Hasura-User-Id
       columns:
+        - service_provider_id
+        - service_provider_type
+  - role: laundry_operator
+    permission:
+      check:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - id
         - service_provider_id
         - service_provider_type
   - role: mez_admin
@@ -89,6 +110,13 @@ select_permissions:
         - service_provider_type
       filter: {}
   - role: delivery_operator
+    permission:
+      columns:
+        - id
+        - service_provider_id
+        - service_provider_type
+      filter: {}
+  - role: laundry_operator
     permission:
       columns:
         - id

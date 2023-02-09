@@ -31,7 +31,9 @@ targets:
               type: Geography
               fromJsonFunctionName: geographyFromJson
               toJsonFunctionName: geographyToJson
-              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart   
+              import: package:mezcalmos/Shared/graphql/hasuraTypes.dart 
+            float8:
+              type: double    
             money:
               type: double
               fromJsonFunctionName: moneyFromJson

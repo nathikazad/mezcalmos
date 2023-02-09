@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/restaurantController.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -32,8 +31,6 @@ class RestaurantControllButtons extends StatefulWidget {
 
 class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
   bool clicked = false;
-  RestaurantOrderController restaurantOrderController =
-      Get.find<RestaurantOrderController>();
 
   @override
   Widget build(BuildContext context) {
@@ -165,12 +162,12 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
             children: [
               Text(
                 '${_i18n()["orderStatus"]["delivered"]}',
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.order.orderTime.toLocal()),
-                style: Get.textTheme.subtitle1,
+                style: Get.textTheme.titleMedium,
               )
             ],
           ))
@@ -230,11 +227,11 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
             children: [
               Text(
                 header,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Text(
                 body,
-                style: Get.textTheme.subtitle1,
+                style: Get.textTheme.titleMedium,
               )
             ],
           ))
@@ -265,12 +262,12 @@ class _RestaurantControllButtonsState extends State<RestaurantControllButtons> {
             children: [
               Text(
                 '${_i18n()["orderStatus"]["canceled"]}',
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Text(
                 DateFormat('dd MMM yy h:m')
                     .format(widget.order.orderTime.toLocal()),
-                style: Get.textTheme.subtitle1,
+                style: Get.textTheme.titleMedium,
               )
             ],
           ))

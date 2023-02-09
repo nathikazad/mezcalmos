@@ -1,11 +1,11 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CategoryView/CategoryView.dart';
-import 'package:mezcalmos/LaundryApp/pages/CurrentOrdersList/LaundryOpOrdersListView.dart';
-import 'package:mezcalmos/LaundryApp/pages/EditInfoView/EditInfoView.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
-import 'package:mezcalmos/LaundryApp/pages/PastOrdresList/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
+import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -18,34 +18,35 @@ const String kEditInfoView = '/editInfo/:laundryId';
 
 const String kCategoryView = '/categoryScreen/:laundryId/:categoryId';
 const String kOrderView = '/laundryOrders/:orderId';
+const String kLaundryTabsView = '/dashboard';
 
-String getCategoryRoute({String? categoryId, required String laundryId}) {
+String getCategoryRoute({int? categoryId, required int laundryId}) {
   mezDbgPrint("Categ =========>$categoryId");
-  String catgRoute = kCategoryView.replaceFirst(":laundryId", laundryId);
+  String catgRoute = kCategoryView.replaceFirst(":laundryId", "$laundryId");
   if (categoryId != null) {
-    catgRoute = catgRoute.replaceFirst(":categoryId", categoryId);
+    catgRoute = catgRoute.replaceFirst(":categoryId", "$categoryId");
   }
   mezDbgPrint("finalroute :======> $catgRoute");
   return catgRoute;
 }
 
-String getAdminRoute({required String laundryId}) {
-  return kAdminView.replaceFirst(":laundryId", laundryId);
+String getAdminRoute({required int laundryId}) {
+  return kAdminView.replaceFirst(":laundryId", "$laundryId");
 }
 
-String getEditInfoRoute({required String laundryId}) {
-  return kEditInfoView.replaceFirst(":laundryId", laundryId);
+String getEditInfoRoute({required int laundryId}) {
+  return kEditInfoView.replaceFirst(":laundryId", "$laundryId");
 }
 
-String getLaundryOpOrderRoute(String orderId) {
-  return kOrderView.replaceFirst(":orderId", orderId);
+String getLaundryOpOrderRoute(int orderId) {
+  return kOrderView.replaceFirst(":orderId", "$orderId");
 }
 
 // GetX based Router (For navigating)
 class XRouter {
   static dynamic mainRoutes = [
-        GetPage(name: kEditInfoView, page: () => LaundryOpEditInfoView()),
         GetPage(name: kAdminView, page: () => LaundryOpAdminView()),
+        GetPage(name: kLaundryTabsView, page: () => LaundryTabsView()),
         GetPage(
             name: kCurrentOrdersListView,
             page: () => LaundryOpCurrentOrdersListView()),
@@ -54,7 +55,7 @@ class XRouter {
         GetPage(name: kHomeRoute, page: () => LaundryWrapper()),
         GetPage(
           name: kCategoryView,
-          page: () => LaundryOpCategoryScreen(),
+          page: () => LaundrOpCategoryView(),
         ),
         GetPage(name: kOrderView, page: () => LaundryOpOrderView())
       ] +

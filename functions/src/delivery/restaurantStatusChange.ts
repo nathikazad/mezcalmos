@@ -4,109 +4,35 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryDriver, DeliveryDriverType, DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
-import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
+import {  DeliveryOrder, DeliveryOrderStatus,  } from "../shared/models/Generic/Delivery";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
-import { getRestaurantOrder } from "../shared/graphql/restaurant/order/getRestaurantOrder";
+import { getRestaurantOrderFromDelivery } from "../shared/graphql/restaurant/order/getRestaurantOrder";
 import { CustomerInfo } from "../shared/models/Generic/User";
-import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { updateRestaurantOrderStatus } from "../shared/graphql/restaurant/order/updateOrder";
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
-import { RestaurantOperator } from "../shared/models/Services/Restaurant/Restaurant";
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { restaurantOrderStatusChangeMessages } from "../restaurant/bgNotificationMessages";
+import { ChangeDeliveryStatusDetails } from "./statusChange";
+import { Operator } from "../shared/models/Services/Service";
 
-let statusArrayInSeq: Array<DeliveryOrderStatus> =
-  [
-    DeliveryOrderStatus.OrderReceived,
-    DeliveryOrderStatus.PackageReady,
-    DeliveryOrderStatus.AtPickup,
-    DeliveryOrderStatus.OnTheWayToDropoff,
-    DeliveryOrderStatus.AtDropoff,
-    DeliveryOrderStatus.Delivered
-  ]
-export async function deliveryDriverAtPickup(userId: number, data: ChangeDeliveryStatusDetails) {
-  await changeStatus(data, DeliveryOrderStatus.AtPickup, userId)
-};
-export async function startDelivery(userId: number, data: ChangeDeliveryStatusDetails) {
-  await changeStatus(data, DeliveryOrderStatus.OnTheWayToDropoff, userId)
-};
-export async function deliveryDriverAtDropoff(userId: number, data: ChangeDeliveryStatusDetails) {
-  await changeStatus(data, DeliveryOrderStatus.AtDropoff, userId)
-};
-export async function finishDelivery(userId: number, data: ChangeDeliveryStatusDetails) {
-  await changeStatus(data, DeliveryOrderStatus.Delivered, userId)
-};
 
-function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
-  if ((newStatus == DeliveryOrderStatus.AtPickup)
-    && (currentStatus != DeliveryOrderStatus.OrderReceived)
-    && (currentStatus != DeliveryOrderStatus.PackageReady)
-  ) {
-    throw new HttpsError(
-      "internal",
-      "invalid delivery order status"
-    );
-  } else if (currentStatus != statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == newStatus) - 1]) {
-    throw new HttpsError(
-      "internal",
-      "invalid delivery order status"
-    );
-  }
-}
-
-export interface ChangeDeliveryStatusDetails {
-  deliveryId: number,
-  deliveryDriverId: number,
-  deliveryDriverType: DeliveryDriverType,
-  restaurantOrderId: number
-}
-
-async function changeStatus(
+export async function changeRestaurantOrderStatus(
   changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
-  newStatus: DeliveryOrderStatus,
-  userId: number
+  customer: CustomerInfo,
+  deliveryOrder: DeliveryOrder
 ) {
 
-  let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
-  let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId, changeDeliveryStatusDetails.deliveryDriverType);
-  let restaurantOrderPromise = getRestaurantOrder(changeDeliveryStatusDetails.restaurantOrderId);
-  let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise, restaurantOrderPromise]);
-  let deliveryOrder: DeliveryOrder = promiseResponse[0];
-  let deliveryDriver: DeliveryDriver = promiseResponse[1];
-  let restaurantOrder: RestaurantOrder = promiseResponse[2];
-  let restaurantOperators: RestaurantOperator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
+  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(changeDeliveryStatusDetails.deliveryId);
+  let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
-  if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
-    || DeliveryOrderStatus.CancelledByCustomer
-    || DeliveryOrderStatus.CancelledByDeliverer
-    || DeliveryOrderStatus.CancelledByServiceProvider
-  )) {
-    throw new HttpsError(
-      "internal",
-      "delivery order is complete or cancelled"
-    );
-  }
-  if (deliveryDriver.userId != userId) {
-    throw new HttpsError(
-      "internal",
-      "invalid delivery driver user id"
-    );
-  }
+
   if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryId) {
     throw new HttpsError(
       "internal",
       "restaurant order and delivery order do not match"
     );
   }
-  let customer: CustomerInfo = await getCustomer(restaurantOrder.customerId);
 
-  checkExpectedStatus(deliveryOrder.status, newStatus);
-
-  deliveryOrder.status = newStatus;
-  updateDeliveryOrderStatus(deliveryOrder);
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff) {
     restaurantOrder.status = RestaurantOrderStatus.OnTheWay;
@@ -124,11 +50,11 @@ async function changeStatus(
       notificationType: NotificationType.OrderStatusChange,
       orderType: OrderType.Restaurant,
       notificationAction: NotificationAction.ShowSnackBarAlways,
-      orderId: changeDeliveryStatusDetails.restaurantOrderId
+      orderId: restaurantOrder.orderId
     },
     // todo @SanchitUke fix the background message based on Restaurant Order Status
     background: restaurantOrderStatusChangeMessages[restaurantOrder.status],
-    linkUrl: orderUrl(OrderType.Restaurant, changeDeliveryStatusDetails.restaurantOrderId)
+    linkUrl: orderUrl(OrderType.Restaurant, restaurantOrder.orderId!)
   }
 
   if (deliveryOrder.status == DeliveryOrderStatus.OnTheWayToDropoff
@@ -150,10 +76,10 @@ async function changeStatus(
     })
   }
 
-  if (newStatus == DeliveryOrderStatus.Delivered) {
+  if (changeDeliveryStatusDetails.newStatus == DeliveryOrderStatus.Delivered) {
     if (restaurantOrder.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
-        orderId: changeDeliveryStatusDetails.restaurantOrderId,
+        orderId: restaurantOrder.orderId!,
         orderType: OrderType.Restaurant,
         serviceProviderId: restaurantOrder.restaurantId,
         orderStripePaymentInfo: restaurantOrder.stripeInfo!

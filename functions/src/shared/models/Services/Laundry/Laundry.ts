@@ -1,13 +1,13 @@
 import { Language } from "../../Generic/Generic";
-import { Operator, ServiceProvider } from "../Service";
+import { ForegroundNotification } from "../../Notification";
 
-export interface Laundry extends ServiceProvider {
-    laundryOperators?: Array<LaundryOperator>
-}
+// export interface Laundry extends ServiceProvider {
+//     laundryOperators?: Array<LaundryOperator>
+// }
 
-export interface LaundryOperator extends Operator {
-    storeId: number;
-}
+// export interface LaundryOperator extends Operator {
+//     storeId: number;
+// }
 
 export interface LaundryCategory {
     categoryid: number;
@@ -15,4 +15,10 @@ export interface LaundryCategory {
     storeId: number;
     costByKilo: number;
     position: number;
+}
+
+export interface NewLaundryNotification extends ForegroundNotification {
+    name: string,
+    image: string,
+    id: number,
 }

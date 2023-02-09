@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
-import 'package:mezcalmos/LaundryApp/controllers/orderController.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -27,20 +25,13 @@ class _LaundyOpSetCategoryComponentState
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
-  late OpLaundryInfoController laundryInfoController;
-
-  OrderController orderController = Get.find<OrderController>();
   @override
   void initState() {
-    Get.put(OpLaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<OpLaundryInfoController>();
-
     super.initState();
   }
 
   @override
   void dispose() {
-    Get.delete<OpLaundryInfoController>(force: true);
     super.dispose();
   }
 
@@ -61,7 +52,7 @@ class _LaundyOpSetCategoryComponentState
               //  padding: const EdgeInsets.all(5),
               child: Text(
                 "${_i18n()["itemsWeight"]}",
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             SizedBox(
@@ -85,11 +76,11 @@ class _LaundyOpSetCategoryComponentState
                       children: [
                         Text(
                           '${_i18n()["total"]}',
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyLarge,
                         ),
                         Text(
                           widget.order.costsByType!.weighedCost.toPriceString(),
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyLarge,
                         ),
                       ],
                     ),
@@ -122,7 +113,7 @@ class _LaundyOpSetCategoryComponentState
               Text(
                 "${_i18n()["setNewItemsWeight"]}",
                 style:
-                    Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+                    Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
               ),
             ],
           ),
@@ -172,8 +163,8 @@ class _LaundyOpSetCategoryComponentState
       if (oldCosts.lineItems.length > 1) {
         oldCosts.lineItems.removeWhere(
             (LaundryOrderCostLineItem element) => element.name == item.name);
-        orderController.setOrderWeight(
-            widget.order.orderId.toString(), oldCosts);
+        // orderController.setOrderWeight(
+        //     widget.order.orderId.toString(), oldCosts);
       } else {
         Get.snackbar(
           "${_i18n()["error"]}",
@@ -197,7 +188,7 @@ class _LaundyOpSetCategoryComponentState
             child: Text(
               item.name[userLanguage] ?? "",
               maxLines: 1,
-              style: Get.textTheme.bodyText2,
+              style: Get.textTheme.bodyMedium,
             ),
           ),
           Text(

@@ -1,101 +1,147 @@
-import { orderInProcess, LaundryOrder, LaundryOrderStatus } from "../shared/models/Services/Laundry/LaundryOrder";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
-import { OrderType } from "../shared/models/Generic/Order";
-import { ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { finishOrder } from "./helper";
-import * as deliveryAdminNodes from "../shared/databaseNodes/deliveryAdmin";
-// import { ParticipantType } from "../shared/models/Generic/Chat";
-// import { pushNotification } from "../utilities/senders/notifyUser";
-// import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-
+import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { getLaundryOrder } from "../shared/graphql/laundry/order/getLaundryOrder";
+import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
+import { MezAdmin } from "../shared/models/Generic/User";
+import { Operator } from "../shared/models/Services/Service";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
+import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { DeliveryOperator, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { orderUrl } from "../utilities/senders/appRoutes";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { LaundryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator";
+ 
 // Customer Canceling
-export async function cancelFromCustomer(userId: string, data: any) {
+interface CancelOrderDetails {
+  orderId: number
+}
 
-  // let response = isSignedIn(userId)
-  // if (response != undefined) {
-  //   return response;
-  // }
+export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetails: CancelOrderDetails) {
 
-  if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
+  let order: LaundryOrder = await getLaundryOrder(cancelOrderDetails.orderId);
+  let promiseResponse = await Promise.all([getMezAdmins(), getLaundryOperators(order.storeId)]);
+
+  let mezAdmins: MezAdmin[] = promiseResponse[0];
+  let laundryOperators: Operator[] = promiseResponse[1];
+
+  if (order.customerId != userId) {
+    throw new HttpsError(
+      "internal",
+      `Order does not belong to customer`,
+    );
   }
-
-  let orderId: string = data.orderId;
-
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).once('value')).val();
-  if (order == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
-    }
-  }
-
-  // if (order.customer.firebaseId != userId) {
-  //   return {
-  //     status: ServerResponseStatus.Error,
-  //     errorMessage: `Order does not belong to customer`,
-  //     errorCode: "notCustomerOrder"
-  //   }
-  // }
-
   if (!orderInProcess(order.status)) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order cannot be cancelled because it is not in process`,
-      errorCode: "orderNotInProcess"
+    throw new HttpsError(
+      "internal",
+      `Order cannot be cancelled because it is not in process`,
+    );
+  }
+
+  let paymentDetails: PaymentDetails = {
+    orderId: cancelOrderDetails.orderId,
+    orderType: OrderType.Laundry,
+    serviceProviderId: order.storeId,
+    orderStripePaymentInfo: order.stripeInfo
+  }
+  switch (order.status) {
+    case LaundryOrderStatus.OrderReceived:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(paymentDetails, 0)
+      }
+      order.refundAmount = order.totalCost;
+      break;
+    case LaundryOrderStatus.OtwPickupFromCustomer:
+    case LaundryOrderStatus.PickedUpFromCustomer:
+    case LaundryOrderStatus.AtLaundry:
+    case LaundryOrderStatus.ReadyForDelivery:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
+      if (order.paymentType == PaymentType.Card) {
+        capturePayment(paymentDetails, order.totalCost)
+      }
+      break;
+    default:
+      break;
+  }
+  // let prevStatus: LaundryOrderStatus = order.status;
+
+  order.status = LaundryOrderStatus.CancelledByCustomer;
+  updateLaundryOrderStatus(order);
+
+  let notification = notify(cancelOrderDetails, mezAdmins, laundryOperators);
+
+  updateDeliveryStatus();
+
+  async function updateDeliveryStatus() {
+    if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId && order.toCustomerDeliveryId) {
+
+      let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
+      let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
+      let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
+
+      // switch (prevStatus) {
+      //   case LaundryOrderStatus.OrderReceived:
+      fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+      toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+      updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+      updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+      //   break;
+      // default:
+      //   break;
+      // }
+      //notify driver
+      deliveryOperators.forEach((d) => {
+        pushNotification(d.user?.firebaseId!,
+          notification,
+          d.notificationInfo,
+          ParticipantType.DeliveryOperator,
+          d.user?.language
+        );
+      })
+      if(fromCustomerDeliveryOrder.deliveryDriver) 
+        pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId!,
+          notification,
+          fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+          ParticipantType.DeliveryDriver,
+          fromCustomerDeliveryOrder.deliveryDriver.user?.language
+        );
+
+      if(toCustomerDeliveryOrder.deliveryDriver)
+        pushNotification(toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId!,
+          notification,
+          toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+          ParticipantType.DeliveryDriver,
+          toCustomerDeliveryOrder.deliveryDriver.user?.language
+        );
     }
   }
-  order.status = LaundryOrderStatus.CancelledByCustomer;
-  await finishOrder(order, orderId);
-
-  deliveryAdminNodes.deliveryAdmins().once('value', (snapshot) => {
-    // let deliveryAdmins: Record<string, DeliveryAdmin> = snapshot.val();
-    // laundryNodes.laundryOperators(order.serviceProviderId!.toString()).once('value').then((snapshot) => {
-    //   let laundryOperators: Record<string, boolean> = snapshot.val();
-    //   notifyOthersCancelledOrder(deliveryAdmins, parseInt(orderId), order, laundryOperators);
-    // });
-  });
-
-  return { status: ServerResponseStatus.Success, orderId: data.orderId }
 };
 
-
-// async function notifyOthersCancelledOrder(
-//   deliveryAdmins: Record<string, DeliveryAdmin>,
-//   orderId: number,
-//   order: LaundryOrder,
-//   laundryOperators: Record<string, boolean>) {
-
-//   let notification: Notification = {
-//     foreground: <LaundryOrderStatusChangeNotification>{
-//       status: LaundryOrderStatus.CancelledByCustomer,
-//       time: (new Date()).toISOString(),
-//       notificationType: NotificationType.OrderStatusChange,
-//       orderType: OrderType.Laundry,
-//       notificationAction: NotificationAction.ShowPopUp,
-//       orderId: orderId
-//     },
-//     background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
-//     linkUrl: orderUrl(OrderType.Laundry, orderId)
-//   }
-
-  // for (let adminId in deliveryAdmins) {
-  //   pushNotification(adminId!, notification, ParticipantType.DeliveryAdmin);
-  // }
-
-  // for (let operatorId in laundryOperators) {
-  //   pushNotification(operatorId, notification, ParticipantType.LaundryOperator);
-  // }
-
-
-  // notification.linkUrl = orderUrl(OrderType.Laundry, orderId)
-  // if (order.dropoffDriver)
-  //   pushNotification(order.dropoffDriver.firebaseId, notification, ParticipantType.DeliveryDriver);
-  // else if (order.pickupDriver)
-  //   pushNotification(order.pickupDriver.firebaseId, notification, ParticipantType.DeliveryDriver);
-// }
+function notify(cancelOrderDetails: CancelOrderDetails, mezAdmins: MezAdmin[], laundryOperators: Operator[]) {
+  let notification: Notification = {
+    foreground: <LaundryOrderStatusChangeNotification>{
+      status: LaundryOrderStatus.CancelledByCustomer,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Laundry,
+      notificationAction: NotificationAction.ShowPopUp,
+      orderId: cancelOrderDetails.orderId
+    },
+    background: LaundryOrderStatusChangeMessages[LaundryOrderStatus.CancelledByCustomer],
+    linkUrl: orderUrl(OrderType.Laundry, cancelOrderDetails.orderId)
+  };
+  mezAdmins.forEach((m) => {
+    pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);
+  });
+  laundryOperators.forEach((r) => {
+    pushNotification(r.user?.firebaseId!, notification, r.notificationInfo, ParticipantType.LaundryOperator);
+  });
+  return notification;
+}

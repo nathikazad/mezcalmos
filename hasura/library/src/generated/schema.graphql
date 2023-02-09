@@ -4559,14 +4559,14 @@ type delivery_order {
   """An object relationship"""
   restaurant_order: restaurant_order
   schedule_time: String
-  service_provider_id: Int
+  service_provider_id: Int!
 
   """An object relationship"""
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
 
   """restaurant, delivery_company"""
-  service_provider_type: String
+  service_provider_type: String!
 
   """
   orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
@@ -7783,6 +7783,16 @@ type laundry_order {
   from_customer_delivery: delivery_order
   from_customer_delivery_id: Int
   id: Int!
+
+  """
+  A computed field, executes function "laundry.order_in_process"
+  """
+  in_process: Boolean
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz!
   payment_type: String!
@@ -7803,7 +7813,15 @@ type laundry_order {
     path: String
   ): jsonb
   tax: money!
+
+  """An object relationship"""
+  to_customer_delivery: delivery_order
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -7878,6 +7896,8 @@ input laundry_order_bool_exp {
   from_customer_delivery: delivery_order_bool_exp
   from_customer_delivery_id: Int_comparison_exp
   id: Int_comparison_exp
+  in_process: Boolean_comparison_exp
+  items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
   payment_type: String_comparison_exp
@@ -7891,7 +7911,9 @@ input laundry_order_bool_exp {
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
   tax: money_comparison_exp
+  to_customer_delivery: delivery_order_bool_exp
   to_customer_delivery_id: Int_comparison_exp
+  total_cost: money_comparison_exp
 }
 
 """
@@ -8534,6 +8556,7 @@ input laundry_order_insert_input {
   stripe_fees: money
   stripe_info: jsonb
   tax: money
+  to_customer_delivery: delivery_order_obj_rel_insert_input
   to_customer_delivery_id: Int
 }
 
@@ -8643,6 +8666,8 @@ input laundry_order_order_by {
   from_customer_delivery: delivery_order_order_by
   from_customer_delivery_id: order_by
   id: order_by
+  in_process: order_by
+  items_cost: order_by
   notes: order_by
   order_time: order_by
   payment_type: order_by
@@ -8656,7 +8681,9 @@ input laundry_order_order_by {
   stripe_fees: order_by
   stripe_info: order_by
   tax: order_by
+  to_customer_delivery: delivery_order_order_by
   to_customer_delivery_id: order_by
+  total_cost: order_by
 }
 
 """primary key columns input for table: laundry.order"""
@@ -9072,8 +9099,8 @@ type laundry_store {
   delivery_partner: service_provider_delivery_partner
 
   """An object relationship"""
-  description: translation!
-  description_id: Int!
+  description: translation
+  description_id: Int
   id: Int!
   image: String!
   language_id: String!
@@ -9082,6 +9109,9 @@ type laundry_store {
   location: service_provider_location!
   location_id: Int!
   name: String!
+
+  """in days"""
+  normal_delivery_time: Int!
   open_status: String!
 
   """An array relationship"""
@@ -9170,6 +9200,9 @@ type laundry_store_avg_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """
@@ -9195,6 +9228,7 @@ input laundry_store_bool_exp {
   location: service_provider_location_bool_exp
   location_id: Int_comparison_exp
   name: String_comparison_exp
+  normal_delivery_time: Int_comparison_exp
   open_status: String_comparison_exp
   operators: laundry_operator_bool_exp
   operators_aggregate: laundry_operator_aggregate_bool_exp
@@ -9261,6 +9295,9 @@ input laundry_store_inc_input {
   description_id: Int
   id: Int
   location_id: Int
+
+  """in days"""
+  normal_delivery_time: Int
 }
 
 """
@@ -9283,6 +9320,9 @@ input laundry_store_insert_input {
   location: service_provider_location_obj_rel_insert_input
   location_id: Int
   name: String
+
+  """in days"""
+  normal_delivery_time: Int
   open_status: String
   operators: laundry_operator_arr_rel_insert_input
   phone_number: String
@@ -9302,6 +9342,9 @@ type laundry_store_max_fields {
   language_id: String
   location_id: Int
   name: String
+
+  """in days"""
+  normal_delivery_time: Int
   open_status: String
   phone_number: String
   service_provider_type: String
@@ -9317,6 +9360,9 @@ type laundry_store_min_fields {
   language_id: String
   location_id: Int
   name: String
+
+  """in days"""
+  normal_delivery_time: Int
   open_status: String
   phone_number: String
   service_provider_type: String
@@ -9370,6 +9416,7 @@ input laundry_store_order_by {
   location: service_provider_location_order_by
   location_id: order_by
   name: order_by
+  normal_delivery_time: order_by
   open_status: order_by
   operators_aggregate: laundry_operator_aggregate_order_by
   phone_number: order_by
@@ -9432,6 +9479,9 @@ enum laundry_store_select_column {
   name
 
   """column name"""
+  normal_delivery_time
+
+  """column name"""
   open_status
 
   """column name"""
@@ -9466,6 +9516,9 @@ input laundry_store_set_input {
   language_id: String
   location_id: Int
   name: String
+
+  """in days"""
+  normal_delivery_time: Int
   open_status: String
   phone_number: String
   schedule: jsonb
@@ -9480,6 +9533,9 @@ type laundry_store_stddev_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -9488,6 +9544,9 @@ type laundry_store_stddev_pop_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -9496,6 +9555,9 @@ type laundry_store_stddev_samp_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """
@@ -9523,6 +9585,9 @@ input laundry_store_stream_cursor_value_input {
   language_id: String
   location_id: Int
   name: String
+
+  """in days"""
+  normal_delivery_time: Int
   open_status: String
   phone_number: String
   schedule: jsonb
@@ -9537,6 +9602,9 @@ type laundry_store_sum_fields {
   description_id: Int
   id: Int
   location_id: Int
+
+  """in days"""
+  normal_delivery_time: Int
 }
 
 """
@@ -9578,6 +9646,9 @@ enum laundry_store_update_column {
 
   """column name"""
   name
+
+  """column name"""
+  normal_delivery_time
 
   """column name"""
   open_status
@@ -9635,6 +9706,9 @@ type laundry_store_var_pop_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """aggregate var_samp on columns"""
@@ -9643,6 +9717,9 @@ type laundry_store_var_samp_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """aggregate variance on columns"""
@@ -9651,6 +9728,9 @@ type laundry_store_variance_fields {
   description_id: Float
   id: Float
   location_id: Float
+
+  """in days"""
+  normal_delivery_time: Float
 }
 
 """
@@ -25142,6 +25222,9 @@ type service_provider_location {
   id: Int!
 
   """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
   restaurant: restaurant_restaurant
 }
 
@@ -25186,6 +25269,7 @@ input service_provider_location_bool_exp {
   delivery_company: delivery_company_bool_exp
   gps: geography_comparison_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   restaurant: restaurant_restaurant_bool_exp
 }
 
@@ -25214,6 +25298,7 @@ input service_provider_location_insert_input {
   delivery_company: delivery_company_obj_rel_insert_input
   gps: geography
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
 }
 
@@ -25265,6 +25350,7 @@ input service_provider_location_order_by {
   delivery_company: delivery_company_order_by
   gps: order_by
   id: order_by
+  laundry: laundry_store_order_by
   restaurant: restaurant_restaurant_order_by
 }
 
@@ -29358,6 +29444,9 @@ type translation {
   id: Int!
 
   """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
   restaurant: restaurant_restaurant
   service_provider_id: Int!
   service_provider_type: String!
@@ -29439,6 +29528,7 @@ input translation_bool_exp {
   _or: [translation_bool_exp!]
   delivery_company: delivery_company_bool_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
@@ -29470,6 +29560,7 @@ input type for inserting data into table "translation"
 input translation_insert_input {
   delivery_company: delivery_company_obj_rel_insert_input
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_type: String
@@ -29524,6 +29615,7 @@ input translation_on_conflict {
 input translation_order_by {
   delivery_company: delivery_company_order_by
   id: order_by
+  laundry: laundry_store_order_by
   restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
   service_provider_type: order_by

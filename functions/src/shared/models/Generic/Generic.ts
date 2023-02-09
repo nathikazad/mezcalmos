@@ -1,4 +1,3 @@
-import { UserInfo } from "./User";
 
 export interface Location {
   lat: number,
@@ -24,11 +23,12 @@ export enum AppType {
   RestaurantApp = "restaurant",
   DeliveryApp = "delivery",
   DeliveryAdmin = "delivery_admin",
-  MezAdmin = "mez_admin"
+  MezAdmin = "mez_admin",
+  LaundryApp = "laundry",
 }
 export enum CustomerAppType {
   Native = "native",
-  Mobile = "mobile"
+  Web = "web"
 }
 
 export interface NotificationInfo {
@@ -41,11 +41,11 @@ export enum TokenType {
   DeviceNotificationToken = "deviceNotificationToken",
 }
 
-export interface Operator {
-  info: UserInfo,
-  versionNumber: string,
-  notificationInfo: NotificationInfo
-}
+// export interface Operator {
+//   info: UserInfo,
+//   versionNumber: string,
+//   notificationInfo: NotificationInfo
+// }
 // export interface LaundryOperator extends Operator {
 //   state: {
 //     laundryId: string

@@ -94,5 +94,6 @@ void runMainGuarded(Function runMain) {
 }
 
 void throwError(error) {
+  mezDbgPrint("ERROR =================>$error");
   throw Exception(" ======🛑 Error 🛑=====  \n $error   ");
 }

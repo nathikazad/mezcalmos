@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryInfoController.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:sizer/sizer.dart';
 
@@ -22,11 +20,6 @@ class LaundryOrderWeightSelector extends StatefulWidget {
 
 class _LaundryOrderWeightSelectorState
     extends State<LaundryOrderWeightSelector> {
-  final LanguageType userLanguage =
-      Get.find<LanguageController>().userLanguageKey;
-
-  late OpLaundryInfoController laundryInfoController;
-    
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
 
@@ -34,24 +27,22 @@ class _LaundryOrderWeightSelectorState
 
   @override
   void initState() {
-     Get.put(OpLaundryInfoController(), permanent: false);
-    laundryInfoController = Get.find<OpLaundryInfoController>();
     getcatgeories();
     super.initState();
   }
 
   Future<void> getcatgeories() async {
-    final Laundry laundry = await laundryInfoController
-        .getLaundryAsFuture(opAuthController.laundryId!);
+    // final Laundry laundry = await laundryInfoController
+    //     .getLaundryAsFuture(opAuthController.laundryId!);
 
-    laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
-      laundryCategories.add(element);
-    });
+    // laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
+    //   laundryCategories.add(element);
+    // });
   }
   @override
   void dispose() {
     // TODO: implement dispose
-    Get.delete<OpLaundryInfoController>(force: true);
+
     super.dispose();
   }
 
@@ -95,7 +86,7 @@ class _LaundryOrderWeightSelectorState
                               child: Text(
                                 value.name[userLanguage] ??
                                     "Error catgeory name",
-                                style: Get.textTheme.bodyText1
+                                style: Get.textTheme.bodyLarge
                                     ?.copyWith(fontSize: 11.sp),
                               ),
                             ),
@@ -107,7 +98,7 @@ class _LaundryOrderWeightSelectorState
                                 " \$${value.cost}/KG",
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(color: primaryBlueColor),
                               )
                           ]),

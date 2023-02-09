@@ -55,6 +55,20 @@ select_permissions:
         - name
         - phone
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - deleted
+        - id
+        - big_image
+        - email
+        - firebase_id
+        - image
+        - language_id
+        - name
+        - phone
+        - creation_time
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -100,6 +114,16 @@ update_permissions:
         - language_id
         - name
         - phone
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+  - role: laundry_operator
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
       filter:
         id:
           _eq: X-Hasura-User-Id

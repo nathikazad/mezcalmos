@@ -8,7 +8,7 @@ import * as foreground from "./foreground";
 export async function pushNotification(
   firebaseUserId: string,
   notification: Notification,
-  subscription?: NotificationInfo | null,
+  notificationInfo?: NotificationInfo | null,
   participantType: ParticipantType = ParticipantType.Customer,
   language: Language = Language.ES,
   fcmThroughApi: boolean = false,
@@ -20,11 +20,11 @@ export async function pushNotification(
     notification: { ...notification.foreground, linkUrl: notification.linkUrl },
     linkUrl: notification.linkUrl
   });
-  if(subscription == null) {
+  if(notificationInfo == null) {
     return;
   }
   let fcmMessage: fcm.fcmPayload = {
-    token: subscription.token,
+    token: notificationInfo.token,
     payload: {
       notification: notification.background[language],
       data: {

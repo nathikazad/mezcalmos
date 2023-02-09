@@ -1,21 +1,20 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { CheckoutRequest } from "../../../../restaurant/checkoutCart";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryOrder, DeliveryOrderStatus } from "../../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
-import { Restaurant } from "../../../models/Services/Restaurant/Restaurant";
 import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { ServiceProviderType } from "../../../models/Services/Service";
+import { ServiceProvider } from "../../../models/Services/Service";
 
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: Restaurant, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
+export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
   : Promise<DeliveryOrder> {
 
   let chain = getHasura();
 
-  let restaurantOperatorsDetails = restaurant.restaurantOperators!.map((v) => {
+  let restaurantOperatorsDetails = restaurant.operators!.map((v) => {
     return {
       participant_id: v.userId,
       app_type_id: AppType.RestaurantApp
@@ -77,7 +76,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             chat_with_service_provider: {
               data: {
                 chat_participants: {
-                  data: restaurantOperatorsDetails
+                  data: [...restaurantOperatorsDetails, ...mezAdminDetails]
                 }
               }
             },
@@ -86,7 +85,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
           
             status: DeliveryOrderStatus.OrderReceived,
             service_provider_id: restaurantOrder.restaurantId,
-            service_provider_type: ServiceProviderType.Restaurant,
+            service_provider_type: DeliveryServiceProviderType.Restaurant,
             
             scheduled_time: restaurantOrder.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
@@ -152,7 +151,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       );
     }
     restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
-    return {
+    return <DeliveryOrder>{
       deliveryId: response.insert_restaurant_order_one.delivery.id,
       orderType: OrderType.Restaurant,
       pickupLocation: restaurant.location,
@@ -168,6 +167,8 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
+      serviceProviderId: restaurantOrder.restaurantId,
+      serviceProviderType: DeliveryServiceProviderType.Restaurant
     }
   }
   return {
@@ -186,6 +187,9 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
     tripDistance : checkoutReq.tripDistance,
     tripDuration : checkoutReq.tripDuration,
     tripPolyline : checkoutReq.tripPolyline,
+    serviceProviderId: restaurantOrder.restaurantId,
+    serviceProviderType: DeliveryServiceProviderType.Restaurant,
+    direction: DeliveryDirection.ToCustomer
   }
 }
 

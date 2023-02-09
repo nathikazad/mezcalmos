@@ -25,10 +25,12 @@ export interface ServiceProvider {
   delivery: boolean;
   customerPickup: boolean;
   deliveryDetails?: DeliveryDetails;
+  operators?: Operator[]
 }
 
 export interface Operator {
   id?: number;
+  serviceProviderId: number;
   userId: number;
   status: OperatorStatus;
   owner?: boolean;

@@ -4,7 +4,7 @@ import { UserInfo } from '../../Generic/User';
 import { OrderNotification } from '../../Notification';
 import { Location } from "../../Generic/Generic";
 import { RouteInformation } from '../../Generic/RouteInformation';
-import { Laundry } from './Laundry';
+import { ServiceProvider } from '../Service';
 
 export interface LaundryOrder extends Order {
   storeId: number;
@@ -14,8 +14,8 @@ export interface LaundryOrder extends Order {
   fromCustomerDeliveryId?: number;
   toCustomerDeliveryId?: number;
   status: LaundryOrderStatus;
-  categories: Array<OrderCategory>;
-  laundryStore?: Laundry;
+  categories?: Array<OrderCategory>;
+  laundryStore?: ServiceProvider;
   // routeInformation?: RouteInformation;
   // costsByType?: CostsByType;
 }

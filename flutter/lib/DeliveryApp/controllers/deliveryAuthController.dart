@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
@@ -65,8 +64,8 @@ class DeliveryAuthController extends GetxController {
   Future<void> saveNotificationToken() async {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    final NotificationInfo? notifInfo =
-        await get_notif_info(userId: driver!.driverInfo.hasuraId);
+    final NotificationInfo? notifInfo = await get_notif_info(
+        userId: driver!.driverInfo.hasuraId, appType: "delivery");
 
     try {
       if (notifInfo != null &&

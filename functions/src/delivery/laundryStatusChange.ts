@@ -1,142 +1,133 @@
-import { ServerResponse, ServerResponseStatus } from "../shared/models/Generic/Generic";
-import { OrderType } from "../shared/models/Generic/Order";
-import { LaundryOrderStatus, LaundryOrder } from "../shared/models/Services/Laundry/LaundryOrder";
-// import * as customerNodes from "../shared/databaseNodes/customer";
-import * as deliveryDriverNodes from "../shared/databaseNodes/deliveryDriver";
-import *  as rootDbNodes from "../shared/databaseNodes/root";
-// import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
-// import { pushNotification } from "../utilities/senders/notifyUser";
-// import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
-import { finishOrder } from "../laundry/helper";
-// import { orderUrl } from "../utilities/senders/appRoutes";
-// import * as laundryNodes from "../shared/databaseNodes/services/laundry";
-let statusArrayInSeq: Array<LaundryOrderStatus> =
-  [LaundryOrderStatus.OrderReceived,
-    LaundryOrderStatus.OtwPickupFromCustomer,
-    LaundryOrderStatus.PickedUpFromCustomer,
-  LaundryOrderStatus.AtLaundry,
-  LaundryOrderStatus.ReadyForDelivery,
-    LaundryOrderStatus.OtwPickupFromLaundry,
-    LaundryOrderStatus.PickedUpFromLaundry,
-  LaundryOrderStatus.Delivered
-  ]
+import { OrderType, PaymentType } from "../shared/models/Generic/Order";
+import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { HttpsError } from "firebase-functions/v1/auth";
+import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { CustomerInfo } from "../shared/models/Generic/User";
+import { NotificationType, NotificationAction, Notification } from "../shared/models/Notification";
+import { Operator } from "../shared/models/Services/Service";
+import { orderUrl } from "../utilities/senders/appRoutes";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { PaymentDetails, capturePayment } from "../utilities/stripe/payment";
+import { ChangeDeliveryStatusDetails } from "./statusChange";
+import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
+import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
+import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
 
-export async function startPickupFromCustomer(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromCustomer, userId)
-  return response;
-};
 
-export async function pickedUpFromCustomer(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromCustomer, userId)
-  return response;
-};
-export async function atFacility(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.AtLaundry, userId)
-  return response
-};
-export async function startPickupFromLaundry(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.OtwPickupFromLaundry, userId)
-  return response
-};
-export async function pickedUpFromLaundry(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.PickedUpFromLaundry, userId)
-  return response
-};
-export async function finishDropoff(userId: number, data: any) {
-  let response: ServerResponse = await changeStatus(data, LaundryOrderStatus.Delivered, userId)
-  return response
-};
+export async function changeLaundryOrderStatus(
+  changeDeliveryStatusDetails: ChangeDeliveryStatusDetails,
+  customer: CustomerInfo,
+  deliveryOrder: DeliveryOrder
+) {
 
-function expectedPreviousStatus(status: LaundryOrderStatus): LaundryOrderStatus {
-  return statusArrayInSeq[statusArrayInSeq.findIndex((element) => element == status) - 1];
+  let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
+  let laundryOperators: Operator[] = await getRestaurantOperators(laundryOrder.storeId);
+
+  if ((laundryOrder.fromCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId) 
+    && (laundryOrder.toCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId)
+  ) {
+    throw new HttpsError(
+      "internal",
+      "laundry order and delivery order do not match"
+    );
+  }
+  switch (deliveryOrder.direction) {
+    case DeliveryDirection.FromCustomer:
+      switch (deliveryOrder.status) {
+        case DeliveryOrderStatus.OnTheWayToPickup:
+          laundryOrder.status = LaundryOrderStatus.OtwPickupFromCustomer;
+          break;
+        case DeliveryOrderStatus.OnTheWayToDropoff:
+          laundryOrder.status = LaundryOrderStatus.PickedUpFromCustomer;
+          break;
+        case DeliveryOrderStatus.Delivered:
+          laundryOrder.status = LaundryOrderStatus.AtLaundry;
+          break;
+        default:
+          break;
+      }
+      break;
+    case DeliveryDirection.ToCustomer:
+      switch (deliveryOrder.status) {
+        case DeliveryOrderStatus.OnTheWayToPickup:
+          laundryOrder.status = LaundryOrderStatus.OtwPickupFromLaundry;
+          break;
+        case DeliveryOrderStatus.OnTheWayToDropoff:
+          laundryOrder.status = LaundryOrderStatus.PickedUpFromLaundry;
+          break;
+        case DeliveryOrderStatus.Delivered:
+          laundryOrder.status = LaundryOrderStatus.Delivered;
+          break;
+        default:
+          break;
+      }
+      break;
+    default:
+      break;
+  }
+  updateLaundryOrderStatus(laundryOrder);
+
+  notify(laundryOrder, deliveryOrder, laundryOperators, customer);
+
+  if (laundryOrder.status == LaundryOrderStatus.Delivered) {
+    if (laundryOrder.paymentType == PaymentType.Card) {
+      let paymentDetails: PaymentDetails = {
+        orderId: laundryOrder.orderId!,
+        orderType: OrderType.Laundry,
+        serviceProviderId: laundryOrder.storeId,
+        orderStripePaymentInfo: laundryOrder.stripeInfo!
+      }
+      capturePayment(paymentDetails, laundryOrder.totalCost)
+    }
+  }
 }
 
-async function changeStatus(data: any, newStatus: LaundryOrderStatus, userId: number): Promise<ServerResponse> {
+function notify(laundryOrder: LaundryOrder, deliveryOrder: DeliveryOrder, laundryOperators: Operator[], customer: CustomerInfo) {
+  
+  let notification: Notification = {
+    foreground: <LaundryOrderStatusChangeNotification>{
+      status: laundryOrder.status,
+      deliveryOrderStatus: deliveryOrder.status,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Laundry,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      orderId: laundryOrder.orderId
+    },
+    // todo @SanchitUke fix the background message based on Restaurant Order Status
+    background: LaundryOrderStatusChangeMessages[laundryOrder.status],
+    linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
+  };
 
-  // let response = isSignedIn(userId)
-  // if (response != undefined) {
-  //   return response;
-  // }
-
-
-  if (data.orderId == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Expected order id`,
-      errorCode: "orderIdNotGiven"
-    }
+  switch (laundryOrder.status) {
+    case LaundryOrderStatus.Delivered:
+      laundryOperators.forEach((r) => {
+        if (r.user) {
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.LaundryOperator, r.user.language);
+        }
+      });
+    case LaundryOrderStatus.OtwPickupFromCustomer:
+    case LaundryOrderStatus.AtLaundry:
+    case LaundryOrderStatus.PickedUpFromLaundry:
+      pushNotification(
+        customer.firebaseId,
+        notification,
+        customer.notificationInfo,
+        ParticipantType.Customer,
+        customer.language
+      );
+      break;
+    case LaundryOrderStatus.PickedUpFromCustomer:
+    case LaundryOrderStatus.OtwPickupFromLaundry:
+      laundryOperators.forEach((r) => {
+        if (r.user) {
+          pushNotification(r.user.firebaseId, notification, r.notificationInfo, ParticipantType.LaundryOperator, r.user.language);
+        }
+      });
+      break;
+    default:
+      break;
   }
-
-  let orderId: string = data.orderId;
-  let deliveryDriverId: number = userId;
-  let order: LaundryOrder = (await rootDbNodes.inProcessOrders(OrderType.Laundry, orderId.toString()).once('value')).val();
-  if (order == null) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Order does not exist`,
-      errorCode: "orderDontExist"
-    }
-  }
-
-  if (expectedPreviousStatus(newStatus) != order.status) {
-    return {
-      status: ServerResponseStatus.Error,
-      errorMessage: `Status is not ${expectedPreviousStatus(newStatus)} but ${order.status}`,
-      errorCode: "invalidOrderStatus"
-    }
-  }
-
-
-  if (newStatus == LaundryOrderStatus.OtwPickupFromCustomer || newStatus == LaundryOrderStatus.PickedUpFromCustomer
-    || newStatus == LaundryOrderStatus.AtLaundry) {
-    // if (order.pickupDriver?.id != deliveryDriverId) {
-    //   return {
-    //     status: ServerResponseStatus.Error,
-    //     errorMessage: `Order does not belong to this delivery driver`,
-    //   }
-    // }
-  }
-
-  if (newStatus == LaundryOrderStatus.OtwPickupFromLaundry || newStatus == LaundryOrderStatus.PickedUpFromLaundry
-    || newStatus == LaundryOrderStatus.Delivered) {
-    // if (order.dropoffDriver?.id != deliveryDriverId) {
-    //   return {
-    //     status: ServerResponseStatus.Error,
-    //     errorMessage: `Order does not belong to this delivery driver`,
-    //   }
-    // }
-  }
-
-  order.status = newStatus
-
-  // let notification: Notification = {
-  //   foreground: <LaundryOrderStatusChangeNotification>{
-  //     status: newStatus,
-  //     time: (new Date()).toISOString(),
-  //     notificationType: NotificationType.OrderStatusChange,
-  //     orderType: OrderType.Laundry,
-  //     notificationAction: NotificationAction.ShowSnackBarAlways,
-  //     orderId: parseInt(orderId)
-  //   },
-  //   background: LaundryOrderStatusChangeMessages[newStatus],
-  //   linkUrl: orderUrl(OrderType.Laundry, parseInt(orderId))
-  // }
-
-  if (order.status != LaundryOrderStatus.OtwPickupFromLaundry)
-    // pushNotification(order.customer.firebaseId!, notification);
-
-  if (newStatus == LaundryOrderStatus.Delivered) {
-    await finishOrder(order, orderId);
-  } else {
-    // customerNodes.inProcessOrders(order.customer.firebaseId!, orderId).update(order);
-    rootDbNodes.inProcessOrders(OrderType.Laundry, orderId).update(order);
-    // laundryNodes.inProcessOrders(order.laundry.firebaseId, orderId).update(order);
-    if (newStatus == LaundryOrderStatus.AtLaundry) {
-      await deliveryDriverNodes.pastOrders(deliveryDriverId.toString(), orderId).update(order)
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId.toString(), orderId).remove();
-    } else {
-      await deliveryDriverNodes.inProcessOrders(deliveryDriverId.toString(), orderId).update(order);
-    }
-  }
-  return { status: ServerResponseStatus.Success }
 }

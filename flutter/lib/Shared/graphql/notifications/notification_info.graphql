@@ -8,8 +8,10 @@ mutation updateNotifInfo($id: Int!, $notifData: notification_info_set_input!) {
     id
   }
 }
-query getNotifInfoByUserId($userId: Int!) {
-  notification_info(where: { user_id: { _eq: $userId } }) {
+query getNotifInfoByUserId($userId: Int!, $app_type_id: String!) {
+  notification_info(
+    where: { user_id: { _eq: $userId }, app_type_id: { _eq: $app_type_id } }
+  ) {
     app_type_id
     id
     token

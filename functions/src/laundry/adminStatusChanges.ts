@@ -14,6 +14,9 @@ import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/update
 import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
+import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
+import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 
 interface ChangeStatusDetails {
   orderId: number,
@@ -85,33 +88,47 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     ParticipantType.Customer, 
     customer.language
   )
-
+  
   if(order.deliveryType == DeliveryType.Delivery) {
-    // Delivery order status change
-    // if(!(order.deliveryId)) {
-    //   throw new HttpsError(
-    //     "internal",
-    //     "No delivery id"
-    //   );
-    // }
-    // let deliveryOrder: DeliveryOrder = await getDeliveryOrder(order.deliveryId);
-    // if (newStatus == RestaurantOrderStatus.CancelledByAdmin) {
-    //   deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
-    //   updateDeliveryOrderStatus(deliveryOrder);
-    // }
-    // if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
-    //   deliveryOrder.status = DeliveryOrderStatus.PackageReady;
-    //   updateDeliveryOrderStatus(deliveryOrder);
-    // }
-    // if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {
-    //   notification.linkUrl = orderUrl(OrderType.Restaurant, order.orderId!);
-    //   pushNotification(deliveryOrder.deliveryDriver.user.firebaseId, 
-    //     notification, 
-    //     deliveryOrder.deliveryDriver.notificationInfo,
-    //     ParticipantType.DeliveryDriver,
-    //     deliveryOrder.deliveryDriver.user?.language,
-    //   );
-    // }
+    if(order.fromCustomerDeliveryId == null || order.toCustomerDeliveryId == null) {
+      throw new HttpsError(
+        "internal",
+        "No delivery id"
+      );
+    }
+    let response = await Promise.all([
+      getDeliveryOrder(order.fromCustomerDeliveryId), 
+      getDeliveryOrder(order.toCustomerDeliveryId)
+    ])
+    let fromCustomerDeliveryOrder: DeliveryOrder = response[0] ;
+    let toCustomerDeliveryOrder: DeliveryOrder = response[1];
+
+    if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
+      fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+      toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+
+      updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+      updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+    }
+    
+    if (fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId!);
+      pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
+        notification, 
+        fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        fromCustomerDeliveryOrder.deliveryDriver.user?.language,
+      );
+    }
+    if (toCustomerDeliveryOrder.deliveryDriver && toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
+      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId!);
+      pushNotification(toCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
+        notification, 
+        toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+        ParticipantType.DeliveryDriver,
+        toCustomerDeliveryOrder.deliveryDriver.user?.language,
+      );
+    }
   }
 }
 

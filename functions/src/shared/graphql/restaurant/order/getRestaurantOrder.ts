@@ -2,9 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
-import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { OperatorStatus } from "../../../models/Services/Service";
+import { Operator, OperatorStatus } from "../../../models/Services/Service";
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
   let chain = getHasura();
@@ -103,6 +102,108 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
   return restaurantOrder;
 }
 
+export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): Promise<RestaurantOrder> {
+  let chain = getHasura();
+
+  let response =  await chain.query({
+    restaurant_order: [
+      { 
+        where: {
+          delivery_id: {
+            _eq: deliveryOrderId
+          }
+        }
+      }, {
+        restaurant_id: true,
+        id: true,
+        total_cost: true,
+        delivery_type: true,
+        status: true,
+        payment_type: true,
+        refund_amount: true,
+        customer_id: true,
+        to_location_gps: true,
+        order_time: true,
+        restaurant: {
+          location: {
+            gps: true
+          },
+          self_delivery :true,
+        },
+        delivery_id: true,
+        to_location_address: true,
+        estimated_food_ready_time: true,
+        customer_app_type: true,
+        delivery_cost: true,
+        stripe_info: [{}, true],
+        customer: {
+          user: {
+            firebase_id: true,
+            language_id: true,
+          },
+          app_version: true,
+        },
+        items: [{}, {
+          // in_json: [{path: "[name(en,es), selected_options]"}, true]
+          id: true,
+          restaurant_item_id: true,
+          quantity: true,
+          cost_per_one: true,
+          restaurant_item : {
+            name : {
+              translations :  [{} , {
+                language_id : true,
+                value : true
+              }], 
+            },
+            image : true,
+          }   
+        }],
+      }
+    ]
+  })
+  if(response.restaurant_order.length == 0) {
+    throw new HttpsError(
+      "internal",
+      "No order with that id found"
+    );
+  }
+  
+  let toLocation: Location = {
+    lat: response.restaurant_order[0].to_location_gps.coordinates[1],
+    lng: response.restaurant_order[0].to_location_gps.coordinates[0],
+  }
+
+  let items: OrderItem[] = response.restaurant_order[0].items.map((i) => {
+    return {
+      orderItemId: i.id,
+      name: i.restaurant_item.name,
+      image : i.restaurant_item.image,
+      itemId: i.restaurant_item_id,
+      quantity: i.quantity,
+      costPerOne: i.cost_per_one
+    }
+  })
+  let restaurantOrder: RestaurantOrder = {
+    orderId: response.restaurant_order[0].id,
+    customerId: response.restaurant_order[0].customer_id,
+    restaurantId: response.restaurant_order[0].restaurant_id,
+    paymentType: response.restaurant_order[0].payment_type as PaymentType,
+    toLocation,
+    refundAmount: parseFloat(response.restaurant_order[0].refund_amount.replace("$","")),
+    estimatedFoodReadyTime: response.restaurant_order[0].estimated_food_ready_time,
+    status: response.restaurant_order[0].status as RestaurantOrderStatus,
+    deliveryType: response.restaurant_order[0].delivery_type as DeliveryType,
+    customerAppType: response.restaurant_order[0].customer_app_type as CustomerAppType,
+    deliveryCost: parseFloat(response.restaurant_order[0].delivery_cost.replace("$","")),
+    items,
+    stripeInfo: JSON.parse(response.restaurant_order[0].stripe_info),
+    totalCost: parseFloat(response.restaurant_order[0].total_cost.replace("$","")),
+    deliveryId: response.restaurant_order[0].delivery_id
+  }
+  return restaurantOrder;
+}
+
 export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> {
   let chain = getHasura();
 
@@ -169,11 +270,11 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
   });
 
  return  response.restaurant_order.map((o ): RestaurantOrder => {
-    let restaurantOperators: RestaurantOperator[] = o.restaurant.restaurant_operators.map((r) => {
-      return <RestaurantOperator>{
+    let restaurantOperators: Operator[] = o.restaurant.restaurant_operators.map((r) => {
+      return <Operator>{
         id: r.id,
         userId: r.user_id,
-        restaurantId: o.restaurant_id,
+        serviceProviderId: o.restaurant_id,
         
         status: r.status as OperatorStatus,
         owner: r.owner,
@@ -220,7 +321,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         selfDelivery : o.restaurant.self_delivery,
         image: o.restaurant.image,
         location: o.restaurant.location.gps as Location,
-        restaurantOperators,
+        operators: restaurantOperators,
         delivery: o.restaurant.delivery,
         customerPickup: o.restaurant.customer_pickup,
         language: o.restaurant.language_id as Language

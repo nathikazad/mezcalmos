@@ -1,19 +1,19 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 class ItemSliverAppBar extends StatelessWidget {
   const ItemSliverAppBar({Key? key, required this.item}) : super(key: key);
@@ -49,7 +49,7 @@ class ItemSliverAppBar extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context)
                 .textTheme
-                .headline3!
+                .displaySmall!
                 .copyWith(fontSize: 13.sp, color: Colors.white),
           ),
         ),
@@ -185,10 +185,10 @@ class ItemSliverAppBar extends StatelessWidget {
             onTap: () {
               MezRouter.toNamed(kNotificationsRoute);
             },
-            child: Badge(
+            child: badge.Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 0, end: 0),
+              position: badge.BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(

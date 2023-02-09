@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as bage;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
@@ -38,7 +38,7 @@ class CustomerAppBar extends GetWidget<AuthController>
               fit: BoxFit.fitWidth,
               child: Text(
                 title!,
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.displaySmall,
                 textAlign: TextAlign.center,
               ),
             )
@@ -185,10 +185,10 @@ class CustomerAppBar extends GetWidget<AuthController>
             onTap: () {
               MezRouter.toNamed(kNotificationsRoute);
             },
-            child: Badge(
+            child: bage.Badge(
               badgeColor: Colors.red,
               showBadge: true,
-              position: BadgePosition.topEnd(top: 0, end: 0),
+              position: bage.BadgePosition.topEnd(top: 0, end: 0),
               child: Ink(
                 padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(

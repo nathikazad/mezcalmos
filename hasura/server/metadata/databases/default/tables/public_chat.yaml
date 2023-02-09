@@ -47,6 +47,19 @@ select_permissions:
           user:
             id:
               _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - chat_info
+        - messages
+        - creation_time
+        - chat_type
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

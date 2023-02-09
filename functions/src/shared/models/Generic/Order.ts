@@ -18,10 +18,11 @@ export interface Order {
   chatId?: number;
   scheduledTime?: string;
   stripeInfo?: OrderStripeInfo;
-  stripeFees?: number;
+  stripeFees?: number | null;
   cancellationTime?: string;
   discountValue?: number;
   totalCost?: number;
+  itemsCost?: number;
 }
 export enum DeliveryType {
   Pickup = "pickup",

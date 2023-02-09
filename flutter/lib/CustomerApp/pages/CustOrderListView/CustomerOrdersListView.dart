@@ -47,7 +47,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (viewController.currentOrders.isNotEmpty)
+                    if (viewController.inProcessOrder.isNotEmpty)
                       CustomerInprocessOrdersList(
                           txt: txt, viewController: viewController),
                     if (viewController.pastOrders.isNotEmpty)
@@ -81,7 +81,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
         ),
         Text(
           "${_i18n()["orders"]["noOrders"]}",
-          style: Get.textTheme.headline3,
+          style: Get.textTheme.displaySmall,
         ),
         SizedBox(
           height: 8,
@@ -90,7 +90,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             "${_i18n()["orders"]["noOrdersBody"]}",
-            style: Get.textTheme.bodyText2,
+            style: Get.textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/graphql/admin/orders/__generated/admin_orders.g
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -31,14 +32,15 @@ Future<List<MinimalOrder>?> get_admin_dv_orders({
         ordersData.map((Query$admin_get_dv_orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
           serviceProviderId: orderData.service_provider_id,
           serviceProviderType: orderData.service_provider_type
               .toString()
               .toServiceProviderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
@@ -71,14 +73,15 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
           (Subscription$admin_listen_on_dv_orders$delivery_order orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: orderData.order_type.toOrderType(),
             serviceProviderId: orderData.service_provider_id,
             serviceProviderType: orderData.service_provider_type
                 .toString()
                 .toServiceProviderType(),
             toAdress: orderData.dropoff_address,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
@@ -110,12 +113,13 @@ Future<List<MinimalOrder>?> get_admin_restaurant_orders({
         .map((Query$admin_get_restaurant_orders$restaurant_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: OrderType.Restaurant,
           serviceProviderId: orderData.restaurant_id,
           serviceProviderType: ServiceProviderType.Restaurant,
           toAdress: orderData.to_location_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
@@ -149,12 +153,13 @@ Stream<List<MinimalOrder>?> listen_on_admin_restaurant_orders({
               orderData) {
         return MinimalOrder(
             id: orderData.id,
+            orderType: OrderType.Restaurant,
             serviceProviderId: orderData.restaurant_id,
             serviceProviderType: ServiceProviderType.Restaurant,
             toAdress: orderData.to_location_address,
             orderTime: DateTime.parse(orderData.order_time),
-            customerName: orderData.customer.user.name!,
-            customerImage: orderData.customer.user.image,
+            title: orderData.customer.user.name!,
+            image: orderData.customer.user.image,
             status: orderData.status
                 .toRestaurantOrderStatus()
                 .toMinimalOrderStatus(),
@@ -190,14 +195,15 @@ Future<List<MinimalOrder>?> get_admin_service__orders({
         .map((Query$admin_get_service__orders$delivery_order orderData) {
       return MinimalOrder(
           id: orderData.id,
+          orderType: orderData.order_type.toOrderType(),
           serviceProviderId: orderData.service_provider_id,
           serviceProviderType: orderData.service_provider_type
               .toString()
               .toServiceProviderType(),
           toAdress: orderData.dropoff_address,
           orderTime: DateTime.parse(orderData.order_time),
-          customerName: orderData.customer.user.name!,
-          customerImage: orderData.customer.user.image,
+          title: orderData.customer.user.name!,
+          image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);

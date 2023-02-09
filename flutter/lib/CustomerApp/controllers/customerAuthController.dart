@@ -78,8 +78,8 @@ class CustomerAuthController extends GetxController {
   Future<void> saveNotificationToken() async {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
-    final NotificationInfo? notifInfo =
-        await get_notif_info(userId: _authController.hasuraUserId!);
+    final NotificationInfo? notifInfo = await get_notif_info(
+        userId: _authController.hasuraUserId!, appType: "customer");
 
     try {
       if (notifInfo != null &&

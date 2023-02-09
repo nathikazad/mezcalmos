@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { Restaurant } from "../../models/Services/Restaurant/Restaurant";
+import { ServiceProvider } from "../../models/Services/Service";
 
-export async function updateRestaurantStripe(restaurant: Restaurant) {
+export async function updateRestaurantStripe(restaurant: ServiceProvider) {
     let chain = getHasura();
     if(!(restaurant.id)) {
         throw new HttpsError(

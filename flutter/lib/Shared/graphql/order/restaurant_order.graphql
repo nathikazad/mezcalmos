@@ -252,6 +252,7 @@ subscription listen_restaurant_current_orders($restaurantId: Int!) {
     }
   }
 }
+
 query get_restaurant_current_orders($restaurantId: Int!) {
   restaurant_order(
     where: { restaurant_id: { _eq: $restaurantId }, in_process: { _eq: true } }

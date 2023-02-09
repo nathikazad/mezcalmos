@@ -1,11 +1,10 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { RestaurantOperator } from "../../../models/Services/Restaurant/Restaurant";
-import { OperatorStatus } from "../../../models/Services/Service";
+import { Operator, OperatorStatus } from "../../../models/Services/Service";
 
 
-export async function getRestaurantOperators(restaurantId: number): Promise<RestaurantOperator[]> {
+export async function getRestaurantOperators(restaurantId: number): Promise<Operator[]> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -40,11 +39,11 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Rest
     );
   }
   
-  return response.restaurant_operator.map((r): RestaurantOperator => {
+  return response.restaurant_operator.map((r): Operator => {
     return {
       id: r.id,
       userId: r.user_id,
-      restaurantId: restaurantId,
+      serviceProviderId: restaurantId,
       status: r.status as OperatorStatus,
       owner: r.owner,
       notificationInfo: (r.notification_info) ? {
@@ -62,7 +61,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Rest
 
 }
 
-export async function getRestaurantOperator(restaurantOperatorId: number): Promise<RestaurantOperator> {
+export async function getRestaurantOperator(restaurantOperatorId: number): Promise<Operator> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -93,7 +92,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
   return {
     id: response.restaurant_operator_by_pk.id,
     userId: response.restaurant_operator_by_pk.user_id,
-    restaurantId: response.restaurant_operator_by_pk.restaurant_id,
+    serviceProviderId: response.restaurant_operator_by_pk.restaurant_id,
     status: response.restaurant_operator_by_pk.status as OperatorStatus,
     owner: response.restaurant_operator_by_pk.owner,
     notificationInfo: (response.restaurant_operator_by_pk.notification_info) ? {
@@ -109,7 +108,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
   };
 }
 
-export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: number): Promise<RestaurantOperator> {
+export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: number): Promise<Operator> {
   let chain = getHasura();
 
   let response = await chain.query({
@@ -144,7 +143,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
   return {
     id: response.restaurant_operator[0].id,
     userId: response.restaurant_operator[0].user_id,
-    restaurantId: response.restaurant_operator[0].restaurant_id,
+    serviceProviderId: response.restaurant_operator[0].restaurant_id,
     status: response.restaurant_operator[0].status as OperatorStatus,
     owner: response.restaurant_operator[0].owner,
     notificationInfo: (response.restaurant_operator[0].notification_info) ? {

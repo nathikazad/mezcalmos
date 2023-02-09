@@ -146,8 +146,16 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin }
-extension ParseAppTypeToString on AppType {
+enum Language { EN, ES }
+extension ParseLanguageToString on Language {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum CustomerAppType { Native, Web }
+extension ParseCustomerAppTypeToString on CustomerAppType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
@@ -196,8 +204,28 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 
 }
 
-enum DeliveryDriverType { RestaurantOperator, DeliveryDriver }
-extension ParseDeliveryDriverTypeToString on DeliveryDriverType {
+class ReqLaundryResponse {
+  num orderId;
+  ReqLaundryResponse(this.orderId);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "orderId": orderId};
+  }
+factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return ReqLaundryResponse(json["orderId"]);
+  }
+}
+
+enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, PackageReady, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
+extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin, LaundryApp }
+extension ParseAppTypeToString on AppType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);

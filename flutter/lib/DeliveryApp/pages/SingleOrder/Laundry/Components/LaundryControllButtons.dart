@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/DeliveryApp/controllers/laundryController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/GradientCircularLoading.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
         ["pages"]["CurrentOrders"]["CurrentOrderViewScreen"]["Components"]
@@ -23,8 +22,8 @@ class LaundryControllButtons extends StatefulWidget {
 }
 
 class _LaundryControllButtonsState extends State<LaundryControllButtons> {
-  LaundryOrderController laundryOrderController =
-      Get.find<LaundryOrderController>();
+  // LaundryOrderController laundryOrderController =
+  //     Get.find<LaundryOrderController>();
 
   num orderWeight = 0;
 
@@ -55,37 +54,37 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .otwPickupFromCustomer(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .otwPickupFromCustomer(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       break;
                     case LaundryOrderStatus.OtwPickupFromCustomer:
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .pickedUpFromCustomer(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .pickedUpFromCustomer(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       break;
                     case LaundryOrderStatus.PickedUpFromCustomer:
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .atLaundryOrder(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .atLaundryOrder(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       MezRouter.back(closeOverlays: true);
 
                       break;
@@ -93,39 +92,39 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .otwPickupFromLaundry(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .otwPickupFromLaundry(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       break;
 
                     case LaundryOrderStatus.OtwPickupFromLaundry:
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .pickedUpFromLaundry(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .pickedUpFromLaundry(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       // MezRouter.back(closeOverlays: true);
                       break;
                     case LaundryOrderStatus.PickedUpFromLaundry:
                       setState(() {
                         clicked = true;
                       });
-                      await laundryOrderController
-                          .deliveredOrder(widget.order.orderId)
-                          .whenComplete(() {
-                        setState(() {
-                          clicked = false;
-                        });
-                      });
+                      // await laundryOrderController
+                      //     .deliveredOrder(widget.order.orderId)
+                      //     .whenComplete(() {
+                      //   setState(() {
+                      //     clicked = false;
+                      //   });
+                      // });
                       break;
                     default:
                       break;
@@ -206,11 +205,11 @@ class _LaundryControllButtonsState extends State<LaundryControllButtons> {
             children: [
               Text(
                 header,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Text(
                 body,
-                style: Get.textTheme.subtitle1,
+                style: Get.textTheme.titleMedium,
               )
             ],
           ))
