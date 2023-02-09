@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_callkit_incoming/entities/call_event.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -19,6 +19,9 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
+import 'package:uuid/uuid.dart';
+import 'package:flutter_callkit_incoming/entities/entities.dart';
 
 enum CallStatus { none, calling, inCall, timedOut }
 
@@ -131,7 +134,6 @@ class Sagora extends GetxController {
         },
       ),
     );
-
     await _engine.enableAudio();
     await _engine.disableVideo();
   }
@@ -239,10 +241,22 @@ class Sagora extends GetxController {
               token: event!.body?['extra']['agoraToken'],
               channelId: int.parse(event.body?['extra']['chatId']),
               uid: //5774112,
-                  int.parse(event.body!['extra']['calleeuid']),
+                  int.parse(event.body!['extra']['recipientuid']),
             );
             // change to Accept to update view parts.
             callStatus.value = CallStatus.inCall;
+            Map<String, dynamic> args = <String, dynamic>{
+              "chatId": int.parse(event.body?['extra']?['chatId']),
+              "talkingTo": Participant(
+                image: event.body?['avatar'],
+                name: event.body?['nameCaller'],
+                participantType: event.body['extra']['callerType']
+                    .toString()
+                    .toParticipantType(),
+                // wrong actual user id, it's more like an agora generated id
+                id: int.parse(event.body['extra']['callerId']),
+              ),
+            };
             if (Get.currentRoute == kAgoraCallScreen) {
               Future<void>.microtask(
                 () => MezRouter.offAndToNamed<void>(kAgoraCallScreen,
@@ -262,21 +276,8 @@ class Sagora extends GetxController {
             } else {
               // Pushing to call screen + awaiting in case we wanna return with value.
               // ignore: unawaited_futures
-              Future.microtask(
-                () => MezRouter.toNamed<void>(kAgoraCallScreen,
-                    arguments: <String, dynamic>{
-                      "chatId": int.parse(event.body?['extra']?['chatId']),
-                      "talkingTo": Participant(
-                        image: event.body?['avatar'],
-                        name: event.body?['nameCaller'],
-                        participantType: event.body['extra']['callerType']
-                            .toString()
-                            .toParticipantType(),
-                        // wrong actual user id, it's more like an agora generated id
-                        id: int.parse(event.body['extra']['callerId']),
-                      ),
-                    }),
-              );
+              Future.microtask(() =>
+                  MezRouter.toNamed<void>(kAgoraCallScreen, arguments: args));
             }
           }
           break;
@@ -349,5 +350,100 @@ class Sagora extends GetxController {
                 calleeParticipantType: callee.participantType,
                 callNotificationType: callNotificationType)
             .toFirebaseFormatJson());
+  }
+
+  static Future<void> handleCallNotificationEvent(RemoteMessage event) async {
+    switch (event.data['callNotificationType']
+        .toString()
+        .toCallNotificationtType()) {
+      case CallNotificationtType.Incoming:
+        mezDbgPrint("# 👁 # [ BG NOTIF ] # [ I N C O M I N G ] ${event.data}");
+        // await handleIfInChannelAlready();
+        await triggerIncomingCallAlert(
+            callerName: event.data["callerName"],
+            callerImage: event.data["callerImage"],
+            callerType: event.data["callerType"],
+            callerId: event.data["callerId"],
+            languageType: event.data["language"].toString().toLanguageType(),
+            chatId: event.data['chatId'],
+            agoraToken: event.data['agoraToken'],
+            recipientuid: event.data['recipientuid']);
+
+        break;
+      // not here
+      case CallNotificationtType.EndCall:
+        mezDbgPrint("# 👀 # [ BG NOTIF ] # [ E N D - C A L L] ${event.data}");
+        await FlutterCallkitIncoming.endAllCalls();
+        // await engine.leaveChannel();
+        // callStatus.value = CallStatus.none;
+        // await FlutterCallkitIncoming.endCall(
+        //   event.data['chatId'],
+        // );
+        break;
+      default:
+        mezDbgPrint("# 🗣 # [ BG NOTIF ] # [ U N K N O W N] ${event.data}");
+    }
+  }
+
+  static Future<void> triggerIncomingCallAlert({
+    required String callerName,
+    required String callerImage,
+    required String callerType,
+    required String callerId,
+    required Gen.LanguageType languageType,
+    required String chatId,
+    required String agoraToken,
+    required String recipientuid,
+  }) async {
+    final String _uuid = Uuid().v1();
+    final Map<String, dynamic> params = <String, dynamic>{
+      'id': _uuid,
+      'nameCaller': callerName,
+      'appName': 'Mezcalmos',
+      'avatar': callerImage,
+      'handle': callerName,
+      'type': 0,
+      'duration': 30000,
+      'textAccept': 'Accept',
+      'textDecline': 'Decline',
+      'textMissedCall': 'Missed call',
+      'textCallback': 'Call back',
+      'extra': <String, dynamic>{
+        'chatId': chatId,
+        'agoraToken': agoraToken,
+        'recipientuid': recipientuid,
+        'callerId': callerId,
+        'callerType': callerType
+      },
+      'android': <String, dynamic>{
+        'isCustomNotification': true,
+        'isShowLogo': false,
+        'isShowCallback': false,
+        'ringtonePath': 'system_ringtone_default',
+        'backgroundColor': '#0955fa',
+        'background': callerImage,
+        'actionColor': '#4CAF50'
+      },
+      'ios': <String, dynamic>{
+        'iconName': 'AppIcon',
+        'handleType': '',
+        'supportsVideo': true,
+        'maximumCallGroups': 2,
+        'maximumCallsPerCallGroup': 1,
+        'audioSessionMode': 'default',
+        'audioSessionActive': true,
+        'audioSessionPreferredSampleRate': 44100.0,
+        'audioSessionPreferredIOBufferDuration': 0.005,
+        'supportsDTMF': true,
+        'supportsHolding': true,
+        'supportsGrouping': false,
+        'supportsUngrouping': false,
+        'ringtonePath': 'system_ringtone_default'
+      }
+    };
+    final CallKitParams kitParams = CallKitParams.fromJson(params);
+    mezDbgPrint("triggering");
+    // ignore: unawaited_futures
+    await FlutterCallkitIncoming.showCallkitIncoming(kitParams);
   }
 }

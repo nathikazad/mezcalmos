@@ -1,17 +1,12 @@
 import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_callkit_incoming/entities/entities.dart';
-import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
+import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart' as Gen;
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
-import 'package:uuid/uuid.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
   mezDbgPrint("Handling a background message");
@@ -22,92 +17,8 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
     // await markInDb(event.data["markReceivedUrl"]);
   } else if (event.data["notificationType"] ==
       NotificationType.Call.toFirebaseFormatString()) {
-    switch (event.data['callNotificationType']
-        .toString()
-        .toCallNotificationtType()) {
-      case CallNotificationtType.Incoming:
-        mezDbgPrint("# 👁 # [ BG NOTIF ] # [ I N C O M I N G ] ${event.data}");
-        await triggerIncomingCallAlert(
-          callerName: event.data["callerName"],
-          callerImage: event.data["callerImage"],
-          callerType: event.data["callerType"],
-          callerId: event.data["callerId"],
-          languageType: event.data["language"].toString().toLanguageType(),
-          extra: <String, dynamic>{
-            "chatId": event.data['chatId'],
-            "agoraToken": event.data['agoraToken'],
-            "calleeuid": event.data['calleeuid'],
-          },
-        );
-
-        break;
-      // not here
-      case CallNotificationtType.EndCall:
-        mezDbgPrint("# 👀 # [ BG NOTIF ] # [ E N D - C A L L] ${event.data}");
-        await FlutterCallkitIncoming.endAllCalls();
-
-        // await FlutterCallkitIncoming.endCall(
-        //   event.data['chatId'],
-        // );
-        break;
-      default:
-        mezDbgPrint("# 🗣 # [ BG NOTIF ] # [ U N K N O W N] ${event.data}");
-    }
+    unawaited(Sagora.handleCallNotificationEvent(event));
   }
-}
-
-Future<void> triggerIncomingCallAlert({
-  required String callerName,
-  required String callerImage,
-  required String callerType,
-  required String callerId,
-  required Gen.LanguageType languageType,
-  required Map<String, dynamic> extra,
-}) async {
-  final String _uuid = Uuid().v1();
-  final Map<String, dynamic> params = <String, dynamic>{
-    'id': _uuid,
-    'nameCaller': callerName,
-    'appName': 'Mezcalmos',
-    'avatar': callerImage,
-    'handle': callerName,
-    'type': 0,
-    'duration': 30000,
-    'textAccept': 'Accept',
-    'textDecline': 'Decline',
-    'textMissedCall': 'Missed call',
-    'textCallback': 'Call back',
-    'extra': {...extra, 'callerId': callerId, 'callerType': callerType},
-    'android': <String, dynamic>{
-      'isCustomNotification': true,
-      'isShowLogo': false,
-      'isShowCallback': false,
-      'ringtonePath': 'system_ringtone_default',
-      'backgroundColor': '#0955fa',
-      'background': callerImage,
-      'actionColor': '#4CAF50'
-    },
-    'ios': <String, dynamic>{
-      'iconName': 'AppIcon',
-      'handleType': '',
-      'supportsVideo': true,
-      'maximumCallGroups': 2,
-      'maximumCallsPerCallGroup': 1,
-      'audioSessionMode': 'default',
-      'audioSessionActive': true,
-      'audioSessionPreferredSampleRate': 44100.0,
-      'audioSessionPreferredIOBufferDuration': 0.005,
-      'supportsDTMF': true,
-      'supportsHolding': true,
-      'supportsGrouping': false,
-      'supportsUngrouping': false,
-      'ringtonePath': 'system_ringtone_default'
-    }
-  };
-  final CallKitParams kitParams = CallKitParams.fromJson(params);
-  mezDbgPrint("triggering");
-  // ignore: unawaited_futures
-  await FlutterCallkitIncoming.showCallkitIncoming(kitParams);
 }
 
 // Future<void> markInDb(String url) async {
@@ -152,41 +63,16 @@ class BackgroundNotificationsController extends GetxController {
     });
 
     onMessageListener =
-        FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+        FirebaseMessaging.onMessage.listen((RemoteMessage event) async {
       mezDbgPrint(
-          "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
-      mezDbgPrint(message.data["notificationType"]);
+          "FirebaseMessage ======> ${event.data} | ${event.contentAvailable}");
+      mezDbgPrint(event.data["notificationType"]);
       mezDbgPrint(NotificationType.Call.toFirebaseFormatString());
 
-      if (message.data["notificationType"] ==
+      if (event.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
-        final Sagora agora = Get.find<Sagora>();
-
-        if (message.data['callNotificationType']
-                .toString()
-                .toCallNotificationtType() ==
-            CallNotificationtType.Incoming) {
-          // handle incoming
-          mezDbgPrint(message.data);
-          await agora.handleIfInChannelAlready();
-          await triggerIncomingCallAlert(
-              callerName: message.data["callerName"],
-              callerImage: message.data["callerImage"],
-              callerType: message.data["callerType"],
-              callerId: message.data["callerId"],
-              languageType:
-                  message.data["language"].toString().toLanguageType(),
-              extra: <String, dynamic>{
-                "chatId": message.data['chatId'],
-                "agoraToken": message.data['agoraToken'],
-                "calleeuid": message.data['recipientuid'],
-              });
-        } else {
-          mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");
-          await FlutterCallkitIncoming.endAllCalls();
-          await agora.engine.leaveChannel();
-          Get.find<Sagora>().callStatus.value = CallStatus.none;
-        }
+        mezDbgPrint(event.data);
+        unawaited(Sagora.handleCallNotificationEvent(event));
       }
     });
   }
