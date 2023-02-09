@@ -8,8 +8,12 @@ import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
+import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
@@ -22,10 +26,11 @@ class Sagora extends GetxController {
   late final RtcEngine _engine;
 
   RtcEngine get engine => _engine;
-  // late TextEditingController _controller;
+  FirebaseDb _databaseHelper = Get.find<FirebaseDb>();
+  AuthController _authController = Get.find<AuthController>();
   StreamController<String> _infoStrings = StreamController.broadcast();
+  SettingsController _settingsController = Get.find<SettingsController>();
   Stream<String> get agoraLogs => _infoStrings.stream;
-  // Call Action
   final Rx<CallStatus> callStatus = CallStatus.none.obs;
   @override
   void onInit() {
@@ -83,50 +88,66 @@ class Sagora extends GetxController {
 
   Future<void> _initAgora() async {
     //create the engine
-    // _engine = await RtcEngine.createWithContext(RtcEngineContext(agoraAppId));
-    // _engine.setEventHandler(RtcEngineEventHandler(
-    //   error: (code) {
-    //     final info = '👻👻👻👻👻 onError: $code';
-    //     _infoStrings.add(info);
-    //   },
-    //   joinChannelSuccess: (channel, uid, elapsed) {
-    //     final info = '👻👻👻👻👻 onJoinChannel: $channel, uid: $uid';
-    //     _infoStrings.add(info);
-    //   },
-    //   leaveChannel: (stats) {
-    //     _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
-    //     removeSession();
+    _engine = createAgoraRtcEngine();
+    await _engine.initialize(const RtcEngineContext(
+      appId: agoraAppId,
+      channelProfile: ChannelProfileType.channelProfileCommunication,
+    ));
 
-    //     // if (Get.currentRoute == kAgoraCallScreen) {
-    //     //   MezRouter.back<void>();
-    //     // }
-    //   },
-    //   userJoined: (uid, elapsed) {
-    //     final info = '👻👻👻👻👻 userJoined: $uid';
-    //     _infoStrings.add(info);
-    //     callStatus.value = CallStatus.inCall;
-    //   },
-    //   userOffline: (uid, reason) {
-    //     final info = '👻👻👻👻👻 userOffline: $uid , reason: $reason';
-    //     removeSession();
+    _engine.registerEventHandler(
+      RtcEngineEventHandler(
+        onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
+          final info =
+              '👻👻👻👻👻 onJoinChannel: ${connection.channelId}, uid: ${connection.localUid}';
+          _infoStrings.add(info);
+          mezDbgPrint(info);
+        },
+        onUserJoined: (RtcConnection connection, int remoteUid, int elapsed) {
+          final info = '👻👻👻👻👻 userJoined: $remoteUid';
+          _infoStrings.add(info);
+          mezDbgPrint(info);
+          callStatus.value = CallStatus.inCall;
+        },
+        onUserOffline: (RtcConnection connection, int remoteUid,
+            UserOfflineReasonType reason) {
+          final info = '👻👻👻👻👻 userOffline: $remoteUid , reason: $reason';
+          mezDbgPrint(info);
+          removeSession();
 
-    //     _infoStrings.add(info);
-    //   },
-    // ));
+          _infoStrings.add(info);
+        },
+        onTokenPrivilegeWillExpire: (RtcConnection connection, String token) {
+          _infoStrings.add(
+              '[onTokenPrivilegeWillExpire] connection: ${connection.toJson()}, token: $token');
+        },
+        onLeaveChannel: (connection, stats) {
+          _infoStrings.add(' 👻👻👻👻👻 onLeaveChannel');
+          mezDbgPrint(' 👻👻👻👻👻 onLeaveChannel');
+          removeSession();
+        },
+        onError: (err, msg) {
+          final info = '👻👻👻👻👻 onError: $err $msg';
+          _infoStrings.add(info);
+        },
+      ),
+    );
 
-    // await _engine.enableAudio();
-    // await _engine.disableVideo();
-    // await _engine.setChannelProfile(ChannelProfile.Communication);
+    await _engine.enableAudio();
+    await _engine.disableVideo();
   }
 
   Future<void> joinChannel({
     required String token,
-    required String channelId,
+    required int channelId,
     required int uid,
   }) async {
     // mezDbgPrint(" 👻👻👻 JOIN CHANNEL CALLED !!!! 👻👻👻  ");
     mezDbgPrint("👻👻👻 Joining using : $token | $channelId | $uid");
-    //   await _engine.joinChannel(token, channelId, null, uid);
+    await _engine.joinChannel(
+        token: token,
+        channelId: channelId.toString(),
+        uid: uid,
+        options: ChannelMediaOptions());
   }
 
   Future<void> removeSession({String? chatId}) async {
@@ -139,7 +160,7 @@ class Sagora extends GetxController {
   }
 
   Future<DatabaseEvent> getAgoraToken(
-      String chatId, String userId, ParticipantType type) async {
+      int chatId, String userId, ParticipantType type) async {
     mezDbgPrint("Listening once on ${agoraChatNode(chatId, userId, type)}");
     final DatabaseEvent ev = await (FirebaseDatabase.instance
         .ref()
@@ -162,14 +183,14 @@ class Sagora extends GetxController {
   }
 
   void _startListeningOnCallEvents() {
+    mezDbgPrint("🤑🤑🤑🤑🤑🤑 Flutter listening");
     FlutterCallkitIncoming.onEvent.listen((CallEvent? event) async {
       mezDbgPrint("CallEvent ===>  $event");
 
       switch (event?.event) {
         case Event.ACTION_CALL_DECLINE:
           mezDbgPrint("CallEvent.DECLINED !");
-          final MessageController _msgCtrl = Get.find<MessageController>();
-          _msgCtrl.endCall(
+          endCall(
             chatId: event!.body['extra']['chatId'],
             callee: Participant(
               image: event.body['avatar'],
@@ -188,7 +209,7 @@ class Sagora extends GetxController {
         case Event.ACTION_CALL_ENDED:
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
           if (event!.body?['extra']?['chatId'] != null) {
-            await Get.find<MessageController>().endCall(
+            await endCall(
               chatId: event.body?['extra']['chatId'],
               callee: Participant(
                 image: event.body['avatar'],
@@ -216,11 +237,9 @@ class Sagora extends GetxController {
                 "🎃🎃🎃 ACTION_CALL_ACCEPT::   Calling [_sagora.joinChannel] with extra::uid ${event?.body}");
             joinChannel(
               token: event!.body?['extra']['agoraToken'],
-              channelId: event.body?['extra']['chatId'],
+              channelId: int.parse(event.body?['extra']['chatId']),
               uid: //5774112,
-                  int.parse(
-                event.body!['extra']['calleeuid'],
-              ),
+                  int.parse(event.body!['extra']['calleeuid']),
             );
             // change to Accept to update view parts.
             callStatus.value = CallStatus.inCall;
@@ -228,7 +247,7 @@ class Sagora extends GetxController {
               Future<void>.microtask(
                 () => MezRouter.offAndToNamed<void>(kAgoraCallScreen,
                     arguments: <String, dynamic>{
-                      "chatId": event.body?['extra']?['chatId'],
+                      "chatId": int.parse(event.body?['extra']?['chatId']),
                       "talkingTo": Participant(
                         image: event.body?['avatar'],
                         name: event.body?['nameCaller'],
@@ -246,7 +265,7 @@ class Sagora extends GetxController {
               Future.microtask(
                 () => MezRouter.toNamed<void>(kAgoraCallScreen,
                     arguments: <String, dynamic>{
-                      "chatId": event.body?['extra']?['chatId'],
+                      "chatId": int.parse(event.body?['extra']?['chatId']),
                       "talkingTo": Participant(
                         image: event.body?['avatar'],
                         name: event.body?['nameCaller'],
@@ -254,7 +273,7 @@ class Sagora extends GetxController {
                             .toString()
                             .toParticipantType(),
                         // wrong actual user id, it's more like an agora generated id
-                        id: event.body['extra']['callerId'],
+                        id: int.parse(event.body['extra']['callerId']),
                       ),
                     }),
               );
@@ -290,5 +309,45 @@ class Sagora extends GetxController {
     }).catchError((err) {
       mezDbgPrint('setEnableSpeakerphone $err');
     });
+  }
+
+  Future<void> callUser(
+      {required int chatId, required Participant callee}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationType: CallNotificationtType.Incoming);
+  }
+
+  Future<void> endCall(
+      {required int chatId, required Participant callee, int? orderId}) async {
+    return sendUserCallNotification(
+        chatId: chatId,
+        callee: callee,
+        callNotificationType: CallNotificationtType.EndCall);
+  }
+
+  Future<void> sendUserCallNotification(
+      {required int chatId,
+      required Participant callee,
+      required CallNotificationtType callNotificationType}) async {
+    final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
+        .ref()
+        .child(notificationQueueNode())
+        .push();
+
+    // ignore: unawaited_futures
+    _databaseHelper.firebaseDatabase
+        .ref()
+        .child(notificationQueueNode(notificationNode.key))
+        .set(CallNotificationForQueue(
+                chatId: chatId,
+                callerId: _authController.hasuraUserId!,
+                callerParticipantType:
+                    _settingsController.appType.toParticipantTypefromAppType(),
+                calleeId: callee.id,
+                calleeParticipantType: callee.participantType,
+                callNotificationType: callNotificationType)
+            .toFirebaseFormatJson());
   }
 }

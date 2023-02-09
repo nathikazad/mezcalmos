@@ -13,13 +13,18 @@ import 'package:get/get.dart';
 // Extends GetView<MessagingController> after Nathik implements the controller
 import 'package:intl/intl.dart' as intl;
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/Shared/widgets/ThreeDotsLoading.dart';
@@ -50,7 +55,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void initState() {
     // Instanciating the Agaora controller in case the user is able to call:
-    if (controller.isUserAuthorizedToCall()) {
+    if (controller.isInAppCallFeatureAvailable()) {
       sagora = Get.find<Sagora>();
     }
 
@@ -60,15 +65,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
     }
 
     chatId = int.parse(Get.parameters['chatId']!);
-    // orderLink = Get.parameters['orderLink'];
-    // orderId = Get.parameters['orderId'];
-    // orderType = Get.parameters['orderType']?.toString().toOrderType();
-    // if (Get.parameters['recipientId'] != null)
-    //   recipientId = Get.parameters['recipientId'];
-    // else if (Get.parameters['recipientType'] != null) {
-    //   recipientType =
-    //       Get.parameters['recipientType']!.toString().toParticipantType();
-    // }
     controller.clearMessageNotifications(chatId: chatId);
     // mezDbgPrint("@AYROUT ===> ${Get.parameters} | orderLink ==> $orderLink");
     controller.loadChat(chatId: chatId, onValueCallBack: _fillCallBack);
@@ -118,14 +114,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
     scrollDown();
   }
 
-  /// Using this for now, to limit the calls only between deliveryDrivers<->Customers
-  // bool isReciepientNotAdmin() {
-  //   final ParticipantType? _pType =
-  //       controller.recipient(recipientType: recipientType)?.participantType;
-  //   return [ParticipantType.Customer, ParticipantType.DeliveryDriver]
-  //       .contains(_pType);
-  // }
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
@@ -171,38 +159,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       fontSize: 18,
                     ),
                   );
-            // return (controller
-            //             .recipient(recipientType: recipientType)
-            //             ?.participantType ==
-            //         ParticipantType.DeliveryAdmin)
-            //     ? Text(
-            //         "Administrador",
-            //         style: TextStyle(
-            //           fontSize: 18,
-            //         ),
-            //       )
-            //     : Text(
-            //         controller
-            //                 .recipient(
-            //                     recipientType: recipientType,
-            //                     recipientId: recipientId)
-            //                 ?.name ??
-            //             "User",
-            //         style: TextStyle(
-            //           fontSize: 18,
-            //         ),
-            //       );
           },
         ),
         actions: <Widget>[
           // Obx(
           //   () =>
           Container(
-            child: controller.isUserAuthorizedToCall() &&
-                    // isReciepientNotAdmin() &&
-                    sagora != null
+            child: controller.isInAppCallFeatureAvailable() && sagora != null
                 ? InkWell(
-                    // onTap: () async => _onCallPress(),
+                    onTap: () async => _onCallPress(),
                     child: Container(
                       width: 30,
                       height: 30,
@@ -294,83 +259,57 @@ class _MessagingScreenState extends State<MessagingScreen> {
     );
   }
 
-  // Future<void> _onCallPress() async {
-  //   // all the none-null forcing used down below, are garanteed to work 100%
-  //   // and will never throw a null check error/exception.
-  //   if (await sagora!.checkAgoraPermissions()) {
-  //     mezDbgPrint("#############----1-----######");
-  //     ParticipantType _calleeType = ParticipantType.DeliveryDriver;
-  //     switch (controller.appType) {
-  //       case AppType.DeliveryApp:
-  //         _calleeType = ParticipantType.Customer;
-  //         break;
-  //       default:
-  //     }
-  //     mezDbgPrint("#############----2-----######");
-  //     mezDbgPrint(_calleeType);
-  //     // we get the one We're trying to call first.
-  //     final Participant? _recipient = controller.recipient(
-  //       recipientType: _calleeType,
-  //     );
-  //     mezDbgPrint("1 [RECIPIENT::calleeType ] $_calleeType");
+  Future<void> _onCallPress() async {
+    // all the none-null forcing used down below, are garanteed to work 100%
+    // and will never throw a null check error/exception.
+    if (await sagora!.checkAgoraPermissions()) {
+      mezDbgPrint("#############----1-----######");
 
-  //     if (_recipient != null) {
-  //       await controller.callUser(
-  //         chatId: chatId,
-  //         callee: _recipient,
-  //         orderId: orderId,
-  //       );
-  //       mezDbgPrint("3 - sender id ${controller.sender()?.id}");
-  //       mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
+      // we get the one We're trying to call first.
+      final SettingsController _settingsController =
+          Get.find<SettingsController>();
+      ServerResponse response = await CloudFunctions.agora_callChatUser(
+          chatId: chatId,
+          callerParticipantType:
+              _settingsController.appType.toCFParticipantTypefromAppType());
+      // mezDbgPrint("3 - sender name ${controller.sender()?.participantType}");
 
-  //       // Request Agora auth
+      // Request Agora auth
 
-  //       final dynamic _agoraAuth = (await sagora!.getAgoraToken(
-  //         chatId,
-  //         controller.sender()!.id,
-  //         controller.sender()!.participantType,
-  //       ))
-  //           .snapshot
-  //           .value;
+      mezDbgPrint("4 - agora_callChatUser response $response");
 
-  //       mezDbgPrint("4 - A_agoraAuth $_agoraAuth");
+      await sagora!.handleIfInChannelAlready();
 
-  //       // then we join if it's not null && it's not expired
-  //       if (_agoraAuth != null) {
-  //         mezDbgPrint("AgoraAuth  :: passed validation test !");
-  //         // await FlutterCallkitIncoming.startCall(chatId);
-  //         // then join channel
-  //         // ignore: unawaited_futures
-  //         await sagora!.handleIfInChannelAlready();
+      // ignore: unawaited_futures
+      sagora!
+          .joinChannel(
+        token: response.data['token'],
+        channelId: chatId,
+        uid: _authController.hasuraUserId!,
+      )
+          .then((value) {
+        mezDbgPrint(
+            "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
-  //         // ignore: unawaited_futures
-  //         sagora!
-  //             .joinChannel(
-  //           token: _agoraAuth['token'],
-  //           channelId: chatId,
-  //           uid: _agoraAuth['uid'],
-  //         )
-  //             .then((value) {
-  //           mezDbgPrint(
-  //               "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
-
-  //           sagora!.callStatus.value = CallStatus.calling;
-  //           Get.toNamed<void>(kAgoraCallScreen, arguments: {
-  //             "chatId": chatId,
-  //             "talkingTo": _recipient,
-  //           });
-  //         }).onError((Object? error, StackTrace stackTrace) {
-  //           mezDbgPrint("Error ===> $error | $stackTrace");
-  //           sagora!.callStatus.value = CallStatus.none;
-  //         });
-  //       } else {
-  //         sagora!.callStatus.value = CallStatus.none;
-  //       }
-  //     }
-  //   } else {
-  //     mezDbgPrint("AGORA :: PERMISSIONS :: NOT :: DONE ");
-  //   }
-  // }
+        sagora!.callStatus.value = CallStatus.calling;
+        Get.toNamed<void>(kAgoraCallScreen, arguments: {
+          "chatId": chatId,
+          "talkingTo": Participant(
+              id: response.data['id'],
+              image: response.data['image'],
+              name: response.data['name'],
+              participantType: response.data['participantType']
+                  .toString()
+                  .toParticipantType()),
+        });
+      }).onError((Object? error, StackTrace stackTrace) {
+        mezDbgPrint("Error ===> $error | $stackTrace");
+        sagora!.callStatus.value = CallStatus.none;
+      });
+    } else {
+      sagora!.callStatus.value = CallStatus.none;
+    }
+  }
 
   Widget singleChatComponent({
     required String message,

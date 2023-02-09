@@ -27,7 +27,6 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
         .toCallNotificationtType()) {
       case CallNotificationtType.Incoming:
         mezDbgPrint("# 👁 # [ BG NOTIF ] # [ I N C O M I N G ] ${event.data}");
-
         await triggerIncomingCallAlert(
           callerName: event.data["callerName"],
           callerImage: event.data["callerImage"],
@@ -40,6 +39,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage event) async {
             "calleeuid": event.data['calleeuid'],
           },
         );
+
         break;
       // not here
       case CallNotificationtType.EndCall:
@@ -71,7 +71,7 @@ Future<void> triggerIncomingCallAlert({
     'appName': 'Mezcalmos',
     'avatar': callerImage,
     'handle': callerName,
-    'type': callerType,
+    'type': 0,
     'duration': 30000,
     'textAccept': 'Accept',
     'textDecline': 'Decline',
@@ -105,6 +105,7 @@ Future<void> triggerIncomingCallAlert({
     }
   };
   final CallKitParams kitParams = CallKitParams.fromJson(params);
+  mezDbgPrint("triggering");
   // ignore: unawaited_futures
   await FlutterCallkitIncoming.showCallkitIncoming(kitParams);
 }
@@ -154,6 +155,9 @@ class BackgroundNotificationsController extends GetxController {
         FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       mezDbgPrint(
           "FirebaseMessage ======> ${message.data} | ${message.contentAvailable}");
+      mezDbgPrint(message.data["notificationType"]);
+      mezDbgPrint(NotificationType.Call.toFirebaseFormatString());
+
       if (message.data["notificationType"] ==
           NotificationType.Call.toFirebaseFormatString()) {
         final Sagora agora = Get.find<Sagora>();
@@ -163,6 +167,7 @@ class BackgroundNotificationsController extends GetxController {
                 .toCallNotificationtType() ==
             CallNotificationtType.Incoming) {
           // handle incoming
+          mezDbgPrint(message.data);
           await agora.handleIfInChannelAlready();
           await triggerIncomingCallAlert(
               callerName: message.data["callerName"],
@@ -174,7 +179,7 @@ class BackgroundNotificationsController extends GetxController {
               extra: <String, dynamic>{
                 "chatId": message.data['chatId'],
                 "agoraToken": message.data['agoraToken'],
-                "calleeuid": message.data['calleeuid'],
+                "calleeuid": message.data['recipientuid'],
               });
         } else {
           mezDbgPrint("LOG ===> GOT END CALL BG NOTIF ===> ${message.data}");

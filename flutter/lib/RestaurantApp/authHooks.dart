@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
+import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
@@ -22,7 +23,7 @@ class AuthHooks {
 
     Get.put(ForegroundNotificationsController(), permanent: true);
     Get.put(BackgroundNotificationsController(), permanent: true);
-
+    Get.put<Sagora>(Sagora(), permanent: true);
     // Get.put(RestaurantInfoController(), permanent: true);
 
     Get.put(RestaurantOpAuthController(), permanent: true);

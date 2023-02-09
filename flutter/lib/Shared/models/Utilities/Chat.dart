@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, avoid_annotating_with_dynamic
 
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cf;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -297,12 +298,11 @@ extension ParseStringToCallNotificationtType on String {
 }
 
 class CallNotificationForQueue extends NotificationForQueue {
-  String chatId;
-  String callerId;
+  int chatId;
+  int callerId;
   ParticipantType callerParticipantType;
-  String calleeId;
+  int calleeId;
   ParticipantType calleeParticipantType;
-  String? orderId;
   CallNotificationtType callNotificationType;
   CallNotificationForQueue({
     required this.chatId,
@@ -311,7 +311,6 @@ class CallNotificationForQueue extends NotificationForQueue {
     required this.calleeId,
     required this.calleeParticipantType,
     required this.callNotificationType,
-    this.orderId,
   }) : super(
           notificationType: NotificationType.Call,
           timeStamp: DateTime.now().toUtc(),
@@ -328,6 +327,5 @@ class CallNotificationForQueue extends NotificationForQueue {
             calleeParticipantType.toFirebaseFormattedString(),
         "callNotificationType":
             callNotificationType.toFirebaseFormattedString(),
-        "orderId": orderId
       };
 }
