@@ -12,6 +12,7 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     discount_value
     estimated_ready_time
     firebase_id
+    to_customer_delivery_id
     from_customer_delivery_id
     id
     notes
@@ -20,19 +21,20 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     refund_amount
     scheduled_time
     status
+
     store_id
-     store{
-      name,
-      image,
-      location{
-        gps,
+    store {
+      name
+      image
+      location {
+        gps
         address
       }
     }
     stripe_fees
     stripe_info
     tax
-    to_customer_delivery_id
+
     review {
       created_at
       from_entity_id
@@ -91,6 +93,7 @@ query get_laundry_order_by_id($orderId: Int!) {
     discount_value
     estimated_ready_time
     firebase_id
+    to_customer_delivery_id
     from_customer_delivery_id
     id
     notes
@@ -99,12 +102,13 @@ query get_laundry_order_by_id($orderId: Int!) {
     refund_amount
     scheduled_time
     status
+
     store_id
-    store{
-      name,
-      image,
-      location{
-        gps,
+    store {
+      name
+      image
+      location {
+        gps
         address
       }
     }
@@ -199,6 +203,35 @@ subscription listen_on_laundry_orders(
         name
         image
       }
+    }
+  }
+}
+mutation insertLaundryOrderCategory(
+  $data: laundry_order_category_insert_input!
+) {
+  insert_laundry_order_category_one(object: $data) {
+    id
+  }
+}
+mutation updateLaundryOrderCategory(
+  $data: laundry_order_category_set_input!
+  $categoryId: Int!
+) {
+  update_laundry_order_category(
+    where: { category_id: { _eq: $categoryId } }
+    _set: $data
+  ) {
+    returning {
+      id
+    }
+  }
+}
+
+mutation deleteLaundryOrderCategory($categoryId: Int!) {
+  delete_laundry_order_category(where: { category_id: { _eq: $categoryId } }) {
+    affected_rows
+    returning {
+      id
     }
   }
 }

@@ -1,3 +1,4 @@
+import '../../__generated/schema.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -373,6 +374,13 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'to_customer_delivery_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'from_customer_delivery_id'),
             alias: null,
             arguments: [],
@@ -509,13 +517,6 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
           ),
           FieldNode(
             name: NameNode(value: 'tax'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'to_customer_delivery_id'),
             alias: null,
             arguments: [],
             directives: [],
@@ -935,6 +936,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     required this.discount_value,
     this.estimated_ready_time,
     this.firebase_id,
+    this.to_customer_delivery_id,
     this.from_customer_delivery_id,
     required this.id,
     this.notes,
@@ -948,7 +950,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
-    this.to_customer_delivery_id,
     this.review,
     required this.customer,
     required this.categories,
@@ -969,6 +970,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$discount_value = json['discount_value'];
     final l$estimated_ready_time = json['estimated_ready_time'];
     final l$firebase_id = json['firebase_id'];
+    final l$to_customer_delivery_id = json['to_customer_delivery_id'];
     final l$from_customer_delivery_id = json['from_customer_delivery_id'];
     final l$id = json['id'];
     final l$notes = json['notes'];
@@ -982,7 +984,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
-    final l$to_customer_delivery_id = json['to_customer_delivery_id'];
     final l$review = json['review'];
     final l$customer = json['customer'];
     final l$categories = json['categories'];
@@ -1002,6 +1003,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       discount_value: moneyFromJson(l$discount_value),
       estimated_ready_time: (l$estimated_ready_time as String?),
       firebase_id: (l$firebase_id as String?),
+      to_customer_delivery_id: (l$to_customer_delivery_id as int?),
       from_customer_delivery_id: (l$from_customer_delivery_id as int?),
       id: (l$id as int),
       notes: (l$notes as String?),
@@ -1017,7 +1019,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
-      to_customer_delivery_id: (l$to_customer_delivery_id as int?),
       review: l$review == null
           ? null
           : Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review
@@ -1058,6 +1059,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
 
   final String? firebase_id;
 
+  final int? to_customer_delivery_id;
+
   final int? from_customer_delivery_id;
 
   final int id;
@@ -1084,8 +1087,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
   final dynamic? stripe_info;
 
   final double tax;
-
-  final int? to_customer_delivery_id;
 
   final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review?
       review;
@@ -1127,6 +1128,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     _resultData['estimated_ready_time'] = l$estimated_ready_time;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$to_customer_delivery_id = to_customer_delivery_id;
+    _resultData['to_customer_delivery_id'] = l$to_customer_delivery_id;
     final l$from_customer_delivery_id = from_customer_delivery_id;
     _resultData['from_customer_delivery_id'] = l$from_customer_delivery_id;
     final l$id = id;
@@ -1154,8 +1157,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$tax = tax;
     _resultData['tax'] = moneyToJson(l$tax);
-    final l$to_customer_delivery_id = to_customer_delivery_id;
-    _resultData['to_customer_delivery_id'] = l$to_customer_delivery_id;
     final l$review = review;
     _resultData['review'] = l$review?.toJson();
     final l$customer = customer;
@@ -1181,6 +1182,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$discount_value = discount_value;
     final l$estimated_ready_time = estimated_ready_time;
     final l$firebase_id = firebase_id;
+    final l$to_customer_delivery_id = to_customer_delivery_id;
     final l$from_customer_delivery_id = from_customer_delivery_id;
     final l$id = id;
     final l$notes = notes;
@@ -1194,7 +1196,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
-    final l$to_customer_delivery_id = to_customer_delivery_id;
     final l$review = review;
     final l$customer = customer;
     final l$categories = categories;
@@ -1212,6 +1213,7 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       l$discount_value,
       l$estimated_ready_time,
       l$firebase_id,
+      l$to_customer_delivery_id,
       l$from_customer_delivery_id,
       l$id,
       l$notes,
@@ -1225,7 +1227,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       l$stripe_fees,
       l$stripe_info,
       l$tax,
-      l$to_customer_delivery_id,
       l$review,
       l$customer,
       Object.hashAll(l$categories.map((v) => v)),
@@ -1303,6 +1304,11 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
+    final l$to_customer_delivery_id = to_customer_delivery_id;
+    final lOther$to_customer_delivery_id = other.to_customer_delivery_id;
+    if (l$to_customer_delivery_id != lOther$to_customer_delivery_id) {
+      return false;
+    }
     final l$from_customer_delivery_id = from_customer_delivery_id;
     final lOther$from_customer_delivery_id = other.from_customer_delivery_id;
     if (l$from_customer_delivery_id != lOther$from_customer_delivery_id) {
@@ -1366,11 +1372,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$tax = tax;
     final lOther$tax = other.tax;
     if (l$tax != lOther$tax) {
-      return false;
-    }
-    final l$to_customer_delivery_id = to_customer_delivery_id;
-    final lOther$to_customer_delivery_id = other.to_customer_delivery_id;
-    if (l$to_customer_delivery_id != lOther$to_customer_delivery_id) {
       return false;
     }
     final l$review = review;
@@ -1441,6 +1442,7 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? discount_value,
     String? estimated_ready_time,
     String? firebase_id,
+    int? to_customer_delivery_id,
     int? from_customer_delivery_id,
     int? id,
     String? notes,
@@ -1454,7 +1456,6 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    int? to_customer_delivery_id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review?
         review,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$customer?
@@ -1508,6 +1509,7 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
     Object? discount_value = _undefined,
     Object? estimated_ready_time = _undefined,
     Object? firebase_id = _undefined,
+    Object? to_customer_delivery_id = _undefined,
     Object? from_customer_delivery_id = _undefined,
     Object? id = _undefined,
     Object? notes = _undefined,
@@ -1521,7 +1523,6 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
-    Object? to_customer_delivery_id = _undefined,
     Object? review = _undefined,
     Object? customer = _undefined,
     Object? categories = _undefined,
@@ -1563,6 +1564,9 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        to_customer_delivery_id: to_customer_delivery_id == _undefined
+            ? _instance.to_customer_delivery_id
+            : (to_customer_delivery_id as int?),
         from_customer_delivery_id: from_customer_delivery_id == _undefined
             ? _instance.from_customer_delivery_id
             : (from_customer_delivery_id as int?),
@@ -1597,9 +1601,6 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        to_customer_delivery_id: to_customer_delivery_id == _undefined
-            ? _instance.to_customer_delivery_id
-            : (to_customer_delivery_id as int?),
         review: review == _undefined
             ? _instance.review
             : (review
@@ -1677,6 +1678,7 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? discount_value,
     String? estimated_ready_time,
     String? firebase_id,
+    int? to_customer_delivery_id,
     int? from_customer_delivery_id,
     int? id,
     String? notes,
@@ -1690,7 +1692,6 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    int? to_customer_delivery_id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$review?
         review,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$customer?
@@ -4282,6 +4283,13 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'to_customer_delivery_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'from_customer_delivery_id'),
             alias: null,
             arguments: [],
@@ -4874,6 +4882,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     required this.discount_value,
     this.estimated_ready_time,
     this.firebase_id,
+    this.to_customer_delivery_id,
     this.from_customer_delivery_id,
     required this.id,
     this.notes,
@@ -4887,7 +4896,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     required this.stripe_fees,
     this.stripe_info,
     required this.tax,
-    this.to_customer_delivery_id,
     this.review,
     required this.customer,
     required this.categories,
@@ -4908,6 +4916,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$discount_value = json['discount_value'];
     final l$estimated_ready_time = json['estimated_ready_time'];
     final l$firebase_id = json['firebase_id'];
+    final l$to_customer_delivery_id = json['to_customer_delivery_id'];
     final l$from_customer_delivery_id = json['from_customer_delivery_id'];
     final l$id = json['id'];
     final l$notes = json['notes'];
@@ -4921,7 +4930,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$stripe_fees = json['stripe_fees'];
     final l$stripe_info = json['stripe_info'];
     final l$tax = json['tax'];
-    final l$to_customer_delivery_id = json['to_customer_delivery_id'];
     final l$review = json['review'];
     final l$customer = json['customer'];
     final l$categories = json['categories'];
@@ -4941,6 +4949,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       discount_value: moneyFromJson(l$discount_value),
       estimated_ready_time: (l$estimated_ready_time as String?),
       firebase_id: (l$firebase_id as String?),
+      to_customer_delivery_id: (l$to_customer_delivery_id as int?),
       from_customer_delivery_id: (l$from_customer_delivery_id as int?),
       id: (l$id as int),
       notes: (l$notes as String?),
@@ -4955,7 +4964,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       stripe_fees: moneyFromJson(l$stripe_fees),
       stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       tax: moneyFromJson(l$tax),
-      to_customer_delivery_id: (l$to_customer_delivery_id as int?),
       review: l$review == null
           ? null
           : Query$get_laundry_order_by_id$laundry_order_by_pk$review.fromJson(
@@ -4996,6 +5004,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
 
   final String? firebase_id;
 
+  final int? to_customer_delivery_id;
+
   final int? from_customer_delivery_id;
 
   final int id;
@@ -5021,8 +5031,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
   final dynamic? stripe_info;
 
   final double tax;
-
-  final int? to_customer_delivery_id;
 
   final Query$get_laundry_order_by_id$laundry_order_by_pk$review? review;
 
@@ -5061,6 +5069,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     _resultData['estimated_ready_time'] = l$estimated_ready_time;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$to_customer_delivery_id = to_customer_delivery_id;
+    _resultData['to_customer_delivery_id'] = l$to_customer_delivery_id;
     final l$from_customer_delivery_id = from_customer_delivery_id;
     _resultData['from_customer_delivery_id'] = l$from_customer_delivery_id;
     final l$id = id;
@@ -5088,8 +5098,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
         l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$tax = tax;
     _resultData['tax'] = moneyToJson(l$tax);
-    final l$to_customer_delivery_id = to_customer_delivery_id;
-    _resultData['to_customer_delivery_id'] = l$to_customer_delivery_id;
     final l$review = review;
     _resultData['review'] = l$review?.toJson();
     final l$customer = customer;
@@ -5115,6 +5123,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$discount_value = discount_value;
     final l$estimated_ready_time = estimated_ready_time;
     final l$firebase_id = firebase_id;
+    final l$to_customer_delivery_id = to_customer_delivery_id;
     final l$from_customer_delivery_id = from_customer_delivery_id;
     final l$id = id;
     final l$notes = notes;
@@ -5128,7 +5137,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$stripe_fees = stripe_fees;
     final l$stripe_info = stripe_info;
     final l$tax = tax;
-    final l$to_customer_delivery_id = to_customer_delivery_id;
     final l$review = review;
     final l$customer = customer;
     final l$categories = categories;
@@ -5146,6 +5154,7 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       l$discount_value,
       l$estimated_ready_time,
       l$firebase_id,
+      l$to_customer_delivery_id,
       l$from_customer_delivery_id,
       l$id,
       l$notes,
@@ -5159,7 +5168,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       l$stripe_fees,
       l$stripe_info,
       l$tax,
-      l$to_customer_delivery_id,
       l$review,
       l$customer,
       Object.hashAll(l$categories.map((v) => v)),
@@ -5236,6 +5244,11 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     if (l$firebase_id != lOther$firebase_id) {
       return false;
     }
+    final l$to_customer_delivery_id = to_customer_delivery_id;
+    final lOther$to_customer_delivery_id = other.to_customer_delivery_id;
+    if (l$to_customer_delivery_id != lOther$to_customer_delivery_id) {
+      return false;
+    }
     final l$from_customer_delivery_id = from_customer_delivery_id;
     final lOther$from_customer_delivery_id = other.from_customer_delivery_id;
     if (l$from_customer_delivery_id != lOther$from_customer_delivery_id) {
@@ -5299,11 +5312,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$tax = tax;
     final lOther$tax = other.tax;
     if (l$tax != lOther$tax) {
-      return false;
-    }
-    final l$to_customer_delivery_id = to_customer_delivery_id;
-    final lOther$to_customer_delivery_id = other.to_customer_delivery_id;
-    if (l$to_customer_delivery_id != lOther$to_customer_delivery_id) {
       return false;
     }
     final l$review = review;
@@ -5372,6 +5380,7 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk<
     double? discount_value,
     String? estimated_ready_time,
     String? firebase_id,
+    int? to_customer_delivery_id,
     int? from_customer_delivery_id,
     int? id,
     String? notes,
@@ -5385,7 +5394,6 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk<
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    int? to_customer_delivery_id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$review? review,
     Query$get_laundry_order_by_id$laundry_order_by_pk$customer? customer,
     List<Query$get_laundry_order_by_id$laundry_order_by_pk$categories>?
@@ -5433,6 +5441,7 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     Object? discount_value = _undefined,
     Object? estimated_ready_time = _undefined,
     Object? firebase_id = _undefined,
+    Object? to_customer_delivery_id = _undefined,
     Object? from_customer_delivery_id = _undefined,
     Object? id = _undefined,
     Object? notes = _undefined,
@@ -5446,7 +5455,6 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     Object? stripe_fees = _undefined,
     Object? stripe_info = _undefined,
     Object? tax = _undefined,
-    Object? to_customer_delivery_id = _undefined,
     Object? review = _undefined,
     Object? customer = _undefined,
     Object? categories = _undefined,
@@ -5488,6 +5496,9 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        to_customer_delivery_id: to_customer_delivery_id == _undefined
+            ? _instance.to_customer_delivery_id
+            : (to_customer_delivery_id as int?),
         from_customer_delivery_id: from_customer_delivery_id == _undefined
             ? _instance.from_customer_delivery_id
             : (from_customer_delivery_id as int?),
@@ -5522,9 +5533,6 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
             ? _instance.stripe_info
             : (stripe_info as dynamic?),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
-        to_customer_delivery_id: to_customer_delivery_id == _undefined
-            ? _instance.to_customer_delivery_id
-            : (to_customer_delivery_id as int?),
         review: review == _undefined
             ? _instance.review
             : (review
@@ -5600,6 +5608,7 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     double? discount_value,
     String? estimated_ready_time,
     String? firebase_id,
+    int? to_customer_delivery_id,
     int? from_customer_delivery_id,
     int? id,
     String? notes,
@@ -5613,7 +5622,6 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     double? stripe_fees,
     dynamic? stripe_info,
     double? tax,
-    int? to_customer_delivery_id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$review? review,
     Query$get_laundry_order_by_id$laundry_order_by_pk$customer? customer,
     List<Query$get_laundry_order_by_id$laundry_order_by_pk$categories>?
@@ -9892,6 +9900,2137 @@ class _CopyWithStubImpl$Subscription$listen_on_laundry_orders$laundry_order$cust
   call({
     String? name,
     String? image,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$insertLaundryOrderCategory {
+  factory Variables$Mutation$insertLaundryOrderCategory(
+          {required Input$laundry_order_category_insert_input data}) =>
+      Variables$Mutation$insertLaundryOrderCategory._({
+        r'data': data,
+      });
+
+  Variables$Mutation$insertLaundryOrderCategory._(this._$data);
+
+  factory Variables$Mutation$insertLaundryOrderCategory.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$data = data['data'];
+    result$data['data'] = Input$laundry_order_category_insert_input.fromJson(
+        (l$data as Map<String, dynamic>));
+    return Variables$Mutation$insertLaundryOrderCategory._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$laundry_order_category_insert_input get data =>
+      (_$data['data'] as Input$laundry_order_category_insert_input);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$insertLaundryOrderCategory<
+          Variables$Mutation$insertLaundryOrderCategory>
+      get copyWith => CopyWith$Variables$Mutation$insertLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$insertLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$data = data;
+    return Object.hashAll([l$data]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$insertLaundryOrderCategory<TRes> {
+  factory CopyWith$Variables$Mutation$insertLaundryOrderCategory(
+    Variables$Mutation$insertLaundryOrderCategory instance,
+    TRes Function(Variables$Mutation$insertLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Variables$Mutation$insertLaundryOrderCategory;
+
+  factory CopyWith$Variables$Mutation$insertLaundryOrderCategory.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$insertLaundryOrderCategory;
+
+  TRes call({Input$laundry_order_category_insert_input? data});
+}
+
+class _CopyWithImpl$Variables$Mutation$insertLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$insertLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Variables$Mutation$insertLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$insertLaundryOrderCategory _instance;
+
+  final TRes Function(Variables$Mutation$insertLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? data = _undefined}) =>
+      _then(Variables$Mutation$insertLaundryOrderCategory._({
+        ..._instance._$data,
+        if (data != _undefined && data != null)
+          'data': (data as Input$laundry_order_category_insert_input),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$insertLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$insertLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$insertLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({Input$laundry_order_category_insert_input? data}) => _res;
+}
+
+class Mutation$insertLaundryOrderCategory {
+  Mutation$insertLaundryOrderCategory({
+    this.insert_laundry_order_category_one,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertLaundryOrderCategory.fromJson(
+      Map<String, dynamic> json) {
+    final l$insert_laundry_order_category_one =
+        json['insert_laundry_order_category_one'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertLaundryOrderCategory(
+      insert_laundry_order_category_one: l$insert_laundry_order_category_one ==
+              null
+          ? null
+          : Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+              .fromJson((l$insert_laundry_order_category_one
+                  as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one?
+      insert_laundry_order_category_one;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$insert_laundry_order_category_one =
+        insert_laundry_order_category_one;
+    _resultData['insert_laundry_order_category_one'] =
+        l$insert_laundry_order_category_one?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$insert_laundry_order_category_one =
+        insert_laundry_order_category_one;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$insert_laundry_order_category_one,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$insertLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$insert_laundry_order_category_one =
+        insert_laundry_order_category_one;
+    final lOther$insert_laundry_order_category_one =
+        other.insert_laundry_order_category_one;
+    if (l$insert_laundry_order_category_one !=
+        lOther$insert_laundry_order_category_one) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertLaundryOrderCategory
+    on Mutation$insertLaundryOrderCategory {
+  CopyWith$Mutation$insertLaundryOrderCategory<
+          Mutation$insertLaundryOrderCategory>
+      get copyWith => CopyWith$Mutation$insertLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertLaundryOrderCategory<TRes> {
+  factory CopyWith$Mutation$insertLaundryOrderCategory(
+    Mutation$insertLaundryOrderCategory instance,
+    TRes Function(Mutation$insertLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Mutation$insertLaundryOrderCategory;
+
+  factory CopyWith$Mutation$insertLaundryOrderCategory.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$insertLaundryOrderCategory;
+
+  TRes call({
+    Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one?
+        insert_laundry_order_category_one,
+    String? $__typename,
+  });
+  CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+      TRes> get insert_laundry_order_category_one;
+}
+
+class _CopyWithImpl$Mutation$insertLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$insertLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Mutation$insertLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertLaundryOrderCategory _instance;
+
+  final TRes Function(Mutation$insertLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? insert_laundry_order_category_one = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$insertLaundryOrderCategory(
+        insert_laundry_order_category_one: insert_laundry_order_category_one ==
+                _undefined
+            ? _instance.insert_laundry_order_category_one
+            : (insert_laundry_order_category_one
+                as Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+      TRes> get insert_laundry_order_category_one {
+    final local$insert_laundry_order_category_one =
+        _instance.insert_laundry_order_category_one;
+    return local$insert_laundry_order_category_one == null
+        ? CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+            .stub(_then(_instance))
+        : CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+            local$insert_laundry_order_category_one,
+            (e) => call(insert_laundry_order_category_one: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$insertLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$insertLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Mutation$insertLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one?
+        insert_laundry_order_category_one,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+          TRes>
+      get insert_laundry_order_category_one =>
+          CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+              .stub(_res);
+}
+
+const documentNodeMutationinsertLaundryOrderCategory =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'insertLaundryOrderCategory'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'laundry_order_category_insert_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'insert_laundry_order_category_one'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$insertLaundryOrderCategory
+    _parserFn$Mutation$insertLaundryOrderCategory(Map<String, dynamic> data) =>
+        Mutation$insertLaundryOrderCategory.fromJson(data);
+typedef OnMutationCompleted$Mutation$insertLaundryOrderCategory = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$insertLaundryOrderCategory?,
+);
+
+class Options$Mutation$insertLaundryOrderCategory
+    extends graphql.MutationOptions<Mutation$insertLaundryOrderCategory> {
+  Options$Mutation$insertLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$insertLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$insertLaundryOrderCategory? onCompleted,
+    graphql.OnMutationUpdate<Mutation$insertLaundryOrderCategory>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$insertLaundryOrderCategory(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationinsertLaundryOrderCategory,
+          parserFn: _parserFn$Mutation$insertLaundryOrderCategory,
+        );
+
+  final OnMutationCompleted$Mutation$insertLaundryOrderCategory?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$insertLaundryOrderCategory
+    extends graphql.WatchQueryOptions<Mutation$insertLaundryOrderCategory> {
+  WatchOptions$Mutation$insertLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$insertLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationinsertLaundryOrderCategory,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$insertLaundryOrderCategory,
+        );
+}
+
+extension ClientExtension$Mutation$insertLaundryOrderCategory
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$insertLaundryOrderCategory>>
+      mutate$insertLaundryOrderCategory(
+              Options$Mutation$insertLaundryOrderCategory options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$insertLaundryOrderCategory>
+      watchMutation$insertLaundryOrderCategory(
+              WatchOptions$Mutation$insertLaundryOrderCategory options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one {
+  Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+    on Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one {
+  CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+          Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one>
+      get copyWith =>
+          CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+    TRes> {
+  factory CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+    Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+        instance,
+    TRes Function(
+            Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one)
+        then,
+  ) = _CopyWithImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one;
+
+  factory CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+            TRes> {
+  _CopyWithImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one
+      _instance;
+
+  final TRes Function(
+          Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+        TRes>
+    implements
+        CopyWith$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one<
+            TRes> {
+  _CopyWithStubImpl$Mutation$insertLaundryOrderCategory$insert_laundry_order_category_one(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$updateLaundryOrderCategory {
+  factory Variables$Mutation$updateLaundryOrderCategory({
+    required Input$laundry_order_category_set_input data,
+    required int categoryId,
+  }) =>
+      Variables$Mutation$updateLaundryOrderCategory._({
+        r'data': data,
+        r'categoryId': categoryId,
+      });
+
+  Variables$Mutation$updateLaundryOrderCategory._(this._$data);
+
+  factory Variables$Mutation$updateLaundryOrderCategory.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$data = data['data'];
+    result$data['data'] = Input$laundry_order_category_set_input.fromJson(
+        (l$data as Map<String, dynamic>));
+    final l$categoryId = data['categoryId'];
+    result$data['categoryId'] = (l$categoryId as int);
+    return Variables$Mutation$updateLaundryOrderCategory._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  Input$laundry_order_category_set_input get data =>
+      (_$data['data'] as Input$laundry_order_category_set_input);
+  int get categoryId => (_$data['categoryId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
+    final l$categoryId = categoryId;
+    result$data['categoryId'] = l$categoryId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$updateLaundryOrderCategory<
+          Variables$Mutation$updateLaundryOrderCategory>
+      get copyWith => CopyWith$Variables$Mutation$updateLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$updateLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
+      return false;
+    }
+    final l$categoryId = categoryId;
+    final lOther$categoryId = other.categoryId;
+    if (l$categoryId != lOther$categoryId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$data = data;
+    final l$categoryId = categoryId;
+    return Object.hashAll([
+      l$data,
+      l$categoryId,
+    ]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$updateLaundryOrderCategory<TRes> {
+  factory CopyWith$Variables$Mutation$updateLaundryOrderCategory(
+    Variables$Mutation$updateLaundryOrderCategory instance,
+    TRes Function(Variables$Mutation$updateLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Variables$Mutation$updateLaundryOrderCategory;
+
+  factory CopyWith$Variables$Mutation$updateLaundryOrderCategory.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderCategory;
+
+  TRes call({
+    Input$laundry_order_category_set_input? data,
+    int? categoryId,
+  });
+}
+
+class _CopyWithImpl$Variables$Mutation$updateLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Variables$Mutation$updateLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$updateLaundryOrderCategory _instance;
+
+  final TRes Function(Variables$Mutation$updateLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? data = _undefined,
+    Object? categoryId = _undefined,
+  }) =>
+      _then(Variables$Mutation$updateLaundryOrderCategory._({
+        ..._instance._$data,
+        if (data != _undefined && data != null)
+          'data': (data as Input$laundry_order_category_set_input),
+        if (categoryId != _undefined && categoryId != null)
+          'categoryId': (categoryId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$updateLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$updateLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({
+    Input$laundry_order_category_set_input? data,
+    int? categoryId,
+  }) =>
+      _res;
+}
+
+class Mutation$updateLaundryOrderCategory {
+  Mutation$updateLaundryOrderCategory({
+    this.update_laundry_order_category,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderCategory.fromJson(
+      Map<String, dynamic> json) {
+    final l$update_laundry_order_category =
+        json['update_laundry_order_category'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderCategory(
+      update_laundry_order_category: l$update_laundry_order_category == null
+          ? null
+          : Mutation$updateLaundryOrderCategory$update_laundry_order_category
+              .fromJson(
+                  (l$update_laundry_order_category as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$updateLaundryOrderCategory$update_laundry_order_category?
+      update_laundry_order_category;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$update_laundry_order_category = update_laundry_order_category;
+    _resultData['update_laundry_order_category'] =
+        l$update_laundry_order_category?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$update_laundry_order_category = update_laundry_order_category;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$update_laundry_order_category,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$updateLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$update_laundry_order_category = update_laundry_order_category;
+    final lOther$update_laundry_order_category =
+        other.update_laundry_order_category;
+    if (l$update_laundry_order_category !=
+        lOther$update_laundry_order_category) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderCategory
+    on Mutation$updateLaundryOrderCategory {
+  CopyWith$Mutation$updateLaundryOrderCategory<
+          Mutation$updateLaundryOrderCategory>
+      get copyWith => CopyWith$Mutation$updateLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderCategory<TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderCategory(
+    Mutation$updateLaundryOrderCategory instance,
+    TRes Function(Mutation$updateLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderCategory;
+
+  factory CopyWith$Mutation$updateLaundryOrderCategory.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderCategory;
+
+  TRes call({
+    Mutation$updateLaundryOrderCategory$update_laundry_order_category?
+        update_laundry_order_category,
+    String? $__typename,
+  });
+  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+      TRes> get update_laundry_order_category;
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderCategory _instance;
+
+  final TRes Function(Mutation$updateLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? update_laundry_order_category = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderCategory(
+        update_laundry_order_category: update_laundry_order_category ==
+                _undefined
+            ? _instance.update_laundry_order_category
+            : (update_laundry_order_category
+                as Mutation$updateLaundryOrderCategory$update_laundry_order_category?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+      TRes> get update_laundry_order_category {
+    final local$update_laundry_order_category =
+        _instance.update_laundry_order_category;
+    return local$update_laundry_order_category == null
+        ? CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+            local$update_laundry_order_category,
+            (e) => call(update_laundry_order_category: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$updateLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$updateLaundryOrderCategory$update_laundry_order_category?
+        update_laundry_order_category,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+          TRes>
+      get update_laundry_order_category =>
+          CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category
+              .stub(_res);
+}
+
+const documentNodeMutationupdateLaundryOrderCategory =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'updateLaundryOrderCategory'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'data')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'laundry_order_category_set_input'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'categoryId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      ),
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'update_laundry_order_category'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'category_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'categoryId')),
+                  )
+                ]),
+              )
+            ]),
+          ),
+          ArgumentNode(
+            name: NameNode(value: '_set'),
+            value: VariableNode(name: NameNode(value: 'data')),
+          ),
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$updateLaundryOrderCategory
+    _parserFn$Mutation$updateLaundryOrderCategory(Map<String, dynamic> data) =>
+        Mutation$updateLaundryOrderCategory.fromJson(data);
+typedef OnMutationCompleted$Mutation$updateLaundryOrderCategory = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$updateLaundryOrderCategory?,
+);
+
+class Options$Mutation$updateLaundryOrderCategory
+    extends graphql.MutationOptions<Mutation$updateLaundryOrderCategory> {
+  Options$Mutation$updateLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$updateLaundryOrderCategory? onCompleted,
+    graphql.OnMutationUpdate<Mutation$updateLaundryOrderCategory>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$updateLaundryOrderCategory(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationupdateLaundryOrderCategory,
+          parserFn: _parserFn$Mutation$updateLaundryOrderCategory,
+        );
+
+  final OnMutationCompleted$Mutation$updateLaundryOrderCategory?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$updateLaundryOrderCategory
+    extends graphql.WatchQueryOptions<Mutation$updateLaundryOrderCategory> {
+  WatchOptions$Mutation$updateLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$updateLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationupdateLaundryOrderCategory,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$updateLaundryOrderCategory,
+        );
+}
+
+extension ClientExtension$Mutation$updateLaundryOrderCategory
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$updateLaundryOrderCategory>>
+      mutate$updateLaundryOrderCategory(
+              Options$Mutation$updateLaundryOrderCategory options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$updateLaundryOrderCategory>
+      watchMutation$updateLaundryOrderCategory(
+              WatchOptions$Mutation$updateLaundryOrderCategory options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$updateLaundryOrderCategory$update_laundry_order_category {
+  Mutation$updateLaundryOrderCategory$update_laundry_order_category({
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderCategory$update_laundry_order_category.fromJson(
+      Map<String, dynamic> json) {
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<
+          Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryOrderCategory$update_laundry_order_category) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderCategory$update_laundry_order_category
+    on Mutation$updateLaundryOrderCategory$update_laundry_order_category {
+  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+          Mutation$updateLaundryOrderCategory$update_laundry_order_category>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+    Mutation$updateLaundryOrderCategory$update_laundry_order_category instance,
+    TRes Function(
+            Mutation$updateLaundryOrderCategory$update_laundry_order_category)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category;
+
+  factory CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category;
+
+  TRes call({
+    List<Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+                      Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderCategory$update_laundry_order_category
+      _instance;
+
+  final TRes Function(
+      Mutation$updateLaundryOrderCategory$update_laundry_order_category) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+                          Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category(
+      this._res);
+
+  TRes _res;
+
+  call({
+    List<Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning {
+  Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning
+    on Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning {
+  CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+          Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+    Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning
+        instance,
+    TRes Function(
+            Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning;
+
+  factory CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning
+      _instance;
+
+  final TRes Function(
+          Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryOrderCategory$update_laundry_order_category$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Variables$Mutation$deleteLaundryOrderCategory {
+  factory Variables$Mutation$deleteLaundryOrderCategory(
+          {required int categoryId}) =>
+      Variables$Mutation$deleteLaundryOrderCategory._({
+        r'categoryId': categoryId,
+      });
+
+  Variables$Mutation$deleteLaundryOrderCategory._(this._$data);
+
+  factory Variables$Mutation$deleteLaundryOrderCategory.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$categoryId = data['categoryId'];
+    result$data['categoryId'] = (l$categoryId as int);
+    return Variables$Mutation$deleteLaundryOrderCategory._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get categoryId => (_$data['categoryId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$categoryId = categoryId;
+    result$data['categoryId'] = l$categoryId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Mutation$deleteLaundryOrderCategory<
+          Variables$Mutation$deleteLaundryOrderCategory>
+      get copyWith => CopyWith$Variables$Mutation$deleteLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Mutation$deleteLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$categoryId = categoryId;
+    final lOther$categoryId = other.categoryId;
+    if (l$categoryId != lOther$categoryId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$categoryId = categoryId;
+    return Object.hashAll([l$categoryId]);
+  }
+}
+
+abstract class CopyWith$Variables$Mutation$deleteLaundryOrderCategory<TRes> {
+  factory CopyWith$Variables$Mutation$deleteLaundryOrderCategory(
+    Variables$Mutation$deleteLaundryOrderCategory instance,
+    TRes Function(Variables$Mutation$deleteLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Variables$Mutation$deleteLaundryOrderCategory;
+
+  factory CopyWith$Variables$Mutation$deleteLaundryOrderCategory.stub(
+          TRes res) =
+      _CopyWithStubImpl$Variables$Mutation$deleteLaundryOrderCategory;
+
+  TRes call({int? categoryId});
+}
+
+class _CopyWithImpl$Variables$Mutation$deleteLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$deleteLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Variables$Mutation$deleteLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Mutation$deleteLaundryOrderCategory _instance;
+
+  final TRes Function(Variables$Mutation$deleteLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? categoryId = _undefined}) =>
+      _then(Variables$Mutation$deleteLaundryOrderCategory._({
+        ..._instance._$data,
+        if (categoryId != _undefined && categoryId != null)
+          'categoryId': (categoryId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Mutation$deleteLaundryOrderCategory<TRes>
+    implements CopyWith$Variables$Mutation$deleteLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Variables$Mutation$deleteLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({int? categoryId}) => _res;
+}
+
+class Mutation$deleteLaundryOrderCategory {
+  Mutation$deleteLaundryOrderCategory({
+    this.delete_laundry_order_category,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteLaundryOrderCategory.fromJson(
+      Map<String, dynamic> json) {
+    final l$delete_laundry_order_category =
+        json['delete_laundry_order_category'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteLaundryOrderCategory(
+      delete_laundry_order_category: l$delete_laundry_order_category == null
+          ? null
+          : Mutation$deleteLaundryOrderCategory$delete_laundry_order_category
+              .fromJson(
+                  (l$delete_laundry_order_category as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Mutation$deleteLaundryOrderCategory$delete_laundry_order_category?
+      delete_laundry_order_category;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delete_laundry_order_category = delete_laundry_order_category;
+    _resultData['delete_laundry_order_category'] =
+        l$delete_laundry_order_category?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delete_laundry_order_category = delete_laundry_order_category;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delete_laundry_order_category,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Mutation$deleteLaundryOrderCategory) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delete_laundry_order_category = delete_laundry_order_category;
+    final lOther$delete_laundry_order_category =
+        other.delete_laundry_order_category;
+    if (l$delete_laundry_order_category !=
+        lOther$delete_laundry_order_category) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteLaundryOrderCategory
+    on Mutation$deleteLaundryOrderCategory {
+  CopyWith$Mutation$deleteLaundryOrderCategory<
+          Mutation$deleteLaundryOrderCategory>
+      get copyWith => CopyWith$Mutation$deleteLaundryOrderCategory(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteLaundryOrderCategory<TRes> {
+  factory CopyWith$Mutation$deleteLaundryOrderCategory(
+    Mutation$deleteLaundryOrderCategory instance,
+    TRes Function(Mutation$deleteLaundryOrderCategory) then,
+  ) = _CopyWithImpl$Mutation$deleteLaundryOrderCategory;
+
+  factory CopyWith$Mutation$deleteLaundryOrderCategory.stub(TRes res) =
+      _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory;
+
+  TRes call({
+    Mutation$deleteLaundryOrderCategory$delete_laundry_order_category?
+        delete_laundry_order_category,
+    String? $__typename,
+  });
+  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+      TRes> get delete_laundry_order_category;
+}
+
+class _CopyWithImpl$Mutation$deleteLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$deleteLaundryOrderCategory<TRes> {
+  _CopyWithImpl$Mutation$deleteLaundryOrderCategory(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteLaundryOrderCategory _instance;
+
+  final TRes Function(Mutation$deleteLaundryOrderCategory) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delete_laundry_order_category = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteLaundryOrderCategory(
+        delete_laundry_order_category: delete_laundry_order_category ==
+                _undefined
+            ? _instance.delete_laundry_order_category
+            : (delete_laundry_order_category
+                as Mutation$deleteLaundryOrderCategory$delete_laundry_order_category?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+      TRes> get delete_laundry_order_category {
+    final local$delete_laundry_order_category =
+        _instance.delete_laundry_order_category;
+    return local$delete_laundry_order_category == null
+        ? CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category
+            .stub(_then(_instance))
+        : CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+            local$delete_laundry_order_category,
+            (e) => call(delete_laundry_order_category: e));
+  }
+}
+
+class _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory<TRes>
+    implements CopyWith$Mutation$deleteLaundryOrderCategory<TRes> {
+  _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory(this._res);
+
+  TRes _res;
+
+  call({
+    Mutation$deleteLaundryOrderCategory$delete_laundry_order_category?
+        delete_laundry_order_category,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+          TRes>
+      get delete_laundry_order_category =>
+          CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category
+              .stub(_res);
+}
+
+const documentNodeMutationdeleteLaundryOrderCategory =
+    DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.mutation,
+    name: NameNode(value: 'deleteLaundryOrderCategory'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'categoryId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delete_laundry_order_category'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'category_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'categoryId')),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'affected_rows'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'returning'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Mutation$deleteLaundryOrderCategory
+    _parserFn$Mutation$deleteLaundryOrderCategory(Map<String, dynamic> data) =>
+        Mutation$deleteLaundryOrderCategory.fromJson(data);
+typedef OnMutationCompleted$Mutation$deleteLaundryOrderCategory = FutureOr<void>
+    Function(
+  dynamic,
+  Mutation$deleteLaundryOrderCategory?,
+);
+
+class Options$Mutation$deleteLaundryOrderCategory
+    extends graphql.MutationOptions<Mutation$deleteLaundryOrderCategory> {
+  Options$Mutation$deleteLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$deleteLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    OnMutationCompleted$Mutation$deleteLaundryOrderCategory? onCompleted,
+    graphql.OnMutationUpdate<Mutation$deleteLaundryOrderCategory>? update,
+    graphql.OnError? onError,
+  })  : onCompletedWithParsed = onCompleted,
+        super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          onCompleted: onCompleted == null
+              ? null
+              : (data) => onCompleted(
+                    data,
+                    data == null
+                        ? null
+                        : _parserFn$Mutation$deleteLaundryOrderCategory(data),
+                  ),
+          update: update,
+          onError: onError,
+          document: documentNodeMutationdeleteLaundryOrderCategory,
+          parserFn: _parserFn$Mutation$deleteLaundryOrderCategory,
+        );
+
+  final OnMutationCompleted$Mutation$deleteLaundryOrderCategory?
+      onCompletedWithParsed;
+
+  @override
+  List<Object?> get properties => [
+        ...super.onCompleted == null
+            ? super.properties
+            : super.properties.where((property) => property != onCompleted),
+        onCompletedWithParsed,
+      ];
+}
+
+class WatchOptions$Mutation$deleteLaundryOrderCategory
+    extends graphql.WatchQueryOptions<Mutation$deleteLaundryOrderCategory> {
+  WatchOptions$Mutation$deleteLaundryOrderCategory({
+    String? operationName,
+    required Variables$Mutation$deleteLaundryOrderCategory variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeMutationdeleteLaundryOrderCategory,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Mutation$deleteLaundryOrderCategory,
+        );
+}
+
+extension ClientExtension$Mutation$deleteLaundryOrderCategory
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Mutation$deleteLaundryOrderCategory>>
+      mutate$deleteLaundryOrderCategory(
+              Options$Mutation$deleteLaundryOrderCategory options) async =>
+          await this.mutate(options);
+  graphql.ObservableQuery<Mutation$deleteLaundryOrderCategory>
+      watchMutation$deleteLaundryOrderCategory(
+              WatchOptions$Mutation$deleteLaundryOrderCategory options) =>
+          this.watchMutation(options);
+}
+
+class Mutation$deleteLaundryOrderCategory$delete_laundry_order_category {
+  Mutation$deleteLaundryOrderCategory$delete_laundry_order_category({
+    required this.affected_rows,
+    required this.returning,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteLaundryOrderCategory$delete_laundry_order_category.fromJson(
+      Map<String, dynamic> json) {
+    final l$affected_rows = json['affected_rows'];
+    final l$returning = json['returning'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+      affected_rows: (l$affected_rows as int),
+      returning: (l$returning as List<dynamic>)
+          .map((e) =>
+              Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning
+                  .fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int affected_rows;
+
+  final List<
+          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>
+      returning;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$affected_rows = affected_rows;
+    _resultData['affected_rows'] = l$affected_rows;
+    final l$returning = returning;
+    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$affected_rows = affected_rows;
+    final l$returning = returning;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$affected_rows,
+      Object.hashAll(l$returning.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$deleteLaundryOrderCategory$delete_laundry_order_category) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$affected_rows = affected_rows;
+    final lOther$affected_rows = other.affected_rows;
+    if (l$affected_rows != lOther$affected_rows) {
+      return false;
+    }
+    final l$returning = returning;
+    final lOther$returning = other.returning;
+    if (l$returning.length != lOther$returning.length) {
+      return false;
+    }
+    for (int i = 0; i < l$returning.length; i++) {
+      final l$returning$entry = l$returning[i];
+      final lOther$returning$entry = lOther$returning[i];
+      if (l$returning$entry != lOther$returning$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category
+    on Mutation$deleteLaundryOrderCategory$delete_laundry_order_category {
+  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category>
+      get copyWith =>
+          CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+    TRes> {
+  factory CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+    Mutation$deleteLaundryOrderCategory$delete_laundry_order_category instance,
+    TRes Function(
+            Mutation$deleteLaundryOrderCategory$delete_laundry_order_category)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category;
+
+  factory CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category;
+
+  TRes call({
+    int? affected_rows,
+    List<Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>?
+        returning,
+    String? $__typename,
+  });
+  TRes returning(
+      Iterable<Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning> Function(
+              Iterable<
+                  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+                      Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>>)
+          _fn);
+}
+
+class _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteLaundryOrderCategory$delete_laundry_order_category
+      _instance;
+
+  final TRes Function(
+      Mutation$deleteLaundryOrderCategory$delete_laundry_order_category) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? affected_rows = _undefined,
+    Object? returning = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+        affected_rows: affected_rows == _undefined || affected_rows == null
+            ? _instance.affected_rows
+            : (affected_rows as int),
+        returning: returning == _undefined || returning == null
+            ? _instance.returning
+            : (returning as List<
+                Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes returning(
+          Iterable<Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning> Function(
+                  Iterable<
+                      CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+                          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>>)
+              _fn) =>
+      call(
+          returning: _fn(_instance.returning.map((e) =>
+              CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+                e,
+                (i) => i,
+              ))).toList());
+}
+
+class _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? affected_rows,
+    List<Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>?
+        returning,
+    String? $__typename,
+  }) =>
+      _res;
+  returning(_fn) => _res;
+}
+
+class Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning {
+  Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning({
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning
+    on Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning {
+  CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning>
+      get copyWith =>
+          CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+    TRes> {
+  factory CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+    Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning
+        instance,
+    TRes Function(
+            Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning)
+        then,
+  ) = _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning;
+
+  factory CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning;
+
+  TRes call({
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+            TRes> {
+  _CopyWithImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning
+      _instance;
+
+  final TRes Function(
+          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+        TRes>
+    implements
+        CopyWith$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning<
+            TRes> {
+  _CopyWithStubImpl$Mutation$deleteLaundryOrderCategory$delete_laundry_order_category$returning(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
     String? $__typename,
   }) =>
       _res;

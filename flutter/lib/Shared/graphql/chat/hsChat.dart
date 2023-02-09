@@ -42,10 +42,8 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     ),
   );
 
-  mezDbgPrint(
-      "[666] ${Get.find<SettingsController>().appType.toNormalString()} ");
-  mezDbgPrint("[666] ${_chat.data}");
-  if (_chat.hasException || _chat.parsedData?.chat_by_pk == null) {
+  if (_chat.parsedData?.chat_by_pk == null) {
+    mezDbgPrint("Chat data 👋👋👋👋👋👋👋👋👋👋 =>${_chat.data}");
     throwError(_chat.exception);
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
@@ -143,7 +141,6 @@ List<Participant> _get_participants(
           id: _participant.user.id,
         ),
       );
-      
     });
   }
 

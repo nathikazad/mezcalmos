@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -214,7 +215,14 @@ class _CustLaundryOrderRequestViewState
         enabled: viewController.isUserSignedIn ? viewController.canOrder : true,
         onClick: () async {
           if (viewController.isUserSignedIn) {
-            await viewController.createLaundryOrder();
+            num? res = await viewController.createLaundryOrder();
+            if (res != null) {
+              popEverythingAndNavigateTo(
+                getLaundryOrderRoute(
+                  res.toInt(),
+                ),
+              );
+            }
           } else {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;

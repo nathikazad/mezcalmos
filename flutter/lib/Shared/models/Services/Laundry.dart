@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -188,12 +190,26 @@ class LaundryCostLineItem {
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ cost.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        cost.hashCode ^
+        nameId.hashCode ^
+        storeId.hashCode ^
+        position.hashCode;
+  }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant LaundryCostLineItem other) {
     if (identical(this, other)) return true;
+    final bool Function(dynamic e1, dynamic e2) mapEquals =
+        const DeepCollectionEquality().equals;
 
-    return other is LaundryCostLineItem && other.id == id && other.cost == cost;
+    return other.id == id &&
+        mapEquals(other.name, name) &&
+        other.cost == cost &&
+        other.nameId == nameId &&
+        other.storeId == storeId &&
+        other.position == position;
   }
 }

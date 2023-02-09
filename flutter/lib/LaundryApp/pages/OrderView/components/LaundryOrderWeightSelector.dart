@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -9,9 +10,9 @@ import 'package:sizer/sizer.dart';
 class LaundryOrderWeightSelector extends StatefulWidget {
   const LaundryOrderWeightSelector({
     Key? key,
-    required this.newCategory,
+    required this.viewController,
   }) : super(key: key);
-  final Rxn<LaundryCostLineItem?> newCategory;
+  final LaundryOpOrderViewController viewController;
 
   @override
   State<LaundryOrderWeightSelector> createState() =>
@@ -23,26 +24,13 @@ class _LaundryOrderWeightSelectorState
   LaundryOpAuthController opAuthController =
       Get.find<LaundryOpAuthController>();
 
-  RxList<LaundryCostLineItem> laundryCategories = RxList.empty();
-
   @override
   void initState() {
-    getcatgeories();
     super.initState();
   }
 
-  Future<void> getcatgeories() async {
-    // final Laundry laundry = await laundryInfoController
-    //     .getLaundryAsFuture(opAuthController.laundryId!);
-
-    // laundry.laundryCosts.lineItems.forEach((LaundryCostLineItem element) {
-    //   laundryCategories.add(element);
-    // });
-  }
   @override
   void dispose() {
-    // TODO: implement dispose
-
     super.dispose();
   }
 
@@ -64,18 +52,19 @@ class _LaundryOrderWeightSelectorState
                     borderRadius: BorderRadius.circular(8)),
                 floatingLabelBehavior: FloatingLabelBehavior.never,
               ),
-              isEmpty: widget.newCategory.value == null,
+              isEmpty: widget.viewController.selectedCategory.value == null,
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<LaundryCostLineItem>(
-                  value: widget.newCategory.value,
+                  value: widget.viewController.selectedCategory.value,
                   isExpanded: true,
                   isDense: true,
                   onChanged: (LaundryCostLineItem? newValue) {
                     if (newValue != null) {
-                      setCategory(newValue);
+                      widget.viewController.setCategory(newValue);
                     }
                   },
-                  items: laundryCategories.map((LaundryCostLineItem value) {
+                  items: widget.viewController.laundryCategories
+                      .map((LaundryCostLineItem value) {
                     return DropdownMenuItem<LaundryCostLineItem>(
                       value: value,
                       child: Row(
@@ -113,7 +102,7 @@ class _LaundryOrderWeightSelectorState
     );
   }
 
-  void setCategory(LaundryCostLineItem category) {
-    widget.newCategory.value = category;
-  }
+  // void setCategory(LaundryCostLineItem category) {
+  //   widget.newCategory.value = category;
+  // }
 }

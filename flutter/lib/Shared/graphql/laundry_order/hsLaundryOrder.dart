@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/__generated/laundry_order.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -96,6 +97,8 @@ Future<LaundryOrder?> get_laundry_order_by_id(
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
       orderId: orderData.id,
+      toCustomerDeliveryId: orderData.to_customer_delivery_id!,
+      fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
       costsByType: LaundryOrderCosts(
           lineItems: orderData.categories
               .map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories
@@ -144,6 +147,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
+          toCustomerDeliveryId: orderData.to_customer_delivery_id!,
+          fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
           orderId: orderData.id,
           cost: 0,
           costsByType: LaundryOrderCosts(
@@ -181,4 +186,67 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
     return null;
   });
   //////
+}
+
+Future<int?> add_laundry_order_category(
+    {required int categoryId,
+    required int orderId,
+    required double weightInKilo}) async {
+  QueryResult<Mutation$insertLaundryOrderCategory> res =
+      await _hasuraDb.graphQLClient.mutate$insertLaundryOrderCategory(
+    Options$Mutation$insertLaundryOrderCategory(
+      variables: Variables$Mutation$insertLaundryOrderCategory(
+        data: Input$laundry_order_category_insert_input(
+          order_id: orderId,
+          category_id: categoryId,
+          weight_in_kilo: weightInKilo,
+        ),
+      ),
+    ),
+  );
+  if (res.parsedData?.insert_laundry_order_category_one == null) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.insert_laundry_order_category_one!.id;
+  }
+  return null;
+}
+
+Future<int?> update_laundry_order_category(
+    {required LaundryOrderCostLineItem cat, required int orderId}) async {
+  QueryResult<Mutation$updateLaundryOrderCategory> res =
+      await _hasuraDb.graphQLClient.mutate$updateLaundryOrderCategory(
+    Options$Mutation$updateLaundryOrderCategory(
+      variables: Variables$Mutation$updateLaundryOrderCategory(
+          categoryId: cat.id,
+          data: Input$laundry_order_category_set_input(
+            weight_in_kilo: cat.weight.toDouble(),
+          )),
+    ),
+  );
+  if (res.parsedData?.update_laundry_order_category == null) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.update_laundry_order_category!.returning.first.id;
+  }
+  return null;
+}
+
+Future<int?> delete_laundry_order_category({required int catId}) async {
+  QueryResult<Mutation$deleteLaundryOrderCategory> res =
+      await _hasuraDb.graphQLClient.mutate$deleteLaundryOrderCategory(
+    Options$Mutation$deleteLaundryOrderCategory(
+      variables: Variables$Mutation$deleteLaundryOrderCategory(
+        categoryId: catId,
+      ),
+    ),
+  );
+  mezDbgPrint("Data $catId 👋👋👋👋👋👋👋👋👋👋👋👋👋👋");
+  mezDbgPrint(res.data);
+  if (res.parsedData?.delete_laundry_order_category == null) {
+    throwError(res.exception);
+  } else {
+    return res.parsedData!.delete_laundry_order_category!.returning.first.id;
+  }
+  return null;
 }

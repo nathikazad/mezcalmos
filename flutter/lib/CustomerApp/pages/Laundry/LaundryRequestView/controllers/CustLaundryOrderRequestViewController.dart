@@ -111,7 +111,7 @@ class CustLaundryOrderRequestViewController {
     }
   }
 
-  Future<void> createLaundryOrder() async {
+  Future<num?> createLaundryOrder() async {
     final LaundryRequest _laundryRequest = LaundryRequest(
         laundryId: laundry.value!.info.hasuraId, deliveryCost: 50);
 
@@ -132,11 +132,12 @@ class CustLaundryOrderRequestViewController {
       _laundryRequest.paymentType = PaymentType.Cash;
       mezDbgPrint("👋👋👋👋 paylod 👋👋👋👋");
       mezDbgPrint(_laundryRequest.toString());
-      await _checkoutOrder(_laundryRequest);
+      return await _checkoutOrder(_laundryRequest);
     }
+    return null;
   }
 
-  Future<void> _checkoutOrder(LaundryRequest laundryRequest) async {
+  Future<num?> _checkoutOrder(LaundryRequest laundryRequest) async {
     try {
       cloudFunctionModels.ReqLaundryResponse response =
           await CloudFunctions.laundry_requestLaundry(
@@ -155,6 +156,7 @@ class CustLaundryOrderRequestViewController {
         tripPolyline: laundryRequest.routeInformation!.polyline,
         deliveryType: cloudFunctionModels.DeliveryType.Delivery,
       );
+      return response.orderId;
     } catch (e, stk) {
       mezDbgPrint("error function");
       mezDbgPrint(e);
@@ -163,5 +165,6 @@ class CustLaundryOrderRequestViewController {
         errorTitle: "Server error please try again",
       );
     }
+    return null;
   }
 }

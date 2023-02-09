@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -11,14 +12,15 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
 
 class LaundryOpOrderDriverCard extends StatelessWidget {
-  const LaundryOpOrderDriverCard({Key? key, required this.order})
+  const LaundryOpOrderDriverCard({Key? key, required this.viewController})
       : super(key: key);
-  final LaundryOrder order;
+  final LaundryOpOrderViewController viewController;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,7 +62,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                       children: [
                         Text(
                           _getDriver()!.name,
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyLarge,
                         ),
                         if (_getTime() != null) Text(_getTime()!)
                       ],
@@ -72,7 +74,6 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                         chatId: _getCorrectChatId(),
                         onTap: () {
                           MezRouter.toNamed(getMessagesRoute(
-                              orderId: order.orderId,
                               orderType: OrderType.Laundry,
                               chatId: _getCorrectChatId(),
                               recipientType: ParticipantType.DeliveryDriver));
@@ -106,11 +107,22 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                       width: 40,
                     ),
                     Flexible(
+                      fit: FlexFit.tight,
                       child: Text(
                         "${_i18n()["noDriver"]}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                     ),
+                    MezIconButton(
+                      icon: Icons.add,
+                      onTap: () {
+                        navigateToPickDriver(
+                            deliveryOrderId: viewController.order.inPickup
+                                ? viewController.order.fromCustomerDeliveryId
+                                : viewController.order.toCustomerDeliveryId,
+                            showForwardButton: false);
+                      },
+                    )
                   ],
                 )),
     );
@@ -119,43 +131,43 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   String? _getTime() {
     final String userLangCode =
         Get.find<LanguageController>().userLanguageKey.toLanguageCode();
-    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
-        order.estimatedPickupFromCustomerTime != null) {
-      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedPickupFromCustomerTime!.toLocal())}";
-    } else if (order.estimatedDropoffAtCustomerTime != null &&
-        order.status != LaundryOrderStatus.PickedUpFromLaundry) {
-      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(order.estimatedDropoffAtCustomerTime!.toLocal())}";
+    if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup &&
+        viewController.order.estimatedPickupFromCustomerTime != null) {
+      return "${_i18n()["pickUpTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedPickupFromCustomerTime!.toLocal())}";
+    } else if (viewController.order.estimatedDropoffAtCustomerTime != null &&
+        viewController.order.status != LaundryOrderStatus.PickedUpFromLaundry) {
+      return "${_i18n()["dropOffTime"]}:\n${DateFormat.MMMd(userLangCode).format(viewController.order.estimatedDropoffAtCustomerTime!.toLocal())} ${DateFormat("hh:mm a").format(viewController.order.estimatedDropoffAtCustomerTime!.toLocal())}";
     } else {
       return null;
     }
   }
 
   bool _isDriverExist() {
-    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return order.pickupDriver != null;
+    if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return viewController.order.pickupDriver != null;
     } else {
-      return order.dropoffDriver != null;
+      return viewController.order.dropoffDriver != null;
     }
   }
 
   int _getCorrectChatId() {
-    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return order.serviceProviderPickupDriverChatId!;
+    if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return viewController.order.serviceProviderPickupDriverChatId!;
     } else {
-      return order.serviceProviderDropOffDriverChatId!;
+      return viewController.order.serviceProviderDropOffDriverChatId!;
     }
   }
 
   DeliveryDriverUserInfo? _getDriver() {
-    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
-      return order.pickupDriver;
+    if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+      return viewController.order.pickupDriver;
     } else {
-      return order.dropoffDriver;
+      return viewController.order.dropoffDriver;
     }
   }
 
   void _handleMessageRouting() {
-    if (order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
+    if (viewController.order.getCurrentPhase() == LaundryOrderPhase.Pickup) {
       _laundryPickupDriverMessageRoute();
     } else {
       _laundryDropOffDriverMessageRoute();
@@ -164,17 +176,17 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
 
   void _laundryDropOffDriverMessageRoute() {
     MezRouter.toNamed<dynamic>(getMessagesRoute(
-        orderId: order.orderId,
+        orderId: viewController.order.orderId,
         orderType: OrderType.Laundry,
-        chatId: order.serviceProviderDropOffDriverChatId!,
+        chatId: viewController.order.serviceProviderDropOffDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 
   void _laundryPickupDriverMessageRoute() {
     MezRouter.toNamed<dynamic>(getMessagesRoute(
-        orderId: order.orderId,
+        orderId: viewController.order.orderId,
         orderType: OrderType.Laundry,
-        chatId: order.serviceProviderPickupDriverChatId!,
+        chatId: viewController.order.serviceProviderPickupDriverChatId!,
         recipientType: ParticipantType.DeliveryDriver));
   }
 }
