@@ -156,7 +156,7 @@ class CustomerCartController extends GetxController {
       mezDbgPrint("[+] -> payload :: $payload");
       final cloudFunctionModels.CheckoutResponse res =
           await CloudFunctions.restaurant2_checkoutCart(
-              customerAppType: cloudFunctionModels.AppType.Customer,
+              customerAppType: cloudFunctionModels.CustomerAppType.Native,
               customerLocation: cloudFunctionModels.Location(
                   cart.value?.toLocation!.latitude,
                   cart.value?.toLocation!.longitude,

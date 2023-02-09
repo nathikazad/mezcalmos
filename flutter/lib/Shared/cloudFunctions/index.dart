@@ -377,7 +377,6 @@ class CloudFunctions {
       {required num deliveryOrderId,
       required num deliveryDriverId,
       required OrderType orderType,
-      required ParticipantType deliveryDriverType,
       bool? changeDriver,
       required num deliveryCompanyId}  ) async {
     return await callCloudFunction(
@@ -386,7 +385,6 @@ class CloudFunctions {
         "deliveryOrderId":deliveryOrderId,
         "deliveryDriverId":deliveryDriverId,
         "orderType":orderType.toFirebaseFormatString(),
-        "deliveryDriverType":deliveryDriverType.toFirebaseFormatString(),
         "changeDriver":changeDriver,
         "deliveryCompanyId":deliveryCompanyId,
       });

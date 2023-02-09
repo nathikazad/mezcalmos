@@ -21,6 +21,8 @@ export interface CallUserDetails {
 export interface CallUserResponse {
   uid: number,
   token: string,
+  name?: string,
+  image?: string,
   expirationTime: string,
   participantType: ParticipantType,
   notificationInfo: NotificationInfo | null

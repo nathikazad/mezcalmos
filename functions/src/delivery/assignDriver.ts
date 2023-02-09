@@ -20,7 +20,6 @@ export interface AssignDriverDetails {
   deliveryOrderId: number,
   deliveryDriverId: number,
   orderType: OrderType,
-  // deliveryDriverType: ParticipantType,
   changeDriver?: boolean,
   deliveryCompanyId: number
 }
