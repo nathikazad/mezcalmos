@@ -127,7 +127,7 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
 
   let response =  await chain.query({
       laundry_order: [{
-        where: (deliveryOrder.direction == DeliveryDirection.FromCustomer) ? {
+        where: (deliveryOrder.direction == DeliveryDirection.ToCustomer) ? {
           to_customer_delivery_id: {
             _eq: deliveryOrder.deliveryId
           }

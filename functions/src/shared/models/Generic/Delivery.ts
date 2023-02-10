@@ -48,8 +48,8 @@ export interface DeliveryOrder {
   direction: DeliveryDirection;
 }
 export enum DeliveryDirection {
-  FromCustomer = "from_customer",
-  ToCustomer = "to_customer",
+  FromCustomer = "fromCustomer",
+  ToCustomer = "toCustomer",
 }
 
 export interface DeliveryDriver {
