@@ -16,6 +16,30 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     from_customer_delivery_id
     id
     notes
+     from_customer_delivery {
+      delivery_driver {
+        current_location
+        id
+        user {
+          id
+          image
+          name
+        }
+      }
+      chat_with_service_provider_id
+    }
+    to_customer_delivery {
+      delivery_driver {
+        current_location
+        id
+        user {
+          id
+          image
+          name
+        }
+      }
+      chat_with_service_provider_id
+    }
     order_time
     payment_type
     refund_amount
@@ -102,7 +126,30 @@ query get_laundry_order_by_id($orderId: Int!) {
     refund_amount
     scheduled_time
     status
-
+    from_customer_delivery {
+      delivery_driver {
+        current_location
+        id
+        user {
+          id
+          image
+          name
+        }
+      }
+      chat_with_service_provider_id
+    }
+    to_customer_delivery {
+      delivery_driver {
+        current_location
+        id
+        user {
+          id
+          image
+          name
+        }
+      }
+      chat_with_service_provider_id
+    }
     store_id
     store {
       name
@@ -234,4 +281,19 @@ mutation deleteLaundryOrderCategory($categoryId: Int!) {
       id
     }
   }
+}
+mutation setLaundryOrderEstReadyTime(
+  $orderId: Int!
+  $deliveryOrderId: Int!
+  $time: timestamptz!
+) {
+  update_laundry_order_by_pk(
+    pk_columns: { id: $orderId }
+    _set: { estimated_ready_time: $time }
+  ) {
+    estimated_ready_time
+  }
+   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
+    estimated_package_ready_time
+   }
 }

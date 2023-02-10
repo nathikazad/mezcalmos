@@ -1670,7 +1670,8 @@
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Restaurant Delivery",
-                            "foodReady": "Food ready",
+                            "laundryDelivery": "Laundry Delivery",
+                            "packageReady": "Package ready",
                             "oops": "Oops",
                             "set": "Set",
                             "time": "Time",
@@ -1680,12 +1681,13 @@
                             "pickupTimeError": "The Pickup time should be before the delivery time.",
                             "wrongTime": "You picked a wrong time",
                             "orderStatus": {
-                                "waiting": "Waiting for restaurant",
+                                "waiting": "Waiting for package",
                                 "scheduled": "Scheduled order",
                                 "preparing": "Order is being prepared",
                                 "readyForPickup": "Ready for pickup",
                                 "justReady": "Ready for delivery",
                                 "deliveryOtw": "Delivery on the way",
+                                "pickupOtw": "Pickup on the way",
                                 "delivered": "Order Delivered",
                                 "canceled": "Order Cancelled"
                             },

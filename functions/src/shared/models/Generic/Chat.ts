@@ -46,7 +46,15 @@ export enum ParticipantType {
   RestaurantOperator = "restaurantOperator",
   MezAdmin = "mezAdmin"
 }
-
+export const participantTypeToHasura: Record<ParticipantType, string> = {
+   [ParticipantType.Customer]: "customer",
+  [ParticipantType.DeliveryOperator]: "delivery_operator",
+  [ParticipantType.DeliveryDriver]: "delivery_driver",
+  [ParticipantType.MezAdmin]: "mez_admin",
+  [ParticipantType.RestaurantOperator]: "restaurant_operator",
+  [ParticipantType.LaundryOperator]: "laundry_operator",
+  [ParticipantType.Taxi]: "taxi",
+}
 
 export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.Customer]: ParticipantType.Customer,

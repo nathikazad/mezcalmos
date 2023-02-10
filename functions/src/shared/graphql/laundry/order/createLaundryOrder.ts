@@ -75,6 +75,7 @@ export async function createLaundryOrder(
                             "type": "Point",
                             "coordinates": [laundryOrder.customerLocation.lng, laundryOrder.customerLocation.lat ],
                         }),
+                        package_ready:true,
                         pickup_address: laundryOrder.customerLocation.address,
                         schedule_time: laundryOrder.scheduledTime,
                         chat_with_customer: {
@@ -96,7 +97,7 @@ export async function createLaundryOrder(
                         },
                         payment_type: laundryOrder.paymentType,
                         delivery_cost: laundryOrder.deliveryCost / 2,
-                    
+                        direction : DeliveryDirection.FromCustomer,
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: laundryOrder.storeId,
                         service_provider_type:  DeliveryServiceProviderType.Laundry,
@@ -120,6 +121,7 @@ export async function createLaundryOrder(
                             "type": "Point",
                             "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
                         }),
+                        direction : DeliveryDirection.ToCustomer,
                         pickup_address: laundryStore.location.address,
                         schedule_time: laundryOrder.scheduledTime,
                         chat_with_customer: {
@@ -192,6 +194,7 @@ export async function createLaundryOrder(
         laundryOrder.fromCustomerDeliveryId = response.insert_laundry_order_one.from_customer_delivery.id;
         laundryOrder.toCustomerDeliveryId = response.insert_laundry_order_one.to_customer_delivery.id;
         return [{
+            packageReady: true,
             deliveryId: response.insert_laundry_order_one.from_customer_delivery.id,
             orderType: OrderType.Laundry,
             pickupLocation: laundryOrder.customerLocation,
@@ -211,6 +214,7 @@ export async function createLaundryOrder(
             serviceProviderId: laundryStore.id!,
             direction: DeliveryDirection.FromCustomer
         }, {
+            packageReady: false,
             deliveryId: response.insert_laundry_order_one.to_customer_delivery.id,
             orderType: OrderType.Laundry,
             pickupLocation: laundryStore.location,
@@ -232,6 +236,7 @@ export async function createLaundryOrder(
         }]
     }
     return [{
+        packageReady:false,
         deliveryId: 0,
         orderType: OrderType.Laundry,
         pickupLocation: laundryStore.location,

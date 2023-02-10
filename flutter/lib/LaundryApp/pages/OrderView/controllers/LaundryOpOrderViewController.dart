@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -282,21 +284,15 @@ class LaundryOpOrderViewController {
     }
   }
 
-  Future<ServerResponse> cancelOrder() async {
-    final HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-cancelOrderFromCustomer');
+  Future<void> cancelOrder() async {
     try {
-      final HttpsCallableResult<dynamic> response = await cancelOrder
-          .call(<String, dynamic>{"orderId": _order.value!.orderId});
-      mezDbgPrint(response.toString());
-      print(response.data);
-
-      final ServerResponse res = ServerResponse.fromJson(response.data);
-
-      return res;
-    } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      await CloudFunctions.laundry_cancelFromAdmin(orderId: order.orderId);
+      showSavedSnackBar(
+          title: "Cancelled", subtitle: "Order cancelled successfuly");
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.toString());
     }
   }
 
@@ -401,5 +397,17 @@ class LaundryOpOrderViewController {
       backgroundColor: Colors.grey.shade800,
       colorText: Colors.white,
     );
+  }
+
+  Future<void> setLaundryEstTime(DateTime value) async {
+    try {
+      await set_laundry_est_ready_time(
+          orderId: order.orderId,
+          deliveryOrderId: order.deliveryOrderId,
+          time: value);
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 }

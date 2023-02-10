@@ -25,6 +25,26 @@ class AdminTabsViewController {
 
   double get getAppbarHeight =>
       showAppBarTabs ? kToolbarHeight * 2 : kToolbarHeight;
+  RxInt restOrdersCount = RxInt(0);
+  RxInt laundryOrdersCount = RxInt(0);
+  RxInt dvOrdersCount = RxInt(0);
+  String? getBadge(ServiceProviderType type) {
+    if (bottomTabIndex.value == 0) {
+      switch (type) {
+        case ServiceProviderType.Restaurant:
+          return restOrdersCount.value.toString();
+        case ServiceProviderType.Delivery_company:
+          return dvOrdersCount.value.toString();
+        case ServiceProviderType.Laundry:
+          return laundryOrdersCount.value.toString();
+
+          break;
+        default:
+      }
+    }
+    return null;
+  }
+
   // methods //
   void init({required TickerProvider vsync}) {
     appbarTabsController =

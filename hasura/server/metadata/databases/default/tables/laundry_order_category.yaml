@@ -58,6 +58,21 @@ select_permissions:
             operators:
               user_id:
                 _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - weight_in_kilo
+        - category_id
+        - id
+        - order_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
   - role: laundry_operator
     permission:

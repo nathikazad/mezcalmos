@@ -7,139 +7,137 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["OrderEstimatedTimeComponent"];
 
-class OrderEstimatedTimeComponent extends StatefulWidget {
-  const OrderEstimatedTimeComponent({Key? key, required this.viewController})
+class LaundryOrderEstTime extends StatefulWidget {
+  const LaundryOrderEstTime({Key? key, required this.viewController})
       : super(key: key);
   final LaundryOpOrderViewController viewController;
 
   @override
-  State<OrderEstimatedTimeComponent> createState() =>
-      _OrderEstimatedTimeComponentState();
+  State<LaundryOrderEstTime> createState() => _LaundryOrderEstTimeState();
 }
 
-class _OrderEstimatedTimeComponentState
-    extends State<OrderEstimatedTimeComponent> {
+class _LaundryOrderEstTimeState extends State<LaundryOrderEstTime> {
+  final Rxn<TimeOfDay> selectedTime = Rxn();
+  final Rxn<DateTime> selectedDate = Rxn();
+
+  @override
+  void initState() {
+    selectedDate.value =
+        widget.viewController.order.estimatedLaundryReadyTime?.toLocal() ??
+            DateTime.now().toLocal();
+    selectedTime.value = TimeOfDay.fromDateTime(
+        widget.viewController.order.estimatedLaundryReadyTime?.toLocal() ??
+            DateTime.now().toLocal());
+    super.initState();
+  }
+
   RxBool isClicked = RxBool(false);
   @override
   Widget build(BuildContext context) {
-    if (widget.viewController.order.isAtLaundry() ||
-        widget.viewController.order.estimatedLaundryReadyTime != null) {
-      return Obx(
-        () => Card(
-          margin: const EdgeInsets.only(bottom: 20),
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  child: Icon(
-                    Icons.watch_later,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  flex: 8,
-                  fit: FlexFit.tight,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${_i18n()["estFinishTime"]}",
-                        style: Get.theme.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      if (widget
-                              .viewController.order.estimatedLaundryReadyTime !=
-                          null)
-                        Text(
-                          "${DateFormat("dd MMMM, hh:mm a ").format(widget.viewController.order.estimatedLaundryReadyTime!.toLocal())}",
-                          style: Get.theme.textTheme.bodyMedium,
-                        ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                if (widget.viewController.order.isAtLaundry())
-                  _editSetButton(context)
-              ],
+    return Card(
+      margin: const EdgeInsets.only(bottom: 25),
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              child: Icon(
+                Icons.watch_later,
+                color: Colors.white,
+              ),
             ),
-          ),
+            SizedBox(
+              width: 10,
+            ),
+            Flexible(
+              flex: 8,
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${_i18n()["estLaundryFinish"]}',
+                    style: Get.theme.textTheme.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  if (widget.viewController.order.estimatedLaundryReadyTime !=
+                      null)
+                    Text(
+                      "${DateFormat("dd MMMM, hh:mm a ").format(widget.viewController.order.estimatedLaundryReadyTime!.toLocal())}",
+                      style: Get.theme.textTheme.bodyMedium,
+                    ),
+                ],
+              ),
+            ),
+            Spacer(),
+            _editSetButton(context)
+          ],
         ),
-      );
-    } else {
-      return Container();
-    }
+      ),
+    );
   }
 
   Widget _editSetButton(BuildContext context) {
     return InkWell(
-        onTap: (widget.viewController.order.isAtLaundry())
-            ? () async {
-                final Rxn<DateTime> selectedDate =
-                    Rxn(widget.viewController.order.estimatedLaundryReadyTime);
-                final Rxn<TimeOfDay> selectedTime = Rxn(TimeOfDay.fromDateTime(
-                    widget.viewController.order.estimatedLaundryReadyTime ??
-                        DateTime.now()));
-
-                await showModalBottomSheet(
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8))),
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "${_i18n()["estLaundryFinish"]}",
-                              style: Get.textTheme.bodyLarge,
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            _dateSelector(context, selectedDate),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            _timeSelector(context, selectedTime, selectedDate),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            _confirmButton(selectedDate),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            _cancelButton(),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              }
-            : null,
+        onTap: () async {
+          await showModalBottomSheet(
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8))),
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "${_i18n()["estLaundryFinish"]}",
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      _dateSelector(context),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _timeSelector(
+                        context,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _confirmButton(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      _cancelButton(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                );
+              });
+        },
         customBorder: CircleBorder(),
         child: Ink(
           padding: const EdgeInsets.all(5),
@@ -155,47 +153,23 @@ class _OrderEstimatedTimeComponentState
                   size: 18,
                 )
               : Text(
-                  "${_i18n()["set"]}",
+                  '${_i18n()["set"]}',
                   style: Get.textTheme.bodyLarge
                       ?.copyWith(color: primaryBlueColor),
                 ),
         ));
   }
 
-  Widget _confirmButton(Rxn<DateTime> selectedDate) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(8),
-      onTap: () {
-        if (selectedDate.value != null) {
-          _setOrderEstTime(selectedDate.value!);
-        }
+  Widget _confirmButton() {
+    return MezButton(
+      label: "${_i18n()["confirm"]}",
+      onClick: () async {
+        await _setOrderEstTime(selectedDate.value!);
+
+        MezRouter.popDialog(closeOverlays: true);
+        showSavedSnackBar();
       },
-      child: Ink(
-        height: 50,
-        width: double.infinity,
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            gradient: bluePurpleGradient,
-            borderRadius: BorderRadius.circular(8)),
-        child: Obx(
-          () => Container(
-            padding: const EdgeInsets.all(5),
-            alignment: Alignment.center,
-            child: (isClicked.value)
-                ? Transform.scale(
-                    scale: 0.3,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    "${_i18n()["confirm"]}",
-                    style:
-                        Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
-                  ),
-          ),
-        ),
-      ),
+      withGradient: true,
     );
   }
 
@@ -223,8 +197,9 @@ class _OrderEstimatedTimeComponentState
     );
   }
 
-  Widget _timeSelector(BuildContext context, Rxn<TimeOfDay> selectedTime,
-      Rxn<DateTime> selectedDate) {
+  Widget _timeSelector(
+    BuildContext context,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () {
@@ -249,8 +224,10 @@ class _OrderEstimatedTimeComponentState
                   );
                 },
                 initialTime: TimeOfDay(
-                    hour: widget.viewController.order.orderTime.hour,
-                    minute: widget.viewController.order.orderTime.minute))
+                    hour: selectedDate.value?.toLocal().hour ??
+                        widget.viewController.order.orderTime.toLocal().hour,
+                    minute: selectedDate.value?.toLocal().minute ??
+                        widget.viewController.order.orderTime.toLocal().minute))
             .then((TimeOfDay? value) {
           if (value != null) {
             selectedTime.value = value;
@@ -286,21 +263,28 @@ class _OrderEstimatedTimeComponentState
     );
   }
 
-  Widget _dateSelector(BuildContext context, Rxn<DateTime> selectedDate) {
+  Widget _dateSelector(
+    BuildContext context,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(8),
       onTap: () async {
         // ignore: unawaited_futures
-        mezDbgPrint("tappppped");
 
         await getDatePicker(
           context,
-          initialDate: selectedDate.value ?? DateTime.now(),
+          initialDate:
+              selectedDate.value?.toLocal() ?? DateTime.now().toLocal(),
           firstDate: widget.viewController.order.orderTime,
           lastDate: DateTime(DateTime.now().year + 1),
         ).then((DateTime? value) {
           if (value != null) {
-            selectedDate.value = value;
+            selectedDate.value = DateTime(
+                value.toLocal().year,
+                value.toLocal().month,
+                value.toLocal().day,
+                value.toLocal().hour,
+                value.toLocal().minute);
           }
         });
       },
@@ -317,7 +301,7 @@ class _OrderEstimatedTimeComponentState
             ),
             Obx(
               () => Text(
-                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now())}"),
+                  "${DateFormat("dd MMMM yyyy").format(selectedDate.value?.toLocal() ?? DateTime.now().toLocal())}"),
             ),
             Spacer(),
             Icon(Icons.chevron_right_rounded)
@@ -327,27 +311,20 @@ class _OrderEstimatedTimeComponentState
     );
   }
 
-  void _setOrderEstTime(DateTime value) {
-    // isClicked.value = true;
-    // if (value.difference(widget.viewController.order.orderTime).inMinutes >
-    //     30) {
-    //   orderController
-    //       .setEstimatedLaundryReadyTime(
-    //           widget.viewController.order.orderId.toString(), value)
-    //       .whenComplete(() {
-    //     isClicked.value = false;
-    //   }).then((ServerResponse value) {
-    //     if (value.success) {
-    //       MezRouter.back(closeOverlays: true);
-    //     }
-    //   });
-    // } else {
-    //   isClicked.value = false;
-    //   Get.showSnackbar(GetSnackBar(
-    //     snackPosition: SnackPosition.TOP,
-    //     title: "${_i18n()["error"]}",
-    //     message: "${_i18n()["errorText"]}",
-    //   ));
-    // }
+  Future<void> _setOrderEstTime(DateTime value) async {
+    isClicked.value = true;
+
+    if (value
+                .difference(widget.viewController.order.orderTime.toLocal())
+                .inMinutes
+                .abs() >
+            5 &&
+        value.difference(DateTime.now().toLocal()).inMinutes.abs() > 5) {
+      await widget.viewController.setLaundryEstTime(value);
+    } else {
+      isClicked.value = false;
+      MezSnackbar('${_i18n()["error"]}', '${_i18n()["minTimes"]}',
+          position: SnackPosition.TOP);
+    }
   }
 }

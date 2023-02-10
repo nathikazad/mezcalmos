@@ -50,6 +50,16 @@ object_relationships:
   - name: driver_review_by_service_provider
     using:
       foreign_key_constraint_on: driver_review_by_service_provider_id
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: laundry_delivery_order
     using:
       manual_configuration:

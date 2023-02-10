@@ -17,6 +17,7 @@ export async function updateDeliveryOrderStatus(deliveryOrder: DeliveryOrder) {
       }, 
       _set: {
         status: deliveryOrder.status,
+        package_ready: deliveryOrder.packageReady ,
       }
     }, { 
       status: true

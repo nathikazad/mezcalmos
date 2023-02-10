@@ -2,6 +2,16 @@ table:
   name: delivery_partner
   schema: service_provider
 object_relationships:
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: restaurant
     using:
       manual_configuration:

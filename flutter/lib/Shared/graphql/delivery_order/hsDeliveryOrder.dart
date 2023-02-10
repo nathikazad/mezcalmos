@@ -40,19 +40,26 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
       _paymentInfo = StripeOrderPaymentInfo.fromJson(
           orderData.restaurant_order!.stripe_info);
     }
+    if (orderData.laundry_pickup_order?.stripe_info != null) {
+      _paymentInfo = StripeOrderPaymentInfo.fromJson(
+          orderData.restaurant_order!.stripe_info);
+    }
+    if (orderData.laundry_delivery_order?.stripe_info != null) {
+      _paymentInfo = StripeOrderPaymentInfo.fromJson(
+          orderData.restaurant_order!.stripe_info);
+    }
     return DeliveryOrder(
         id: orderData.id,
         orderType: orderData.order_type.toOrderType(),
         stripeOrderPaymentInfo: _paymentInfo,
-        driverAssigned: orderData.delivery_driver != null,
         serviceOrderId: orderData.restaurant_order?.id,
         deliveryCompany: _getDeliveryCompany(orderData)!,
         serviceInfo: _getServiceInfo(orderData)!,
+        deliveryDirection: orderData.direction.toDeliveryDirection(),
         customerInfo: UserInfo(
             hasuraId: orderData.customer.user.id,
             image: orderData.customer.user.image,
             name: orderData.customer.user.name),
-        deliveryDirection: DeliveryDirection.ServiceProviderToCustomer,
         routeInformation: (orderData.trip_duration != null &&
                 orderData.trip_distance != null &&
                 orderData.trip_polyline != null)
@@ -77,7 +84,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
         orderTime: DateTime.parse(orderData.order_time),
         status: orderData.status.toDeliveryOrderStatus(),
         serviceProviderType:
-            orderData.service_provider_type?.toServiceProviderType(),
+            orderData.service_provider_type.toServiceProviderType(),
         deliveryCost: orderData.delivery_cost,
         estimatedArrivalAtDropoffTime:
             (orderData.estimated_arrival_at_dropoff_time != null)
@@ -118,19 +125,26 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
     _paymentInfo = StripeOrderPaymentInfo.fromJson(
         orderData.restaurant_order!.stripe_info);
   }
+  if (orderData.laundry_pickup_order?.stripe_info != null) {
+    _paymentInfo = StripeOrderPaymentInfo.fromJson(
+        orderData.restaurant_order!.stripe_info);
+  }
+  if (orderData.laundry_delivery_order?.stripe_info != null) {
+    _paymentInfo = StripeOrderPaymentInfo.fromJson(
+        orderData.restaurant_order!.stripe_info);
+  }
   return DeliveryOrder(
       id: orderData.id,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
-      driverAssigned: orderData.delivery_driver != null,
       deliveryCompany: _getDeliveryCompany(orderData)!,
       serviceInfo: _getServiceInfo(orderData)!,
       customerInfo: UserInfo(
           hasuraId: orderData.customer.user.id,
           image: orderData.customer.user.image,
           name: orderData.customer.user.name),
-      deliveryDirection: DeliveryDirection.ServiceProviderToCustomer,
+      deliveryDirection: orderData.direction.toDeliveryDirection(),
       routeInformation: (orderData.trip_duration != null &&
               orderData.trip_distance != null &&
               orderData.trip_polyline != null)
@@ -160,7 +174,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
           : null,
       status: orderData.status.toDeliveryOrderStatus(),
       serviceProviderType:
-          orderData.service_provider_type?.toServiceProviderType(),
+          orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
       packageCost: orderData.package_cost,
       driverLocation: (orderData.delivery_driver != null &&
@@ -192,6 +206,11 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
           hasuraId: orderData.restaurant!.id,
           name: orderData.restaurant!.name,
           image: orderData.restaurant!.image);
+    case ServiceProviderType.Laundry:
+      return UserInfo(
+          hasuraId: orderData.laundry!.id,
+          name: orderData.laundry!.name,
+          image: orderData.laundry!.image);
 
     default:
   }
@@ -200,6 +219,9 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
+  mezDbgPrint(
+      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData!.laundry_pickup_order.toString()}");
+
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
@@ -209,6 +231,16 @@ ServiceInfo? _getServiceInfo(orderData) {
           hasuraId: orderData.restaurant_order!.restaurant.id,
           image: orderData.restaurant_order!.restaurant.image,
           name: orderData.restaurant_order!.restaurant.name);
+    case OrderType.Laundry:
+      dynamic laundryOrder =
+          orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
+      mezDbgPrint(laundryOrder);
+      return ServiceInfo(
+          location: MezLocation.fromHasura(laundryOrder.store.location.gps,
+              laundryOrder.store.location.address),
+          hasuraId: laundryOrder.store.id,
+          image: laundryOrder.store.image,
+          name: laundryOrder.store.name);
 
     default:
   }
@@ -462,4 +494,74 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
     throw Exception(
         "🚨 Getting min orders exceptions \n ${queryResult.exception}");
   }
+}
+
+Future<DeliveryOrder?> get_pick_driver_order_by_id(
+    {required int orderId}) async {
+  final QueryResult<Query$get_pick_driver_order> response =
+      await _hasuraDb.graphQLClient.query$get_pick_driver_order(
+    Options$Query$get_pick_driver_order(
+      variables: Variables$Query$get_pick_driver_order(orderId: orderId),
+    ),
+  );
+  if (response.parsedData?.delivery_order_by_pk == null) {
+    throwError(response.exception);
+  }
+
+  final Query$get_pick_driver_order$delivery_order_by_pk orderData =
+      response.parsedData!.delivery_order_by_pk!;
+
+  return DeliveryOrder(
+      deliveryDirection: DeliveryDirection.From_customer,
+      id: orderData.id,
+      orderType: orderData.order_type.toOrderType(),
+      stripeOrderPaymentInfo: null,
+      serviceOrderId: null,
+      deliveryCompany: UserInfo(
+          hasuraId: orderData.service_provider_id, name: "", image: ""),
+      serviceInfo: ServiceInfo(
+          location: MezLocation.fromLocationData(
+              MezLocation.buildLocationData(55, 55)),
+          hasuraId: 1,
+          image: "",
+          name: ""),
+      customerInfo: UserInfo(
+          hasuraId: orderData.customer.user.id,
+          image: orderData.customer.user.image,
+          name: orderData.customer.user.name),
+      //  deliveryDirection: orderData.,
+      routeInformation: (orderData.trip_duration != null &&
+              orderData.trip_distance != null &&
+              orderData.trip_polyline != null)
+          ? RouteInformation(
+              duration: RideDuration(
+                  orderData.trip_duration.toString(), orderData.trip_duration!),
+              distance: RideDistance(
+                  orderData.trip_distance.toString(), orderData.trip_distance!),
+              polyline: orderData.trip_polyline!)
+          : null,
+      orderTime: DateTime.parse(orderData.order_time),
+      driverInfo: (orderData.delivery_driver != null)
+          ? UserInfo(
+              hasuraId: orderData.delivery_driver!.user.id,
+              name: orderData.delivery_driver!.user.name,
+              image: orderData.delivery_driver!.user.image)
+          : null,
+      status: orderData.status.toDeliveryOrderStatus(),
+      serviceProviderType:
+          orderData.service_provider_type.toServiceProviderType(),
+      deliveryCost: orderData.delivery_cost,
+      packageCost: orderData.package_cost,
+      driverLocation: (orderData.delivery_driver != null &&
+              orderData.delivery_driver?.current_location != null)
+          ? LatLng(orderData.delivery_driver!.current_location!.latitude,
+              orderData.delivery_driver!.current_location!.longitude)
+          : null,
+      pickupLocation: MezLocation(
+          orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+      dropoffLocation: MezLocation(
+          orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
+      chatWithCustomerId: 0,
+      paymentType: orderData.payment_type.toPaymentType(),
+      chatWithServiceProviderId: null);
 }

@@ -1,6 +1,16 @@
 table:
   name: details
   schema: delivery
+object_relationships:
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_details_id
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
 array_relationships:
   - name: delivery_company
     using:

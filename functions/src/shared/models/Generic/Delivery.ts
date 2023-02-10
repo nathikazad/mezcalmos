@@ -11,6 +11,7 @@ export interface DeliveryOrder {
     deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
+    packageReady: boolean;
     
     chatWithCustomerId: number;
     paymentType: PaymentType;
@@ -43,10 +44,13 @@ export interface DeliveryOrder {
     direction: DeliveryDirection;
 }
 export enum DeliveryDirection {
-    FromCustomer = "fromCustomer",
-    ToCustomer = "toCustomer"
+    FromCustomer = "from_customer",
+    ToCustomer = "to_customer"
 }
-
+export const deliveryDirectionToHasura: Record<DeliveryDirection, string> = {
+    [DeliveryDirection.FromCustomer]: "from_customer",
+    [DeliveryDirection.ToCustomer]: "to_customer"
+}
 export interface DeliveryDriver {
     id?: number,
     userId: number,
@@ -95,7 +99,7 @@ export enum DeliveryOperatorStatus {
 export enum DeliveryOrderStatus {
     OrderReceived = "orderReceived",
     OnTheWayToPickup = "onTheWayToPickup", 
-    PackageReady = "packageReady", 
+    
     AtPickup = "atPickup", 
     OnTheWayToDropoff = "onTheWayToDropoff", 
     AtDropoff = "atDropoff", 

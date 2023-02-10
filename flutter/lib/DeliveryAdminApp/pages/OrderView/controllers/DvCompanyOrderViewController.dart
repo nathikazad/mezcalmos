@@ -7,7 +7,9 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
+import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryAction.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/utilities/DeliveryOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 class DvCompanyOrderViewController {
@@ -24,6 +26,13 @@ class DvCompanyOrderViewController {
   // getters //
   DeliveryOrderStatus get orderStatus {
     return order.value!.status;
+  }
+
+  bool get canSetDriver {
+    return order.value?.deliveryDirection == DeliveryDirection.To_customer &&
+            order.value?.orderType == OrderType.Laundry
+        ? order.value?.status == DeliveryOrderStatus.PackageReady
+        : true;
   }
 
   // streams //

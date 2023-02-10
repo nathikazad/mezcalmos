@@ -173,6 +173,7 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
   }
   return {
     deliveryId: 0,
+    packageReady:false,
     orderType: OrderType.Restaurant,
     pickupLocation: restaurant.location,
     dropoffLocation: restaurantOrder.toLocation,

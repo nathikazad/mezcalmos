@@ -35,7 +35,7 @@ class DeliveryOrder {
   DateTime? estimatedArrivalAtDropoffTime;
   DateTime? estimatedArrivalAtPickupTime;
   DateTime? estimatedPackageReadyTime;
-  bool driverAssigned;
+  //bool driverAssigned;
   DeliveryOrder({
     required this.orderType,
     required this.id,
@@ -59,7 +59,7 @@ class DeliveryOrder {
     required this.stripeOrderPaymentInfo,
     this.estimatedArrivalAtDropoffTime,
     this.serviceOrderId,
-    this.driverAssigned = false,
+  //  this.driverAssigned = false,
     this.estimatedArrivalAtPickupTime,
     this.estimatedPackageReadyTime,
   });
@@ -118,6 +118,7 @@ class DeliveryOrder {
     );
   }
 
+  bool get isDriverAssigned => driverInfo != null;
   @override
   String toString() {
     return 'DeliveryOrder(id: $id, serviceInfo: $serviceInfo, customerInfo: $customerInfo, deliveryDirection: $deliveryDirection, routeInformation: $routeInformation, orderTime: $orderTime, deliveryCost: $deliveryCost, packageCost: $packageCost, pickupLocation: $pickupLocation, dropoffLocation: $dropoffLocation, chatWithCustomerId: $chatWithCustomerId, chatWithServiceProviderId: $chatWithServiceProviderId, paymentType: $paymentType, estimatedArrivalAtDropoffTime: $estimatedArrivalAtDropoffTime, estimatedArrivalAtPickupTime: $estimatedArrivalAtPickupTime, estimatedPackageReadyTime: $estimatedPackageReadyTime, )';

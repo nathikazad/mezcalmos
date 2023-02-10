@@ -1,17 +1,19 @@
 import 'dart:async';
 
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 
 class PickDriverViewController {
   final MGoogleMapController mapController = MGoogleMapController();
@@ -26,9 +28,10 @@ class PickDriverViewController {
     required int orderId,
   }) async {
     this.orderId = orderId;
+
     // assigning restaurant data and start the stream subscription //
     try {
-      order.value = await get_driver_order_by_id(orderId: orderId);
+      order.value = await get_pick_driver_order_by_id(orderId: orderId);
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -41,32 +44,52 @@ class PickDriverViewController {
   }
 
   // assign driver //
-  Future<ServerResponse> assignDriver({
+  Future<void> assignDriver({
     required DeliveryDriver driver,
   }) async {
     screenLoading.value = true;
 
-    final HttpsCallable cloudFunction =
-        FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
     try {
-      final HttpsCallableResult response = await cloudFunction.call({
-        "orderType": order.value!.orderType.toFirebaseFormatString(),
-        "deliveryOrderId": order.value!.id,
-        "deliveryDriverId": driver.deliveryDriverId,
-        "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,
-        "deliveryDriverType":
-            DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),
-        "changeDriver": order.value!.driverAssigned
-      });
-      mezDbgPrint("Response : ${response.data}");
+      mezDbgPrint("calling assign driver....");
+      await CloudFunctions.delivery2_assignDriver(
+          deliveryOrderId: orderId,
+          deliveryDriverId: driver.deliveryDriverId,
+          orderType: order.value!.orderType.toCloudFunctionsModel(),
+          deliveryDriverType: ParticipantType.DeliveryDriver,
+          changeDriver: order.value!.isDriverAssigned,
+          deliveryCompanyId: driver.deliveryDriverState.deliveryCompanyId!);
+      MezRouter.back();
       screenLoading.value = false;
-      return ServerResponse.fromJson(response.data);
-    } catch (e) {
-      mezDbgPrint("Errrooooooooor =======> $e");
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
       screenLoading.value = false;
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      showErrorSnackBar(
+        errorText: e.toString(),
+      );
     }
+
+    // final HttpsCallable cloudFunction =
+    //     FirebaseFunctions.instance.httpsCallable('delivery2-assignDriver');
+    // try {
+    //   final HttpsCallableResult response = await cloudFunction.call({
+    //     "orderType": order.value!.orderType.toFirebaseFormatString(),
+    //     "deliveryOrderId": order.value!.id,
+    //     "deliveryDriverId": driver.deliveryDriverId,
+    //     "deliveryCompanyId": driver.deliveryDriverState.deliveryCompanyId,
+    //     "deliveryDriverType":
+    //         DeliveryDriverType.Delivery_driver.toFirebaseFormatString(),
+    //     "changeDriver": order.value!.driverAssigned
+    //   });
+    //   mezDbgPrint("Response : ${response.data}");
+    //   screenLoading.value = false;
+    //   return ServerResponse.fromJson(response.data);
+    // } catch (e) {
+    //   mezDbgPrint("Errrooooooooor =======> $e");
+    //   screenLoading.value = false;
+    //   return ServerResponse(ResponseStatus.Error,
+    //       errorMessage: "Server Error", errorCode: "serverError");
+    // }
   }
 
   Future<void> _initMap() async {
@@ -86,10 +109,8 @@ class PickDriverViewController {
     );
 
     // restaurant ad customer's location are fixed (fit in bound at start)
-    await mapController.addOrUpdateUserMarker(
+    await mapController.addOrUpdatePackageMarkerMarker(
       latLng: order.value?.pickupLocation.toLatLng(),
-      markerId: order.value?.serviceInfo.hasuraId.toString(),
-      customImgHttpUrl: order.value?.serviceInfo.image,
       fitWithinBounds: true,
     );
     // customer's
@@ -120,6 +141,8 @@ class PickDriverViewController {
   }
 
   Future<void> _getDrivers() async {
+    mezDbgPrint(
+        "ORDER DELIVERCOMPANY 👋===> ${order.value!.deliveryCompany.hasuraId}");
     mezDbgPrint(order.value!.deliveryCompany.hasuraId);
     drivers.clear();
     drivers.value = await get_drivers_by_service_provider_id(

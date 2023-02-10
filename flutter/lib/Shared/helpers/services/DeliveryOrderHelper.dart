@@ -91,6 +91,15 @@ extension DeliveryOrderHelper on DeliveryOrder {
             fit: BoxFit.cover,
           ),
         );
+      case DeliveryOrderStatus.OnTheWayToPickup:
+        return Container(
+          height: 50,
+          width: 50,
+          child: RiveAnimation.asset(
+            "assets/animation/scooterWashingMachine.riv",
+            fit: BoxFit.cover,
+          ),
+        );
       case DeliveryOrderStatus.AtDropoff:
         return Container(
           // padding: const EdgeInsets.only(right: 10.0),

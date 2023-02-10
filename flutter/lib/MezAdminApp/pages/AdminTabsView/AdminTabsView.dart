@@ -67,8 +67,8 @@ class _AdminTabsViewState extends State<AdminTabsView>
   Widget _navBar() {
     return BottomNavigationBar(
         iconSize: 23,
-        selectedLabelStyle: Get.textTheme.bodyText1,
-        unselectedLabelStyle: Get.textTheme.bodyText2,
+        selectedLabelStyle: Get.textTheme.bodyLarge,
+        unselectedLabelStyle: Get.textTheme.bodyMedium,
         selectedItemColor: primaryBlueColor,
         currentIndex: viewController.bottomTabIndex.value,
         onTap: (int v) {
@@ -104,8 +104,8 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 controller: viewController.appbarTabsController,
                 labelColor: primaryBlueColor,
                 unselectedLabelColor: Colors.grey.shade800,
-                labelStyle: Get.textTheme.bodyText1,
-                unselectedLabelStyle: Get.textTheme.bodyText2,
+                labelStyle: Get.textTheme.bodyLarge,
+                unselectedLabelStyle: Get.textTheme.bodyMedium,
                 onTap: (int value) {
                   viewController.selectedServiceProviderType.value =
                       viewController.serviceTypes[value];
@@ -114,8 +114,15 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 tabs: List.generate(
                     viewController.serviceTypes.length,
                     (int index) => Tab(
-                          child: Icon(
-                            viewController.serviceTypes[index].toIcon(),
+                          child: Badge(
+                            backgroundColor: primaryBlueColor,
+                            isLabelVisible: false,
+                            label: Text(viewController.getBadge(
+                                    viewController.serviceTypes[index]) ??
+                                ""),
+                            child: Icon(
+                              viewController.serviceTypes[index].toIcon(),
+                            ),
                           ),
                         )))
             : null,

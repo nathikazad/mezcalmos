@@ -15,15 +15,16 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpOrderView']["components"]["ROpOrderEstTime"];
 
-class ROpOrderEstTime extends StatefulWidget {
-  const ROpOrderEstTime({Key? key, required this.order}) : super(key: key);
+class RestaurantOrderEstTime extends StatefulWidget {
+  const RestaurantOrderEstTime({Key? key, required this.order})
+      : super(key: key);
   final RestaurantOrder order;
 
   @override
-  State<ROpOrderEstTime> createState() => _ROpOrderEstTimeState();
+  State<RestaurantOrderEstTime> createState() => _RestaurantOrderEstTimeState();
 }
 
-class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
+class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
   final Rxn<TimeOfDay> selectedTime = Rxn();
   final Rxn<DateTime> selectedDate = Rxn();
 
@@ -66,7 +67,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                 children: [
                   Text(
                     '${_i18n()["title"]}',
-                    style: Get.theme.textTheme.bodyText1,
+                    style: Get.theme.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -74,7 +75,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                   if (widget.order.estimatedFoodReadyTime != null)
                     Text(
                       "${DateFormat("dd MMMM, hh:mm a ").format(widget.order.estimatedFoodReadyTime!.toLocal())}",
-                      style: Get.theme.textTheme.bodyText2,
+                      style: Get.theme.textTheme.bodyMedium,
                     ),
                 ],
               ),
@@ -109,7 +110,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                       ),
                       Text(
                         "${_i18n()["title"]}",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                       SizedBox(
                         height: 25,
@@ -152,7 +153,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
                 )
               : Text(
                   '${_i18n()["set"]}',
-                  style: Get.textTheme.bodyText1
+                  style: Get.textTheme.bodyLarge
                       ?.copyWith(color: primaryBlueColor),
                 ),
         ));
@@ -170,41 +171,6 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
       },
       withGradient: true,
     );
-    // return InkWell(
-    //   borderRadius: BorderRadius.circular(8),
-    //   onTap: () async {
-    //     mezDbgPrint("Select date =====>>>>>${selectedDate.value}");
-    //     if (selectedDate.value != null) {
-
-    //     }
-    //   },
-    //   child: Ink(
-    //     height: 50,
-    //     width: double.infinity,
-    //     padding: const EdgeInsets.all(8),
-    //     decoration: BoxDecoration(
-    //         gradient: bluePurpleGradient,
-    //         borderRadius: BorderRadius.circular(8)),
-    //     child: Obx(
-    //       () => Container(
-    //         padding: const EdgeInsets.all(5),
-    //         alignment: Alignment.center,
-    //         child: (isClicked.value)
-    //             ? Transform.scale(
-    //                 scale: 0.3,
-    //                 child: CircularProgressIndicator(
-    //                   color: Colors.white,
-    //                 ),
-    //               )
-    //             : Text(
-    //                 '${_i18n()["confirm"]}',
-    //                 style:
-    //                     Get.textTheme.bodyText1?.copyWith(color: Colors.white),
-    //               ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 
   InkWell _cancelButton() {
@@ -224,7 +190,7 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
           alignment: Alignment.center,
           child: Text(
             "${_i18n()["cancel"]}",
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
           ),
         ),
       ),
@@ -367,8 +333,6 @@ class _ROpOrderEstTimeState extends State<ROpOrderEstTime> {
     }
   }
 
-  bool get _showBtn {
-    return widget.order.status == RestaurantOrderStatus.OrderReceived ||
-        widget.order.status == RestaurantOrderStatus.Preparing;
-  }
+
+
 }

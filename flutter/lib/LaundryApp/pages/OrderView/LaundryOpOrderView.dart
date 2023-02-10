@@ -70,7 +70,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   if (_setReadyForDeliveryButton() != null)
                     _setReadyForDeliveryButton()!,
 
-                  OrderEstimatedTimeComponent(viewController: viewController),
+                  LaundryOrderEstTime(viewController: viewController),
 
                   LaundryOpOrderDriverCard(viewController: viewController),
                   _getMapWidget(),
@@ -108,7 +108,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                     label: "Cancel order",
                     backgroundColor: offRedColor,
                     textColor: Colors.red,
-                    onClick: () async {},
+                    onClick: () async {
+                      viewController.cancelOrder();
+                    },
                   )
                 ],
               ),

@@ -59,16 +59,7 @@ export const deliveryOrderStatusChangeMessages: { [id in DeliveryOrderStatus]: B
       body: "El conductor ha llegado a su ubicación para recoger"
     }
   },
-  [DeliveryOrderStatus.PackageReady]: {
-    [Language.EN]: {
-      title: "",
-      body: ""
-    },
-    [Language.ES]: {
-      title: "",
-      body: ""
-    }
-  },
+
   [DeliveryOrderStatus.OnTheWayToDropoff]: {
     [Language.EN]: {
       title: "Order Picked Up",

@@ -463,7 +463,7 @@ extension ClientExtension$Query$get_chat_info on graphql.GraphQLClient {
 
 class Query$get_chat_info$chat_by_pk {
   Query$get_chat_info$chat_by_pk({
-    required this.messages,
+    this.messages,
     this.chat_info,
     required this.creation_time,
     required this.chat_participants,
@@ -477,7 +477,7 @@ class Query$get_chat_info$chat_by_pk {
     final l$chat_participants = json['chat_participants'];
     final l$$__typename = json['__typename'];
     return Query$get_chat_info$chat_by_pk(
-      messages: mapFromJson(l$messages),
+      messages: l$messages == null ? null : mapFromJson(l$messages),
       chat_info: l$chat_info == null ? null : mapFromJson(l$chat_info),
       creation_time: (l$creation_time as String),
       chat_participants: (l$chat_participants as List<dynamic>)
@@ -488,7 +488,7 @@ class Query$get_chat_info$chat_by_pk {
     );
   }
 
-  final dynamic messages;
+  final dynamic? messages;
 
   final dynamic? chat_info;
 
@@ -502,7 +502,7 @@ class Query$get_chat_info$chat_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$messages = messages;
-    _resultData['messages'] = mapToJson(l$messages);
+    _resultData['messages'] = l$messages == null ? null : mapToJson(l$messages);
     final l$chat_info = chat_info;
     _resultData['chat_info'] =
         l$chat_info == null ? null : mapToJson(l$chat_info);
@@ -631,9 +631,9 @@ class _CopyWithImpl$Query$get_chat_info$chat_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_chat_info$chat_by_pk(
-        messages: messages == _undefined || messages == null
+        messages: messages == _undefined
             ? _instance.messages
-            : (messages as dynamic),
+            : (messages as dynamic?),
         chat_info: chat_info == _undefined
             ? _instance.chat_info
             : (chat_info as dynamic?),
@@ -1385,7 +1385,7 @@ extension ClientExtension$Subscription$listen_on_chat_messages
 
 class Subscription$listen_on_chat_messages$chat_by_pk {
   Subscription$listen_on_chat_messages$chat_by_pk({
-    required this.messages,
+    this.messages,
     required this.$__typename,
   });
 
@@ -1394,19 +1394,19 @@ class Subscription$listen_on_chat_messages$chat_by_pk {
     final l$messages = json['messages'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_chat_messages$chat_by_pk(
-      messages: mapFromJson(l$messages),
+      messages: l$messages == null ? null : mapFromJson(l$messages),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final dynamic messages;
+  final dynamic? messages;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$messages = messages;
-    _resultData['messages'] = mapToJson(l$messages);
+    _resultData['messages'] = l$messages == null ? null : mapToJson(l$messages);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1489,9 +1489,9 @@ class _CopyWithImpl$Subscription$listen_on_chat_messages$chat_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$listen_on_chat_messages$chat_by_pk(
-        messages: messages == _undefined || messages == null
+        messages: messages == _undefined
             ? _instance.messages
-            : (messages as dynamic),
+            : (messages as dynamic?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),

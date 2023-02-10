@@ -18,6 +18,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       dropoff_address: true,
       chat_with_service_provider_id: true,
       chat_with_customer_id: true,
+      package_ready: true,
       payment_type: true,
       status: true,
       customer_id: true,
@@ -65,6 +66,7 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     );
   }
   let delivery: DeliveryOrder = {
+    packageReady: response.delivery_order_by_pk.package_ready,
     deliveryId: deliveryId,
     serviceProviderId: response.delivery_order_by_pk.service_provider_id,
     orderType: response.delivery_order_by_pk.order_type as OrderType,
@@ -157,6 +159,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       delivery_cost: true,
       order_time: true,
       order_type: true,
+      package_ready: true,
       service_provider_id: true,
       direction: true,
       delivery_driver: {
@@ -176,6 +179,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
 
   return response.delivery_order.map((d) => {
     let delivery: DeliveryOrder = {
+      packageReady: d.package_ready,
       deliveryId: d.id,
       pickupLocation: {
         lat: d.pickup_gps.coordinates[1],
