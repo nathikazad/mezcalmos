@@ -153,6 +153,8 @@ enum app_type_update_column {
 input app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: app_type_set_input
+
+  """filter the rows which have to be updated"""
   where: app_type_bool_exp!
 }
 
@@ -223,7 +225,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
 }
 
 """
@@ -741,6 +743,8 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -926,6 +930,8 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
+
+  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -1429,6 +1435,8 @@ input customer_customer_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -1683,6 +1691,8 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -2086,6 +2096,8 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
+
+  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -2717,6 +2729,8 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -3285,6 +3299,8 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -3912,6 +3928,8 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -4437,6 +4455,8 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -5614,6 +5634,8 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -6221,6 +6243,8 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
+
+  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -6600,6 +6624,8 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -6954,6 +6980,8 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
+
+  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -7235,6 +7263,8 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -7743,6 +7773,8 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -8483,6 +8515,8 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -9101,6 +9135,8 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -9793,6 +9829,8 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
+
+  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -10110,6 +10148,8 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -10288,6 +10328,8 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -10484,6 +10526,8 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
+
+  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -14228,6 +14272,8 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
+
+  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -17056,6 +17102,8 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -17253,6 +17301,8 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
@@ -17739,6 +17789,8 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -18248,6 +18300,8 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -19057,6 +19111,8 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -19404,6 +19460,8 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -19983,6 +20041,8 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -20637,6 +20697,8 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -21048,6 +21110,8 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -21992,6 +22056,8 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -22530,6 +22596,8 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -22947,6 +23015,8 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -24155,6 +24225,8 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
+
+  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -24636,6 +24708,8 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
+
+  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -24948,6 +25022,8 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -25232,6 +25308,8 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -25486,6 +25564,8 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -25878,6 +25958,8 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -26213,6 +26295,8 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -26489,6 +26573,8 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
+
+  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -29744,6 +29830,8 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -30054,6 +30142,8 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
+
+  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -30427,6 +30517,8 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
+
+  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 

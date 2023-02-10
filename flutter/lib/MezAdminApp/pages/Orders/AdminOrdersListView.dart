@@ -37,7 +37,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       ServiceProviderType.Restaurant)
                     _buildRestuarntOrders(),
                   if (viewController.currentService ==
-                      ServiceProviderType.Delivery_company)
+                      ServiceProviderType.DeliveryCompany)
                     _buildDeliveryOrders(),
                 ],
               )),

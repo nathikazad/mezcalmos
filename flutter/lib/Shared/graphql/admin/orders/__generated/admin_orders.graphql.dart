@@ -294,7 +294,7 @@ const documentNodeSubscriptionadmin_listen_on_dv_orders =
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
                     value: StringValueNode(
-                      value: 'delivery_company',
+                      value: 'deliveryCompany',
                       isBlock: false,
                     ),
                   )
@@ -1449,7 +1449,7 @@ const documentNodeQueryadmin_get_dv_orders = DocumentNode(definitions: [
                   ObjectFieldNode(
                     name: NameNode(value: '_eq'),
                     value: StringValueNode(
-                      value: 'delivery_company',
+                      value: 'deliveryCompany',
                       isBlock: false,
                     ),
                   )

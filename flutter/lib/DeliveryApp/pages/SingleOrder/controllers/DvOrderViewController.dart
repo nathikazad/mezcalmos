@@ -46,7 +46,7 @@ class DvOrderViewcontroller {
   DeliveryOrder get order => _order.value!;
   bool get hasData => _order.value != null;
   bool get inPickupPhase =>
-      _order.value!.deliveryDirection == DeliveryDirection.From_customer;
+      _order.value!.deliveryDirection == DeliveryDirection.FromCustomer;
   bool get pickuSetted => _order.value?.estimatedArrivalAtPickupTime != null;
   bool get dropoffSetted => _order.value?.estimatedArrivalAtDropoffTime != null;
   DateTime? get pickupTime => _order.value?.estimatedArrivalAtPickupTime;

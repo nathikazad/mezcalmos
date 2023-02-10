@@ -1,4 +1,4 @@
-enum DeliveryDirection { To_customer, From_customer }
+enum DeliveryDirection { ToCustomer, FromCustomer }
 
 extension ParseDeliveryDirectionToString on DeliveryDirection {
   String toFirebaseFormatString() {
