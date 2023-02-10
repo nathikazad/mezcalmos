@@ -2,25 +2,15 @@ table:
   name: restaurant
   schema: restaurant
 object_relationships:
-  - name: delivery_details
-    using:
-      foreign_key_constraint_on: delivery_details_id
-  - name: delivery_partner
+  - name: details
     using:
       manual_configuration:
         column_mapping:
-          id: service_provider_id
-          service_provider_type: service_provider_type
+          details_id: id
         insertion_order: null
         remote_table:
-          name: delivery_partner
+          name: details
           schema: service_provider
-  - name: description
-    using:
-      foreign_key_constraint_on: description_id
-  - name: location
-    using:
-      foreign_key_constraint_on: location_id
 array_relationships:
   - name: categories
     using:
@@ -29,16 +19,6 @@ array_relationships:
         table:
           name: category
           schema: restaurant
-  - name: delivery_drivers
-    using:
-      manual_configuration:
-        column_mapping:
-          id: delivery_company_id
-          service_provider_type: delivery_company_type
-        insertion_order: null
-        remote_table:
-          name: driver
-          schema: delivery
   - name: items
     using:
       foreign_key_constraint_on:
@@ -60,16 +40,6 @@ array_relationships:
         table:
           name: operator
           schema: restaurant
-  - name: reviews
-    using:
-      manual_configuration:
-        column_mapping:
-          id: to_entity_id
-          service_provider_type: to_entity_type
-        insertion_order: null
-        remote_table:
-          name: review
-          schema: public
 computed_fields:
   - name: delivery_details_of_deliverer
     definition:
@@ -85,91 +55,27 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - creation_time
-        - customer_pickup
-        - delivery
-        - delivery_details_id
-        - description_id
-        - firebase_id
         - id
-        - image
-        - language_id
-        - location_id
-        - name
-        - open_status
-        - phone_number
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
       filter: {}
   - role: customer
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - creation_time
-        - customer_pickup
-        - delivery
-        - delivery_details_id
-        - description_id
-        - firebase_id
         - id
-        - image
-        - language_id
-        - location_id
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
       filter: {}
   - role: delivery_driver
     permission:
       columns:
-        - firebase_id
         - id
-        - image
-        - language_id
-        - name
-        - open_status
-        - service_provider_type
       filter: {}
   - role: delivery_operator
     permission:
       columns:
-        - firebase_id
         - id
-        - image
-        - language_id
-        - name
-        - open_status
-        - service_provider_type
       filter: {}
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - self_delivery
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - schedule
-        - firebase_id
-        - image
-        - language_id
-        - name
-        - service_provider_type
-        - creation_time
-        - accepted_payments
-        - delivery
-        - open_status
-        - customer_pickup
-        - stripe_info
       filter:
         _exists:
           _table:
@@ -181,24 +87,7 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - accepted_payments
-        - approved
-        - creation_time
-        - customer_pickup
-        - delivery
-        - delivery_details_id
-        - description_id
-        - firebase_id
         - id
-        - image
-        - language_id
-        - location_id
-        - name
-        - open_status
-        - schedule
-        - self_delivery
-        - service_provider_type
-        - stripe_info
       filter:
         restaurant_operators:
           user_id:
@@ -207,24 +96,7 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - self_delivery
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - schedule
-        - firebase_id
-        - image
-        - language_id
-        - name
-        - service_provider_type
-        - creation_time
-        - accepted_payments
-        - delivery
-        - open_status
-        - customer_pickup
-        - stripe_info
       filter:
         _exists:
           _table:
@@ -237,24 +109,7 @@ update_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - approved
-        - self_delivery
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - schedule
-        - firebase_id
-        - image
-        - language_id
-        - name
-        - service_provider_type
-        - creation_time
-        - accepted_payments
-        - delivery
-        - open_status
-        - customer_pickup
-        - stripe_info
       filter:
         restaurant_operators:
           user_id:

@@ -1,21 +1,6 @@
 table:
   name: details
   schema: delivery
-array_relationships:
-  - name: delivery_company
-    using:
-      foreign_key_constraint_on:
-        column: delivery_details_id
-        table:
-          name: company
-          schema: delivery
-  - name: restaurant
-    using:
-      foreign_key_constraint_on:
-        column: delivery_details_id
-        table:
-          name: restaurant
-          schema: restaurant
 insert_permissions:
   - role: restaurant_operator
     permission:
@@ -95,16 +80,8 @@ update_permissions:
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}
   - role: delivery_operator
     permission:
       columns:
@@ -113,16 +90,8 @@ update_permissions:
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
-      filter:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}
   - role: mez_admin
     permission:
       columns:
@@ -148,13 +117,5 @@ update_permissions:
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}

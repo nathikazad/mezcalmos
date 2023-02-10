@@ -1,0 +1,3 @@
+table:
+  name: stripe_info
+  schema: service_provider

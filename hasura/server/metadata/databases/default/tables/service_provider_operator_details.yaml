@@ -1,0 +1,14 @@
+table:
+  name: operator_details
+  schema: service_provider
+object_relationships:
+  - name: notification_info
+    using:
+      manual_configuration:
+        column_mapping:
+          app_type_id: app_type_id
+          user_id: user_id
+        insertion_order: null
+        remote_table:
+          name: notification_info
+          schema: public

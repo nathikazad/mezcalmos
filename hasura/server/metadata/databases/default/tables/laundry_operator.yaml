@@ -2,16 +2,9 @@ table:
   name: operator
   schema: laundry
 object_relationships:
-  - name: notification_info
+  - name: operator_details
     using:
-      manual_configuration:
-        column_mapping:
-          app_type_id: app_type_id
-          user_id: user_id
-        insertion_order: null
-        remote_table:
-          name: notification_info
-          schema: public
+      foreign_key_constraint_on: details_id
   - name: store
     using:
       foreign_key_constraint_on: store_id
@@ -22,27 +15,10 @@ select_permissions:
   - role: laundry_operator
     permission:
       columns:
-        - current_gps
-        - online
-        - owner
         - id
         - store_id
         - user_id
-        - app_type_id
-        - app_version
         - delivery_driver_type
-        - status
       filter:
         user_id:
           _eq: X-Hasura-User-Id
-update_permissions:
-  - role: laundry_operator
-    permission:
-      columns:
-        - current_gps
-        - online
-        - status
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
-      check: null

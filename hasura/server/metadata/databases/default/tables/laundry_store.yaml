@@ -2,25 +2,15 @@ table:
   name: store
   schema: laundry
 object_relationships:
-  - name: delivery_details
-    using:
-      foreign_key_constraint_on: delivery_details_id
-  - name: delivery_partner
+  - name: details
     using:
       manual_configuration:
         column_mapping:
-          id: service_provider_id
-          service_provider_type: service_provider_type
+          details_id: id
         insertion_order: null
         remote_table:
-          name: delivery_partner
+          name: details
           schema: service_provider
-  - name: description
-    using:
-      foreign_key_constraint_on: description_id
-  - name: location
-    using:
-      foreign_key_constraint_on: location_id
 array_relationships:
   - name: operators
     using:
@@ -38,95 +28,12 @@ insert_permissions:
             _eq: X-Hasura-User-Id
       columns:
         - id
-        - name
-        - image
-        - description_id
-        - open_status
-        - language_id
-        - approved
-        - self_delivery
-        - creation_time
-        - location_id
-        - phone_number
-        - schedule
-        - stripe_info
-        - accepted_payments
-        - delivery
-        - customer_pickup
-        - delivery_details_id
-        - service_provider_type
 select_permissions:
-  - role: customer
-    permission:
-      columns:
-        - approved
-        - customer_pickup
-        - delivery
-        - self_delivery
-        - delivery_details_id
-        - description_id
-        - id
-        - location_id
-        - accepted_payments
-        - schedule
-        - stripe_info
-        - image
-        - language_id
-        - name
-        - open_status
-        - phone_number
-        - service_provider_type
-        - creation_time
-        - normal_delivery_time
-      filter: {}
   - role: laundry_operator
     permission:
       columns:
         - id
-        - name
-        - image
-        - description_id
-        - open_status
-        - language_id
-        - approved
-        - self_delivery
-        - creation_time
-        - location_id
-        - phone_number
-        - schedule
-        - stripe_info
-        - accepted_payments
-        - delivery
-        - customer_pickup
-        - delivery_details_id
-        - service_provider_type
-        - normal_delivery_time
       filter:
-        operators:
-          user_id:
-            _eq: X-Hasura-User-Id
-update_permissions:
-  - role: laundry_operator
-    permission:
-      columns:
-        - accepted_payments
-        - delivery_details_id
-        - description_id
-        - image
-        - language_id
-        - location_id
-        - name
-        - normal_delivery_time
-        - open_status
-        - phone_number
-        - schedule
-        - self_delivery
-        - stripe_info
-      filter:
-        operators:
-          user_id:
-            _eq: X-Hasura-User-Id
-      check:
         operators:
           user_id:
             _eq: X-Hasura-User-Id

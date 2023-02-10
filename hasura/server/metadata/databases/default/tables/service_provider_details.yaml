@@ -1,0 +1,43 @@
+table:
+  name: details
+  schema: service_provider
+object_relationships:
+  - name: delivery_details
+    using:
+      foreign_key_constraint_on: delivery_details_id
+  - name: delivery_partner
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: delivery_partner
+          schema: service_provider
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+array_relationships:
+  - name: delivery_drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public

@@ -1,30 +1,6 @@
 table:
   name: location
   schema: service_provider
-object_relationships:
-  - name: delivery_company
-    using:
-      foreign_key_constraint_on:
-        column: location_id
-        table:
-          name: company
-          schema: delivery
-  - name: laundry
-    using:
-      manual_configuration:
-        column_mapping:
-          id: location_id
-        insertion_order: null
-        remote_table:
-          name: store
-          schema: laundry
-  - name: restaurant
-    using:
-      foreign_key_constraint_on:
-        column: location_id
-        table:
-          name: restaurant
-          schema: restaurant
 select_permissions:
   - role: anonymous
     permission:
@@ -81,31 +57,15 @@ update_permissions:
       columns:
         - address
         - gps
-      filter:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}
   - role: laundry_operator
     permission:
       columns:
         - address
         - gps
-      filter:
-        laundry:
-          operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        laundry:
-          operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}
   - role: mez_admin
     permission:
       columns:
@@ -132,13 +92,5 @@ update_permissions:
       columns:
         - address
         - gps
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}
