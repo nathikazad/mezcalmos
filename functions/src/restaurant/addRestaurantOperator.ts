@@ -5,7 +5,8 @@ import { ParticipantType } from "../shared/models/Generic/Chat"
 import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
-import { Operator, OperatorStatus } from "../shared/models/Services/Service"
+import { Operator } from "../shared/models/Services/Service"
+import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 import { pushNotification } from "../utilities/senders/notifyUser"
 
 export interface AddOperatorDetails {
@@ -18,7 +19,7 @@ export async function addRestaurantOperator(operatorUserId: number, addDriverDet
   let newOperator: Operator = {
     userId: operatorUserId,
     serviceProviderId: addDriverDetails.restaurantId,
-    status: OperatorStatus.AwaitingApproval,
+    status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: addDriverDetails.notificationInfo
   }
   await createRestaurantOperator(newOperator);

@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { DeliveryDirection, deliveryDirectionToHasura, DeliveryOrder } from "../../../models/Generic/Delivery";
+import { DeliveryDirection, DeliveryOrder } from "../../../models/Generic/Delivery";
 import { CustomerAppType, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { LaundryOrder, LaundryOrderStatus, OrderCategory } from "../../../models/Services/Laundry/LaundryOrder";
@@ -127,7 +127,7 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
 
   let response =  await chain.query({
       laundry_order: [{
-        where: (deliveryOrder.direction == deliveryDirectionToHasura[DeliveryDirection.FromCustomer]) ? {
+        where: (deliveryOrder.direction == DeliveryDirection.FromCustomer) ? {
           to_customer_delivery_id: {
             _eq: deliveryOrder.deliveryId
           }

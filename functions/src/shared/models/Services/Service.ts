@@ -32,18 +32,12 @@ export interface Operator {
   id?: number;
   serviceProviderId: number;
   userId: number;
-  status: OperatorStatus;
+  status: AuthorizationStatus;
   owner?: boolean;
   appVersion?: string;
   currentGps?: Location;
   notificationInfo?: NotificationInfo;
   user?: UserInfo;
-}
-
-export enum OperatorStatus {
-  AwaitingApproval = "awaitingApproval",
-  Authorized = "authorized",
-  Banned = "banned"
 }
 
 export enum OpenStatus {

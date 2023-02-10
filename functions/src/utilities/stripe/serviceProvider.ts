@@ -8,9 +8,11 @@ import { HttpsError } from 'firebase-functions/v1/auth';
 import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
-import { Operator, OperatorStatus, ServiceProvider } from '../../shared/models/Services/Service';
+import { Operator, ServiceProvider } from '../../shared/models/Services/Service';
 import { getLaundryStore } from '../../shared/graphql/laundry/getLaundry';
 import { updateLaundryStripe } from '../../shared/graphql/laundry/updateLaundry';
+import { AuthorizationStatus } from "../../shared/models/Generic/Generic"
+
 let keys: Keys = getKeys();
 
 export interface SetupDetails {
@@ -50,7 +52,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       "No restaurant operator with that user id or restaurant id found"
     );
   }
-  if(operator.status != OperatorStatus.Authorized) {
+  if(operator.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
       "restaurant operator not authorized"
@@ -155,7 +157,7 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
       "No restaurant operator with that user id or restaurant id found"
     );
   }
-  if(operator.status != OperatorStatus.Authorized) {
+  if(operator.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
       "restaurant operator not authorized"

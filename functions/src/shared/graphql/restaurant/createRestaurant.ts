@@ -2,7 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType } from "../../models/Generic/Generic";
-import { OperatorStatus, ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
+import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
+import { AuthorizationStatus } from "../../models/Generic/Generic";
 
 export async function createRestaurant(
   restaurant: ServiceProvider, 
@@ -44,7 +45,7 @@ export async function createRestaurant(
         restaurant_operators: {
           data: [{
             user_id: restaurantOperatorUserId,
-            status: OperatorStatus.Authorized,
+            status: AuthorizationStatus.Authorized,
             owner: true,
           }]
         },

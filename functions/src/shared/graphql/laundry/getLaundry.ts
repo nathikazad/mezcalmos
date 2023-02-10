@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { Language } from "../../models/Generic/Generic";
-import { OpenStatus, Operator, OperatorStatus, ServiceProvider } from "../../models/Services/Service";
+import { OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
+import { AuthorizationStatus } from "../../models/Generic/Generic"
 
 export async function getLaundryStore(storeId: number): Promise<ServiceProvider> {
     let chain = getHasura();
@@ -66,7 +67,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             id: o.id,
             serviceProviderId: o.store_id,
             userId: o.user_id,
-            status: o.status as OperatorStatus,
+            status: o.status as AuthorizationStatus,
             user: {
                 id: o.user_id,
                 firebaseId: o.user.firebase_id,

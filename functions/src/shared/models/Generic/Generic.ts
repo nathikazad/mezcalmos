@@ -73,8 +73,8 @@ export enum ServerResponseStatus {
 export enum AuthorizationStatus {
   InReview = "inReview",
   Authorized = "authorized",
-  Unauthorized = "unauthorized"
-
+  Unauthorized = "unauthorized",
+  AwaitingApproval = "awaitingApproval"
 }
 
 export enum OperatorType {

@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, NotificationInfo } from "../../../models/Generic/Generic";
-import { DeliveryOperator, DeliveryOperatorStatus } from "../../../models/Generic/Delivery";
+import { DeliveryOperator } from "../../../models/Generic/Delivery";
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function getDeliveryOperators(deliveryCompanyId: number): Promise<DeliveryOperator[]> {
     let chain = getHasura();
@@ -41,7 +42,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             id: d.id,
             userId: d.user_id,
             deliveryCompanyId: deliveryCompanyId,
-            status: d.status as DeliveryOperatorStatus,
+            status: d.status as AuthorizationStatus,
             owner: d.owner,
             appVersion: d.app_version,
             currentGPS: (d.current_gps) ? {
@@ -97,7 +98,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
         id: response.delivery_operator_by_pk.id,
         userId: response.delivery_operator_by_pk.user_id,
         deliveryCompanyId: response.delivery_operator_by_pk.delivery_company_id,
-        status: response.delivery_operator_by_pk.status as DeliveryOperatorStatus,
+        status: response.delivery_operator_by_pk.status as AuthorizationStatus,
         owner: response.delivery_operator_by_pk.owner,
         appVersion: response.delivery_operator_by_pk.app_version,
         currentGPS: {
@@ -156,7 +157,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
         deliveryCompanyId: response.delivery_operator[0].delivery_company_id,
-        status: response.delivery_operator[0].status as DeliveryOperatorStatus,
+        status: response.delivery_operator[0].status as AuthorizationStatus,
         owner: response.delivery_operator[0].owner,
         appVersion: response.delivery_operator[0].app_version,
         currentGPS: (response.delivery_operator[0].current_gps) ? {

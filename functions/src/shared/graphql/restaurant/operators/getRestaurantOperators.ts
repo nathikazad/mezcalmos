@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { Operator, OperatorStatus } from "../../../models/Services/Service";
-
+import { Operator } from "../../../models/Services/Service";
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function getRestaurantOperators(restaurantId: number): Promise<Operator[]> {
   let chain = getHasura();
@@ -44,7 +44,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       id: r.id,
       userId: r.user_id,
       serviceProviderId: restaurantId,
-      status: r.status as OperatorStatus,
+      status: r.status as AuthorizationStatus,
       owner: r.owner,
       notificationInfo: (r.notification_info) ? {
         appType: AppType.RestaurantApp,
@@ -93,7 +93,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     id: response.restaurant_operator_by_pk.id,
     userId: response.restaurant_operator_by_pk.user_id,
     serviceProviderId: response.restaurant_operator_by_pk.restaurant_id,
-    status: response.restaurant_operator_by_pk.status as OperatorStatus,
+    status: response.restaurant_operator_by_pk.status as AuthorizationStatus,
     owner: response.restaurant_operator_by_pk.owner,
     notificationInfo: (response.restaurant_operator_by_pk.notification_info) ? {
       appType: AppType.RestaurantApp,
@@ -144,7 +144,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     id: response.restaurant_operator[0].id,
     userId: response.restaurant_operator[0].user_id,
     serviceProviderId: response.restaurant_operator[0].restaurant_id,
-    status: response.restaurant_operator[0].status as OperatorStatus,
+    status: response.restaurant_operator[0].status as AuthorizationStatus,
     owner: response.restaurant_operator[0].owner,
     notificationInfo: (response.restaurant_operator[0].notification_info) ? {
       appType: AppType.RestaurantApp,

@@ -4,7 +4,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOperatorStatus, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType, DeliveryDriverStatus } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -13,7 +13,7 @@ import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat
 import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
-import { OperatorStatus } from "../shared/models/Services/Service";
+import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
@@ -36,7 +36,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
 
     await checkIfOperatorAuthorized(deliveryOrder, userId);
   }
-  if(deliveryDriver.status != DeliveryDriverStatus.Authorized) {
+  if(deliveryDriver.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
       "delivery driver not authorized"
@@ -90,7 +90,7 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
   switch (deliveryOrder.serviceProviderType) {
     case DeliveryServiceProviderType.DeliveryCompany:
       operator = await getDeliveryOperatorByUserId(userId);
-      if (operator.status != DeliveryOperatorStatus.Authorized || operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
+      if (operator.status != AuthorizationStatus.Authorized || operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"
@@ -99,7 +99,7 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
       break;
     case DeliveryServiceProviderType.Restaurant:
       operator = await getRestaurantOperatorByUserId(userId);
-      if (operator.status != OperatorStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+      if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"

@@ -1,4 +1,4 @@
-import { Location, NotificationInfo } from "./Generic";
+import { AuthorizationStatus, Location, NotificationInfo } from "./Generic";
 import { OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
 import {
@@ -70,7 +70,7 @@ export interface DeliveryOperator {
   id?: number;
   userId: number;
   deliveryCompanyId: number;
-  status: DeliveryOperatorStatus;
+  status: AuthorizationStatus;
   owner: boolean;
   appVersion?: string;
   currentGPS?: Location;
@@ -84,17 +84,6 @@ export interface DeliveryDetails {
   radius: number;
   freeDeliveryMinimumCost?: number;
   freeDeliveryKmRange?: number;
-}
-
-export enum DeliveryOperatorStatus {
-  AwaitingApproval = "awaitingApproval",
-  Authorized = "authorized",
-  Banned = "banned",
-}
-export enum DeliveryDriverStatus {
-  AwaitingApproval = "awaitingApproval",
-  Authorized = "authorized",
-  Banned = "banned",
 }
 
 export enum DeliveryOrderStatus {

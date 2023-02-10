@@ -5,8 +5,10 @@ import { ParticipantType } from "../shared/models/Generic/Chat"
 import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
-import { DeliveryOperator, DeliveryOperatorStatus } from "../shared/models/Generic/Delivery"
+import { DeliveryOperator } from "../shared/models/Generic/Delivery"
 import { pushNotification } from "../utilities/senders/notifyUser"
+import { AuthorizationStatus } from "../shared/models/Generic/Generic"
+
 
 export interface AddOperatorDetails {
     deliveryCompanyId: number,
@@ -39,7 +41,7 @@ export async function addDeliveryOperator(operatorUserId: number, addDriverDetai
   let newOperator: DeliveryOperator = {
     userId: operatorUserId,
     deliveryCompanyId: addDriverDetails.deliveryCompanyId,
-    status: DeliveryOperatorStatus.AwaitingApproval,
+    status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: addDriverDetails.notificationInfo,
     owner: false,
   }

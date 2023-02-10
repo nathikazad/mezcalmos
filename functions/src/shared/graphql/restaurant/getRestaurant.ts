@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, Language } from "../../models/Generic/Generic";
-import { OperatorStatus, OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
+import { OpenStatus, Operator, ServiceProvider } from "../../models/Services/Service";
+import { AuthorizationStatus } from "../../models/Generic/Generic";
 
 export async function getRestaurant(restaurantId: number): Promise<ServiceProvider> {
   let chain = getHasura();
@@ -68,7 +69,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       id: r.id,
       userId: r.user_id,
       serviceProviderId: restaurantId,
-      status: r.status as OperatorStatus,
+      status: r.status as AuthorizationStatus,
       owner: r.owner,
       notificationInfo: (r.notification_info) ? {
         appType: AppType.RestaurantApp,
