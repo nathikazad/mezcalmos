@@ -58,8 +58,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                           mezDbgPrint(v);
                           viewController.switchServiceStatus(
                               serviceId: company.info.hasuraId,
-                              providerType:
-                                  ServiceProviderType.Delivery_company,
+                              providerType: ServiceProviderType.DeliveryCompany,
                               value: v);
                         },
                         activeColor: primaryBlueColor,
@@ -97,7 +96,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                               serviceName: company.info.name,
                               serviceProviderId: company.info.hasuraId,
                               serviceProviderType:
-                                  ServiceProviderType.Delivery_company);
+                                  ServiceProviderType.DeliveryCompany);
                         }),
                     _smallBtn(
                         icon: Icons.person,
@@ -106,7 +105,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                           navigateToServiceInfoEdit(
                               serviceProviderId: company.info.hasuraId,
                               serviceProviderType:
-                                  ServiceProviderType.Delivery_company);
+                                  ServiceProviderType.DeliveryCompany);
                         }),
                   ],
                 ),

@@ -40,7 +40,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
 
   void _assignController() {
     switch (serviceProviderType) {
-      case ServiceProviderType.Delivery_company:
+      case ServiceProviderType.DeliveryCompany:
         viewController = DeliveryInfoEditViewController();
 
         break;

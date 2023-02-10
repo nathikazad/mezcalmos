@@ -196,7 +196,7 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
   final ServiceProviderType serviceProviderType =
       orderData!.service_provider_type.toString().toServiceProviderType();
   switch (serviceProviderType) {
-    case ServiceProviderType.Delivery_company:
+    case ServiceProviderType.DeliveryCompany:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
           name: orderData.delivery_company!.name,
@@ -512,7 +512,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
       response.parsedData!.delivery_order_by_pk!;
 
   return DeliveryOrder(
-      deliveryDirection: DeliveryDirection.From_customer,
+      deliveryDirection: DeliveryDirection.FromCustomer,
       id: orderData.id,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: null,

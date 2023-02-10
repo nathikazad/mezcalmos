@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/hsDeliveryOrder.dart';
@@ -55,7 +54,6 @@ class PickDriverViewController {
           deliveryOrderId: orderId,
           deliveryDriverId: driver.deliveryDriverId,
           orderType: order.value!.orderType.toCloudFunctionsModel(),
-          deliveryDriverType: ParticipantType.DeliveryDriver,
           changeDriver: order.value!.isDriverAssigned,
           deliveryCompanyId: driver.deliveryDriverState.deliveryCompanyId!);
       MezRouter.back();
