@@ -4,7 +4,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import { DelivererStatus, DeliveryDriver, DeliveryOperatorStatus, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOperatorStatus, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType, DeliveryDriverStatus } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -36,7 +36,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
 
     await checkIfOperatorAuthorized(deliveryOrder, userId);
   }
-  if(deliveryDriver.status != DelivererStatus.Authorized) {
+  if(deliveryDriver.status != DeliveryDriverStatus.Authorized) {
     throw new HttpsError(
       "internal",
       "delivery driver not authorized"
