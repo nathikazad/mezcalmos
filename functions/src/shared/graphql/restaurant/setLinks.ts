@@ -11,12 +11,12 @@ export async function insertServiceLink(serviceLink: ServiceLink) {
     insert_service_provider_service_link_one: [
       {
         object: {
-          service_provider_id: serviceLink.service_provider_id,
-          service_provider_type: serviceLink.service_provider_type,
-          operator_deep_link: serviceLink.operator_deep_link,
-          operator_qr_image_link: serviceLink.operator_qr_image_link,
-          driver_deep_link: serviceLink.driver_deep_link,
-          driver_qr_image_link: serviceLink.driver_qr_image_link,
+          service_provider_id: serviceLink.serviceProviderId,
+          service_provider_type: serviceLink.serviceProviderType,
+          operator_deep_link: serviceLink.operatorDeepLink,
+          operator_qr_image_link: serviceLink.operatorQrImageLink,
+          driver_deep_link: serviceLink.driverDeepLink,
+          driver_qr_image_link: serviceLink.driverQrImageLink,
         },
       },
       {
@@ -41,8 +41,8 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
       {
         pk_columns: { id: serviceLink.id! },
         _set: {
-          operator_deep_link: serviceLink.operator_deep_link,
-          operator_qr_image_link: serviceLink.operator_qr_image_link,
+          operator_deep_link: serviceLink.operatorDeepLink,
+          operator_qr_image_link: serviceLink.operatorQrImageLink,
         },
       },
       {
@@ -66,8 +66,8 @@ export async function updateOperatorLink(serviceLink: ServiceLink) {
       {
         pk_columns: { id: serviceLink.id! },
         _set: {
-          driver_deep_link: serviceLink.driver_deep_link,
-          driver_qr_image_link: serviceLink.driver_qr_image_link,
+          driver_deep_link: serviceLink.driverDeepLink,
+          driver_qr_image_link: serviceLink.driverQrImageLink,
         },
       },
       {

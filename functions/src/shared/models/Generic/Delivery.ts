@@ -47,6 +47,7 @@ export enum DeliveryDirection {
     ToCustomer = "toCustomer"
 }
 
+
 export interface DeliveryDriver {
     id?: number,
     userId: number,
@@ -81,13 +82,8 @@ export interface DeliveryDetails {
     freeDeliveryKmRange?: number,
 }
 
-export enum DelivererStatus {
-    AwaitingApproval = "awaiting_approval",
-    Authorized = "authorized",
-    Banned = "banned"
-}
 export enum DeliveryOperatorStatus {
-    AwaitingApproval = "awaiting_approval",
+    AwaitingApproval = "awaitingApproval",
     Authorized = "authorized",
     Banned = "banned"
 }
@@ -107,14 +103,10 @@ export enum DeliveryOrderStatus {
 
 export enum DeliveryServiceProviderType {
     Restaurant = "restaurant",
-    DeliveryCompany = "delivery_company",
+    DeliveryCompany = "deliveryCompany",
     Laundry = "laundry"
 }
 
-// export enum DeliveryDriverType {
-//     RestaurantOperator = "restaurant_operator",
-//     DeliveryDriver = "delivery_driver"
-// }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {
     deliveryDriverType: ParticipantType
