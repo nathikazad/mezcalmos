@@ -31,9 +31,8 @@ class LaundryOpAdminViewController {
   }
 
   Future<void> fetchCategories() async {
-    _categories.value = await get_laundry_categories(
-            storeId: laundryStoreId, withCache: false) ??
-        [];
+    _categories.value =
+        await get_laundry_categories(storeId: laundryStoreId, withCache: false);
   }
 
   Future<void> incrementDays() async {

@@ -71,8 +71,7 @@ class CustomerAuthController extends GetxController {
 
   Future<void> fetchSavedLocations() async {
     _customer.value?.savedLocations = await get_customer_locations(
-            customer_id: _authController.hasuraUserId!, withCache: false) ??
-        [];
+        customer_id: _authController.hasuraUserId!, withCache: false);
   }
 
   Future<void> saveNotificationToken() async {

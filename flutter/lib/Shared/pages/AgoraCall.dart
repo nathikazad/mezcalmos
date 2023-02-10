@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/Agora/agoraController.dart';
+import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/messageController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
@@ -21,7 +21,7 @@ class _AgoraCallState extends State<AgoraCall> {
   final SettingsController _settingsController = Get.find<SettingsController>();
   final Sagora _sagora = Get.find<Sagora>();
   final Participant? talkingTo = Get.arguments?['talkingTo'] as Participant?;
-  final String chatId = Get.arguments?['chatId'];
+  final int chatId = Get.arguments?['chatId'];
   StreamSubscription? callStatusStream;
 
   late CallStatus callStatus;
@@ -105,7 +105,7 @@ class _AgoraCallState extends State<AgoraCall> {
         _subTimer.cancel();
         resetTimer();
 
-        _msgController.endCall(
+        _sagora.endCall(
           chatId: chatId,
           callee: talkingTo!,
         );
@@ -237,7 +237,7 @@ class _AgoraCallState extends State<AgoraCall> {
           Flexible(
             child: InkWell(
               onTap: () {
-                _msgController.endCall(
+                _sagora.endCall(
                   chatId: chatId,
                   callee: talkingTo!,
                 );
@@ -288,7 +288,7 @@ class _AgoraCallState extends State<AgoraCall> {
           Flexible(
             child: InkWell(
               onTap: () {
-                _msgController.endCall(
+                _sagora.endCall(
                   chatId: chatId,
                   callee: talkingTo!,
                 );
@@ -338,11 +338,7 @@ class _AgoraCallState extends State<AgoraCall> {
           Flexible(
             child: InkWell(
               onTap: () async {
-                await _msgController.callUser(
-                  chatId: chatId,
-                  callee: talkingTo!,
-                  orderId: chatId,
-                );
+                await _sagora.callUser(chatId: chatId, callee: talkingTo!);
 
                 // Request Agora auth
                 // @Nathik this part does not work

@@ -21,6 +21,8 @@ export interface CallUserDetails {
 export interface CallUserResponse {
   uid: number,
   token: string,
+  name?: string,
+  image?: string,
   expirationTime: string,
   participantType: ParticipantType,
   notificationInfo: NotificationInfo | null
@@ -31,9 +33,14 @@ export async function callUser(callerUserId: number, callUserDetails: CallUserDe
   
   let recipient: Participant = getRecipient();
 
-  // out of bounds error if caller isnt there in participant
+  // out of bounds error if caller isnt there in participant 
   let caller:Participant = chat.participants.filter((p) => p.participantType == callUserDetails.callerParticipantType && p.id == callerUserId)[0]
-
+  if(!caller) {
+    throw new HttpsError(
+      "internal",
+      "Caller not in participants"
+    );
+  }
   let callerAgoraToken = getAgoraDetails(callUserDetails.chatId, caller.id)
   let recipientAgoraToken = getAgoraDetails(callUserDetails.chatId, recipient.id)
 
@@ -114,7 +121,7 @@ export async function notifyCallerOfEndCall(chatId: number, callNotificationForQ
 
 function getAgoraDetails(chatId: number, userId: number): ParticipantAgoraDetails {
   let expirationTime: number = Math.floor(Date.now() / 1000) + 24 * 60 * 60;
-  let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appId,
+  let token: string = agora.RtcTokenBuilder.buildTokenWithUid(keys.agora!.appid,
     keys.agora!.certificate,
     chatId.toString(),
     userId,

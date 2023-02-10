@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { AssignDriverDetails } from "../../../../delivery/assignDriver";
 import { getHasura } from "../../../../utilities/hasura";
-import { participantTypeToHasura } from "../../../models/Generic/Chat";
+import { ParticipantType,  } from "../../../models/Generic/Chat";
 import { AppType } from "../../../models/Generic/Generic";
 
 export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDetails, driverUserId: number) {
@@ -13,7 +13,7 @@ export async function assignDeliveryDriver(assignDriverDetails: AssignDriverDeta
         id: assignDriverDetails.deliveryOrderId
       },
       _set: {
-        delivery_driver_type: participantTypeToHasura[assignDriverDetails.deliveryDriverType],
+        delivery_driver_type: ParticipantType.DeliveryDriver,
         delivery_driver_id: assignDriverDetails.deliveryDriverId,
       }
     }, {
