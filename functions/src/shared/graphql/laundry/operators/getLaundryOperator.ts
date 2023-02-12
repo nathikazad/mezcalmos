@@ -19,11 +19,13 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
       }, {
         id: true,
         user_id: true,
-        status: true,
-        owner: true,
-        notification_info: {
-          token: true,
-          turn_off_notifications: true
+        operator_details: {
+          status: true,
+          owner: true,
+          notification_info: {
+            token: true,
+            turn_off_notifications: true
+          },
         },
         user: {
           firebase_id: true,
@@ -43,12 +45,12 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
         id: r.id,
         userId: r.user_id,
         serviceProviderId: laundryStoreId,
-        status: r.status as OperatorStatus,
-        owner: r.owner,
-        notificationInfo: (r.notification_info) ? {
+        status: r.operator_details.status as OperatorStatus,
+        owner: r.operator_details.owner,
+        notificationInfo: (r.operator_details.notification_info) ? {
           appType: AppType.LaundryApp,
-          token: r.notification_info.token,
-          turnOffNotifications: r.notification_info.turn_off_notifications
+          token: r.operator_details.notification_info.token,
+          turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         }: undefined,
         user: {
           id: r.user_id,

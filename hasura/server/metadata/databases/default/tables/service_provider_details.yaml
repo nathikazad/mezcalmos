@@ -5,22 +5,22 @@ object_relationships:
   - name: delivery_details
     using:
       foreign_key_constraint_on: delivery_details_id
-  - name: delivery_partner
-    using:
-      manual_configuration:
-        column_mapping:
-          id: service_provider_id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: delivery_partner
-          schema: service_provider
   - name: description
     using:
       foreign_key_constraint_on: description_id
   - name: location
     using:
       foreign_key_constraint_on: location_id
+  - name: service_link
+    using:
+      foreign_key_constraint_on: service_link_id
+  - name: stripe_info
+    using:
+      foreign_key_constraint_on:
+        column: sp_id
+        table:
+          name: stripe_info
+          schema: service_provider
 array_relationships:
   - name: delivery_drivers
     using:
@@ -31,6 +31,13 @@ array_relationships:
         remote_table:
           name: driver
           schema: delivery
+  - name: delivery_partners
+    using:
+      foreign_key_constraint_on:
+        column: service_provider_id
+        table:
+          name: delivery_partner
+          schema: service_provider
   - name: reviews
     using:
       manual_configuration:

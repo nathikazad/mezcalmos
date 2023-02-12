@@ -5,12 +5,13 @@ import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceP
 import { AppType } from "../../../models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../../../models/Generic/Order";
 import { MezAdmin } from "../../../models/Generic/User";
-import { RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
+import { Cart } from "../../../models/Services/Restaurant/Cart";
+import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
 import { ServiceProvider } from "../../../models/Services/Service";
 
 
-export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, restaurant: ServiceProvider, checkoutReq : CheckoutRequest, mezAdmins: MezAdmin[])
-  : Promise<DeliveryOrder> {
+export async function createRestaurantOrder(restaurant: ServiceProvider, checkoutReq : CheckoutRequest, customerCart: Cart, mezAdmins: MezAdmin[])
+  : Promise<{restaurantOrder: RestaurantOrder, deliveryOrder: DeliveryOrder}> {
 
   let chain = getHasura();
 
@@ -26,20 +27,19 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       app_type_id: AppType.MezAdmin
     };
   });
-  console
   let response = await chain.mutation({
     insert_restaurant_order_one: [{
       object: {
-       scheduled_time: restaurantOrder.scheduledTime,
-        customer_id: restaurantOrder.customerId,
-        restaurant_id: restaurantOrder.restaurantId,
-        customer_app_type: restaurantOrder.customerAppType,
-        delivery_type: restaurantOrder.deliveryType,
+       scheduled_time: checkoutReq.scheduledTime,
+        customer_id: customerCart.customerId,
+        restaurant_id: checkoutReq.restaurantId,
+        customer_app_type: checkoutReq.customerAppType,
+        delivery_type: checkoutReq.deliveryType,
         chat: {
           data: {
             chat_participants: {
               data: [{
-                participant_id: restaurantOrder.customerId,
+                participant_id: customerCart.customerId,
                 app_type_id: AppType.Customer
               },
               ...restaurantOperatorsDetails,
@@ -47,27 +47,27 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
             }
           }
         },
-        delivery_cost: restaurantOrder.deliveryCost,
-        delivery: (restaurantOrder.deliveryType == DeliveryType.Delivery) ? {
+        delivery_cost: checkoutReq.deliveryCost,
+        delivery: (checkoutReq.deliveryType == DeliveryType.Delivery) ? {
           data: {
-            customer_id: restaurantOrder.customerId,
+            customer_id: customerCart.customerId,
             order_type: OrderType.Restaurant,
             dropoff_gps: JSON.stringify({
               "type": "Point",
-              "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
+              "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
             }),
-            dropoff_address: restaurantOrder.toLocation.address,
+            dropoff_address: checkoutReq.customerLocation.address,
             pickup_gps: JSON.stringify({
               "type": "Point",
               "coordinates": [restaurant.location.lng, restaurant.location.lat ],
             }),
             pickup_address: restaurant.location.address,
-            schedule_time: restaurantOrder.scheduledTime,
+            schedule_time: checkoutReq.scheduledTime,
             chat_with_customer: {
               data: {
                 chat_participants: {
                   data: [{
-                    participant_id: restaurantOrder.customerId,
+                    participant_id: customerCart.customerId,
                     app_type_id: AppType.Customer
                   },]
                 }
@@ -80,30 +80,30 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
                 }
               }
             },
-            payment_type: restaurantOrder.paymentType,
-            delivery_cost: restaurantOrder.deliveryCost,
+            payment_type: checkoutReq.paymentType,
+            delivery_cost: checkoutReq.deliveryCost,
           
             status: DeliveryOrderStatus.OrderReceived,
-            service_provider_id: restaurantOrder.restaurantId,
+            service_provider_id: checkoutReq.restaurantId,
             service_provider_type: DeliveryServiceProviderType.Restaurant,
             
-            scheduled_time: restaurantOrder.scheduledTime,
+            scheduled_time: checkoutReq.scheduledTime,
             trip_distance: checkoutReq.tripDistance,
             trip_duration: checkoutReq.tripDuration,
             trip_polyline: checkoutReq.tripPolyline,
-            package_cost: restaurantOrder.itemsCost
+            package_cost: customerCart.cost
           }
         }: undefined,
-        payment_type: restaurantOrder.paymentType,
+        payment_type: checkoutReq.paymentType,
         to_location_gps: JSON.stringify({
           "type": "Point",
-          "coordinates": [restaurantOrder.toLocation.lng, restaurantOrder.toLocation.lat ],
+          "coordinates": [checkoutReq.customerLocation.lng, checkoutReq.customerLocation.lat ],
         }),
-        to_location_address: restaurantOrder.toLocation.address,
-        notes: restaurantOrder.notes,
+        to_location_address: checkoutReq.customerLocation.address,
+        notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
         items: {
-          data: restaurantOrder.items!.map((i) => {
+          data: customerCart.items!.map((i) => {
             console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);
             console.log("+ ItemName ", i.name);
             return {
@@ -140,10 +140,36 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       "order creation error"
     );
   }
-  restaurantOrder.orderId = response.insert_restaurant_order_one.id;
-  restaurantOrder.chatId = response.insert_restaurant_order_one.chat_id;
-
-  if(restaurantOrder.deliveryType == DeliveryType.Delivery) {
+  let orderItems: OrderItem[] = customerCart.items.map((i) => {
+    return {
+      itemId: i.itemId,
+      name: i.name,
+      image: i.image,
+      selectedOptions: i.selectedOptions,
+      notes: i.notes,
+      quantity: i.quantity,
+      costPerOne: i.costPerOne
+    }
+  })
+  let restaurantOrder: RestaurantOrder = {
+    orderId: response.insert_restaurant_order_one.id,
+    customerId: customerCart.customerId,
+    restaurantId: checkoutReq.restaurantId,
+    paymentType: checkoutReq.paymentType,
+    toLocation: checkoutReq.customerLocation,
+    status: RestaurantOrderStatus.OrderReceived,
+    deliveryType: checkoutReq.deliveryType ?? DeliveryType.Delivery,
+    customerAppType: checkoutReq.customerAppType,
+    items: orderItems,
+    itemsCost: customerCart.cost,
+    notes: checkoutReq.notes,
+    deliveryCost: checkoutReq.deliveryCost,
+    scheduledTime: checkoutReq.scheduledTime,
+    chatId: response.insert_restaurant_order_one.chat_id
+    
+  }
+  let deliveryOrder: DeliveryOrder;
+  if(checkoutReq.deliveryType == DeliveryType.Delivery) {
     if(response.insert_restaurant_order_one.delivery == null) {
       throw new HttpsError(
         "internal",
@@ -151,45 +177,48 @@ export async function createRestaurantOrder(restaurantOrder: RestaurantOrder, re
       );
     }
     restaurantOrder.deliveryId = response.insert_restaurant_order_one.delivery.id;
-    return <DeliveryOrder>{
+    deliveryOrder = {
       deliveryId: response.insert_restaurant_order_one.delivery.id,
       orderType: OrderType.Restaurant,
       pickupLocation: restaurant.location,
-      dropoffLocation: restaurantOrder.toLocation,
+      dropoffLocation: checkoutReq.customerLocation,
       chatWithServiceProviderId: response.insert_restaurant_order_one.delivery.chat_with_service_provider_id,
       chatWithCustomerId: response.insert_restaurant_order_one.delivery.chat_with_customer_id,
-      paymentType: restaurantOrder.paymentType,
+      paymentType: checkoutReq.paymentType,
       status: DeliveryOrderStatus.OrderReceived,
-      customerId: restaurantOrder.customerId,
-      deliveryCost: restaurantOrder.deliveryCost,
-      packageCost: restaurantOrder.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
+      customerId: customerCart.customerId,
+      deliveryCost: checkoutReq.deliveryCost,
+      packageCost: checkoutReq.paymentType == "cash" ? response.insert_restaurant_order_one.items_cost : 0,
       orderTime: response.insert_restaurant_order_one.order_time,
       tripDistance : checkoutReq.tripDistance,
       tripDuration : checkoutReq.tripDuration,
       tripPolyline : checkoutReq.tripPolyline,
-      serviceProviderId: restaurantOrder.restaurantId,
-      serviceProviderType: DeliveryServiceProviderType.Restaurant
+      serviceProviderId: checkoutReq.restaurantId,
+      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      direction: DeliveryDirection.ToCustomer
+    }
+  } else {
+    deliveryOrder = {
+      deliveryId: 0,
+      orderType: OrderType.Restaurant,
+      pickupLocation: restaurant.location,
+      dropoffLocation: checkoutReq.customerLocation,
+      chatWithServiceProviderId: 0,
+      chatWithCustomerId: 0,
+      paymentType: checkoutReq.paymentType,
+      status: DeliveryOrderStatus.OrderReceived,
+      customerId: customerCart.customerId,
+      deliveryCost: checkoutReq.deliveryCost,
+      packageCost: checkoutReq.paymentType == PaymentType.Cash ? response.insert_restaurant_order_one.items_cost : 0,
+      orderTime: response.insert_restaurant_order_one.order_time,
+      tripDistance : checkoutReq.tripDistance,
+      tripDuration : checkoutReq.tripDuration,
+      tripPolyline : checkoutReq.tripPolyline,
+      serviceProviderId: checkoutReq.restaurantId,
+      serviceProviderType: DeliveryServiceProviderType.Restaurant,
+      direction: DeliveryDirection.ToCustomer
     }
   }
-  return {
-    deliveryId: 0,
-    orderType: OrderType.Restaurant,
-    pickupLocation: restaurant.location,
-    dropoffLocation: restaurantOrder.toLocation,
-    chatWithServiceProviderId: 0,
-    chatWithCustomerId: 0,
-    paymentType: restaurantOrder.paymentType,
-    status: DeliveryOrderStatus.OrderReceived,
-    customerId: restaurantOrder.customerId,
-    deliveryCost: restaurantOrder.deliveryCost,
-    packageCost: restaurantOrder.paymentType == PaymentType.Cash ? response.insert_restaurant_order_one.items_cost : 0,
-    orderTime: response.insert_restaurant_order_one.order_time,
-    tripDistance : checkoutReq.tripDistance,
-    tripDuration : checkoutReq.tripDuration,
-    tripPolyline : checkoutReq.tripPolyline,
-    serviceProviderId: restaurantOrder.restaurantId,
-    serviceProviderType: DeliveryServiceProviderType.Restaurant,
-    direction: DeliveryDirection.ToCustomer
-  }
+  return {restaurantOrder, deliveryOrder}
 }
 

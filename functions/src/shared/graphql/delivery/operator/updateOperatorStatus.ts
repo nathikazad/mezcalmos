@@ -5,22 +5,35 @@ import { DeliveryOperatorStatus } from "../../../models/Generic/Delivery";
 export async function updateDeliveryOperatorStatusToAuthorized(deliveryOperatorId: number) {
     let chain = getHasura();
 
-    let response = await chain.mutation({
-        update_delivery_operator_by_pk: [{
+    let response = await chain.query({
+        delivery_operator_by_pk: [{
+            id: deliveryOperatorId
+        }, {
+            details_id: true
+        }]
+    });
+
+    if(response.delivery_operator_by_pk == null) {
+        throw new HttpsError(
+            "internal",
+            "incorrect delivery operator id"
+        );
+    }
+
+    let mutationResponse = await chain.mutation({
+        update_service_provider_operator_details_by_pk: [{
             pk_columns: {
-                id: deliveryOperatorId
+                id: response.delivery_operator_by_pk.details_id
             },
             _set: {
                 status: DeliveryOperatorStatus.Authorized
             }
-        }, {
-            status: true,
-        }]
+        }, {}],
     });
-    if(!(response.update_delivery_operator_by_pk)) {
+    if(!(mutationResponse.update_service_provider_operator_details_by_pk)) {
         throw new HttpsError(
             "internal",
-            "incorrect delivery operator id"
+            "delivery operator details not found"
         );
     }
 }

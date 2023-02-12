@@ -38,7 +38,7 @@ export async function updateDeliveryOrderCompany(deliveryOrderId: number, delive
       }
     }, {
       delivery_company: {
-        name: true
+        id: true
       }
     }]
   })

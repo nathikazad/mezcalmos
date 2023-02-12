@@ -45,17 +45,17 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
           turn_off_notifications: true
         }
       },
-      restaurant_operator: {
-        user: {
-          id: true,
-          firebase_id: true,
-          language_id: true,
-        },
-        notification_info: {
-          token: true,
-          turn_off_notifications: true
-        }
-      }
+      // restaurant_operator: {
+      //   user: {
+      //     id: true,
+      //     firebase_id: true,
+      //     language_id: true,
+      //   },
+      //   notification_info: {
+      //     token: true,
+      //     turn_off_notifications: true
+      //   }
+      // }
     }]
   });
   if (response.delivery_order_by_pk == null) {
@@ -115,24 +115,24 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       deliveryDriverType: ParticipantType.DeliveryDriver
 
     }
-  } else if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.RestaurantOperator
-    && response.delivery_order_by_pk.restaurant_operator
-  ) {
-    delivery.deliveryDriver = {
-      userId: response.delivery_order_by_pk.restaurant_operator.user.id,
-      user: {
-        id: response.delivery_order_by_pk.restaurant_operator.user.id,
-        firebaseId: response.delivery_order_by_pk.restaurant_operator.user.firebase_id,
-        language: response.delivery_order_by_pk.restaurant_operator.user.language_id as Language
-      },
-      notificationInfo: (response.delivery_order_by_pk.restaurant_operator.notification_info) ? {
-        appType: AppType.RestaurantApp,
-        token: response.delivery_order_by_pk.restaurant_operator.notification_info.token,
-        turnOffNotifications: response.delivery_order_by_pk.restaurant_operator.notification_info.turn_off_notifications
-      } : undefined,
-      deliveryDriverType: ParticipantType.RestaurantOperator
-    }
-  }
+  } //else if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.RestaurantOperator
+  //   && response.delivery_order_by_pk.restaurant_operator
+  // ) {
+  //   delivery.deliveryDriver = {
+  //     userId: response.delivery_order_by_pk.restaurant_operator.user.id,
+  //     user: {
+  //       id: response.delivery_order_by_pk.restaurant_operator.user.id,
+  //       firebaseId: response.delivery_order_by_pk.restaurant_operator.user.firebase_id,
+  //       language: response.delivery_order_by_pk.restaurant_operator.user.language_id as Language
+  //     },
+  //     notificationInfo: (response.delivery_order_by_pk.restaurant_operator.notification_info) ? {
+  //       appType: AppType.RestaurantApp,
+  //       token: response.delivery_order_by_pk.restaurant_operator.notification_info.token,
+  //       turnOffNotifications: response.delivery_order_by_pk.restaurant_operator.notification_info.turn_off_notifications
+  //     } : undefined,
+  //     deliveryDriverType: ParticipantType.RestaurantOperator
+  //   }
+  // }
   return delivery;
 }
 

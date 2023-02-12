@@ -118,13 +118,6 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
 export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder): Promise<LaundryOrder> {
   let chain = getHasura();
 
-  if(deliveryOrder.deliveryId == null) {
-    throw new HttpsError(
-      "internal",
-      "delivery id not provided"
-    );
-  }
-
   let response =  await chain.query({
       laundry_order: [{
         where: (deliveryOrder.direction == DeliveryDirection.FromCustomer) ? {

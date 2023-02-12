@@ -3,7 +3,7 @@ import { CustomerAppType } from "./Generic";
 import { UserInfo } from "./User";
 
 export interface Order {
-  orderId?: number;
+  orderId: number;
   customerId: number;
   paymentType: PaymentType;
   refundAmount?: number;

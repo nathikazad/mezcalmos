@@ -2,28 +2,16 @@ table:
   name: delivery_partner
   schema: service_provider
 object_relationships:
-  - name: restaurant
+  - name: service_provider
     using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: restaurant
-          schema: restaurant
+      foreign_key_constraint_on: service_provider_id
 insert_permissions:
   - role: restaurant_operator
     permission:
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      check: {}
       columns:
         - delivery_company_id
         - service_provider_id
-        - service_provider_type
 select_permissions:
   - role: delivery_operator
     permission:
@@ -31,7 +19,6 @@ select_permissions:
         - delivery_company_id
         - id
         - service_provider_id
-        - service_provider_type
       filter: {}
   - role: mez_admin
     permission:
@@ -39,7 +26,6 @@ select_permissions:
         - delivery_company_id
         - id
         - service_provider_id
-        - service_provider_type
       filter:
         _exists:
           _table:
@@ -54,12 +40,7 @@ select_permissions:
         - id
         - delivery_company_id
         - service_provider_id
-        - service_provider_type
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: mez_admin
     permission:
@@ -67,7 +48,6 @@ update_permissions:
         - delivery_company_id
         - id
         - service_provider_id
-        - service_provider_type
       filter:
         _exists:
           _table:
@@ -81,13 +61,5 @@ update_permissions:
     permission:
       columns:
         - delivery_company_id
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
+      check: {}

@@ -9,7 +9,7 @@ export async function getRestaurantLinks(restaurantId: number): Promise<ServiceL
     let response = await chain.query({
       service_provider_service_link: [{
         where: {
-            service_provider_id: {
+            id: {
               _eq: restaurantId
             }
           }
@@ -36,7 +36,7 @@ export async function getRestaurantLinks(restaurantId: number): Promise<ServiceL
     } else {
         let serviceLink: ServiceLink = {
         id: response.service_provider_service_link[0].id,
-        service_provider_id: response.service_provider_service_link[0].service_provider_id,
+        service_provider_id: 0,//response.service_provider_service_link[0].service_provider_id,
         service_provider_type: response.service_provider_service_link[0].service_provider_type as ServiceProviderType,
         driver_deep_link: response.service_provider_service_link[0].driver_deep_link,
         driver_qr_image_link: response.service_provider_service_link[0].driver_qr_image_link,

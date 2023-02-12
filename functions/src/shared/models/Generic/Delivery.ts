@@ -5,7 +5,7 @@ import { ForegroundNotification, NotificationForQueue, OrderNotification } from 
 import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
-    deliveryId?: number;
+    deliveryId: number;
     pickupLocation: Location;
     dropoffLocation: Location;
     deliveryDriverType?: ParticipantType
@@ -62,7 +62,7 @@ export interface DeliveryDriver {
 }
 
 export interface DeliveryOperator {
-    id?: number,
+    id: number,
     userId: number,
     deliveryCompanyId: number,
     status: DeliveryOperatorStatus,
@@ -79,6 +79,9 @@ export interface DeliveryDetails {
     radius: number,
     freeDeliveryMinimumCost?: number,
     freeDeliveryKmRange?: number,
+    deliveryAvailable: boolean;
+    customerPickup: boolean;
+    selfDelivery: boolean;
 }
 
 export enum DelivererStatus {

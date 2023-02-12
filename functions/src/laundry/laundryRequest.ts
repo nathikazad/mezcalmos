@@ -8,12 +8,11 @@ import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundr
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { DeliveryOrder } from "../shared/models/Generic/Delivery";
 import { CustomerAppType, Language, Location } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { CustomerInfo, MezAdmin } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType, OrderNotification } from "../shared/models/Notification";
-import { LaundryOrder, LaundryOrderStatus, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
+import { LaundryOrder, NewLaundryOrderNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import { ServiceProvider } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
@@ -52,38 +51,38 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
 
     errorChecks(laundryStore, laundryRequestDetails);
     
-    let laundryOrder: LaundryOrder = {
-        customerId,
-        storeId: laundryRequestDetails.storeId,
-        paymentType: laundryRequestDetails.paymentType,
-        deliveryType: laundryRequestDetails.deliveryType,
-        customerAppType: laundryRequestDetails.customerAppType,
-        notes: laundryRequestDetails.notes,
-        tax: laundryRequestDetails.tax,
-        scheduledTime: laundryRequestDetails.scheduledTime,
-        stripeFees: laundryRequestDetails.stripeFees,
-        discountValue: laundryRequestDetails.discountValue,
-        customerLocation: laundryRequestDetails.customerLocation,
-        deliveryCost: laundryRequestDetails.deliveryCost,
-        status: LaundryOrderStatus.OrderReceived,
-    }
-    let deliveryOrders: DeliveryOrder[] = await createLaundryOrder(laundryOrder, laundryStore, mezAdmins, laundryRequestDetails);
+    // let orderResponse.laundryOrder: LaundryOrder = {
+    //     customerId,
+    //     storeId: laundryRequestDetails.storeId,
+    //     paymentType: laundryRequestDetails.paymentType,
+    //     deliveryType: laundryRequestDetails.deliveryType,
+    //     customerAppType: laundryRequestDetails.customerAppType,
+    //     notes: laundryRequestDetails.notes,
+    //     tax: laundryRequestDetails.tax,
+    //     scheduledTime: laundryRequestDetails.scheduledTime,
+    //     stripeFees: laundryRequestDetails.stripeFees,
+    //     discountValue: laundryRequestDetails.discountValue,
+    //     customerLocation: laundryRequestDetails.customerLocation,
+    //     deliveryCost: laundryRequestDetails.deliveryCost,
+    //     status: LaundryOrderStatus.OrderReceived,
+    // }
+    let orderResponse = await createLaundryOrder(customerId, laundryRequestDetails, laundryStore, mezAdmins);
 
-    setLaundryOrderChatInfo(laundryOrder, laundryStore, deliveryOrders[0], deliveryOrders[1], customer);
+    setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.deliveryOrders[0], orderResponse.deliveryOrders[1], customer);
 
     // assign delivery company 
-    if(laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.selfDelivery == false) {
+    if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
-        updateDeliveryOrderCompany(laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-        updateDeliveryOrderCompany(laundryOrder.toCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
+        updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
+        updateDeliveryOrderCompany(orderResponse.laundryOrder.toCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
     }
 
-    notify(laundryOrder, laundryStore, mezAdmins);
+    notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
 
     // payment
     if(laundryRequestDetails.paymentType == PaymentType.Card) {
         let paymentDetails: PaymentDetails = {
-            orderId: laundryOrder.orderId!,
+            orderId: orderResponse.laundryOrder.orderId!,
             orderType: OrderType.Laundry,
             serviceProviderId: laundryRequestDetails.storeId
         }
@@ -91,7 +90,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
     }
     
     return {
-        orderId: laundryOrder.orderId!
+        orderId: orderResponse.laundryOrder.orderId!
     }
 }
 
@@ -110,8 +109,8 @@ function errorChecks(laundryStore: ServiceProvider, laundryRequestDetails: Laund
       );
     }
     if(laundryRequestDetails.deliveryType == DeliveryType.Delivery) {
-        if(laundryStore.delivery) {
-            if(!(laundryStore.selfDelivery)) {
+        if(laundryStore.deliveryDetails.deliveryAvailable) {
+            if(!(laundryStore.deliveryDetails.selfDelivery)) {
                 if(laundryStore.deliveryPartnerId == null) {
                     throw new HttpsError(
                         "internal",
@@ -164,7 +163,7 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
           }
         });
     }
-    if(laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.selfDelivery == false) {
+    if(laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
         let deliveryOperators = await getDeliveryOperators(laundryStore.deliveryPartnerId!);
 
         let fromCustomerNotification: Notification = {

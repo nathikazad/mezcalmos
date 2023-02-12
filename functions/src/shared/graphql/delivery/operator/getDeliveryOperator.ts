@@ -16,13 +16,15 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
         }, {
             id: true,
             user_id: true,
-            status: true,
-            owner: true,
-            app_version: true,
-            current_gps: true,
-            notification_info: {
-                token: true,
-                turn_off_notifications: true
+            operator_details: {
+                status: true,
+                owner: true,
+                app_version: true,
+                current_gps: true,
+                notification_info: {
+                    token: true,
+                    turn_off_notifications: true
+                },
             },
             user: {
                 firebase_id: true,
@@ -41,17 +43,17 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             id: d.id,
             userId: d.user_id,
             deliveryCompanyId: deliveryCompanyId,
-            status: d.status as DeliveryOperatorStatus,
-            owner: d.owner,
-            appVersion: d.app_version,
-            currentGPS: (d.current_gps) ? {
-                lat: d.current_gps.coordinates[1],
-                lng: d.current_gps.coordinates[0]
+            status: d.operator_details.status as DeliveryOperatorStatus,
+            owner: d.operator_details.owner,
+            appVersion: d.operator_details.app_version,
+            currentGPS: (d.operator_details.current_gps) ? {
+                lat: d.operator_details.current_gps.coordinates[1],
+                lng: d.operator_details.current_gps.coordinates[0]
             } : undefined,
-            notificationInfo: (d.notification_info) ? <NotificationInfo>{
+            notificationInfo: (d.operator_details.notification_info) ? <NotificationInfo>{
                 appType: AppType.DeliveryAdmin,
-                token: d.notification_info.token,
-                turnOffNotifications: d.notification_info.turn_off_notifications
+                token: d.operator_details.notification_info.token,
+                turnOffNotifications: d.operator_details.notification_info.turn_off_notifications
             } : undefined,
             user: {
                 id: d.user_id,
@@ -72,13 +74,15 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
             id: true,
             user_id: true,
             delivery_company_id: true,
-            status: true,
-            owner: true,
-            app_version: true,
-            current_gps: true,
-            notification_info: {
-                token: true,
-                turn_off_notifications: true
+            operator_details: {
+                status: true,
+                owner: true,
+                app_version: true,
+                current_gps: true,
+                notification_info: {
+                    token: true,
+                    turn_off_notifications: true
+                },
             },
             user: {
                 firebase_id: true,
@@ -97,17 +101,17 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
         id: response.delivery_operator_by_pk.id,
         userId: response.delivery_operator_by_pk.user_id,
         deliveryCompanyId: response.delivery_operator_by_pk.delivery_company_id,
-        status: response.delivery_operator_by_pk.status as DeliveryOperatorStatus,
-        owner: response.delivery_operator_by_pk.owner,
-        appVersion: response.delivery_operator_by_pk.app_version,
+        status: response.delivery_operator_by_pk.operator_details.status as DeliveryOperatorStatus,
+        owner: response.delivery_operator_by_pk.operator_details.owner,
+        appVersion: response.delivery_operator_by_pk.operator_details.app_version,
         currentGPS: {
-            lat: response.delivery_operator_by_pk.current_gps.coordinates[1],
-            lng: response.delivery_operator_by_pk.current_gps.coordinates[0]
+            lat: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[1],
+            lng: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[0]
         },
-        notificationInfo: (response.delivery_operator_by_pk.notification_info) ? <NotificationInfo>{
+        notificationInfo: (response.delivery_operator_by_pk.operator_details.notification_info) ? <NotificationInfo>{
             appType: AppType.DeliveryAdmin,
-            token: response.delivery_operator_by_pk.notification_info.token,
-            turnOffNotifications: response.delivery_operator_by_pk.notification_info.turn_off_notifications
+            token: response.delivery_operator_by_pk.operator_details.notification_info.token,
+            turnOffNotifications: response.delivery_operator_by_pk.operator_details.notification_info.turn_off_notifications
         } : undefined,
         user: {
             id: response.delivery_operator_by_pk.user_id,
@@ -131,13 +135,15 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
             id: true,
             user_id: true,
             delivery_company_id: true,
-            status: true,
-            owner: true,
-            app_version: true,
-            current_gps: true,
-            notification_info: {
-                token: true,
-                turn_off_notifications: true
+            operator_details: {
+                status: true,
+                owner: true,
+                app_version: true,
+                current_gps: true,
+                notification_info: {
+                    token: true,
+                    turn_off_notifications: true
+                },
             },
             user: {
                 firebase_id: true,
@@ -156,17 +162,17 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
         deliveryCompanyId: response.delivery_operator[0].delivery_company_id,
-        status: response.delivery_operator[0].status as DeliveryOperatorStatus,
-        owner: response.delivery_operator[0].owner,
-        appVersion: response.delivery_operator[0].app_version,
-        currentGPS: (response.delivery_operator[0].current_gps) ? {
-            lat: response.delivery_operator[0].current_gps.coordinates[1],
-            lng: response.delivery_operator[0].current_gps.coordinates[0]
-        } : undefined,
-        notificationInfo: (response.delivery_operator[0].notification_info) ? <NotificationInfo>{
+        status: response.delivery_operator[0].operator_details.status as DeliveryOperatorStatus,
+        owner: response.delivery_operator[0].operator_details.owner,
+        appVersion: response.delivery_operator[0].operator_details.app_version,
+        currentGPS: {
+            lat: response.delivery_operator[0].operator_details.current_gps.coordinates[1],
+            lng: response.delivery_operator[0].operator_details.current_gps.coordinates[0]
+        },
+        notificationInfo: (response.delivery_operator[0].operator_details.notification_info) ? <NotificationInfo>{
             appType: AppType.DeliveryAdmin,
-            token: response.delivery_operator[0].notification_info.token,
-            turnOffNotifications: response.delivery_operator[0].notification_info.turn_off_notifications
+            token: response.delivery_operator[0].operator_details.notification_info.token,
+            turnOffNotifications: response.delivery_operator[0].operator_details.notification_info.turn_off_notifications
         } : undefined,
         user: {
             id: response.delivery_operator[0].user_id,
