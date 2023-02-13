@@ -4,8 +4,6 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/components/DriverSelectCard.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/components/ROpDriversMapComponent.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/controllers/PickDriverViewController.dart';
@@ -81,12 +79,8 @@ class _PickDriverViewState extends State<PickDriverView> {
                           (int index) => DriverSelectCard(
                                 driver: viewController.drivers[index],
                                 assingCallback: () async {
-                                  final bool result = await _assignCallback(
-                                      viewController.drivers[index]);
-                                  if (result) {
-                                    MezRouter.back();
-                                    viewController.screenLoading.value = false;
-                                  }
+                                  await viewController.assignDriver(
+                                      driver: viewController.drivers[index]);
                                 },
                               )),
                     )
@@ -105,7 +99,7 @@ class _PickDriverViewState extends State<PickDriverView> {
                     ),
                     Text(
                       '${_i18n()["assigning"]}',
-                      style: Get.textTheme.bodyText2
+                      style: Get.textTheme.bodyMedium
                           ?.copyWith(color: primaryBlueColor),
                     )
                   ],
@@ -114,11 +108,5 @@ class _PickDriverViewState extends State<PickDriverView> {
         }));
   }
 
-  Future<bool> _assignCallback(DeliveryDriver driver) async {
-    final ServerResponse result = await viewController.assignDriver(
-      driver: driver,
-    );
-    return result.success;
-    // return true;
-  }
+  // return true;
 }

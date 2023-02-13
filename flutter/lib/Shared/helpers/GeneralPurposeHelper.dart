@@ -167,7 +167,7 @@ Future<TimeOfDay?> getTimePicker(
       dialBackgroundColor: Color.fromRGBO(236, 236, 236, 1),
     ),
     textTheme: TextTheme(
-      overline: TextStyle(
+      labelSmall: TextStyle(
         color: Color.fromRGBO(120, 120, 120, 1),
         fontFamily: 'Nunito',
         fontSize: 10,
@@ -690,8 +690,9 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
   }
 }
 
-SnackbarController showSavedSnackBar() {
-  return Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedTitle']}",
+SnackbarController showSavedSnackBar({String? title, String? subtitle}) {
+  return Get.snackbar(
+      title ?? "${_i18n()['saved']}", subtitle ?? "${_i18n()['savedTitle']}",
       backgroundColor: Colors.black,
       colorText: Colors.white,
       shouldIconPulse: false,
@@ -703,7 +704,7 @@ SnackbarController showSavedSnackBar() {
 
 SnackbarController showErrorSnackBar(
     {String errorTitle = "Error", String errorText = ""}) {
-  return Get.snackbar(errorTitle, errorText,
+  return Get.snackbar(errorTitle.substring(0, 40), errorText.substring(0, 40),
       backgroundColor: Colors.black,
       colorText: Colors.white,
       shouldIconPulse: false,

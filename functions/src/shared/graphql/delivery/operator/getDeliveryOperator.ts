@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language, NotificationInfo } from "../../../models/Generic/Generic";
-import { DeliveryOperator, DeliveryOperatorStatus } from "../../../models/Generic/Delivery";
+import { DeliveryOperator } from "../../../models/Generic/Delivery";
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function getDeliveryOperators(deliveryCompanyId: number): Promise<DeliveryOperator[]> {
     let chain = getHasura();

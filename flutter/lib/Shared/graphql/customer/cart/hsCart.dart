@@ -107,7 +107,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                   name: cartData.restaurant!.name,
                   descriptionId: cartData.restaurant!.description_id,
                   //   descriptionId: data.d,
-                  location: Location.fromHasura(
+                  location: MezLocation.fromHasura(
                     cartData.restaurant!.location.gps,
                     cartData.restaurant!.location.address,
                   ),
@@ -339,7 +339,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
                 : null,
             descriptionId: _res.description_id,
             //   descriptionId: data.d,
-            location: Location.fromHasura(
+            location: MezLocation.fromHasura(
               _res.location.gps,
               _res.location.address,
             ),

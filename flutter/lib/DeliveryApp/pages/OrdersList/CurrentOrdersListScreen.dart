@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
@@ -63,9 +64,13 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                       title: "${_i18n()["title"]}",
                       isLoading: viewController.onlineClicked.value,
                       onTurnedOn: () {
+                        HapticFeedback.lightImpact();
+                        SystemSound.play(SystemSoundType.click);
                         viewController.switchOnlineStatus(true);
                       },
                       onTurnedOff: () {
+                        HapticFeedback.lightImpact();
+                        SystemSound.play(SystemSoundType.click);
                         viewController.switchOnlineStatus(false);
                       },
                       initialSwitcherValue: viewController.isOnline),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/RestaurantControllButtons.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderBottomCard.dart';
-import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/AnimatedOrderInfoCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderBottomCard.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/DvOrderStatusControllButtons.dart';
+import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/controllers/DvOrderViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -58,15 +58,14 @@ class _DvOrderViewState extends State<DvOrderView> {
         title: '${_i18n()["title"]}',
       ),
       bottomNavigationBar: Obx(
-        () => (viewController.order.value != null)
-            ? RestaurantControllButtons(
-                order: viewController.order.value!,
+        () => (viewController.hasData)
+            ? DvOrderStatusControllButtons(
                 viewController: viewController,
               )
             : SizedBox(),
       ),
       body: Obx(
-        () => viewController.order.value != null
+        () => viewController.hasData
             ? Stack(
                 children: [
                   MGoogleMap(
@@ -80,10 +79,8 @@ class _DvOrderViewState extends State<DvOrderView> {
                     child: InkWell(
                       onTap: () async {
                         final LatLng _destination = LatLng(
-                            viewController
-                                .order.value!.dropoffLocation.latitude,
-                            viewController
-                                .order.value!.dropoffLocation.longitude);
+                            viewController.order.dropoffLocation.latitude,
+                            viewController.order.dropoffLocation.longitude);
 
                         final String url =
                             "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
@@ -122,7 +119,7 @@ class _DvOrderViewState extends State<DvOrderView> {
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         child: DvOrderBottomCard(
-                          order: viewController.order.value!,
+                          viewcontroller: viewController,
                           onCardStateChange: (OrderInfoCardState state) {
                             setState(() {
                               if (state == OrderInfoCardState.Maximized) {

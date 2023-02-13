@@ -195,7 +195,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripPolyline : checkoutReq.tripPolyline,
       serviceProviderId: checkoutReq.restaurantId,
       serviceProviderType: DeliveryServiceProviderType.Restaurant,
-      direction: DeliveryDirection.ToCustomer
+      direction: DeliveryDirection.ToCustomer,
+      packageReady:false,
     }
   } else {
     deliveryOrder = {
@@ -216,7 +217,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
       tripPolyline : checkoutReq.tripPolyline,
       serviceProviderId: checkoutReq.restaurantId,
       serviceProviderType: DeliveryServiceProviderType.Restaurant,
-      direction: DeliveryDirection.ToCustomer
+      direction: DeliveryDirection.ToCustomer,
+      packageReady:false,
     }
   }
   return {restaurantOrder, deliveryOrder}

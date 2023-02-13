@@ -55,7 +55,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
               firebaseId: data.firebase_id,
               name: data.name,
               descriptionId: data.description_id,
-              location: Location.fromHasura(
+              location: MezLocation.fromHasura(
                   data.location.gps, data.location.address)),
           deliveryCost: (data.delivery_details_of_deliverer == null)
               ? null
@@ -198,7 +198,7 @@ Future<Restaurant?> get_restaurant_by_id(
               firebaseId: data.firebase_id ?? "",
               name: data.name,
               descriptionId: data.description_id,
-              location: Location.fromHasura(
+              location: MezLocation.fromHasura(
                   data.location.gps, data.location.address)),
           schedule:
               data.schedule != null ? Schedule.fromData(data.schedule) : null,
@@ -314,7 +314,7 @@ Future<Restaurant> update_restaurant_info({
               : null,
           name: data.name,
           location:
-              Location.fromHasura(data.location.gps, data.location.address)),
+              MezLocation.fromHasura(data.location.gps, data.location.address)),
       schedule: data.schedule != null ? Schedule.fromData(data.schedule) : null,
       paymentInfo: _paymentInfo,
       restaurantState:

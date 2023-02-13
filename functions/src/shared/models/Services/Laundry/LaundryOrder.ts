@@ -44,6 +44,19 @@ export enum LaundryOrderStatus {
   CancelledByCustomer = "cancelledByCustomer"
 }
 
+export const LaundryOrderStatusToHasura: Record<LaundryOrderStatus, string> = {
+  [LaundryOrderStatus.OrderReceived]: "orderReceived",
+  [LaundryOrderStatus.OtwPickupFromCustomer]: "otwPickupFromCustomer",
+  [LaundryOrderStatus.PickedUpFromCustomer]: "pickedUpFromCustomer",
+  [LaundryOrderStatus.AtLaundry]: "atLaundry",
+  [LaundryOrderStatus.ReadyForDelivery]: "readyForDelivery",
+  [LaundryOrderStatus.OtwPickupFromLaundry]: "otwPickupFromLaundry",
+  [LaundryOrderStatus.PickedUpFromLaundry]: "pickedUpFromLaundry",
+  [LaundryOrderStatus.Delivered]: "delivered",
+  [LaundryOrderStatus.CancelledByAdmin]: "cancelledByAdmin",
+  [LaundryOrderStatus.CancelledByCustomer]: "cancelledByCustomer"
+} 
+
 export interface ConstructLaundryOrderParameters {
   routeInformation?: RouteInformation,
   notes?: string,

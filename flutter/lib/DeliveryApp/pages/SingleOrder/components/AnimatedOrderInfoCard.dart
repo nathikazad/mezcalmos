@@ -35,12 +35,12 @@ class AnimatedOrderInfoCard extends StatelessWidget {
   // customer part (top row of animated container)
   final String customerName;
   final String customerImage;
-  final List<Widget> customerTimeWidgets;
+  final Widget customerTimeWidget;
   final VoidCallback onCustomerMsgClick;
   // service provider part (bottom row)
   final String serviceProviderName;
   final String serviceProviderImage;
-  final List<Widget> serviceProviderTimeWidgets;
+  final Widget serviceProviderTimeWidget;
   final VoidCallback onServiceMsgClick;
 
   final String formattedOrderStatus;
@@ -60,11 +60,11 @@ class AnimatedOrderInfoCard extends StatelessWidget {
     this.enableExpand = true,
     required this.customerName,
     required this.customerImage,
-    this.customerTimeWidgets = const <Widget>[],
+    required this.customerTimeWidget,
     required this.onCustomerMsgClick,
     required this.serviceProviderName,
     required this.serviceProviderImage,
-    this.serviceProviderTimeWidgets = const <Widget>[],
+    required this.serviceProviderTimeWidget,
     required this.onServiceMsgClick,
     required this.order,
     Key? key,
@@ -239,13 +239,10 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ],
             ),
             if (!showMsgIconInOneLine)
-              Row(
-                children: [
-                  Row(
-                    children: serviceProviderTimeWidgets,
-                  ),
-                ],
-              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: serviceProviderTimeWidget,
+              )
           ],
         ),
         SizedBox(
@@ -290,17 +287,13 @@ class AnimatedOrderInfoCard extends StatelessWidget {
               ],
             ),
             if (!showMsgIconInOneLine)
-              Row(
-                children: [
-                  Row(
-                    children: customerTimeWidgets,
-                  ),
-                ],
-              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: customerTimeWidget,
+              )
           ],
         ),
         SizedBox(width: 15),
-        // todo fix obx @m66are
         MessageButton(
           withPadding: false,
           onTap: onCustomerMsgClick,

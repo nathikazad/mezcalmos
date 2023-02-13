@@ -37,7 +37,7 @@ Future<List<SavedLocation>> get_customer_locations(
               name: location.name,
               defaultLocation: location.$default,
               id: location.id,
-              location: LocModel.Location(
+              location: LocModel.MezLocation(
                 location.location_text,
                 location.location_gps.toLocationData(),
               ),
@@ -74,7 +74,7 @@ Stream<List<SavedLocation>?> listen_on_customer_locations(
             name: location.name,
             defaultLocation: location.$default,
             id: location.id,
-            location: LocModel.Location(
+            location: LocModel.MezLocation(
               location.location_text,
               location.location_gps.toLocationData(),
             ),
@@ -102,7 +102,7 @@ Future<SavedLocation?> get_saved_location({required int location_id}) async {
           id: location_id,
           defaultLocation: _saved_location.$default,
           name: _saved_location.name,
-          location: LocModel.Location(
+          location: LocModel.MezLocation(
             _saved_location.location_text,
             _saved_location.location_gps.toLocationData(),
           ),

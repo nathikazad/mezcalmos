@@ -22,11 +22,12 @@ class ROpEditLocationCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
-            final Location newLoc = await MezRouter.toNamed(kPickLocationEdit,
+            final MezLocation newLoc = await MezRouter.toNamed(
+                kPickLocationEdit,
                 arguments: LatLng(
                     editInfoController.restaurant.value!.info.location.latitude,
                     editInfoController.restaurant.value!.info.location
-                        .longitude)) as Location;
+                        .longitude)) as MezLocation;
             editInfoController.setNewLocation(newLoc);
             editInfoController.newLocation.refresh();
           },

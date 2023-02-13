@@ -1,7 +1,6 @@
 import { OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { LaundryOrderStatus, LaundryOrder, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
@@ -14,6 +13,7 @@ import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
+import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
 
 
 export async function changeLaundryOrderStatus(
@@ -23,7 +23,7 @@ export async function changeLaundryOrderStatus(
 ) {
 
   let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
-  let laundryOperators: Operator[] = await getRestaurantOperators(laundryOrder.storeId);
+  let laundryOperators: Operator[] = await getLaundryOperators(laundryOrder.storeId);
 
   if ((laundryOrder.fromCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId) 
     && (laundryOrder.toCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId)

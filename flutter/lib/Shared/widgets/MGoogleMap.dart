@@ -117,7 +117,7 @@ class MGoogleMapState extends State<MGoogleMap> {
     try {
       currentLocation = await Location().getLocation();
       widget.notifyParentOfNewLocation?.call(
-        LocationModel.Location.fromFirebaseData(
+        LocationModel.MezLocation.fromFirebaseData(
           <String, dynamic>{
             "lat": currentLocation.latitude,
             "lng": currentLocation.longitude,

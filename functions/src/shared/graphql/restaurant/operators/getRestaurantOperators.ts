@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { Operator, OperatorStatus } from "../../../models/Services/Service";
-
+import { Operator } from "../../../models/Services/Service";
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function getRestaurantOperators(restaurantId: number): Promise<Operator[]> {
   let chain = getHasura();
@@ -19,7 +19,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
           },
           operator_details: {
             status: {
-              _eq: OperatorStatus.Authorized
+              _eq: AuthorizationStatus.Authorized
             }
           }
         }]
@@ -52,7 +52,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       id: r.id,
       userId: r.user_id,
       serviceProviderId: restaurantId,
-      status: OperatorStatus.Authorized,
+      status: AuthorizationStatus.Authorized,
       owner: r.operator_details.owner,
       notificationInfo: (r.operator_details.notification_info) ? {
         appType: AppType.RestaurantApp,
@@ -101,7 +101,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     id: restaurantOperatorId,
     userId: response.restaurant_operator_by_pk.user_id,
     serviceProviderId: response.restaurant_operator_by_pk.restaurant_id,
-    status: response.restaurant_operator_by_pk.operator_details.status as OperatorStatus,
+    status: response.restaurant_operator_by_pk.operator_details.status as AuthorizationStatus,
     owner: response.restaurant_operator_by_pk.operator_details.owner,
     notificationInfo: (response.restaurant_operator_by_pk.operator_details.notification_info) ? {
       appType: AppType.RestaurantApp,
@@ -153,7 +153,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
     id: response.restaurant_operator[0].id,
     userId: restaurantOperatorUserId,
     serviceProviderId: response.restaurant_operator[0].restaurant_id,
-    status: response.restaurant_operator[0].operator_details.status as OperatorStatus,
+    status: response.restaurant_operator[0].operator_details.status as AuthorizationStatus,
     owner: response.restaurant_operator[0].operator_details.owner,
     notificationInfo: (response.restaurant_operator[0].operator_details.notification_info) ? {
       appType: AppType.RestaurantApp,

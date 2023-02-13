@@ -54,7 +54,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                                     Get.find<DeliveryOpAuthController>()
                                         .companyId!,
                                 serviceProviderType:
-                                    ServiceProviderType.Delivery_company);
+                                    ServiceProviderType.DeliveryCompany);
                           }),
                       Divider(),
                       _navigationLink(
@@ -66,7 +66,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                                     Get.find<DeliveryOpAuthController>()
                                         .companyId!,
                                 serviceProviderType:
-                                    ServiceProviderType.Delivery_company);
+                                    ServiceProviderType.DeliveryCompany);
                           }),
                     ],
                   ),

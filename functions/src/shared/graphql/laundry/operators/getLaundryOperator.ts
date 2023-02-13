@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { Operator, OperatorStatus } from "../../../models/Services/Service";
+import { Operator } from "../../../models/Services/Service";
+import { AuthorizationStatus } from "../../../models/Generic/Generic"
 
 export async function getLaundryOperators(laundryStoreId: number): Promise<Operator[]> {
     let chain = getHasura();
@@ -45,7 +46,7 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
         id: r.id,
         userId: r.user_id,
         serviceProviderId: laundryStoreId,
-        status: r.operator_details.status as OperatorStatus,
+        status: r.operator_details.status as AuthorizationStatus,
         owner: r.operator_details.owner,
         notificationInfo: (r.operator_details.notification_info) ? {
           appType: AppType.LaundryApp,

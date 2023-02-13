@@ -2832,6 +2832,9 @@ type delivery_details {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int!
+
+  """An object relationship"""
+  laundry: laundry_store
   minimum_cost: money!
 
   """in metres"""
@@ -2955,6 +2958,7 @@ input delivery_details_bool_exp {
   free_delivery_km_range: Float_comparison_exp
   free_delivery_minimum_cost: money_comparison_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   minimum_cost: money_comparison_exp
   radius: Int_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -2994,6 +2998,7 @@ input delivery_details_insert_input {
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   minimum_cost: money
 
   """in metres"""
@@ -3090,6 +3095,7 @@ input delivery_details_order_by {
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
+  laundry: laundry_store_order_by
   minimum_cost: order_by
   radius: order_by
   restaurant_aggregate: restaurant_restaurant_aggregate_order_by
@@ -3396,6 +3402,9 @@ type delivery_driver {
   id: Int!
 
   """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
   notification_info: notification_info
   online: Boolean!
 
@@ -3520,6 +3529,7 @@ input delivery_driver_bool_exp {
   delivery_company_type: String_comparison_exp
   delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   notification_info: notification_info_bool_exp
   online: Boolean_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -3568,6 +3578,7 @@ input delivery_driver_insert_input {
   """Just for relationship"""
   delivery_driver_type: String
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   notification_info: notification_info_obj_rel_insert_input
   online: Boolean
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -3694,6 +3705,7 @@ input delivery_driver_order_by {
   delivery_company_type: order_by
   delivery_driver_type: order_by
   id: order_by
+  laundry: laundry_store_order_by
   notification_info: notification_info_order_by
   online: order_by
   restaurant: restaurant_restaurant_order_by
@@ -4559,6 +4571,15 @@ type delivery_order {
   """
   in_process: Boolean
 
+  """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
+  laundry_delivery_order: laundry_order
+
+  """An object relationship"""
+  laundry_pickup_order: laundry_order
+
   """
   A computed field, executes function "delivery_notification_token"
   """
@@ -4566,6 +4587,7 @@ type delivery_order {
   order_time: timestamptz!
   order_type: String!
   package_cost: money!
+  package_ready: Boolean!
   payment_type: String!
   pickup_address: String!
   pickup_gps: geography!
@@ -4579,14 +4601,14 @@ type delivery_order {
   """An object relationship"""
   restaurant_order: restaurant_order
   schedule_time: String
-  service_provider_id: Int
+  service_provider_id: Int!
 
   """An object relationship"""
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
 
   """restaurant, delivery_company"""
-  service_provider_type: String
+  service_provider_type: String!
 
   """
   orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
@@ -4612,7 +4634,23 @@ type delivery_order_aggregate {
 }
 
 input delivery_order_aggregate_bool_exp {
+  bool_and: delivery_order_aggregate_bool_exp_bool_and
+  bool_or: delivery_order_aggregate_bool_exp_bool_or
   count: delivery_order_aggregate_bool_exp_count
+}
+
+input delivery_order_aggregate_bool_exp_bool_and {
+  arguments: delivery_order_select_column_delivery_order_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_order_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_order_aggregate_bool_exp_bool_or {
+  arguments: delivery_order_select_column_delivery_order_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_order_bool_exp
+  predicate: Boolean_comparison_exp!
 }
 
 input delivery_order_aggregate_bool_exp_count {
@@ -4751,10 +4789,14 @@ input delivery_order_bool_exp {
   estimated_package_ready_time: timestamptz_comparison_exp
   id: Int_comparison_exp
   in_process: Boolean_comparison_exp
+  laundry: laundry_store_bool_exp
+  laundry_delivery_order: laundry_order_bool_exp
+  laundry_pickup_order: laundry_order_bool_exp
   notification_token: String_comparison_exp
   order_time: timestamptz_comparison_exp
   order_type: String_comparison_exp
   package_cost: money_comparison_exp
+  package_ready: Boolean_comparison_exp
   payment_type: String_comparison_exp
   pickup_address: String_comparison_exp
   pickup_gps: geography_comparison_exp
@@ -4845,9 +4887,13 @@ input delivery_order_insert_input {
   estimated_arrival_at_pickup_time: timestamptz
   estimated_package_ready_time: timestamptz
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
+  laundry_delivery_order: laundry_order_obj_rel_insert_input
+  laundry_pickup_order: laundry_order_obj_rel_insert_input
   order_time: timestamptz
   order_type: String
   package_cost: money
+  package_ready: Boolean
   payment_type: String
   pickup_address: String
   pickup_gps: geography
@@ -5157,10 +5203,14 @@ input delivery_order_order_by {
   estimated_package_ready_time: order_by
   id: order_by
   in_process: order_by
+  laundry: laundry_store_order_by
+  laundry_delivery_order: laundry_order_order_by
+  laundry_pickup_order: laundry_order_order_by
   notification_token: order_by
   order_time: order_by
   order_type: order_by
   package_cost: order_by
+  package_ready: order_by
   payment_type: order_by
   pickup_address: order_by
   pickup_gps: order_by
@@ -5708,6 +5758,9 @@ enum delivery_order_select_column {
   package_cost
 
   """column name"""
+  package_ready
+
+  """column name"""
   payment_type
 
   """column name"""
@@ -5739,6 +5792,22 @@ enum delivery_order_select_column {
 
   """column name"""
   trip_polyline
+}
+
+"""
+select "delivery_order_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.order"
+"""
+enum delivery_order_select_column_delivery_order_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  package_ready
+}
+
+"""
+select "delivery_order_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.order"
+"""
+enum delivery_order_select_column_delivery_order_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  package_ready
 }
 
 """
@@ -5774,6 +5843,7 @@ input delivery_order_set_input {
   order_time: timestamptz
   order_type: String
   package_cost: money
+  package_ready: Boolean
   payment_type: String
   pickup_address: String
   pickup_gps: geography
@@ -5979,6 +6049,7 @@ input delivery_order_stream_cursor_value_input {
   order_time: timestamptz
   order_type: String
   package_cost: money
+  package_ready: Boolean
   payment_type: String
   pickup_address: String
   pickup_gps: geography
@@ -6128,6 +6199,9 @@ enum delivery_order_update_column {
 
   """column name"""
   package_cost
+
+  """column name"""
+  package_ready
 
   """column name"""
   payment_type
@@ -7820,6 +7894,11 @@ type laundry_order {
   A computed field, executes function "laundry.order_in_process"
   """
   in_process: Boolean
+
+  """
+  A computed field, executes function "laundry.itemscost"
+  """
+  items_cost: money
   notes: String
   order_time: timestamptz!
   payment_type: String!
@@ -7840,7 +7919,15 @@ type laundry_order {
     path: String
   ): jsonb
   tax: money!
+
+  """An object relationship"""
+  to_customer_delivery: delivery_order
   to_customer_delivery_id: Int
+
+  """
+  A computed field, executes function "laundry.totalcost"
+  """
+  total_cost: money
 }
 
 """
@@ -7916,6 +8003,7 @@ input laundry_order_bool_exp {
   from_customer_delivery_id: Int_comparison_exp
   id: Int_comparison_exp
   in_process: Boolean_comparison_exp
+  items_cost: money_comparison_exp
   notes: String_comparison_exp
   order_time: timestamptz_comparison_exp
   payment_type: String_comparison_exp
@@ -7929,7 +8017,9 @@ input laundry_order_bool_exp {
   stripe_fees: money_comparison_exp
   stripe_info: jsonb_comparison_exp
   tax: money_comparison_exp
+  to_customer_delivery: delivery_order_bool_exp
   to_customer_delivery_id: Int_comparison_exp
+  total_cost: money_comparison_exp
 }
 
 """
@@ -8574,6 +8664,7 @@ input laundry_order_insert_input {
   stripe_fees: money
   stripe_info: jsonb
   tax: money
+  to_customer_delivery: delivery_order_obj_rel_insert_input
   to_customer_delivery_id: Int
 }
 
@@ -8684,6 +8775,7 @@ input laundry_order_order_by {
   from_customer_delivery_id: order_by
   id: order_by
   in_process: order_by
+  items_cost: order_by
   notes: order_by
   order_time: order_by
   payment_type: order_by
@@ -8697,7 +8789,9 @@ input laundry_order_order_by {
   stripe_fees: order_by
   stripe_info: order_by
   tax: order_by
+  to_customer_delivery: delivery_order_order_by
   to_customer_delivery_id: order_by
+  total_cost: order_by
 }
 
 """primary key columns input for table: laundry.order"""
@@ -9111,12 +9205,32 @@ type laundry_store {
   delivery_details: delivery_details
   delivery_details_id: Int
 
+  """
+  A computed field, executes function "laundry_delivery_details"
+  """
+  delivery_details_of_deliverer(
+    """distinct select on columns"""
+    distinct_on: [delivery_details_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_details_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_details_bool_exp
+  ): [delivery_details!]
+
   """An object relationship"""
   delivery_partner: service_provider_delivery_partner
 
   """An object relationship"""
-  description: translation!
-  description_id: Int!
+  description: translation
+  description_id: Int
   id: Int!
   image: String!
   language_id: String!
@@ -9235,6 +9349,7 @@ input laundry_store_bool_exp {
   delivery: Boolean_comparison_exp
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
+  delivery_details_of_deliverer: delivery_details_bool_exp
   delivery_partner: service_provider_delivery_partner_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
@@ -9423,6 +9538,7 @@ input laundry_store_order_by {
   delivery: order_by
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
+  delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
   delivery_partner: service_provider_delivery_partner_order_by
   description: translation_order_by
   description_id: order_by
@@ -24940,6 +25056,9 @@ type service_provider_delivery_partner {
   id: Int!
 
   """An object relationship"""
+  laundry: laundry_store
+
+  """An object relationship"""
   restaurant: restaurant_restaurant
   service_provider_id: Int!
   service_provider_type: String!
@@ -24987,6 +25106,7 @@ input service_provider_delivery_partner_bool_exp {
   _or: [service_provider_delivery_partner_bool_exp!]
   delivery_company_id: Int_comparison_exp
   id: Int_comparison_exp
+  laundry: laundry_store_bool_exp
   restaurant: restaurant_restaurant_bool_exp
   service_provider_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
@@ -25022,6 +25142,7 @@ input type for inserting data into table "service_provider.delivery_partner"
 input service_provider_delivery_partner_insert_input {
   delivery_company_id: Int
   id: Int
+  laundry: laundry_store_obj_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   service_provider_id: Int
   service_provider_type: String
@@ -25079,6 +25200,7 @@ Ordering options when selecting data from "service_provider.delivery_partner".
 input service_provider_delivery_partner_order_by {
   delivery_company_id: order_by
   id: order_by
+  laundry: laundry_store_order_by
   restaurant: restaurant_restaurant_order_by
   service_provider_id: order_by
   service_provider_type: order_by

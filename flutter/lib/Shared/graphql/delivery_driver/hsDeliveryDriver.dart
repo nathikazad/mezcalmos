@@ -42,7 +42,7 @@ Future<List<DeliveryDriver>?> get_drivers_by_service_provider_id(
           deliveryDriverState: DeliveryDriverState(
               status: driverData.status.toAgentStatus(),
               online: driverData.online,
-              deliveryCompanyId: driverData.delivery_company_id.toString(),
+              deliveryCompanyId: driverData.delivery_company_id,
               deliveryCompanyType:
                   driverData.delivery_company_type.toDeliveryCompanyType()),
           deliveryDriverId: driverData.id,
@@ -83,7 +83,7 @@ Future<DeliveryDriver?> get_driver_by_user_id(
           deliveryDriverState: DeliveryDriverState(
               status: data.first.status.toAgentStatus(),
               online: data.first.online,
-              deliveryCompanyId: data.first.delivery_company_id.toString(),
+              deliveryCompanyId: data.first.delivery_company_id,
               deliveryCompanyType:
                   data.first.delivery_company_type.toDeliveryCompanyType()),
           deliveryDriverId: data.first.id,

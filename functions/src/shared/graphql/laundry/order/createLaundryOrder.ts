@@ -75,6 +75,7 @@ export async function createLaundryOrder(
                             "type": "Point",
                             "coordinates": [laundryRequestDetails.customerLocation.lng, laundryRequestDetails.customerLocation.lat ],
                         }),
+                        package_ready:true,
                         pickup_address: laundryRequestDetails.customerLocation.address,
                         schedule_time: laundryRequestDetails.scheduledTime,
                         chat_with_customer: {
@@ -96,7 +97,7 @@ export async function createLaundryOrder(
                         },
                         payment_type: laundryRequestDetails.paymentType,
                         delivery_cost: laundryRequestDetails.deliveryCost / 2,
-                    
+                        direction : DeliveryDirection.FromCustomer,
                         status: DeliveryOrderStatus.OrderReceived,
                         service_provider_id: laundryRequestDetails.storeId,
                         service_provider_type:  DeliveryServiceProviderType.Laundry,
@@ -120,6 +121,7 @@ export async function createLaundryOrder(
                             "type": "Point",
                             "coordinates": [laundryStore.location.lng, laundryStore.location.lat ],
                         }),
+                        direction : DeliveryDirection.ToCustomer,
                         pickup_address: laundryStore.location.address,
                         schedule_time: laundryRequestDetails.scheduledTime,
                         chat_with_customer: {
@@ -225,7 +227,8 @@ export async function createLaundryOrder(
                 tripPolyline : laundryRequestDetails.tripPolyline,
                 serviceProviderType: DeliveryServiceProviderType.Laundry,
                 serviceProviderId: laundryStore.id!,
-                direction: DeliveryDirection.FromCustomer
+                direction: DeliveryDirection.FromCustomer,
+                packageReady: true,
             }, {
                 deliveryId: response.insert_laundry_order_one.to_customer_delivery.id,
                 orderType: OrderType.Laundry,
@@ -244,7 +247,8 @@ export async function createLaundryOrder(
                 tripPolyline : laundryRequestDetails.tripPolyline,
                 serviceProviderType: DeliveryServiceProviderType.Laundry,
                 serviceProviderId: laundryStore.id!,
-                direction: DeliveryDirection.ToCustomer
+                direction: DeliveryDirection.ToCustomer,
+                packageReady: false,
             }]
         }
     }
@@ -268,7 +272,8 @@ export async function createLaundryOrder(
             tripPolyline : laundryRequestDetails.tripPolyline,
             serviceProviderType: DeliveryServiceProviderType.Laundry,
             serviceProviderId: laundryStore.id!,
-            direction: DeliveryDirection.FromCustomer
+            direction: DeliveryDirection.FromCustomer,
+            packageReady: false,
         }]
     }
 }

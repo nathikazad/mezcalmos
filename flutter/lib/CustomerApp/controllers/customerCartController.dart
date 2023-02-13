@@ -41,7 +41,7 @@ class CustomerCartController extends GetxController {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.restaurant?.paymentInfo?.acceptedPayments.entries}");
-          final LocModel.Location? oldLoc = cart.value?.toLocation;
+          final LocModel.MezLocation? oldLoc = cart.value?.toLocation;
           cart.value = event;
           cart.value?.toLocation = oldLoc;
 
@@ -156,7 +156,7 @@ class CustomerCartController extends GetxController {
       mezDbgPrint("[+] -> payload :: $payload");
       final cloudFunctionModels.CheckoutResponse res =
           await CloudFunctions.restaurant2_checkoutCart(
-              customerAppType: cloudFunctionModels.AppType.Customer,
+              customerAppType: cloudFunctionModels.CustomerAppType.Native,
               customerLocation: cloudFunctionModels.Location(
                   cart.value?.toLocation!.latitude,
                   cart.value?.toLocation!.longitude,
@@ -193,7 +193,7 @@ class CustomerCartController extends GetxController {
       "customerAppType": "customer",
 
       "customerLocation": cart.value?.toLocation?.toFirebaseFormattedJson() ??
-          LocModel.Location(
+          LocModel.MezLocation(
             "Test _ Location ",
             LocationData.fromMap(
               {"latitude": 15.872451864887513, "longitude": -97.0771243663329},

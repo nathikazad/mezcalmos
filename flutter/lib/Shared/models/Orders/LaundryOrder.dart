@@ -49,6 +49,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrderCosts? costsByType;
   DateTime? estimatedLaundryReadyTime;
   RouteInformation? routeInformation;
+  int fromCustomerDeliveryId;
+  int toCustomerDeliveryId;
 
   LaundryOrder(
       {required super.orderId,
@@ -59,6 +61,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required this.status,
       required super.customer,
       required this.laundry,
+      required this.fromCustomerDeliveryId,
+      required this.toCustomerDeliveryId,
       required this.shippingCost,
       this.costsByType,
       this.estimatedLaundryReadyTime,
@@ -203,6 +207,12 @@ class LaundryOrder extends TwoWayDeliverableOrder {
     return null;
   }
 
+  int get deliveryOrderId {
+    return getCurrentPhase() == LaundryOrderPhase.Pickup
+        ? fromCustomerDeliveryId
+        : toCustomerDeliveryId;
+  }
+
   int? getServiceDriverChatId() {
     if (getCurrentPhase() == LaundryOrderPhase.Pickup &&
         serviceProviderPickupDriverChatId != null) {
@@ -232,7 +242,14 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   bool isAtLaundry() {
-    return status == LaundryOrderStatus.AtLaundry;
+    return true;
+    // return status == LaundryOrderStatus.AtLaundry;
+  }
+
+  bool get inPickup {
+    return status == LaundryOrderStatus.OtwPickupFromCustomer ||
+        status == LaundryOrderStatus.OrderReceived ||
+        status == LaundryOrderStatus.PickedUpFromCustomer;
   }
 
   LaundryOrderPhase getCurrentPhase() {
@@ -289,6 +306,16 @@ class LaundryOrderCostLineItem extends LaundryCostLineItem {
       "weighedCost": weighedCost
     };
   }
+
+  @override
+  bool operator ==(covariant LaundryOrderCostLineItem other) {
+    if (identical(this, other)) return true;
+
+    return other.weight == weight;
+  }
+
+  @override
+  int get hashCode => weight.hashCode;
 }
 
 class LaundryOrderCosts {

@@ -75,8 +75,9 @@ Notification? _orderStatusChangesHandler(key, value) {
             (value["notificationAction"] as String).toNotificationAction(),
         title: 'Order status change',
       );
+    default:
+      return null;
   }
-  return null;
 }
 
 mat.Widget _getRestaurantOrderIcon(value) {

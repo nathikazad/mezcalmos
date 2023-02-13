@@ -1,6 +1,55 @@
 table:
   name: details
   schema: delivery
+object_relationships:
+  - name: delivery_company
+    using:
+      foreign_key_constraint_on:
+        column: delivery_details_id
+        table:
+          name: company
+          schema: delivery
+  # - name: delivery_company
+  #   using:
+  #     manual_configuration:
+  #       column_mapping:
+  #         id: delivery_details_id
+  #       insertion_order: null
+  #       remote_table:
+  #         name: company
+  #         schema: delivery
+  - name: laundry
+    using:
+      foreign_key_constraint_on:
+        column: delivery_details_id
+        table:
+          name: store
+          schema: laundry
+  # - name: laundry
+  #   using:
+  #     manual_configuration:
+  #       column_mapping:
+  #         id: delivery_details_id
+  #       insertion_order: null
+  #       remote_table:
+  #         name: store
+  #         schema: laundry
+  - name: restaurant
+    using:
+      foreign_key_constraint_on:
+        column: delivery_details_id
+        table:
+          name: restaurant
+          schema: restaurant
+  # - name: restaurant
+  #   using:
+  #     manual_configuration:
+  #       column_mapping:
+  #         id: delivery_details_id
+  #       insertion_order: null
+  #       remote_table:
+  #         name: restaurant
+  #         schema: restaurant
 insert_permissions:
   - role: restaurant_operator
     permission:
@@ -51,6 +100,16 @@ select_permissions:
         - minimum_cost
         - radius
       filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - id
+        - cost_per_km
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - radius
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -90,8 +149,29 @@ update_permissions:
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
-      filter: {}
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       check: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - cost_per_km
+        - customer_pickup
+        - delivery_available
+        - free_delivery_km_range
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - radius
+        - self_delivery
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: mez_admin
     permission:
       columns:
@@ -113,9 +193,16 @@ update_permissions:
     permission:
       columns:
         - cost_per_km
+        - customer_pickup
+        - delivery_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
-      filter: {}
+        - self_delivery
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       check: {}

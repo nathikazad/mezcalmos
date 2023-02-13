@@ -97,20 +97,24 @@ extension ParseParticipantTypeToString on ParticipantType {
 class CallUserResponse {
   num uid;
   String token;
+  String? name;
+  String? image;
   String expirationTime;
   ParticipantType participantType;
   NotificationInfo? notificationInfo;
-  CallUserResponse(this.uid, this.token, this.expirationTime, this.participantType, this.notificationInfo);
+  CallUserResponse(this.uid, this.token, this.name, this.image, this.expirationTime, this.participantType, this.notificationInfo);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "uid": uid,
       "token": token,
+      "name": name,
+      "image": image,
       "expirationTime": expirationTime,
       "participantType": participantType,
       "notificationInfo": notificationInfo};
   }
 factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["uid"], json["token"], json["expirationTime"], json["participantType"], json["notificationInfo"]);
+   return CallUserResponse(json["uid"], json["token"], json["name?"], json["image?"], json["expirationTime"], json["participantType"], json["notificationInfo"]);
   }
 }
 
@@ -216,7 +220,7 @@ factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, PackageReady, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
+enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;

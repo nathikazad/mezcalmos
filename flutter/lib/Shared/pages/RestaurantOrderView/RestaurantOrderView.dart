@@ -76,7 +76,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
                 ROpOrderHandleButton(viewController: viewController),
                 if (viewController.order.value!.scheduledTime != null)
                   _getScheduleTime(),
-                ROpOrderEstTime(order: viewController.order.value!),
+                RestaurantOrderEstTime(order: viewController.order.value!),
                 if (viewController.order.value?.selfDelivery ?? false)
                   ROpEstDeliveryTime(order: viewController.order.value!),
                 ROpDriverCard(order: viewController.order.value!),

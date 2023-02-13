@@ -30,7 +30,7 @@ Future<List<Restaurant>> admin_get_restaurants(
           Restaurant(
               deliveryDetailsId: data.delivery_details_id,
               userInfo: ServiceInfo(
-                  location: Location.fromHasura(
+                  location: MezLocation.fromHasura(
                       data.location.gps, data.location.address),
                   hasuraId: data.id,
                   image: data.image,
@@ -68,7 +68,7 @@ Future<List<DeliveryCompany>> admin_get_dv_companies(
                   hasuraId: data.id,
                   image: data.image,
                   name: data.name,
-                  location: Location.fromHasura(
+                  location: MezLocation.fromHasura(
                       data.location.gps, data.location.address)),
               creationTime: DateTime.parse(data.creation_time),
               primaryLanguage: LanguageType.EN,

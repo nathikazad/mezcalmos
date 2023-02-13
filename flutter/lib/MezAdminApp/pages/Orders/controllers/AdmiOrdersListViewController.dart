@@ -28,14 +28,20 @@ class AdmiOrdersListViewController {
     this.adminTabsViewController = adminTabsViewController;
     restaurantOrders.value =
         await get_admin_restaurant_orders(inProcess: true, withCache: false);
+    adminTabsViewController.restOrdersCount.value =
+        restaurantOrders.value!.length;
+
     deliveryOrders.value =
         await get_admin_dv_orders(inProcess: true, withCache: false);
+    adminTabsViewController.dvOrdersCount.value = deliveryOrders.value!.length;
+
     subscriptionId = hasuraDb.createSubscription(start: () {
       rOrdersStream = listen_on_admin_restaurant_orders(inProcess: true)
           .listen((List<MinimalOrder>? event) {
         if (event != null) {
           restaurantOrders.value?.clear();
           restaurantOrders.value?.addAll(event);
+
           restaurantOrders.refresh();
         }
       });
@@ -44,6 +50,7 @@ class AdmiOrdersListViewController {
         if (event != null) {
           deliveryOrders.value?.clear();
           deliveryOrders.value?.addAll(event);
+
           deliveryOrders.refresh();
         }
       });
@@ -53,15 +60,5 @@ class AdmiOrdersListViewController {
       rOrdersStream?.cancel();
       rOrdersStream = null;
     });
-    await _startRestaurantOrders();
-  }
-
-  Future<void> _startRestaurantOrders() async {
-    subscriptionId = hasuraDb.createSubscription(
-        start: () {},
-        cancel: () {
-          rOrdersStream?.cancel();
-          rOrdersStream = null;
-        });
   }
 }

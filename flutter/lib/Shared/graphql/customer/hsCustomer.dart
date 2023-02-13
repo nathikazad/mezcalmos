@@ -63,7 +63,7 @@ Future<Customer?> get_customer({required int user_id}) async {
         SavedLocation(
           name: sLocation.name,
           id: sLocation.id,
-          location: Location(
+          location: MezLocation(
             sLocation.location_text,
             sLocation.location_gps.toLocationData(),
           ),
@@ -210,7 +210,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
             orderTime: DateTime.parse(_o.order_time),
             cost: _o.delivery_cost,
             restaurant: ServiceInfo(
-              location: Location(
+              location: MezLocation(
                 _o.restaurant.location.address,
                 _o.restaurant.location.gps.toLocationData(),
               ),
@@ -220,7 +220,7 @@ Future<List<RestaurantOrder>> get_customer_orders(
               name: _o.restaurant.name,
             ),
             customer: Get.find<AuthController>().user!,
-            to: Location(
+            to: MezLocation(
               _o.to_location_address!,
               _o.to_location_gps!.toLocationData(),
             ),

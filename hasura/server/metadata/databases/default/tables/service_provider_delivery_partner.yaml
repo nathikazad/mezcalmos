@@ -2,16 +2,49 @@ table:
   name: delivery_partner
   schema: service_provider
 object_relationships:
-  - name: service_provider
+  - name: laundry_store
     using:
-      foreign_key_constraint_on: service_provider_id
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
+  - name: restaurant
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: restaurant
+          schema: restaurant
 insert_permissions:
-  - role: restaurant_operator
+  - role: laundry_operator
     permission:
-      check: {}
+      check:
+        laundry_store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       columns:
         - delivery_company_id
         - service_provider_id
+        - service_provider_type
+  - role: restaurant_operator
+    permission:
+      check:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - delivery_company_id
+        - service_provider_id
+        - service_provider_type
 select_permissions:
   - role: delivery_operator
     permission:
@@ -19,6 +52,14 @@ select_permissions:
         - delivery_company_id
         - id
         - service_provider_id
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_company_id
+        - id
+        - service_provider_id
+        - service_provider_type
       filter: {}
   - role: mez_admin
     permission:
@@ -40,8 +81,22 @@ select_permissions:
         - id
         - delivery_company_id
         - service_provider_id
-      filter: {}
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
 update_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_company_id
+      filter:
+        laundry_store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
   - role: mez_admin
     permission:
       columns:
@@ -61,5 +116,9 @@ update_permissions:
     permission:
       columns:
         - delivery_company_id
-      filter: {}
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
       check: {}

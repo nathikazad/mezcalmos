@@ -76,7 +76,8 @@ class _PickLocationViewState extends State<PickLocationView> {
         geoCodeAndSetLocation(currentLatLng!);
       }).catchError((Object error) {
         if (error.runtimeType == TimeoutException) {
-          locationPickerController.location.value = Location.fromFirebaseData({
+          locationPickerController.location.value =
+              MezLocation.fromFirebaseData({
             "address": savedLocation!.location.address,
             "lat": 15.872141,
             "lng": -97.076737,
@@ -99,7 +100,8 @@ class _PickLocationViewState extends State<PickLocationView> {
           .timeout(Duration(seconds: 10))
           .then((GeoLoc.LocationData locData) {
         setState(() {
-          locationPickerController.location.value = Location.fromFirebaseData({
+          locationPickerController.location.value =
+              MezLocation.fromFirebaseData({
             "address": savedLocation!.location.address,
             "lat": savedLocation?.location.latitude,
             "lng": savedLocation?.location.longitude,
@@ -119,7 +121,7 @@ class _PickLocationViewState extends State<PickLocationView> {
 
     setState(() {
       locationPickerController.setLocation(
-        Location.fromFirebaseData(<String, dynamic>{
+        MezLocation.fromFirebaseData(<String, dynamic>{
           "address": address ??
               currentLoc.latitude.toString() + ", ${currentLoc.longitude}",
           "lat": currentLoc.latitude,
@@ -188,7 +190,7 @@ class _PickLocationViewState extends State<PickLocationView> {
 
   void setNewLocationOnController({required LatLng latlng, String? address}) {
     locationPickerController.setLocation(
-      Location.fromFirebaseData(<String, dynamic>{
+      MezLocation.fromFirebaseData(<String, dynamic>{
         "address": address ??
             latlng.latitude.toString() + ', ' + latlng.longitude.toString(),
         "lat": latlng.latitude,
@@ -293,7 +295,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           MezRouter.back<SavedLocation?>(result: savedLocation);
         }
       } else if (widget.pickLocationMode == PickLocationMode.NonLoggedInPick) {
-        MezRouter.back<Location>(
+        MezRouter.back<MezLocation>(
             result: locationPickerController.location.value);
       }
     }
@@ -319,7 +321,7 @@ class _PickLocationViewState extends State<PickLocationView> {
                 showSearchIcon: true,
                 text: locationPickerController.location.value?.address,
                 onClear: () {},
-                notifyParent: (Location? location) {
+                notifyParent: (MezLocation? location) {
                   setState(() {
                     // _locationAccessFailed = false;
                     locationPickerController.setLocation(location!);
@@ -336,25 +338,25 @@ class _PickLocationViewState extends State<PickLocationView> {
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.grey.shade200,
               ),
-              child:
-                  locationPickerController.location.value?.isValidLocation() ==
-                          true
-                      ? LocationPicker(
-                          showBottomButton: false,
-                          locationPickerMapController: locationPickerController,
-                          notifyParentOfConfirm: (_) {},
-                          notifyParentOfLocationFinalized: (Location location) {
-                            setState(() {
-                              locationPickerController.setLocation(location);
-                            });
-                          },
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                            strokeWidth: 1,
-                          ),
-                        ),
+              child: locationPickerController.location.value
+                          ?.isValidLocation() ==
+                      true
+                  ? LocationPicker(
+                      showBottomButton: false,
+                      locationPickerMapController: locationPickerController,
+                      notifyParentOfConfirm: (_) {},
+                      notifyParentOfLocationFinalized: (MezLocation location) {
+                        setState(() {
+                          locationPickerController.setLocation(location);
+                        });
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.black,
+                        strokeWidth: 1,
+                      ),
+                    ),
             ),
           ),
         ],

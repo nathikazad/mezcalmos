@@ -3,7 +3,8 @@ import { getHasura } from "../../../../utilities/hasura";
 import { AppType, CustomerAppType, Language, Location } from "../../../models/Generic/Generic";
 import { DeliveryType, PaymentType } from "../../../models/Generic/Order";
 import { OrderItem, RestaurantOrder, RestaurantOrderStatus } from "../../../models/Services/Restaurant/RestaurantOrder";
-import { Operator, OperatorStatus } from "../../../models/Services/Service";
+import { Operator } from "../../../models/Services/Service";
+import { AuthorizationStatus } from "../../../models/Generic/Generic"
 
 export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrder> {
   let chain = getHasura();
@@ -289,7 +290,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         userId: r.user_id,
         serviceProviderId: o.restaurant_id,
         
-        status: r.operator_details.status as OperatorStatus,
+        status: r.operator_details.status as AuthorizationStatus,
         owner: r.operator_details.owner,
         notificationInfo: (r.operator_details.notification_info) ? {
           AppTypeId: AppType.RestaurantApp,

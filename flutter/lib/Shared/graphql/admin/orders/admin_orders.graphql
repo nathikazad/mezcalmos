@@ -6,7 +6,7 @@ subscription admin_listen_on_dv_orders(
 ) {
   delivery_order(
     where: {
-    service_provider_type : {_eq: "delivery_company"},
+    service_provider_type : {_eq: "deliveryCompany"},
       in_process: { _eq: $inProccess }
     }
   ) {
@@ -30,7 +30,7 @@ subscription admin_listen_on_dv_orders(
 query admin_get_dv_orders( $inProccess: Boolean!) {
   delivery_order(
     where: {
-      service_provider_type : {_eq: "delivery_company"},
+      service_provider_type : {_eq: "deliveryCompany"},
       in_process: { _eq: $inProccess }
     }
   ) {

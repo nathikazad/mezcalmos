@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -52,6 +53,9 @@ class _MezButtonState extends State<MezButton> {
             onTap:
                 (!isLoading.value && widget.enabled && widget.onClick != null)
                     ? () {
+                        HapticFeedback.lightImpact();
+                        SystemSound.play(SystemSoundType.click);
+
                         isLoading.value = true;
                         widget.onClick
                             ?.call()
@@ -104,7 +108,7 @@ class _MezButtonState extends State<MezButton> {
                             child: Text(
                               widget.label,
                               style: widget.textStyle ??
-                                  Get.textTheme.bodyText1?.copyWith(
+                                  Get.textTheme.bodyLarge?.copyWith(
                                       color: widget.textColor ?? Colors.white),
                             ),
                           ),
