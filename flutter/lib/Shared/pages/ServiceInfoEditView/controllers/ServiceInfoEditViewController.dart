@@ -199,16 +199,16 @@ class RestauarantInfoEditViewController extends ServiceInfoEditViewController {
 
   @override
   Future<void> updateServiceInfo() async {
-    service.value = await update_restaurant_info(
-        id: serviceId,
-        restaurant: restaurant!.copyWith(
-          primaryLanguage: primaryLang.value,
-          userInfo: restaurant!.info.copyWith(
-              name: serviceNameTxt.text,
-              location: newLocation.value,
-              image: newImageUrl.value,
-              descId: newDescId),
-        ));
+    // service.value = await update_restaurant_info(
+    //     id: serviceId,
+    //     restaurant: restaurant!.copyWith(
+    //       primaryLanguage: primaryLang.value,
+    //       userInfo: restaurant!.info.copyWith(
+    //           name: serviceNameTxt.text,
+    //           location: newLocation.value,
+    //           image: newImageUrl.value,
+    //           descId: newDescId),
+    //     ));
     return super.updateServiceInfo();
   }
 }
@@ -224,15 +224,16 @@ class DeliveryInfoEditViewController extends ServiceInfoEditViewController {
 
   @override
   Future<void> updateServiceInfo() async {
-    service.value = await update_delivery_company(
-        companyId: serviceId,
-        deliveryCompany: dvCompany!.copyWith(
-          primaryLanguage: primaryLang.value,
-          userInfo: dvCompany!.info.copyWith(
-              name: serviceNameTxt.text,
-              location: newLocation.value,
-              image: newImageUrl.value,
-              descId: newDescId),
-        ));
+    // service.value = await update_delivery_company(
+    //     companyId: serviceId,
+    //     deliveryCompany: dvCompany!.copyWith(
+    //       primaryLanguage: primaryLang.value,
+    //       userInfo: dvCompany!.info.copyWith(
+    //           name: serviceNameTxt.text,
+    //           location: newLocation.value,
+    //           image: newImageUrl.value,
+    //           descId: newDescId),
+    //     ));
   }
 }
+  // TODO @m66are RFC

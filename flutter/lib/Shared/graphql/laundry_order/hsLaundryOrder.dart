@@ -149,7 +149,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
         name: orderData.customer.user.name,
         image: orderData.customer.user.image,
       ),
-      laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.location.gps, orderData.store.location.address), hasuraId: orderData.store_id, image: orderData.store.image, name: orderData.store.name),
+      laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address), hasuraId: orderData.store_id, image: orderData.store.details!.image, name: orderData.store.details!.name),
       shippingCost: orderData.delivery_cost,
       chatId: orderData.chat_id!);
 }
@@ -220,7 +220,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
             name: orderData.customer.user.name,
             image: orderData.customer.user.image,
           ),
-          laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.location.gps, orderData.store.location.address), hasuraId: orderData.store_id, image: orderData.store.image, name: orderData.store.name),
+          laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address), hasuraId: orderData.store_id, image: orderData.store.details!.image, name: orderData.store.details!.name),
           shippingCost: orderData.delivery_cost,
           chatId: orderData.chat_id!);
     }

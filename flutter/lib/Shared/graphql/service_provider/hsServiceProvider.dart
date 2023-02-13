@@ -3,7 +3,6 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/__generated/service_provider.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
@@ -32,8 +31,6 @@ Future<ServiceLink?> get_service_link_by_id(
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
         id: data.id,
-        serivceProviderId: data.service_provider_id,
-        serviceProviderType: data.service_provider_type.toOrderType(),
         driverDeepLink: data.driver_deep_link,
         driverQrImageLink: data.driver_qr_image_link,
         operatorDeepLink: data.operator_deep_link,

@@ -5,8 +5,8 @@ query getServiceProviderLinks($serviceProviderId: Int!) {
     driver_qr_image_link
     operator_deep_link
     operator_qr_image_link
-    service_provider_id
-    service_provider_type
+    # service_provider_id
+    # service_provider_type
   }
 }
 

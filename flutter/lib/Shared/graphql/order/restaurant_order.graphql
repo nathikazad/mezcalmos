@@ -8,7 +8,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
 
     restaurant {
       id
-      details {
+      details{ id
         firebase_id
         image
         language
@@ -129,7 +129,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
-      details {
+      details{ id
         firebase_id
         image
         language

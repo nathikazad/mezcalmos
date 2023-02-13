@@ -12,7 +12,7 @@ query get_driver_order($orderId: Int!) {
     current_gps
     delivery_company {
       id
-     details {
+     details{ id
        image
       name
       service_provider_type
@@ -34,7 +34,7 @@ query get_driver_order($orderId: Int!) {
       stripe_info
       restaurant {
         id
-        details{firebase_id 
+        details{ id firebase_id 
         image
         name
         location {
@@ -45,26 +45,26 @@ query get_driver_order($orderId: Int!) {
     }
     laundry {
       id
-      image
+     details{ id image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
     laundry_pickup_order {
       id
       stripe_info
       store {
         id
-        image
+       details{ id image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
     laundry_delivery_order {
@@ -72,12 +72,12 @@ query get_driver_order($orderId: Int!) {
       stripe_info
       store {
         id
-        image
+       details{ id image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
     order_time
@@ -88,7 +88,7 @@ query get_driver_order($orderId: Int!) {
 
     restaurant {
       id
-    details{  firebase_id
+    details{ id  firebase_id
       image
       name
       location {
@@ -148,26 +148,26 @@ subscription listen_on_driver_order($orderId: Int!) {
     }
     laundry {
       id
-      image
+    details{ id  image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
     laundry_pickup_order {
       id
       stripe_info
       store {
         id
-        image
+      details{ id  image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
     laundry_delivery_order {
@@ -175,12 +175,12 @@ subscription listen_on_driver_order($orderId: Int!) {
       stripe_info
       store {
         id
-        image
+       details{ id image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
 
@@ -188,7 +188,7 @@ subscription listen_on_driver_order($orderId: Int!) {
       id
       stripe_info
       restaurant {
-     details{   firebase_id
+     details{ id   firebase_id
         id
         image
         name
@@ -204,7 +204,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     delivery_cost
     delivery_company {
       id
-      details {
+      details{ id
        image
       name
       service_provider_type
@@ -224,7 +224,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     pickup_gps
     restaurant {
       id
-    details{  firebase_id
+    details{ id  firebase_id
       image
       name
       location {
@@ -271,7 +271,7 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-   details{   firebase_id
+   details{ id   firebase_id
       image
       name
       location {
@@ -306,7 +306,7 @@ query get_past_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-    details{  firebase_id
+    details{ id  firebase_id
       image
       name
       location {
@@ -337,7 +337,7 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-     details{ firebase_id
+     details{ id firebase_id
       image
       name
       location {
@@ -371,7 +371,7 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details {firebase_id
+     details{ id firebase_id
       image
       name
       location {
@@ -405,7 +405,7 @@ query get_delivery_company_past_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details{ firebase_id
+     details{ id firebase_id
       image
       name
       location {
@@ -439,7 +439,7 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details{ firebase_id
+     details{ id firebase_id
       image
       name
       location {
@@ -464,9 +464,9 @@ query get_pick_driver_order($orderId: Int!) {
     current_gps
     delivery_company {
       id
-      image
+     details{ id image
       name
-      service_provider_type
+      service_provider_type}
     }
 
     delivery_cost

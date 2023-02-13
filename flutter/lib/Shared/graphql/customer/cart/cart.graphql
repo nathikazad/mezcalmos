@@ -41,10 +41,12 @@ query getCustomerCart($customer_id: Int!) {
       minimum_cost
       radius
     }
+    delivery_details_id
+    details_id
 details {
   stripe_info
         accepted_payments
-delivery_details_id
+
         firebase_id
         image
         language
@@ -150,7 +152,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       restaurant_id
       restaurant {
         id
-
+details_id
  delivery_details_of_deliverer{
          cost_per_km
       free_delivery_km_range
@@ -159,8 +161,9 @@ subscription listen_on_customer_cart($customer_id: Int!) {
       minimum_cost
       radius
     }
-   details {
-     delivery_details_id
+    delivery_details_id
+   details{ id
+     
         firebase_id
         name
         stripe_info

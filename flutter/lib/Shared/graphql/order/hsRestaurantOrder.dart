@@ -151,13 +151,13 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         cost: orderData.delivery_cost,
         restaurant: ServiceInfo(
           location: MezLocation(
-            orderData.restaurant.location.address,
-            orderData.restaurant.location.gps.toLocationData(),
+            orderData.restaurant.details!.location.address,
+            orderData.restaurant.details!.location.gps.toLocationData(),
           ),
-          firebaseId: orderData.restaurant.firebase_id,
+          firebaseId: orderData.restaurant.details!.firebase_id,
           hasuraId: orderData.restaurant.id,
-          image: orderData.restaurant.image,
-          name: orderData.restaurant.name,
+          image: orderData.restaurant.details!.image,
+          name: orderData.restaurant.details!.name,
         ),
         dropoffDriver: (orderData.delivery?.delivery_driver != null)
             ? DeliveryDriverUserInfo(
@@ -342,13 +342,13 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
         : null,
     restaurant: ServiceInfo(
       location: MezLocation(
-        orderData.restaurant.location.address,
-        orderData.restaurant.location.gps.toLocationData(),
+        orderData.restaurant.details!.location.address,
+        orderData.restaurant.details!.location.gps.toLocationData(),
       ),
-      firebaseId: orderData.restaurant.firebase_id,
+      firebaseId: orderData.restaurant.details!.firebase_id,
       hasuraId: orderData.restaurant.id,
-      image: orderData.restaurant.image,
-      name: orderData.restaurant.name,
+      image: orderData.restaurant.details!.image,
+      name: orderData.restaurant.details!.name,
     ),
     deliveryOrderId: orderData.delivery_id,
     customer: UserInfo(

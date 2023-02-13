@@ -22,6 +22,12 @@ array_relationships:
         table:
           name: operator
           schema: laundry
+computed_fields:
+  - name: delivery_details_of_deliverer
+    definition:
+      function:
+        name: laundry_delivery_details
+        schema: public
 select_permissions:
   - role: customer
     permission:

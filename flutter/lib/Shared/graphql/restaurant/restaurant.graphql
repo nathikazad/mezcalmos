@@ -10,7 +10,7 @@ query getRestaurants {
       radius
       self_delivery
     }
-    details {
+    details{ id
       image
       language
 
@@ -62,9 +62,10 @@ query getOneRestaurant($id: Int!) {
       radius
       self_delivery
     }
-    details {
+    delivery_details_id
+    details{ id
       firebase_id
-      delivery_details_id
+      
       location_id
       image
       language
@@ -90,28 +91,28 @@ query getOneRestaurant($id: Int!) {
 }
 query getRestaurantStatus($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details {
+    details{ id
       open_status
     }
   }
 }
 query getRestaurantSchedule($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details {
+    details{ id
       schedule
     }
   }
 }
 query getRestaurantAprroved($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details {
+    details{ id
       approved
     }
   }
 }
 query getRestaurantPaymentInfo($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details {
+    details{ id
       stripe_info
       accepted_payments
     }
@@ -123,20 +124,20 @@ query getRestaurantPaymentInfo($id: Int!) {
 #     pk_columns: { id: $restauarntId }
 #     _set: { self_delivery: $value }
 #   ) {
-#     details {
+#     details{ id
 #       id
 #       self_delivery
 #     }
 #   }
 # }
 mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
-  update_restaurant_restaurant_by_pk(
+  update_service_provider_details_by_pk(
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-    details {
+
       open_status
-    }
+   
   }
 }
 
@@ -155,7 +156,7 @@ mutation updateRestaurantInfo(
       minimum_cost
       radius
     }
-    details {
+    details{ id
       firebase_id
       location_id
       image
@@ -182,7 +183,7 @@ mutation updateRestaurantInfo(
 }
 query getRestaurantLang($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details {
+    details{ id
       language
     }
   }
@@ -274,7 +275,7 @@ query getRestaurantOperators($restaurantId: Int!) {
 # get average rating
 query get_restaurant_review_average($restaurantId: Int!) {
   restaurant_restaurant_by_pk(id: $restaurantId) {
-  details {
+  details{ id
       reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
       aggregate {
         avg {
@@ -288,7 +289,7 @@ query get_restaurant_review_average($restaurantId: Int!) {
 # get restaurant reviews
 query get_restaurant_reviews($restaurantId: Int!) {
   restaurant_restaurant_by_pk(id: $restaurantId) {
-    details {
+    details{ id
       reviews(where: { from_entity_type: { _eq: "customer" } }) {
       from_entity_id
       from_entity_type

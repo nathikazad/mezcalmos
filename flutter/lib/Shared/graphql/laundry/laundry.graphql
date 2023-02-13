@@ -2,22 +2,22 @@ query getLaundries {
   laundry_store {
     id
     normal_delivery_time
-    details {
+    delivery_details_id
+    normal_delivery_time
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      self_delivery
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      radius
+    }
+    details{ id
+      location_id
+
       image
       language
-
-      location_id
-      delivery_details_id
-      normal_delivery_time
-      delivery_details_of_deliverer {
-        cost_per_km
-        free_delivery_km_range
-        self_delivery
-        free_delivery_minimum_cost
-        id
-        minimum_cost
-        radius
-      }
       name
       location {
         gps
@@ -46,10 +46,10 @@ query getLaundries {
 query getLaundryStoreById($id: Int!) {
   laundry_store_by_pk(id: $id) {
     id
-    location_id
+
     delivery_details_id
     normal_delivery_time
-    delivery_details_id
+
     delivery_details_of_deliverer {
       cost_per_km
       free_delivery_km_range
@@ -59,32 +59,37 @@ query getLaundryStoreById($id: Int!) {
       self_delivery
       radius
     }
+    details{ id
+      location_id
 
-    image
-    language_id
-    description_id
-    location {
-      gps
-      address
-    }
-    # self_delivery
-    accepted_payments
-    stripe_info
-    name
-    description {
-      translations {
-        language_id
-        value
+      image
+      language
+      description_id
+      location {
+        gps
+        address
       }
+
+      accepted_payments
+      stripe_info
+      name
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      schedule
+      open_status
     }
-    approved
-    schedule
-    open_status
   }
 }
 query getLaundryStatus($id: Int!) {
   laundry_store_by_pk(id: $id) {
-    open_status
+    details{ id
+      open_status
+    }
   }
 }
 query getLaundryDays($id: Int!) {
@@ -98,7 +103,9 @@ mutation switchLaundryAvailability($restauarntId: Int!, $value: String) {
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-    open_status
+    details{ id
+      open_status
+    }
   }
 }
 
@@ -106,7 +113,6 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
   update_laundry_store_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
 
-    location_id
     normal_delivery_time
     delivery_details_id
     delivery_details_of_deliverer {
@@ -118,25 +124,28 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
       self_delivery
       radius
     }
-    image
-    language_id
-    location {
-      gps
-      address
-    }
-    accepted_payments
-    stripe_info
-    name
-    schedule
-    description {
-      translations {
-        language_id
-        value
+    details{ id
+      location_id
+      image
+      language
+      location {
+        gps
+        address
       }
+      accepted_payments
+      stripe_info
+      name
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      open_status
+      schedule
     }
-    approved
-    open_status
-    schedule
   }
 }
 

@@ -82,10 +82,10 @@ query get_customer_restaurant_orders($customer_id: Int!) {
     id
     restaurant {
       id
-      details {
+      details{ id
         firebase_id
         image
-        language_id
+        language
         location {
           gps
           address
@@ -133,7 +133,7 @@ query get_customer_restaurant_orders($customer_id: Int!) {
     review_id
 
     order_time
-    
+
     customer_app_type
     notes
     tax
@@ -168,8 +168,10 @@ subscription listenOnCustomerRestaurantInProcessOrders(
     total_cost
     to_location_address
     restaurant {
-      name
-      image
+      details{ id
+        name
+        image
+      }
     }
   }
 }
@@ -190,8 +192,10 @@ subscription listenOnCustomerLaundryInProcessOrders(
     # total_cost
     customer_address
     store {
-      name
-      image
+      details{ id
+        name
+        image
+      }
     }
   }
 }
@@ -212,8 +216,10 @@ query getCustomerRestaurantInProcessOrders(
     total_cost
     to_location_address
     restaurant {
-      name
-      image
+      details{ id
+        name
+        image
+      }
     }
   }
 }
@@ -234,8 +240,10 @@ query getCustomerLaundryInProcessOrders(
     # total_cost
     customer_address
     store {
-      name
-      image
+      details{ id
+        name
+        image
+      }
     }
   }
 }

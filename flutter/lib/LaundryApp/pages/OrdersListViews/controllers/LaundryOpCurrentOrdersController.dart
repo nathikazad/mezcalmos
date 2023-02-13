@@ -71,13 +71,13 @@ class LaundryOpCurrentOrdersController {
   }
 
   Future<void> turnOffOrders() async {
-    _serviceStatus.value = await update_laundry_status(
-        id: laundryId, status: ServiceStatus.Closed_temporarily);
+    // _serviceStatus.value = await update_laundry_status(
+    //     id: laundryId, status: ServiceStatus.Closed_temporarily);
   }
 
   Future<void> turnOnOrders() async {
-    _serviceStatus.value =
-        await update_laundry_status(id: laundryId, status: ServiceStatus.Open);
+    // _serviceStatus.value =
+    //     await update_laundry_status(id: laundryId, status: ServiceStatus.Open);
   }
 
   void dispose() {

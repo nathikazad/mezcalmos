@@ -1,12 +1,15 @@
 query getDeliveryCompanyById($id: Int!) {
   delivery_company_by_pk(id: $id) {
     id
-    details {
+    details{ id
+      id
       approved
       description_id
       image
       location_id
       name
+      language
+      
       open_status
       creation_time
       service_provider_type
@@ -17,48 +20,52 @@ query getDeliveryCompanyById($id: Int!) {
           value
         }
       }
-    }
-    location {
+       location {
       gps
       address
     }
+    }
+   
   }
 }
-mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
-  update_delivery_company_by_pk(pk_columns: { id: $id }, _set: $data) {
-    id
-    details {
-      approved
-      description_id
-      image
-      location_id
-      name
-      open_status
-      creation_time
-      service_provider_type
-      description {
-        id
-        translations {
-          language_id
-          value
-        }
-      }
-    }
-    location {
-      gps
-      address
-    }
-  }
-}
+
+# mutation updateDeliveryCompany($id: Int!, $data: delivery_company_set_input) {
+#   update_service_provider_company_by_pk(pk_columns: { id: $id }, _set: $data) {
+#     id
+#     details{ id
+#       approved
+#       description_id
+#       image
+#       location_id
+#       name
+#       open_status
+#       creation_time
+#       service_provider_type
+#       description {
+#         id
+#         translations {
+#           language_id
+#           value
+#         }
+#       }
+#        location {
+#       gps
+#       address
+#     }
+#     }
+   
+#   }
+# }
 query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
   delivery_get_delivery_companies(args: $args) {
     id
-    details {
+    details{ id
       approved
       description_id
       image
       location_id
       name
+      language
       open_status
       creation_time
       service_provider_type
@@ -69,10 +76,11 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
           value
         }
       }
-    }
-    location {
+      location {
       gps
       address
     }
+    }
+    
   }
 }

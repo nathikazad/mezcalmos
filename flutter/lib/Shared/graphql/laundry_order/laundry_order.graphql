@@ -48,7 +48,7 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
 
     store_id
     store {
-      details {
+      details{ id
         name
         image
         location {
@@ -154,7 +154,7 @@ query get_laundry_order_by_id($orderId: Int!) {
     }
     store_id
     store {
-      details {
+      details{ id
         name
         image
         location {

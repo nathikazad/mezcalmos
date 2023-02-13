@@ -22,6 +22,9 @@ query getLaundryOperatorByUserId($userId: Int!) {
 }
 subscription laundryOperatorStatusStream($userId: Int!) {
   laundry_operator(where: {user_id: {_eq: $userId}}) {
+      operator_details {
+  
     status
+    }
   }
 }

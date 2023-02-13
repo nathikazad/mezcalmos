@@ -6139,6 +6139,12 @@ the end). throws an error if top level container is not an array */
 	/** An object relationship */
 	delivery_details?:ValueTypes["delivery_details"],
 	delivery_details_id?:true,
+delivery_details_of_deliverer?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
 	/** An object relationship */
 	details?:ValueTypes["service_provider_details"],
 	details_id?:true,
@@ -6197,6 +6203,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	_or?:ValueTypes["laundry_store_bool_exp"][],
 	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
+	delivery_details_of_deliverer?:ValueTypes["delivery_details_bool_exp"],
 	details?:ValueTypes["service_provider_details_bool_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -6271,6 +6278,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 ["laundry_store_order_by"]: {
 	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
+	delivery_details_of_deliverer_aggregate?:ValueTypes["delivery_details_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -23624,6 +23632,8 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	delivery_details?:PartialObjects["delivery_details"],
 			delivery_details_id?:number,
+			/** A computed field, executes function "laundry_delivery_details" */
+	delivery_details_of_deliverer?:PartialObjects["delivery_details"][],
 			/** An object relationship */
 	details?:PartialObjects["service_provider_details"],
 			details_id?:number,
@@ -23673,6 +23683,7 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["laundry_store_bool_exp"][],
 	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
+	delivery_details_of_deliverer?:PartialObjects["delivery_details_bool_exp"],
 	details?:PartialObjects["service_provider_details_bool_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -23747,6 +23758,7 @@ the end). throws an error if top level container is not an array */
 ["laundry_store_order_by"]: {
 	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
+	delivery_details_of_deliverer_aggregate?:PartialObjects["delivery_details_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -40871,6 +40883,8 @@ export type laundry_store = {
 	/** An object relationship */
 	delivery_details:delivery_details,
 	delivery_details_id:number,
+	/** A computed field, executes function "laundry_delivery_details" */
+	delivery_details_of_deliverer?:delivery_details[],
 	/** An object relationship */
 	details?:service_provider_details,
 	details_id:number,
@@ -40924,6 +40938,7 @@ export type laundry_store_bool_exp = {
 	_or?:laundry_store_bool_exp[],
 	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
+	delivery_details_of_deliverer?:delivery_details_bool_exp,
 	details?:service_provider_details_bool_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
@@ -41011,6 +41026,7 @@ export type laundry_store_on_conflict = {
 export type laundry_store_order_by = {
 		delivery_details?:delivery_details_order_by,
 	delivery_details_id?:order_by,
+	delivery_details_of_deliverer_aggregate?:delivery_details_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
 	id?:order_by,
@@ -66361,6 +66377,38 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_store:{
+		delivery_details_of_deliverer:{
+			distinct_on:{
+				type:"delivery_details_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"delivery_details_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"delivery_details_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		operators:{
 			distinct_on:{
 				type:"laundry_operator_select_column",
@@ -66469,6 +66517,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_details_id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_of_deliverer:{
+			type:"delivery_details_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -66636,6 +66690,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_details_id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_details_of_deliverer_aggregate:{
+			type:"delivery_details_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -102051,6 +102111,7 @@ export const ReturnTypes: Record<string,any> = {
 	laundry_store:{
 		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
+		delivery_details_of_deliverer:"delivery_details",
 		details:"service_provider_details",
 		details_id:"Int",
 		id:"Int",

@@ -211,13 +211,13 @@ Future<List<RestaurantOrder>> get_customer_orders(
             cost: _o.delivery_cost,
             restaurant: ServiceInfo(
               location: MezLocation(
-                _o.restaurant.location.address,
-                _o.restaurant.location.gps.toLocationData(),
+                _o.restaurant.details!.location.address,
+                _o.restaurant.details!.location.gps.toLocationData(),
               ),
-              firebaseId: _o.restaurant.firebase_id,
+              firebaseId: _o.restaurant.details!.firebase_id,
               hasuraId: _o.restaurant.id,
-              image: _o.restaurant.image,
-              name: _o.restaurant.name,
+              image: _o.restaurant.details!.image,
+              name: _o.restaurant.details!.name,
             ),
             customer: Get.find<AuthController>().user!,
             to: MezLocation(
@@ -288,8 +288,8 @@ Stream<List<MinimalOrder>?> listen_on_customer_rest_orders(
                       id: order.id,
                       toAdress: order.to_location_address,
                       orderTime: DateTime.parse(order.order_time),
-                      title: order.restaurant.name,
-                      image: order.restaurant.image,
+                      title: order.restaurant.details!.name,
+                      image: order.restaurant.details!.image,
                       status: order.status
                           .toRestaurantOrderStatus()
                           .toMinimalOrderStatus(),
@@ -327,8 +327,8 @@ Stream<List<MinimalOrder>?> listen_on_customer_laundry_orders(
                       id: order.id,
                       toAdress: order.customer_address,
                       orderTime: DateTime.parse(order.order_time),
-                      title: order.store.name,
-                      image: order.store.image,
+                      title: order.store.details!.name,
+                      image: order.store.details!.image,
                       status: order.status
                           .toLaundryOrderStatus()
                           .toMinimalOrderStatus(),
@@ -365,8 +365,8 @@ Future<List<MinimalOrder>?> get_customer_rest_orders(
                 id: order.id,
                 toAdress: order.to_location_address,
                 orderTime: DateTime.parse(order.order_time),
-                title: order.restaurant.name,
-                image: order.restaurant.image,
+                title: order.restaurant.details!.name,
+                image: order.restaurant.details!.image,
                 status: order.status
                     .toRestaurantOrderStatus()
                     .toMinimalOrderStatus(),
@@ -398,8 +398,8 @@ Future<List<MinimalOrder>?> get_customer_laundry_orders(
                 id: order.id,
                 toAdress: order.customer_address,
                 orderTime: DateTime.parse(order.order_time),
-                title: order.store.name,
-                image: order.store.image,
+                title: order.store.details!.name,
+                image: order.store.details!.image,
                 status: order.status
                     .toRestaurantOrderStatus()
                     .toMinimalOrderStatus(),

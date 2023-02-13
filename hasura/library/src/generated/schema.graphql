@@ -8956,6 +8956,26 @@ type laundry_store {
   delivery_details: delivery_details!
   delivery_details_id: Int!
 
+  """
+  A computed field, executes function "laundry_delivery_details"
+  """
+  delivery_details_of_deliverer(
+    """distinct select on columns"""
+    distinct_on: [delivery_details_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_details_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_details_bool_exp
+  ): [delivery_details!]
+
   """An object relationship"""
   details: service_provider_details
   details_id: Int!
@@ -9046,6 +9066,7 @@ input laundry_store_bool_exp {
   _or: [laundry_store_bool_exp!]
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
+  delivery_details_of_deliverer: delivery_details_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -9159,6 +9180,7 @@ input laundry_store_on_conflict {
 input laundry_store_order_by {
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
+  delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
