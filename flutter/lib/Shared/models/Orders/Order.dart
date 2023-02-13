@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
+    as cloudFunctionModels;
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -16,7 +18,7 @@ abstract class Order {
   DateTime orderTime;
   UserInfo customer;
   UserInfo? serviceProvider;
-  Location to;
+  MezLocation to;
   num cost;
   RouteInformation? routeInformation;
   StripeOrderPaymentInfo? stripePaymentInfo;
@@ -84,7 +86,6 @@ abstract class Order {
     }
   }
 // Order.orderFromData(dynamic orderId, dynamic orderData){
-
 }
 
 // ignore: constant_identifier_names
@@ -99,6 +100,19 @@ extension ParseOrderTypeToString on OrderType {
   String toFirebaseFormatString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  cloudFunctionModels.OrderType toCloudFunctionsModel() {
+    switch (this) {
+      case OrderType.Laundry:
+        return cloudFunctionModels.OrderType.Laundry;
+      case OrderType.Restaurant:
+        return cloudFunctionModels.OrderType.Restaurant;
+      case OrderType.Taxi:
+        return cloudFunctionModels.OrderType.Taxi;
+      case OrderType.Water:
+        return cloudFunctionModels.OrderType.Water;
+    }
   }
 
   String toPlural() {

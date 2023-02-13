@@ -2,35 +2,44 @@ query getLaundries {
   laundry_store {
     id
     normal_delivery_time
-details {
+    details {
       image
-    language
-    
-    location_id
-    delivery_details_id
-    normal_delivery_time
-    name
-    location {
-      gps
-      address
-    }
+      language
 
-    approved
-
-    description_id
-    schedule
-    description {
-      translations {
-        language_id
-        value
+      location_id
+      delivery_details_id
+      normal_delivery_time
+      delivery_details_of_deliverer {
+        cost_per_km
+        free_delivery_km_range
+        self_delivery
+        free_delivery_minimum_cost
+        id
+        minimum_cost
+        radius
       }
+      name
+      location {
+        gps
+        address
+      }
+
+      approved
+
+      description_id
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      accepted_payments
+      stripe_info
+      # self_delivery
+      open_status
+      schedule
     }
-    accepted_payments
-    stripe_info
-    # self_delivery
-    open_status
-    schedule
-}
   }
 }
 
@@ -40,6 +49,16 @@ query getLaundryStoreById($id: Int!) {
     location_id
     delivery_details_id
     normal_delivery_time
+    delivery_details_id
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      self_delivery
+      radius
+    }
 
     image
     language_id
@@ -89,7 +108,16 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
 
     location_id
     normal_delivery_time
-
+    delivery_details_id
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      self_delivery
+      radius
+    }
     image
     language_id
     location {

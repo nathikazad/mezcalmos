@@ -13,7 +13,6 @@ import { changeLaundryOrderStatus } from "./laundryStatusChange";
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
   DeliveryOrderStatus.OnTheWayToPickup,
-  DeliveryOrderStatus.PackageReady,
   DeliveryOrderStatus.AtPickup,
   DeliveryOrderStatus.OnTheWayToDropoff,
   DeliveryOrderStatus.AtDropoff,
@@ -23,7 +22,7 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
     && (currentStatus != DeliveryOrderStatus.OrderReceived)
-    && (currentStatus != DeliveryOrderStatus.PackageReady)
+   
   ) {
     throw new HttpsError(
       "internal",

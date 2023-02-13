@@ -23,6 +23,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/agoraController.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -293,6 +294,7 @@ class _StartingPointState extends State<StartingPoint> {
     Stripe.publishableKey =
         _launchMode == AppLaunchMode.prod ? stripePubProdKey : stripePubTestKey;
     Stripe.instance.applySettings();
+    Get.put<Sagora>(Sagora(), permanent: true);
   }
 
   void hookOnFlutterErrorsStdout() {

@@ -109,6 +109,20 @@ update_permissions:
             id:
               _eq: X-Hasura-User-Id
       check: null
+  - role: laundry_operator
+    permission:
+      columns:
+        - messages
+      filter:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
+      check:
+        chat_participants:
+          user:
+            id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

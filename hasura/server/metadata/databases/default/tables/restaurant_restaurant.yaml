@@ -2,6 +2,9 @@ table:
   name: restaurant
   schema: restaurant
 object_relationships:
+  - name: delivery_details
+    using:
+      foreign_key_constraint_on: delivery_details_id
   - name: details
     using:
       manual_configuration:
@@ -55,43 +58,52 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
       filter: {}
   - role: customer
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
       filter: {}
   - role: delivery_driver
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
       filter: {}
   - role: delivery_operator
     permission:
       columns:
+        - delivery_details_id
+        - details_id
+        - id
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
         - id
       filter: {}
   - role: mez_admin
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
-      filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: restaurant_operator
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
-      filter:
-        restaurant_operators:
-          user_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: mez_admin
     permission:
@@ -108,8 +120,7 @@ update_permissions:
       check: null
   - role: restaurant_operator
     permission:
-      columns:
-        - id
+      columns: []
       filter:
         restaurant_operators:
           user_id:

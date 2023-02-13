@@ -34,7 +34,6 @@ class MessageController extends GetxController {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
     appType = Get.find<SettingsController>().appType;
-    
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
@@ -73,35 +72,19 @@ class MessageController extends GetxController {
     });
   }
 
-  bool isUserAuthorizedToCall() {
-    return [AppType.CustomerApp, AppType.DeliveryApp].contains(appType);
+  bool isInAppCallFeatureAvailable() {
+    // This will be false for chats of type group
+    return true;
   }
 
   Future<void> sendMessage({
     required String message,
     required int chatId,
-    // OrderType? orderType,
-    // int? orderId,
   }) async {
     final DatabaseReference messageNode = _databaseHelper.firebaseDatabase
         .ref()
         .child(messagesNode(chatId.toString()))
         .push();
-
-    // messages => _append => messages
-    //TODO: write to hasura messages
-    // messageNode.set(<String, dynamic>{
-    //   "message": message,
-    //   "userId": _authController.user!.id,
-    //   "participantType": _settingsController.appType
-    //       .toParticipantTypefromAppType()
-    //       .toFirebaseFormattedString(),
-    //   "timestamp": DateTime.now().toUtc().toString(),
-    //   "chatId": chatId,
-    //   "orderId": orderId
-    // }).onError((Object? error, StackTrace stackTrace) {
-    //   mezDbgPrint(stackTrace);
-    // });
 
     await send_message(chat_id: chatId, msg:
         // timestamp as key
@@ -124,71 +107,6 @@ class MessageController extends GetxController {
               _settingsController.appType.toParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
   }
-
-  Future<void> callUser(
-      {required String chatId,
-      required Participant callee,
-      String? orderId}) async {
-    return sendUserCallNotification(
-        chatId: chatId,
-        callee: callee,
-        callNotificationType: CallNotificationtType.Incoming);
-  }
-
-  Future<void> endCall(
-      {required String chatId,
-      required Participant callee,
-      String? orderId}) async {
-    return sendUserCallNotification(
-        chatId: chatId,
-        callee: callee,
-        callNotificationType: CallNotificationtType.EndCall);
-  }
-
-  Future<void> sendUserCallNotification(
-      {required String chatId,
-      required Participant callee,
-      required CallNotificationtType callNotificationType,
-      String? orderId}) async {
-    // final DatabaseReference notificationNode = _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(notificationQueueNode())
-    //     .push();
-
-    // ignore: unawaited_futures
-    // _databaseHelper.firebaseDatabase
-    //     .ref()
-    //     .child(notificationQueueNode(notificationNode.key))
-    //     .set(CallNotificationForQueue(
-    //             chatId: chatId,
-    //             callerId: FirebaseAuth.instance.currentUser!.uid,
-    //             callerParticipantType:
-    //                 _settingsController.appType.toParticipantTypefromAppType(),
-    //             calleeId: callee.id,
-    //             calleeParticipantType: callee.participantType,
-    //             callNotificationType: callNotificationType,
-    //             orderId: orderId)
-    //         .toFirebaseFormatJson());
-  }
-
-  // Participant? sender() {
-  //   return chat.value?.getParticipant(
-  //       _settingsController.appType.toParticipantTypefromAppType(),
-  //       FirebaseAuth.instance.currentUser!.uid);
-  // }
-
-  // Participant? recipient(
-  //     {required ParticipantType recipientType, String? recipientId}) {
-  //   if (chat.value == null) return null;
-  //   if (recipientId != null)
-  //     return chat.value!.getParticipant(recipientType, recipientId);
-  //   final Map<String, Participant>? participants =
-  //       chat.value!.getParticipants(recipientType);
-  //   if (participants != null && participants.keys.length > 0) {
-  //     return participants[participants.keys.toList()[0]];
-  //   }
-  //   return null;
-  // }
 
   void clearMessageNotifications({required int chatId}) {
     mezDbgPrint("Clearing message notifications");

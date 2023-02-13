@@ -7,6 +7,7 @@ query get_driver_order($orderId: Int!) {
     cancellation_time
     chat_with_customer_id
     order_type
+    direction
     chat_with_service_provider_id
     current_gps
     delivery_company {
@@ -42,6 +43,43 @@ query get_driver_order($orderId: Int!) {
         }}
       }
     }
+    laundry {
+      id
+      image
+      name
+      location {
+        gps
+        address
+      }
+      language_id
+      open_status
+    }
+    laundry_pickup_order {
+      id
+      stripe_info
+      store {
+        id
+        image
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+    laundry_delivery_order {
+      id
+      stripe_info
+      store {
+        id
+        image
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
     order_time
     package_cost
     payment_type
@@ -60,6 +98,7 @@ query get_driver_order($orderId: Int!) {
       language
       open_status}
     }
+
     service_provider_id
     delivery_driver {
       current_location
@@ -93,6 +132,7 @@ subscription listen_on_driver_order($orderId: Int!) {
     actual_arrival_at_pickup_time
     actual_delivered_time
     actual_package_ready_time
+    direction
     cancellation_time
     chat_with_customer_id
     order_type
@@ -106,6 +146,44 @@ subscription listen_on_driver_order($orderId: Int!) {
         id
       }
     }
+    laundry {
+      id
+      image
+      name
+      location {
+        gps
+        address
+      }
+      language_id
+      open_status
+    }
+    laundry_pickup_order {
+      id
+      stripe_info
+      store {
+        id
+        image
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+    laundry_delivery_order {
+      id
+      stripe_info
+      store {
+        id
+        image
+        name
+        location {
+          gps
+          address
+        }
+      }
+    }
+
     restaurant_order {
       id
       stripe_info
@@ -242,10 +320,7 @@ query get_past_driver_orders($driverId: Int!) {
 }
 query get_inprocess_driver_orders($driverId: Int!) {
   delivery_order(
-    where: {
-      delivery_driver_id: { _eq: $driverId }
-      in_process: { _eq: true }
-    }
+    where: { delivery_driver_id: { _eq: $driverId }, in_process: { _eq: true } }
   ) {
     id
     order_time
@@ -380,5 +455,53 @@ mutation updateDeliveryOrder($orderId: Int!, $data: delivery_order_set_input!) {
   update_delivery_order_by_pk(pk_columns: { id: $orderId }, _set: $data) {
     estimated_arrival_at_dropoff_time
     estimated_arrival_at_pickup_time
+  }
+}
+query get_pick_driver_order($orderId: Int!) {
+  delivery_order_by_pk(id: $orderId) {
+    order_type
+
+    current_gps
+    delivery_company {
+      id
+      image
+      name
+      service_provider_type
+    }
+
+    delivery_cost
+    dropoff_address
+    dropoff_gps
+
+    id
+    order_time
+    package_cost
+    payment_type
+    pickup_address
+    pickup_gps
+    service_provider_id
+    delivery_driver {
+      current_location
+
+      user {
+        name
+        image
+        id
+      }
+    }
+
+    service_provider_type
+    status
+    trip_distance
+    trip_duration
+    trip_polyline
+    customer {
+      user {
+        id
+        image
+        name
+        language_id
+      }
+    }
   }
 }

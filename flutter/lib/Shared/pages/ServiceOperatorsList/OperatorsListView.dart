@@ -41,7 +41,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   @override
   void initState() {
     _settingVariables();
-    if (serviceProviderType == ServiceProviderType.Delivery_company) {
+    if (serviceProviderType == ServiceProviderType.DeliveryCompany) {
       viewController = DeliveryOperatorsListViewController();
     } else {
       viewController = RestaurantOperatorsListViewController();

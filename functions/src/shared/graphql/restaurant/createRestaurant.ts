@@ -2,8 +2,8 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { RestaurantDetails } from "../../../restaurant/createNewRestaurant";
 import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
-import { AppType } from "../../models/Generic/Generic";
-import { OperatorStatus, ServiceProvider } from "../../models/Services/Service";
+import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { ServiceProvider } from "../../models/Services/Service";
 
 export async function createRestaurant(
   restaurantDetails: RestaurantDetails, 
@@ -54,7 +54,7 @@ export async function createRestaurant(
             operator_details: {
               data: {
                 owner: true,
-                status: OperatorStatus.Authorized,
+                status: AuthorizationStatus.Authorized,
                 user_id: restaurantOperatorUserId,
                 app_type_id: AppType.RestaurantApp,
                 notification_info: (restaurantDetails.restaurantOperatorNotificationToken)? {

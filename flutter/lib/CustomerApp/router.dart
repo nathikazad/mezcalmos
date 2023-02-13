@@ -164,7 +164,7 @@ class XRouter {
 
         GetPage(
           name: kLaundryOrderRequest,
-          page: () => LaundryOrderRequestView(),
+          page: () => CustLaundryOrderRequestView(),
         ),
         GetPage(
           name: kSingleLaundryRoute,

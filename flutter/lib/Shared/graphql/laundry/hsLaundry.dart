@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
@@ -45,24 +46,34 @@ Future<Laundry?> get_laundry_store_by_id(
     mezDbgPrint(
         "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.schedule}");
     return Laundry(
+        deliveryDetailsId: data.delivery_details_id!,
+        deliveryCost: DeliveryCost(
+          id: data.delivery_details_of_deliverer!.first.id,
+          freeDeliveryMinimumCost: data
+              .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
+          costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
+          minimumCost: data.delivery_details_of_deliverer!.first.minimum_cost,
+          freeDeliveryKmRange:
+              data.delivery_details_of_deliverer!.first.free_delivery_km_range,
+        ),
         userInfo: ServiceInfo(
             locationId: data.location_id,
             hasuraId: data.id,
             image: data.image,
-            description: (data.description.translations != null)
+            description: (data.description?.translations != null)
                 ? {
-                    data.description.translations.first.language_id
+                    data.description!.translations.first.language_id
                             .toLanguageType():
-                        data.description.translations.first.value,
-                    data.description.translations[1].language_id
+                        data.description!.translations.first.value,
+                    data.description!.translations[1].language_id
                             .toLanguageType():
-                        data.description.translations[1].value,
+                        data.description!.translations[1].value,
                   }
                 : null,
             name: data.name,
             descriptionId: data.description_id,
-            location:
-                Location.fromHasura(data.location.gps, data.location.address)),
+            location: MezLocation.fromHasura(
+                data.location.gps, data.location.address)),
         schedule:
             data.schedule != null ? Schedule.fromData(data.schedule) : null,
         paymentInfo: paymentInfo,
@@ -291,24 +302,34 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
     mezDbgPrint(
         "response data ====> ${res.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
     return Laundry(
+        deliveryDetailsId: data.delivery_details_id!,
+        deliveryCost: DeliveryCost(
+          id: data.delivery_details_of_deliverer!.first.id,
+          freeDeliveryMinimumCost: data
+              .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
+          costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
+          minimumCost: data.delivery_details_of_deliverer!.first.minimum_cost,
+          freeDeliveryKmRange:
+              data.delivery_details_of_deliverer!.first.free_delivery_km_range,
+        ),
         userInfo: ServiceInfo(
             locationId: data.location_id,
             hasuraId: data.id,
             image: data.image,
-            description: (data.description.translations != null)
+            description: (data.description?.translations != null)
                 ? {
-                    data.description.translations.first.language_id
+                    data.description!.translations.first.language_id
                             .toLanguageType():
-                        data.description.translations.first.value,
-                    data.description.translations[1].language_id
+                        data.description!.translations.first.value,
+                    data.description!.translations[1].language_id
                             .toLanguageType():
-                        data.description.translations[1].value,
+                        data.description!.translations[1].value,
                   }
                 : null,
             name: data.name,
             descriptionId: data.description_id,
-            location:
-                Location.fromHasura(data.location.gps, data.location.address)),
+            location: MezLocation.fromHasura(
+                data.location.gps, data.location.address)),
         schedule:
             data.schedule != null ? Schedule.fromData(data.schedule) : null,
         paymentInfo: paymentInfo,

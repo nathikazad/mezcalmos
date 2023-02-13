@@ -8,6 +8,31 @@ object_relationships:
   - name: order
     using:
       foreign_key_constraint_on: order_id
+insert_permissions:
+  - role: laundry_operator
+    permission:
+      check:
+        order:
+          store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - category_id
+        - order_id
+        - weight_in_kilo
+  - role: mez_admin
+    permission:
+      check:
+        order:
+          store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - category_id
+        - order_id
+        - weight_in_kilo
 select_permissions:
   - role: customer
     permission:
@@ -27,6 +52,43 @@ select_permissions:
         - category_id
         - id
         - order_id
+      filter:
+        order:
+          store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - weight_in_kilo
+        - category_id
+        - id
+        - order_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: laundry_operator
+    permission:
+      columns:
+        - category_id
+        - weight_in_kilo
+      filter:
+        order:
+          store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: laundry_operator
+    permission:
       filter:
         order:
           store:

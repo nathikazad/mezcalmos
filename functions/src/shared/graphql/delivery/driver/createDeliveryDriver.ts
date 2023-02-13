@@ -1,7 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { DelivererStatus, DeliveryDriver } from "../../../models/Generic/Delivery";
+import { DeliveryDriver } from "../../../models/Generic/Delivery";;
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Promise<DeliveryDriver>*/ {
     let chain = getHasura();
@@ -46,7 +47,7 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
                 user_id: deliveryDriver.userId,
                 delivery_company_type: deliveryDriver.deliveryCompanyType,
                 delivery_company_id: deliveryDriver.deliveryCompanyId,
-                status: DelivererStatus.AwaitingApproval,
+                status: AuthorizationStatus.AwaitingApproval,
             }
         }, {
             id: true,

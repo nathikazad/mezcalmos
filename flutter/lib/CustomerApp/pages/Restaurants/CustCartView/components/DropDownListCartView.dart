@@ -48,7 +48,7 @@ class _DropDownListCartViewState extends State<DropDownListCartView> {
 
       loc = SavedLocation(
           name: _i18n()["pickLocation"],
-          location: locModel.Location(
+          location: locModel.MezLocation(
               "address",
               LocationData.fromMap({
                 "latitude": 17.07555488925666,

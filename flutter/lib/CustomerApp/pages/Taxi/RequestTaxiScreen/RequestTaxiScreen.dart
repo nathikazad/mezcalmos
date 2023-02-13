@@ -87,7 +87,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
                         viewController.locationPickerController,
                     notifyParentOfLocationFinalized:
                         viewController.updateModelAndMaybeCalculateRoute,
-                    notifyParentOfConfirm: (Location? _) async {
+                    notifyParentOfConfirm: (MezLocation? _) async {
                       if (getAppLaunchMode() == AppLaunchMode.prod &&
                           Get.find<AuthController>().fireAuthUser?.uid ==
                               testUserIdInProd) {

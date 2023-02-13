@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -11,9 +13,11 @@ dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
 
 class LaundyOpSetCategoryComponent extends StatefulWidget {
-  const LaundyOpSetCategoryComponent({Key? key, required this.order})
-      : super(key: key);
-  final LaundryOrder order;
+  const LaundyOpSetCategoryComponent({Key? key, required this.viewController})
+      : super(
+          key: key,
+        );
+  final LaundryOpOrderViewController viewController;
 
   @override
   State<LaundyOpSetCategoryComponent> createState() =>
@@ -58,15 +62,18 @@ class _LaundyOpSetCategoryComponentState
             SizedBox(
               height: 10,
             ),
-            if (widget.order.costsByType?.lineItems.isNotEmpty ?? false)
+            if (widget.viewController.order.costsByType?.lineItems.isNotEmpty ??
+                false)
               Column(
                 children: [
                   Column(
                     children: List.generate(
-                        widget.order.costsByType?.lineItems.length ?? 0,
-                        (int index) {
+                        widget.viewController.order.costsByType?.lineItems
+                                .length ??
+                            0, (int index) {
                       return _itemRowCard(
-                          item: widget.order.costsByType!.lineItems[index]);
+                          item: widget.viewController.order.costsByType!
+                              .lineItems[index]);
                     }),
                   ),
                   Container(
@@ -79,7 +86,8 @@ class _LaundyOpSetCategoryComponentState
                           style: Get.textTheme.bodyLarge,
                         ),
                         Text(
-                          widget.order.costsByType!.weighedCost.toPriceString(),
+                          widget.viewController.order.costsByType!.weighedCost
+                              .toPriceString(),
                           style: Get.textTheme.bodyLarge,
                         ),
                       ],
@@ -87,7 +95,8 @@ class _LaundyOpSetCategoryComponentState
                   )
                 ],
               ),
-            if (widget.order.isAtLaundry()) setItemsWeightButton(context),
+            if (widget.viewController.order.isAtLaundry())
+              setItemsWeightButton(context),
           ],
         ),
       ),
@@ -122,7 +131,7 @@ class _LaundyOpSetCategoryComponentState
 
 //----------------------------------// ------>>>> FUNCTIONS <<<<----------//--------------------------------//
   Function()? handleClick({required BuildContext context}) {
-    if (widget.order.isAtLaundry()) {
+    if (widget.viewController.order.isAtLaundry()) {
       return assignNewCategory(context: context);
     } else {
       return null;
@@ -135,6 +144,10 @@ class _LaundyOpSetCategoryComponentState
       bool editMode = false,
       LaundryOrderCostLineItem? laundryOrderCostLineItem}) {
     return () {
+      if (editMode && laundryOrderCostLineItem != null) {
+        widget.viewController
+            .editCategory(categoryId: laundryOrderCostLineItem.id);
+      }
       showModalBottomSheet(
           isDismissible: false,
           useRootNavigator: true,
@@ -148,33 +161,35 @@ class _LaundyOpSetCategoryComponentState
           context: context,
           builder: (BuildContext context) {
             return SetOrderWeightBottomSheet(
-              order: widget.order,
-              editMode: editMode,
-              oldItem: laundryOrderCostLineItem,
+              viewController: widget.viewController,
             );
-          });
+          }).whenComplete(() {
+        if (editMode) {
+          widget.viewController.closeEditMode();
+        }
+      });
     };
   }
 
   // delete item
-  void deleteItem(LaundryOrderCostLineItem item) {
-    final LaundryOrderCosts? oldCosts = widget.order.costsByType;
-    if (oldCosts != null) {
-      if (oldCosts.lineItems.length > 1) {
-        oldCosts.lineItems.removeWhere(
-            (LaundryOrderCostLineItem element) => element.name == item.name);
-        // orderController.setOrderWeight(
-        //     widget.order.orderId.toString(), oldCosts);
-      } else {
-        Get.snackbar(
-          "${_i18n()["error"]}",
-          "${_i18n()["deleteLast"]}",
-          padding: EdgeInsets.all(16),
-          backgroundColor: Colors.grey.shade800,
-          colorText: Colors.white,
-        );
-      }
-    }
+  Future<void> deleteItem(LaundryOrderCostLineItem item) async {
+    // final LaundryOrderCosts? oldCosts = widget.viewController.order.costsByType;
+    // if (oldCosts != null) {
+    //   if (oldCosts.lineItems.length > 1) {
+    //     int? res = await widget.viewController.deleteCategory(item.id);
+    //     if (res != null) {
+    //       MezRouter.popDialog();
+    //     }
+    //   } else {
+    //     Get.snackbar(
+    //       "${_i18n()["error"]}",
+    //       "${_i18n()["deleteLast"]}",
+    //       padding: EdgeInsets.all(16),
+    //       backgroundColor: Colors.grey.shade800,
+    //       colorText: Colors.white,
+    //     );
+    //   }
+    // }
   }
 
   Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
@@ -194,7 +209,7 @@ class _LaundyOpSetCategoryComponentState
           Text(
             "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
-          if (widget.order.isAtLaundry())
+          if (widget.viewController.order.isAtLaundry())
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: InkWell(

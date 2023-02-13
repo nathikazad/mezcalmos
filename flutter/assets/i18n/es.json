@@ -1702,8 +1702,9 @@
                         },
                         "DriverBottomRestaurantOrderCard": {
                             "restaurantDelivery": "Entrega de restaurantes",
+                            "laundryDelivery": "Entrega de lavandería",
                             "oops": "Ups",
-                            "foodReady": "preparación de la comida",
+                            "packageReady": "Paquete listo",
                             "dvTime": "El tiempo de entrega",
                             "set": "Establecer",
                             "time": "Tiempo",
@@ -1712,10 +1713,11 @@
                             "pickupTimeError": "El tiempo de recogida debe ser antes del tiempo de entregada.",
                             "wrongTime": "Elegiste un momento equivocado",
                             "orderStatus": {
-                                "waiting": "Esperando el restaurante",
+                                "waiting": "Esperando el paquete",
                                 "preparing": "Orden se está preparando",
                                 "readyForPickup": "Listo para recojer",
                                 "deliveryOtw": "Entrega en el camino",
+                                "pickupOtw": "Recogida en el camino",
                                 "justReady": "Listo para la entrega",
                                 "scheduled": "Pedido programado",
                                 "delivered": "Orden Entregado",

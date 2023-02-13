@@ -243,9 +243,9 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
     mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           viewController.order.value!.to.latitude,
           viewController.order.value!.to.longitude,
         ),

@@ -26,6 +26,10 @@ class DvCompanyOrderViewController {
     return order.value!.status;
   }
 
+  bool get canSetDriver {
+    return true;
+  }
+
   // streams //
   StreamSubscription<DeliveryOrder?>? orderStream;
   String? subscriptionId;
@@ -76,9 +80,9 @@ class DvCompanyOrderViewController {
     mapController.animateMarkersPolyLinesBounds.value = true;
 
     mapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           order.value?.dropoffLocation.latitude,
           order.value?.dropoffLocation.longitude,
         ),

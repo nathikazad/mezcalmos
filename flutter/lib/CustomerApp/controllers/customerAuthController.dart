@@ -71,8 +71,7 @@ class CustomerAuthController extends GetxController {
 
   Future<void> fetchSavedLocations() async {
     _customer.value?.savedLocations = await get_customer_locations(
-            customer_id: _authController.hasuraUserId!, withCache: false) ??
-        [];
+        customer_id: _authController.hasuraUserId!, withCache: false);
   }
 
   Future<void> saveNotificationToken() async {
@@ -129,7 +128,7 @@ class CustomerAuthController extends GetxController {
       delete_saved_location(saved_location_id: savedLocation.id!);
   }
 
-  Location? getLocationById(int locationId) {
+  MezLocation? getLocationById(int locationId) {
     // we get the user Location by it's id!
 
     return customer?.savedLocations.firstWhere((SavedLocation savedLocation) {

@@ -35,8 +35,7 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
             ? toLanguageMap(translations: data.description!.translations)
             : null,
         descriptionId: data.description_id,
-        location:
-            Location.fromHasura(data.location.gps, data.location.address ?? ""),
+        location: MezLocation.fromHasura(data.location.gps, data.location.address),
         name: data.name,
       ),
       state: ServiceState(
@@ -74,7 +73,8 @@ Future<DeliveryCompany?> update_delivery_company(
         description: (data.description?.translations != null)
             ? toLanguageMap(translations: data.description!.translations)
             : null,
-        location: Location.fromHasura(data.location.gps, data.location.address),
+        location:
+            MezLocation.fromHasura(data.location.gps, data.location.address),
         name: data.name,
       ),
       state: ServiceState(
@@ -83,7 +83,7 @@ Future<DeliveryCompany?> update_delivery_company(
 }
 
 Future<List<DeliveryCompany>> get_nearby_companies(
-    {required Location location}) async {
+    {required MezLocation location}) async {
   final QueryResult<Query$getNearByCompanies> res =
       await _hasuraDb.graphQLClient.query$getNearByCompanies(
     Options$Query$getNearByCompanies(
@@ -109,8 +109,8 @@ Future<List<DeliveryCompany>> get_nearby_companies(
               ? toLanguageMap(translations: data.description!.translations)
               : null,
           descriptionId: data.description_id,
-          location: Location.fromHasura(
-              data.location.gps, data.location.address ?? ""),
+          location:
+              MezLocation.fromHasura(data.location.gps, data.location.address),
           name: data.name,
         ),
         state: ServiceState(

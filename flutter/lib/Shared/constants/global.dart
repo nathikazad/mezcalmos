@@ -189,3 +189,8 @@ const LinearGradient bluePurpleGradient = LinearGradient(
   begin: Alignment.centerLeft,
   end: Alignment.centerRight,
 );
+
+const String mezPackageMarker =
+    "assets/images/shared/markers/packageMarker.png";
+const String mezDestinationMarker =
+    "assets/images/shared/markers/destinationMarker.png";

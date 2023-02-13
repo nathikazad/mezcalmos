@@ -5,12 +5,15 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverC
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderTimes.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
+import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -67,9 +70,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   if (_setReadyForDeliveryButton() != null)
                     _setReadyForDeliveryButton()!,
 
-                  //   OrderEstimatedTimeComponent(order: viewController.order),
+                  LaundryOrderEstTime(viewController: viewController),
 
-                  LaundryOpOrderDriverCard(order: viewController.order),
+                  LaundryOpOrderDriverCard(viewController: viewController),
                   _getMapWidget(),
                   MezCard(
                     margin: const EdgeInsets.only(bottom: 20),
@@ -77,8 +80,14 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                     action: MessageButton(
                         chatId: viewController.order.chatId,
                         onTap: () {
-                          MezRouter.toNamed(getMessagesRoute(
-                              chatId: viewController.order.chatId));
+                          MezRouter.toNamed(
+                            getMessagesRoute(
+                              chatId: viewController.order.chatId,
+                              recipientType: ParticipantType.Customer,
+                              orderType: OrderType.Laundry,
+                              orderId: viewController.order.orderId,
+                            ),
+                          );
                         }),
                     firstAvatarBgImage: CachedNetworkImageProvider(
                         viewController.order.customer.image),
@@ -89,7 +98,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   ),
                   //  if (viewController.order.afterAtLaundry())
                   LaundyOpSetCategoryComponent(
-                    order: viewController.order,
+                    viewController: viewController,
                   ),
 
                   _totalCostcomponent(context),
@@ -99,7 +108,9 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                     label: "Cancel order",
                     backgroundColor: offRedColor,
                     textColor: Colors.red,
-                    onClick: () async {},
+                    onClick: () async {
+                      viewController.cancelOrder();
+                    },
                   )
                 ],
               ),
