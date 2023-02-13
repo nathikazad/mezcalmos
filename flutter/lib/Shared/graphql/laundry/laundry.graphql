@@ -1,12 +1,14 @@
 query getLaundries {
   laundry_store {
     id
-    image
-    language_id
-normal_delivery_time
+    normal_delivery_time
+details {
+      image
+    language
+    
     location_id
     delivery_details_id
-normal_delivery_time
+    normal_delivery_time
     name
     location {
       gps
@@ -25,9 +27,10 @@ normal_delivery_time
     }
     accepted_payments
     stripe_info
-    self_delivery
+    # self_delivery
     open_status
     schedule
+}
   }
 }
 
@@ -36,7 +39,7 @@ query getLaundryStoreById($id: Int!) {
     id
     location_id
     delivery_details_id
-normal_delivery_time
+    normal_delivery_time
 
     image
     language_id
@@ -45,7 +48,7 @@ normal_delivery_time
       gps
       address
     }
-    self_delivery
+    # self_delivery
     accepted_payments
     stripe_info
     name
@@ -64,10 +67,10 @@ query getLaundryStatus($id: Int!) {
   laundry_store_by_pk(id: $id) {
     open_status
   }
-}query getLaundryDays($id: Int!) {
+}
+query getLaundryDays($id: Int!) {
   laundry_store_by_pk(id: $id) {
-   normal_delivery_time
-
+    normal_delivery_time
   }
 }
 
@@ -85,7 +88,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
     id
 
     location_id
-normal_delivery_time
+    normal_delivery_time
 
     image
     language_id
@@ -112,10 +115,13 @@ normal_delivery_time
 query getLaundryOperators($laundryStoreID: Int!) {
   laundry_operator(where: { store_id: { _eq: $laundryStoreID } }) {
     id
-    current_gps
-    status
+
     store_id
-    owner
+    operator_details {
+      owner
+      current_gps
+      status
+    }
     user {
       phone
       name
@@ -179,6 +185,7 @@ mutation updateLaundryCategory(
   }
 }
 mutation deleteLaundryCategory($id: Int!) {
-  delete_laundry_category_by_pk(id: $id){id}
+  delete_laundry_category_by_pk(id: $id) {
+    id
+  }
 }
-

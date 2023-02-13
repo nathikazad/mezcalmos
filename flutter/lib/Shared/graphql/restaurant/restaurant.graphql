@@ -1,35 +1,39 @@
 query getRestaurants {
   restaurant_restaurant {
     id
-    image
-    language_id
-
-    name
-    location {
-      gps
-      address
-    }
-    firebase_id
-    approved
-    delivery_details_of_deliverer{
-         cost_per_km
+    delivery_details_of_deliverer {
+      cost_per_km
       free_delivery_km_range
       free_delivery_minimum_cost
       id
       minimum_cost
       radius
+      self_delivery
     }
-    description_id
-    schedule
-    description {
-      translations {
-        language_id
-        value
+    details {
+      image
+      language
+
+      name
+      location {
+        gps
+        address
       }
+      firebase_id
+      approved
+
+      description_id
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+
+      open_status
+      schedule
     }
-    self_delivery
-    open_status
-    schedule
   }
 }
 
@@ -48,75 +52,91 @@ query get_restaurant_desc_by_pk($desc_id: Int!) {
 query getOneRestaurant($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
     id
-    location_id
-    delivery_details_id
-    delivery_details_of_deliverer{   cost_per_km
+
+    delivery_details_of_deliverer {
+      cost_per_km
       free_delivery_km_range
       free_delivery_minimum_cost
       id
       minimum_cost
-      radius}
-    firebase_id
-    image
-    language_id
-    description_id
-    location {
-      gps
-      address
+      radius
+      self_delivery
     }
-    self_delivery
-    accepted_payments
-    stripe_info
-    name
-    description {
-      translations {
-        language_id
-        value
+    details {
+      firebase_id
+      delivery_details_id
+      location_id
+      image
+      language
+      description_id
+      location {
+        gps
+        address
       }
+      accepted_payments
+      stripe_info
+      name
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      schedule
+      open_status
     }
-    approved
-    schedule
-    open_status
   }
 }
 query getRestaurantStatus($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    open_status
+    details {
+      open_status
+    }
   }
 }
 query getRestaurantSchedule($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    schedule
+    details {
+      schedule
+    }
   }
 }
 query getRestaurantAprroved($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    approved
+    details {
+      approved
+    }
   }
 }
 query getRestaurantPaymentInfo($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    stripe_info
-    accepted_payments
+    details {
+      stripe_info
+      accepted_payments
+    }
   }
 }
 
-
-mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
-  update_restaurant_restaurant_by_pk(
-    pk_columns: { id: $restauarntId }
-    _set: { self_delivery: $value }
-  ) {
-    id
-    self_delivery
-  }
-}
+# mutation switchRestaurantSelfDelivery($restauarntId: Int!, $value: Boolean) {
+#   update_restaurant_restaurant_by_pk(
+#     pk_columns: { id: $restauarntId }
+#     _set: { self_delivery: $value }
+#   ) {
+#     details {
+#       id
+#       self_delivery
+#     }
+#   }
+# }
 mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
   update_restaurant_restaurant_by_pk(
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-    open_status
+    details {
+      open_status
+    }
   }
 }
 
@@ -126,44 +146,47 @@ mutation updateRestaurantInfo(
 ) {
   update_restaurant_restaurant_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
-    firebase_id
-    location_id
-    delivery_details_of_deliverer{
-         cost_per_km
+
+    delivery_details_of_deliverer {
+      cost_per_km
       free_delivery_km_range
       free_delivery_minimum_cost
       id
       minimum_cost
       radius
     }
-    image
-    language_id
-    location {
-      gps
-      address
-    }
-    accepted_payments
-    stripe_info
-    name
-    schedule
-    description {
-      translations {
-        language_id
-        value
+    details {
+      firebase_id
+      location_id
+      image
+      language
+      location {
+        gps
+        address
       }
+      accepted_payments
+      stripe_info
+      name
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      open_status
+      schedule
     }
-    approved
-    open_status
-    schedule
   }
 }
 query getRestaurantLang($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    language_id
+    details {
+      language
+    }
   }
 }
-
-
 
 query getRestaurantItems($restaurant_id: Int!) {
   restaurant_item(where: { restaurant_id: { _eq: $restaurant_id } }) {
@@ -229,10 +252,13 @@ query getRestaurantOperators($restaurantId: Int!) {
   restaurant_restaurant_by_pk(id: $restaurantId) {
     restaurant_operators {
       id
-      current_gps
-      status
+
       restaurant_id
-      owner
+      operator_details {
+        owner
+        status
+        current_gps
+      }
       user {
         phone
         name
@@ -248,7 +274,8 @@ query getRestaurantOperators($restaurantId: Int!) {
 # get average rating
 query get_restaurant_review_average($restaurantId: Int!) {
   restaurant_restaurant_by_pk(id: $restaurantId) {
-    reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
+  details {
+      reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
       aggregate {
         avg {
           rating
@@ -256,11 +283,13 @@ query get_restaurant_review_average($restaurantId: Int!) {
       }
     }
   }
+  }
 }
 # get restaurant reviews
 query get_restaurant_reviews($restaurantId: Int!) {
   restaurant_restaurant_by_pk(id: $restaurantId) {
-    reviews(where: { from_entity_type: { _eq: "customer" } }) {
+    details {
+      reviews(where: { from_entity_type: { _eq: "customer" } }) {
       from_entity_id
       from_entity_type
       rating
@@ -269,6 +298,7 @@ query get_restaurant_reviews($restaurantId: Int!) {
       to_entity_id
       to_entity_type
       created_at
+    }
     }
   }
 }

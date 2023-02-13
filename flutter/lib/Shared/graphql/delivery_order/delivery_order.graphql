@@ -11,9 +11,11 @@ query get_driver_order($orderId: Int!) {
     current_gps
     delivery_company {
       id
-      image
+     details {
+       image
       name
       service_provider_type
+     }
     }
 
     customer_id
@@ -30,14 +32,14 @@ query get_driver_order($orderId: Int!) {
       id
       stripe_info
       restaurant {
-        firebase_id
         id
+        details{firebase_id 
         image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
     order_time
@@ -48,15 +50,15 @@ query get_driver_order($orderId: Int!) {
 
     restaurant {
       id
-      firebase_id
+    details{  firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
     service_provider_id
     delivery_driver {
@@ -108,14 +110,14 @@ subscription listen_on_driver_order($orderId: Int!) {
       id
       stripe_info
       restaurant {
-        firebase_id
+     details{   firebase_id
         id
         image
         name
         location {
           gps
           address
-        }
+        }}
       }
     }
     current_gps
@@ -124,9 +126,11 @@ subscription listen_on_driver_order($orderId: Int!) {
     delivery_cost
     delivery_company {
       id
-      image
+      details {
+       image
       name
       service_provider_type
+     }
     }
 
     dropoff_address
@@ -142,15 +146,15 @@ subscription listen_on_driver_order($orderId: Int!) {
     pickup_gps
     restaurant {
       id
-      firebase_id
+    details{  firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
     service_provider_id
     service_provider_review_by_driver_id
@@ -189,15 +193,15 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+   details{   firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }
@@ -224,15 +228,15 @@ query get_past_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+    details{  firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }
@@ -258,15 +262,15 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+     details{ firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }
@@ -292,15 +296,15 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+     details {firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }
@@ -326,15 +330,15 @@ query get_delivery_company_past_orders($companyId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+     details{ firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }
@@ -360,15 +364,15 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     }
     restaurant {
       id
-      firebase_id
+     details{ firebase_id
       image
       name
       location {
         gps
         address
       }
-      language_id
-      open_status
+      language
+      open_status}
     }
   }
 }

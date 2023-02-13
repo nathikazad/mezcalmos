@@ -8,12 +8,16 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
 
     restaurant {
       id
-      firebase_id
-      image
-      language_id
-    location { gps
-      address}
-      name
+      details {
+        firebase_id
+        image
+        language
+        location {
+          gps
+          address
+        }
+        name
+      }
     }
     items {
       in_json
@@ -73,9 +77,9 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    
+
     order_time
-    firebase_id
+   
     customer_app_type
     notes
     customer {
@@ -94,8 +98,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       trip_polyline
       trip_distance
       trip_duration
-    estimated_arrival_at_dropoff_time
-    estimated_arrival_at_pickup_time
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       chat_with_service_provider_id
       chat_with_customer_id
       cancellation_time
@@ -125,12 +129,16 @@ query get_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
-      firebase_id
-      image
-      language_id
-    location { gps
-      address}
-      name
+      details {
+        firebase_id
+        image
+        language
+        location {
+          gps
+          address
+        }
+        name
+      }
     }
     items {
       in_json
@@ -190,9 +198,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
         }
       }
     }
-    
+
     order_time
-    firebase_id
     customer_app_type
     notes
     tax
@@ -214,8 +221,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
       chat_with_service_provider_id
       chat_with_customer_id
       id
-    estimated_arrival_at_dropoff_time
-    estimated_arrival_at_pickup_time
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       cancellation_time
       current_gps
 
@@ -301,9 +308,12 @@ mutation setRestaurantOrderEstFoodReadyTime(
   ) {
     estimated_food_ready_time
   }
-   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
+  update_delivery_order_by_pk(
+    pk_columns: { id: $deliveryOrderId }
+    _set: { estimated_package_ready_time: $time }
+  ) {
     estimated_package_ready_time
-   }
+  }
 }
 mutation assignRestaurantOrderReview($orderId: Int!, $reviewId: Int!) {
   update_restaurant_order_by_pk(
