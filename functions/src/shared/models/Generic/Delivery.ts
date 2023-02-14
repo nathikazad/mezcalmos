@@ -12,7 +12,7 @@ export interface DeliveryOrder {
     deliveryId: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    deliveryDriverType?: ParticipantType
+    // deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
     packageReady: boolean;
@@ -52,7 +52,7 @@ export enum DeliveryDirection {
 }
 
 export interface DeliveryDriver {
-  id?: number;
+  id: number;
   userId: number;
   deliveryCompanyType?: DeliveryServiceProviderType;
   deliveryCompanyId?: number;
@@ -62,7 +62,7 @@ export interface DeliveryDriver {
   user?: UserInfo;
   online?: boolean;
   notificationInfo?: NotificationInfo;
-  deliveryDriverType: ParticipantType;
+  // deliveryDriverType: ParticipantType;
 }
 
 export interface DeliveryOperator {
@@ -78,9 +78,9 @@ export interface DeliveryOperator {
     user?: UserInfo
 }
 export interface DeliveryDetails {
-    minimumCost: number,
-    costPerKm: number,
-    radius: number,
+    minimumCost?: number,
+    costPerKm?: number,
+    radius?: number,
     freeDeliveryMinimumCost?: number,
     freeDeliveryKmRange?: number,
     deliveryAvailable: boolean;

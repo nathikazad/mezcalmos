@@ -2984,6 +2984,8 @@ type customer_stripe_info_variance_fields {
 columns and relationships of "delivery.company"
 """
 type delivery_company {
+  """An object relationship"""
+  delivery_details: delivery_details!
   delivery_details_id: Int!
 
   """An array relationship"""
@@ -3068,6 +3070,7 @@ input delivery_company_bool_exp {
   _and: [delivery_company_bool_exp!]
   _not: delivery_company_bool_exp
   _or: [delivery_company_bool_exp!]
+  delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_operators: delivery_operator_bool_exp
   delivery_operators_aggregate: delivery_operator_aggregate_bool_exp
@@ -3110,6 +3113,7 @@ input delivery_company_inc_input {
 input type for inserting data into table "delivery.company"
 """
 input delivery_company_insert_input {
+  delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
   delivery_operators: delivery_operator_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
@@ -3166,6 +3170,7 @@ input delivery_company_on_conflict {
 
 """Ordering options when selecting data from "delivery.company"."""
 input delivery_company_order_by {
+  delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_operators_aggregate: delivery_operator_aggregate_order_by
   details: service_provider_details_order_by
@@ -14402,11 +14407,6 @@ enum notification_info_constraint {
   unique or primary key constraint on columns "id"
   """
   notification_info_pkey
-
-  """
-  unique or primary key constraint on columns "app_type_id", "user_id"
-  """
-  notification_info_user_id_app_type_id_key
 }
 
 """

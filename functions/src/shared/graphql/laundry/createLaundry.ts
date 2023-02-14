@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryDetails } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
-import { ServiceProvider } from "../../models/Services/Service";
+import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
 export async function createLaundryStore(
     laundryDetails: LaundryDetails, 
@@ -13,13 +13,29 @@ export async function createLaundryStore(
     let response = await chain.mutation({
         insert_laundry_store_one: [{
             object: {
+                delivery_details: { data:  {
+                    self_delivery: laundryDetails.deliveryDetails.selfDelivery,
+                    delivery_available: laundryDetails.deliveryDetails.deliveryAvailable,
+                    customer_pickup: laundryDetails.deliveryDetails.customerPickup,
+                    minimum_cost: laundryDetails.deliveryDetails.minimumCost,
+                    cost_per_km: laundryDetails.deliveryDetails.costPerKm,
+                    radius: laundryDetails.deliveryDetails.radius,
+                    free_delivery_minimum_cost: laundryDetails.deliveryDetails.freeDeliveryMinimumCost,
+                    free_delivery_km_range: laundryDetails.deliveryDetails.freeDeliveryKmRange
+                }},
+                delivery_partners: (laundryDetails.deliveryPartnerId) ? {
+                    data: [{
+                        delivery_company_id: laundryDetails.deliveryPartnerId
+                    }]
+                }: undefined,
                 details: {
                     data: {
                         name: laundryDetails.name,
                         image: laundryDetails.image,
                         schedule: JSON.stringify(laundryDetails.schedule),
                         firebase_id: laundryDetails.firebaseId ?? undefined,
-                        
+                        language: JSON.stringify(laundryDetails.language),
+                        service_provider_type: ServiceProviderType.Laundry,
                         location: {
                             data: {
                                 gps: JSON.stringify({
@@ -29,22 +45,6 @@ export async function createLaundryStore(
                                 address: laundryDetails.location.address
                             }
                         },
-                        delivery_details: 
-                            (laundryDetails.deliveryDetails) ? { data:  {
-                                self_delivery: laundryDetails.deliveryDetails.selfDelivery,
-                                delivery_available: laundryDetails.deliveryDetails.deliveryAvailable,
-                                customer_pickup: laundryDetails.deliveryDetails.customerPickup,
-                                minimum_cost: laundryDetails.deliveryDetails.minimumCost,
-                                cost_per_km: laundryDetails.deliveryDetails.costPerKm,
-                                radius: laundryDetails.deliveryDetails.radius,
-                                free_delivery_minimum_cost: laundryDetails.deliveryDetails.freeDeliveryMinimumCost,
-                                free_delivery_km_range: laundryDetails.deliveryDetails.freeDeliveryKmRange
-                            }} : undefined,
-                        delivery_partners: (laundryDetails.deliveryPartnerId) ? {
-                            data: [{
-                                delivery_company_id: laundryDetails.deliveryPartnerId
-                            }]
-                        }: undefined,
                     }
                 },
                 operators: {
@@ -56,13 +56,13 @@ export async function createLaundryStore(
                                 status: AuthorizationStatus.Authorized,
                                 owner: true,
                                 app_type_id: AppType.LaundryApp,
-                                notification_info: (laundryDetails.laundryOperatorNotificationToken)? {
-                                    data: {
-                                      user_id: laundryOperatorUserId,
-                                      app_type_id: AppType.RestaurantApp,
-                                      token: laundryDetails.laundryOperatorNotificationToken
-                                    }
-                                  }: undefined
+                                // notification_info: (laundryDetails.laundryOperatorNotificationToken)? {
+                                //     data: {
+                                //       user_id: laundryOperatorUserId,
+                                //       app_type_id: AppType.RestaurantApp,
+                                //       token: laundryDetails.laundryOperatorNotificationToken
+                                //     }
+                                //   }: undefined
                             }
                         }
                         
@@ -108,18 +108,18 @@ export async function createLaundryStore(
     //         }]
     //     });
     // }
-    // if(laundryDetails.laundryOperatorNotificationToken) {
-    //     chain.mutation({
-    //         insert_notification_info_one: [{
-    //             object: {
-    //                 user_id: laundryOperatorUserId,
-    //                 app_type_id: AppType.LaundryApp,
-    //                 token: laundryDetails.laundryOperatorNotificationToken
-    //             }
-    //         }, {
-    //             id: true
-    //         }]
-    //     });
-    //  }
+    if(laundryDetails.laundryOperatorNotificationToken) {
+        chain.mutation({
+            insert_notification_info_one: [{
+                object: {
+                    user_id: laundryOperatorUserId,
+                    app_type_id: AppType.LaundryApp,
+                    token: laundryDetails.laundryOperatorNotificationToken
+                }
+            }, {
+                id: true
+            }]
+        });
+     }
     return laundryStore
 }
