@@ -5,23 +5,16 @@ object_relationships:
   - name: delivery_details
     using:
       foreign_key_constraint_on: delivery_details_id
-  - name: description
-    using:
-      foreign_key_constraint_on: description_id
-  - name: location
-    using:
-      foreign_key_constraint_on: location_id
-array_relationships:
-  - name: delivery_drivers
+  - name: details
     using:
       manual_configuration:
         column_mapping:
-          id: delivery_company_id
-          service_provider_type: delivery_company_type
+          details_id: id
         insertion_order: null
         remote_table:
-          name: driver
-          schema: delivery
+          name: details
+          schema: service_provider
+array_relationships:
   - name: delivery_operators
     using:
       foreign_key_constraint_on:
@@ -33,62 +26,32 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - approved
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - image
-        - name
-        - open_status
-        - service_provider_type
-        - creation_time
       filter: {}
   - role: delivery_driver
     permission:
       columns:
-        - approved
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - image
-        - name
-        - open_status
-        - service_provider_type
-        - creation_time
-      filter:
-        delivery_drivers:
-          user_id:
-            _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_operator
     permission:
       columns:
-        - approved
-        - creation_time
-        - description_id
         - id
-        - image
-        - name
-        - open_status
-        - service_provider_type
       filter:
         delivery_operators:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - id
+        - service_provider_type
+      filter: {}
   - role: mez_admin
     permission:
       columns:
-        - approved
-        - delivery_details_id
-        - description_id
         - id
-        - location_id
-        - image
-        - name
-        - open_status
-        - service_provider_type
-        - creation_time
       filter:
         _exists:
           _table:
@@ -100,53 +63,5 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - approved
-        - creation_time
-        - description_id
         - id
-        - image
-        - name
-        - open_status
-        - service_provider_type
       filter: {}
-update_permissions:
-  - role: delivery_operator
-    permission:
-      columns:
-        - approved
-        - description_id
-        - image
-        - name
-        - open_status
-      filter:
-        delivery_operators:
-          user_id:
-            _eq: X-Hasura-User-Id
-      check:
-        delivery_operators:
-          user_id:
-            _eq: X-Hasura-User-Id
-  - role: mez_admin
-    permission:
-      columns:
-        - approved
-        - description_id
-        - image
-        - name
-        - open_status
-      filter:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id
-      check:
-        _exists:
-          _table:
-            name: mez_admin
-            schema: public
-          _where:
-            user_id:
-              _eq: X-Hasura-User-Id

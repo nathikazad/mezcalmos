@@ -2,18 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
-import 'package:mezcalmos/old/customerApp/laundry/LaundryController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["SingleLaundryScreen"];
@@ -26,7 +25,6 @@ class SingleLaundryScreen extends StatefulWidget {
 }
 
 class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
-  LaundryController laundryController = Get.find<LaundryController>();
   String? laundryId;
   Rxn<Laundry> laundry = Rxn();
   final LanguageType userLanguage =
@@ -36,9 +34,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
     // TODO: implement initState
     laundryId = Get.parameters["laundryId"];
     if (laundryId != null) {
-      laundryController
-          .getLaundry(laundryId!)
-          .then((Laundry value) => laundry.value = value);
+      // laundryController
+      //     .getLaundry(laundryId!)
+      //     .then((Laundry value) => laundry.value = value);
     } else {
       MezRouter.back();
     }
@@ -70,7 +68,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ),
                   Text(
                     "${_i18n()["categories"]}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 10,
@@ -111,7 +109,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.bodyText2,
+              style: Get.textTheme.bodyMedium,
               maxLines: 1,
             ),
           ),
@@ -120,7 +118,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
           ),
           Text(
             "${item.cost.toPriceString()}/KG",
-            style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
       ),
@@ -166,7 +164,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
               children: [
                 Text(
                   laundry.value!.info.name,
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 5,
@@ -181,7 +179,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.bodyText2?.copyWith(
+                    style: Get.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700, color: primaryBlueColor),
                   ),
                 ),
@@ -201,7 +199,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     padding: const EdgeInsets.all(5),
                     child: Text(
                       "\$${laundry.value!.getCheapestCategory}/KG",
-                      style: Get.textTheme.bodyText1
+                      style: Get.textTheme.bodyLarge
                           ?.copyWith(color: Get.theme.primaryColorLight),
                     ),
                   ),

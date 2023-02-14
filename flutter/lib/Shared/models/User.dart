@@ -150,9 +150,9 @@ class MainUserInfo {
 }
 
 class ServiceInfo extends UserInfo {
-  Location location;
+  MezLocation location;
   int? locationId;
-  
+
   int? descriptionId;
   LanguageMap? description;
 
@@ -170,7 +170,7 @@ class ServiceInfo extends UserInfo {
 
   factory ServiceInfo.fromData(data) {
     return ServiceInfo(
-      location: Location.fromFirebaseData(data['location']),
+      location: MezLocation.fromFirebaseData(data['location']),
       firebaseId: data['firebase_id'],
       hasuraId: data['id'],
       image: data['image'],
@@ -187,7 +187,7 @@ class ServiceInfo extends UserInfo {
       };
   @override
   ServiceInfo copyWith({
-    Location? location,
+    MezLocation? location,
     String? name,
     String? image,
     int? descId,

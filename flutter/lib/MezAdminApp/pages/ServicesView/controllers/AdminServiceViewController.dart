@@ -49,23 +49,23 @@ class AdminServicesViewController {
       required ServiceProviderType providerType,
       required bool value}) async {
     if (providerType == ServiceProviderType.Restaurant) {
-      await update_restaurant_status(
-          id: serviceId,
-          status:
-              (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
+      // await update_restaurant_status(
+      //     id: serviceId,
+      //     status:
+      //         (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
       unawaited(fetchRestaurants());
     } else {
-      await update_deliveryCompany_status(
-          id: serviceId,
-          status:
-              (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
+      // await update_deliveryCompany_status(
+      //     id: serviceId,
+      //     status:
+      //         (value) ? ServiceStatus.Open : ServiceStatus.Closed_temporarily);
       unawaited(fetchCompanies());
     }
   }
 
   Future<void> approveService({required Restaurant restaurant}) async {
-    await update_restaurant_info(
-        id: restaurant.restaurantId, restaurant: restaurant, approved: true);
+    // await update_restaurant_info(
+    //     id: restaurant.restaurantId, restaurant: restaurant, approved: true);
     unawaited(fetchRestaurants());
   }
 }

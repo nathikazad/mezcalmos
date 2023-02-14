@@ -96,7 +96,7 @@ class LocationPicker extends StatefulWidget {
 enum BottomButtomToShow { Pick, Confirm, GrayedOut, Loading }
 
 class LocationPickerState extends State<LocationPicker> {
-  Location? location;
+  MezLocation? location;
   bool userTaped = false;
 
   @override
@@ -191,7 +191,7 @@ class LocationPickerState extends State<LocationPicker> {
       child: InkWell(
         onTap: notifier != null
             ? () async {
-                final Location? _loc = await getCenterAndGeoCode();
+                final MezLocation? _loc = await getCenterAndGeoCode();
                 if (_loc != null) {
                   notifier.call(_loc);
                   widget.locationPickerMapController._showFakeMarker.value =
@@ -297,18 +297,19 @@ class LocationPickerState extends State<LocationPicker> {
   }
 
   /******************************  helper functions ************************************/
-  Future<Location?> getCenterAndGeoCode() async {
+  Future<MezLocation?> getCenterAndGeoCode() async {
     final LatLng? _mapCenter =
         await widget.locationPickerMapController.getMapCenter();
-    Location? finalResult;
+    MezLocation? finalResult;
 
     if (_mapCenter != null) {
       final GeoLoc.LocationData _newLocationData =
-          Location.buildLocationData(_mapCenter.latitude, _mapCenter.longitude);
+          MezLocation.buildLocationData(
+              _mapCenter.latitude, _mapCenter.longitude);
 
       final double kmDistance = MapHelper.calculateDistance(
           _newLocationData,
-          Location.buildLocationData(
+          MezLocation.buildLocationData(
               widget.locationPickerMapController.location.value!.latitude,
               widget.locationPickerMapController.location.value!.longitude));
 
@@ -326,7 +327,7 @@ class LocationPickerState extends State<LocationPicker> {
             widget.locationPickerMapController.location.value!.address;
       }
 
-      finalResult = Location(formattedAddress, _newLocationData);
+      finalResult = MezLocation(formattedAddress, _newLocationData);
 
       mezDbgPrint("@===> new location : ${finalResult.toString()}");
     }

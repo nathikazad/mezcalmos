@@ -1,8 +1,10 @@
 query getLaundryOperatorByUserId($userId: Int!) {
   laundry_operator(where: {user_id: {_eq: $userId}}) {
     id
-    owner
+     operator_details {
+  owner
     status
+    }
     user_id
     user {
       firebase_id
@@ -20,6 +22,9 @@ query getLaundryOperatorByUserId($userId: Int!) {
 }
 subscription laundryOperatorStatusStream($userId: Int!) {
   laundry_operator(where: {user_id: {_eq: $userId}}) {
+      operator_details {
+  
     status
+    }
   }
 }

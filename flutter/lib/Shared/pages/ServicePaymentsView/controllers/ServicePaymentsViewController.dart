@@ -68,8 +68,8 @@ class ServicePaymentsViewController {
 
     mezDbgPrint("Heeerrererrere =>${_paymentInfo.value!}");
     try {
-      _paymentInfo.value = await update_restaurant_payment_info(
-          id: serviceProviderId, paymentInfo: paymentInfo!);
+      // _paymentInfo.value = await update_restaurant_payment_info(
+      //     id: serviceProviderId, paymentInfo: paymentInfo!);
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -119,10 +119,10 @@ class ServicePaymentsViewController {
 
   Future<void> switchChargeFees(bool v) async {
     try {
-      await update_restaurant_payment_info(
-          id: serviceProviderId,
-          paymentInfo: paymentInfo!.copyWith(
-              stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
+      // await update_restaurant_payment_info(
+      //     id: serviceProviderId,
+      //     paymentInfo: paymentInfo!.copyWith(
+      //         stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
       await _fetchPayment(withCache: false);
     } catch (e, stk) {
       mezDbgPrint(e);
@@ -208,6 +208,7 @@ class ServicePaymentsViewController {
     };
     mezDbgPrint(newMap);
   }
+  // TODO @m66are RFC
 
   void dspose() {}
 }

@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Period.dart';
 
 class Cart {
   List<CartItem> cartItems = <CartItem>[];
-  Location? toLocation;
+  MezLocation? toLocation;
   Restaurant? restaurant;
   DateTime? deliveryTime;
   DeliveryType? deliveryType;
@@ -51,7 +51,7 @@ class Cart {
               itemIdInCart: itemIdInCart));
       });
       toLocation = cartData["to"] != null
-          ? Location.fromFirebaseData(cartData["to"])
+          ? MezLocation.fromFirebaseData(cartData["to"])
           : null;
       notes = cartData["notes"];
       deliveryTime = (cartData["deliveryTime"] != null)

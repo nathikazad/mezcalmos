@@ -150,14 +150,14 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         orderTime: DateTime.parse(orderData.order_time),
         cost: orderData.delivery_cost,
         restaurant: ServiceInfo(
-          location: Location(
-            orderData.restaurant.location.address,
-            orderData.restaurant.location.gps.toLocationData(),
+          location: MezLocation(
+            orderData.restaurant.details!.location.address,
+            orderData.restaurant.details!.location.gps.toLocationData(),
           ),
-          firebaseId: orderData.restaurant.firebase_id,
+          firebaseId: orderData.restaurant.details!.firebase_id,
           hasuraId: orderData.restaurant.id,
-          image: orderData.restaurant.image,
-          name: orderData.restaurant.name,
+          image: orderData.restaurant.details!.image,
+          name: orderData.restaurant.details!.name,
         ),
         dropoffDriver: (orderData.delivery?.delivery_driver != null)
             ? DeliveryDriverUserInfo(
@@ -183,7 +183,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
             hasuraId: orderData.customer.user.id,
             image: orderData.customer.user.image,
             name: orderData.customer.user.name),
-        to: Location(orderData.to_location_address!,
+        to: MezLocation(orderData.to_location_address!,
             orderData.to_location_gps!.toLocationData()),
         itemsCost: orderData.items_cost ?? 0,
         totalCost: orderData.total_cost,
@@ -341,21 +341,21 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
             reviewTime: DateTime.parse(orderData.review!.created_at))
         : null,
     restaurant: ServiceInfo(
-      location: Location(
-        orderData.restaurant.location.address,
-        orderData.restaurant.location.gps.toLocationData(),
+      location: MezLocation(
+        orderData.restaurant.details!.location.address,
+        orderData.restaurant.details!.location.gps.toLocationData(),
       ),
-      firebaseId: orderData.restaurant.firebase_id,
+      firebaseId: orderData.restaurant.details!.firebase_id,
       hasuraId: orderData.restaurant.id,
-      image: orderData.restaurant.image,
-      name: orderData.restaurant.name,
+      image: orderData.restaurant.details!.image,
+      name: orderData.restaurant.details!.name,
     ),
     deliveryOrderId: orderData.delivery_id,
     customer: UserInfo(
         hasuraId: orderData.customer.user.id,
         image: orderData.customer.user.image,
         name: orderData.customer.user.name),
-    to: Location(orderData.to_location_address!,
+    to: MezLocation(orderData.to_location_address!,
         orderData.to_location_gps!.toLocationData()),
     itemsCost: orderData.items_cost ?? 0,
     totalCost: orderData.total_cost,

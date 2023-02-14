@@ -464,7 +464,7 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
           order = orderStreamEvent;
           if (order?.driver?.location != null)
             mGoogleMapController.setLocation(
-              Location(
+              MezLocation(
                 "CurrentLocation",
                 LocationLibrary.LocationData.fromMap(
                   <String, double>{

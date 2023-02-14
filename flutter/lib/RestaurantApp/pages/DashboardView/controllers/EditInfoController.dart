@@ -35,7 +35,7 @@ class ROpEditInfoController {
 
   Rxn<Restaurant> restaurant = Rxn<Restaurant>();
   final Rxn<String> newImageUrl = Rxn();
-  final Rxn<Location> newLocation = Rxn();
+  final Rxn<MezLocation> newLocation = Rxn();
 
   final Rxn<LanguageType> primaryLang = Rxn();
   final Rxn<LanguageType> secondaryLang = Rxn();
@@ -116,23 +116,23 @@ class ROpEditInfoController {
       }
     }
 
-    await update_restaurant_info(
-        id: restaurantId,
-        restaurant: restaurant.value!.copyWith(
-          primaryLanguage: primaryLang.value,
-          userInfo: restaurant.value!.info.copyWith(
-              name: restaurantNameTxt.text,
-              location: newLocation.value,
-              image: newImageUrl.value,
-              descId: newDescId),
-        ));
+    // await update_restaurant_info(
+    //     id: restaurantId,
+    //     restaurant: restaurant.value!.copyWith(
+    //       primaryLanguage: primaryLang.value,
+    //       userInfo: restaurant.value!.info.copyWith(
+    //           name: restaurantNameTxt.text,
+    //           location: newLocation.value,
+    //           image: newImageUrl.value,
+    //           descId: newDescId),
+    //     ));
   }
 
   void switchAv(bool value) {
     isAvailable.value = value;
   }
 
-  void setNewLocation(Location? newLoc) {
+  void setNewLocation(MezLocation? newLoc) {
     if (newLoc != null) {
       newLocation.value = newLoc;
     }
@@ -144,16 +144,16 @@ class ROpEditInfoController {
   }
 
   Future<void> switchSelfDelivery(bool v) async {
-    try {
-      final bool? res =
-          await switch_restaurant_self_delivery(id: restaurantId, value: v);
-      if (res == true) {
-        await fetchRestaurant();
-      }
-    } on Exception catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
+    // try {
+    //   final bool? res =
+    //       await switch_restaurant_self_delivery(id: restaurantId, value: v);
+    //   if (res == true) {
+    //     await fetchRestaurant();
+    //   }
+    // } on Exception catch (e, stk) {
+    //   mezDbgPrint(e);
+    //   mezDbgPrint(stk);
+    // }
   }
 
   bool validateSecondaryLanguUpdate(LanguageType value) {
@@ -170,13 +170,13 @@ class ROpEditInfoController {
   }
 
   Future<void> turnOffOrders() async {
-    _serviceStatus.value = await update_restaurant_status(
-        id: restaurantId, status: ServiceStatus.Closed_temporarily);
+    // _serviceStatus.value = await update_restaurant_status(
+    //     id: restaurantId, status: ServiceStatus.Closed_temporarily);
   }
 
   Future<void> turnOnOrders() async {
-    _serviceStatus.value = await update_restaurant_status(
-        id: restaurantId, status: ServiceStatus.Open);
+    // _serviceStatus.value = await update_restaurant_status(
+    //     id: restaurantId, status: ServiceStatus.Open);
   }
 
   //

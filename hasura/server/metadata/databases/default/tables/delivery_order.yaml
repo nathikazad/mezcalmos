@@ -26,30 +26,41 @@ object_relationships:
           schema: delivery
   - name: delivery_driver
     using:
-      manual_configuration:
-        column_mapping:
-          delivery_driver_id: id
-          delivery_driver_type: delivery_driver_type
-        insertion_order: null
-        remote_table:
-          name: driver
-          schema: delivery
-  - name: delivery_operator
-    using:
-      manual_configuration:
-        column_mapping:
-          delivery_driver_id: id
-          delivery_driver_type: delivery_driver_type
-        insertion_order: null
-        remote_table:
-          name: operator
-          schema: delivery
+      foreign_key_constraint_on: delivery_driver_id
   - name: driver_review_by_customer
     using:
       foreign_key_constraint_on: driver_review_by_customer_id
   - name: driver_review_by_service_provider
     using:
       foreign_key_constraint_on: driver_review_by_service_provider_id
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          service_provider_id: id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
+  - name: laundry_delivery_order
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_customer_delivery_id
+        insertion_order: null
+        remote_table:
+          name: order
+          schema: laundry
+  - name: laundry_pickup_order
+    using:
+      manual_configuration:
+        column_mapping:
+          id: from_customer_delivery_id
+        insertion_order: null
+        remote_table:
+          name: order
+          schema: laundry
   - name: restaurant
     using:
       manual_configuration:
@@ -59,16 +70,6 @@ object_relationships:
         insertion_order: null
         remote_table:
           name: restaurant
-          schema: restaurant
-  - name: restaurant_operator
-    using:
-      manual_configuration:
-        column_mapping:
-          delivery_driver_id: id
-          delivery_driver_type: delivery_driver_type
-        insertion_order: null
-        remote_table:
-          name: operator
           schema: restaurant
   - name: restaurant_order
     using:
@@ -129,7 +130,6 @@ select_permissions:
         - trip_duration
         - status
         - service_provider_type
-        - delivery_driver_type
         - direction
       computed_fields:
         - in_process
@@ -151,7 +151,6 @@ select_permissions:
         - customer_review_by_driver_id
         - delivery_cost
         - delivery_driver_id
-        - delivery_driver_type
         - direction
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
@@ -196,7 +195,6 @@ select_permissions:
         - customer_review_by_driver_id
         - delivery_cost
         - delivery_driver_id
-        - delivery_driver_type
         - direction
         - driver_review_by_customer_id
         - driver_review_by_service_provider_id
@@ -227,6 +225,58 @@ select_permissions:
           delivery_operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - current_gps
+        - dropoff_gps
+        - pickup_gps
+        - chat_with_customer_id
+        - chat_with_service_provider_id
+        - customer_id
+        - customer_review_by_driver_id
+        - delivery_driver_id
+        - driver_review_by_customer_id
+        - driver_review_by_service_provider_id
+        - id
+        - service_provider_id
+        - service_provider_review_by_driver_id
+        - delivery_cost
+        - package_cost
+        - dropoff_address
+        - order_type
+        - payment_type
+        - pickup_address
+        - schedule_time
+        - trip_polyline
+        - actual_arrival_at_dropoff_time
+        - actual_arrival_at_pickup_time
+        - actual_delivered_time
+        - actual_package_ready_time
+        - cancellation_time
+        - estimated_arrival_at_dropoff_time
+        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
+        - order_time
+        - trip_distance
+        - trip_duration
+        - status
+        - service_provider_type
+        - direction
+      computed_fields:
+        - in_process
+      filter:
+        _or:
+          - laundry_delivery_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - laundry_pickup_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -264,7 +314,6 @@ select_permissions:
         - trip_duration
         - status
         - service_provider_type
-        - delivery_driver_type
         - direction
       computed_fields:
         - in_process
@@ -314,7 +363,6 @@ select_permissions:
         - trip_duration
         - status
         - service_provider_type
-        - delivery_driver_type
         - direction
       computed_fields:
         - in_process
@@ -335,16 +383,34 @@ update_permissions:
           user_id:
             _eq: X-Hasura-User-Id
       check: null
-  - role: delivery_operator
+  - role: laundry_operator
     permission:
       columns:
-        - estimated_arrival_at_dropoff_time
-        - estimated_arrival_at_pickup_time
+        - estimated_package_ready_time
       filter:
-        delivery_operator:
-          user_id:
-            _eq: X-Hasura-User-Id
-      check: null
+        _or:
+          - laundry_delivery_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - laundry_pickup_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+      check:
+        _or:
+          - laundry_delivery_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - laundry_pickup_order:
+              store:
+                operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:

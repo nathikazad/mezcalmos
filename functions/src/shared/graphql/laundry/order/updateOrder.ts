@@ -7,13 +7,6 @@ export async function updateLaundryOrderStatus(order: LaundryOrder) {
 
     let chain = getHasura();
 
-    if(order.orderId == null) {
-        throw new HttpsError(
-            "internal",
-            "order id not provided"
-        );
-    }
-    
     await chain.mutation({
         update_laundry_order_by_pk: [{
             pk_columns: {
@@ -27,28 +20,29 @@ export async function updateLaundryOrderStatus(order: LaundryOrder) {
             status: true
         }]
     });
-  }
+}
 
 export async function updateLaundryOrderStripe(orderId: number, orderStripePaymentInfo: OrderStripeInfo) {
     let chain = getHasura();
     
     let response = await chain.mutation({
-      update_laundry_order_by_pk: [{
-        pk_columns: {
-          id: orderId
-        }, 
-        _set: {
-          stripe_info: JSON.stringify(orderStripePaymentInfo),
-          stripe_fees: orderStripePaymentInfo.stripeFees
-        }
-      }, { 
-        stripe_info: [{}, true]
-      }]
+        update_laundry_order_by_pk: [{
+            pk_columns: {
+                id: orderId
+            }, 
+            _set: {
+                stripe_info: JSON.stringify(orderStripePaymentInfo),
+                stripe_fees: orderStripePaymentInfo.stripeFees
+            }
+        }, { 
+            stripe_info: [{}, true]
+        }]
     });
     if(!(response.update_laundry_order_by_pk)) {
-      throw new HttpsError(
-        "internal",
-        "error in updating order"
-      );
+        throw new HttpsError(
+            "internal",
+            "error in updating order"
+        );
     }
 }
+

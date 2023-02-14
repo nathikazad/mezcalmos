@@ -22,8 +22,8 @@ export enum AppType {
   Customer = "customer",
   RestaurantApp = "restaurant",
   DeliveryApp = "delivery",
-  DeliveryAdmin = "delivery_admin",
-  MezAdmin = "mez_admin",
+  DeliveryAdmin = "deliveryAdmin",
+  MezAdmin = "mezAdmin",
   LaundryApp = "laundry",
 }
 export enum CustomerAppType {
@@ -73,8 +73,8 @@ export enum ServerResponseStatus {
 export enum AuthorizationStatus {
   InReview = "inReview",
   Authorized = "authorized",
-  Unauthorized = "unauthorized"
-
+  Unauthorized = "unauthorized",
+  AwaitingApproval = "awaitingApproval"
 }
 
 export enum OperatorType {

@@ -21,23 +21,20 @@ export interface LaundryDetails {
   schedule:JSON,
   laundryOperatorNotificationToken?: string,
   firebaseId?: string,
-  delivery: boolean,
-  customerPickup: boolean,
-  selfDelivery?: boolean,
   deliveryPartnerId?: number,
-  deliveryDetails?: DeliveryDetails,
-  language: Language
+  deliveryDetails: DeliveryDetails,
+  language: Record<Language, boolean>
 }
- 
+
 export async function createLaundry(userId: number, laundryDetails: LaundryDetails) {
 
-  if(laundryDetails.delivery) {
-    if(laundryDetails.selfDelivery && !(laundryDetails.deliveryDetails)) {
+  if(laundryDetails.deliveryDetails.deliveryAvailable) {
+    if(laundryDetails.deliveryDetails.selfDelivery && !(laundryDetails.deliveryDetails.radius)) {
       throw new HttpsError(
         "unknown",
-        "laundry delivery details not provided"
+        "laundry delivery radius or cost is not set for self delivery"
       );
-    } else if(!(laundryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
+    } else if(!(laundryDetails.deliveryDetails.selfDelivery) && !(laundryDetails.deliveryPartnerId)) {
       throw new HttpsError(
         "unknown",
         "delivery partner not specified"
@@ -50,21 +47,21 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-  let laundryStore: ServiceProvider = {
-    name: laundryDetails.name,
-    image: laundryDetails.image,
-    location: laundryDetails.location,
-    schedule: laundryDetails.schedule,
-    selfDelivery: laundryDetails.selfDelivery ?? false,
-    customerPickup: laundryDetails.customerPickup,
-    delivery: laundryDetails.delivery,
-    deliveryPartnerId: laundryDetails.deliveryPartnerId,
-    deliveryDetails: laundryDetails.deliveryDetails,
-    language: laundryDetails.language,
-    firebaseId: laundryDetails.firebaseId
-  }
+  // let laundryStore: ServiceProvider = {
+  //   name: laundryDetails.name,
+  //   image: laundryDetails.image,
+  //   location: laundryDetails.location,
+  //   schedule: laundryDetails.schedule,
+  //   selfDelivery: laundryDetails.selfDelivery ?? false,
+  //   customerPickup: laundryDetails.customerPickup,
+  //   delivery: laundryDetails.delivery,
+  //   deliveryPartnerId: laundryDetails.deliveryPartnerId,
+  //   deliveryDetails: laundryDetails.deliveryDetails,
+  //   language: laundryDetails.language,
+  //   firebaseId: laundryDetails.firebaseId
+  // }
 
-  await createLaundryStore(laundryStore, userId, laundryDetails.laundryOperatorNotificationToken);
+  let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
 
   notifyAdmins(laundryStore, mezAdmins);
 

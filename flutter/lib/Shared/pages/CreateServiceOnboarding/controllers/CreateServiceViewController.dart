@@ -11,8 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
@@ -21,7 +24,6 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -49,7 +51,7 @@ class CreateServiceViewController {
 
   // info inputs //
 
-  final Rxn<Location> newLocation = Rxn();
+  final Rxn<MezLocation> newLocation = Rxn();
   final Rxn<File> newImageFile = Rxn();
   final Rxn<String> newImageUrl = Rxn();
   final RxBool imageLoading = RxBool(false);
@@ -105,7 +107,7 @@ class CreateServiceViewController {
     }
   }
 
-  void setNewLocation(Location newLoc) {
+  void setNewLocation(MezLocation newLoc) {
     newLocation.value = newLoc;
   }
 
@@ -146,7 +148,7 @@ class CreateServiceViewController {
     }
   }
 
-  Future<ServerResponse?> handleNext() async {
+  Future<bool?> handleNext() async {
     switch (currentPage.value) {
       case 0:
         await handleInfoPageNext();
@@ -238,7 +240,7 @@ class CreateServiceViewController {
     return costFormKey.currentState?.validate() == true;
   }
 
-  Future<ServerResponse> _createService() async {
+  Future<bool> _createService() async {
     mezDbgPrint("Clciked");
     if (serviceInput.value.deliveryType == ServiceDeliveryType.Self_delivery) {
       serviceInput.value.deliveryPartnerId = null;
@@ -247,27 +249,54 @@ class CreateServiceViewController {
       serviceInput.value.selfDeliveryCost = null;
     }
     mezDbgPrint(serviceInput.value.toString());
-    final ServerResponse res = await _pushServiceToDb();
+    final bool res = await _pushServiceToDb();
     return res;
   }
 
-  Future<ServerResponse> _pushServiceToDb() async {
+  Future<bool> _pushServiceToDb() async {
     mezDbgPrint(
         "Creating restaurant with this paylod ====>>>\n ${_constructServiceDetails()}");
-
-    final HttpsCallable cloudFunction = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-createRestaurant');
     try {
-      final HttpsCallableResult response =
-          await cloudFunction.call(_constructServiceDetails());
-      mezDbgPrint("Response : ${response.data}");
-
-      return ServerResponse.fromJson(response.data);
-    } catch (e, stk) {
-      mezDbgPrint("Errrooooooooor =======> $e,$stk");
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      await CloudFunctions.restaurant2_createRestaurant(
+          name: serviceInput.value.serviceInfo!.name,
+          image: serviceInput.value.serviceInfo!.image,
+          location: cModel.Location(
+              serviceInput.value.serviceInfo!.location.latitude,
+              serviceInput.value.serviceInfo!.location.longitude,
+              serviceInput.value.serviceInfo!.location.address),
+          schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
+          delivery: true,
+          customerPickup: false,
+          deliveryDetails: cModel.DeliveryDetails(
+            serviceInput.value.selfDeliveryCost!.minimumCost,
+            serviceInput.value.selfDeliveryCost!.costPerKm,
+            10,
+            serviceInput.value.selfDeliveryCost!.freeDeliveryMinimumCost,
+            serviceInput.value.selfDeliveryCost!.freeDeliveryKmRange,
+          ),
+          selfDelivery: serviceInput.value.deliveryType ==
+              ServiceDeliveryType.Self_delivery,
+          language: cModel.Language.EN);
+      return true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");
+      throwError(e);
+      throwError(stk);
+      return false;
     }
+    // final HttpsCallable cloudFunction = FirebaseFunctions.instance
+    //     .httpsCallable('restaurant2-createRestaurant');
+    // try {
+    //   final HttpsCallableResult response =
+    //       await cloudFunction.call(_constructServiceDetails());
+    //   mezDbgPrint("Response : ${response.data}");
+
+    //   return ServerResponse.fromJson(response.data);
+    // } catch (e, stk) {
+    //   mezDbgPrint("Errrooooooooor =======> $e,$stk");
+    //   return ServerResponse(ResponseStatus.Error,
+    //       errorMessage: "Server Error", errorCode: "serverError");
+    // }
   }
 
   Map<String, Object?> _constructServiceDetails() {

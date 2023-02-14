@@ -112,7 +112,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     }
     
     if (fromCustomerDeliveryOrder.deliveryDriver && fromCustomerDeliveryOrder.deliveryDriver.user?.firebaseId) {
-      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId!);
+      notification.linkUrl = orderUrl(OrderType.Laundry, order.orderId);
       pushNotification(fromCustomerDeliveryOrder.deliveryDriver.user.firebaseId, 
         notification, 
         fromCustomerDeliveryOrder.deliveryDriver.notificationInfo,

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -136,14 +136,14 @@ class RestaurantOrder extends DeliverableOrder {
             ? DateTime.tryParse(data["deliveryTime"])
             : null,
         to: data['to'] == null
-            ? Location.fromFirebaseData(
+            ? MezLocation.fromFirebaseData(
                 {
                   "address": "---------",
                   "lat": 15.871937999999997,
                   "lng": -97.091954
                 },
               )
-            : Location.fromFirebaseData(data['to']),
+            : MezLocation.fromFirebaseData(data['to']),
         restaurant: ServiceInfo.fromData(data["restaurant"]),
         // TODO:544D-HASURA
         customer: UserInfo(

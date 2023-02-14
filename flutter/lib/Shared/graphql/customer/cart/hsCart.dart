@@ -45,21 +45,25 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
       getCartResp.parsedData?.customer_customer_by_pk?.cart;
 
   PaymentInfo paymentInfo = PaymentInfo();
-  if (cartData?.restaurant?.stripe_info != null &&
-      cartData?.restaurant?.accepted_payments != null) {
+  if (cartData?.restaurant?.details?.stripe_info != null &&
+      cartData?.restaurant?.details?.accepted_payments != null) {
     paymentInfo = PaymentInfo.fromData(
-        stripeInfo: cartData?.restaurant?.stripe_info!,
-        acceptedPayments: cartData?.restaurant?.accepted_payments!);
+        stripeInfo: cartData?.restaurant?.details?.stripe_info!,
+        acceptedPayments: cartData?.restaurant?.details?.accepted_payments!);
   }
   // if (data?.stripe_info != null) {
   //   paymentInfo.stripe = parseServiceStripeInfo(data!.stripe_info);
   // }
+
   if (cartData != null) {
     final Cart cart = Cart(
         restaurant: cartData.restaurant != null
             ? Restaurant(
+                serviceDetailsId: cartData.restaurant!.details_id,
+                languages:
+                    convertToLanguages(cartData.restaurant?.details?.language),
                 deliveryCost:
-                    (cartData.restaurant!.delivery_details_of_deliverer == null)
+                    (cartData.restaurant?.delivery_details_of_deliverer == null)
                         ? null
                         : DeliveryCost(
                             id: cartData.restaurant!
@@ -87,46 +91,41 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                           ),
                 userInfo: ServiceInfo(
                   hasuraId: cartData.restaurant!.id,
-                  description:
-                      (cartData.restaurant!.description?.translations != null)
-                          ? {
-                              cartData.restaurant!.description!.translations
-                                      .first.language_id
-                                      .toLanguageType():
-                                  cartData.restaurant!.description!.translations
-                                      .first.value,
-                              cartData.restaurant!.description!.translations[1]
-                                      .language_id
-                                      .toLanguageType():
-                                  cartData.restaurant!.description!
-                                      .translations[1].value,
-                            }
-                          : null,
-                  image: cartData.restaurant!.image,
-                  firebaseId: cartData.restaurant?.firebase_id,
-                  name: cartData.restaurant!.name,
-                  descriptionId: cartData.restaurant!.description_id,
+                  description: (cartData
+                              .restaurant?.details!.description?.translations !=
+                          null)
+                      ? {
+                          cartData.restaurant!.details!.description!
+                                  .translations.first.language_id
+                                  .toLanguageType():
+                              cartData.restaurant!.details!.description!
+                                  .translations.first.value,
+                          cartData.restaurant!.details!.description!
+                                  .translations[1].language_id
+                                  .toLanguageType():
+                              cartData.restaurant!.details!.description!
+                                  .translations[1].value,
+                        }
+                      : null,
+                  image: cartData.restaurant?.details!.image,
+                  firebaseId: cartData.restaurant?.details?.firebase_id,
+                  name: cartData.restaurant?.details!.name,
+                  descriptionId: cartData.restaurant?.details!.description_id,
                   //   descriptionId: data.d,
-                  location: Location.fromHasura(
-                    cartData.restaurant!.location.gps,
-                    cartData.restaurant!.location.address,
+                  location: MezLocation.fromHasura(
+                    cartData.restaurant!.details!.location.gps,
+                    cartData.restaurant!.details!.location.address,
                   ),
                 ),
-                schedule: cartData.restaurant?.schedule != null
-                    ? Schedule.fromData(cartData.restaurant?.schedule)
+                schedule: cartData.restaurant?.details?.schedule != null
+                    ? Schedule.fromData(cartData.restaurant!.details!.schedule)
                     : null,
                 paymentInfo: paymentInfo,
                 restaurantState: ServiceState(
-                  cartData.restaurant!.open_status.toServiceStatus(),
-                  cartData.restaurant!.approved,
+                  cartData.restaurant!.details!.open_status.toServiceStatus(),
+                  cartData.restaurant!.details!.approved,
                 ),
-                primaryLanguage: cartData.restaurant!.language_id
-                    .toString()
-                    .toLanguageType(),
-                secondaryLanguage: cartData.restaurant!.language_id
-                    .toString()
-                    .toLanguageType()
-                    .toOpLang())
+              )
             : null);
     cartData.items.forEach(
         (Query$getCustomerCart$customer_customer_by_pk$cart$items cartitem) {
@@ -302,14 +301,17 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant?
           _res = cart.parsedData?.customer_customer_by_pk?.cart?.restaurant;
       PaymentInfo paymentInfo = PaymentInfo();
-      if (_res?.stripe_info != null && _res?.accepted_payments != null) {
+      if (_res?.details?.stripe_info != null &&
+          _res?.details?.accepted_payments != null) {
         paymentInfo = PaymentInfo.fromData(
-            stripeInfo: _res?.stripe_info!,
-            acceptedPayments: _res?.accepted_payments!);
+            stripeInfo: _res?.details?.stripe_info!,
+            acceptedPayments: _res?.details?.accepted_payments!);
       }
       if (cart.parsedData?.customer_customer_by_pk?.cart?.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
-          deliveryCost: (_res!.delivery_details_of_deliverer == null)
+          languages: convertToLanguages(_res!.details!.language),
+          serviceDetailsId: _res.details_id,
+          deliveryCost: (_res.delivery_details_of_deliverer == null)
               ? null
               : DeliveryCost(
                   id: _res.delivery_details_of_deliverer!.first.id,
@@ -324,36 +326,38 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
                 ),
           userInfo: ServiceInfo(
             hasuraId: _res.id,
-            image: _res.image,
-            firebaseId: _res.firebase_id,
-            name: _res.name,
-            description: (_res.description?.translations != null)
+            image: _res.details!.image,
+            firebaseId: _res.details!.firebase_id,
+            name: _res.details!.name,
+            description: (_res.details?.description?.translations != null)
                 ? {
-                    _res.description!.translations.first.language_id
+                    _res.details!.description!.translations.first.language_id
                             .toLanguageType():
-                        _res.description!.translations.first.value,
-                    _res.description!.translations[1].language_id
+                        _res.details!.description!.translations.first.value,
+                    _res.details!.description!.translations[1].language_id
                             .toLanguageType():
-                        _res.description!.translations[1].value,
+                        _res.details!.description!.translations[1].value,
                   }
                 : null,
-            descriptionId: _res.description_id,
+            descriptionId: _res.details!.description_id,
             //   descriptionId: data.d,
-            location: Location.fromHasura(
-              _res.location.gps,
-              _res.location.address,
+            location: MezLocation.fromHasura(
+              _res.details!.location.gps,
+              _res.details!.location.address,
             ),
           ),
-          schedule:
-              _res.schedule != null ? Schedule.fromData(_res.schedule) : null,
+          schedule: _res.details!.schedule != null
+              ? Schedule.fromData(_res.details!.schedule)
+              : null,
           paymentInfo: paymentInfo,
           restaurantState: ServiceState(
-            _res.open_status.toServiceStatus(),
-            _res.approved,
+            _res.details!.open_status.toServiceStatus(),
+            _res.details!.approved,
           ),
-          primaryLanguage: _res.language_id.toString().toLanguageType(),
-          secondaryLanguage:
-              _res.language_id.toString().toLanguageType().toOpLang(),
+
+          // primaryLanguage: _res.details!.language_id.toString().toLanguageType(),
+          // secondaryLanguage:
+          //     _res.language_id.toString().toLanguageType().toOpLang(),
         );
       }
 
@@ -498,7 +502,9 @@ Future<int> set_cart_restaurant_id({
 List<Option> _convertOptionFromStream(
     Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options
         optionsData) {
-  final List<Option> options = optionsData.item_options.map((var oneOption) {
+  final List<Option> options = optionsData.item_options.map(
+      (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options$item_options
+          oneOption) {
     final Option newOption = Option(
       id: oneOption.id,
       nameId: oneOption.name.id,

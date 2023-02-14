@@ -104,7 +104,7 @@ dependencies:
   uuid: ^3.0.6
   flutter_stripe: ^7.0.0
   agora_rtc_engine: ^6.1.0
-  flutter_callkit_incoming: ^1.0.2+1
+  flutter_callkit_incoming: ^1.0.3+1
   html: ^0.15.0
 
 # dependency_overrides:
@@ -138,6 +138,7 @@ flutter:
     - assets/images/laundryApp/
     - assets/images/restaurantApp/
     - assets/images/shared/notifications/
+    - assets/images/shared/markers/
     - assets/images/shared/notifications/laundry/
     - assets/images/deliveryAdmin/
     - assets/images/customer/restaurants/

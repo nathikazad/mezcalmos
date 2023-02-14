@@ -138,9 +138,9 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               borderRadius: BorderRadius.circular(10),
               onTap: () async {
                 // ignore: prefer_final_locals
-                Location? currentLoc =
+                MezLocation? currentLoc =
                     await MezRouter.toNamed(kPickLocationWithoutAuth)
-                        as Location?;
+                        as MezLocation?;
                 if (currentLoc != null) {
                   viewController.restaurantLocation.value = currentLoc;
                 }

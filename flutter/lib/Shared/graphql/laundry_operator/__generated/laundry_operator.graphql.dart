@@ -304,18 +304,33 @@ const documentNodeQuerygetLaundryOperatorByUserId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'owner'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user_id'),
@@ -504,8 +519,7 @@ extension ClientExtension$Query$getLaundryOperatorByUserId
 class Query$getLaundryOperatorByUserId$laundry_operator {
   Query$getLaundryOperatorByUserId$laundry_operator({
     required this.id,
-    required this.owner,
-    required this.status,
+    required this.operator_details,
     required this.user_id,
     required this.user,
     required this.store_id,
@@ -515,16 +529,16 @@ class Query$getLaundryOperatorByUserId$laundry_operator {
   factory Query$getLaundryOperatorByUserId$laundry_operator.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$owner = json['owner'];
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$user_id = json['user_id'];
     final l$user = json['user'];
     final l$store_id = json['store_id'];
     final l$$__typename = json['__typename'];
     return Query$getLaundryOperatorByUserId$laundry_operator(
       id: (l$id as int),
-      owner: (l$owner as bool),
-      status: (l$status as String),
+      operator_details:
+          Query$getLaundryOperatorByUserId$laundry_operator$operator_details
+              .fromJson((l$operator_details as Map<String, dynamic>)),
       user_id: (l$user_id as int),
       user: Query$getLaundryOperatorByUserId$laundry_operator$user.fromJson(
           (l$user as Map<String, dynamic>)),
@@ -535,9 +549,8 @@ class Query$getLaundryOperatorByUserId$laundry_operator {
 
   final int id;
 
-  final bool owner;
-
-  final String status;
+  final Query$getLaundryOperatorByUserId$laundry_operator$operator_details
+      operator_details;
 
   final int user_id;
 
@@ -551,10 +564,8 @@ class Query$getLaundryOperatorByUserId$laundry_operator {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$owner = owner;
-    _resultData['owner'] = l$owner;
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$user_id = user_id;
     _resultData['user_id'] = l$user_id;
     final l$user = user;
@@ -569,16 +580,14 @@ class Query$getLaundryOperatorByUserId$laundry_operator {
   @override
   int get hashCode {
     final l$id = id;
-    final l$owner = owner;
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$user_id = user_id;
     final l$user = user;
     final l$store_id = store_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$owner,
-      l$status,
+      l$operator_details,
       l$user_id,
       l$user,
       l$store_id,
@@ -600,14 +609,9 @@ class Query$getLaundryOperatorByUserId$laundry_operator {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$owner = owner;
-    final lOther$owner = other.owner;
-    if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$user_id = user_id;
@@ -658,13 +662,15 @@ abstract class CopyWith$Query$getLaundryOperatorByUserId$laundry_operator<
 
   TRes call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getLaundryOperatorByUserId$laundry_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getLaundryOperatorByUserId$laundry_operator$user? user,
     int? store_id,
     String? $__typename,
   });
+  CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+      TRes> get operator_details;
   CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$user<TRes>
       get user;
 }
@@ -685,8 +691,7 @@ class _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? owner = _undefined,
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? user_id = _undefined,
     Object? user = _undefined,
     Object? store_id = _undefined,
@@ -694,12 +699,11 @@ class _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator<TRes>
   }) =>
       _then(Query$getLaundryOperatorByUserId$laundry_operator(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        owner: owner == _undefined || owner == null
-            ? _instance.owner
-            : (owner as bool),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Query$getLaundryOperatorByUserId$laundry_operator$operator_details),
         user_id: user_id == _undefined || user_id == null
             ? _instance.user_id
             : (user_id as int),
@@ -713,6 +717,13 @@ class _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+      TRes> get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+
   CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$user<TRes>
       get user {
     final local$user = _instance.user;
@@ -731,18 +742,185 @@ class _CopyWithStubImpl$Query$getLaundryOperatorByUserId$laundry_operator<TRes>
 
   call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getLaundryOperatorByUserId$laundry_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getLaundryOperatorByUserId$laundry_operator$user? user,
     int? store_id,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+          TRes>
+      get operator_details =>
+          CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details
+              .stub(_res);
   CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$user<TRes>
       get user =>
           CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$user.stub(
               _res);
+}
+
+class Query$getLaundryOperatorByUserId$laundry_operator$operator_details {
+  Query$getLaundryOperatorByUserId$laundry_operator$operator_details({
+    required this.owner,
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryOperatorByUserId$laundry_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$owner = json['owner'];
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+      owner: (l$owner as bool),
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool owner;
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$owner = owner;
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$owner,
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryOperatorByUserId$laundry_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryOperatorByUserId$laundry_operator$operator_details
+    on Query$getLaundryOperatorByUserId$laundry_operator$operator_details {
+  CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+          Query$getLaundryOperatorByUserId$laundry_operator$operator_details>
+      get copyWith =>
+          CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+    TRes> {
+  factory CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+    Query$getLaundryOperatorByUserId$laundry_operator$operator_details instance,
+    TRes Function(
+            Query$getLaundryOperatorByUserId$laundry_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details;
+
+  factory CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details;
+
+  TRes call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryOperatorByUserId$laundry_operator$operator_details
+      _instance;
+
+  final TRes Function(
+      Query$getLaundryOperatorByUserId$laundry_operator$operator_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? owner = _undefined,
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryOperatorByUserId$laundry_operator$operator_details<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryOperatorByUserId$laundry_operator$operator_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getLaundryOperatorByUserId$laundry_operator$user {
@@ -1242,11 +1420,26 @@ const documentNodeSubscriptionlaundryOperatorStatusStream =
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1346,28 +1539,31 @@ extension ClientExtension$Subscription$laundryOperatorStatusStream
 
 class Subscription$laundryOperatorStatusStream$laundry_operator {
   Subscription$laundryOperatorStatusStream$laundry_operator({
-    required this.status,
+    required this.operator_details,
     required this.$__typename,
   });
 
   factory Subscription$laundryOperatorStatusStream$laundry_operator.fromJson(
       Map<String, dynamic> json) {
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$$__typename = json['__typename'];
     return Subscription$laundryOperatorStatusStream$laundry_operator(
-      status: (l$status as String),
+      operator_details:
+          Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+              .fromJson((l$operator_details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String status;
+  final Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+      operator_details;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1375,10 +1571,10 @@ class Subscription$laundryOperatorStatusStream$laundry_operator {
 
   @override
   int get hashCode {
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$status,
+      l$operator_details,
       l$$__typename,
     ]);
   }
@@ -1392,9 +1588,9 @@ class Subscription$laundryOperatorStatusStream$laundry_operator {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1430,9 +1626,12 @@ abstract class CopyWith$Subscription$laundryOperatorStatusStream$laundry_operato
       _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator;
 
   TRes call({
-    String? status,
+    Subscription$laundryOperatorStatusStream$laundry_operator$operator_details?
+        operator_details,
     String? $__typename,
   });
+  CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+      TRes> get operator_details;
 }
 
 class _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator<
@@ -1453,10 +1652,169 @@ class _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator<
   static const _undefined = {};
 
   TRes call({
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$laundryOperatorStatusStream$laundry_operator(
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Subscription$laundryOperatorStatusStream$laundry_operator$operator_details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+      TRes> get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator<
+        TRes>
+    implements
+        CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator<
+            TRes> {
+  _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$laundryOperatorStatusStream$laundry_operator$operator_details?
+        operator_details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+          TRes>
+      get operator_details =>
+          CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+              .stub(_res);
+}
+
+class Subscription$laundryOperatorStatusStream$laundry_operator$operator_details {
+  Subscription$laundryOperatorStatusStream$laundry_operator$operator_details({
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Subscription$laundryOperatorStatusStream$laundry_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$laundryOperatorStatusStream$laundry_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+    on Subscription$laundryOperatorStatusStream$laundry_operator$operator_details {
+  CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+          Subscription$laundryOperatorStatusStream$laundry_operator$operator_details>
+      get copyWith =>
+          CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+    TRes> {
+  factory CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
+    Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+        instance,
+    TRes Function(
+            Subscription$laundryOperatorStatusStream$laundry_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details;
+
+  factory CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details;
+
+  TRes call({
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$laundryOperatorStatusStream$laundry_operator$operator_details
+      _instance;
+
+  final TRes Function(
+          Subscription$laundryOperatorStatusStream$laundry_operator$operator_details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -1466,12 +1824,12 @@ class _CopyWithImpl$Subscription$laundryOperatorStatusStream$laundry_operator<
       ));
 }
 
-class _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator<
+class _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
         TRes>
     implements
-        CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator<
+        CopyWith$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details<
             TRes> {
-  _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator(
+  _CopyWithStubImpl$Subscription$laundryOperatorStatusStream$laundry_operator$operator_details(
       this._res);
 
   TRes _res;

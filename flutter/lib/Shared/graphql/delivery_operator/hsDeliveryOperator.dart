@@ -23,8 +23,8 @@ Future<Operator?> get_delivery_operator({required int userId}) async {
         res.parsedData!.delivery_operator.first;
     return Operator(
         state: OperatorState(
-            operatorState: data.status.toAgentStatus(),
-            owner: data.owner,
+            operatorState: data.operator_details.status.toAgentStatus(),
+            owner: data.operator_details.owner,
             serviceProviderId: data.delivery_company_id),
         info: UserInfo(
             hasuraId: data.user_id,
@@ -48,7 +48,8 @@ Stream<AgentStatus> listen_operator_status({required int operatorId}) {
       throw Exception(
           "🚨🚨 Stream on operator status exceptions =>${event.exception}");
     } else {
-      return event.parsedData!.delivery_operator.first.status.toAgentStatus();
+      return event.parsedData!.delivery_operator.first.operator_details.status
+          .toAgentStatus();
     }
   });
 }
@@ -69,8 +70,8 @@ Future<List<Operator>?> get_delivery_company_operators(
   return data
       .map((Query$getCompanyOerators$delivery_operator opData) => Operator(
           state: OperatorState(
-              owner: opData.owner,
-              operatorState: opData.status.toAgentStatus(),
+              owner: opData.operator_details.owner,
+              operatorState: opData.operator_details.status.toAgentStatus(),
               serviceProviderId: null),
           info: UserInfo(
               hasuraId: opData.user.id,

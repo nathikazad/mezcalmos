@@ -2,12 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpOpenClose.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProfileView/components/ServiceOpenCloseSwitcher.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -81,9 +81,9 @@ class ROpDashboardPage extends StatelessWidget {
             children: [
               _navigationLink(
                   onClick: () async {
-                    navigateToServiceInfoEdit(
-                        serviceProviderId: viewController.restaurantId,
-                        serviceProviderType: ServiceProviderType.Restaurant);
+                    // navigateToServiceInfoEdit(
+                    //     serviceDetailsId: viewController.restaurantId,
+                    //     serviceProviderType: ServiceProviderType.Restaurant);
                   },
                   icon: Icons.person,
                   titleWidget: Text(
@@ -131,7 +131,7 @@ class ROpDashboardPage extends StatelessWidget {
                     viewController.tabsViewViewController?.showTabs.value =
                         true;
                     navigateToServicePayments(
-                        ServiceProviderId:
+                        serviceProviderId:
                             viewController.restaurant.value!.restaurantId,
                         serviceProviderType: ServiceProviderType.Restaurant);
                   },
@@ -245,7 +245,7 @@ class ROpDashboardPage extends StatelessWidget {
                     ],
                   )),
               _divider(),
-              ROpOpenClose(
+              ServiceOpenCloseSwitcher(
                   title: '${_i18n()["openTitle"]}',
                   subtitle: '${_i18n()["openSubtitle"]}',
                   onTurnedOn: () {

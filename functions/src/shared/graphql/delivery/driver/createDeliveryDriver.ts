@@ -1,21 +1,23 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
-import { DelivererStatus, DeliveryDriver } from "../../../models/Generic/Delivery";
+import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";;
+import { AuthorizationStatus } from "../../../models/Generic/Generic";
+import { AddDriverDetails } from "../../../../delivery/addDriver";
 
-export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Promise<DeliveryDriver>*/ {
+export async function createDeliveryDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ): Promise<DeliveryDriver> {
     let chain = getHasura();
     let response = await chain.query({
         delivery_driver: [{
             where: {
                 user_id: {
-                    _eq: deliveryDriver.userId,
+                    _eq: userId,
                 },
                 delivery_company_type: {
-                    _eq: deliveryDriver.deliveryCompanyType
+                    _eq: deliveryServiceProviderType
                 },
                 delivery_company_id: {
-                    _eq: deliveryDriver.deliveryCompanyId
+                    _eq: addDriverDetails.deliveryCompanyId
                 }
             }
         }, {
@@ -24,7 +26,7 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
         notification_info: [{
             where: {
                 user_id: {
-                    _eq: deliveryDriver.userId
+                    _eq: userId
                 },
                 app_type_id: {
                     _eq: AppType.DeliveryApp
@@ -37,16 +39,16 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
     if(response.delivery_driver.length) {
         throw new HttpsError(
             "internal",
-            "The driver is already working for this delivery company or restaurant"
+            "The driver is already working for this delivery company or restaurant ot laundry"
         );
     }
     let mutationResponse = await chain.mutation({
         insert_delivery_driver_one: [{
             object: {
-                user_id: deliveryDriver.userId,
-                delivery_company_type: deliveryDriver.deliveryCompanyType,
-                delivery_company_id: deliveryDriver.deliveryCompanyId,
-                status: DelivererStatus.AwaitingApproval,
+                user_id: userId,
+                delivery_company_type: deliveryServiceProviderType,
+                delivery_company_id: addDriverDetails.deliveryCompanyId,
+                status: AuthorizationStatus.AwaitingApproval,
             }
         }, {
             id: true,
@@ -58,24 +60,38 @@ export async function createDeliveryDriver(deliveryDriver: DeliveryDriver)/*: Pr
             }
         }]
     })
-    if(!(response.notification_info.length) && deliveryDriver.notificationInfo) {
+    if(mutationResponse.insert_delivery_driver_one == null) {
+        throw new HttpsError(
+            "internal",
+            "driver creation error"
+        );
+    }
+    if(!(response.notification_info.length) && addDriverDetails.notificationInfo) {
         await chain.mutation({
             insert_notification_info_one: [{
                 object: {
-                    app_type_id: deliveryDriver.notificationInfo.appType,
-                    token: deliveryDriver.notificationInfo.token,
-                    user_id: deliveryDriver.userId
+                    app_type_id: addDriverDetails.notificationInfo.appType,
+                    token: addDriverDetails.notificationInfo.token,
+                    user_id: userId
                 }
             }, {
                 id: true
             }]
         });
     }
-    deliveryDriver.user = {
-        firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,
-        id: deliveryDriver.userId,
-        language: mutationResponse.insert_delivery_driver_one!.user.language_id as Language,
-        name: mutationResponse.insert_delivery_driver_one!.user.name,
-        image: mutationResponse.insert_delivery_driver_one!.user.image
+    return {
+        id: mutationResponse.insert_delivery_driver_one?.id,
+        userId,
+        deliveryCompanyType: deliveryServiceProviderType,
+        deliveryCompanyId: addDriverDetails.deliveryCompanyId,
+        notificationInfo: addDriverDetails.notificationInfo,
+        user: {
+            firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,
+            id: userId,
+            language: mutationResponse.insert_delivery_driver_one!.user.language_id as Language,
+            name: mutationResponse.insert_delivery_driver_one!.user.name,
+            image: mutationResponse.insert_delivery_driver_one!.user.image
+        }
+        // deliveryDriverType: ParticipantType.DeliveryDriver
     }
 }

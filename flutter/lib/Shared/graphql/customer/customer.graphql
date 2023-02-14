@@ -24,7 +24,7 @@ query get_customer_info($customer_id: Int!) {
   customer_customer(where: { user_id: { _eq: $customer_id } }) {
     app_version
     notification_info {
-      token,
+      token
       turn_off_notifications
     }
     user {
@@ -82,14 +82,16 @@ query get_customer_restaurant_orders($customer_id: Int!) {
     id
     restaurant {
       id
-      firebase_id
-      image
-      language_id
-      location {
-        gps
-        address
+      details{ id
+        firebase_id
+        image
+        language
+        location {
+          gps
+          address
+        }
+        name
       }
-      name
     }
     items {
       restaurant_item {
@@ -131,7 +133,7 @@ query get_customer_restaurant_orders($customer_id: Int!) {
     review_id
 
     order_time
-    firebase_id
+
     customer_app_type
     notes
     tax
@@ -149,70 +151,99 @@ query get_customer_restaurant_orders($customer_id: Int!) {
     }
   }
 }
-subscription listenOnCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
-  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+subscription listenOnCustomerRestaurantInProcessOrders(
+  $customerId: Int!
+  $inprocess: Boolean!
+) {
+  restaurant_order(
+    where: {
+      customer_id: { _eq: $customerId }
+      in_process: { _eq: $inprocess }
+    }
+  ) {
     id
     order_time
     status
-delivery_cost
+    delivery_cost
     total_cost
     to_location_address
     restaurant {
-    
+      details{ id
         name
         image
-      
+      }
     }
   }
-  
-}subscription listenOnCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
- laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
-     id
-    order_time
-    status
-delivery_cost
-    # total_cost
-    customer_address
-    store {
-     
-        name
-        image
-      
-    }
-  }
-  
 }
-query getCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
-  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+subscription listenOnCustomerLaundryInProcessOrders(
+  $customerId: Int!
+  $inprocess: Boolean!
+) {
+  laundry_order(
+    where: {
+      customer_id: { _eq: $customerId }
+      in_process: { _eq: $inprocess }
+    }
+  ) {
     id
     order_time
     status
-delivery_cost
-    total_cost
-    to_location_address
-    restaurant {
-     
-        name
-        image
-      
-    }
-  }
-  
-}
-query getCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
- laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
-     id
-    order_time
-    status
-delivery_cost
+    delivery_cost
     # total_cost
     customer_address
     store {
-      
+      details{ id
         name
         image
-      
+      }
     }
   }
-  
+}
+query getCustomerRestaurantInProcessOrders(
+  $customerId: Int!
+  $inprocess: Boolean!
+) {
+  restaurant_order(
+    where: {
+      customer_id: { _eq: $customerId }
+      in_process: { _eq: $inprocess }
+    }
+  ) {
+    id
+    order_time
+    status
+    delivery_cost
+    total_cost
+    to_location_address
+    restaurant {
+      details{ id
+        name
+        image
+      }
+    }
+  }
+}
+query getCustomerLaundryInProcessOrders(
+  $customerId: Int!
+  $inprocess: Boolean!
+) {
+  laundry_order(
+    where: {
+      customer_id: { _eq: $customerId }
+      in_process: { _eq: $inprocess }
+    }
+  ) {
+    id
+    order_time
+    status
+    delivery_cost
+    # total_cost
+    customer_address
+    store {
+      details{ id
+        name
+        image
+      }
+    }
+  }
 }

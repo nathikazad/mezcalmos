@@ -1,0 +1,89 @@
+table:
+  name: stripe_info
+  schema: service_provider
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - payouts_enabled
+        - sp_id
+        - email
+        - requirements
+        - status
+        - stripe_id
+      filter: {}

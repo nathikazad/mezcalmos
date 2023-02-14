@@ -2,25 +2,25 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
-class Location {
+class MezLocation {
   String address;
   LocationData position;
-  Location(this.address, this.position);
-  factory Location.fromFirebaseData(location) {
+  MezLocation(this.address, this.position);
+  factory MezLocation.fromFirebaseData(location) {
     // mezDbgPrint("Building LocData => $location");
     final LocationData position =
         buildLocationData(location["lat"], location["lng"]);
-    return Location(location["address"], position);
+    return MezLocation(location["address"], position);
   }
 
-  factory Location.fromLocationData(LocationData locationData) {
-    return Location("", locationData);
+  factory MezLocation.fromLocationData(LocationData locationData) {
+    return MezLocation("", locationData);
   }
 
-  factory Location.fromHasura(Geography locationData, address) {
+  factory MezLocation.fromHasura(Geography locationData, address) {
     final LocationData position = buildLocationData(
         locationData.latitude.toDouble(), locationData.longitude.toDouble());
-    return Location(address, position);
+    return MezLocation(address, position);
   }
 
   static LocationData buildLocationData(double lat, double lng) {
@@ -56,7 +56,7 @@ class Location {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Location && other.address == address;
+    return other is MezLocation && other.address == address;
   }
 
   bool isValidLocation() =>

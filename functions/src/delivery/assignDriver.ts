@@ -4,7 +4,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import { DelivererStatus, DeliveryDriver, DeliveryOperatorStatus, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -13,22 +13,23 @@ import { deleteDeliveryChatMessagesAndParticipant } from "../shared/graphql/chat
 import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator/getDeliveryOperator";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
-import { OperatorStatus } from "../shared/models/Services/Service";
+import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
   deliveryOrderId: number,
   deliveryDriverId: number,
   orderType: OrderType,
-  deliveryDriverType: ParticipantType,
   changeDriver?: boolean,
   deliveryCompanyId: number
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
-
+  // assignDriverDetails.deliveryDriverType = 'delivery_driver';
   let deliveryOrderPromise = getDeliveryOrder(assignDriverDetails.deliveryOrderId);
-  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId, assignDriverDetails.deliveryDriverType);
+  let deliveryDriverPromise = getDeliveryDriver(assignDriverDetails.deliveryDriverId)//, assignDriverDetails.deliveryDriverType);
   let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
   let deliveryOrder: DeliveryOrder = promiseResponse[0];
   let deliveryDriver: DeliveryDriver = promiseResponse[1];
@@ -37,7 +38,7 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
 
     await checkIfOperatorAuthorized(deliveryOrder, userId);
   }
-  if(deliveryDriver.status != DelivererStatus.Authorized) {
+  if(deliveryDriver.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
       "delivery driver not authorized"
@@ -71,7 +72,7 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, assignDriverDe
         orderType: assignDriverDetails.orderType,
         notificationAction: NotificationAction.ShowPopUp,
         orderId: assignDriverDetails.deliveryOrderId,
-        deliveryDriverType: assignDriverDetails.deliveryDriverType
+        // deliveryDriverType: assignDriverDetails.deliveryDriverType
       },
       background: deliveryNewOrderMessage,
       linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)
@@ -81,7 +82,7 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, assignDriverDe
       deliveryDriver.user!.firebaseId!,
       notification,
       deliveryDriver.notificationInfo,
-      deliveryDriver.deliveryDriverType
+      ParticipantType.DeliveryDriver
     );
   }
 }
@@ -91,7 +92,7 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
   switch (deliveryOrder.serviceProviderType) {
     case DeliveryServiceProviderType.DeliveryCompany:
       operator = await getDeliveryOperatorByUserId(userId);
-      if (operator.status != DeliveryOperatorStatus.Authorized || operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
+      if (operator.status != AuthorizationStatus.Authorized || operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"
@@ -100,13 +101,22 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
       break;
     case DeliveryServiceProviderType.Restaurant:
       operator = await getRestaurantOperatorByUserId(userId);
-      if (operator.status != OperatorStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+      if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"
         );
       }
       break;
+      case DeliveryServiceProviderType.Laundry:
+        operator = await getLaundryOperatorByUserId(userId);
+        if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+          throw new HttpsError(
+            "internal",
+            "Invalid operator"
+          );
+        }
+        break;
     default:
       break;
   }

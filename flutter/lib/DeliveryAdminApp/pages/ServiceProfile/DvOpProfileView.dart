@@ -37,7 +37,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
               Text(
                 'Settings',
                 textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 6),
               Card(
@@ -49,12 +49,12 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                           icon: Icons.person,
                           title: "Info",
                           onClick: () {
-                            navigateToServiceInfoEdit(
-                                serviceProviderId:
-                                    Get.find<DeliveryOpAuthController>()
-                                        .companyId!,
-                                serviceProviderType:
-                                    ServiceProviderType.Delivery_company);
+                            // navigateToServiceInfoEdit(
+                            //     serviceDetailsId:
+                            //         Get.find<DeliveryOpAuthController>()
+                            //             .companyId!,
+                            //     serviceProviderType:
+                            //         ServiceProviderType.DeliveryCompany);
                           }),
                       Divider(),
                       _navigationLink(
@@ -66,7 +66,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                                     Get.find<DeliveryOpAuthController>()
                                         .companyId!,
                                 serviceProviderType:
-                                    ServiceProviderType.Delivery_company);
+                                    ServiceProviderType.DeliveryCompany);
                           }),
                     ],
                   ),
@@ -78,7 +78,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
               Text(
                 'Shortcuts',
                 textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(height: 6),
               Card(
@@ -144,7 +144,7 @@ class _DvOpProfileViewState extends State<DvOpProfileView> {
                 fit: FlexFit.tight,
                 child: Text(
                   title,
-                  style: Get.textTheme.bodyText1?.copyWith(color: textColor),
+                  style: Get.textTheme.bodyLarge?.copyWith(color: textColor),
                 )),
             SizedBox(
               width: 5,

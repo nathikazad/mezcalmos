@@ -5,21 +5,21 @@ import { ParticipantType } from "../shared/models/Generic/Chat"
 import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
-import { DeliveryOperator, DeliveryOperatorStatus } from "../shared/models/Generic/Delivery"
 import { pushNotification } from "../utilities/senders/notifyUser"
+
 
 export interface AddOperatorDetails {
     deliveryCompanyId: number,
     notificationInfo?: NotificationInfo,
 }
-export async function addDeliveryOperator(operatorUserId: number, addDriverDetails: AddOperatorDetails) {
+export async function addDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails) {
 
   let operatorUserInfo: UserInfo = await getUser(operatorUserId);
   let notification: Notification = {
     foreground: <AuthorizeOperatorNotification>{
       newOperatorName: operatorUserInfo.name,
       newOperatorImage: operatorUserInfo.image,
-      serviceProviderId: addDriverDetails.deliveryCompanyId,
+      serviceProviderId: addOperatorDetails.deliveryCompanyId,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.AuthorizeOperator,
       notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
@@ -36,16 +36,9 @@ export async function addDeliveryOperator(operatorUserId: number, addDriverDetai
     },
     linkUrl: `/`
   }
-  let newOperator: DeliveryOperator = {
-    userId: operatorUserId,
-    deliveryCompanyId: addDriverDetails.deliveryCompanyId,
-    status: DeliveryOperatorStatus.AwaitingApproval,
-    notificationInfo: addDriverDetails.notificationInfo,
-    owner: false,
-  }
-  await createDeliveryOperator(newOperator)
+  await createDeliveryOperator(operatorUserId, addOperatorDetails)
 
-  let operators = await getDeliveryOperators(addDriverDetails.deliveryCompanyId);
+  let operators = await getDeliveryOperators(addOperatorDetails.deliveryCompanyId);
   operators.forEach((o) => {
     if(o.owner && o.user) {
       pushNotification(

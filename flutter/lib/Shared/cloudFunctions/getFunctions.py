@@ -16,7 +16,8 @@ def searchForModel(search):
   found = False
   for folder, dirs, files in os.walk("./"):
     for file in files:
-      # print(file)
+      if file == '.DS_Store':
+        continue
       fullpath = os.path.join(folder, file)
       with open(fullpath, 'r') as f:
         for line in f:
@@ -344,7 +345,6 @@ if __name__ == "__main__":
   for key in uniqueTypes:
     print(key)
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:
-      # print(key)
       models[key] = searchForModel(key)
 
   os.chdir('../../flutter/lib/Shared/cloudFunctions')

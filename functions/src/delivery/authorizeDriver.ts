@@ -1,5 +1,5 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { DeliveryDriver, DeliveryOperatorStatus, DeliveryServiceProviderType, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
+import { DeliveryDriver, DeliveryServiceProviderType, DriverApprovedNotification } from "../shared/models/Generic/Delivery";
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { updateDriverStatustoAuthorized } from "../shared/graphql/delivery/driver/updateDriverStatus";
 import { deleteDeliveryDriver } from "../shared/graphql/delivery/driver/deleteDriver";
@@ -8,7 +8,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { OperatorStatus } from "../shared/models/Services/Service";
+import { AuthorizationStatus } from "../shared/models/Generic/Generic";
 
 export interface AuthorizeDetails {
     deliveryDriverId: number,
@@ -16,7 +16,7 @@ export interface AuthorizeDetails {
 }
 
 export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails, deliveryServiceProviderType: DeliveryServiceProviderType) {
-  let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId, ParticipantType.DeliveryDriver);
+  let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
 
   await checkAuthorization();
 
@@ -32,7 +32,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
     switch (deliveryServiceProviderType) {
       case DeliveryServiceProviderType.Restaurant:
         let restaurantOperator = await getRestaurantOperatorByUserId(userId);
-        if (!restaurantOperator.owner || restaurantOperator.status != OperatorStatus.Authorized) {
+        if (!restaurantOperator.owner || restaurantOperator.status != AuthorizationStatus.Authorized) {
           throw new HttpsError(
             "internal",
             "Only authorized restaurant owners can add drivers"
@@ -41,7 +41,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
         break;
       case DeliveryServiceProviderType.DeliveryCompany:
         let deliveryOperator = await getDeliveryOperatorByUserId(userId);
-        if (!deliveryOperator.owner || deliveryOperator.status != DeliveryOperatorStatus.Authorized) {
+        if (!deliveryOperator.owner || deliveryOperator.status != AuthorizationStatus.Authorized) {
           throw new HttpsError(
             "internal",
             "Only authorized delivery owners can add drivers"

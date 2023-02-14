@@ -13,7 +13,7 @@ class AdminTabsViewController {
 // vars//
   List<ServiceProviderType> serviceTypes = [
     ServiceProviderType.Restaurant,
-    ServiceProviderType.Delivery_company
+    ServiceProviderType.DeliveryCompany
   ];
   // obs //
   Rx<ServiceProviderType> selectedServiceProviderType =
@@ -25,6 +25,26 @@ class AdminTabsViewController {
 
   double get getAppbarHeight =>
       showAppBarTabs ? kToolbarHeight * 2 : kToolbarHeight;
+  RxInt restOrdersCount = RxInt(0);
+  RxInt laundryOrdersCount = RxInt(0);
+  RxInt dvOrdersCount = RxInt(0);
+  String? getBadge(ServiceProviderType type) {
+    if (bottomTabIndex.value == 0) {
+      switch (type) {
+        case ServiceProviderType.Restaurant:
+          return restOrdersCount.value.toString();
+        case ServiceProviderType.DeliveryCompany:
+          return dvOrdersCount.value.toString();
+        case ServiceProviderType.Laundry:
+          return laundryOrdersCount.value.toString();
+
+          break;
+        default:
+      }
+    }
+    return null;
+  }
+
   // methods //
   void init({required TickerProvider vsync}) {
     appbarTabsController =

@@ -1,17 +1,21 @@
-import { Location, NotificationInfo } from "./Generic";
+import { AuthorizationStatus, Location, NotificationInfo } from "./Generic";
 import { OrderType, PaymentType } from "./Order";
 import { UserInfo } from "./User";
-import { ForegroundNotification, NotificationForQueue, OrderNotification } from "../Notification";
+import {
+  ForegroundNotification,
+  NotificationForQueue,
+  OrderNotification,
+} from "../Notification";
 import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
-    deliveryId?: number;
+    deliveryId: number;
     pickupLocation: Location;
     dropoffLocation: Location;
-    deliveryDriverType?: ParticipantType
+    // deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
     chatWithServiceProviderId?: number;
-    
+    packageReady: boolean;
     chatWithCustomerId: number;
     paymentType: PaymentType;
     stripePaymentId?: number;
@@ -43,29 +47,29 @@ export interface DeliveryOrder {
     direction: DeliveryDirection;
 }
 export enum DeliveryDirection {
-    FromCustomer = "fromCustomer",
-    ToCustomer = "toCustomer"
+  FromCustomer = "fromCustomer",
+  ToCustomer = "toCustomer",
 }
 
 export interface DeliveryDriver {
-    id?: number,
-    userId: number,
-    deliveryCompanyType?: DeliveryServiceProviderType,
-    deliveryCompanyId?: number,
-    status?: string,
-    appVersion?: string,
-    currentLocation?: Location
-    user?: UserInfo,
-    online?: boolean,
-    notificationInfo?: NotificationInfo,
-    deliveryDriverType: ParticipantType
+  id: number;
+  userId: number;
+  deliveryCompanyType?: DeliveryServiceProviderType;
+  deliveryCompanyId?: number;
+  status?: string;
+  appVersion?: string;
+  currentLocation?: Location;
+  user?: UserInfo;
+  online?: boolean;
+  notificationInfo?: NotificationInfo;
+  // deliveryDriverType: ParticipantType;
 }
 
 export interface DeliveryOperator {
-    id?: number,
+    id: number,
     userId: number,
     deliveryCompanyId: number,
-    status: DeliveryOperatorStatus,
+    status: AuthorizationStatus,
     owner: boolean,
     appVersion?: string,
     currentGPS?: Location,
@@ -74,89 +78,80 @@ export interface DeliveryOperator {
     user?: UserInfo
 }
 export interface DeliveryDetails {
-    minimumCost: number,
-    costPerKm: number,
-    radius: number,
+    minimumCost?: number,
+    costPerKm?: number,
+    radius?: number,
     freeDeliveryMinimumCost?: number,
     freeDeliveryKmRange?: number,
-}
-
-export enum DelivererStatus {
-    AwaitingApproval = "awaiting_approval",
-    Authorized = "authorized",
-    Banned = "banned"
-}
-export enum DeliveryOperatorStatus {
-    AwaitingApproval = "awaiting_approval",
-    Authorized = "authorized",
-    Banned = "banned"
+    deliveryAvailable: boolean;
+    customerPickup: boolean;
+    selfDelivery: boolean;
 }
 
 export enum DeliveryOrderStatus {
-    OrderReceived = "orderReceived",
-    OnTheWayToPickup = "onTheWayToPickup", 
-    PackageReady = "packageReady", 
-    AtPickup = "atPickup", 
-    OnTheWayToDropoff = "onTheWayToDropoff", 
-    AtDropoff = "atDropoff", 
-    Delivered = "delivered", 
-    CancelledByCustomer = "cancelledByCustomer", 
-    CancelledByDeliverer = "cancelledByDeliverer", 
-    CancelledByServiceProvider = "cancelledByServiceProvider"
+  OrderReceived = "orderReceived",
+  OnTheWayToPickup = "onTheWayToPickup",
+
+  AtPickup = "atPickup",
+  OnTheWayToDropoff = "onTheWayToDropoff",
+  AtDropoff = "atDropoff",
+  Delivered = "delivered",
+  CancelledByCustomer = "cancelledByCustomer",
+  CancelledByDeliverer = "cancelledByDeliverer",
+  CancelledByServiceProvider = "cancelledByServiceProvider",
 }
 
 export enum DeliveryServiceProviderType {
-    Restaurant = "restaurant",
-    DeliveryCompany = "delivery_company",
-    Laundry = "laundry"
+  Restaurant = "restaurant",
+  DeliveryCompany = "deliveryCompany",
+  Laundry = "laundry",
 }
-
-// export enum DeliveryDriverType {
-//     RestaurantOperator = "restaurant_operator",
-//     DeliveryDriver = "delivery_driver"
-// }
 
 export interface NewDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: ParticipantType
+  deliveryDriverType: ParticipantType;
 }
-  
+
 export interface CancelDeliveryOrderNotification extends OrderNotification {
-    deliveryDriverType: ParticipantType
+  deliveryDriverType: ParticipantType;
 }
 
-export interface DeliveryOrderStatusChangeNotification extends OrderNotification {
-    status: DeliveryOrderStatus
+export interface DeliveryOrderStatusChangeNotification
+  extends OrderNotification {
+  status: DeliveryOrderStatus;
 }
 
-export interface AssignDeliveryCompanyNotification extends ForegroundNotification {
-    orderType: OrderType,
-    orderId: number,
-    deliveryCompanyId: number
+export interface AssignDeliveryCompanyNotification
+  extends ForegroundNotification {
+  orderType: OrderType;
+  orderId: number;
+  deliveryCompanyId: number;
 }
 
-export interface AssignDeliveryCompanyNotificationForQueue extends NotificationForQueue {
-    orderType: OrderType,
-    orderId: number,
-    deliveryCompanyId: number
+export interface AssignDeliveryCompanyNotificationForQueue
+  extends NotificationForQueue {
+  orderType: OrderType;
+  orderId: number;
+  deliveryCompanyId: number;
 }
 
 export interface AuthorizeDriverNotification extends ForegroundNotification {
-    newDriverName: string,
-    newDriverImage: string,
+  newDriverName: string;
+  newDriverImage: string;
 }
 export interface DriverApprovedNotification extends ForegroundNotification {
-    approved: boolean,
+  approved: boolean;
 }
 
-export interface DeliveryOperatorApprovedNotification extends ForegroundNotification {
-    operatorId: number,
-    approved: boolean,
-    DeliveryCompanyName: string,
-    DeliveryCompanyId: number
+export interface DeliveryOperatorApprovedNotification
+  extends ForegroundNotification {
+  operatorId: number;
+  approved: boolean;
+  DeliveryCompanyName: string;
+  DeliveryCompanyId: number;
 }
 
 export interface DeliveryAdmin {
-    authorized: boolean,
-    versionNumber: string,
-    notificationInfo: NotificationInfo
+  authorized: boolean;
+  versionNumber: string;
+  notificationInfo: NotificationInfo;
 }

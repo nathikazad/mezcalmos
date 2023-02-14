@@ -1,0 +1,246 @@
+table:
+  name: details
+  schema: service_provider
+object_relationships:
+  - name: delivery_company
+    using:
+      foreign_key_constraint_on:
+        column: details_id
+        table:
+          name: company
+          schema: delivery
+  - name: description
+    using:
+      foreign_key_constraint_on: description_id
+  - name: laundry_store
+    using:
+      foreign_key_constraint_on:
+        column: details_id
+        table:
+          name: store
+          schema: laundry
+  - name: location
+    using:
+      foreign_key_constraint_on: location_id
+  - name: restaurant
+    using:
+      foreign_key_constraint_on:
+        column: details_id
+        table:
+          name: restaurant
+          schema: restaurant
+  - name: service_link
+    using:
+      foreign_key_constraint_on: service_link_id
+  - name: stripe_info
+    using:
+      foreign_key_constraint_on:
+        column: sp_id
+        table:
+          name: stripe_info
+          schema: service_provider
+array_relationships:
+  - name: delivery_drivers
+    using:
+      manual_configuration:
+        column_mapping:
+          id: delivery_company_id
+        insertion_order: null
+        remote_table:
+          name: driver
+          schema: delivery
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: customer
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: delivery_driver
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: laundry_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: mez_admin
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+  - role: restaurant_operator
+    permission:
+      columns:
+        - approved
+        - description_id
+        - id
+        - location_id
+        - service_link_id
+        - accepted_payments
+        - schedule
+        - firebase_id
+        - image
+        - name
+        - open_status
+        - phone_number
+        - service_provider_type
+        - creation_time
+        - language
+      filter: {}
+update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - accepted_payments
+        - image
+        - language
+        - name
+        - open_status
+        - phone_number
+        - schedule
+      filter:
+        delivery_company:
+          delivery_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: laundry_operator
+    permission:
+      columns:
+        - accepted_payments
+        - description_id
+        - image
+        - language
+        - name
+        - open_status
+        - phone_number
+        - schedule
+      filter:
+        laundry_store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - accepted_payments
+        - description_id
+        - image
+        - language
+        - name
+        - open_status
+        - phone_number
+        - schedule
+      filter:
+        restaurant:
+          restaurant_operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

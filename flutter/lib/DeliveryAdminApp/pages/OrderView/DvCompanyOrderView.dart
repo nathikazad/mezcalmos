@@ -6,8 +6,8 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
-import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/services/DeliveryOrderHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -44,6 +44,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
   @override
   void dispose() {
     mezDbgPrint("Calling view dispose 🥸");
+    viewController.dispose();
 
     super.dispose();
   }
@@ -72,7 +73,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                         Expanded(
                           child: Text(
                             viewController.order.value!.orderStatusTitle(),
-                            style: Theme.of(context).textTheme.headline3,
+                            style: Theme.of(context).textTheme.displaySmall,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -83,13 +84,13 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                   ),
                 ),
                 _estTimes(),
-                _driverCard(),
+                if (viewController.canSetDriver) _driverCard(),
                 _serviceCard(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     "Customer Info",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 MezCard(
@@ -99,13 +100,13 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                         viewController.order.value!.customerInfo.image),
                     content: Text(
                       viewController.order.value!.customerInfo.name,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     )),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
                     'Delivery Details',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 OrderScheduledTimeCard(
@@ -139,7 +140,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 ),
                 Text(
                   "Getting you order info...",
-                  style: Get.textTheme.bodyText1
+                  style: Get.textTheme.bodyLarge
                       ?.copyWith(color: primaryBlueColor),
                 ),
               ],
@@ -158,7 +159,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           margin: const EdgeInsets.only(top: 20, bottom: 10),
           child: Text(
             "Estimated Times",
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         if (viewController.order.value!.estimatedPackageReadyTime != null)
@@ -175,7 +176,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Package ready :",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -198,7 +199,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at pickup :",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -221,7 +222,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 children: [
                   Text(
                     "Arrival at dropoff :",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 2,
@@ -250,7 +251,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
       content: Text(
         viewController.order.value!.driverInfo?.name ??
             "No driver assigned yet",
-        style: Get.textTheme.bodyText1,
+        style: Get.textTheme.bodyLarge,
       ),
       action: Row(
         children: [
@@ -258,7 +259,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             onTap: () {
               navigateToPickDriver(
                   deliveryOrderId: viewController.order.value!.id,
-                  showForwardButton: true);
+                  showForwardButton: false);
             },
             icon: (viewController.order.value!.driverInfo != null)
                 ? Icons.edit
@@ -287,7 +288,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
           children: [
             Text(
               viewController.order.value!.serviceInfo.name,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -303,7 +304,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 Flexible(
                   child: Text(
                     viewController.order.value!.serviceInfo.location.address,
-                    style: Get.textTheme.bodyText2,
+                    style: Get.textTheme.bodyMedium,
                     maxLines: 1,
                   ),
                 ),

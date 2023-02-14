@@ -24,8 +24,8 @@ Future<Operator?> get_laundry_operator({required int userId}) async {
         res.parsedData!.laundry_operator.first;
     return Operator(
         state: OperatorState(
-            operatorState: data.status.toAgentStatus(),
-            owner: data.owner,
+            operatorState: data.operator_details.status.toAgentStatus(),
+            owner: data.operator_details.owner,
             serviceProviderId: data.store_id),
         info: UserInfo(
             hasuraId: data.user_id,
@@ -49,7 +49,8 @@ Stream<AgentStatus> listen_laundry_operator_status({required int operatorId}) {
       throw Exception(
           "🚨🚨 Stream on operator status exceptions =>${event.exception}");
     } else {
-      return event.parsedData!.laundry_operator.first.status.toAgentStatus();
+      return event.parsedData!.laundry_operator.first.operator_details.status
+          .toAgentStatus();
     }
   });
 }

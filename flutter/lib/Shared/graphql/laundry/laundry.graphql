@@ -1,73 +1,100 @@
 query getLaundries {
   laundry_store {
     id
-    image
-    language_id
-normal_delivery_time
-    location_id
+    normal_delivery_time
     delivery_details_id
-normal_delivery_time
-    name
-    location {
-      gps
-      address
+    normal_delivery_time
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      self_delivery
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      radius
     }
+    details{ id
+      location_id
 
-    approved
-
-    description_id
-    schedule
-    description {
-      translations {
-        language_id
-        value
+      image
+      language
+      name
+      location {
+        gps
+        address
       }
+
+      approved
+
+      description_id
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      accepted_payments
+      stripe_info
+      # self_delivery
+      open_status
+      schedule
     }
-    accepted_payments
-    stripe_info
-    self_delivery
-    open_status
-    schedule
   }
 }
 
 query getLaundryStoreById($id: Int!) {
   laundry_store_by_pk(id: $id) {
     id
-    location_id
-    delivery_details_id
-normal_delivery_time
 
-    image
-    language_id
-    description_id
-    location {
-      gps
-      address
+    delivery_details_id
+    normal_delivery_time
+
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      self_delivery
+      radius
     }
-    self_delivery
-    accepted_payments
-    stripe_info
-    name
-    description {
-      translations {
-        language_id
-        value
+    details{ id
+      location_id
+
+      image
+      language
+      description_id
+      location {
+        gps
+        address
       }
+
+      accepted_payments
+      stripe_info
+      name
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      schedule
+      open_status
     }
-    approved
-    schedule
-    open_status
   }
 }
 query getLaundryStatus($id: Int!) {
   laundry_store_by_pk(id: $id) {
-    open_status
+    details{ id
+      open_status
+    }
   }
-}query getLaundryDays($id: Int!) {
+}
+query getLaundryDays($id: Int!) {
   laundry_store_by_pk(id: $id) {
-   normal_delivery_time
-
+    normal_delivery_time
   }
 }
 
@@ -76,7 +103,9 @@ mutation switchLaundryAvailability($restauarntId: Int!, $value: String) {
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-    open_status
+    details{ id
+      open_status
+    }
   }
 }
 
@@ -84,38 +113,52 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
   update_laundry_store_by_pk(_set: $data, pk_columns: { id: $id }) {
     id
 
-    location_id
-normal_delivery_time
-
-    image
-    language_id
-    location {
-      gps
-      address
+    normal_delivery_time
+    delivery_details_id
+    delivery_details_of_deliverer {
+      cost_per_km
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      minimum_cost
+      self_delivery
+      radius
     }
-    accepted_payments
-    stripe_info
-    name
-    schedule
-    description {
-      translations {
-        language_id
-        value
+    details{ id
+      location_id
+      image
+      language
+      location {
+        gps
+        address
       }
+      accepted_payments
+      stripe_info
+      name
+      schedule
+      description {
+        translations {
+          language_id
+          value
+        }
+      }
+      approved
+      open_status
+      schedule
     }
-    approved
-    open_status
-    schedule
   }
 }
 
 query getLaundryOperators($laundryStoreID: Int!) {
   laundry_operator(where: { store_id: { _eq: $laundryStoreID } }) {
     id
-    current_gps
-    status
+
     store_id
-    owner
+    operator_details {
+      owner
+      current_gps
+      status
+    }
     user {
       phone
       name
@@ -179,6 +222,7 @@ mutation updateLaundryCategory(
   }
 }
 mutation deleteLaundryCategory($id: Int!) {
-  delete_laundry_category_by_pk(id: $id){id}
+  delete_laundry_category_by_pk(id: $id) {
+    id
+  }
 }
-

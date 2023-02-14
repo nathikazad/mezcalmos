@@ -189,30 +189,32 @@ export async function insertRestaurants(data: any) {
         return {
             id: index + 1,
             firebase_id: r.firebaseId,
-            name: r.name,
-            image: r.image,
-            location: {
-                data: {
-                    gps: JSON.stringify({
-                        "type": "point",
-                        "coordinates": [r.location.lng, r.location.lat]
-                    }),
-                    address: r.location.address,
-                }
-            },
-            description: {
-                data: {
-                    service_provider_id: index + 1,
-                    service_provider_type: "restaurant",
-                    translations: {
-                        data: description
+            details: {
+                name: r.name,
+                image: r.image,
+                location: {
+                    data: {
+                        gps: JSON.stringify({
+                            "type": "point",
+                            "coordinates": [r.location.lng, r.location.lat]
+                        }),
+                        address: r.location.address,
                     }
-                }
+                },
+                description: {
+                    data: {
+                        service_provider_id: index + 1,
+                        service_provider_type: "restaurant",
+                        translations: {
+                            data: description
+                        }
+                    }
+                },
+                open_status: r.openStatus,
+                // language_id: r.languageId,
+                approved: r.approved,
+                schedule: r.schedule,
             },
-            open_status: r.openStatus,
-            // language_id: r.languageId,
-            approved: r.approved,
-            schedule: r.schedule,
             categories: (categories) ? {
                 data: categories
             }: undefined

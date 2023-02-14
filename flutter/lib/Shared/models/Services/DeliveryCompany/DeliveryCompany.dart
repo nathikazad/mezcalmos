@@ -8,7 +8,8 @@ class DeliveryCompany extends Service {
       {this.deliveryDetailsId,
       required super.info,
       required super.state,
-      required super.primaryLanguage,
+      required super.serviceDetailsId,
+      required super.languages,
       // required this.deliveryRaidus,
       required this.creationTime});
   // int deliveryRaidus;
@@ -17,13 +18,14 @@ class DeliveryCompany extends Service {
   DeliveryCompany copyWith({
     ServiceInfo? userInfo,
     ServiceState? state,
-    LanguageType? primaryLanguage,
+    Map<LanguageType, bool>? languages,
   }) {
     return DeliveryCompany(
         info: userInfo ?? info,
         state: state ?? this.state,
+        serviceDetailsId: serviceDetailsId,
         // deliveryRaidus: deliveryRaidus,
         creationTime: creationTime,
-        primaryLanguage: primaryLanguage ?? this.primaryLanguage);
+        languages: languages ?? this.languages);
   }
 }

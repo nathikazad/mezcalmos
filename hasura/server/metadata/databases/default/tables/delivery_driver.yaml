@@ -12,6 +12,16 @@ object_relationships:
         remote_table:
           name: company
           schema: delivery
+  - name: laundry
+    using:
+      manual_configuration:
+        column_mapping:
+          delivery_company_id: id
+          delivery_company_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: store
+          schema: laundry
   - name: notification_info
     using:
       manual_configuration:
@@ -35,6 +45,14 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: user_id
+array_relationships:
+  - name: orders
+    using:
+      foreign_key_constraint_on:
+        column: delivery_driver_id
+        table:
+          name: order
+          schema: delivery
 select_permissions:
   - role: customer
     permission:
@@ -85,6 +103,23 @@ select_permissions:
           delivery_operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - app_version
+        - current_location
+        - delivery_company_id
+        - delivery_company_type
+        - delivery_driver_type
+        - id
+        - online
+        - status
+        - user_id
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
@@ -133,6 +168,20 @@ update_permissions:
         user_id:
           _eq: X-Hasura-User-Id
       check: null
+  - role: laundry_operator
+    permission:
+      columns:
+        - status
+      filter:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        laundry:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

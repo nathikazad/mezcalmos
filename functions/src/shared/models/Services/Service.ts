@@ -5,12 +5,11 @@ import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
 
 export interface ServiceProvider {
-  id?: number;
+  id: number;
   name: string;
   image: string;
   phoneNumber?: string;
   firebaseId?: string;
-  selfDelivery: boolean;
   location: Location;
   description?: Record<Language, string>;
   openStatus?: OpenStatus;
@@ -19,20 +18,18 @@ export interface ServiceProvider {
   approved?: boolean;
   links?: ServiceLink;
   creationTime?: string;
-  language: Language;
+  language: Record<Language, boolean>;
   schedule?: any;
   deliveryPartnerId?: number;
-  delivery: boolean;
-  customerPickup: boolean;
-  deliveryDetails?: DeliveryDetails;
+  deliveryDetails: DeliveryDetails;
   operators?: Operator[]
 }
 
 export interface Operator {
-  id?: number;
+  id: number;
   serviceProviderId: number;
   userId: number;
-  status: OperatorStatus;
+  status: AuthorizationStatus;
   owner?: boolean;
   appVersion?: string;
   currentGps?: Location;
@@ -40,16 +37,10 @@ export interface Operator {
   user?: UserInfo;
 }
 
-export enum OperatorStatus {
-  AwaitingApproval = "awaiting_approval",
-  Authorized = "authorized",
-  Banned = "banned"
-}
-
 export enum OpenStatus {
   Open = "open",
-  ClosedTemporarily = "closed_temporarily",
-  ClosedIndefinitely = "closed_indefinitely",
+  ClosedTemporarily = "closedTemporarily",
+  ClosedIndefinitely = "closedIndefinitely",
 }
 
 export interface State {
@@ -75,13 +66,12 @@ export interface PaymentInfo {
 }
 export interface ServiceLink{
   id?: number;
-  service_provider_id: number;
-  service_provider_type: ServiceProviderType;
-  operator_deep_link?: string; 
-  operator_qr_image_link?: string;
-  driver_deep_link?: string; 
-  driver_qr_image_link?: string; 
-
+  serviceProviderId: number;
+  serviceProviderType: ServiceProviderType;
+  operatorDeepLink?: string; 
+  operatorQrImageLink?: string;
+  driverDeepLink?: string; 
+  driverQrImageLink?: string; 
 }
 export enum ServiceProviderType {
   Restaurant = "restaurant",

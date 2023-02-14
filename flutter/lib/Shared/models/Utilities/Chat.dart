@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names, avoid_annotating_with_dynamic
 
 import 'package:intl/intl.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cf;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -61,6 +62,28 @@ extension AppTypeToParticipantType on AppType {
         return ParticipantType.RestaurantOperator;
       case AppType.MezAdminApp:
         return ParticipantType.MezAdmin;
+      default:
+        throw Exception(
+            "App type $this cannot be converted to participantType");
+    }
+  }
+}
+
+extension AppTypeToCFParticipantType on AppType {
+  cf.ParticipantType toCFParticipantTypefromAppType() {
+    switch (this) {
+      case AppType.CustomerApp:
+        return cf.ParticipantType.Customer;
+      case AppType.TaxiApp:
+        return cf.ParticipantType.Taxi;
+      case AppType.DeliveryApp:
+        return cf.ParticipantType.DeliveryDriver;
+      // case AppType.DeliveryAdminApp:
+      //   return cf.ParticipantType.DeliveryAdmin;
+      case AppType.LaundryApp:
+        return cf.ParticipantType.LaundryOperator;
+      case AppType.RestaurantApp:
+        return cf.ParticipantType.RestaurantOperator;
       default:
         throw Exception(
             "App type $this cannot be converted to participantType");
@@ -306,12 +329,11 @@ extension ParseStringToCallNotificationtType on String {
 }
 
 class CallNotificationForQueue extends NotificationForQueue {
-  String chatId;
-  String callerId;
+  int chatId;
+  int callerId;
   ParticipantType callerParticipantType;
-  String calleeId;
+  int calleeId;
   ParticipantType calleeParticipantType;
-  String? orderId;
   CallNotificationtType callNotificationType;
   CallNotificationForQueue({
     required this.chatId,
@@ -320,7 +342,6 @@ class CallNotificationForQueue extends NotificationForQueue {
     required this.calleeId,
     required this.calleeParticipantType,
     required this.callNotificationType,
-    this.orderId,
   }) : super(
           notificationType: NotificationType.Call,
           timeStamp: DateTime.now().toUtc(),
@@ -337,6 +358,5 @@ class CallNotificationForQueue extends NotificationForQueue {
             calleeParticipantType.toFirebaseFormattedString(),
         "callNotificationType":
             callNotificationType.toFirebaseFormattedString(),
-        "orderId": orderId
       };
 }

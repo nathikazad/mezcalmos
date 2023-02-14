@@ -2085,27 +2085,6 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'stripe_info'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'accepted_payments'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'delivery_details_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: 'delivery_details_of_deliverer'),
                     alias: null,
                     arguments: [],
@@ -2163,104 +2142,89 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     ]),
                   ),
                   FieldNode(
-                    name: NameNode(value: 'firebase_id'),
+                    name: NameNode(value: 'delivery_details_id'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'image'),
+                    name: NameNode(value: 'details_id'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'language_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location'),
+                    name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'gps'),
+                        name: NameNode(value: 'stripe_info'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'address'),
+                        name: NameNode(value: 'accepted_payments'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: '__typename'),
+                        name: NameNode(value: 'firebase_id'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'self_delivery'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'schedule'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'language'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'name'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FieldNode(
-                            name: NameNode(value: 'language_id'),
+                            name: NameNode(value: 'gps'),
                             alias: null,
                             arguments: [],
                             directives: [],
                             selectionSet: null,
                           ),
                           FieldNode(
-                            name: NameNode(value: 'value'),
+                            name: NameNode(value: 'address'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -2276,6 +2240,71 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                         ]),
                       ),
                       FieldNode(
+                        name: NameNode(value: 'schedule'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'approved'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'open_status'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: '__typename'),
                         alias: null,
                         arguments: [],
@@ -2283,20 +2312,6 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                         selectionSet: null,
                       ),
                     ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'approved'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'open_status'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -3261,111 +3276,52 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart<TRes>
 class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
   Query$getCustomerCart$customer_customer_by_pk$cart$restaurant({
     required this.id,
-    this.stripe_info,
-    this.accepted_payments,
-    this.delivery_details_id,
     this.delivery_details_of_deliverer,
-    this.firebase_id,
-    required this.image,
-    required this.language_id,
-    this.description_id,
-    required this.name,
-    required this.location,
-    required this.self_delivery,
-    this.schedule,
-    this.description,
-    required this.approved,
-    required this.open_status,
+    required this.delivery_details_id,
+    required this.details_id,
+    this.details,
     required this.$__typename,
   });
 
   factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$stripe_info = json['stripe_info'];
-    final l$accepted_payments = json['accepted_payments'];
-    final l$delivery_details_id = json['delivery_details_id'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
-    final l$firebase_id = json['firebase_id'];
-    final l$image = json['image'];
-    final l$language_id = json['language_id'];
-    final l$description_id = json['description_id'];
-    final l$name = json['name'];
-    final l$location = json['location'];
-    final l$self_delivery = json['self_delivery'];
-    final l$schedule = json['schedule'];
-    final l$description = json['description'];
-    final l$approved = json['approved'];
-    final l$open_status = json['open_status'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$details_id = json['details_id'];
+    final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant(
       id: (l$id as int),
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
-      delivery_details_id: (l$delivery_details_id as int?),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
           ?.map((e) =>
               Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      firebase_id: (l$firebase_id as String?),
-      image: (l$image as String),
-      language_id: (l$language_id as String),
-      description_id: (l$description_id as int?),
-      name: (l$name as String),
-      location:
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
-              .fromJson((l$location as Map<String, dynamic>)),
-      self_delivery: (l$self_delivery as bool),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      description: l$description == null
+      delivery_details_id: (l$delivery_details_id as int),
+      details_id: (l$details_id as int),
+      details: l$details == null
           ? null
-          : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      approved: (l$approved as bool),
-      open_status: (l$open_status as String),
+          : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
+              .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final dynamic? stripe_info;
-
-  final dynamic? accepted_payments;
-
-  final int? delivery_details_id;
-
   final List<
           Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
       delivery_details_of_deliverer;
 
-  final String? firebase_id;
+  final int delivery_details_id;
 
-  final String image;
+  final int details_id;
 
-  final String language_id;
-
-  final int? description_id;
-
-  final String name;
-
-  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
-      location;
-
-  final bool self_delivery;
-
-  final dynamic? schedule;
-
-  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
-      description;
-
-  final bool approved;
-
-  final String open_status;
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details?
+      details;
 
   final String $__typename;
 
@@ -3373,39 +3329,15 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
-    final l$delivery_details_id = delivery_details_id;
-    _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     _resultData['delivery_details_of_deliverer'] =
         l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$description_id = description_id;
-    _resultData['description_id'] = l$description_id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$location = location;
-    _resultData['location'] = l$location.toJson();
-    final l$self_delivery = self_delivery;
-    _resultData['self_delivery'] = l$self_delivery;
-    final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$approved = approved;
-    _resultData['approved'] = l$approved;
-    final l$open_status = open_status;
-    _resultData['open_status'] = l$open_status;
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3414,41 +3346,19 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
   @override
   int get hashCode {
     final l$id = id;
-    final l$stripe_info = stripe_info;
-    final l$accepted_payments = accepted_payments;
-    final l$delivery_details_id = delivery_details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final l$firebase_id = firebase_id;
-    final l$image = image;
-    final l$language_id = language_id;
-    final l$description_id = description_id;
-    final l$name = name;
-    final l$location = location;
-    final l$self_delivery = self_delivery;
-    final l$schedule = schedule;
-    final l$description = description;
-    final l$approved = approved;
-    final l$open_status = open_status;
+    final l$delivery_details_id = delivery_details_id;
+    final l$details_id = details_id;
+    final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$stripe_info,
-      l$accepted_payments,
-      l$delivery_details_id,
       l$delivery_details_of_deliverer == null
           ? null
           : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
-      l$firebase_id,
-      l$image,
-      l$language_id,
-      l$description_id,
-      l$name,
-      l$location,
-      l$self_delivery,
-      l$schedule,
-      l$description,
-      l$approved,
-      l$open_status,
+      l$delivery_details_id,
+      l$details_id,
+      l$details,
       l$$__typename,
     ]);
   }
@@ -3466,21 +3376,6 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    final l$accepted_payments = accepted_payments;
-    final lOther$accepted_payments = other.accepted_payments;
-    if (l$accepted_payments != lOther$accepted_payments) {
-      return false;
-    }
-    final l$delivery_details_id = delivery_details_id;
-    final lOther$delivery_details_id = other.delivery_details_id;
-    if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
@@ -3506,59 +3401,19 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant {
         lOther$delivery_details_of_deliverer) {
       return false;
     }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
       return false;
     }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$description_id = description_id;
-    final lOther$description_id = other.description_id;
-    if (l$description_id != lOther$description_id) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$location = location;
-    final lOther$location = other.location;
-    if (l$location != lOther$location) {
-      return false;
-    }
-    final l$self_delivery = self_delivery;
-    final lOther$self_delivery = other.self_delivery;
-    if (l$self_delivery != lOther$self_delivery) {
-      return false;
-    }
-    final l$schedule = schedule;
-    final lOther$schedule = other.schedule;
-    if (l$schedule != lOther$schedule) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$approved = approved;
-    final lOther$approved = other.approved;
-    if (l$approved != lOther$approved) {
-      return false;
-    }
-    final l$open_status = open_status;
-    final lOther$open_status = other.open_status;
-    if (l$open_status != lOther$open_status) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3595,24 +3450,12 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
 
   TRes call({
     int? id,
-    dynamic? stripe_info,
-    dynamic? accepted_payments,
-    int? delivery_details_id,
     List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    String? firebase_id,
-    String? image,
-    String? language_id,
-    int? description_id,
-    String? name,
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
-        location,
-    bool? self_delivery,
-    dynamic? schedule,
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
-        description,
-    bool? approved,
-    String? open_status,
+    int? delivery_details_id,
+    int? details_id,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details?
+        details,
     String? $__typename,
   });
   TRes delivery_details_of_deliverer(
@@ -3621,10 +3464,8 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
                   CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
                       Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
           _fn);
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
-      TRes> get location;
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
-      TRes> get description;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+      TRes> get details;
 }
 
 class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant<
@@ -3646,74 +3487,30 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
 
   TRes call({
     Object? id = _undefined,
-    Object? stripe_info = _undefined,
-    Object? accepted_payments = _undefined,
-    Object? delivery_details_id = _undefined,
     Object? delivery_details_of_deliverer = _undefined,
-    Object? firebase_id = _undefined,
-    Object? image = _undefined,
-    Object? language_id = _undefined,
-    Object? description_id = _undefined,
-    Object? name = _undefined,
-    Object? location = _undefined,
-    Object? self_delivery = _undefined,
-    Object? schedule = _undefined,
-    Object? description = _undefined,
-    Object? approved = _undefined,
-    Object? open_status = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? details_id = _undefined,
+    Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$customer_customer_by_pk$cart$restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
-        delivery_details_id: delivery_details_id == _undefined
-            ? _instance.delivery_details_id
-            : (delivery_details_id as int?),
         delivery_details_of_deliverer: delivery_details_of_deliverer ==
                 _undefined
             ? _instance.delivery_details_of_deliverer
             : (delivery_details_of_deliverer as List<
                 Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?),
-        firebase_id: firebase_id == _undefined
-            ? _instance.firebase_id
-            : (firebase_id as String?),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        description_id: description_id == _undefined
-            ? _instance.description_id
-            : (description_id as int?),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        location: location == _undefined || location == null
-            ? _instance.location
-            : (location
-                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location),
-        self_delivery: self_delivery == _undefined || self_delivery == null
-            ? _instance.self_delivery
-            : (self_delivery as bool),
-        schedule: schedule == _undefined
-            ? _instance.schedule
-            : (schedule as dynamic?),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?),
-        approved: approved == _undefined || approved == null
-            ? _instance.approved
-            : (approved as bool),
-        open_status: open_status == _undefined || open_status == null
-            ? _instance.open_status
-            : (open_status as String),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -3731,21 +3528,14 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
                     e,
                     (i) => i,
                   )))?.toList());
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
-      TRes> get location {
-    final local$location = _instance.location;
-    return CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
-        local$location, (e) => call(location: e));
-  }
-
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
             .stub(_then(_instance))
-        : CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
-            local$description, (e) => call(description: e));
+        : CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+            local$details, (e) => call(details: e));
   }
 }
 
@@ -3761,37 +3551,20 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
 
   call({
     int? id,
-    dynamic? stripe_info,
-    dynamic? accepted_payments,
-    int? delivery_details_id,
     List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    String? firebase_id,
-    String? image,
-    String? language_id,
-    int? description_id,
-    String? name,
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location?
-        location,
-    bool? self_delivery,
-    dynamic? schedule,
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description?
-        description,
-    bool? approved,
-    String? open_status,
+    int? delivery_details_id,
+    int? details_id,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details?
+        details,
     String? $__typename,
   }) =>
       _res;
   delivery_details_of_deliverer(_fn) => _res;
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
           TRes>
-      get location =>
-          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
-              .stub(_res);
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
-          TRes>
-      get description =>
-          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
+      get details =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
               .stub(_res);
 }
 
@@ -4043,19 +3816,549 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
       _res;
 }
 
-class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
-  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location({
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details({
+    this.stripe_info,
+    this.accepted_payments,
+    this.firebase_id,
+    required this.image,
+    required this.language,
+    this.description_id,
+    required this.name,
+    required this.location,
+    this.schedule,
+    this.description,
+    required this.approved,
+    required this.open_status,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$stripe_info = json['stripe_info'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$firebase_id = json['firebase_id'];
+    final l$image = json['image'];
+    final l$language = json['language'];
+    final l$description_id = json['description_id'];
+    final l$name = json['name'];
+    final l$location = json['location'];
+    final l$schedule = json['schedule'];
+    final l$description = json['description'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+      stripe_info: l$stripe_info == null
+          ? null
+          : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      firebase_id: (l$firebase_id as String?),
+      image: (l$image as String),
+      language: mapFromJson(l$language),
+      description_id: (l$description_id as int?),
+      name: (l$name as String),
+      location:
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      description: l$description == null
+          ? null
+          : Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+      stripe_info;
+
+  final dynamic? accepted_payments;
+
+  final String? firebase_id;
+
+  final String image;
+
+  final dynamic language;
+
+  final int? description_id;
+
+  final String name;
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
+      location;
+
+  final dynamic? schedule;
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description?
+      description;
+
+  final bool approved;
+
+  final String open_status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$stripe_info = stripe_info;
+    final l$accepted_payments = accepted_payments;
+    final l$firebase_id = firebase_id;
+    final l$image = image;
+    final l$language = language;
+    final l$description_id = description_id;
+    final l$name = name;
+    final l$location = location;
+    final l$schedule = schedule;
+    final l$description = description;
+    final l$approved = approved;
+    final l$open_status = open_status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$stripe_info,
+      l$accepted_payments,
+      l$firebase_id,
+      l$image,
+      l$language,
+      l$description_id,
+      l$name,
+      l$location,
+      l$schedule,
+      l$description,
+      l$approved,
+      l$open_status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details;
+
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details;
+
+  TRes call({
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+        stripe_info,
+    dynamic? accepted_payments,
+    String? firebase_id,
+    String? image,
+    dynamic? language,
+    int? description_id,
+    String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location?
+        location,
+    dynamic? schedule,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  });
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+      TRes> get stripe_info;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
+      TRes> get location;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
+      TRes> get description;
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? stripe_info = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? firebase_id = _undefined,
+    Object? image = _undefined,
+    Object? language = _undefined,
+    Object? description_id = _undefined,
+    Object? name = _undefined,
+    Object? location = _undefined,
+    Object? schedule = _undefined,
+    Object? description = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info?),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description?),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
+  }
+
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
+        local$location, (e) => call(location: e));
+  }
+
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+        stripe_info,
+    dynamic? accepted_payments,
+    String? firebase_id,
+    String? image,
+    dynamic? language,
+    int? description_id,
+    String? name,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location?
+        location,
+    dynamic? schedule,
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+              .stub(_res);
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
+          TRes>
+      get location =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
+              .stub(_res);
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
+          TRes>
+      get description =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
+              .stub(_res);
+}
+
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info();
+
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info();
+  }
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hashAll([]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+        instance,
+    TRes Function(
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info;
+
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info;
+
+  TRes call();
+}
+
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call() => _then(
+      Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info());
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call() => _res;
+}
+
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location({
     required this.gps,
     required this.address,
     required this.$__typename,
   });
 
-  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4097,7 +4400,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
       return true;
     }
     if (!(other
-            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location) ||
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4120,30 +4423,30 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
   }
 }
 
-extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
-    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location {
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location>
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location>
       get copyWith =>
-          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
     TRes> {
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
         instance,
     TRes Function(
-            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location)
         then,
-  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location;
 
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location.stub(
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location;
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location;
 
   TRes call({
     Geography? gps,
@@ -4152,21 +4455,21 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
   });
 }
 
-class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
             TRes> {
-  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location
       _instance;
 
   final TRes Function(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location)
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location)
       _then;
 
   static const _undefined = {};
@@ -4177,7 +4480,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -4190,12 +4493,12 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
       ));
 }
 
-class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location<
             TRes> {
-  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$location(
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$location(
       this._res);
 
   TRes _res;
@@ -4208,20 +4511,20 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
       _res;
 }
 
-class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description {
-  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description({
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description.fromJson(
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations
+              Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4229,7 +4532,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description 
   }
 
   final List<
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>
       translations;
 
   final String $__typename;
@@ -4260,7 +4563,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description 
       return true;
     }
     if (!(other
-            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description) ||
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4285,59 +4588,59 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description 
   }
 }
 
-extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
-    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description {
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description>
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description>
       get copyWith =>
-          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
     TRes> {
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
         instance,
     TRes Function(
-            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description)
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description)
         then,
-  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description;
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description;
 
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description.stub(
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description;
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description;
 
   TRes call({
-    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>?
+    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations> Function(
+      Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations> Function(
               Iterable<
-                  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
-                      Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>>)
+                  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+                      Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
             TRes> {
-  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description
       _instance;
 
   final TRes Function(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description)
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description)
       _then;
 
   static const _undefined = {};
@@ -4347,41 +4650,41 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>),
+                Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations> Function(
+          Iterable<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations> Function(
                   Iterable<
-                      CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
-                          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>>)
+                      CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+                          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+              CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description<
             TRes> {
-  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description(
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description(
       this._res);
 
   TRes _res;
 
   call({
-    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>?
+    List<Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -4389,19 +4692,19 @@ class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$resta
   translations(_fn) => _res;
 }
 
-class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations {
-  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations({
+class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations {
+  Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations.fromJson(
+  factory Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+    return Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4443,7 +4746,7 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$
       return true;
     }
     if (!(other
-            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations) ||
+            is Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -4466,30 +4769,30 @@ class Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$
   }
 }
 
-extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations
-    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations {
-  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations>
+extension UtilityExtension$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations
+    on Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations {
+  CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations>
       get copyWith =>
-          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+          CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
+abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
     TRes> {
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
-    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
+    Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations
         instance,
     TRes Function(
-            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations)
+            Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations)
         then,
-  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations;
+  ) = _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations;
 
-  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations.stub(
+  factory CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations;
+      _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations;
 
   TRes call({
     String? language_id,
@@ -4498,21 +4801,21 @@ abstract class CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$resta
   });
 }
 
-class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
+class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
             TRes> {
-  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+  _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
     this._instance,
     this._then,
   );
 
-  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations
+  final Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations
       _instance;
 
   final TRes Function(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations)
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations)
       _then;
 
   static const _undefined = {};
@@ -4523,7 +4826,7 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+          Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -4536,12 +4839,12 @@ class _CopyWithImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restauran
       ));
 }
 
-class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
+class _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations<
+        CopyWith$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations<
             TRes> {
-  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$description$translations(
+  _CopyWithStubImpl$Query$getCustomerCart$customer_customer_by_pk$cart$restaurant$details$description$translations(
       this._res);
 
   TRes _res;
@@ -8524,7 +8827,7 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'delivery_details_id'),
+                    name: NameNode(value: 'details_id'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -8588,118 +8891,89 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     ]),
                   ),
                   FieldNode(
-                    name: NameNode(value: 'firebase_id'),
+                    name: NameNode(value: 'delivery_details_id'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'name'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'stripe_info'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'accepted_payments'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'language_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description_id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'location'),
+                    name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'gps'),
+                        name: NameNode(value: 'id'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: 'address'),
+                        name: NameNode(value: 'firebase_id'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
                       FieldNode(
-                        name: NameNode(value: '__typename'),
+                        name: NameNode(value: 'name'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null,
                       ),
-                    ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'self_delivery'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'schedule'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'description'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: SelectionSetNode(selections: [
                       FieldNode(
-                        name: NameNode(value: 'translations'),
+                        name: NameNode(value: 'stripe_info'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'accepted_payments'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'image'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'language'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'location'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FieldNode(
-                            name: NameNode(value: 'language_id'),
+                            name: NameNode(value: 'gps'),
                             alias: null,
                             arguments: [],
                             directives: [],
                             selectionSet: null,
                           ),
                           FieldNode(
-                            name: NameNode(value: 'value'),
+                            name: NameNode(value: 'address'),
                             alias: null,
                             arguments: [],
                             directives: [],
@@ -8715,6 +8989,71 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                         ]),
                       ),
                       FieldNode(
+                        name: NameNode(value: 'schedule'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                            name: NameNode(value: 'translations'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: SelectionSetNode(selections: [
+                              FieldNode(
+                                name: NameNode(value: 'language_id'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: 'value'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                              FieldNode(
+                                name: NameNode(value: '__typename'),
+                                alias: null,
+                                arguments: [],
+                                directives: [],
+                                selectionSet: null,
+                              ),
+                            ]),
+                          ),
+                          FieldNode(
+                            name: NameNode(value: '__typename'),
+                            alias: null,
+                            arguments: [],
+                            directives: [],
+                            selectionSet: null,
+                          ),
+                        ]),
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'approved'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'open_status'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
                         name: NameNode(value: '__typename'),
                         alias: null,
                         arguments: [],
@@ -8722,20 +9061,6 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                         selectionSet: null,
                       ),
                     ]),
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'approved'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'open_status'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -9721,111 +10046,52 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
 class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant {
   Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant({
     required this.id,
-    this.delivery_details_id,
+    required this.details_id,
     this.delivery_details_of_deliverer,
-    this.firebase_id,
-    required this.name,
-    this.stripe_info,
-    this.accepted_payments,
-    required this.image,
-    required this.language_id,
-    this.description_id,
-    required this.location,
-    required this.self_delivery,
-    this.schedule,
-    this.description,
-    required this.approved,
-    required this.open_status,
+    required this.delivery_details_id,
+    this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$delivery_details_id = json['delivery_details_id'];
+    final l$details_id = json['details_id'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
-    final l$firebase_id = json['firebase_id'];
-    final l$name = json['name'];
-    final l$stripe_info = json['stripe_info'];
-    final l$accepted_payments = json['accepted_payments'];
-    final l$image = json['image'];
-    final l$language_id = json['language_id'];
-    final l$description_id = json['description_id'];
-    final l$location = json['location'];
-    final l$self_delivery = json['self_delivery'];
-    final l$schedule = json['schedule'];
-    final l$description = json['description'];
-    final l$approved = json['approved'];
-    final l$open_status = json['open_status'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant(
       id: (l$id as int),
-      delivery_details_id: (l$delivery_details_id as int?),
+      details_id: (l$details_id as int),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
           ?.map((e) =>
               Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
-      firebase_id: (l$firebase_id as String?),
-      name: (l$name as String),
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
-      image: (l$image as String),
-      language_id: (l$language_id as String),
-      description_id: (l$description_id as int?),
-      location:
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
-              .fromJson((l$location as Map<String, dynamic>)),
-      self_delivery: (l$self_delivery as bool),
-      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
-      description: l$description == null
+      delivery_details_id: (l$delivery_details_id as int),
+      details: l$details == null
           ? null
-          : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
-              .fromJson((l$description as Map<String, dynamic>)),
-      approved: (l$approved as bool),
-      open_status: (l$open_status as String),
+          : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
+              .fromJson((l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int id;
 
-  final int? delivery_details_id;
+  final int details_id;
 
   final List<
           Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
       delivery_details_of_deliverer;
 
-  final String? firebase_id;
+  final int delivery_details_id;
 
-  final String name;
-
-  final dynamic? stripe_info;
-
-  final dynamic? accepted_payments;
-
-  final String image;
-
-  final String language_id;
-
-  final int? description_id;
-
-  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
-      location;
-
-  final bool self_delivery;
-
-  final dynamic? schedule;
-
-  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
-      description;
-
-  final bool approved;
-
-  final String open_status;
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details?
+      details;
 
   final String $__typename;
 
@@ -9833,39 +10099,15 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$delivery_details_id = delivery_details_id;
-    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     _resultData['delivery_details_of_deliverer'] =
         l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$description_id = description_id;
-    _resultData['description_id'] = l$description_id;
-    final l$location = location;
-    _resultData['location'] = l$location.toJson();
-    final l$self_delivery = self_delivery;
-    _resultData['self_delivery'] = l$self_delivery;
-    final l$schedule = schedule;
-    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
-    final l$description = description;
-    _resultData['description'] = l$description?.toJson();
-    final l$approved = approved;
-    _resultData['approved'] = l$approved;
-    final l$open_status = open_status;
-    _resultData['open_status'] = l$open_status;
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -9874,41 +10116,19 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   @override
   int get hashCode {
     final l$id = id;
-    final l$delivery_details_id = delivery_details_id;
+    final l$details_id = details_id;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
-    final l$firebase_id = firebase_id;
-    final l$name = name;
-    final l$stripe_info = stripe_info;
-    final l$accepted_payments = accepted_payments;
-    final l$image = image;
-    final l$language_id = language_id;
-    final l$description_id = description_id;
-    final l$location = location;
-    final l$self_delivery = self_delivery;
-    final l$schedule = schedule;
-    final l$description = description;
-    final l$approved = approved;
-    final l$open_status = open_status;
+    final l$delivery_details_id = delivery_details_id;
+    final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$delivery_details_id,
+      l$details_id,
       l$delivery_details_of_deliverer == null
           ? null
           : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
-      l$firebase_id,
-      l$name,
-      l$stripe_info,
-      l$accepted_payments,
-      l$image,
-      l$language_id,
-      l$description_id,
-      l$location,
-      l$self_delivery,
-      l$schedule,
-      l$description,
-      l$approved,
-      l$open_status,
+      l$delivery_details_id,
+      l$details,
       l$$__typename,
     ]);
   }
@@ -9928,9 +10148,9 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
     if (l$id != lOther$id) {
       return false;
     }
-    final l$delivery_details_id = delivery_details_id;
-    final lOther$delivery_details_id = other.delivery_details_id;
-    if (l$delivery_details_id != lOther$delivery_details_id) {
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
       return false;
     }
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
@@ -9956,69 +10176,14 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
         lOther$delivery_details_of_deliverer) {
       return false;
     }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    final l$accepted_payments = accepted_payments;
-    final lOther$accepted_payments = other.accepted_payments;
-    if (l$accepted_payments != lOther$accepted_payments) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$description_id = description_id;
-    final lOther$description_id = other.description_id;
-    if (l$description_id != lOther$description_id) {
-      return false;
-    }
-    final l$location = location;
-    final lOther$location = other.location;
-    if (l$location != lOther$location) {
-      return false;
-    }
-    final l$self_delivery = self_delivery;
-    final lOther$self_delivery = other.self_delivery;
-    if (l$self_delivery != lOther$self_delivery) {
-      return false;
-    }
-    final l$schedule = schedule;
-    final lOther$schedule = other.schedule;
-    if (l$schedule != lOther$schedule) {
-      return false;
-    }
-    final l$description = description;
-    final lOther$description = other.description;
-    if (l$description != lOther$description) {
-      return false;
-    }
-    final l$approved = approved;
-    final lOther$approved = other.approved;
-    if (l$approved != lOther$approved) {
-      return false;
-    }
-    final l$open_status = open_status;
-    final lOther$open_status = other.open_status;
-    if (l$open_status != lOther$open_status) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -10057,24 +10222,12 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
 
   TRes call({
     int? id,
-    int? delivery_details_id,
+    int? details_id,
     List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    String? firebase_id,
-    String? name,
-    dynamic? stripe_info,
-    dynamic? accepted_payments,
-    String? image,
-    String? language_id,
-    int? description_id,
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
-        location,
-    bool? self_delivery,
-    dynamic? schedule,
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
-        description,
-    bool? approved,
-    String? open_status,
+    int? delivery_details_id,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details?
+        details,
     String? $__typename,
   });
   TRes delivery_details_of_deliverer(
@@ -10083,10 +10236,8 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
                   CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer<
                       Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>>?)
           _fn);
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
-      TRes> get location;
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
-      TRes> get description;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+      TRes> get details;
 }
 
 class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant<
@@ -10110,75 +10261,31 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
 
   TRes call({
     Object? id = _undefined,
-    Object? delivery_details_id = _undefined,
+    Object? details_id = _undefined,
     Object? delivery_details_of_deliverer = _undefined,
-    Object? firebase_id = _undefined,
-    Object? name = _undefined,
-    Object? stripe_info = _undefined,
-    Object? accepted_payments = _undefined,
-    Object? image = _undefined,
-    Object? language_id = _undefined,
-    Object? description_id = _undefined,
-    Object? location = _undefined,
-    Object? self_delivery = _undefined,
-    Object? schedule = _undefined,
-    Object? description = _undefined,
-    Object? approved = _undefined,
-    Object? open_status = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        delivery_details_id: delivery_details_id == _undefined
-            ? _instance.delivery_details_id
-            : (delivery_details_id as int?),
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
         delivery_details_of_deliverer: delivery_details_of_deliverer ==
                 _undefined
             ? _instance.delivery_details_of_deliverer
             : (delivery_details_of_deliverer as List<
                 Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?),
-        firebase_id: firebase_id == _undefined
-            ? _instance.firebase_id
-            : (firebase_id as String?),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
-        description_id: description_id == _undefined
-            ? _instance.description_id
-            : (description_id as int?),
-        location: location == _undefined || location == null
-            ? _instance.location
-            : (location
-                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location),
-        self_delivery: self_delivery == _undefined || self_delivery == null
-            ? _instance.self_delivery
-            : (self_delivery as bool),
-        schedule: schedule == _undefined
-            ? _instance.schedule
-            : (schedule as dynamic?),
-        description: description == _undefined
-            ? _instance.description
-            : (description
-                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?),
-        approved: approved == _undefined || approved == null
-            ? _instance.approved
-            : (approved as bool),
-        open_status: open_status == _undefined || open_status == null
-            ? _instance.open_status
-            : (open_status as String),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -10196,21 +10303,14 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
                     e,
                     (i) => i,
                   )))?.toList());
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
-      TRes> get location {
-    final local$location = _instance.location;
-    return CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
-        local$location, (e) => call(location: e));
-  }
-
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
-      TRes> get description {
-    final local$description = _instance.description;
-    return local$description == null
-        ? CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
             .stub(_then(_instance))
-        : CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
-            local$description, (e) => call(description: e));
+        : CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+            local$details, (e) => call(details: e));
   }
 }
 
@@ -10226,37 +10326,20 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
 
   call({
     int? id,
-    int? delivery_details_id,
+    int? details_id,
     List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
-    String? firebase_id,
-    String? name,
-    dynamic? stripe_info,
-    dynamic? accepted_payments,
-    String? image,
-    String? language_id,
-    int? description_id,
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location?
-        location,
-    bool? self_delivery,
-    dynamic? schedule,
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description?
-        description,
-    bool? approved,
-    String? open_status,
+    int? delivery_details_id,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details?
+        details,
     String? $__typename,
   }) =>
       _res;
   delivery_details_of_deliverer(_fn) => _res;
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
           TRes>
-      get location =>
-          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
-              .stub(_res);
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
-          TRes>
-      get description =>
-          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
+      get details =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
               .stub(_res);
 }
 
@@ -10508,19 +10591,567 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
       _res;
 }
 
-class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
-  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location({
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details({
+    required this.id,
+    this.firebase_id,
+    required this.name,
+    this.stripe_info,
+    this.accepted_payments,
+    required this.image,
+    required this.language,
+    this.description_id,
+    required this.location,
+    this.schedule,
+    this.description,
+    required this.approved,
+    required this.open_status,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$firebase_id = json['firebase_id'];
+    final l$name = json['name'];
+    final l$stripe_info = json['stripe_info'];
+    final l$accepted_payments = json['accepted_payments'];
+    final l$image = json['image'];
+    final l$language = json['language'];
+    final l$description_id = json['description_id'];
+    final l$location = json['location'];
+    final l$schedule = json['schedule'];
+    final l$description = json['description'];
+    final l$approved = json['approved'];
+    final l$open_status = json['open_status'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+      id: (l$id as int),
+      firebase_id: (l$firebase_id as String?),
+      name: (l$name as String),
+      stripe_info: l$stripe_info == null
+          ? null
+          : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
+      accepted_payments:
+          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      image: (l$image as String),
+      language: mapFromJson(l$language),
+      description_id: (l$description_id as int?),
+      location:
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
+      description: l$description == null
+          ? null
+          : Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
+              .fromJson((l$description as Map<String, dynamic>)),
+      approved: (l$approved as bool),
+      open_status: (l$open_status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? firebase_id;
+
+  final String name;
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+      stripe_info;
+
+  final dynamic? accepted_payments;
+
+  final String image;
+
+  final dynamic language;
+
+  final int? description_id;
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
+      location;
+
+  final dynamic? schedule;
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description?
+      description;
+
+  final bool approved;
+
+  final String open_status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
+    final l$accepted_payments = accepted_payments;
+    _resultData['accepted_payments'] =
+        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$description_id = description_id;
+    _resultData['description_id'] = l$description_id;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
+    final l$description = description;
+    _resultData['description'] = l$description?.toJson();
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$firebase_id = firebase_id;
+    final l$name = name;
+    final l$stripe_info = stripe_info;
+    final l$accepted_payments = accepted_payments;
+    final l$image = image;
+    final l$language = language;
+    final l$description_id = description_id;
+    final l$location = location;
+    final l$schedule = schedule;
+    final l$description = description;
+    final l$approved = approved;
+    final l$open_status = open_status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$firebase_id,
+      l$name,
+      l$stripe_info,
+      l$accepted_payments,
+      l$image,
+      l$language,
+      l$description_id,
+      l$location,
+      l$schedule,
+      l$description,
+      l$approved,
+      l$open_status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
+    final l$accepted_payments = accepted_payments;
+    final lOther$accepted_payments = other.accepted_payments;
+    if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$description_id = description_id;
+    final lOther$description_id = other.description_id;
+    if (l$description_id != lOther$description_id) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
+      return false;
+    }
+    final l$description = description;
+    final lOther$description = other.description;
+    if (l$description != lOther$description) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details;
+
+  TRes call({
+    int? id,
+    String? firebase_id,
+    String? name,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+        stripe_info,
+    dynamic? accepted_payments,
+    String? image,
+    dynamic? language,
+    int? description_id,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location?
+        location,
+    dynamic? schedule,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  });
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+      TRes> get stripe_info;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
+      TRes> get location;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
+      TRes> get description;
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? firebase_id = _undefined,
+    Object? name = _undefined,
+    Object? stripe_info = _undefined,
+    Object? accepted_payments = _undefined,
+    Object? image = _undefined,
+    Object? language = _undefined,
+    Object? description_id = _undefined,
+    Object? location = _undefined,
+    Object? schedule = _undefined,
+    Object? description = _undefined,
+    Object? approved = _undefined,
+    Object? open_status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        firebase_id: firebase_id == _undefined
+            ? _instance.firebase_id
+            : (firebase_id as String?),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info?),
+        accepted_payments: accepted_payments == _undefined
+            ? _instance.accepted_payments
+            : (accepted_payments as dynamic?),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        description_id: description_id == _undefined
+            ? _instance.description_id
+            : (description_id as int?),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
+        description: description == _undefined
+            ? _instance.description
+            : (description
+                as Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description?),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
+  }
+
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
+      TRes> get location {
+    final local$location = _instance.location;
+    return CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
+        local$location, (e) => call(location: e));
+  }
+
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
+      TRes> get description {
+    final local$description = _instance.description;
+    return local$description == null
+        ? CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
+            local$description, (e) => call(description: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? firebase_id,
+    String? name,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info?
+        stripe_info,
+    dynamic? accepted_payments,
+    String? image,
+    dynamic? language,
+    int? description_id,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location?
+        location,
+    dynamic? schedule,
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description?
+        description,
+    bool? approved,
+    String? open_status,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+              .stub(_res);
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
+          TRes>
+      get location =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
+              .stub(_res);
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
+          TRes>
+      get description =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
+              .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info();
+
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info();
+  }
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hashAll([]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info;
+
+  TRes call();
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call() => _then(
+      Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info());
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call() => _res;
+}
+
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location({
     required this.gps,
     required this.address,
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.fromJson(
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -10562,7 +11193,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       return true;
     }
     if (!(other
-            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location) ||
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10585,30 +11216,30 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
-    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location {
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location>
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location>
       get copyWith =>
-          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
     TRes> {
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
         instance,
     TRes Function(
-            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location)
         then,
-  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location;
 
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location.stub(
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location;
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location;
 
   TRes call({
     Geography? gps,
@@ -10617,21 +11248,21 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
   });
 }
 
-class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
             TRes> {
-  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location
       _instance;
 
   final TRes Function(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location)
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location)
       _then;
 
   static const _undefined = {};
@@ -10642,7 +11273,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -10655,12 +11286,12 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
       ));
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location<
             TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$location(
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$location(
       this._res);
 
   TRes _res;
@@ -10673,20 +11304,20 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
       _res;
 }
 
-class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description {
-  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description({
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description({
     required this.translations,
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description.fromJson(
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description.fromJson(
       Map<String, dynamic> json) {
     final l$translations = json['translations'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
       translations: (l$translations as List<dynamic>)
           .map((e) =>
-              Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations
+              Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -10694,7 +11325,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   }
 
   final List<
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>
       translations;
 
   final String $__typename;
@@ -10725,7 +11356,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       return true;
     }
     if (!(other
-            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description) ||
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10750,59 +11381,59 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
-    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description {
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description>
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description>
       get copyWith =>
-          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
     TRes> {
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
         instance,
     TRes Function(
-            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description)
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description)
         then,
-  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description;
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description;
 
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description.stub(
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description;
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description;
 
   TRes call({
-    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>?
+    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>?
         translations,
     String? $__typename,
   });
   TRes translations(
-      Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations> Function(
+      Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations> Function(
               Iterable<
-                  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
-                      Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>>)
+                  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+                      Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>>)
           _fn);
 }
 
-class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
             TRes> {
-  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description
       _instance;
 
   final TRes Function(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description)
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description)
       _then;
 
   static const _undefined = {};
@@ -10812,41 +11443,41 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
         translations: translations == _undefined || translations == null
             ? _instance.translations
             : (translations as List<
-                Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>),
+                Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes translations(
-          Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations> Function(
+          Iterable<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations> Function(
                   Iterable<
-                      CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
-                          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>>)
+                      CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+                          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>>)
               _fn) =>
       call(
           translations: _fn(_instance.translations.map((e) =>
-              CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+              CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description<
             TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description(
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description(
       this._res);
 
   TRes _res;
 
   call({
-    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>?
+    List<Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>?
         translations,
     String? $__typename,
   }) =>
@@ -10854,19 +11485,19 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_b
   translations(_fn) => _res;
 }
 
-class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations {
-  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations({
+class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations {
+  Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations({
     required this.language_id,
     required this.value,
     required this.$__typename,
   });
 
-  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations.fromJson(
+  factory Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations.fromJson(
       Map<String, dynamic> json) {
     final l$language_id = json['language_id'];
     final l$value = json['value'];
     final l$$__typename = json['__typename'];
-    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+    return Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
       language_id: (l$language_id as String),
       value: (l$value as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -10908,7 +11539,7 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
       return true;
     }
     if (!(other
-            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations) ||
+            is Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -10931,30 +11562,30 @@ class Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaura
   }
 }
 
-extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations
-    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations {
-  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations>
+extension UtilityExtension$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations
+    on Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations {
+  CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations>
       get copyWith =>
-          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+          CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
+abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
     TRes> {
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
+    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations
         instance,
     TRes Function(
-            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations)
+            Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations)
         then,
-  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations;
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations;
 
-  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations.stub(
+  factory CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations.stub(
           TRes res) =
-      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations;
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations;
 
   TRes call({
     String? language_id,
@@ -10963,21 +11594,21 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$customer_customer_b
   });
 }
 
-class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
+class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
             TRes> {
-  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+  _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
     this._instance,
     this._then,
   );
 
-  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations
+  final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations
       _instance;
 
   final TRes Function(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations)
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations)
       _then;
 
   static const _undefined = {};
@@ -10988,7 +11619,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+          Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
         language_id: language_id == _undefined || language_id == null
             ? _instance.language_id
             : (language_id as String),
@@ -11001,12 +11632,12 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk
       ));
 }
 
-class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
         TRes>
     implements
-        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations<
+        CopyWith$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations<
             TRes> {
-  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$description$translations(
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant$details$description$translations(
       this._res);
 
   TRes _res;

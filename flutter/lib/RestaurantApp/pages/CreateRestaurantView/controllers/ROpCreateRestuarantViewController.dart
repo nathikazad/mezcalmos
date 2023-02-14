@@ -18,7 +18,7 @@ class ROpCreateRestuarantViewController {
   TextEditingController restaurantName = TextEditingController();
   TextEditingController restaurantDescription = TextEditingController();
   // state variables //
-  Rxn<Location> restaurantLocation = Rxn();
+  Rxn<MezLocation> restaurantLocation = Rxn();
   RxnString restaurantImage = RxnString();
   RxBool imageLoading = RxBool(false);
   Rxn<File> newImageFile = Rxn();

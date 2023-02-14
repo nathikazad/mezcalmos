@@ -119,8 +119,8 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
       deliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
       updateDeliveryOrderStatus(deliveryOrder);
     }
-    if(order.status == RestaurantOrderStatus.ReadyForPickup && deliveryOrder.status != DeliveryOrderStatus.AtPickup) {
-      deliveryOrder.status = DeliveryOrderStatus.PackageReady;
+    if(order.status == RestaurantOrderStatus.ReadyForPickup) {
+      deliveryOrder.packageReady = true;
       updateDeliveryOrderStatus(deliveryOrder);
     }
     if (deliveryOrder.deliveryDriver && deliveryOrder.deliveryDriver.user?.firebaseId) {

@@ -8,7 +8,7 @@ class DeliveryDriverState {
   AgentStatus status;
 
   bool online;
-  String? deliveryCompanyId;
+  int? deliveryCompanyId;
 
   DeliveryCompanyType? deliveryCompanyType;
 

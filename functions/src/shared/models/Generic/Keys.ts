@@ -15,7 +15,7 @@ export interface Stripe {
 }
 export interface Agora {
   certificate: string;
-  appId: string;
+  appid: string;
 }
 
 export interface Fcm {

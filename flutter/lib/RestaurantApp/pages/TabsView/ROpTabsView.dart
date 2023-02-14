@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/ROpCurrentOrders.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -25,7 +25,6 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
       ROpTabsViewViewController();
   @override
   void initState() {
-  
     super.initState();
   }
 
@@ -59,10 +58,9 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
           canGoBack: false,
         );
       case 2:
-        return ROpDashboardView(
-          restID: opAuthController.restaurantId!,
-          tabsViewViewController: tabsViewViewController,
-          canGoBack: false,
+        return ServiceProfileView(
+          serviceId: opAuthController.restaurantId,
+          serviceDetailsId: opAuthController.detailsId,
         );
 
       default:
@@ -79,8 +77,8 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
     return Obx(
       () => tabsViewViewController.showTabs.value
           ? BottomNavigationBar(
-              selectedLabelStyle: Get.textTheme.bodyText1,
-              unselectedLabelStyle: Get.textTheme.bodyText2,
+              selectedLabelStyle: Get.textTheme.bodyLarge,
+              unselectedLabelStyle: Get.textTheme.bodyMedium,
               currentIndex: _index.value,
               onTap: (int v) {
                 _index.value = v;

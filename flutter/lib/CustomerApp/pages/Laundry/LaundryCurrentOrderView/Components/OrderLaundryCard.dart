@@ -66,7 +66,7 @@ class OrderLaundryCard extends StatelessWidget {
                   getMessagesRoute(
                     chatId: order.chatId,
                     recipientType: ParticipantType.Laundry,
-                    orderType: OrderType.Restaurant,
+                    orderType: OrderType.Laundry,
                     orderId: order.orderId,
                   ),
                 );

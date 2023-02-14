@@ -285,46 +285,104 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'approved'),
+            name: NameNode(value: 'details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'image'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'open_status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'creation_time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'service_provider_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'approved'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'open_status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'delivery_details_id'),
@@ -339,35 +397,6 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'address'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -498,85 +527,45 @@ extension ClientExtension$Query$admin_get_dv_companies
 
 class Query$admin_get_dv_companies$delivery_company {
   Query$admin_get_dv_companies$delivery_company({
-    required this.approved,
-    required this.image,
-    required this.name,
-    required this.open_status,
-    required this.creation_time,
-    required this.service_provider_type,
+    this.details,
     required this.delivery_details_id,
     required this.id,
-    required this.location,
     required this.$__typename,
   });
 
   factory Query$admin_get_dv_companies$delivery_company.fromJson(
       Map<String, dynamic> json) {
-    final l$approved = json['approved'];
-    final l$image = json['image'];
-    final l$name = json['name'];
-    final l$open_status = json['open_status'];
-    final l$creation_time = json['creation_time'];
-    final l$service_provider_type = json['service_provider_type'];
+    final l$details = json['details'];
     final l$delivery_details_id = json['delivery_details_id'];
     final l$id = json['id'];
-    final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Query$admin_get_dv_companies$delivery_company(
-      approved: (l$approved as bool),
-      image: (l$image as String),
-      name: (l$name as String),
-      open_status: (l$open_status as String),
-      creation_time: (l$creation_time as String),
-      service_provider_type: (l$service_provider_type as String),
+      details: l$details == null
+          ? null
+          : Query$admin_get_dv_companies$delivery_company$details.fromJson(
+              (l$details as Map<String, dynamic>)),
       delivery_details_id: (l$delivery_details_id as int),
       id: (l$id as int),
-      location: Query$admin_get_dv_companies$delivery_company$location.fromJson(
-          (l$location as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final bool approved;
-
-  final String image;
-
-  final String name;
-
-  final String open_status;
-
-  final String creation_time;
-
-  final String service_provider_type;
+  final Query$admin_get_dv_companies$delivery_company$details? details;
 
   final int delivery_details_id;
 
   final int id;
 
-  final Query$admin_get_dv_companies$delivery_company$location location;
-
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$approved = approved;
-    _resultData['approved'] = l$approved;
-    final l$image = image;
-    _resultData['image'] = l$image;
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$open_status = open_status;
-    _resultData['open_status'] = l$open_status;
-    final l$creation_time = creation_time;
-    _resultData['creation_time'] = l$creation_time;
-    final l$service_provider_type = service_provider_type;
-    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$location = location;
-    _resultData['location'] = l$location.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -584,26 +573,14 @@ class Query$admin_get_dv_companies$delivery_company {
 
   @override
   int get hashCode {
-    final l$approved = approved;
-    final l$image = image;
-    final l$name = name;
-    final l$open_status = open_status;
-    final l$creation_time = creation_time;
-    final l$service_provider_type = service_provider_type;
+    final l$details = details;
     final l$delivery_details_id = delivery_details_id;
     final l$id = id;
-    final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$approved,
-      l$image,
-      l$name,
-      l$open_status,
-      l$creation_time,
-      l$service_provider_type,
+      l$details,
       l$delivery_details_id,
       l$id,
-      l$location,
       l$$__typename,
     ]);
   }
@@ -617,34 +594,9 @@ class Query$admin_get_dv_companies$delivery_company {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$approved = approved;
-    final lOther$approved = other.approved;
-    if (l$approved != lOther$approved) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$open_status = open_status;
-    final lOther$open_status = other.open_status;
-    if (l$open_status != lOther$open_status) {
-      return false;
-    }
-    final l$creation_time = creation_time;
-    final lOther$creation_time = other.creation_time;
-    if (l$creation_time != lOther$creation_time) {
-      return false;
-    }
-    final l$service_provider_type = service_provider_type;
-    final lOther$service_provider_type = other.service_provider_type;
-    if (l$service_provider_type != lOther$service_provider_type) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -655,11 +607,6 @@ class Query$admin_get_dv_companies$delivery_company {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$location = location;
-    final lOther$location = other.location;
-    if (l$location != lOther$location) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -692,19 +639,13 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company<TRes> {
       _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company;
 
   TRes call({
-    bool? approved,
-    String? image,
-    String? name,
-    String? open_status,
-    String? creation_time,
-    String? service_provider_type,
+    Query$admin_get_dv_companies$delivery_company$details? details,
     int? delivery_details_id,
     int? id,
-    Query$admin_get_dv_companies$delivery_company$location? location,
     String? $__typename,
   });
-  CopyWith$Query$admin_get_dv_companies$delivery_company$location<TRes>
-      get location;
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
+      get details;
 }
 
 class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company<TRes>
@@ -721,55 +662,33 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? approved = _undefined,
-    Object? image = _undefined,
-    Object? name = _undefined,
-    Object? open_status = _undefined,
-    Object? creation_time = _undefined,
-    Object? service_provider_type = _undefined,
+    Object? details = _undefined,
     Object? delivery_details_id = _undefined,
     Object? id = _undefined,
-    Object? location = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$admin_get_dv_companies$delivery_company(
-        approved: approved == _undefined || approved == null
-            ? _instance.approved
-            : (approved as bool),
-        image: image == _undefined || image == null
-            ? _instance.image
-            : (image as String),
-        name: name == _undefined || name == null
-            ? _instance.name
-            : (name as String),
-        open_status: open_status == _undefined || open_status == null
-            ? _instance.open_status
-            : (open_status as String),
-        creation_time: creation_time == _undefined || creation_time == null
-            ? _instance.creation_time
-            : (creation_time as String),
-        service_provider_type:
-            service_provider_type == _undefined || service_provider_type == null
-                ? _instance.service_provider_type
-                : (service_provider_type as String),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$admin_get_dv_companies$delivery_company$details?),
         delivery_details_id:
             delivery_details_id == _undefined || delivery_details_id == null
                 ? _instance.delivery_details_id
                 : (delivery_details_id as int),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        location: location == _undefined || location == null
-            ? _instance.location
-            : (location
-                as Query$admin_get_dv_companies$delivery_company$location),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$admin_get_dv_companies$delivery_company$location<TRes>
-      get location {
-    final local$location = _instance.location;
-    return CopyWith$Query$admin_get_dv_companies$delivery_company$location(
-        local$location, (e) => call(location: e));
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$admin_get_dv_companies$delivery_company$details.stub(
+            _then(_instance))
+        : CopyWith$Query$admin_get_dv_companies$delivery_company$details(
+            local$details, (e) => call(details: e));
   }
 }
 
@@ -780,37 +699,339 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company<TRes>
   TRes _res;
 
   call({
-    bool? approved,
-    String? image,
-    String? name,
-    String? open_status,
-    String? creation_time,
-    String? service_provider_type,
+    Query$admin_get_dv_companies$delivery_company$details? details,
     int? delivery_details_id,
     int? id,
-    Query$admin_get_dv_companies$delivery_company$location? location,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$admin_get_dv_companies$delivery_company$location<TRes>
-      get location =>
-          CopyWith$Query$admin_get_dv_companies$delivery_company$location.stub(
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes>
+      get details =>
+          CopyWith$Query$admin_get_dv_companies$delivery_company$details.stub(
               _res);
 }
 
-class Query$admin_get_dv_companies$delivery_company$location {
-  Query$admin_get_dv_companies$delivery_company$location({
+class Query$admin_get_dv_companies$delivery_company$details {
+  Query$admin_get_dv_companies$delivery_company$details({
+    required this.id,
+    required this.approved,
+    required this.image,
+    required this.name,
+    required this.language,
+    required this.open_status,
+    required this.creation_time,
+    required this.service_provider_type,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_dv_companies$delivery_company$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$approved = json['approved'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$language = json['language'];
+    final l$open_status = json['open_status'];
+    final l$creation_time = json['creation_time'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_dv_companies$delivery_company$details(
+      id: (l$id as int),
+      approved: (l$approved as bool),
+      image: (l$image as String),
+      name: (l$name as String),
+      language: mapFromJson(l$language),
+      open_status: (l$open_status as String),
+      creation_time: (l$creation_time as String),
+      service_provider_type: (l$service_provider_type as String),
+      location: Query$admin_get_dv_companies$delivery_company$details$location
+          .fromJson((l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final bool approved;
+
+  final String image;
+
+  final String name;
+
+  final dynamic language;
+
+  final String open_status;
+
+  final String creation_time;
+
+  final String service_provider_type;
+
+  final Query$admin_get_dv_companies$delivery_company$details$location location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$approved = approved;
+    final l$image = image;
+    final l$name = name;
+    final l$language = language;
+    final l$open_status = open_status;
+    final l$creation_time = creation_time;
+    final l$service_provider_type = service_provider_type;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$approved,
+      l$image,
+      l$name,
+      l$language,
+      l$open_status,
+      l$creation_time,
+      l$service_provider_type,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_dv_companies$delivery_company$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_dv_companies$delivery_company$details
+    on Query$admin_get_dv_companies$delivery_company$details {
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details<
+          Query$admin_get_dv_companies$delivery_company$details>
+      get copyWith =>
+          CopyWith$Query$admin_get_dv_companies$delivery_company$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details<
+    TRes> {
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$details(
+    Query$admin_get_dv_companies$delivery_company$details instance,
+    TRes Function(Query$admin_get_dv_companies$delivery_company$details) then,
+  ) = _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details;
+
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details;
+
+  TRes call({
+    int? id,
+    bool? approved,
+    String? image,
+    String? name,
+    dynamic? language,
+    String? open_status,
+    String? creation_time,
+    String? service_provider_type,
+    Query$admin_get_dv_companies$delivery_company$details$location? location,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<TRes>
+      get location;
+}
+
+class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
+    implements
+        CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes> {
+  _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_dv_companies$delivery_company$details _instance;
+
+  final TRes Function(Query$admin_get_dv_companies$delivery_company$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? approved = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? language = _undefined,
+    Object? open_status = _undefined,
+    Object? creation_time = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_dv_companies$delivery_company$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$admin_get_dv_companies$delivery_company$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$admin_get_dv_companies$delivery_company$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_dv_companies$delivery_company$details<TRes> {
+  _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    bool? approved,
+    String? image,
+    String? name,
+    dynamic? language,
+    String? open_status,
+    String? creation_time,
+    String? service_provider_type,
+    Query$admin_get_dv_companies$delivery_company$details$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<TRes>
+      get location =>
+          CopyWith$Query$admin_get_dv_companies$delivery_company$details$location
+              .stub(_res);
+}
+
+class Query$admin_get_dv_companies$delivery_company$details$location {
+  Query$admin_get_dv_companies$delivery_company$details$location({
     required this.gps,
     required this.address,
     required this.$__typename,
   });
 
-  factory Query$admin_get_dv_companies$delivery_company$location.fromJson(
+  factory Query$admin_get_dv_companies$delivery_company$details$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Query$admin_get_dv_companies$delivery_company$location(
+    return Query$admin_get_dv_companies$delivery_company$details$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -851,7 +1072,8 @@ class Query$admin_get_dv_companies$delivery_company$location {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Query$admin_get_dv_companies$delivery_company$location) ||
+    if (!(other
+            is Query$admin_get_dv_companies$delivery_company$details$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -874,27 +1096,29 @@ class Query$admin_get_dv_companies$delivery_company$location {
   }
 }
 
-extension UtilityExtension$Query$admin_get_dv_companies$delivery_company$location
-    on Query$admin_get_dv_companies$delivery_company$location {
-  CopyWith$Query$admin_get_dv_companies$delivery_company$location<
-          Query$admin_get_dv_companies$delivery_company$location>
+extension UtilityExtension$Query$admin_get_dv_companies$delivery_company$details$location
+    on Query$admin_get_dv_companies$delivery_company$details$location {
+  CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<
+          Query$admin_get_dv_companies$delivery_company$details$location>
       get copyWith =>
-          CopyWith$Query$admin_get_dv_companies$delivery_company$location(
+          CopyWith$Query$admin_get_dv_companies$delivery_company$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$location<
+abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<
     TRes> {
-  factory CopyWith$Query$admin_get_dv_companies$delivery_company$location(
-    Query$admin_get_dv_companies$delivery_company$location instance,
-    TRes Function(Query$admin_get_dv_companies$delivery_company$location) then,
-  ) = _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location;
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$details$location(
+    Query$admin_get_dv_companies$delivery_company$details$location instance,
+    TRes Function(
+            Query$admin_get_dv_companies$delivery_company$details$location)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details$location;
 
-  factory CopyWith$Query$admin_get_dv_companies$delivery_company$location.stub(
+  factory CopyWith$Query$admin_get_dv_companies$delivery_company$details$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$location;
+      _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$location;
 
   TRes call({
     Geography? gps,
@@ -903,18 +1127,21 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$location<
   });
 }
 
-class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location<TRes>
+class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details$location<
+        TRes>
     implements
-        CopyWith$Query$admin_get_dv_companies$delivery_company$location<TRes> {
-  _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location(
+        CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details$location(
     this._instance,
     this._then,
   );
 
-  final Query$admin_get_dv_companies$delivery_company$location _instance;
+  final Query$admin_get_dv_companies$delivery_company$details$location
+      _instance;
 
-  final TRes Function(Query$admin_get_dv_companies$delivery_company$location)
-      _then;
+  final TRes Function(
+      Query$admin_get_dv_companies$delivery_company$details$location) _then;
 
   static const _undefined = {};
 
@@ -923,7 +1150,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location<TRes>
     Object? address = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$admin_get_dv_companies$delivery_company$location(
+      _then(Query$admin_get_dv_companies$delivery_company$details$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -936,11 +1163,12 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$location<TRes>
       ));
 }
 
-class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$location<
+class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$location<
         TRes>
     implements
-        CopyWith$Query$admin_get_dv_companies$delivery_company$location<TRes> {
-  _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$location(
+        CopyWith$Query$admin_get_dv_companies$delivery_company$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$location(
       this._res);
 
   TRes _res;
@@ -1241,28 +1469,7 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'approved'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'firebase_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'image'),
             alias: null,
             arguments: [],
             directives: [],
@@ -1276,27 +1483,91 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'language_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'location'),
+            name: NameNode(value: 'details'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'gps'),
+                name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'address'),
+                name: NameNode(value: 'approved'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'firebase_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'open_status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1310,27 +1581,6 @@ const documentNodeQueryadmin_get_restaurants = DocumentNode(definitions: [
                 selectionSet: null,
               ),
             ]),
-          ),
-          FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'open_status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'service_provider_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1458,93 +1708,45 @@ extension ClientExtension$Query$admin_get_restaurants on graphql.GraphQLClient {
 
 class Query$admin_get_restaurants$restaurant_restaurant {
   Query$admin_get_restaurants$restaurant_restaurant({
-    required this.approved,
-    this.firebase_id,
     required this.id,
-    required this.image,
-    this.delivery_details_id,
-    required this.language_id,
-    required this.location,
-    required this.name,
-    required this.open_status,
-    required this.service_provider_type,
+    required this.delivery_details_id,
+    this.details,
     required this.$__typename,
   });
 
   factory Query$admin_get_restaurants$restaurant_restaurant.fromJson(
       Map<String, dynamic> json) {
-    final l$approved = json['approved'];
-    final l$firebase_id = json['firebase_id'];
     final l$id = json['id'];
-    final l$image = json['image'];
     final l$delivery_details_id = json['delivery_details_id'];
-    final l$language_id = json['language_id'];
-    final l$location = json['location'];
-    final l$name = json['name'];
-    final l$open_status = json['open_status'];
-    final l$service_provider_type = json['service_provider_type'];
+    final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$admin_get_restaurants$restaurant_restaurant(
-      approved: (l$approved as bool),
-      firebase_id: (l$firebase_id as String?),
       id: (l$id as int),
-      image: (l$image as String),
-      delivery_details_id: (l$delivery_details_id as int?),
-      language_id: (l$language_id as String),
-      location:
-          Query$admin_get_restaurants$restaurant_restaurant$location.fromJson(
-              (l$location as Map<String, dynamic>)),
-      name: (l$name as String),
-      open_status: (l$open_status as String),
-      service_provider_type: (l$service_provider_type as String),
+      delivery_details_id: (l$delivery_details_id as int),
+      details: l$details == null
+          ? null
+          : Query$admin_get_restaurants$restaurant_restaurant$details.fromJson(
+              (l$details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final bool approved;
-
-  final String? firebase_id;
-
   final int id;
 
-  final String image;
+  final int delivery_details_id;
 
-  final int? delivery_details_id;
-
-  final String language_id;
-
-  final Query$admin_get_restaurants$restaurant_restaurant$location location;
-
-  final String name;
-
-  final String open_status;
-
-  final String service_provider_type;
+  final Query$admin_get_restaurants$restaurant_restaurant$details? details;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$approved = approved;
-    _resultData['approved'] = l$approved;
-    final l$firebase_id = firebase_id;
-    _resultData['firebase_id'] = l$firebase_id;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$image = image;
-    _resultData['image'] = l$image;
     final l$delivery_details_id = delivery_details_id;
     _resultData['delivery_details_id'] = l$delivery_details_id;
-    final l$language_id = language_id;
-    _resultData['language_id'] = l$language_id;
-    final l$location = location;
-    _resultData['location'] = l$location.toJson();
-    final l$name = name;
-    _resultData['name'] = l$name;
-    final l$open_status = open_status;
-    _resultData['open_status'] = l$open_status;
-    final l$service_provider_type = service_provider_type;
-    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1552,28 +1754,14 @@ class Query$admin_get_restaurants$restaurant_restaurant {
 
   @override
   int get hashCode {
-    final l$approved = approved;
-    final l$firebase_id = firebase_id;
     final l$id = id;
-    final l$image = image;
     final l$delivery_details_id = delivery_details_id;
-    final l$language_id = language_id;
-    final l$location = location;
-    final l$name = name;
-    final l$open_status = open_status;
-    final l$service_provider_type = service_provider_type;
+    final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$approved,
-      l$firebase_id,
       l$id,
-      l$image,
       l$delivery_details_id,
-      l$language_id,
-      l$location,
-      l$name,
-      l$open_status,
-      l$service_provider_type,
+      l$details,
       l$$__typename,
     ]);
   }
@@ -1587,24 +1775,9 @@ class Query$admin_get_restaurants$restaurant_restaurant {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$approved = approved;
-    final lOther$approved = other.approved;
-    if (l$approved != lOther$approved) {
-      return false;
-    }
-    final l$firebase_id = firebase_id;
-    final lOther$firebase_id = other.firebase_id;
-    if (l$firebase_id != lOther$firebase_id) {
-      return false;
-    }
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
       return false;
     }
     final l$delivery_details_id = delivery_details_id;
@@ -1612,29 +1785,9 @@ class Query$admin_get_restaurants$restaurant_restaurant {
     if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
-    final l$language_id = language_id;
-    final lOther$language_id = other.language_id;
-    if (l$language_id != lOther$language_id) {
-      return false;
-    }
-    final l$location = location;
-    final lOther$location = other.location;
-    if (l$location != lOther$location) {
-      return false;
-    }
-    final l$name = name;
-    final lOther$name = other.name;
-    if (l$name != lOther$name) {
-      return false;
-    }
-    final l$open_status = open_status;
-    final lOther$open_status = other.open_status;
-    if (l$open_status != lOther$open_status) {
-      return false;
-    }
-    final l$service_provider_type = service_provider_type;
-    final lOther$service_provider_type = other.service_provider_type;
-    if (l$service_provider_type != lOther$service_provider_type) {
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1669,20 +1822,13 @@ abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant<
       _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant;
 
   TRes call({
-    bool? approved,
-    String? firebase_id,
     int? id,
-    String? image,
     int? delivery_details_id,
-    String? language_id,
-    Query$admin_get_restaurants$restaurant_restaurant$location? location,
-    String? name,
-    String? open_status,
-    String? service_provider_type,
+    Query$admin_get_restaurants$restaurant_restaurant$details? details,
     String? $__typename,
   });
-  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<TRes>
-      get location;
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<TRes>
+      get details;
 }
 
 class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
@@ -1700,39 +1846,321 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? details = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_restaurants$restaurant_restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$admin_get_restaurants$restaurant_restaurant$details?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<TRes>
+      get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details
+            .stub(_then(_instance))
+        : CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
+    implements
+        CopyWith$Query$admin_get_restaurants$restaurant_restaurant<TRes> {
+  _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    int? delivery_details_id,
+    Query$admin_get_restaurants$restaurant_restaurant$details? details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<TRes>
+      get details =>
+          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details
+              .stub(_res);
+}
+
+class Query$admin_get_restaurants$restaurant_restaurant$details {
+  Query$admin_get_restaurants$restaurant_restaurant$details({
+    required this.id,
+    required this.approved,
+    this.firebase_id,
+    required this.image,
+    required this.language,
+    required this.location,
+    required this.name,
+    required this.open_status,
+    required this.service_provider_type,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_restaurants$restaurant_restaurant$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$approved = json['approved'];
+    final l$firebase_id = json['firebase_id'];
+    final l$image = json['image'];
+    final l$language = json['language'];
+    final l$location = json['location'];
+    final l$name = json['name'];
+    final l$open_status = json['open_status'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_restaurants$restaurant_restaurant$details(
+      id: (l$id as int),
+      approved: (l$approved as bool),
+      firebase_id: (l$firebase_id as String?),
+      image: (l$image as String),
+      language: mapFromJson(l$language),
+      location:
+          Query$admin_get_restaurants$restaurant_restaurant$details$location
+              .fromJson((l$location as Map<String, dynamic>)),
+      name: (l$name as String),
+      open_status: (l$open_status as String),
+      service_provider_type: (l$service_provider_type as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final bool approved;
+
+  final String? firebase_id;
+
+  final String image;
+
+  final dynamic language;
+
+  final Query$admin_get_restaurants$restaurant_restaurant$details$location
+      location;
+
+  final String name;
+
+  final String open_status;
+
+  final String service_provider_type;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$firebase_id = firebase_id;
+    _resultData['firebase_id'] = l$firebase_id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$approved = approved;
+    final l$firebase_id = firebase_id;
+    final l$image = image;
+    final l$language = language;
+    final l$location = location;
+    final l$name = name;
+    final l$open_status = open_status;
+    final l$service_provider_type = service_provider_type;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$approved,
+      l$firebase_id,
+      l$image,
+      l$language,
+      l$location,
+      l$name,
+      l$open_status,
+      l$service_provider_type,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_restaurants$restaurant_restaurant$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$firebase_id = firebase_id;
+    final lOther$firebase_id = other.firebase_id;
+    if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_restaurants$restaurant_restaurant$details
+    on Query$admin_get_restaurants$restaurant_restaurant$details {
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<
+          Query$admin_get_restaurants$restaurant_restaurant$details>
+      get copyWith =>
+          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<
+    TRes> {
+  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details(
+    Query$admin_get_restaurants$restaurant_restaurant$details instance,
+    TRes Function(Query$admin_get_restaurants$restaurant_restaurant$details)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details;
+
+  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details;
+
+  TRes call({
+    int? id,
+    bool? approved,
+    String? firebase_id,
+    String? image,
+    dynamic? language,
+    Query$admin_get_restaurants$restaurant_restaurant$details$location?
+        location,
+    String? name,
+    String? open_status,
+    String? service_provider_type,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
+      TRes> get location;
+}
+
+class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_restaurants$restaurant_restaurant$details _instance;
+
+  final TRes Function(Query$admin_get_restaurants$restaurant_restaurant$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
     Object? approved = _undefined,
     Object? firebase_id = _undefined,
-    Object? id = _undefined,
     Object? image = _undefined,
-    Object? delivery_details_id = _undefined,
-    Object? language_id = _undefined,
+    Object? language = _undefined,
     Object? location = _undefined,
     Object? name = _undefined,
     Object? open_status = _undefined,
     Object? service_provider_type = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$admin_get_restaurants$restaurant_restaurant(
+      _then(Query$admin_get_restaurants$restaurant_restaurant$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
-        id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
-        delivery_details_id: delivery_details_id == _undefined
-            ? _instance.delivery_details_id
-            : (delivery_details_id as int?),
-        language_id: language_id == _undefined || language_id == null
-            ? _instance.language_id
-            : (language_id as String),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
         location: location == _undefined || location == null
             ? _instance.location
             : (location
-                as Query$admin_get_restaurants$restaurant_restaurant$location),
+                as Query$admin_get_restaurants$restaurant_restaurant$details$location),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -1747,55 +2175,58 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<TRes>
-      get location {
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
+      TRes> get location {
     final local$location = _instance.location;
-    return CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location(
+    return CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location(
         local$location, (e) => call(location: e));
   }
 }
 
-class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant<TRes>
+class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details<
+        TRes>
     implements
-        CopyWith$Query$admin_get_restaurants$restaurant_restaurant<TRes> {
-  _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant(
+        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details(
       this._res);
 
   TRes _res;
 
   call({
+    int? id,
     bool? approved,
     String? firebase_id,
-    int? id,
     String? image,
-    int? delivery_details_id,
-    String? language_id,
-    Query$admin_get_restaurants$restaurant_restaurant$location? location,
+    dynamic? language,
+    Query$admin_get_restaurants$restaurant_restaurant$details$location?
+        location,
     String? name,
     String? open_status,
     String? service_provider_type,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<TRes>
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
+          TRes>
       get location =>
-          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location
+          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location
               .stub(_res);
 }
 
-class Query$admin_get_restaurants$restaurant_restaurant$location {
-  Query$admin_get_restaurants$restaurant_restaurant$location({
+class Query$admin_get_restaurants$restaurant_restaurant$details$location {
+  Query$admin_get_restaurants$restaurant_restaurant$details$location({
     required this.gps,
     required this.address,
     required this.$__typename,
   });
 
-  factory Query$admin_get_restaurants$restaurant_restaurant$location.fromJson(
+  factory Query$admin_get_restaurants$restaurant_restaurant$details$location.fromJson(
       Map<String, dynamic> json) {
     final l$gps = json['gps'];
     final l$address = json['address'];
     final l$$__typename = json['__typename'];
-    return Query$admin_get_restaurants$restaurant_restaurant$location(
+    return Query$admin_get_restaurants$restaurant_restaurant$details$location(
       gps: geographyFromJson(l$gps),
       address: (l$address as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1837,7 +2268,7 @@ class Query$admin_get_restaurants$restaurant_restaurant$location {
       return true;
     }
     if (!(other
-            is Query$admin_get_restaurants$restaurant_restaurant$location) ||
+            is Query$admin_get_restaurants$restaurant_restaurant$details$location) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1860,28 +2291,29 @@ class Query$admin_get_restaurants$restaurant_restaurant$location {
   }
 }
 
-extension UtilityExtension$Query$admin_get_restaurants$restaurant_restaurant$location
-    on Query$admin_get_restaurants$restaurant_restaurant$location {
-  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<
-          Query$admin_get_restaurants$restaurant_restaurant$location>
+extension UtilityExtension$Query$admin_get_restaurants$restaurant_restaurant$details$location
+    on Query$admin_get_restaurants$restaurant_restaurant$details$location {
+  CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
+          Query$admin_get_restaurants$restaurant_restaurant$details$location>
       get copyWith =>
-          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location(
+          CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<
+abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
     TRes> {
-  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location(
-    Query$admin_get_restaurants$restaurant_restaurant$location instance,
-    TRes Function(Query$admin_get_restaurants$restaurant_restaurant$location)
+  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location(
+    Query$admin_get_restaurants$restaurant_restaurant$details$location instance,
+    TRes Function(
+            Query$admin_get_restaurants$restaurant_restaurant$details$location)
         then,
-  ) = _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location;
+  ) = _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location;
 
-  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location.stub(
+  factory CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$location;
+      _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location;
 
   TRes call({
     Geography? gps,
@@ -1890,20 +2322,21 @@ abstract class CopyWith$Query$admin_get_restaurants$restaurant_restaurant$locati
   });
 }
 
-class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location<
+class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location<
         TRes>
     implements
-        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<
+        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
             TRes> {
-  _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location(
+  _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location(
     this._instance,
     this._then,
   );
 
-  final Query$admin_get_restaurants$restaurant_restaurant$location _instance;
+  final Query$admin_get_restaurants$restaurant_restaurant$details$location
+      _instance;
 
   final TRes Function(
-      Query$admin_get_restaurants$restaurant_restaurant$location) _then;
+      Query$admin_get_restaurants$restaurant_restaurant$details$location) _then;
 
   static const _undefined = {};
 
@@ -1912,7 +2345,7 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location<
     Object? address = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$admin_get_restaurants$restaurant_restaurant$location(
+      _then(Query$admin_get_restaurants$restaurant_restaurant$details$location(
         gps: gps == _undefined || gps == null
             ? _instance.gps
             : (gps as Geography),
@@ -1925,12 +2358,12 @@ class _CopyWithImpl$Query$admin_get_restaurants$restaurant_restaurant$location<
       ));
 }
 
-class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$location<
+class _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location<
         TRes>
     implements
-        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$location<
+        CopyWith$Query$admin_get_restaurants$restaurant_restaurant$details$location<
             TRes> {
-  _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$location(
+  _CopyWithStubImpl$Query$admin_get_restaurants$restaurant_restaurant$details$location(
       this._res);
 
   TRes _res;

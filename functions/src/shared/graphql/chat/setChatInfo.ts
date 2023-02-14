@@ -118,8 +118,7 @@ export async function setRestaurantOrderChatInfo(restaurantOrder: RestaurantOrde
 export async function setLaundryOrderChatInfo(
   laundryOrder: LaundryOrder, 
   laundryStore: ServiceProvider, 
-  fromCustomerDelivery: DeliveryOrder, 
-  toCustomerDelivery: DeliveryOrder, 
+  fromCustomerDelivery: DeliveryOrder,
   customer: CustomerInfo
 ) {
   if(laundryOrder.chatId == undefined) {
@@ -167,7 +166,7 @@ export async function setLaundryOrderChatInfo(
   });
   if(laundryOrder.deliveryType == DeliveryType.Delivery) {
     
-    if(fromCustomerDelivery.chatWithServiceProviderId == undefined || toCustomerDelivery.chatWithServiceProviderId == undefined ) {
+    if(fromCustomerDelivery.chatWithServiceProviderId == undefined) {
       throw new HttpsError(
         "internal",
         "No delivery chat with store id"
@@ -200,11 +199,70 @@ export async function setLaundryOrderChatInfo(
       },]
     });
 
-    chatInfo.DeliveryApp.parentLink = `/Orders/${toCustomerDelivery.deliveryId}`
+    chatInfo = {
+      DeliveryApp: {
+        chatTitle: laundryStore.name,
+        chatImage: laundryStore.image,
+        phoneNumber: laundryStore.phoneNumber,
+        participantType: ParticipantType.LaundryOperator,
+        parentLink: `/Orders/${fromCustomerDelivery.deliveryId}`
+      },
+      LaundryApp: {
+        parentLink: `/laundryOrders/${laundryOrder.orderId}`,
+        participantType: ParticipantType.DeliveryDriver,
+      },
+      MezAdminApp: {
+        parentLink: `/laundryOrders/${laundryOrder.orderId}`,
+        participantType: ParticipantType.DeliveryDriver,
+      }
+    }
+
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
-          id: fromCustomerDelivery.chatWithCustomerId
+          id: fromCustomerDelivery.chatWithServiceProviderId
+        },
+        _set: {
+          chat_info: JSON.stringify(chatInfo)
+        }
+      }, {
+        id: true
+      },]
+    });
+  }
+}
+export async function setLaundryToCustomerDeliveryOrderChatInfo(
+  laundryOrder: LaundryOrder, 
+  laundryStore: ServiceProvider, 
+  toCustomerDelivery: DeliveryOrder,
+  customer: CustomerInfo
+) {
+  let chain = getHasura();
+    
+    if(toCustomerDelivery.chatWithServiceProviderId == undefined) {
+      throw new HttpsError(
+        "internal",
+        "No delivery chat with store id"
+      );
+    }
+    let chatInfo: any = {
+      DeliveryApp: {
+        chatTitle: customer.name ?? "Customer",
+        chatImage: customer.image,
+        phoneNumber: customer.phoneNumber,
+        participantType: ParticipantType.Customer,
+        parentLink: `/Orders/${toCustomerDelivery.deliveryId}`
+      },
+      CustomerApp: {
+        parentLink: `/laundryOrders/${laundryOrder.orderId}`,
+        participantType: ParticipantType.DeliveryDriver
+      }
+    }
+
+    chain.mutation({
+      update_chat_by_pk: [{
+        pk_columns: {
+          id: toCustomerDelivery.chatWithCustomerId
         },
         _set: {
           chat_info: JSON.stringify(chatInfo)
@@ -235,21 +293,6 @@ export async function setLaundryOrderChatInfo(
     chain.mutation({
       update_chat_by_pk: [{
         pk_columns: {
-          id: fromCustomerDelivery.chatWithServiceProviderId
-        },
-        _set: {
-          chat_info: JSON.stringify(chatInfo)
-        }
-      }, {
-        id: true
-      },]
-    });
-
-    chatInfo.DeliveryApp.parentLink = `/Orders/${toCustomerDelivery.deliveryId}`
-
-    chain.mutation({
-      update_chat_by_pk: [{
-        pk_columns: {
           id: toCustomerDelivery.chatWithServiceProviderId
         },
         _set: {
@@ -259,8 +302,8 @@ export async function setLaundryOrderChatInfo(
         id: true
       },]
     });
-  }
 }
+
 
 export async function setDeliveryChatInfo(delivery: DeliveryOrder, deliveryDriver: DeliveryDriver, orderType: OrderType) {
   let chain = getHasura();

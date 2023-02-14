@@ -50,7 +50,6 @@ class CustRestaurantOrderViewController {
       subscriptionId = hasuraDb.createSubscription(start: () {
         orderStream = listen_on_restaurant_order_by_id(orderId: orderId)
             .listen((RestaurantOrder? event) {
-         
           if (event != null) {
             mezDbgPrint(
                 "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
@@ -79,9 +78,9 @@ class CustRestaurantOrderViewController {
     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
 
     mGoogleMapController.setLocation(
-      LocModel.Location(
+      LocModel.MezLocation(
         "",
-        LocModel.Location.buildLocationData(
+        LocModel.MezLocation.buildLocationData(
           order.value?.to.latitude,
           order.value?.to.longitude,
         ),

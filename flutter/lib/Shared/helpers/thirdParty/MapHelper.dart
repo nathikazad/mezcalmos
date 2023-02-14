@@ -15,7 +15,7 @@ import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["General"];
 
-typedef LocationChangesNotifier = void Function(LocModel.Location location);
+typedef LocationChangesNotifier = void Function(LocModel.MezLocation location);
 
 class RouteInformation {
   String polyline;
@@ -103,10 +103,10 @@ class Route {
   });
 }
 
-Future<LocModel.Location> getCurrentLocation() async {
+Future<LocModel.MezLocation> getCurrentLocation() async {
   final LocationData res = (await Location().getLocation());
   mezDbgPrint("Got current loc ====> $res");
-  return LocModel.Location("", res);
+  return LocModel.MezLocation("", res);
 }
 
 /// This is for AutoComplete location Search !
@@ -150,7 +150,7 @@ Future<Map<String, String>> getLocationsSuggestions(String search) async {
 }
 
 /// This calls Places API with a [PlaceID] that can be fetched through [getLocationsSuggestions()] and returns [Location] !
-Future<LocModel.Location?> getLocationFromPlaceId(String placeId) async {
+Future<LocModel.MezLocation?> getLocationFromPlaceId(String placeId) async {
   final String url =
       "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=$placesApikey";
   final http.Response resp = await http.get(Uri.parse(url));
@@ -161,7 +161,7 @@ Future<LocModel.Location?> getLocationFromPlaceId(String placeId) async {
     final double lng = respJson["result"]["geometry"]["location"]["lng"];
     final String address = respJson["result"]["formatted_address"];
 
-    return LocModel.Location.fromFirebaseData(
+    return LocModel.MezLocation.fromFirebaseData(
         {"address": address, "lat": lat, "lng": lng});
   } else {
     return null;
@@ -202,7 +202,7 @@ Future<String?> getAdressFromLatLng(LatLng latlng) async {
 
 /// returns a Map {"distance" : { "text" : [in km] , "value": [in Meters]} , "duration": {"text" : [in days:h] , value : [in Seconds]}}
 Future<Route?> getDurationAndDistance(
-    LocModel.Location from, LocModel.Location to) async {
+    LocModel.MezLocation from, LocModel.MezLocation to) async {
   //units=metric => this is so we can get distances in km , cuz default is miles !
   /// Note : distance.text is in [KM] while distance.value is in [M]!
 

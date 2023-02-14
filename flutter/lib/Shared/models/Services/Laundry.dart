@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
@@ -10,70 +12,73 @@ class Laundry extends Service {
   LaundryCosts laundryCosts;
   num averageNumberOfDays = 2;
   bool selfDelivery;
-  Laundry(
-      {required ServiceInfo userInfo,
-      required Schedule? schedule,
-      required PaymentInfo paymentInfo,
-      required ServiceState laundryState,
-      this.averageNumberOfDays = 2,
-      required this.selfDelivery,
-      required this.laundryCosts,
-      required LanguageType primaryLanguage,
-      LanguageType? secondaryLanguage})
-      : super(
+  int deliveryDetailsId;
+  DeliveryCost deliveryCost;
+  Laundry({
+    required ServiceInfo userInfo,
+    required Schedule? schedule,
+    required PaymentInfo paymentInfo,
+    required ServiceState laundryState,
+    required this.deliveryCost,
+    required this.deliveryDetailsId,
+    this.averageNumberOfDays = 2,
+    required super.serviceDetailsId,
+    required this.selfDelivery,
+    required this.laundryCosts,
+    required Map<LanguageType, bool> languages,
+  }) : super(
             info: userInfo,
             schedule: schedule,
+            languages: languages,
             state: laundryState,
-            primaryLanguage: primaryLanguage,
-            secondaryLanguage: secondaryLanguage,
             paymentInfo: paymentInfo);
 
-  factory Laundry.fromLaundryData(
-      // ignore: avoid_annotating_with_dynamic
-      {required String laundryId,
-      required laundryData}) {
-    final ServiceState laundryState =
-        ServiceState.fromServiceStateData(laundryData["state"]);
+  // factory Laundry.fromLaundryData(
+  //     // ignore: avoid_annotating_with_dynamic
+  //     {required String laundryId,
+  //     required laundryData}) {
+  //   final ServiceState laundryState =
+  //       ServiceState.fromServiceStateData(laundryData["state"]);
 
-    final Schedule schedule =
-        Schedule.fromData(laundryData["details"]["schedule"]);
+  //   final Schedule schedule =
+  //       Schedule.fromData(laundryData["details"]["schedule"]);
 
-    final PaymentInfo paymentInfo =
-        // laundryData["details"]["paymentInfo"] != null
-        //     ? PaymentInfo.fromData(laundryData["details"]["paymentInfo"])
-        //     :
-        PaymentInfo();
+  //   final PaymentInfo paymentInfo =
+  //       // laundryData["details"]["paymentInfo"] != null
+  //       //     ? PaymentInfo.fromData(laundryData["details"]["paymentInfo"])
+  //       //     :
+  //       PaymentInfo();
 
-    final LaundryCosts laundryCosts =
-        LaundryCosts.fromData(laundryData["details"]["costs"]);
-    final num averageNumberOfDays =
-        (laundryData["details"]["averageNumberOfDays"] != null)
-            ? laundryData["details"]["averageNumberOfDays"]
-            : 2;
-    final LanguageType primaryLanguage = laundryData["details"]?["language"]
-                ?["primary"]
-            .toString()
-            .toLanguageType() ??
-        LanguageType.ES;
+  //   final LaundryCosts laundryCosts =
+  //       LaundryCosts.fromData(laundryData["details"]["costs"]);
+  //   final num averageNumberOfDays =
+  //       (laundryData["details"]["averageNumberOfDays"] != null)
+  //           ? laundryData["details"]["averageNumberOfDays"]
+  //           : 2;
+  //   final LanguageType primaryLanguage = laundryData["details"]?["language"]
+  //               ?["primary"]
+  //           .toString()
+  //           .toLanguageType() ??
+  //       LanguageType.ES;
 
-    final LanguageType? secondaryLanguage = laundryData["details"]?["language"]
-                ?["secondary"]
-            .toString()
-            .toNullableLanguageType() ??
-        LanguageType.EN;
+  //   final LanguageType? secondaryLanguage = laundryData["details"]?["language"]
+  //               ?["secondary"]
+  //           .toString()
+  //           .toNullableLanguageType() ??
+  //       LanguageType.EN;
 
-    final Laundry laundry = Laundry(
-        userInfo: ServiceInfo.fromData(laundryData["info"]),
-        selfDelivery: true,
-        schedule: schedule,
-        paymentInfo: paymentInfo,
-        laundryState: laundryState,
-        averageNumberOfDays: averageNumberOfDays,
-        laundryCosts: laundryCosts,
-        primaryLanguage: primaryLanguage,
-        secondaryLanguage: secondaryLanguage);
-    return laundry;
-  }
+  //   final Laundry laundry = Laundry(
+  //       userInfo: ServiceInfo.fromData(laundryData["info"]),
+  //       selfDelivery: true,
+  //       schedule: schedule,
+  //       paymentInfo: paymentInfo,
+  //       laundryState: laundryState,
+  //       averageNumberOfDays: averageNumberOfDays,
+  //       laundryCosts: laundryCosts,
+  //       primaryLanguage: primaryLanguage,
+  //       secondaryLanguage: secondaryLanguage);
+  //   return laundry;
+  // }
   double get getAverageCost {
     double allCosts = 0;
 
@@ -183,12 +188,23 @@ class LaundryCostLineItem {
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ cost.hashCode;
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        cost.hashCode ^
+        nameId.hashCode ^
+        storeId.hashCode ^
+        position.hashCode;
+  }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant LaundryCostLineItem other) {
     if (identical(this, other)) return true;
 
-    return other is LaundryCostLineItem && other.id == id && other.cost == cost;
+    return other.id == id &&
+        other.cost == cost &&
+        other.nameId == nameId &&
+        other.storeId == storeId &&
+        other.position == position;
   }
 }

@@ -77,7 +77,7 @@ class RequestTaxiController {
     locationPickerController.blackScreenBottomTextMargin.value = 80;
 
     GeoLoc.Location().getLocation().then((GeoLoc.LocationData locData) {
-      taxiRequest.value.from = Location("", locData);
+      taxiRequest.value.from = MezLocation("", locData);
       mezDbgPrint(
           " GeoLoc.Location().getLocation ==> ${taxiRequest.value.from}");
       updateModelAndMarker(SearchComponentType.From, taxiRequest.value.from!);
@@ -126,7 +126,7 @@ class RequestTaxiController {
   /******************************  EVENT HANDLERS ************************************/
 // when one of the dropdowns (pick current location, a saved location or a places suggestion clicked)
   void updateModelAndHandoffToLocationPicker(
-      Location? newLocation, SearchComponentType textFieldType) {
+      MezLocation? newLocation, SearchComponentType textFieldType) {
     mezDbgPrint(
         "zlaganga : $textFieldType | newLocationAddress : ${newLocation?.address}");
     locationSearchBarController.collapseDropdown();
@@ -164,7 +164,7 @@ class RequestTaxiController {
   }
 
 // after pick button is clicked after user verifies gps locaiton
-  void updateModelAndMaybeCalculateRoute(Location newLocation) {
+  void updateModelAndMaybeCalculateRoute(MezLocation newLocation) {
     locationPickerController.showOrHideBlackScreen(false);
     updateModelAndMarker(currentFocusedTextField.value, newLocation);
 
@@ -241,7 +241,7 @@ class RequestTaxiController {
   /******************************  Helper function ************************************/
   void updateModelAndMarker(
     SearchComponentType textFieldType,
-    Location newLocation,
+    MezLocation newLocation,
   ) {
     if (textFieldType == SearchComponentType.From) {
       taxiRequest.value.setFromLocation(newLocation);
