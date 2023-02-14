@@ -43,36 +43,35 @@ export async function insertRestaurantOperators(data: any) {
                 owner: true,
                 app_version: o.appVersion,
                 app_type_id: AppType.RestaurantApp,
-                notification_info: (o.notificationToken) ? {
-                    user_id: o.user_id,
-                    app_type_id: AppType.RestaurantApp,
-                    token: o.notification_token
-                }: undefined
-            }
+                // notification_info: (o.notificationToken) ? {
+                //     user_id: o.user_id,
+                //     app_type_id: AppType.RestaurantApp,
+                //     token: o.notification_token
+                // }: undefined
+            },
+            notification_token: o.notificationToken
         }
     })
     operators = await Promise.all(operators)
     // console.log(operators)
     operators = operators.filter((o: any) => o.restaurant_id);
 
-    // let operatorsNotif = operators.map((o: any) => {
-    //     return {
-    //         user_id: o.user_id,
-    //         app_type_id: "restaurant",
-    //         token: o.notification_token
-    //     }
-    // })
-    // operatorsNotif = operatorsNotif.filter((o: any) => o.token);
+    let operatorsNotif = operators.map((o: any) => {
+        return {
+            user_id: o.user_id,
+            app_type_id: AppType.RestaurantApp,
+            token: o.notification_token
+        }
+    })
+    operatorsNotif = operatorsNotif.filter((o: any) => o.token);
 
-    // operators = operators.map((o: any) => {
-    //     return {
-    //         user_id: o.user_id,
-    //         restaurant_id: o.restaurant_id,
-    //         status: "authorized",
-    //         owner: true,
-    //         app_version: o.appVersion,
-    //     }
-    // });
+    operators = operators.map((o: any) => {
+        return {
+            user_id: o.user_id,
+            restaurant_id: o.restaurant_id,
+            operator_details: o.operator_details
+        }
+    });
 
     let response1 = await chain.mutation({
         insert_restaurant_operator: [{
@@ -90,14 +89,14 @@ export async function insertRestaurantOperators(data: any) {
                 id: true,
             }
         }],
-        // insert_notification_info: [{
-        //     objects: operatorsNotif
+        insert_notification_info: [{
+            objects: operatorsNotif
 
-        // }, {
-        //     returning: {
-        //         id: true,
-        //     }
-        // }],
+        }, {
+            returning: {
+                id: true,
+            }
+        }],
     })
     console.log("response: ", response1)
 }

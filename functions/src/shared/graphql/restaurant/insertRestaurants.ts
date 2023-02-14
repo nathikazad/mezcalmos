@@ -188,8 +188,8 @@ export async function insertRestaurants(data: any) {
         
         return {
             id: index + 1,
-            firebase_id: r.firebaseId,
             details: {
+                firebase_id: r.firebaseId,
                 name: r.name,
                 image: r.image,
                 location: {
