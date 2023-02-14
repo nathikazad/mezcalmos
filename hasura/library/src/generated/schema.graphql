@@ -2097,7 +2097,7 @@ type customer_minimal_order_variance_fields {
 }
 
 input customer_minimal_orders_args {
-  customer_id: Int
+  cus_id: Int
 }
 
 """Customer's saved locations"""

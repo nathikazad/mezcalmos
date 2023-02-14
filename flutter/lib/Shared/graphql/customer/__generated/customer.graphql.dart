@@ -4930,7 +4930,7 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             name: NameNode(value: 'args'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'customer_id'),
+                name: NameNode(value: 'cus_id'),
                 value: VariableNode(name: NameNode(value: 'custId')),
               )
             ]),
@@ -5813,7 +5813,7 @@ const documentNodeSubscriptionlisten_on_customer_orders =
             name: NameNode(value: 'args'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'customer_id'),
+                name: NameNode(value: 'cus_id'),
                 value: VariableNode(name: NameNode(value: 'custId')),
               )
             ]),

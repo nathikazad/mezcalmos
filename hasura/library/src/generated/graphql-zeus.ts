@@ -1394,7 +1394,7 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 		__typename?: true
 }>;
 	["customer_minimal_orders_args"]: {
-	customer_id?:number
+	cus_id?:number
 };
 	/** Customer's saved locations */
 ["customer_saved_location"]: AliasType<{
@@ -19454,7 +19454,7 @@ the end). throws an error if top level container is not an array */
 			total_cost?:number
 	},
 	["customer_minimal_orders_args"]: {
-	customer_id?:number
+	cus_id?:number
 },
 	/** Customer's saved locations */
 ["customer_saved_location"]: {
@@ -36354,7 +36354,7 @@ export type customer_minimal_order_variance_fields = {
 }
 
 export type customer_minimal_orders_args = {
-		customer_id?:number
+		cus_id?:number
 }
 
 /** Customer's saved locations */
@@ -56802,7 +56802,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_minimal_orders_args:{
-		customer_id:{
+		cus_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,

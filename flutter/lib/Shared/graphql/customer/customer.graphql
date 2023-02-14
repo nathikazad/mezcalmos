@@ -76,7 +76,7 @@ mutation set_customer_stripe_info($user_id: Int!, $stripe_info: jsonb) {
   }
 }
 query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
-  customer_minimal_orders(args: {customer_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
+  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
     id
     image
     in_process
@@ -91,7 +91,7 @@ query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
   }
 }
 subscription listen_on_customer_orders($custId: Int!,$inProcess: Boolean!) {
-  customer_minimal_orders(args: {customer_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
+  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
     id
     image
     in_process
