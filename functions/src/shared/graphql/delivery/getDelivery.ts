@@ -27,7 +27,6 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       service_provider_id: true,
       package_cost: true,
       order_time: true,
-      delivery_driver_type: true,
       delivery_driver_id: true,
       direction: true,
       order_type: true,
@@ -88,17 +87,10 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     deliveryCost: parseFloat(response.delivery_order_by_pk.delivery_cost.replace("$", "")),
     packageCost: parseFloat(response.delivery_order_by_pk.package_cost.replace("$", "")),
     orderTime: response.delivery_order_by_pk.order_time,
-    deliveryDriverType: response.delivery_order_by_pk.delivery_driver_type as ParticipantType,
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
-    direction: response.delivery_order_by_pk.direction as DeliveryDirection
-  }
-  if (!(response.delivery_order_by_pk.delivery_driver_id)) {
-    return delivery;
-  }
-  if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.DeliveryDriver
-    && response.delivery_order_by_pk.delivery_driver
-  ) {
-    delivery.deliveryDriver = {
+    direction: response.delivery_order_by_pk.direction as DeliveryDirection,
+    deliveryDriverId: response.delivery_order_by_pk.delivery_driver_id,
+    deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,
       deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
       deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
@@ -114,27 +106,9 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
         token: response.delivery_order_by_pk.delivery_driver.notification_info.token,
         turnOffNotifications: response.delivery_order_by_pk.delivery_driver.notification_info.turn_off_notifications,
       } : undefined,
-      deliveryDriverType: ParticipantType.DeliveryDriver
-
-    }
-  } //else if (response.delivery_order_by_pk.delivery_driver_type == ParticipantType.RestaurantOperator
-  //   && response.delivery_order_by_pk.restaurant_operator
-  // ) {
-  //   delivery.deliveryDriver = {
-  //     userId: response.delivery_order_by_pk.restaurant_operator.user.id,
-  //     user: {
-  //       id: response.delivery_order_by_pk.restaurant_operator.user.id,
-  //       firebaseId: response.delivery_order_by_pk.restaurant_operator.user.firebase_id,
-  //       language: response.delivery_order_by_pk.restaurant_operator.user.language_id as Language
-  //     },
-  //     notificationInfo: (response.delivery_order_by_pk.restaurant_operator.notification_info) ? {
-  //       appType: AppType.RestaurantApp,
-  //       token: response.delivery_order_by_pk.restaurant_operator.notification_info.token,
-  //       turnOffNotifications: response.delivery_order_by_pk.restaurant_operator.notification_info.turn_off_notifications
-  //     } : undefined,
-  //     deliveryDriverType: ParticipantType.RestaurantOperator
-  //   }
-  // }
+    }: undefined
+  }
+  
   return delivery;
 }
 
@@ -163,6 +137,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       service_provider_id: true,
       direction: true,
       delivery_driver: {
+        id: true,
         delivery_driver_type: true,
         user: {
           firebase_id: true,
@@ -200,6 +175,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
       direction: d.direction as DeliveryDirection,
       deliveryDriver: (d.delivery_driver) ? <DeliveryDriver>{
+        id: d.delivery_driver.id,
         userId: d.delivery_driver.user.id,
         deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,
         user: {

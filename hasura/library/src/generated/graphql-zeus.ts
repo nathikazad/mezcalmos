@@ -1991,6 +1991,8 @@ count?: [{	columns?:ValueTypes["customer_stripe_info_select_column"][],	distinct
 }>;
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: AliasType<{
+	/** An object relationship */
+	delivery_details?:ValueTypes["delivery_details"],
 	delivery_details_id?:true,
 delivery_operators?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_operator_select_column"][],	/** limit the number of rows returned */
@@ -2044,6 +2046,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_and?:ValueTypes["delivery_company_bool_exp"][],
 	_not?:ValueTypes["delivery_company_bool_exp"],
 	_or?:ValueTypes["delivery_company_bool_exp"][],
+	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
@@ -2062,6 +2065,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
+	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:ValueTypes["delivery_operator_arr_rel_insert_input"],
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
@@ -2107,6 +2111,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
+	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
@@ -19968,6 +19973,8 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: {
 		__typename?: "delivery_company";
+			/** An object relationship */
+	delivery_details?:PartialObjects["delivery_details"],
 			delivery_details_id?:number,
 			/** An array relationship */
 	delivery_operators?:PartialObjects["delivery_operator"][],
@@ -20012,6 +20019,7 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["delivery_company_bool_exp"][],
 	_not?:PartialObjects["delivery_company_bool_exp"],
 	_or?:PartialObjects["delivery_company_bool_exp"][],
+	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
@@ -20030,6 +20038,7 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
+	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:PartialObjects["delivery_operator_arr_rel_insert_input"],
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
@@ -20075,6 +20084,7 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
+	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
@@ -36929,6 +36939,8 @@ export type customer_stripe_info_variance_fields = {
 /** columns and relationships of "delivery.company" */
 export type delivery_company = {
 	__typename?: "delivery_company",
+	/** An object relationship */
+	delivery_details:delivery_details,
 	delivery_details_id:number,
 	/** An array relationship */
 	delivery_operators:delivery_operator[],
@@ -36977,6 +36989,7 @@ export type delivery_company_bool_exp = {
 		_and?:delivery_company_bool_exp[],
 	_not?:delivery_company_bool_exp,
 	_or?:delivery_company_bool_exp[],
+	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
 	delivery_operators?:delivery_operator_bool_exp,
 	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
@@ -37002,7 +37015,8 @@ export type delivery_company_inc_input = {
 
 /** input type for inserting data into table "delivery.company" */
 export type delivery_company_insert_input = {
-		delivery_details_id?:number,
+		delivery_details?:delivery_details_obj_rel_insert_input,
+	delivery_details_id?:number,
 	delivery_operators?:delivery_operator_arr_rel_insert_input,
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
@@ -37053,7 +37067,8 @@ export type delivery_company_on_conflict = {
 
 /** Ordering options when selecting data from "delivery.company". */
 export type delivery_company_order_by = {
-		delivery_details_id?:order_by,
+		delivery_details?:delivery_details_order_by,
+	delivery_details_id?:order_by,
 	delivery_operators_aggregate?:delivery_operator_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
@@ -43646,8 +43661,7 @@ export type notification_info_bool_exp = {
 /** unique or primary key constraints on table "notification_info" */
 export enum notification_info_constraint {
 	notification_info_app_type_id_user_id_key = "notification_info_app_type_id_user_id_key",
-	notification_info_pkey = "notification_info_pkey",
-	notification_info_user_id_app_type_id_key = "notification_info_user_id_app_type_id_key"
+	notification_info_pkey = "notification_info_pkey"
 }
 
 /** input type for incrementing numeric columns in table "notification_info" */
@@ -57714,6 +57728,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		delivery_details:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -57779,6 +57799,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_insert_input:{
+		delivery_details:{
+			type:"delivery_details_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"Int",
 			array:false,
@@ -57851,6 +57877,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_order_by:{
+		delivery_details:{
+			type:"delivery_details_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"order_by",
 			array:false,
@@ -103635,6 +103667,7 @@ export const ReturnTypes: Record<string,any> = {
 		sp_id:"Float"
 	},
 	delivery_company:{
+		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
 		delivery_operators:"delivery_operator",
 		delivery_operators_aggregate:"delivery_operator_aggregate",

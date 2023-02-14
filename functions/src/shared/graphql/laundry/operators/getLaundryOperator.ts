@@ -62,3 +62,55 @@ export async function getLaundryOperators(laundryStoreId: number): Promise<Opera
     });
   
   }
+
+  export async function getLaundryOperatorByUserId(laundryOperatorUserId: number): Promise<Operator> {
+    let chain = getHasura();
+  
+    let response = await chain.query({
+      laundry_operator: [{
+        where: {
+          user_id: {
+            _eq: laundryOperatorUserId
+          },
+        }
+      }, {
+        id: true,
+        store_id: true,
+        operator_details: {
+          status: true,
+          owner: true,
+          notification_info: {
+          token: true,
+          turn_off_notifications: true
+          },
+        },
+        user: {
+          firebase_id: true,
+          language_id: true,
+        }
+      }]
+    });
+    if(response.laundry_operator.length == null) {
+      throw new HttpsError(
+        "internal",
+        "No laundry operator with that user id or store id found"
+      );
+    }
+    return {
+      id: response.laundry_operator[0].id,
+      userId: laundryOperatorUserId,
+      serviceProviderId: response.laundry_operator[0].store_id,
+      status: response.laundry_operator[0].operator_details.status as AuthorizationStatus,
+      owner: response.laundry_operator[0].operator_details.owner,
+      notificationInfo: (response.laundry_operator[0].operator_details.notification_info) ? {
+        appType: AppType.LaundryApp,
+        token: response.laundry_operator[0].operator_details.notification_info.token,
+        turnOffNotifications: response.laundry_operator[0].operator_details.notification_info.turn_off_notifications
+      }: undefined,
+      user: {
+        id: laundryOperatorUserId,
+        firebaseId: response.laundry_operator[0].user.firebase_id,
+        language: response.laundry_operator[0].user.language_id as Language
+      }
+    };
+  }

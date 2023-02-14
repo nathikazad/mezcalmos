@@ -1,13 +1,12 @@
-import { DeliveryDriver, DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
+import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { OrderType } from "../shared/models/Generic/Order";
 import { changeRestaurantOrderStatus } from "./restaurantStatusChange";
-import { ParticipantType } from "../shared/models/Generic/Chat";
+// import { ParticipantType } from "../shared/models/Generic/Chat";
 import { changeLaundryOrderStatus } from "./laundryStatusChange";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
@@ -38,35 +37,16 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
 
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
-  deliveryDriverId: number,
-  deliveryDriverType: ParticipantType,
+  // deliveryDriverId: number,
+  // deliveryDriverType: ParticipantType,
   newStatus: DeliveryOrderStatus
 }
 
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails) {
 
-  let deliveryOrderPromise = getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
-  let deliveryDriverPromise = getDeliveryDriver(changeDeliveryStatusDetails.deliveryDriverId)//, changeDeliveryStatusDetails.deliveryDriverType);
-  let promiseResponse = await Promise.all([deliveryOrderPromise, deliveryDriverPromise]);
-  let deliveryOrder: DeliveryOrder = promiseResponse[0];
-  let deliveryDriver: DeliveryDriver = promiseResponse[1];
+  let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
 
-  if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
-    || DeliveryOrderStatus.CancelledByCustomer
-    || DeliveryOrderStatus.CancelledByDeliverer
-    || DeliveryOrderStatus.CancelledByServiceProvider
-  )) {
-    throw new HttpsError(
-      "internal",
-      "delivery order is complete or cancelled"
-    );
-  }
-  if (deliveryDriver.userId != userId) {
-    throw new HttpsError(
-      "internal",
-      "invalid delivery driver user id"
-    );
-  }
+  errorChecks(deliveryOrder, userId);
 
   let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
 
@@ -84,5 +64,30 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
       break;
     default:
       break;
+  }
+}
+
+function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
+  if (deliveryOrder.deliveryDriver == null) {
+    throw new HttpsError(
+      "internal",
+      "No driver assigned to delivery order"
+    );
+  }
+  if (deliveryOrder.status == (DeliveryOrderStatus.Delivered
+    || DeliveryOrderStatus.CancelledByCustomer
+    || DeliveryOrderStatus.CancelledByDeliverer
+    || DeliveryOrderStatus.CancelledByServiceProvider
+  )) {
+    throw new HttpsError(
+      "internal",
+      "delivery order is complete or cancelled"
+    );
+  }
+  if (userId != deliveryOrder.deliveryDriver.userId) {
+    throw new HttpsError(
+      "internal",
+      "order driver mismatch"
+    );
   }
 }

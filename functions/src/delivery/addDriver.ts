@@ -16,14 +16,8 @@ export interface AddDriverDetails {
 export async function addDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ) {
     //first mutation
     //second notify operators of the company
-    let deliveryDriver: DeliveryDriver = {
-        userId,
-        deliveryCompanyType: deliveryServiceProviderType,
-        deliveryCompanyId: addDriverDetails.deliveryCompanyId,
-        notificationInfo: addDriverDetails.notificationInfo,
-        deliveryDriverType: ParticipantType.DeliveryDriver
-    }
-    await createDeliveryDriver(deliveryDriver);
+    
+    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, deliveryServiceProviderType);
 
     notify(deliveryDriver, deliveryServiceProviderType, addDriverDetails);
 }
