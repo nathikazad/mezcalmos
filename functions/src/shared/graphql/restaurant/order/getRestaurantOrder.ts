@@ -251,15 +251,16 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
           location: {
             gps: true
           },
-          delivery_details: {
-            self_delivery: true,
-            delivery_available: true,
-            customer_pickup: true,
-            radius: true,
-            minimum_cost: true,
-            cost_per_km: true,
-          },
+          
           language: [{}, true]
+        },
+        delivery_details: {
+          self_delivery: true,
+          delivery_available: true,
+          customer_pickup: true,
+          radius: true,
+          minimum_cost: true,
+          cost_per_km: true,
         },
       },
       customer_app_type: true,
@@ -338,12 +339,12 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         operators: restaurantOperators,
         language: JSON.parse(o.restaurant.details.language),
         deliveryDetails: {
-          minimumCost:o.restaurant.details.delivery_details.minimum_cost,
-          costPerKm: o.restaurant.details.delivery_details.cost_per_km,
-          radius: o.restaurant.details.delivery_details.radius,
-          deliveryAvailable: o.restaurant.details.delivery_details.delivery_available,
-          customerPickup: o.restaurant.details.delivery_details.customer_pickup,
-          selfDelivery: o.restaurant.details.delivery_details.self_delivery,
+          minimumCost:o.restaurant.delivery_details.minimum_cost,
+          costPerKm: o.restaurant.delivery_details.cost_per_km,
+          radius: o.restaurant.delivery_details.radius,
+          deliveryAvailable: o.restaurant.delivery_details.delivery_available,
+          customerPickup: o.restaurant.delivery_details.customer_pickup,
+          selfDelivery: o.restaurant.delivery_details.self_delivery,
         }
       }: undefined
     }

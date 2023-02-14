@@ -1,3 +1,4 @@
+- "!include customer_minimal_orders.yaml"
 - "!include delivery_get_delivery_companies.yaml"
 - "!include restaurant_get_restaurants.yaml"
 - "!include restaurant_orders_by_date.yaml"

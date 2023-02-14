@@ -21,6 +21,7 @@ export async function createRestaurant(
             image: restaurantDetails.image,
             schedule: JSON.stringify(restaurantDetails.schedule),
             firebase_id: restaurantDetails.firebaseId ?? undefined,
+            language: restaurantDetails.language,
             location: {
               data: {
                 gps: JSON.stringify({

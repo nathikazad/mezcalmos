@@ -1710,6 +1710,324 @@ type customer_favourited_item_variance_fields {
   restaurant_item_id: Float
 }
 
+"""
+columns and relationships of "customer.minimal_order"
+"""
+type customer_minimal_order {
+  id: Int!
+  image: String!
+  in_process: Boolean!
+  name: String!
+  order_time: timestamptz!
+  order_type: String!
+  payment_type: String!
+  status: String!
+  total_cost: money!
+}
+
+"""
+aggregated selection of "customer.minimal_order"
+"""
+type customer_minimal_order_aggregate {
+  aggregate: customer_minimal_order_aggregate_fields
+  nodes: [customer_minimal_order!]!
+}
+
+"""
+aggregate fields of "customer.minimal_order"
+"""
+type customer_minimal_order_aggregate_fields {
+  avg: customer_minimal_order_avg_fields
+  count(columns: [customer_minimal_order_select_column!], distinct: Boolean): Int!
+  max: customer_minimal_order_max_fields
+  min: customer_minimal_order_min_fields
+  stddev: customer_minimal_order_stddev_fields
+  stddev_pop: customer_minimal_order_stddev_pop_fields
+  stddev_samp: customer_minimal_order_stddev_samp_fields
+  sum: customer_minimal_order_sum_fields
+  var_pop: customer_minimal_order_var_pop_fields
+  var_samp: customer_minimal_order_var_samp_fields
+  variance: customer_minimal_order_variance_fields
+}
+
+"""aggregate avg on columns"""
+type customer_minimal_order_avg_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""
+Boolean expression to filter rows from the table "customer.minimal_order". All fields are combined with a logical 'AND'.
+"""
+input customer_minimal_order_bool_exp {
+  _and: [customer_minimal_order_bool_exp!]
+  _not: customer_minimal_order_bool_exp
+  _or: [customer_minimal_order_bool_exp!]
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  in_process: Boolean_comparison_exp
+  name: String_comparison_exp
+  order_time: timestamptz_comparison_exp
+  order_type: String_comparison_exp
+  payment_type: String_comparison_exp
+  status: String_comparison_exp
+  total_cost: money_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "customer.minimal_order"
+"""
+enum customer_minimal_order_constraint {
+  """
+  unique or primary key constraint on columns "order_type", "id"
+  """
+  minimal_order_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "customer.minimal_order"
+"""
+input customer_minimal_order_inc_input {
+  id: Int
+  total_cost: money
+}
+
+"""
+input type for inserting data into table "customer.minimal_order"
+"""
+input customer_minimal_order_insert_input {
+  id: Int
+  image: String
+  in_process: Boolean
+  name: String
+  order_time: timestamptz
+  order_type: String
+  payment_type: String
+  status: String
+  total_cost: money
+}
+
+"""aggregate max on columns"""
+type customer_minimal_order_max_fields {
+  id: Int
+  image: String
+  name: String
+  order_time: timestamptz
+  order_type: String
+  payment_type: String
+  status: String
+  total_cost: money
+}
+
+"""aggregate min on columns"""
+type customer_minimal_order_min_fields {
+  id: Int
+  image: String
+  name: String
+  order_time: timestamptz
+  order_type: String
+  payment_type: String
+  status: String
+  total_cost: money
+}
+
+"""
+response of any mutation on the table "customer.minimal_order"
+"""
+type customer_minimal_order_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [customer_minimal_order!]!
+}
+
+"""
+on_conflict condition type for table "customer.minimal_order"
+"""
+input customer_minimal_order_on_conflict {
+  constraint: customer_minimal_order_constraint!
+  update_columns: [customer_minimal_order_update_column!]! = []
+  where: customer_minimal_order_bool_exp
+}
+
+"""Ordering options when selecting data from "customer.minimal_order"."""
+input customer_minimal_order_order_by {
+  id: order_by
+  image: order_by
+  in_process: order_by
+  name: order_by
+  order_time: order_by
+  order_type: order_by
+  payment_type: order_by
+  status: order_by
+  total_cost: order_by
+}
+
+"""primary key columns input for table: customer.minimal_order"""
+input customer_minimal_order_pk_columns_input {
+  id: Int!
+  order_type: String!
+}
+
+"""
+select columns of table "customer.minimal_order"
+"""
+enum customer_minimal_order_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  in_process
+
+  """column name"""
+  name
+
+  """column name"""
+  order_time
+
+  """column name"""
+  order_type
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  status
+
+  """column name"""
+  total_cost
+}
+
+"""
+input type for updating data in table "customer.minimal_order"
+"""
+input customer_minimal_order_set_input {
+  id: Int
+  image: String
+  in_process: Boolean
+  name: String
+  order_time: timestamptz
+  order_type: String
+  payment_type: String
+  status: String
+  total_cost: money
+}
+
+"""aggregate stddev on columns"""
+type customer_minimal_order_stddev_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type customer_minimal_order_stddev_pop_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type customer_minimal_order_stddev_samp_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""
+Streaming cursor of the table "customer_minimal_order"
+"""
+input customer_minimal_order_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: customer_minimal_order_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input customer_minimal_order_stream_cursor_value_input {
+  id: Int
+  image: String
+  in_process: Boolean
+  name: String
+  order_time: timestamptz
+  order_type: String
+  payment_type: String
+  status: String
+  total_cost: money
+}
+
+"""aggregate sum on columns"""
+type customer_minimal_order_sum_fields {
+  id: Int
+  total_cost: money
+}
+
+"""
+update columns of table "customer.minimal_order"
+"""
+enum customer_minimal_order_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  in_process
+
+  """column name"""
+  name
+
+  """column name"""
+  order_time
+
+  """column name"""
+  order_type
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  status
+
+  """column name"""
+  total_cost
+}
+
+input customer_minimal_order_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: customer_minimal_order_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: customer_minimal_order_set_input
+  where: customer_minimal_order_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type customer_minimal_order_var_pop_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""aggregate var_samp on columns"""
+type customer_minimal_order_var_samp_fields {
+  id: Float
+  total_cost: Float
+}
+
+"""aggregate variance on columns"""
+type customer_minimal_order_variance_fields {
+  id: Float
+  total_cost: Float
+}
+
+input customer_minimal_orders_args {
+  customer_id: Int
+}
+
 """Customer's saved locations"""
 type customer_saved_location {
   customer_id: Int!
@@ -8956,12 +9274,10 @@ type laundry_store {
   delivery_details: delivery_details!
   delivery_details_id: Int!
 
-  """
-  A computed field, executes function "laundry_delivery_details"
-  """
-  delivery_details_of_deliverer(
+  """An array relationship"""
+  delivery_partners(
     """distinct select on columns"""
-    distinct_on: [delivery_details_select_column!]
+    distinct_on: [service_provider_delivery_partner_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -8970,11 +9286,29 @@ type laundry_store {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [delivery_details_order_by!]
+    order_by: [service_provider_delivery_partner_order_by!]
 
     """filter the rows returned"""
-    where: delivery_details_bool_exp
-  ): [delivery_details!]
+    where: service_provider_delivery_partner_bool_exp
+  ): [service_provider_delivery_partner!]!
+
+  """An aggregate relationship"""
+  delivery_partners_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_delivery_partner_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_delivery_partner_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_delivery_partner_bool_exp
+  ): service_provider_delivery_partner_aggregate!
 
   """An object relationship"""
   details: service_provider_details
@@ -9066,7 +9400,8 @@ input laundry_store_bool_exp {
   _or: [laundry_store_bool_exp!]
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
-  delivery_details_of_deliverer: delivery_details_bool_exp
+  delivery_partners: service_provider_delivery_partner_bool_exp
+  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -9114,6 +9449,7 @@ input type for inserting data into table "laundry.store"
 input laundry_store_insert_input {
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
+  delivery_partners: service_provider_delivery_partner_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
@@ -9180,7 +9516,7 @@ input laundry_store_on_conflict {
 input laundry_store_order_by {
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
-  delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
+  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
@@ -10094,6 +10430,19 @@ type mutation_root {
   delete_customer_favourited_item_by_pk(id: Int!): customer_favourited_item
 
   """
+  delete data from the table: "customer.minimal_order"
+  """
+  delete_customer_minimal_order(
+    """filter the rows which have to be deleted"""
+    where: customer_minimal_order_bool_exp!
+  ): customer_minimal_order_mutation_response
+
+  """
+  delete single row from the table: "customer.minimal_order"
+  """
+  delete_customer_minimal_order_by_pk(id: Int!, order_type: String!): customer_minimal_order
+
+  """
   delete data from the table: "customer.saved_location"
   """
   delete_customer_saved_location(
@@ -10790,6 +11139,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: customer_favourited_item_on_conflict
   ): customer_favourited_item
+
+  """
+  insert data into the table: "customer.minimal_order"
+  """
+  insert_customer_minimal_order(
+    """the rows to be inserted"""
+    objects: [customer_minimal_order_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: customer_minimal_order_on_conflict
+  ): customer_minimal_order_mutation_response
+
+  """
+  insert a single row into the table: "customer.minimal_order"
+  """
+  insert_customer_minimal_order_one(
+    """the row to be inserted"""
+    object: customer_minimal_order_insert_input!
+
+    """upsert condition"""
+    on_conflict: customer_minimal_order_on_conflict
+  ): customer_minimal_order
 
   """
   insert data into the table: "customer.saved_location"
@@ -12042,6 +12413,40 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [customer_favourited_item_updates!]!
   ): [customer_favourited_item_mutation_response]
+
+  """
+  update data of the table: "customer.minimal_order"
+  """
+  update_customer_minimal_order(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: customer_minimal_order_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: customer_minimal_order_set_input
+
+    """filter the rows which have to be updated"""
+    where: customer_minimal_order_bool_exp!
+  ): customer_minimal_order_mutation_response
+
+  """
+  update single row of the table: "customer.minimal_order"
+  """
+  update_customer_minimal_order_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: customer_minimal_order_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: customer_minimal_order_set_input
+    pk_columns: customer_minimal_order_pk_columns_input!
+  ): customer_minimal_order
+
+  """
+  update multiples rows of table: "customer.minimal_order"
+  """
+  update_customer_minimal_order_many(
+    """updates to execute, in order"""
+    updates: [customer_minimal_order_updates!]!
+  ): [customer_minimal_order_mutation_response]
 
   """
   update data of the table: "customer.saved_location"
@@ -14358,6 +14763,101 @@ type query_root {
   fetch data from the table: "customer.favourited_item" using primary key columns
   """
   customer_favourited_item_by_pk(id: Int!): customer_favourited_item
+
+  """
+  fetch data from the table: "customer.minimal_order"
+  """
+  customer_minimal_order(
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): [customer_minimal_order!]!
+
+  """
+  fetch aggregated fields from the table: "customer.minimal_order"
+  """
+  customer_minimal_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): customer_minimal_order_aggregate!
+
+  """
+  fetch data from the table: "customer.minimal_order" using primary key columns
+  """
+  customer_minimal_order_by_pk(id: Int!, order_type: String!): customer_minimal_order
+
+  """
+  execute function "customer.minimal_orders" which returns "customer.minimal_order"
+  """
+  customer_minimal_orders(
+    """
+    input parameters for function "customer_minimal_orders"
+    """
+    args: customer_minimal_orders_args!
+
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): [customer_minimal_order!]!
+
+  """
+  execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order"
+  """
+  customer_minimal_orders_aggregate(
+    """
+    input parameters for function "customer_minimal_orders_aggregate"
+    """
+    args: customer_minimal_orders_args!
+
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): customer_minimal_order_aggregate!
 
   """
   fetch data from the table: "customer.saved_location"
@@ -23095,6 +23595,42 @@ type restaurant_restaurant {
     where: delivery_details_bool_exp
   ): [delivery_details!]
 
+  """An array relationship"""
+  delivery_partners(
+    """distinct select on columns"""
+    distinct_on: [service_provider_delivery_partner_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_delivery_partner_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_delivery_partner_bool_exp
+  ): [service_provider_delivery_partner!]!
+
+  """An aggregate relationship"""
+  delivery_partners_aggregate(
+    """distinct select on columns"""
+    distinct_on: [service_provider_delivery_partner_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [service_provider_delivery_partner_order_by!]
+
+    """filter the rows returned"""
+    where: service_provider_delivery_partner_bool_exp
+  ): service_provider_delivery_partner_aggregate!
+
   """An object relationship"""
   details: service_provider_details
   details_id: Int!
@@ -23271,6 +23807,8 @@ input restaurant_restaurant_bool_exp {
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_details_of_deliverer: delivery_details_bool_exp
+  delivery_partners: service_provider_delivery_partner_bool_exp
+  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_bool_exp
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
@@ -23320,6 +23858,7 @@ input restaurant_restaurant_insert_input {
   categories: restaurant_category_arr_rel_insert_input
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
+  delivery_partners: service_provider_delivery_partner_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
@@ -23381,6 +23920,7 @@ input restaurant_restaurant_order_by {
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
+  delivery_partners_aggregate: service_provider_delivery_partner_aggregate_order_by
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
@@ -24301,6 +24841,17 @@ type service_provider_delivery_partner_aggregate {
   nodes: [service_provider_delivery_partner!]!
 }
 
+input service_provider_delivery_partner_aggregate_bool_exp {
+  count: service_provider_delivery_partner_aggregate_bool_exp_count
+}
+
+input service_provider_delivery_partner_aggregate_bool_exp_count {
+  arguments: [service_provider_delivery_partner_select_column!]
+  distinct: Boolean
+  filter: service_provider_delivery_partner_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "service_provider.delivery_partner"
 """
@@ -24318,11 +24869,47 @@ type service_provider_delivery_partner_aggregate_fields {
   variance: service_provider_delivery_partner_variance_fields
 }
 
+"""
+order by aggregate values of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_aggregate_order_by {
+  avg: service_provider_delivery_partner_avg_order_by
+  count: order_by
+  max: service_provider_delivery_partner_max_order_by
+  min: service_provider_delivery_partner_min_order_by
+  stddev: service_provider_delivery_partner_stddev_order_by
+  stddev_pop: service_provider_delivery_partner_stddev_pop_order_by
+  stddev_samp: service_provider_delivery_partner_stddev_samp_order_by
+  sum: service_provider_delivery_partner_sum_order_by
+  var_pop: service_provider_delivery_partner_var_pop_order_by
+  var_samp: service_provider_delivery_partner_var_samp_order_by
+  variance: service_provider_delivery_partner_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_arr_rel_insert_input {
+  data: [service_provider_delivery_partner_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: service_provider_delivery_partner_on_conflict
+}
+
 """aggregate avg on columns"""
 type service_provider_delivery_partner_avg_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by avg() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_avg_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -24380,12 +24967,32 @@ type service_provider_delivery_partner_max_fields {
   service_provider_type: String
 }
 
+"""
+order by max() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_max_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
+}
+
 """aggregate min on columns"""
 type service_provider_delivery_partner_min_fields {
   delivery_company_id: Int
   id: Int
   service_provider_id: Int
   service_provider_type: String
+}
+
+"""
+order by min() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_min_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+  service_provider_type: order_by
 }
 
 """
@@ -24459,6 +25066,15 @@ type service_provider_delivery_partner_stddev_fields {
   service_provider_id: Float
 }
 
+"""
+order by stddev() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_stddev_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type service_provider_delivery_partner_stddev_pop_fields {
   delivery_company_id: Float
@@ -24466,11 +25082,29 @@ type service_provider_delivery_partner_stddev_pop_fields {
   service_provider_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_stddev_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type service_provider_delivery_partner_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_stddev_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -24497,6 +25131,15 @@ type service_provider_delivery_partner_sum_fields {
   delivery_company_id: Int
   id: Int
   service_provider_id: Int
+}
+
+"""
+order by sum() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_sum_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -24532,6 +25175,15 @@ type service_provider_delivery_partner_var_pop_fields {
   service_provider_id: Float
 }
 
+"""
+order by var_pop() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_var_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type service_provider_delivery_partner_var_samp_fields {
   delivery_company_id: Float
@@ -24539,11 +25191,29 @@ type service_provider_delivery_partner_var_samp_fields {
   service_provider_id: Float
 }
 
+"""
+order by var_samp() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_var_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
+}
+
 """aggregate variance on columns"""
 type service_provider_delivery_partner_variance_fields {
   delivery_company_id: Float
   id: Float
   service_provider_id: Float
+}
+
+"""
+order by variance() on columns of table "service_provider.delivery_partner"
+"""
+input service_provider_delivery_partner_variance_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  service_provider_id: order_by
 }
 
 """
@@ -27387,6 +28057,115 @@ type subscription_root {
     """filter the rows returned"""
     where: customer_favourited_item_bool_exp
   ): [customer_favourited_item!]!
+
+  """
+  fetch data from the table: "customer.minimal_order"
+  """
+  customer_minimal_order(
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): [customer_minimal_order!]!
+
+  """
+  fetch aggregated fields from the table: "customer.minimal_order"
+  """
+  customer_minimal_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): customer_minimal_order_aggregate!
+
+  """
+  fetch data from the table: "customer.minimal_order" using primary key columns
+  """
+  customer_minimal_order_by_pk(id: Int!, order_type: String!): customer_minimal_order
+
+  """
+  fetch data from the table in a streaming manner: "customer.minimal_order"
+  """
+  customer_minimal_order_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [customer_minimal_order_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): [customer_minimal_order!]!
+
+  """
+  execute function "customer.minimal_orders" which returns "customer.minimal_order"
+  """
+  customer_minimal_orders(
+    """
+    input parameters for function "customer_minimal_orders"
+    """
+    args: customer_minimal_orders_args!
+
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): [customer_minimal_order!]!
+
+  """
+  execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order"
+  """
+  customer_minimal_orders_aggregate(
+    """
+    input parameters for function "customer_minimal_orders_aggregate"
+    """
+    args: customer_minimal_orders_args!
+
+    """distinct select on columns"""
+    distinct_on: [customer_minimal_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_minimal_order_order_by!]
+
+    """filter the rows returned"""
+    where: customer_minimal_order_bool_exp
+  ): customer_minimal_order_aggregate!
 
   """
   fetch data from the table: "customer.saved_location"

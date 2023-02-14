@@ -51,30 +51,14 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
 
     errorChecks(laundryStore, laundryRequestDetails);
     
-    // let orderResponse.laundryOrder: LaundryOrder = {
-    //     customerId,
-    //     storeId: laundryRequestDetails.storeId,
-    //     paymentType: laundryRequestDetails.paymentType,
-    //     deliveryType: laundryRequestDetails.deliveryType,
-    //     customerAppType: laundryRequestDetails.customerAppType,
-    //     notes: laundryRequestDetails.notes,
-    //     tax: laundryRequestDetails.tax,
-    //     scheduledTime: laundryRequestDetails.scheduledTime,
-    //     stripeFees: laundryRequestDetails.stripeFees,
-    //     discountValue: laundryRequestDetails.discountValue,
-    //     customerLocation: laundryRequestDetails.customerLocation,
-    //     deliveryCost: laundryRequestDetails.deliveryCost,
-    //     status: LaundryOrderStatus.OrderReceived,
-    // }
     let orderResponse = await createLaundryOrder(customerId, laundryRequestDetails, laundryStore, mezAdmins);
 
-    setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.deliveryOrders[0], orderResponse.deliveryOrders[1], customer);
+    setLaundryOrderChatInfo(orderResponse.laundryOrder, laundryStore, orderResponse.fromCustomerDeliveryOrder, customer);
 
     // assign delivery company 
     if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
         updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-        updateDeliveryOrderCompany(orderResponse.laundryOrder.toCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
     }
 
     notify(orderResponse.laundryOrder, laundryStore, mezAdmins);
@@ -177,20 +161,8 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
             background: deliveryNewOrderMessage,
             linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
         }
-        let toCustomerNotification: Notification = {
-            foreground: <OrderNotification>{
-                time: (new Date()).toISOString(),
-                notificationType: NotificationType.NewOrder,
-                orderType: OrderType.Laundry,
-                notificationAction: NotificationAction.ShowPopUp,
-                orderId: laundryOrder.toCustomerDeliveryId
-            },
-            background: deliveryNewOrderMessage,
-            linkUrl: orderUrl(OrderType.Laundry, laundryOrder.orderId!)
-        }
         deliveryOperators.forEach((d) => {
             pushNotification(d.user?.firebaseId!, fromCustomerNotification, d.notificationInfo, ParticipantType.DeliveryOperator);
-            pushNotification(d.user?.firebaseId!, toCustomerNotification, d.notificationInfo, ParticipantType.DeliveryOperator);
         });
     }
 

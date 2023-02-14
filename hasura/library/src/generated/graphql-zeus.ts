@@ -1132,6 +1132,222 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 	restaurant_item_id?:true,
 		__typename?: true
 }>;
+	/** columns and relationships of "customer.minimal_order" */
+["customer_minimal_order"]: AliasType<{
+	id?:true,
+	image?:true,
+	in_process?:true,
+	name?:true,
+	order_time?:true,
+	order_type?:true,
+	payment_type?:true,
+	status?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "customer.minimal_order" */
+["customer_minimal_order_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["customer_minimal_order_aggregate_fields"],
+	nodes?:ValueTypes["customer_minimal_order"],
+		__typename?: true
+}>;
+	/** aggregate fields of "customer.minimal_order" */
+["customer_minimal_order_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["customer_minimal_order_avg_fields"],
+count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["customer_minimal_order_max_fields"],
+	min?:ValueTypes["customer_minimal_order_min_fields"],
+	stddev?:ValueTypes["customer_minimal_order_stddev_fields"],
+	stddev_pop?:ValueTypes["customer_minimal_order_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["customer_minimal_order_stddev_samp_fields"],
+	sum?:ValueTypes["customer_minimal_order_sum_fields"],
+	var_pop?:ValueTypes["customer_minimal_order_var_pop_fields"],
+	var_samp?:ValueTypes["customer_minimal_order_var_samp_fields"],
+	variance?:ValueTypes["customer_minimal_order_variance_fields"],
+		__typename?: true
+}>;
+	/** aggregate avg on columns */
+["customer_minimal_order_avg_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "customer.minimal_order". All fields are combined with a logical 'AND'. */
+["customer_minimal_order_bool_exp"]: {
+	_and?:ValueTypes["customer_minimal_order_bool_exp"][],
+	_not?:ValueTypes["customer_minimal_order_bool_exp"],
+	_or?:ValueTypes["customer_minimal_order_bool_exp"][],
+	id?:ValueTypes["Int_comparison_exp"],
+	image?:ValueTypes["String_comparison_exp"],
+	in_process?:ValueTypes["Boolean_comparison_exp"],
+	name?:ValueTypes["String_comparison_exp"],
+	order_time?:ValueTypes["timestamptz_comparison_exp"],
+	order_type?:ValueTypes["String_comparison_exp"],
+	payment_type?:ValueTypes["String_comparison_exp"],
+	status?:ValueTypes["String_comparison_exp"],
+	total_cost?:ValueTypes["money_comparison_exp"]
+};
+	/** unique or primary key constraints on table "customer.minimal_order" */
+["customer_minimal_order_constraint"]:customer_minimal_order_constraint;
+	/** input type for incrementing numeric columns in table "customer.minimal_order" */
+["customer_minimal_order_inc_input"]: {
+	id?:number,
+	total_cost?:ValueTypes["money"]
+};
+	/** input type for inserting data into table "customer.minimal_order" */
+["customer_minimal_order_insert_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:ValueTypes["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:ValueTypes["money"]
+};
+	/** aggregate max on columns */
+["customer_minimal_order_max_fields"]: AliasType<{
+	id?:true,
+	image?:true,
+	name?:true,
+	order_time?:true,
+	order_type?:true,
+	payment_type?:true,
+	status?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["customer_minimal_order_min_fields"]: AliasType<{
+	id?:true,
+	image?:true,
+	name?:true,
+	order_time?:true,
+	order_type?:true,
+	payment_type?:true,
+	status?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "customer.minimal_order" */
+["customer_minimal_order_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["customer_minimal_order"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "customer.minimal_order" */
+["customer_minimal_order_on_conflict"]: {
+	constraint:ValueTypes["customer_minimal_order_constraint"],
+	update_columns:ValueTypes["customer_minimal_order_update_column"][],
+	where?:ValueTypes["customer_minimal_order_bool_exp"]
+};
+	/** Ordering options when selecting data from "customer.minimal_order". */
+["customer_minimal_order_order_by"]: {
+	id?:ValueTypes["order_by"],
+	image?:ValueTypes["order_by"],
+	in_process?:ValueTypes["order_by"],
+	name?:ValueTypes["order_by"],
+	order_time?:ValueTypes["order_by"],
+	order_type?:ValueTypes["order_by"],
+	payment_type?:ValueTypes["order_by"],
+	status?:ValueTypes["order_by"],
+	total_cost?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: customer.minimal_order */
+["customer_minimal_order_pk_columns_input"]: {
+	id:number,
+	order_type:string
+};
+	/** select columns of table "customer.minimal_order" */
+["customer_minimal_order_select_column"]:customer_minimal_order_select_column;
+	/** input type for updating data in table "customer.minimal_order" */
+["customer_minimal_order_set_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:ValueTypes["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:ValueTypes["money"]
+};
+	/** aggregate stddev on columns */
+["customer_minimal_order_stddev_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_pop on columns */
+["customer_minimal_order_stddev_pop_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregate stddev_samp on columns */
+["customer_minimal_order_stddev_samp_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** Streaming cursor of the table "customer_minimal_order" */
+["customer_minimal_order_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["customer_minimal_order_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["customer_minimal_order_stream_cursor_value_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:ValueTypes["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:ValueTypes["money"]
+};
+	/** aggregate sum on columns */
+["customer_minimal_order_sum_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** update columns of table "customer.minimal_order" */
+["customer_minimal_order_update_column"]:customer_minimal_order_update_column;
+	["customer_minimal_order_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_minimal_order_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["customer_minimal_order_set_input"],
+	where:ValueTypes["customer_minimal_order_bool_exp"]
+};
+	/** aggregate var_pop on columns */
+["customer_minimal_order_var_pop_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregate var_samp on columns */
+["customer_minimal_order_var_samp_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	/** aggregate variance on columns */
+["customer_minimal_order_variance_fields"]: AliasType<{
+	id?:true,
+	total_cost?:true,
+		__typename?: true
+}>;
+	["customer_minimal_orders_args"]: {
+	customer_id?:number
+};
 	/** Customer's saved locations */
 ["customer_saved_location"]: AliasType<{
 	customer_id?:true,
@@ -6139,12 +6355,18 @@ the end). throws an error if top level container is not an array */
 	/** An object relationship */
 	delivery_details?:ValueTypes["delivery_details"],
 	delivery_details_id?:true,
-delivery_details_of_deliverer?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_details_select_column"][],	/** limit the number of rows returned */
+delivery_partners?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner"]],
+delivery_partners_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_aggregate"]],
 	/** An object relationship */
 	details?:ValueTypes["service_provider_details"],
 	details_id?:true,
@@ -6203,7 +6425,8 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	_or?:ValueTypes["laundry_store_bool_exp"][],
 	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
-	delivery_details_of_deliverer?:ValueTypes["delivery_details_bool_exp"],
+	delivery_partners?:ValueTypes["service_provider_delivery_partner_bool_exp"],
+	delivery_partners_aggregate?:ValueTypes["service_provider_delivery_partner_aggregate_bool_exp"],
 	details?:ValueTypes["service_provider_details_bool_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -6226,6 +6449,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 ["laundry_store_insert_input"]: {
 	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
+	delivery_partners?:ValueTypes["service_provider_delivery_partner_arr_rel_insert_input"],
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
@@ -6278,7 +6502,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 ["laundry_store_order_by"]: {
 	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
-	delivery_details_of_deliverer_aggregate?:ValueTypes["delivery_details_aggregate_order_by"],
+	delivery_partners_aggregate?:ValueTypes["service_provider_delivery_partner_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -6871,6 +7095,9 @@ delete_customer_customer_by_pk?: [{	user_id:number},ValueTypes["customer_custome
 delete_customer_favourited_item?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["customer_favourited_item_bool_exp"]},ValueTypes["customer_favourited_item_mutation_response"]],
 delete_customer_favourited_item_by_pk?: [{	id:number},ValueTypes["customer_favourited_item"]],
+delete_customer_minimal_order?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_mutation_response"]],
+delete_customer_minimal_order_by_pk?: [{	id:number,	order_type:string},ValueTypes["customer_minimal_order"]],
 delete_customer_saved_location?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["customer_saved_location_bool_exp"]},ValueTypes["customer_saved_location_mutation_response"]],
 delete_customer_saved_location_by_pk?: [{	id:number},ValueTypes["customer_saved_location"]],
@@ -7037,6 +7264,12 @@ insert_customer_favourited_item?: [{	/** the rows to be inserted */
 insert_customer_favourited_item_one?: [{	/** the row to be inserted */
 	object:ValueTypes["customer_favourited_item_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["customer_favourited_item_on_conflict"]},ValueTypes["customer_favourited_item"]],
+insert_customer_minimal_order?: [{	/** the rows to be inserted */
+	objects:ValueTypes["customer_minimal_order_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["customer_minimal_order_on_conflict"]},ValueTypes["customer_minimal_order_mutation_response"]],
+insert_customer_minimal_order_one?: [{	/** the row to be inserted */
+	object:ValueTypes["customer_minimal_order_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["customer_minimal_order_on_conflict"]},ValueTypes["customer_minimal_order"]],
 insert_customer_saved_location?: [{	/** the rows to be inserted */
 	objects:ValueTypes["customer_saved_location_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["customer_saved_location_on_conflict"]},ValueTypes["customer_saved_location_mutation_response"]],
@@ -7376,6 +7609,15 @@ update_customer_favourited_item_by_pk?: [{	/** increments the numeric columns wi
 	_set?:ValueTypes["customer_favourited_item_set_input"],	pk_columns:ValueTypes["customer_favourited_item_pk_columns_input"]},ValueTypes["customer_favourited_item"]],
 update_customer_favourited_item_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["customer_favourited_item_updates"][]},ValueTypes["customer_favourited_item_mutation_response"]],
+update_customer_minimal_order?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_minimal_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["customer_minimal_order_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_mutation_response"]],
+update_customer_minimal_order_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_minimal_order_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["customer_minimal_order_set_input"],	pk_columns:ValueTypes["customer_minimal_order_pk_columns_input"]},ValueTypes["customer_minimal_order"]],
+update_customer_minimal_order_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["customer_minimal_order_updates"][]},ValueTypes["customer_minimal_order_mutation_response"]],
 update_customer_saved_location?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["customer_saved_location_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["customer_saved_location_set_input"],	/** filter the rows which have to be updated */
@@ -8109,6 +8351,33 @@ customer_favourited_item_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["customer_favourited_item_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_favourited_item_bool_exp"]},ValueTypes["customer_favourited_item_aggregate"]],
 customer_favourited_item_by_pk?: [{	id:number},ValueTypes["customer_favourited_item"]],
+customer_minimal_order?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order"]],
+customer_minimal_order_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_aggregate"]],
+customer_minimal_order_by_pk?: [{	id:number,	order_type:string},ValueTypes["customer_minimal_order"]],
+customer_minimal_orders?: [{	/** input parameters for function "customer_minimal_orders" */
+	args:ValueTypes["customer_minimal_orders_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order"]],
+customer_minimal_orders_aggregate?: [{	/** input parameters for function "customer_minimal_orders_aggregate" */
+	args:ValueTypes["customer_minimal_orders_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_aggregate"]],
 customer_saved_location?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["customer_saved_location_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -13266,6 +13535,18 @@ delivery_details_of_deliverer?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["delivery_details_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["delivery_details_bool_exp"]},ValueTypes["delivery_details"]],
+delivery_partners?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner"]],
+delivery_partners_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["service_provider_delivery_partner_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["service_provider_delivery_partner_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["service_provider_delivery_partner_bool_exp"]},ValueTypes["service_provider_delivery_partner_aggregate"]],
 	/** An object relationship */
 	details?:ValueTypes["service_provider_details"],
 	details_id?:true,
@@ -13352,6 +13633,8 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
 	delivery_details_of_deliverer?:ValueTypes["delivery_details_bool_exp"],
+	delivery_partners?:ValueTypes["service_provider_delivery_partner_bool_exp"],
+	delivery_partners_aggregate?:ValueTypes["service_provider_delivery_partner_aggregate_bool_exp"],
 	details?:ValueTypes["service_provider_details_bool_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -13377,6 +13660,7 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	categories?:ValueTypes["restaurant_category_arr_rel_insert_input"],
 	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
+	delivery_partners?:ValueTypes["service_provider_delivery_partner_arr_rel_insert_input"],
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
@@ -13427,6 +13711,7 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
 	delivery_details_of_deliverer_aggregate?:ValueTypes["delivery_details_aggregate_order_by"],
+	delivery_partners_aggregate?:ValueTypes["service_provider_delivery_partner_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -14080,6 +14365,15 @@ count?: [{	columns?:ValueTypes["service_provider_customer_chat_select_column"][]
 	nodes?:ValueTypes["service_provider_delivery_partner"],
 		__typename?: true
 }>;
+	["service_provider_delivery_partner_aggregate_bool_exp"]: {
+	count?:ValueTypes["service_provider_delivery_partner_aggregate_bool_exp_count"]
+};
+	["service_provider_delivery_partner_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["service_provider_delivery_partner_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["service_provider_delivery_partner_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["service_provider_delivery_partner_avg_fields"],
@@ -14095,6 +14389,26 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	variance?:ValueTypes["service_provider_delivery_partner_variance_fields"],
 		__typename?: true
 }>;
+	/** order by aggregate values of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate_order_by"]: {
+	avg?:ValueTypes["service_provider_delivery_partner_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["service_provider_delivery_partner_max_order_by"],
+	min?:ValueTypes["service_provider_delivery_partner_min_order_by"],
+	stddev?:ValueTypes["service_provider_delivery_partner_stddev_order_by"],
+	stddev_pop?:ValueTypes["service_provider_delivery_partner_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["service_provider_delivery_partner_stddev_samp_order_by"],
+	sum?:ValueTypes["service_provider_delivery_partner_sum_order_by"],
+	var_pop?:ValueTypes["service_provider_delivery_partner_var_pop_order_by"],
+	var_samp?:ValueTypes["service_provider_delivery_partner_var_samp_order_by"],
+	variance?:ValueTypes["service_provider_delivery_partner_variance_order_by"]
+};
+	/** input type for inserting array relation for remote table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_arr_rel_insert_input"]: {
+	data:ValueTypes["service_provider_delivery_partner_insert_input"][],
+	/** upsert condition */
+	on_conflict?:ValueTypes["service_provider_delivery_partner_on_conflict"]
+};
 	/** aggregate avg on columns */
 ["service_provider_delivery_partner_avg_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14102,6 +14416,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by avg() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_avg_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** Boolean expression to filter rows from the table
 "service_provider.delivery_partner". All fields are combined with a logical 'AND'. */
 ["service_provider_delivery_partner_bool_exp"]: {
@@ -14140,6 +14460,13 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_type?:true,
 		__typename?: true
 }>;
+	/** order by max() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_max_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
 	/** aggregate min on columns */
 ["service_provider_delivery_partner_min_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14148,6 +14475,13 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_type?:true,
 		__typename?: true
 }>;
+	/** order by min() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_min_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"],
+	service_provider_type?:ValueTypes["order_by"]
+};
 	/** response of any mutation on the table "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_mutation_response"]: AliasType<{
 	/** number of rows affected by the mutation */
@@ -14191,6 +14525,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_pop on columns */
 ["service_provider_delivery_partner_stddev_pop_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14198,6 +14538,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_pop() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_pop_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_samp on columns */
 ["service_provider_delivery_partner_stddev_samp_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14205,6 +14551,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_samp() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_samp_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** Streaming cursor of the table "service_provider_delivery_partner" */
 ["service_provider_delivery_partner_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -14226,6 +14578,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by sum() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_sum_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** update columns of table "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_update_column"]:service_provider_delivery_partner_update_column;
 	["service_provider_delivery_partner_updates"]: {
@@ -14242,6 +14600,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by var_pop() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_var_pop_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate var_samp on columns */
 ["service_provider_delivery_partner_var_samp_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14249,6 +14613,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by var_samp() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_var_samp_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** aggregate variance on columns */
 ["service_provider_delivery_partner_variance_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -14256,6 +14626,12 @@ count?: [{	columns?:ValueTypes["service_provider_delivery_partner_select_column"
 	service_provider_id?:true,
 		__typename?: true
 }>;
+	/** order by variance() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_variance_order_by"]: {
+	delivery_company_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	service_provider_id?:ValueTypes["order_by"]
+};
 	/** columns and relationships of "service_provider.details" */
 ["service_provider_details"]: AliasType<{
 accepted_payments?: [{	/** JSON select path */
@@ -16021,6 +16397,37 @@ customer_favourited_item_stream?: [{	/** maximum number of rows returned in a si
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["customer_favourited_item_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_favourited_item_bool_exp"]},ValueTypes["customer_favourited_item"]],
+customer_minimal_order?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order"]],
+customer_minimal_order_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_aggregate"]],
+customer_minimal_order_by_pk?: [{	id:number,	order_type:string},ValueTypes["customer_minimal_order"]],
+customer_minimal_order_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["customer_minimal_order_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order"]],
+customer_minimal_orders?: [{	/** input parameters for function "customer_minimal_orders" */
+	args:ValueTypes["customer_minimal_orders_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order"]],
+customer_minimal_orders_aggregate?: [{	/** input parameters for function "customer_minimal_orders_aggregate" */
+	args:ValueTypes["customer_minimal_orders_args"],	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_minimal_order_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_minimal_order_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_minimal_order_bool_exp"]},ValueTypes["customer_minimal_order_aggregate"]],
 customer_saved_location?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["customer_saved_location_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -18650,6 +19057,222 @@ the end). throws an error if top level container is not an array */
 			restaurant_id?:number,
 			restaurant_item_id?:number
 	},
+	/** columns and relationships of "customer.minimal_order" */
+["customer_minimal_order"]: {
+		__typename?: "customer_minimal_order";
+			id?:number,
+			image?:string,
+			in_process?:boolean,
+			name?:string,
+			order_time?:PartialObjects["timestamptz"],
+			order_type?:string,
+			payment_type?:string,
+			status?:string,
+			total_cost?:PartialObjects["money"]
+	},
+	/** aggregated selection of "customer.minimal_order" */
+["customer_minimal_order_aggregate"]: {
+		__typename?: "customer_minimal_order_aggregate";
+			aggregate?:PartialObjects["customer_minimal_order_aggregate_fields"],
+			nodes?:PartialObjects["customer_minimal_order"][]
+	},
+	/** aggregate fields of "customer.minimal_order" */
+["customer_minimal_order_aggregate_fields"]: {
+		__typename?: "customer_minimal_order_aggregate_fields";
+			avg?:PartialObjects["customer_minimal_order_avg_fields"],
+			count?:number,
+			max?:PartialObjects["customer_minimal_order_max_fields"],
+			min?:PartialObjects["customer_minimal_order_min_fields"],
+			stddev?:PartialObjects["customer_minimal_order_stddev_fields"],
+			stddev_pop?:PartialObjects["customer_minimal_order_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["customer_minimal_order_stddev_samp_fields"],
+			sum?:PartialObjects["customer_minimal_order_sum_fields"],
+			var_pop?:PartialObjects["customer_minimal_order_var_pop_fields"],
+			var_samp?:PartialObjects["customer_minimal_order_var_samp_fields"],
+			variance?:PartialObjects["customer_minimal_order_variance_fields"]
+	},
+	/** aggregate avg on columns */
+["customer_minimal_order_avg_fields"]: {
+		__typename?: "customer_minimal_order_avg_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** Boolean expression to filter rows from the table "customer.minimal_order". All fields are combined with a logical 'AND'. */
+["customer_minimal_order_bool_exp"]: {
+	_and?:PartialObjects["customer_minimal_order_bool_exp"][],
+	_not?:PartialObjects["customer_minimal_order_bool_exp"],
+	_or?:PartialObjects["customer_minimal_order_bool_exp"][],
+	id?:PartialObjects["Int_comparison_exp"],
+	image?:PartialObjects["String_comparison_exp"],
+	in_process?:PartialObjects["Boolean_comparison_exp"],
+	name?:PartialObjects["String_comparison_exp"],
+	order_time?:PartialObjects["timestamptz_comparison_exp"],
+	order_type?:PartialObjects["String_comparison_exp"],
+	payment_type?:PartialObjects["String_comparison_exp"],
+	status?:PartialObjects["String_comparison_exp"],
+	total_cost?:PartialObjects["money_comparison_exp"]
+},
+	/** unique or primary key constraints on table "customer.minimal_order" */
+["customer_minimal_order_constraint"]:customer_minimal_order_constraint,
+	/** input type for incrementing numeric columns in table "customer.minimal_order" */
+["customer_minimal_order_inc_input"]: {
+	id?:number,
+	total_cost?:PartialObjects["money"]
+},
+	/** input type for inserting data into table "customer.minimal_order" */
+["customer_minimal_order_insert_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:PartialObjects["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:PartialObjects["money"]
+},
+	/** aggregate max on columns */
+["customer_minimal_order_max_fields"]: {
+		__typename?: "customer_minimal_order_max_fields";
+			id?:number,
+			image?:string,
+			name?:string,
+			order_time?:PartialObjects["timestamptz"],
+			order_type?:string,
+			payment_type?:string,
+			status?:string,
+			total_cost?:PartialObjects["money"]
+	},
+	/** aggregate min on columns */
+["customer_minimal_order_min_fields"]: {
+		__typename?: "customer_minimal_order_min_fields";
+			id?:number,
+			image?:string,
+			name?:string,
+			order_time?:PartialObjects["timestamptz"],
+			order_type?:string,
+			payment_type?:string,
+			status?:string,
+			total_cost?:PartialObjects["money"]
+	},
+	/** response of any mutation on the table "customer.minimal_order" */
+["customer_minimal_order_mutation_response"]: {
+		__typename?: "customer_minimal_order_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["customer_minimal_order"][]
+	},
+	/** on_conflict condition type for table "customer.minimal_order" */
+["customer_minimal_order_on_conflict"]: {
+	constraint:PartialObjects["customer_minimal_order_constraint"],
+	update_columns:PartialObjects["customer_minimal_order_update_column"][],
+	where?:PartialObjects["customer_minimal_order_bool_exp"]
+},
+	/** Ordering options when selecting data from "customer.minimal_order". */
+["customer_minimal_order_order_by"]: {
+	id?:PartialObjects["order_by"],
+	image?:PartialObjects["order_by"],
+	in_process?:PartialObjects["order_by"],
+	name?:PartialObjects["order_by"],
+	order_time?:PartialObjects["order_by"],
+	order_type?:PartialObjects["order_by"],
+	payment_type?:PartialObjects["order_by"],
+	status?:PartialObjects["order_by"],
+	total_cost?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: customer.minimal_order */
+["customer_minimal_order_pk_columns_input"]: {
+	id:number,
+	order_type:string
+},
+	/** select columns of table "customer.minimal_order" */
+["customer_minimal_order_select_column"]:customer_minimal_order_select_column,
+	/** input type for updating data in table "customer.minimal_order" */
+["customer_minimal_order_set_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:PartialObjects["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:PartialObjects["money"]
+},
+	/** aggregate stddev on columns */
+["customer_minimal_order_stddev_fields"]: {
+		__typename?: "customer_minimal_order_stddev_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** aggregate stddev_pop on columns */
+["customer_minimal_order_stddev_pop_fields"]: {
+		__typename?: "customer_minimal_order_stddev_pop_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** aggregate stddev_samp on columns */
+["customer_minimal_order_stddev_samp_fields"]: {
+		__typename?: "customer_minimal_order_stddev_samp_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** Streaming cursor of the table "customer_minimal_order" */
+["customer_minimal_order_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["customer_minimal_order_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["customer_minimal_order_stream_cursor_value_input"]: {
+	id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:PartialObjects["timestamptz"],
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:PartialObjects["money"]
+},
+	/** aggregate sum on columns */
+["customer_minimal_order_sum_fields"]: {
+		__typename?: "customer_minimal_order_sum_fields";
+			id?:number,
+			total_cost?:PartialObjects["money"]
+	},
+	/** update columns of table "customer.minimal_order" */
+["customer_minimal_order_update_column"]:customer_minimal_order_update_column,
+	["customer_minimal_order_updates"]: {
+	/** increments the numeric columns with given value of the filtered values */
+	_inc?:PartialObjects["customer_minimal_order_inc_input"],
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["customer_minimal_order_set_input"],
+	where:PartialObjects["customer_minimal_order_bool_exp"]
+},
+	/** aggregate var_pop on columns */
+["customer_minimal_order_var_pop_fields"]: {
+		__typename?: "customer_minimal_order_var_pop_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** aggregate var_samp on columns */
+["customer_minimal_order_var_samp_fields"]: {
+		__typename?: "customer_minimal_order_var_samp_fields";
+			id?:number,
+			total_cost?:number
+	},
+	/** aggregate variance on columns */
+["customer_minimal_order_variance_fields"]: {
+		__typename?: "customer_minimal_order_variance_fields";
+			id?:number,
+			total_cost?:number
+	},
+	["customer_minimal_orders_args"]: {
+	customer_id?:number
+},
 	/** Customer's saved locations */
 ["customer_saved_location"]: {
 		__typename?: "customer_saved_location";
@@ -23632,8 +24255,10 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	delivery_details?:PartialObjects["delivery_details"],
 			delivery_details_id?:number,
-			/** A computed field, executes function "laundry_delivery_details" */
-	delivery_details_of_deliverer?:PartialObjects["delivery_details"][],
+			/** An array relationship */
+	delivery_partners?:PartialObjects["service_provider_delivery_partner"][],
+			/** An aggregate relationship */
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate"],
 			/** An object relationship */
 	details?:PartialObjects["service_provider_details"],
 			details_id?:number,
@@ -23683,7 +24308,8 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["laundry_store_bool_exp"][],
 	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
-	delivery_details_of_deliverer?:PartialObjects["delivery_details_bool_exp"],
+	delivery_partners?:PartialObjects["service_provider_delivery_partner_bool_exp"],
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_bool_exp"],
 	details?:PartialObjects["service_provider_details_bool_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -23706,6 +24332,7 @@ the end). throws an error if top level container is not an array */
 ["laundry_store_insert_input"]: {
 	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
+	delivery_partners?:PartialObjects["service_provider_delivery_partner_arr_rel_insert_input"],
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
@@ -23758,7 +24385,7 @@ the end). throws an error if top level container is not an array */
 ["laundry_store_order_by"]: {
 	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
-	delivery_details_of_deliverer_aggregate?:PartialObjects["delivery_details_aggregate_order_by"],
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -24355,6 +24982,10 @@ the end). throws an error if top level container is not an array */
 	delete_customer_favourited_item?:PartialObjects["customer_favourited_item_mutation_response"],
 			/** delete single row from the table: "customer.favourited_item" */
 	delete_customer_favourited_item_by_pk?:PartialObjects["customer_favourited_item"],
+			/** delete data from the table: "customer.minimal_order" */
+	delete_customer_minimal_order?:PartialObjects["customer_minimal_order_mutation_response"],
+			/** delete single row from the table: "customer.minimal_order" */
+	delete_customer_minimal_order_by_pk?:PartialObjects["customer_minimal_order"],
 			/** delete data from the table: "customer.saved_location" */
 	delete_customer_saved_location?:PartialObjects["customer_saved_location_mutation_response"],
 			/** delete single row from the table: "customer.saved_location" */
@@ -24555,6 +25186,10 @@ the end). throws an error if top level container is not an array */
 	insert_customer_favourited_item?:PartialObjects["customer_favourited_item_mutation_response"],
 			/** insert a single row into the table: "customer.favourited_item" */
 	insert_customer_favourited_item_one?:PartialObjects["customer_favourited_item"],
+			/** insert data into the table: "customer.minimal_order" */
+	insert_customer_minimal_order?:PartialObjects["customer_minimal_order_mutation_response"],
+			/** insert a single row into the table: "customer.minimal_order" */
+	insert_customer_minimal_order_one?:PartialObjects["customer_minimal_order"],
 			/** insert data into the table: "customer.saved_location" */
 	insert_customer_saved_location?:PartialObjects["customer_saved_location_mutation_response"],
 			/** insert a single row into the table: "customer.saved_location" */
@@ -24769,6 +25404,12 @@ the end). throws an error if top level container is not an array */
 	update_customer_favourited_item_by_pk?:PartialObjects["customer_favourited_item"],
 			/** update multiples rows of table: "customer.favourited_item" */
 	update_customer_favourited_item_many?:(PartialObjects["customer_favourited_item_mutation_response"] | undefined)[],
+			/** update data of the table: "customer.minimal_order" */
+	update_customer_minimal_order?:PartialObjects["customer_minimal_order_mutation_response"],
+			/** update single row of the table: "customer.minimal_order" */
+	update_customer_minimal_order_by_pk?:PartialObjects["customer_minimal_order"],
+			/** update multiples rows of table: "customer.minimal_order" */
+	update_customer_minimal_order_many?:(PartialObjects["customer_minimal_order_mutation_response"] | undefined)[],
 			/** update data of the table: "customer.saved_location" */
 	update_customer_saved_location?:PartialObjects["customer_saved_location_mutation_response"],
 			/** update single row of the table: "customer.saved_location" */
@@ -25262,6 +25903,16 @@ the end). throws an error if top level container is not an array */
 	customer_favourited_item_aggregate?:PartialObjects["customer_favourited_item_aggregate"],
 			/** fetch data from the table: "customer.favourited_item" using primary key columns */
 	customer_favourited_item_by_pk?:PartialObjects["customer_favourited_item"],
+			/** fetch data from the table: "customer.minimal_order" */
+	customer_minimal_order?:PartialObjects["customer_minimal_order"][],
+			/** fetch aggregated fields from the table: "customer.minimal_order" */
+	customer_minimal_order_aggregate?:PartialObjects["customer_minimal_order_aggregate"],
+			/** fetch data from the table: "customer.minimal_order" using primary key columns */
+	customer_minimal_order_by_pk?:PartialObjects["customer_minimal_order"],
+			/** execute function "customer.minimal_orders" which returns "customer.minimal_order" */
+	customer_minimal_orders?:PartialObjects["customer_minimal_order"][],
+			/** execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order" */
+	customer_minimal_orders_aggregate?:PartialObjects["customer_minimal_order_aggregate"],
 			/** fetch data from the table: "customer.saved_location" */
 	customer_saved_location?:PartialObjects["customer_saved_location"][],
 			/** fetch aggregated fields from the table: "customer.saved_location" */
@@ -29965,6 +30616,10 @@ the end). throws an error if top level container is not an array */
 			delivery_details_id?:number,
 			/** A computed field, executes function "restaurant_delivery_details" */
 	delivery_details_of_deliverer?:PartialObjects["delivery_details"][],
+			/** An array relationship */
+	delivery_partners?:PartialObjects["service_provider_delivery_partner"][],
+			/** An aggregate relationship */
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate"],
 			/** An object relationship */
 	details?:PartialObjects["service_provider_details"],
 			details_id?:number,
@@ -30022,6 +30677,8 @@ the end). throws an error if top level container is not an array */
 	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
 	delivery_details_of_deliverer?:PartialObjects["delivery_details_bool_exp"],
+	delivery_partners?:PartialObjects["service_provider_delivery_partner_bool_exp"],
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_bool_exp"],
 	details?:PartialObjects["service_provider_details_bool_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -30047,6 +30704,7 @@ the end). throws an error if top level container is not an array */
 	categories?:PartialObjects["restaurant_category_arr_rel_insert_input"],
 	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
+	delivery_partners?:PartialObjects["service_provider_delivery_partner_arr_rel_insert_input"],
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
@@ -30097,6 +30755,7 @@ the end). throws an error if top level container is not an array */
 	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
 	delivery_details_of_deliverer_aggregate?:PartialObjects["delivery_details_aggregate_order_by"],
+	delivery_partners_aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -30750,6 +31409,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["service_provider_delivery_partner_aggregate_fields"],
 			nodes?:PartialObjects["service_provider_delivery_partner"][]
 	},
+	["service_provider_delivery_partner_aggregate_bool_exp"]: {
+	count?:PartialObjects["service_provider_delivery_partner_aggregate_bool_exp_count"]
+},
+	["service_provider_delivery_partner_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["service_provider_delivery_partner_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["service_provider_delivery_partner_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_aggregate_fields"]: {
 		__typename?: "service_provider_delivery_partner_aggregate_fields";
@@ -30765,6 +31433,26 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["service_provider_delivery_partner_var_samp_fields"],
 			variance?:PartialObjects["service_provider_delivery_partner_variance_fields"]
 	},
+	/** order by aggregate values of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_aggregate_order_by"]: {
+	avg?:PartialObjects["service_provider_delivery_partner_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["service_provider_delivery_partner_max_order_by"],
+	min?:PartialObjects["service_provider_delivery_partner_min_order_by"],
+	stddev?:PartialObjects["service_provider_delivery_partner_stddev_order_by"],
+	stddev_pop?:PartialObjects["service_provider_delivery_partner_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["service_provider_delivery_partner_stddev_samp_order_by"],
+	sum?:PartialObjects["service_provider_delivery_partner_sum_order_by"],
+	var_pop?:PartialObjects["service_provider_delivery_partner_var_pop_order_by"],
+	var_samp?:PartialObjects["service_provider_delivery_partner_var_samp_order_by"],
+	variance?:PartialObjects["service_provider_delivery_partner_variance_order_by"]
+},
+	/** input type for inserting array relation for remote table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_arr_rel_insert_input"]: {
+	data:PartialObjects["service_provider_delivery_partner_insert_input"][],
+	/** upsert condition */
+	on_conflict?:PartialObjects["service_provider_delivery_partner_on_conflict"]
+},
 	/** aggregate avg on columns */
 ["service_provider_delivery_partner_avg_fields"]: {
 		__typename?: "service_provider_delivery_partner_avg_fields";
@@ -30772,6 +31460,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by avg() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_avg_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** Boolean expression to filter rows from the table
 "service_provider.delivery_partner". All fields are combined with a logical 'AND'. */
 ["service_provider_delivery_partner_bool_exp"]: {
@@ -30810,6 +31504,13 @@ the end). throws an error if top level container is not an array */
 			service_provider_id?:number,
 			service_provider_type?:string
 	},
+	/** order by max() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_max_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
 	/** aggregate min on columns */
 ["service_provider_delivery_partner_min_fields"]: {
 		__typename?: "service_provider_delivery_partner_min_fields";
@@ -30818,6 +31519,13 @@ the end). throws an error if top level container is not an array */
 			service_provider_id?:number,
 			service_provider_type?:string
 	},
+	/** order by min() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_min_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"],
+	service_provider_type?:PartialObjects["order_by"]
+},
 	/** response of any mutation on the table "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_mutation_response"]: {
 		__typename?: "service_provider_delivery_partner_mutation_response";
@@ -30861,6 +31569,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by stddev() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_pop on columns */
 ["service_provider_delivery_partner_stddev_pop_fields"]: {
 		__typename?: "service_provider_delivery_partner_stddev_pop_fields";
@@ -30868,6 +31582,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by stddev_pop() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_pop_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_samp on columns */
 ["service_provider_delivery_partner_stddev_samp_fields"]: {
 		__typename?: "service_provider_delivery_partner_stddev_samp_fields";
@@ -30875,6 +31595,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by stddev_samp() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_stddev_samp_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** Streaming cursor of the table "service_provider_delivery_partner" */
 ["service_provider_delivery_partner_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -30896,6 +31622,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by sum() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_sum_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** update columns of table "service_provider.delivery_partner" */
 ["service_provider_delivery_partner_update_column"]:service_provider_delivery_partner_update_column,
 	["service_provider_delivery_partner_updates"]: {
@@ -30912,6 +31644,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by var_pop() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_var_pop_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate var_samp on columns */
 ["service_provider_delivery_partner_var_samp_fields"]: {
 		__typename?: "service_provider_delivery_partner_var_samp_fields";
@@ -30919,6 +31657,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by var_samp() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_var_samp_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** aggregate variance on columns */
 ["service_provider_delivery_partner_variance_fields"]: {
 		__typename?: "service_provider_delivery_partner_variance_fields";
@@ -30926,6 +31670,12 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			service_provider_id?:number
 	},
+	/** order by variance() on columns of table "service_provider.delivery_partner" */
+["service_provider_delivery_partner_variance_order_by"]: {
+	delivery_company_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	service_provider_id?:PartialObjects["order_by"]
+},
 	/** columns and relationships of "service_provider.details" */
 ["service_provider_details"]: {
 		__typename?: "service_provider_details";
@@ -32628,6 +33378,18 @@ All fields are combined with a logical 'AND'. */
 	customer_favourited_item_by_pk?:PartialObjects["customer_favourited_item"],
 			/** fetch data from the table in a streaming manner: "customer.favourited_item" */
 	customer_favourited_item_stream?:PartialObjects["customer_favourited_item"][],
+			/** fetch data from the table: "customer.minimal_order" */
+	customer_minimal_order?:PartialObjects["customer_minimal_order"][],
+			/** fetch aggregated fields from the table: "customer.minimal_order" */
+	customer_minimal_order_aggregate?:PartialObjects["customer_minimal_order_aggregate"],
+			/** fetch data from the table: "customer.minimal_order" using primary key columns */
+	customer_minimal_order_by_pk?:PartialObjects["customer_minimal_order"],
+			/** fetch data from the table in a streaming manner: "customer.minimal_order" */
+	customer_minimal_order_stream?:PartialObjects["customer_minimal_order"][],
+			/** execute function "customer.minimal_orders" which returns "customer.minimal_order" */
+	customer_minimal_orders?:PartialObjects["customer_minimal_order"][],
+			/** execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order" */
+	customer_minimal_orders_aggregate?:PartialObjects["customer_minimal_order_aggregate"],
 			/** fetch data from the table: "customer.saved_location" */
 	customer_saved_location?:PartialObjects["customer_saved_location"][],
 			/** fetch aggregated fields from the table: "customer.saved_location" */
@@ -35007,6 +35769,272 @@ export type customer_favourited_item_variance_fields = {
 	id?:number,
 	restaurant_id?:number,
 	restaurant_item_id?:number
+}
+
+/** columns and relationships of "customer.minimal_order" */
+export type customer_minimal_order = {
+	__typename?: "customer_minimal_order",
+	id:number,
+	image:string,
+	in_process:boolean,
+	name:string,
+	order_time:timestamptz,
+	order_type:string,
+	payment_type:string,
+	status:string,
+	total_cost:money
+}
+
+/** aggregated selection of "customer.minimal_order" */
+export type customer_minimal_order_aggregate = {
+	__typename?: "customer_minimal_order_aggregate",
+	aggregate?:customer_minimal_order_aggregate_fields,
+	nodes:customer_minimal_order[]
+}
+
+/** aggregate fields of "customer.minimal_order" */
+export type customer_minimal_order_aggregate_fields = {
+	__typename?: "customer_minimal_order_aggregate_fields",
+	avg?:customer_minimal_order_avg_fields,
+	count:number,
+	max?:customer_minimal_order_max_fields,
+	min?:customer_minimal_order_min_fields,
+	stddev?:customer_minimal_order_stddev_fields,
+	stddev_pop?:customer_minimal_order_stddev_pop_fields,
+	stddev_samp?:customer_minimal_order_stddev_samp_fields,
+	sum?:customer_minimal_order_sum_fields,
+	var_pop?:customer_minimal_order_var_pop_fields,
+	var_samp?:customer_minimal_order_var_samp_fields,
+	variance?:customer_minimal_order_variance_fields
+}
+
+/** aggregate avg on columns */
+export type customer_minimal_order_avg_fields = {
+	__typename?: "customer_minimal_order_avg_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** Boolean expression to filter rows from the table "customer.minimal_order". All fields are combined with a logical 'AND'. */
+export type customer_minimal_order_bool_exp = {
+		_and?:customer_minimal_order_bool_exp[],
+	_not?:customer_minimal_order_bool_exp,
+	_or?:customer_minimal_order_bool_exp[],
+	id?:Int_comparison_exp,
+	image?:String_comparison_exp,
+	in_process?:Boolean_comparison_exp,
+	name?:String_comparison_exp,
+	order_time?:timestamptz_comparison_exp,
+	order_type?:String_comparison_exp,
+	payment_type?:String_comparison_exp,
+	status?:String_comparison_exp,
+	total_cost?:money_comparison_exp
+}
+
+/** unique or primary key constraints on table "customer.minimal_order" */
+export enum customer_minimal_order_constraint {
+	minimal_order_pkey = "minimal_order_pkey"
+}
+
+/** input type for incrementing numeric columns in table "customer.minimal_order" */
+export type customer_minimal_order_inc_input = {
+		id?:number,
+	total_cost?:money
+}
+
+/** input type for inserting data into table "customer.minimal_order" */
+export type customer_minimal_order_insert_input = {
+		id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:timestamptz,
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:money
+}
+
+/** aggregate max on columns */
+export type customer_minimal_order_max_fields = {
+	__typename?: "customer_minimal_order_max_fields",
+	id?:number,
+	image?:string,
+	name?:string,
+	order_time?:timestamptz,
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:money
+}
+
+/** aggregate min on columns */
+export type customer_minimal_order_min_fields = {
+	__typename?: "customer_minimal_order_min_fields",
+	id?:number,
+	image?:string,
+	name?:string,
+	order_time?:timestamptz,
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:money
+}
+
+/** response of any mutation on the table "customer.minimal_order" */
+export type customer_minimal_order_mutation_response = {
+	__typename?: "customer_minimal_order_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:customer_minimal_order[]
+}
+
+/** on_conflict condition type for table "customer.minimal_order" */
+export type customer_minimal_order_on_conflict = {
+		constraint:customer_minimal_order_constraint,
+	update_columns:customer_minimal_order_update_column[],
+	where?:customer_minimal_order_bool_exp
+}
+
+/** Ordering options when selecting data from "customer.minimal_order". */
+export type customer_minimal_order_order_by = {
+		id?:order_by,
+	image?:order_by,
+	in_process?:order_by,
+	name?:order_by,
+	order_time?:order_by,
+	order_type?:order_by,
+	payment_type?:order_by,
+	status?:order_by,
+	total_cost?:order_by
+}
+
+/** primary key columns input for table: customer.minimal_order */
+export type customer_minimal_order_pk_columns_input = {
+		id:number,
+	order_type:string
+}
+
+/** select columns of table "customer.minimal_order" */
+export enum customer_minimal_order_select_column {
+	id = "id",
+	image = "image",
+	in_process = "in_process",
+	name = "name",
+	order_time = "order_time",
+	order_type = "order_type",
+	payment_type = "payment_type",
+	status = "status",
+	total_cost = "total_cost"
+}
+
+/** input type for updating data in table "customer.minimal_order" */
+export type customer_minimal_order_set_input = {
+		id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:timestamptz,
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:money
+}
+
+/** aggregate stddev on columns */
+export type customer_minimal_order_stddev_fields = {
+	__typename?: "customer_minimal_order_stddev_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** aggregate stddev_pop on columns */
+export type customer_minimal_order_stddev_pop_fields = {
+	__typename?: "customer_minimal_order_stddev_pop_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** aggregate stddev_samp on columns */
+export type customer_minimal_order_stddev_samp_fields = {
+	__typename?: "customer_minimal_order_stddev_samp_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** Streaming cursor of the table "customer_minimal_order" */
+export type customer_minimal_order_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:customer_minimal_order_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type customer_minimal_order_stream_cursor_value_input = {
+		id?:number,
+	image?:string,
+	in_process?:boolean,
+	name?:string,
+	order_time?:timestamptz,
+	order_type?:string,
+	payment_type?:string,
+	status?:string,
+	total_cost?:money
+}
+
+/** aggregate sum on columns */
+export type customer_minimal_order_sum_fields = {
+	__typename?: "customer_minimal_order_sum_fields",
+	id?:number,
+	total_cost?:money
+}
+
+/** update columns of table "customer.minimal_order" */
+export enum customer_minimal_order_update_column {
+	id = "id",
+	image = "image",
+	in_process = "in_process",
+	name = "name",
+	order_time = "order_time",
+	order_type = "order_type",
+	payment_type = "payment_type",
+	status = "status",
+	total_cost = "total_cost"
+}
+
+export type customer_minimal_order_updates = {
+		/** increments the numeric columns with given value of the filtered values */
+	_inc?:customer_minimal_order_inc_input,
+	/** sets the columns of the filtered rows to the given values */
+	_set?:customer_minimal_order_set_input,
+	where:customer_minimal_order_bool_exp
+}
+
+/** aggregate var_pop on columns */
+export type customer_minimal_order_var_pop_fields = {
+	__typename?: "customer_minimal_order_var_pop_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** aggregate var_samp on columns */
+export type customer_minimal_order_var_samp_fields = {
+	__typename?: "customer_minimal_order_var_samp_fields",
+	id?:number,
+	total_cost?:number
+}
+
+/** aggregate variance on columns */
+export type customer_minimal_order_variance_fields = {
+	__typename?: "customer_minimal_order_variance_fields",
+	id?:number,
+	total_cost?:number
+}
+
+export type customer_minimal_orders_args = {
+		customer_id?:number
 }
 
 /** Customer's saved locations */
@@ -40883,8 +41911,10 @@ export type laundry_store = {
 	/** An object relationship */
 	delivery_details:delivery_details,
 	delivery_details_id:number,
-	/** A computed field, executes function "laundry_delivery_details" */
-	delivery_details_of_deliverer?:delivery_details[],
+	/** An array relationship */
+	delivery_partners:service_provider_delivery_partner[],
+	/** An aggregate relationship */
+	delivery_partners_aggregate:service_provider_delivery_partner_aggregate,
 	/** An object relationship */
 	details?:service_provider_details,
 	details_id:number,
@@ -40938,7 +41968,8 @@ export type laundry_store_bool_exp = {
 	_or?:laundry_store_bool_exp[],
 	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
-	delivery_details_of_deliverer?:delivery_details_bool_exp,
+	delivery_partners?:service_provider_delivery_partner_bool_exp,
+	delivery_partners_aggregate?:service_provider_delivery_partner_aggregate_bool_exp,
 	details?:service_provider_details_bool_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
@@ -40968,6 +41999,7 @@ export type laundry_store_inc_input = {
 export type laundry_store_insert_input = {
 		delivery_details?:delivery_details_obj_rel_insert_input,
 	delivery_details_id?:number,
+	delivery_partners?:service_provider_delivery_partner_arr_rel_insert_input,
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
 	id?:number,
@@ -41026,7 +42058,7 @@ export type laundry_store_on_conflict = {
 export type laundry_store_order_by = {
 		delivery_details?:delivery_details_order_by,
 	delivery_details_id?:order_by,
-	delivery_details_of_deliverer_aggregate?:delivery_details_aggregate_order_by,
+	delivery_partners_aggregate?:service_provider_delivery_partner_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
 	id?:order_by,
@@ -41753,6 +42785,10 @@ export type mutation_root = {
 	delete_customer_favourited_item?:customer_favourited_item_mutation_response,
 	/** delete single row from the table: "customer.favourited_item" */
 	delete_customer_favourited_item_by_pk?:customer_favourited_item,
+	/** delete data from the table: "customer.minimal_order" */
+	delete_customer_minimal_order?:customer_minimal_order_mutation_response,
+	/** delete single row from the table: "customer.minimal_order" */
+	delete_customer_minimal_order_by_pk?:customer_minimal_order,
 	/** delete data from the table: "customer.saved_location" */
 	delete_customer_saved_location?:customer_saved_location_mutation_response,
 	/** delete single row from the table: "customer.saved_location" */
@@ -41953,6 +42989,10 @@ export type mutation_root = {
 	insert_customer_favourited_item?:customer_favourited_item_mutation_response,
 	/** insert a single row into the table: "customer.favourited_item" */
 	insert_customer_favourited_item_one?:customer_favourited_item,
+	/** insert data into the table: "customer.minimal_order" */
+	insert_customer_minimal_order?:customer_minimal_order_mutation_response,
+	/** insert a single row into the table: "customer.minimal_order" */
+	insert_customer_minimal_order_one?:customer_minimal_order,
 	/** insert data into the table: "customer.saved_location" */
 	insert_customer_saved_location?:customer_saved_location_mutation_response,
 	/** insert a single row into the table: "customer.saved_location" */
@@ -42167,6 +43207,12 @@ export type mutation_root = {
 	update_customer_favourited_item_by_pk?:customer_favourited_item,
 	/** update multiples rows of table: "customer.favourited_item" */
 	update_customer_favourited_item_many?:(customer_favourited_item_mutation_response | undefined)[],
+	/** update data of the table: "customer.minimal_order" */
+	update_customer_minimal_order?:customer_minimal_order_mutation_response,
+	/** update single row of the table: "customer.minimal_order" */
+	update_customer_minimal_order_by_pk?:customer_minimal_order,
+	/** update multiples rows of table: "customer.minimal_order" */
+	update_customer_minimal_order_many?:(customer_minimal_order_mutation_response | undefined)[],
 	/** update data of the table: "customer.saved_location" */
 	update_customer_saved_location?:customer_saved_location_mutation_response,
 	/** update single row of the table: "customer.saved_location" */
@@ -42713,6 +43759,16 @@ export type query_root = {
 	customer_favourited_item_aggregate:customer_favourited_item_aggregate,
 	/** fetch data from the table: "customer.favourited_item" using primary key columns */
 	customer_favourited_item_by_pk?:customer_favourited_item,
+	/** fetch data from the table: "customer.minimal_order" */
+	customer_minimal_order:customer_minimal_order[],
+	/** fetch aggregated fields from the table: "customer.minimal_order" */
+	customer_minimal_order_aggregate:customer_minimal_order_aggregate,
+	/** fetch data from the table: "customer.minimal_order" using primary key columns */
+	customer_minimal_order_by_pk?:customer_minimal_order,
+	/** execute function "customer.minimal_orders" which returns "customer.minimal_order" */
+	customer_minimal_orders:customer_minimal_order[],
+	/** execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order" */
+	customer_minimal_orders_aggregate:customer_minimal_order_aggregate,
 	/** fetch data from the table: "customer.saved_location" */
 	customer_saved_location:customer_saved_location[],
 	/** fetch aggregated fields from the table: "customer.saved_location" */
@@ -48150,6 +49206,10 @@ export type restaurant_restaurant = {
 	delivery_details_id:number,
 	/** A computed field, executes function "restaurant_delivery_details" */
 	delivery_details_of_deliverer?:delivery_details[],
+	/** An array relationship */
+	delivery_partners:service_provider_delivery_partner[],
+	/** An aggregate relationship */
+	delivery_partners_aggregate:service_provider_delivery_partner_aggregate,
 	/** An object relationship */
 	details?:service_provider_details,
 	details_id:number,
@@ -48211,6 +49271,8 @@ export type restaurant_restaurant_bool_exp = {
 	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
 	delivery_details_of_deliverer?:delivery_details_bool_exp,
+	delivery_partners?:service_provider_delivery_partner_bool_exp,
+	delivery_partners_aggregate?:service_provider_delivery_partner_aggregate_bool_exp,
 	details?:service_provider_details_bool_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
@@ -48243,6 +49305,7 @@ export type restaurant_restaurant_insert_input = {
 		categories?:restaurant_category_arr_rel_insert_input,
 	delivery_details?:delivery_details_obj_rel_insert_input,
 	delivery_details_id?:number,
+	delivery_partners?:service_provider_delivery_partner_arr_rel_insert_input,
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
 	id?:number,
@@ -48299,6 +49362,7 @@ export type restaurant_restaurant_order_by = {
 	delivery_details?:delivery_details_order_by,
 	delivery_details_id?:order_by,
 	delivery_details_of_deliverer_aggregate?:delivery_details_aggregate_order_by,
+	delivery_partners_aggregate?:service_provider_delivery_partner_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
 	id?:order_by,
@@ -49081,6 +50145,17 @@ export type service_provider_delivery_partner_aggregate = {
 	nodes:service_provider_delivery_partner[]
 }
 
+export type service_provider_delivery_partner_aggregate_bool_exp = {
+		count?:service_provider_delivery_partner_aggregate_bool_exp_count
+}
+
+export type service_provider_delivery_partner_aggregate_bool_exp_count = {
+		arguments?:service_provider_delivery_partner_select_column[],
+	distinct?:boolean,
+	filter?:service_provider_delivery_partner_bool_exp,
+	predicate:Int_comparison_exp
+}
+
 /** aggregate fields of "service_provider.delivery_partner" */
 export type service_provider_delivery_partner_aggregate_fields = {
 	__typename?: "service_provider_delivery_partner_aggregate_fields",
@@ -49097,12 +50172,41 @@ export type service_provider_delivery_partner_aggregate_fields = {
 	variance?:service_provider_delivery_partner_variance_fields
 }
 
+/** order by aggregate values of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_aggregate_order_by = {
+		avg?:service_provider_delivery_partner_avg_order_by,
+	count?:order_by,
+	max?:service_provider_delivery_partner_max_order_by,
+	min?:service_provider_delivery_partner_min_order_by,
+	stddev?:service_provider_delivery_partner_stddev_order_by,
+	stddev_pop?:service_provider_delivery_partner_stddev_pop_order_by,
+	stddev_samp?:service_provider_delivery_partner_stddev_samp_order_by,
+	sum?:service_provider_delivery_partner_sum_order_by,
+	var_pop?:service_provider_delivery_partner_var_pop_order_by,
+	var_samp?:service_provider_delivery_partner_var_samp_order_by,
+	variance?:service_provider_delivery_partner_variance_order_by
+}
+
+/** input type for inserting array relation for remote table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_arr_rel_insert_input = {
+		data:service_provider_delivery_partner_insert_input[],
+	/** upsert condition */
+	on_conflict?:service_provider_delivery_partner_on_conflict
+}
+
 /** aggregate avg on columns */
 export type service_provider_delivery_partner_avg_fields = {
 	__typename?: "service_provider_delivery_partner_avg_fields",
 	delivery_company_id?:number,
 	id?:number,
 	service_provider_id?:number
+}
+
+/** order by avg() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_avg_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
 }
 
 /** Boolean expression to filter rows from the table
@@ -49150,6 +50254,14 @@ export type service_provider_delivery_partner_max_fields = {
 	service_provider_type?:string
 }
 
+/** order by max() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_max_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
+}
+
 /** aggregate min on columns */
 export type service_provider_delivery_partner_min_fields = {
 	__typename?: "service_provider_delivery_partner_min_fields",
@@ -49157,6 +50269,14 @@ export type service_provider_delivery_partner_min_fields = {
 	id?:number,
 	service_provider_id?:number,
 	service_provider_type?:string
+}
+
+/** order by min() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_min_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by,
+	service_provider_type?:order_by
 }
 
 /** response of any mutation on the table "service_provider.delivery_partner" */
@@ -49214,6 +50334,13 @@ export type service_provider_delivery_partner_stddev_fields = {
 	service_provider_id?:number
 }
 
+/** order by stddev() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_stddev_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
+}
+
 /** aggregate stddev_pop on columns */
 export type service_provider_delivery_partner_stddev_pop_fields = {
 	__typename?: "service_provider_delivery_partner_stddev_pop_fields",
@@ -49222,12 +50349,26 @@ export type service_provider_delivery_partner_stddev_pop_fields = {
 	service_provider_id?:number
 }
 
+/** order by stddev_pop() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_stddev_pop_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
+}
+
 /** aggregate stddev_samp on columns */
 export type service_provider_delivery_partner_stddev_samp_fields = {
 	__typename?: "service_provider_delivery_partner_stddev_samp_fields",
 	delivery_company_id?:number,
 	id?:number,
 	service_provider_id?:number
+}
+
+/** order by stddev_samp() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_stddev_samp_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
 }
 
 /** Streaming cursor of the table "service_provider_delivery_partner" */
@@ -49254,6 +50395,13 @@ export type service_provider_delivery_partner_sum_fields = {
 	service_provider_id?:number
 }
 
+/** order by sum() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_sum_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
+}
+
 /** update columns of table "service_provider.delivery_partner" */
 export enum service_provider_delivery_partner_update_column {
 	delivery_company_id = "delivery_company_id",
@@ -49278,6 +50426,13 @@ export type service_provider_delivery_partner_var_pop_fields = {
 	service_provider_id?:number
 }
 
+/** order by var_pop() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_var_pop_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
+}
+
 /** aggregate var_samp on columns */
 export type service_provider_delivery_partner_var_samp_fields = {
 	__typename?: "service_provider_delivery_partner_var_samp_fields",
@@ -49286,12 +50441,26 @@ export type service_provider_delivery_partner_var_samp_fields = {
 	service_provider_id?:number
 }
 
+/** order by var_samp() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_var_samp_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
+}
+
 /** aggregate variance on columns */
 export type service_provider_delivery_partner_variance_fields = {
 	__typename?: "service_provider_delivery_partner_variance_fields",
 	delivery_company_id?:number,
 	id?:number,
 	service_provider_id?:number
+}
+
+/** order by variance() on columns of table "service_provider.delivery_partner" */
+export type service_provider_delivery_partner_variance_order_by = {
+		delivery_company_id?:order_by,
+	id?:order_by,
+	service_provider_id?:order_by
 }
 
 /** columns and relationships of "service_provider.details" */
@@ -51345,6 +52514,18 @@ export type subscription_root = {
 	customer_favourited_item_by_pk?:customer_favourited_item,
 	/** fetch data from the table in a streaming manner: "customer.favourited_item" */
 	customer_favourited_item_stream:customer_favourited_item[],
+	/** fetch data from the table: "customer.minimal_order" */
+	customer_minimal_order:customer_minimal_order[],
+	/** fetch aggregated fields from the table: "customer.minimal_order" */
+	customer_minimal_order_aggregate:customer_minimal_order_aggregate,
+	/** fetch data from the table: "customer.minimal_order" using primary key columns */
+	customer_minimal_order_by_pk?:customer_minimal_order,
+	/** fetch data from the table in a streaming manner: "customer.minimal_order" */
+	customer_minimal_order_stream:customer_minimal_order[],
+	/** execute function "customer.minimal_orders" which returns "customer.minimal_order" */
+	customer_minimal_orders:customer_minimal_order[],
+	/** execute function "customer.minimal_orders" and query aggregates on result of table type "customer.minimal_order" */
+	customer_minimal_orders_aggregate:customer_minimal_order_aggregate,
 	/** fetch data from the table: "customer.saved_location" */
 	customer_saved_location:customer_saved_location[],
 	/** fetch aggregated fields from the table: "customer.saved_location" */
@@ -54712,6 +55893,413 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	customer_minimal_order_aggregate_fields:{
+		count:{
+			columns:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	customer_minimal_order_bool_exp:{
+		_and:{
+			type:"customer_minimal_order_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"customer_minimal_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"customer_minimal_order_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"Boolean_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_constraint: "enum",
+	customer_minimal_order_inc_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_insert_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_on_conflict:{
+		constraint:{
+			type:"customer_minimal_order_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"customer_minimal_order_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"customer_minimal_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_pk_columns_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		order_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	customer_minimal_order_select_column: "enum",
+	customer_minimal_order_set_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_stream_cursor_input:{
+		initial_value:{
+			type:"customer_minimal_order_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_stream_cursor_value_input:{
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		image:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		in_process:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		name:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_time:{
+			type:"timestamptz",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		order_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		payment_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		total_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_minimal_order_update_column: "enum",
+	customer_minimal_order_updates:{
+		_inc:{
+			type:"customer_minimal_order_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_set:{
+			type:"customer_minimal_order_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"customer_minimal_order_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	customer_minimal_orders_args:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	customer_saved_location_aggregate_bool_exp:{
@@ -66377,9 +67965,9 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_store:{
-		delivery_details_of_deliverer:{
+		delivery_partners:{
 			distinct_on:{
-				type:"delivery_details_select_column",
+				type:"service_provider_delivery_partner_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -66397,13 +67985,45 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"delivery_details_order_by",
+				type:"service_provider_delivery_partner_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"delivery_details_bool_exp",
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		delivery_partners_aggregate:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -66521,8 +68141,14 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_details_of_deliverer:{
-			type:"delivery_details_bool_exp",
+		delivery_partners:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partners_aggregate:{
+			type:"service_provider_delivery_partner_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -66606,6 +68232,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_details_id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partners:{
+			type:"service_provider_delivery_partner_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -66694,8 +68326,8 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_details_of_deliverer_aggregate:{
-			type:"delivery_details_aggregate_order_by",
+		delivery_partners_aggregate:{
+			type:"service_provider_delivery_partner_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67688,6 +69320,28 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
+		delete_customer_minimal_order:{
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		delete_customer_minimal_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
 		delete_customer_saved_location:{
 			where:{
 				type:"customer_saved_location_bool_exp",
@@ -68549,6 +70203,34 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			on_conflict:{
 				type:"customer_favourited_item_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_customer_minimal_order:{
+			objects:{
+				type:"customer_minimal_order_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"customer_minimal_order_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_customer_minimal_order_one:{
+			object:{
+				type:"customer_minimal_order_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"customer_minimal_order_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -70161,6 +71843,54 @@ export const AllTypesProps: Record<string,any> = {
 		update_customer_favourited_item_many:{
 			updates:{
 				type:"customer_favourited_item_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_customer_minimal_order:{
+			_inc:{
+				type:"customer_minimal_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"customer_minimal_order_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_customer_minimal_order_by_pk:{
+			_inc:{
+				type:"customer_minimal_order_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_set:{
+				type:"customer_minimal_order_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"customer_minimal_order_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_customer_minimal_order_many:{
+			updates:{
+				type:"customer_minimal_order_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -73318,6 +75048,160 @@ export const AllTypesProps: Record<string,any> = {
 				array:false,
 				arrayRequired:false,
 				required:true
+			}
+		},
+		customer_minimal_order:{
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_order_aggregate:{
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		customer_minimal_orders:{
+			args:{
+				type:"customer_minimal_orders_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_orders_aggregate:{
+			args:{
+				type:"customer_minimal_orders_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		customer_saved_location:{
@@ -88442,6 +90326,70 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		delivery_partners:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		delivery_partners_aggregate:{
+			distinct_on:{
+				type:"service_provider_delivery_partner_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"service_provider_delivery_partner_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"service_provider_delivery_partner_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		items:{
 			distinct_on:{
 				type:"restaurant_item_select_column",
@@ -88732,6 +90680,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_partners:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partners_aggregate:{
+			type:"service_provider_delivery_partner_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		details:{
 			type:"service_provider_details_bool_exp",
 			array:false,
@@ -88839,6 +90799,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		delivery_partners:{
+			type:"service_provider_delivery_partner_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		details:{
 			type:"service_provider_details_obj_rel_insert_input",
 			array:false,
@@ -88937,6 +90903,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		delivery_details_of_deliverer_aggregate:{
 			type:"delivery_details_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_partners_aggregate:{
+			type:"service_provider_delivery_partner_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -90220,6 +92192,40 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_delivery_partner_aggregate_bool_exp:{
+		count:{
+			type:"service_provider_delivery_partner_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_aggregate_bool_exp_count:{
+		arguments:{
+			type:"service_provider_delivery_partner_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"service_provider_delivery_partner_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	service_provider_delivery_partner_aggregate_fields:{
 		count:{
 			columns:{
@@ -90234,6 +92240,108 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	service_provider_delivery_partner_aggregate_order_by:{
+		avg:{
+			type:"service_provider_delivery_partner_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"service_provider_delivery_partner_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"service_provider_delivery_partner_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"service_provider_delivery_partner_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"service_provider_delivery_partner_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"service_provider_delivery_partner_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"service_provider_delivery_partner_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"service_provider_delivery_partner_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"service_provider_delivery_partner_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"service_provider_delivery_partner_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_arr_rel_insert_input:{
+		data:{
+			type:"service_provider_delivery_partner_insert_input",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		on_conflict:{
+			type:"service_provider_delivery_partner_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_avg_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_delivery_partner_bool_exp:{
@@ -90351,6 +92459,58 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	service_provider_delivery_partner_max_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_min_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_type:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_delivery_partner_on_conflict:{
 		constraint:{
 			type:"service_provider_delivery_partner_constraint",
@@ -90444,6 +92604,66 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	service_provider_delivery_partner_stddev_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_stddev_pop_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_stddev_samp_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_delivery_partner_stream_cursor_input:{
 		initial_value:{
 			type:"service_provider_delivery_partner_stream_cursor_value_input",
@@ -90484,6 +92704,26 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
+	service_provider_delivery_partner_sum_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_delivery_partner_update_column: "enum",
 	service_provider_delivery_partner_updates:{
 		_inc:{
@@ -90503,6 +92743,66 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	service_provider_delivery_partner_var_pop_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_var_samp_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_delivery_partner_variance_order_by:{
+		delivery_company_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		service_provider_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details:{
@@ -94346,6 +96646,180 @@ export const AllTypesProps: Record<string,any> = {
 			},
 			where:{
 				type:"customer_favourited_item_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_order:{
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_order_aggregate:{
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_order_by_pk:{
+			id:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			order_type:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		customer_minimal_order_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"customer_minimal_order_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_orders:{
+			args:{
+				type:"customer_minimal_orders_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		customer_minimal_orders_aggregate:{
+			args:{
+				type:"customer_minimal_orders_args",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			distinct_on:{
+				type:"customer_minimal_order_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_minimal_order_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_minimal_order_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -100553,6 +103027,90 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_id:"Float",
 		restaurant_item_id:"Float"
 	},
+	customer_minimal_order:{
+		id:"Int",
+		image:"String",
+		in_process:"Boolean",
+		name:"String",
+		order_time:"timestamptz",
+		order_type:"String",
+		payment_type:"String",
+		status:"String",
+		total_cost:"money"
+	},
+	customer_minimal_order_aggregate:{
+		aggregate:"customer_minimal_order_aggregate_fields",
+		nodes:"customer_minimal_order"
+	},
+	customer_minimal_order_aggregate_fields:{
+		avg:"customer_minimal_order_avg_fields",
+		count:"Int",
+		max:"customer_minimal_order_max_fields",
+		min:"customer_minimal_order_min_fields",
+		stddev:"customer_minimal_order_stddev_fields",
+		stddev_pop:"customer_minimal_order_stddev_pop_fields",
+		stddev_samp:"customer_minimal_order_stddev_samp_fields",
+		sum:"customer_minimal_order_sum_fields",
+		var_pop:"customer_minimal_order_var_pop_fields",
+		var_samp:"customer_minimal_order_var_samp_fields",
+		variance:"customer_minimal_order_variance_fields"
+	},
+	customer_minimal_order_avg_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_max_fields:{
+		id:"Int",
+		image:"String",
+		name:"String",
+		order_time:"timestamptz",
+		order_type:"String",
+		payment_type:"String",
+		status:"String",
+		total_cost:"money"
+	},
+	customer_minimal_order_min_fields:{
+		id:"Int",
+		image:"String",
+		name:"String",
+		order_time:"timestamptz",
+		order_type:"String",
+		payment_type:"String",
+		status:"String",
+		total_cost:"money"
+	},
+	customer_minimal_order_mutation_response:{
+		affected_rows:"Int",
+		returning:"customer_minimal_order"
+	},
+	customer_minimal_order_stddev_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_stddev_pop_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_stddev_samp_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_sum_fields:{
+		id:"Int",
+		total_cost:"money"
+	},
+	customer_minimal_order_var_pop_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_var_samp_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
+	customer_minimal_order_variance_fields:{
+		id:"Float",
+		total_cost:"Float"
+	},
 	customer_saved_location:{
 		customer_id:"Int",
 		default:"Boolean",
@@ -102111,7 +104669,8 @@ export const ReturnTypes: Record<string,any> = {
 	laundry_store:{
 		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
-		delivery_details_of_deliverer:"delivery_details",
+		delivery_partners:"service_provider_delivery_partner",
+		delivery_partners_aggregate:"service_provider_delivery_partner_aggregate",
 		details:"service_provider_details",
 		details_id:"Int",
 		id:"Int",
@@ -102360,6 +104919,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_customer_customer_by_pk:"customer_customer",
 		delete_customer_favourited_item:"customer_favourited_item_mutation_response",
 		delete_customer_favourited_item_by_pk:"customer_favourited_item",
+		delete_customer_minimal_order:"customer_minimal_order_mutation_response",
+		delete_customer_minimal_order_by_pk:"customer_minimal_order",
 		delete_customer_saved_location:"customer_saved_location_mutation_response",
 		delete_customer_saved_location_by_pk:"customer_saved_location",
 		delete_customer_stripe_cards:"customer_stripe_cards_mutation_response",
@@ -102460,6 +105021,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_customer_customer_one:"customer_customer",
 		insert_customer_favourited_item:"customer_favourited_item_mutation_response",
 		insert_customer_favourited_item_one:"customer_favourited_item",
+		insert_customer_minimal_order:"customer_minimal_order_mutation_response",
+		insert_customer_minimal_order_one:"customer_minimal_order",
 		insert_customer_saved_location:"customer_saved_location_mutation_response",
 		insert_customer_saved_location_one:"customer_saved_location",
 		insert_customer_stripe_cards:"customer_stripe_cards_mutation_response",
@@ -102567,6 +105130,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_customer_favourited_item:"customer_favourited_item_mutation_response",
 		update_customer_favourited_item_by_pk:"customer_favourited_item",
 		update_customer_favourited_item_many:"customer_favourited_item_mutation_response",
+		update_customer_minimal_order:"customer_minimal_order_mutation_response",
+		update_customer_minimal_order_by_pk:"customer_minimal_order",
+		update_customer_minimal_order_many:"customer_minimal_order_mutation_response",
 		update_customer_saved_location:"customer_saved_location_mutation_response",
 		update_customer_saved_location_by_pk:"customer_saved_location",
 		update_customer_saved_location_many:"customer_saved_location_mutation_response",
@@ -102792,6 +105358,11 @@ export const ReturnTypes: Record<string,any> = {
 		customer_favourited_item:"customer_favourited_item",
 		customer_favourited_item_aggregate:"customer_favourited_item_aggregate",
 		customer_favourited_item_by_pk:"customer_favourited_item",
+		customer_minimal_order:"customer_minimal_order",
+		customer_minimal_order_aggregate:"customer_minimal_order_aggregate",
+		customer_minimal_order_by_pk:"customer_minimal_order",
+		customer_minimal_orders:"customer_minimal_order",
+		customer_minimal_orders_aggregate:"customer_minimal_order_aggregate",
 		customer_saved_location:"customer_saved_location",
 		customer_saved_location_aggregate:"customer_saved_location_aggregate",
 		customer_saved_location_by_pk:"customer_saved_location",
@@ -104283,6 +106854,8 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
 		delivery_details_of_deliverer:"delivery_details",
+		delivery_partners:"service_provider_delivery_partner",
+		delivery_partners_aggregate:"service_provider_delivery_partner_aggregate",
 		details:"service_provider_details",
 		details_id:"Int",
 		id:"Int",
@@ -105216,6 +107789,12 @@ export const ReturnTypes: Record<string,any> = {
 		customer_favourited_item_aggregate:"customer_favourited_item_aggregate",
 		customer_favourited_item_by_pk:"customer_favourited_item",
 		customer_favourited_item_stream:"customer_favourited_item",
+		customer_minimal_order:"customer_minimal_order",
+		customer_minimal_order_aggregate:"customer_minimal_order_aggregate",
+		customer_minimal_order_by_pk:"customer_minimal_order",
+		customer_minimal_order_stream:"customer_minimal_order",
+		customer_minimal_orders:"customer_minimal_order",
+		customer_minimal_orders_aggregate:"customer_minimal_order_aggregate",
 		customer_saved_location:"customer_saved_location",
 		customer_saved_location_aggregate:"customer_saved_location_aggregate",
 		customer_saved_location_by_pk:"customer_saved_location",

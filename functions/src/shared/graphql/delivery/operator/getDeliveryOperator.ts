@@ -44,7 +44,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             id: d.id,
             userId: d.user_id,
             deliveryCompanyId: deliveryCompanyId,
-            status: d.operator_details.status as DeliveryOperatorStatus,
+            status: d.operator_details.status as AuthorizationStatus,
             owner: d.operator_details.owner,
             appVersion: d.operator_details.app_version,
             currentGPS: (d.operator_details.current_gps) ? {
@@ -102,7 +102,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
         id: response.delivery_operator_by_pk.id,
         userId: response.delivery_operator_by_pk.user_id,
         deliveryCompanyId: response.delivery_operator_by_pk.delivery_company_id,
-        status: response.delivery_operator_by_pk.operator_details.status as DeliveryOperatorStatus,
+        status: response.delivery_operator_by_pk.operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator_by_pk.operator_details.owner,
         appVersion: response.delivery_operator_by_pk.operator_details.app_version,
         currentGPS: {
@@ -163,7 +163,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
         deliveryCompanyId: response.delivery_operator[0].delivery_company_id,
-        status: response.delivery_operator[0].operator_details.status as DeliveryOperatorStatus,
+        status: response.delivery_operator[0].operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator[0].operator_details.owner,
         appVersion: response.delivery_operator[0].operator_details.app_version,
         currentGPS: {

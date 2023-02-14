@@ -1,0 +1,3 @@
+table:
+  name: minimal_order
+  schema: customer

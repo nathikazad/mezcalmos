@@ -26,7 +26,7 @@ export async function updateDeliveryOperatorStatusToAuthorized(deliveryOperatorI
                 id: response.delivery_operator_by_pk.details_id
             },
             _set: {
-                status: DeliveryOperatorStatus.Authorized
+                status: AuthorizationStatus.Authorized
             }
         }, {}],
     });
