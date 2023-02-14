@@ -1724,6 +1724,8 @@ type customer_favourited_item_variance_fields {
 columns and relationships of "customer.minimal_order"
 """
 type customer_minimal_order {
+  customer_id: Int!
+  delivery_cost: money!
   id: Int!
   image: String!
   in_process: Boolean!
@@ -1732,6 +1734,7 @@ type customer_minimal_order {
   order_type: String!
   payment_type: String!
   status: String!
+  to_address: String
   total_cost: money!
 }
 
@@ -1762,6 +1765,8 @@ type customer_minimal_order_aggregate_fields {
 
 """aggregate avg on columns"""
 type customer_minimal_order_avg_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
@@ -1773,6 +1778,8 @@ input customer_minimal_order_bool_exp {
   _and: [customer_minimal_order_bool_exp!]
   _not: customer_minimal_order_bool_exp
   _or: [customer_minimal_order_bool_exp!]
+  customer_id: Int_comparison_exp
+  delivery_cost: money_comparison_exp
   id: Int_comparison_exp
   image: String_comparison_exp
   in_process: Boolean_comparison_exp
@@ -1781,6 +1788,7 @@ input customer_minimal_order_bool_exp {
   order_type: String_comparison_exp
   payment_type: String_comparison_exp
   status: String_comparison_exp
+  to_address: String_comparison_exp
   total_cost: money_comparison_exp
 }
 
@@ -1798,6 +1806,8 @@ enum customer_minimal_order_constraint {
 input type for incrementing numeric columns in table "customer.minimal_order"
 """
 input customer_minimal_order_inc_input {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   total_cost: money
 }
@@ -1806,6 +1816,8 @@ input customer_minimal_order_inc_input {
 input type for inserting data into table "customer.minimal_order"
 """
 input customer_minimal_order_insert_input {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   image: String
   in_process: Boolean
@@ -1814,11 +1826,14 @@ input customer_minimal_order_insert_input {
   order_type: String
   payment_type: String
   status: String
+  to_address: String
   total_cost: money
 }
 
 """aggregate max on columns"""
 type customer_minimal_order_max_fields {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   image: String
   name: String
@@ -1826,11 +1841,14 @@ type customer_minimal_order_max_fields {
   order_type: String
   payment_type: String
   status: String
+  to_address: String
   total_cost: money
 }
 
 """aggregate min on columns"""
 type customer_minimal_order_min_fields {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   image: String
   name: String
@@ -1838,6 +1856,7 @@ type customer_minimal_order_min_fields {
   order_type: String
   payment_type: String
   status: String
+  to_address: String
   total_cost: money
 }
 
@@ -1863,6 +1882,8 @@ input customer_minimal_order_on_conflict {
 
 """Ordering options when selecting data from "customer.minimal_order"."""
 input customer_minimal_order_order_by {
+  customer_id: order_by
+  delivery_cost: order_by
   id: order_by
   image: order_by
   in_process: order_by
@@ -1871,6 +1892,7 @@ input customer_minimal_order_order_by {
   order_type: order_by
   payment_type: order_by
   status: order_by
+  to_address: order_by
   total_cost: order_by
 }
 
@@ -1884,6 +1906,12 @@ input customer_minimal_order_pk_columns_input {
 select columns of table "customer.minimal_order"
 """
 enum customer_minimal_order_select_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  delivery_cost
+
   """column name"""
   id
 
@@ -1909,6 +1937,9 @@ enum customer_minimal_order_select_column {
   status
 
   """column name"""
+  to_address
+
+  """column name"""
   total_cost
 }
 
@@ -1916,6 +1947,8 @@ enum customer_minimal_order_select_column {
 input type for updating data in table "customer.minimal_order"
 """
 input customer_minimal_order_set_input {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   image: String
   in_process: Boolean
@@ -1924,23 +1957,30 @@ input customer_minimal_order_set_input {
   order_type: String
   payment_type: String
   status: String
+  to_address: String
   total_cost: money
 }
 
 """aggregate stddev on columns"""
 type customer_minimal_order_stddev_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
 
 """aggregate stddev_pop on columns"""
 type customer_minimal_order_stddev_pop_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
 
 """aggregate stddev_samp on columns"""
 type customer_minimal_order_stddev_samp_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
@@ -1958,6 +1998,8 @@ input customer_minimal_order_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input customer_minimal_order_stream_cursor_value_input {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   image: String
   in_process: Boolean
@@ -1966,11 +2008,14 @@ input customer_minimal_order_stream_cursor_value_input {
   order_type: String
   payment_type: String
   status: String
+  to_address: String
   total_cost: money
 }
 
 """aggregate sum on columns"""
 type customer_minimal_order_sum_fields {
+  customer_id: Int
+  delivery_cost: money
   id: Int
   total_cost: money
 }
@@ -1979,6 +2024,12 @@ type customer_minimal_order_sum_fields {
 update columns of table "customer.minimal_order"
 """
 enum customer_minimal_order_update_column {
+  """column name"""
+  customer_id
+
+  """column name"""
+  delivery_cost
+
   """column name"""
   id
 
@@ -2002,6 +2053,9 @@ enum customer_minimal_order_update_column {
 
   """column name"""
   status
+
+  """column name"""
+  to_address
 
   """column name"""
   total_cost
@@ -2020,18 +2074,24 @@ input customer_minimal_order_updates {
 
 """aggregate var_pop on columns"""
 type customer_minimal_order_var_pop_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
 
 """aggregate var_samp on columns"""
 type customer_minimal_order_var_samp_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }
 
 """aggregate variance on columns"""
 type customer_minimal_order_variance_fields {
+  customer_id: Float
+  delivery_cost: Float
   id: Float
   total_cost: Float
 }

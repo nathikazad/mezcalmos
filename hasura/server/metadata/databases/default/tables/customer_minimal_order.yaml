@@ -5,13 +5,15 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - in_process
+        - delivery_cost
         - id
-        - total_cost
         - image
+        - in_process
         - name
+        - order_time
         - order_type
         - payment_type
         - status
-        - order_time
+        - to_address
+        - total_cost
       filter: {}

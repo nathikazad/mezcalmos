@@ -81,6 +81,8 @@ query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
     image
     in_process
     name
+    delivery_cost
+    to_address
     order_time
     order_type
     payment_type
@@ -94,6 +96,8 @@ subscription listen_on_customer_orders($custId: Int!,$inProcess: Boolean!) {
     image
     in_process
     name
+    delivery_cost
+    to_address
     order_time
     order_type
     payment_type

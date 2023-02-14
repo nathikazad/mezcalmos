@@ -4981,6 +4981,20 @@ const documentNodeQueryget_customer_orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'order_time'),
             alias: null,
             arguments: [],
@@ -5145,6 +5159,8 @@ class Query$get_customer_orders$customer_minimal_orders {
     required this.image,
     required this.in_process,
     required this.name,
+    required this.delivery_cost,
+    this.to_address,
     required this.order_time,
     required this.order_type,
     required this.payment_type,
@@ -5159,6 +5175,8 @@ class Query$get_customer_orders$customer_minimal_orders {
     final l$image = json['image'];
     final l$in_process = json['in_process'];
     final l$name = json['name'];
+    final l$delivery_cost = json['delivery_cost'];
+    final l$to_address = json['to_address'];
     final l$order_time = json['order_time'];
     final l$order_type = json['order_type'];
     final l$payment_type = json['payment_type'];
@@ -5170,6 +5188,8 @@ class Query$get_customer_orders$customer_minimal_orders {
       image: (l$image as String),
       in_process: (l$in_process as bool),
       name: (l$name as String),
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
       order_type: (l$order_type as String),
       payment_type: (l$payment_type as String),
@@ -5186,6 +5206,10 @@ class Query$get_customer_orders$customer_minimal_orders {
   final bool in_process;
 
   final String name;
+
+  final double delivery_cost;
+
+  final String? to_address;
 
   final String order_time;
 
@@ -5209,6 +5233,10 @@ class Query$get_customer_orders$customer_minimal_orders {
     _resultData['in_process'] = l$in_process;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$to_address = to_address;
+    _resultData['to_address'] = l$to_address;
     final l$order_time = order_time;
     _resultData['order_time'] = l$order_time;
     final l$order_type = order_type;
@@ -5230,6 +5258,8 @@ class Query$get_customer_orders$customer_minimal_orders {
     final l$image = image;
     final l$in_process = in_process;
     final l$name = name;
+    final l$delivery_cost = delivery_cost;
+    final l$to_address = to_address;
     final l$order_time = order_time;
     final l$order_type = order_type;
     final l$payment_type = payment_type;
@@ -5241,6 +5271,8 @@ class Query$get_customer_orders$customer_minimal_orders {
       l$image,
       l$in_process,
       l$name,
+      l$delivery_cost,
+      l$to_address,
       l$order_time,
       l$order_type,
       l$payment_type,
@@ -5277,6 +5309,16 @@ class Query$get_customer_orders$customer_minimal_orders {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$to_address = to_address;
+    final lOther$to_address = other.to_address;
+    if (l$to_address != lOther$to_address) {
       return false;
     }
     final l$order_time = order_time;
@@ -5340,6 +5382,8 @@ abstract class CopyWith$Query$get_customer_orders$customer_minimal_orders<
     String? image,
     bool? in_process,
     String? name,
+    double? delivery_cost,
+    String? to_address,
     String? order_time,
     String? order_type,
     String? payment_type,
@@ -5368,6 +5412,8 @@ class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
     Object? image = _undefined,
     Object? in_process = _undefined,
     Object? name = _undefined,
+    Object? delivery_cost = _undefined,
+    Object? to_address = _undefined,
     Object? order_time = _undefined,
     Object? order_type = _undefined,
     Object? payment_type = _undefined,
@@ -5386,6 +5432,12 @@ class _CopyWithImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        to_address: to_address == _undefined
+            ? _instance.to_address
+            : (to_address as String?),
         order_time: order_time == _undefined || order_time == null
             ? _instance.order_time
             : (order_time as String),
@@ -5420,6 +5472,8 @@ class _CopyWithStubImpl$Query$get_customer_orders$customer_minimal_orders<TRes>
     String? image,
     bool? in_process,
     String? name,
+    double? delivery_cost,
+    String? to_address,
     String? order_time,
     String? order_type,
     String? payment_type,
@@ -5810,6 +5864,20 @@ const documentNodeSubscriptionlisten_on_customer_orders =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'delivery_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_address'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'order_time'),
             alias: null,
             arguments: [],
@@ -5946,6 +6014,8 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     required this.image,
     required this.in_process,
     required this.name,
+    required this.delivery_cost,
+    this.to_address,
     required this.order_time,
     required this.order_type,
     required this.payment_type,
@@ -5960,6 +6030,8 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     final l$image = json['image'];
     final l$in_process = json['in_process'];
     final l$name = json['name'];
+    final l$delivery_cost = json['delivery_cost'];
+    final l$to_address = json['to_address'];
     final l$order_time = json['order_time'];
     final l$order_type = json['order_type'];
     final l$payment_type = json['payment_type'];
@@ -5971,6 +6043,8 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
       image: (l$image as String),
       in_process: (l$in_process as bool),
       name: (l$name as String),
+      delivery_cost: moneyFromJson(l$delivery_cost),
+      to_address: (l$to_address as String?),
       order_time: (l$order_time as String),
       order_type: (l$order_type as String),
       payment_type: (l$payment_type as String),
@@ -5987,6 +6061,10 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
   final bool in_process;
 
   final String name;
+
+  final double delivery_cost;
+
+  final String? to_address;
 
   final String order_time;
 
@@ -6010,6 +6088,10 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     _resultData['in_process'] = l$in_process;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$delivery_cost = delivery_cost;
+    _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
+    final l$to_address = to_address;
+    _resultData['to_address'] = l$to_address;
     final l$order_time = order_time;
     _resultData['order_time'] = l$order_time;
     final l$order_type = order_type;
@@ -6031,6 +6113,8 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     final l$image = image;
     final l$in_process = in_process;
     final l$name = name;
+    final l$delivery_cost = delivery_cost;
+    final l$to_address = to_address;
     final l$order_time = order_time;
     final l$order_type = order_type;
     final l$payment_type = payment_type;
@@ -6042,6 +6126,8 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
       l$image,
       l$in_process,
       l$name,
+      l$delivery_cost,
+      l$to_address,
       l$order_time,
       l$order_type,
       l$payment_type,
@@ -6079,6 +6165,16 @@ class Subscription$listen_on_customer_orders$customer_minimal_orders {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$delivery_cost = delivery_cost;
+    final lOther$delivery_cost = other.delivery_cost;
+    if (l$delivery_cost != lOther$delivery_cost) {
+      return false;
+    }
+    final l$to_address = to_address;
+    final lOther$to_address = other.to_address;
+    if (l$to_address != lOther$to_address) {
       return false;
     }
     final l$order_time = order_time;
@@ -6144,6 +6240,8 @@ abstract class CopyWith$Subscription$listen_on_customer_orders$customer_minimal_
     String? image,
     bool? in_process,
     String? name,
+    double? delivery_cost,
+    String? to_address,
     String? order_time,
     String? order_type,
     String? payment_type,
@@ -6176,6 +6274,8 @@ class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orde
     Object? image = _undefined,
     Object? in_process = _undefined,
     Object? name = _undefined,
+    Object? delivery_cost = _undefined,
+    Object? to_address = _undefined,
     Object? order_time = _undefined,
     Object? order_type = _undefined,
     Object? payment_type = _undefined,
@@ -6194,6 +6294,12 @@ class _CopyWithImpl$Subscription$listen_on_customer_orders$customer_minimal_orde
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        delivery_cost: delivery_cost == _undefined || delivery_cost == null
+            ? _instance.delivery_cost
+            : (delivery_cost as double),
+        to_address: to_address == _undefined
+            ? _instance.to_address
+            : (to_address as String?),
         order_time: order_time == _undefined || order_time == null
             ? _instance.order_time
             : (order_time as String),
@@ -6230,6 +6336,8 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_orders$customer_minimal_
     String? image,
     bool? in_process,
     String? name,
+    double? delivery_cost,
+    String? to_address,
     String? order_time,
     String? order_type,
     String? payment_type,

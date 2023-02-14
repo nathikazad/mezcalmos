@@ -210,7 +210,8 @@ Future<List<MinimalOrder>> get_customer_orders(
               order) =>
           MinimalOrder(
               id: order.id,
-              toAdress: order.name,
+              toAdress: order.to_address,
+              deliveryCost: order.delivery_cost,
               orderTime: DateTime.parse(order.order_time),
               title: order.name,
               image: order.image,
@@ -242,7 +243,8 @@ Stream<List<MinimalOrder>?> listen_on_customer_orders(
                   order) =>
               MinimalOrder(
                   id: order.id,
-                  toAdress: order.name,
+                  toAdress: order.to_address,
+                  deliveryCost: order.delivery_cost,
                   orderTime: DateTime.parse(order.order_time),
                   title: order.name,
                   image: order.image,
