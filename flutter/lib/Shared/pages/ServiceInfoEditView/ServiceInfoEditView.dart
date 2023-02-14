@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
@@ -23,33 +22,16 @@ class ServiceInfoEditView extends StatefulWidget {
 }
 
 class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
-  int? serviceProviderId;
-  ServiceProviderType? serviceProviderType;
-  late ServiceInfoEditViewController viewController;
+  int? detailsId;
+
+  ServiceInfoEditViewController viewController =
+      ServiceInfoEditViewController();
   @override
   void initState() {
-    serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
-    serviceProviderType =
-        Get.arguments?["serviceProviderType"] as ServiceProviderType;
-    _assignController();
-    viewController.init(
-        serviceProvierId: serviceProviderId!,
-        serviceProviderType: serviceProviderType!);
+    detailsId = int.tryParse(Get.parameters["serviceDetailsId"]!);
+
+    viewController.init(serviceDetailsId: detailsId!);
     super.initState();
-  }
-
-  void _assignController() {
-    switch (serviceProviderType) {
-      case ServiceProviderType.DeliveryCompany:
-        viewController = DeliveryInfoEditViewController();
-
-        break;
-      case ServiceProviderType.Restaurant:
-        viewController = RestauarantInfoEditViewController();
-
-        break;
-      default:
-    }
   }
 
   @override
@@ -100,8 +82,8 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                     Container(
                       alignment: Alignment.center,
                       child: Text(
-                        viewController.service.value?.info.name ?? "",
-                        style: Get.textTheme.headline3,
+                        viewController.service.value?.name ?? "",
+                        style: Get.textTheme.displaySmall,
                       ),
                     )
                     // Laundry name fiels
@@ -118,7 +100,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       height: 15,
                     ),
                     Text(
-                        '${_i18n()['description']} ${viewController.primaryLang.value?.toLanguageName()}'),
+                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}'),
                     SizedBox(
                       height: 5,
                     ),
@@ -127,7 +109,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                       height: 15,
                     ),
                     Text(
-                        '${_i18n()['description']} ${viewController.secondaryLang.value?.toLanguageName()}'),
+                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}'),
                     SizedBox(
                       height: 5,
                     ),
@@ -145,29 +127,6 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                     SizedBox(
                       height: 15,
                     ),
-                    //  Text("${_i18n()["defaultLanguage"]}"),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    // ROpLanguageSelectorComponent(
-                    //     languageValue: editInfoController.editablePrLang,
-                    //     oppositeLanguageValue: editInfoController.editableScLang,
-                    //     onChangeShouldUpdateLang:
-                    //         editInfoController.changePrimaryLang),
-                    // SizedBox(
-                    //   height: 15,
-                    // ),
-                    // Text("${_i18n()["secondaryLanguage"]}"),
-                    // SizedBox(
-                    //   height: 5,
-                    // ),
-                    // // ROpLanguageSelectorComponent(
-                    // //   languageValue: editInfoController.editableScLang,
-                    // //   oppositeLanguageValue: editInfoController.editablePrLang,
-                    // //   onChangeShouldUpdateLang:
-                    // //       editInfoController.changePrimaryLang,
-                    // //   isSecondary: true,
-                    // // ),
                     SizedBox(
                       height: 15,
                     ),
@@ -188,14 +147,14 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   TextFormField _restNameTextField() {
     return TextFormField(
       controller: viewController.serviceNameTxt,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
     );
   }
 
   TextFormField _prdescTextField() {
     return TextFormField(
       controller: viewController.primaryServiceDesc,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
       maxLines: 5,
       minLines: 3,
     );
@@ -204,7 +163,7 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   TextFormField _scdescTextField() {
     return TextFormField(
       controller: viewController.secondayServiceDesc,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
       maxLines: 5,
       minLines: 3,
     );

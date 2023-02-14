@@ -174,7 +174,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
                     // viewController.tabsViewViewController?.showTabs.value =
                     //     true;
                     navigateToServicePayments(
-                        ServiceProviderId: viewController.laundryStoreId,
+                        serviceProviderId: viewController.laundryStoreId,
                         serviceProviderType: ServiceProviderType.Laundry);
                   },
                   icon: Icons.account_balance,

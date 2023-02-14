@@ -8,13 +8,13 @@ dynamic _i18n() =>
     Get.find<LanguageController>().strings["RestaurantApp"]["pages"]
         ["ROpEditInfoView"]["ROpEditInfoView"]["components"]["ROpOpenClose"];
 
-class ROpOpenClose extends StatelessWidget {
+class ServiceOpenCloseSwitcher extends StatelessWidget {
   final bool initialSwitcherValue;
   String title;
   String? subtitle;
   final Function onTurnedOn;
   final Function onTurnedOff;
-  ROpOpenClose({
+  ServiceOpenCloseSwitcher({
     required this.title,
     this.initialSwitcherValue = false,
     this.subtitle,

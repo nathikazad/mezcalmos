@@ -168,10 +168,10 @@ void navigateToServiceInfoEdit(
 }
 
 void navigateToServicePayments(
-    {required int ServiceProviderId,
+    {required int serviceProviderId,
     required ServiceProviderType serviceProviderType}) {
   final String route =
-      kServicePayments.replaceFirst(":ServiceProviderId", "$ServiceProviderId");
+      kServicePayments.replaceFirst(":ServiceProviderId", "$serviceProviderId");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
   });

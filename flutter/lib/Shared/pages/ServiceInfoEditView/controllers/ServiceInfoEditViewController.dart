@@ -5,20 +5,18 @@ import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
-import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/location/hsServiceLocation.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
-abstract class ServiceInfoEditViewController {
+class ServiceInfoEditViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   // TEXT INPUTS //
   TextEditingController serviceNameTxt = TextEditingController();
@@ -27,86 +25,92 @@ abstract class ServiceInfoEditViewController {
 
   // OBS //
 
-  Rxn<Service> service = Rxn<Service>();
+  Rxn<ServiceInfo> service = Rxn<ServiceInfo>();
   final Rxn<String> newImageUrl = Rxn();
   final Rxn<MezLocation> newLocation = Rxn();
 
-  final Rxn<LanguageType> primaryLang = Rxn();
-  final Rxn<LanguageType> secondaryLang = Rxn();
+  final Rx<LanguageType> primaryLang = Rx(LanguageType.EN);
+  final Rx<LanguageType> secondaryLang = Rx(LanguageType.ES);
   final Rxn<LanguageType> editablePrLang = Rxn();
   final Rxn<LanguageType> editableScLang = Rxn();
   final Rxn<File> newImageFile = Rxn();
-  Rxn<ServiceStatus> _serviceStatus = Rxn();
 
   final RxBool imageLoading = RxBool(false);
   final RxBool isAvailable = RxBool(false);
   final RxBool isApproved = RxBool(true);
 
 // LATE VARS
-  late int serviceId;
+  late int detailsId;
   late ServiceProviderType serviceType;
 
   int? newDescId;
 // INIT //
 
   Future<void> init({
-    required int serviceProvierId,
-    required ServiceProviderType serviceProviderType,
+    required int serviceDetailsId,
   }) async {
-    serviceType = serviceProviderType;
-    serviceId = serviceProvierId;
-    mezDbgPrint("INIT EDIT PROFILE VIEW =======>$serviceId");
+    detailsId = serviceDetailsId;
+    mezDbgPrint("INIT EDIT PROFILE VIEW =======>$detailsId");
 
     await fetchService();
     _setServiceInfo();
   }
 
-  Future<void> fetchService() async {}
+  Future<void> fetchService() async {
+    service.value =
+        await get_service_info(serviceDetailsId: detailsId, serviceId: 1);
+  }
+
   void _setServiceInfo() {
     if (service.value != null) {
-      serviceNameTxt.text = service.value?.info.name ?? '';
+      serviceNameTxt.text = service.value?.name ?? '';
 
-      newLocation.value = service.value!.info.location;
-      newImageUrl.value = service.value?.info.image;
-      primaryLang.value = service.value!.primaryLanguage;
-      secondaryLang.value = service.value!.primaryLanguage.toOpLang();
-      editablePrLang.value = service.value!.primaryLanguage;
-      editableScLang.value = service.value!.primaryLanguage.toOpLang();
+      newLocation.value = service.value!.location;
+      newImageUrl.value = service.value?.image;
 
-      primaryServiceDesc.text =
-          service.value?.info.description?[primaryLang] ?? '';
+      primaryServiceDesc.text = service.value?.description?[primaryLang] ?? '';
       secondayServiceDesc.text =
-          service.value?.info.description?[secondaryLang] ?? '';
+          service.value?.description?[secondaryLang] ?? '';
     }
   }
 
   Future<void> updateServiceDescriptionDescription() async {
-    if (!fd.mapEquals(service.value!.info.description, _contructDesc())) {
-      if (service.value!.info.descriptionId != null) {
+    if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+      if (service.value!.descriptionId != null) {
         _contructDesc().forEach((LanguageType key, String value) {
           update_translation(
               langType: key,
               value: value,
-              translationId: service.value!.info.descriptionId!);
+              translationId: service.value!.descriptionId!);
         });
       } else {
         newDescId = await insert_translation(
             translation: _contructDesc(),
             serviceType: serviceType,
-            serviceId: serviceId);
+            serviceId: detailsId);
       }
     }
   }
 
   Future<void> updateServiceLocation() async {
-    if (newLocation.value?.address != service.value?.info.location.address) {
+    if (newLocation.value?.address != service.value?.location.address) {
       await update_service_location(
-          locationId: service.value!.info.locationId!,
-          location: newLocation.value!);
+          locationId: service.value!.locationId!, location: newLocation.value!);
     }
   }
 
-  Future<void> updateServiceInfo() async {}
+  Future<void> updateServiceInfo() async {
+    try {
+      service.value = await update_service_info(
+          serviceInfo: _constructServiceInfo(), detailsId: detailsId);
+      showSavedSnackBar();
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar();
+    }
+  }
+
   //
   Future<bool> saveInfo() async {
     try {
@@ -126,6 +130,14 @@ abstract class ServiceInfoEditViewController {
     if (newLoc != null) {
       newLocation.value = newLoc;
     }
+  }
+
+  ServiceInfo _constructServiceInfo() {
+    return ServiceInfo(
+        location: newLocation.value!,
+        hasuraId: 1,
+        image: newImageUrl.value,
+        name: serviceNameTxt.text);
   }
 
   // void changePrimaryLang(LanguageType value) {
@@ -170,70 +182,18 @@ abstract class ServiceInfoEditViewController {
 
   bool _updatePrDesc() {
     return (primaryServiceDesc.text != '' &&
-        primaryServiceDesc.text !=
-            service.value?.info.description?[primaryLang]);
+        primaryServiceDesc.text != service.value?.description?[primaryLang]);
   }
 
   bool _updateScDesc() {
     return (secondayServiceDesc.text != '' &&
-        secondayServiceDesc.text !=
-            service.value?.info.description?[secondaryLang]);
+        secondayServiceDesc.text != service.value?.description?[secondaryLang]);
   }
 
   LanguageMap _contructDesc() {
     return {
-      primaryLang.value!: primaryServiceDesc.text,
-      secondaryLang.value!: secondayServiceDesc.text
+      primaryLang.value: primaryServiceDesc.text,
+      secondaryLang.value: secondayServiceDesc.text
     };
   }
 }
-
-class RestauarantInfoEditViewController extends ServiceInfoEditViewController {
-  Restaurant? restaurant;
-  @override
-  Future<void> fetchService() async {
-    service.value = await get_restaurant_by_id(id: serviceId);
-    restaurant = service.value as Restaurant;
-    return super.fetchService();
-  }
-
-  @override
-  Future<void> updateServiceInfo() async {
-    // service.value = await update_restaurant_info(
-    //     id: serviceId,
-    //     restaurant: restaurant!.copyWith(
-    //       primaryLanguage: primaryLang.value,
-    //       userInfo: restaurant!.info.copyWith(
-    //           name: serviceNameTxt.text,
-    //           location: newLocation.value,
-    //           image: newImageUrl.value,
-    //           descId: newDescId),
-    //     ));
-    return super.updateServiceInfo();
-  }
-}
-
-class DeliveryInfoEditViewController extends ServiceInfoEditViewController {
-  DeliveryCompany? dvCompany;
-  @override
-  Future<void> fetchService() async {
-    service.value = await get_delivery_company(companyId: serviceId);
-    dvCompany = service.value as DeliveryCompany;
-    return super.fetchService();
-  }
-
-  @override
-  Future<void> updateServiceInfo() async {
-    // service.value = await update_delivery_company(
-    //     companyId: serviceId,
-    //     deliveryCompany: dvCompany!.copyWith(
-    //       primaryLanguage: primaryLang.value,
-    //       userInfo: dvCompany!.info.copyWith(
-    //           name: serviceNameTxt.text,
-    //           location: newLocation.value,
-    //           image: newImageUrl.value,
-    //           descId: newDescId),
-    //     ));
-  }
-}
-  // TODO @m66are RFC

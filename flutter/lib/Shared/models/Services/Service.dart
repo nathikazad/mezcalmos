@@ -13,7 +13,6 @@ abstract class Service {
   ServiceProviderType? serviceProviderType;
   ServiceState state;
   Map<LanguageType, bool> languages;
-  ServiceStatus? status;
 
   PaymentInfo? paymentInfo;
 
@@ -21,7 +20,6 @@ abstract class Service {
       {required this.info,
       required this.serviceDetailsId,
       this.schedule,
-      this.status,
       this.phoneNumber,
       this.serviceLinkId,
       this.serviceProviderType,
@@ -81,7 +79,6 @@ class MainService extends Service {
     required super.languages,
     required super.paymentInfo,
     required super.schedule,
-    required super.status,
     required super.phoneNumber,
     required super.serviceLinkId,
     required super.serviceProviderType,

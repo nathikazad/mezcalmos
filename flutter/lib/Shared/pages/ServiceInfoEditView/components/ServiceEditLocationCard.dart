@@ -23,11 +23,11 @@ class ServiceEditLocationCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
             final MezLocation newLoc = await MezRouter.toNamed(
-                kPickLocationEdit,
-                arguments: LatLng(
-                    editInfoController.service.value!.info.location.latitude,
-                    editInfoController.service.value!.info.location
-                        .longitude)) as MezLocation;
+                    kPickLocationEdit,
+                    arguments: LatLng(
+                        editInfoController.service.value!.location.latitude,
+                        editInfoController.service.value!.location.longitude))
+                as MezLocation;
             editInfoController.setNewLocation(newLoc);
             editInfoController.newLocation.refresh();
           },
