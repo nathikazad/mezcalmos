@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -6,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
@@ -13,12 +15,14 @@ import 'package:soundpool/soundpool.dart';
 class SettingsController extends GetxController {
   late final ThemeController _appTheme;
   late final LanguageController _appLanguage;
+
   // final Connectivity _connectivity = Connectivity();
   // NOTIFICATION RINGTONES
   // this will be customized by the user in future.
   Soundpool _userNotificationsSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.notification));
   int? _selectedNotificationsSoundId;
+
   // CALLS RINGTONES
   Soundpool _userCallingSoundPool = Soundpool.fromOptions(
       options: SoundpoolOptions(streamType: StreamType.music));
@@ -28,8 +32,11 @@ class SettingsController extends GetxController {
   final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
   AppType appType;
+
   ThemeController get appTheme => _appTheme;
+
   LanguageController get appLanguage => _appLanguage;
+
   SettingsController(this.appType, this.locationType,
       {this.sideMenuItems = const []});
 
@@ -42,6 +49,8 @@ class SettingsController extends GetxController {
     _appLanguage = Get.put(LanguageController(), permanent: true);
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
         sideMenuItems;
+
+    await ConnectivityHelper.instance.networkCheck();
 
     // NOTIFICATION SOUND SETUP
 

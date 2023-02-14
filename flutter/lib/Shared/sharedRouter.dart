@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/pages/DeliverySettingsView/DeliverySettingView.
 import 'package:mezcalmos/Shared/pages/LocationPermissionScreen/LocationPermissionScreen.dart';
 import 'package:mezcalmos/Shared/pages/MessagingScreen.dart';
 import 'package:mezcalmos/Shared/pages/NoInternetConnectionScreen.dart';
+import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
 import 'package:mezcalmos/Shared/pages/Notifications/ViewNotifications.dart';
 import 'package:mezcalmos/Shared/pages/PickDriverView/PickDriverView.dart';
 import 'package:mezcalmos/Shared/pages/PickLocationview.dart';
@@ -66,6 +67,7 @@ const String kserviceInfoEdit = "/service/:serviceProviderId";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
     "/costDeliverySettingScreen/:providerId/:providerType";
+const String kNoInternetRoute = '/noInternet';
 
 String getMessagesRoute({
   required int chatId,
@@ -257,5 +259,9 @@ class SharedRouter {
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
     GetPage(name: kCreateService, page: () => CreateServiceView()),
     GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
+    GetPage(
+      name: kNoInternetRoute,
+      page: () => NoInternetScreen(),
+    ),
   ];
 }
