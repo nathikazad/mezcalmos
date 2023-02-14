@@ -14402,11 +14402,6 @@ enum notification_info_constraint {
   unique or primary key constraint on columns "id"
   """
   notification_info_pkey
-
-  """
-  unique or primary key constraint on columns "app_type_id", "user_id"
-  """
-  notification_info_user_id_app_type_id_key
 }
 
 """

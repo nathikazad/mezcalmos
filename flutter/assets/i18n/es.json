@@ -5,6 +5,7 @@
             "contactUs": "Contáctenos",
             "savedCards": "Tarjetas guardadas"
         },
+        
         "components": {
             "Menu": {
                 "UserMenuComponent": {

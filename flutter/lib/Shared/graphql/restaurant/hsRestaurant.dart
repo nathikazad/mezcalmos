@@ -166,9 +166,9 @@ Future<Restaurant?> get_restaurant_by_id(
       paymentInfo.acceptedPayments =
           parseAcceptedPayments(data!.details!.accepted_payments);
     }
-    if (data?.details?.stripe_info != null) {
-      paymentInfo.stripe = parseServiceStripeInfo(data!.details!.stripe_info);
-    }
+    // if (data?.details?.stripe_info != null) {
+    //   paymentInfo.stripe = parseServiceStripeInfo(data!.details!.stripe_info);
+    // }
     if (data != null) {
       return Restaurant(
         languages: convertToLanguages(data.details!.language),
@@ -529,9 +529,9 @@ Future<PaymentInfo?> get_restaurant_payment_info(
   if (data.details?.accepted_payments != null &&
       data.details?.accepted_payments != null) {
     return PaymentInfo(
-        acceptedPayments:
-            parseAcceptedPayments(data.details!.accepted_payments),
-        stripe: parseServiceStripeInfo(data..details!.stripe_info));
+      acceptedPayments: parseAcceptedPayments(data.details!.accepted_payments),
+      // stripe: parseServiceStripeInfo(data..details!.stripe_info)
+    );
   }
   return PaymentInfo();
 }

@@ -15,14 +15,12 @@ class CustomerOrderController extends GetxController {
   AuthController _authController = Get.find<AuthController>();
 
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> restOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> laundryOrders = <MinimalOrder>[].obs;
 
-  RxList<Order> pastOrders = <Order>[].obs;
+  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
 
   // streams //
-  StreamSubscription<List<MinimalOrder>?>? currentRestaurantOrdersStream;
-  StreamSubscription<List<MinimalOrder>?>? currentLaundryOrdersStream;
+  StreamSubscription<List<MinimalOrder>?>? currentOrdersStream;
+
   String? subscriptionId;
 
   @override
@@ -31,59 +29,42 @@ class CustomerOrderController extends GetxController {
     mezDbgPrint(
         "--------------------> OrderController Initialized ! and the user uid is ${_authController.fireAuthUser?.uid} ");
     if (_authController.fireAuthUser?.uid != null) {
-      fetchOrders();
+      fetchCurrentOrders();
+      _listenOnOrders();
       // _listenOnOrders();
     } else {
       mezDbgPrint("User is not signed it to init order controller");
     }
   }
 
-  Future<void> fetchOrders() async {
-    restOrders.value = await get_customer_rest_orders(
-            customerId: _authController.hasuraUserId!) ??
-        [];
-    laundryOrders.value = await get_customer_laundry_orders(
-            customerId: _authController.hasuraUserId!) ??
-        [];
-    laundryOrders.refresh();
-    restOrders.refresh();
+  Future<void> fetchCurrentOrders() async {
+    currentOrders.value = await get_customer_orders(
+        customerId: _authController.hasuraUserId!, inProcess: true);
+    currentOrders.refresh();
+  }
 
-    mezDbgPrint(
-        "After fetching 👋 ===> \n laundry orders : ${laundryOrders.length} \n rest orders : ${restOrders.length} ");
+  Future<void> fetchPastOrders() async {
+    pastOrders.value = await get_customer_orders(
+        customerId: _authController.hasuraUserId!, inProcess: false);
+    pastOrders.refresh();
   }
 
   void _listenOnOrders() {
     subscriptionId = _hasuraDb.createSubscription(start: () {
-      currentRestaurantOrdersStream = listen_on_customer_rest_orders(
-              customerId: _authController.hasuraUserId!)
-          .listen((List<MinimalOrder>? event) {
+      currentOrdersStream =
+          listen_on_customer_orders(customerId: _authController.hasuraUserId!)
+              .listen((List<MinimalOrder>? event) {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from customer order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
-          restOrders.clear();
-          restOrders.value = event;
-          restOrders.refresh();
-          mezDbgPrint("rest orders length ==========>${restOrders.length}");
-        }
-      });
-      currentLaundryOrdersStream = listen_on_customer_laundry_orders(
-              customerId: _authController.hasuraUserId!)
-          .listen((List<MinimalOrder>? event) {
-        if (event != null) {
-          mezDbgPrint(
-              "Laundry Stream triggred from customer order controller ✅✅✅✅✅✅✅✅✅ =====> $event");
-          laundryOrders.clear();
-          laundryOrders.value = event;
-          laundryOrders.refresh();
-          mezDbgPrint(
-              "laundry orders length ==========>${laundryOrders.length}");
+
+          currentOrders.value = event;
+          currentOrders.refresh();
         }
       });
     }, cancel: () {
-      currentRestaurantOrdersStream?.cancel();
-      currentRestaurantOrdersStream = null;
-      currentLaundryOrdersStream?.cancel();
-      currentLaundryOrdersStream = null;
+      currentOrdersStream?.cancel();
+      currentOrdersStream = null;
     });
   }
 
@@ -126,27 +107,29 @@ class CustomerOrderController extends GetxController {
   }
 
   bool get hasOneOrder {
-    return restOrders.length + laundryOrders.length == 1;
+    return currentOrders.length == 1;
   }
 
   bool get hasManyOrders {
-    return restOrders.length > 1 || laundryOrders.length > 1;
+    return currentOrders.length > 1;
+  }
+
+  int? firstOrderIdBasedOnType(OrderType type) {
+    return currentOrders
+        .firstWhereOrNull((MinimalOrder element) => element.orderType == type)
+        ?.id;
   }
 
   int? get hasOneOrderId {
     if (hasOneOrder) {
-      return restOrders.isNotEmpty
-          ? restOrders.first.id
-          : laundryOrders.first.id;
+      return currentOrders.first.id;
     }
     return null;
   }
 
   OrderType? get hasOneOrderType {
     if (hasOneOrder) {
-      return restOrders.isNotEmpty
-          ? restOrders.first.orderType
-          : laundryOrders.first.orderType;
+      return currentOrders.first.orderType;
     }
     return null;
   }
@@ -154,8 +137,8 @@ class CustomerOrderController extends GetxController {
   @override
   void onClose() {
     print("[+] OrderController::onClose ---------> Was invoked !");
-    currentLaundryOrdersStream?.cancel();
-    currentRestaurantOrdersStream?.cancel();
+
+    currentOrdersStream?.cancel();
     currentOrders.close();
     pastOrders.close();
 

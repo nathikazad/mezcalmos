@@ -47,7 +47,7 @@ class _CustomerOrdersListView extends State<CustomerOrdersListView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    if (viewController.inProcessOrder.isNotEmpty)
+                    if (viewController.currentOrders.isNotEmpty)
                       CustomerInprocessOrdersList(
                           txt: txt, viewController: viewController),
                     if (viewController.pastOrders.isNotEmpty)

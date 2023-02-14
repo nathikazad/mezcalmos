@@ -1,3 +1,17 @@
 table:
   name: minimal_order
   schema: customer
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - in_process
+        - id
+        - total_cost
+        - image
+        - name
+        - order_type
+        - payment_type
+        - status
+        - order_time
+      filter: {}

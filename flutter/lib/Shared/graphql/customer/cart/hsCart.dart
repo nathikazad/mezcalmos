@@ -34,25 +34,24 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
     ),
   );
 
-  if (getCartResp.parsedData?.customer_customer_by_pk == null) {
+  if (getCartResp.parsedData?.restaurant_cart == null) {
     throw Exception(
         "[🛑] create_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
   mezDbgPrint(
       "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
 
-  final Query$getCustomerCart$customer_customer_by_pk$cart? cartData =
-      getCartResp.parsedData?.customer_customer_by_pk?.cart;
+  final Query$getCustomerCart$restaurant_cart? cartData =
+      getCartResp.parsedData?.restaurant_cart.isNotEmpty == true
+          ? getCartResp.parsedData?.restaurant_cart.first
+          : null;
 
   PaymentInfo paymentInfo = PaymentInfo();
-  if (cartData?.restaurant?.details?.stripe_info != null &&
-      cartData?.restaurant?.details?.accepted_payments != null) {
-    paymentInfo = PaymentInfo.fromData(
-        stripeInfo: cartData?.restaurant?.details?.stripe_info!,
-        acceptedPayments: cartData?.restaurant?.details?.accepted_payments!);
-  }
-  // if (data?.stripe_info != null) {
-  //   paymentInfo.stripe = parseServiceStripeInfo(data!.stripe_info);
+  // if (cartData?.restaurant?.details?.stripe_info != null &&
+  //     cartData?.restaurant?.details?.accepted_payments != null) {
+  //   paymentInfo = PaymentInfo.fromData(
+  //       stripeInfo: cartData?.restaurant?.details?.stripe_info!,
+  //       acceptedPayments: cartData?.restaurant?.details?.accepted_payments!);
   // }
 
   if (cartData != null) {
@@ -127,8 +126,8 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
                 ),
               )
             : null);
-    cartData.items.forEach(
-        (Query$getCustomerCart$customer_customer_by_pk$cart$items cartitem) {
+    cartData.items
+        .forEach((Query$getCustomerCart$restaurant_cart$items cartitem) {
       final CartItem data = CartItem(
         item: Item(
             startsAt: (cartitem.restaurant_item.special_period_start != null)
@@ -179,7 +178,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
           data.chosenChoices[key] = choices;
         });
         cartitem.restaurant_item.options.forEach(
-            (Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options
+            (Query$getCustomerCart$restaurant_cart$items$restaurant_item$options
                 listOfOptions) {
           data.item.options.addAll(_convertOptionFromQuerry(listOfOptions));
         });
@@ -293,21 +292,23 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
   )
       .map<Cart?>((QueryResult<Subscription$listen_on_customer_cart> cart) {
     mezDbgPrint(
-        "✅ From stream ============>>>>${cart.parsedData?.customer_customer_by_pk?.cart?.items}");
+        "✅ From stream ============>>>>${cart.parsedData?.restaurant_cart}");
     final Cart _cartEvent = Cart();
-    final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart?
-        parsedCart = cart.parsedData?.customer_customer_by_pk?.cart;
-    if (cart.parsedData?.customer_customer_by_pk?.cart != null) {
-      final Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$restaurant?
-          _res = cart.parsedData?.customer_customer_by_pk?.cart?.restaurant;
+    final Subscription$listen_on_customer_cart$restaurant_cart? parsedCart =
+        (cart.parsedData?.restaurant_cart.isNotEmpty == true)
+            ? cart.parsedData?.restaurant_cart.first
+            : null;
+    if (parsedCart != null) {
+      Subscription$listen_on_customer_cart$restaurant_cart$restaurant? _res =
+          cart.parsedData?.restaurant_cart.first.restaurant;
       PaymentInfo paymentInfo = PaymentInfo();
-      if (_res?.details?.stripe_info != null &&
-          _res?.details?.accepted_payments != null) {
-        paymentInfo = PaymentInfo.fromData(
-            stripeInfo: _res?.details?.stripe_info!,
-            acceptedPayments: _res?.details?.accepted_payments!);
-      }
-      if (cart.parsedData?.customer_customer_by_pk?.cart?.restaurant != null) {
+      // if (_res?.details?.stripe_info != null &&
+      //     _res?.details?.accepted_payments != null) {
+      //   paymentInfo = PaymentInfo.fromData(
+      //       stripeInfo: _res?.details?.stripe_info!,
+      //       acceptedPayments: _res?.details?.accepted_payments!);
+      // }
+      if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           languages: convertToLanguages(_res!.details!.language),
           serviceDetailsId: _res.details_id,
@@ -361,8 +362,8 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
         );
       }
 
-      parsedCart!.items.forEach(
-          (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items
+      parsedCart.items.forEach(
+          (Subscription$listen_on_customer_cart$restaurant_cart$items
               cartitem) {
         final CartItem data = CartItem(
           item: Item(
@@ -411,7 +412,7 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
           });
         }
         cartitem.restaurant_item.options.forEach(
-            (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options
+            (Subscription$listen_on_customer_cart$restaurant_cart$items$restaurant_item$options
                 listOfOptions) {
           data.item.options.addAll(_convertOptionFromStream(listOfOptions));
         });
@@ -500,10 +501,10 @@ Future<int> set_cart_restaurant_id({
 }
 
 List<Option> _convertOptionFromStream(
-    Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options
+    Subscription$listen_on_customer_cart$restaurant_cart$items$restaurant_item$options
         optionsData) {
   final List<Option> options = optionsData.item_options.map(
-      (Subscription$listen_on_customer_cart$customer_customer_by_pk$cart$items$restaurant_item$options$item_options
+      (Subscription$listen_on_customer_cart$restaurant_cart$items$restaurant_item$options$item_options
           oneOption) {
     final Option newOption = Option(
       id: oneOption.id,
@@ -527,10 +528,10 @@ List<Option> _convertOptionFromStream(
 }
 
 List<Option> _convertOptionFromQuerry(
-    Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options
+    Query$getCustomerCart$restaurant_cart$items$restaurant_item$options
         optionsData) {
   final List<Option> options = optionsData.item_options.map(
-      (Query$getCustomerCart$customer_customer_by_pk$cart$items$restaurant_item$options$item_options
+      (Query$getCustomerCart$restaurant_cart$items$restaurant_item$options$item_options
           oneOption) {
     final Option newOption = Option(
       id: oneOption.id,

@@ -136,7 +136,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
               image: orderData.from_customer_delivery!.delivery_driver!.user.image,
               language: LanguageType.EN)
           : null,
-      toCustomerDeliveryId: orderData.to_customer_delivery_id!,
+      toCustomerDeliveryId: orderData.to_customer_delivery_id,
       fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
       costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo * cat.weight_in_kilo!, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
       cost: 0,
@@ -173,7 +173,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
           estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
               ? DateTime.parse(orderData.estimated_ready_time!)
               : null,
-          toCustomerDeliveryId: orderData.to_customer_delivery_id!,
+          toCustomerDeliveryId: orderData.to_customer_delivery_id,
           laundryDropOffDriverChatId:
               orderData.to_customer_delivery?.chat_with_service_provider_id,
           laundryPickupDriverChatId:

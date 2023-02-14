@@ -50,7 +50,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   DateTime? estimatedLaundryReadyTime;
   RouteInformation? routeInformation;
   int fromCustomerDeliveryId;
-  int toCustomerDeliveryId;
+  int? toCustomerDeliveryId;
 
   LaundryOrder(
       {required super.orderId,
@@ -208,9 +208,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   int get deliveryOrderId {
-    return getCurrentPhase() == LaundryOrderPhase.Pickup
-        ? fromCustomerDeliveryId
-        : toCustomerDeliveryId;
+    return getCurrentPhase() == LaundryOrderPhase.Dropoff
+        ? toCustomerDeliveryId!
+        : fromCustomerDeliveryId;
   }
 
   int? getServiceDriverChatId() {

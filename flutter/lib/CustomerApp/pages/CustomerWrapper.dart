@@ -303,17 +303,26 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null &&
         _orderController != null) {
-      await _orderController!.fetchOrders();
-      if (_orderController!.hasOneOrder) {
-        //   MezRouter.toNamed(getLaundyOrderRoute(orders[0].orderId));
-        singleOrderRoute(_orderController!.hasOneOrderId!);
-      } else if (_orderController!.hasManyOrders) {
-        // ignore: unawaited_futures
-        MezRouter.toNamed<void>(kOrdersRoute);
+      if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
+        singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
       } else {
         // ignore: unawaited_futures
         MezRouter.toNamed<void>(serviceRoute);
       }
+
+      // if (_orderController!.hasOneOrder) {
+      //   //   MezRouter.toNamed(getLaundyOrderRoute(orders[0].orderId));
+      //   if (_orderController!.hasOneOrderType == orderType) {
+      //     singleOrderRoute(_orderController!.hasOneOrderId!);
+      //   } else
+      //     await MezRouter.toNamed<void>(serviceRoute);
+      // } else if (_orderController!.hasManyOrders) {
+      //   // ignore: unawaited_futures
+      //   MezRouter.toNamed<void>(kOrdersRoute);
+      // } else {
+      //   // ignore: unawaited_futures
+      //   MezRouter.toNamed<void>(serviceRoute);
+      // }
     } else {
       // ignore: unawaited_futures
       MezRouter.toNamed<void>(serviceRoute);
@@ -323,7 +332,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   // when app resumes check if there are current orders and if yes navigate to orders page
   Future<void> _navigateToOrdersIfNecessary() async {
     if (_orderController != null) {
-      await _orderController!.fetchOrders();
+      await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
         // Restaurant
         if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
