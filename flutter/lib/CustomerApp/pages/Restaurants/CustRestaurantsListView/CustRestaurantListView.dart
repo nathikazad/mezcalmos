@@ -262,7 +262,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             Image.asset(
               "assets/images/customer/restaurants/noOpenRestaurants.png",
               height: 50.h,
-              width: 80.w,
+              width: 65.w,
             ),
             SizedBox(
               height: 5,

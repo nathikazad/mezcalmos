@@ -56,19 +56,32 @@ class MezSideMenu extends GetWidget<AuthController> {
                       SizedBox(height: 10),
                       _buildSideMenuItem(),
                       _basicSideMenuItems(context),
+                      MediaQuery.of(context).size.width <= 360
+                          ? Container(
+                              alignment: Alignment.center,
+                              child: Text(
+                                version +
+                                    (lmd != AppLaunchMode.prod
+                                        ? " ${lmd.toShortString()}"
+                                        : ""),
+                              ),
+                            )
+                          : SizedBox()
                     ],
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ),
-              )
+              MediaQuery.of(context).size.width > 360
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        version +
+                            (lmd != AppLaunchMode.prod
+                                ? " ${lmd.toShortString()}"
+                                : ""),
+                      ),
+                    )
+                  : SizedBox()
             ],
           ),
         ),

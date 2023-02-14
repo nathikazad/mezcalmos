@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -53,7 +54,7 @@ class _SavedLocationViewState extends State<SavedLocationView> {
       ),
       bottomNavigationBar: MezButton(
         borderRadius: 0,
-        height: 70,
+        height: 8.h,
         label: "${_i18n()["addNewLoc"]}",
         onClick: () async {
           // ignore: unawaited_futures
@@ -71,20 +72,17 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         } else if (viewController.savedLocs.value!.isNotEmpty) {
           return SingleChildScrollView(
               child: Column(children: <Widget>[
-            const SizedBox(height: 20),
+            SizedBox(height: 2.h),
             Container(
-              margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
+              margin: EdgeInsets.only(right: 16, bottom: 8.sp, left: 16),
               child: Row(
                 children: <Widget>[
                   Container(
                     child: Text(
-                      _i18n()["title"].toString().substring(6),
+                      _i18n()["location"] + 's',
                       style: txt.headline3!.copyWith(
                         fontWeight: FontWeight.w700,
-                        fontSize: 18,
                       ),
-                      //headline3's font family is Montserrat => Jira MEZ-1702,
-                      // headline2's font family is Poppins,
                       //     txt.headline2!.copyWith(
                       //   fontWeight: FontWeight.w700,
                       //   fontSize: 12,
@@ -97,17 +95,16 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                     child: Text(
                       "${getLocationNumbers()} ${_i18n()["location"]}${(getLocationNumbers() > 1) ? Get.find<LanguageController>().userLanguageKey == LanguageType.EN ? 's' : '' : ''}",
                       style: txt.bodyText1!.copyWith(
+                        // fontSize: getProportionateScreenHeight(13.sp),
                         color: Color(0xFF494949),
                       ),
-                      textAlign: TextAlign.center,
+                      //textAlign: TextAlign.center,
                     ),
                   )
                 ],
               ),
             ),
-            SizedBox(
-              height: 8.24,
-            ),
+         //   SizedBox(height: 0.1.h),
             Column(
               children: List.generate(
                   viewController.savedLocs.value!.length,
@@ -115,7 +112,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                         savelocation: viewController.savedLocs.value![index],
                       )),
             ),
-            const SizedBox(height: 25),
           ]));
         } else {
           return SavedLocationISEmpty();

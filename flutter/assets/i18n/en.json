@@ -1,9 +1,9 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Saved Locations",
+            "savedLocations": "My Locations",
             "contactUs": "Contact us",
-            "savedCards": "Saved cards"
+            "savedCards": "My cards"
         },
         "components": {
             "Menu": {
@@ -38,9 +38,9 @@
         "pages": {
             "cards": {
                 "SavedCardsListView": {
-                    "cards": "Cards",
+                    "cards": "My Cards",
                     "card": "Card",
-                    "addNew": "Add new credit card",
+                    "addNew": "Add new card",
                     "removeTitle": "Remove card",
                     "removeDesc": "Are you sure you want to remove this card",
                     "removeBtn": "Yes, remove card"
@@ -245,7 +245,7 @@
                         "notes": "Notes",
                         "special": "Special",
                         "viewRestaurant": "View restaurant",
-                        "itemNotes": "Item notes :",
+                        "itemNotes": "Item notes",
                         "itemDescription": "Item Description",
                         "availability": "Availability"
                     }
@@ -381,7 +381,7 @@
                     }
                 },
                 "SavedLocationView": {
-                    "title": "Saved Locations",
+                    "title": "My Locations",
                     "addNewLoc": "Add New Location",
                     "location":"Location"
                 }
@@ -699,7 +699,7 @@
                     "title": "Rate your experience",
                     "subtitle": "We would like to hear your feedback.",
                     "hintText": "Say something about your experience..",
-                    "send": "Send",
+                    "send": "Save",
                     "close": "Close",
                     "successTitle": "Thank you",
                     "successSubtitle": "Your review have been submitted successfuly"
@@ -710,7 +710,7 @@
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "tomorrow": "tomorrow",
+                "tomorrow": "Tomorrow",
                 "on": "on",
                 "in": "in",
                 "at": "at",
@@ -721,10 +721,10 @@
                 "yesterday": "Yesterday",
                 "hoursAgo": "Hours ago",
                 "hourAgo": "Hour ago",
-                "minutesAgo": "Minutes ago",
-                "minuteAgo": "Minute ago",
-                "secondsAgo": "Seconds ago",
-                "now": "Just now"
+                "minutesAgo": "mins ago",
+                "minuteAgo": "min ago",
+                "secondsAgo": "sec ago",
+                "now": "Now"
             }
         },
         "pages": {
@@ -882,11 +882,12 @@
                     "title": "Notifications",
                     "latest": "Latest",
                     "today": "Today",
-                    "alertClearNotificationTitle": "Clear All Notifications",
+                    "yesterday" : "Yesterday",
+                    "alertClearNotificationTitle" : "Clear All Notifications",
                     "clear": "Clear",
                     "no": "No",
                     "noNotifTitle": "No notifications yet !",
-                    "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
+                    "noNotifBody": "You have currently no notifications. \n   We will notify you when something new arrives."
                 }
             },
             "UserWelcomeView": {
@@ -1016,7 +1017,7 @@
                 "title": "Pick your time"
             },
             "OrderSummaryCard": {
-                "orderSummary": "Order Summary",
+                "orderSummary": "Summary",
                 "orderCost": "Order Cost",
                 "deliveryCost": "Delivery Cost",
                 "stripeFees": "Card fees",
@@ -1037,7 +1038,7 @@
                 "title": "Delivery location"
             },
             "OrderScheduledTimeCard": {
-                "title": "Scheduled time"
+                "title": "Delivery time"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",

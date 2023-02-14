@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -54,8 +55,10 @@ class _CustCardsListViewState extends State<CustCardsListView> {
                     child: Column(
                       children: List.generate(
                           viewController.cards.length,
-                          (int index) =>
-                              _creditCardCard(viewController.cards[index])),
+                          (int index) => Container(
+                              margin: EdgeInsets.only(bottom: 1.h),
+                              child: _creditCardCard(
+                                  viewController.cards[index]))),
                     ),
                   ),
                 MezAddButton(

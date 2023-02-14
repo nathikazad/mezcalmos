@@ -1,9 +1,9 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Ubicaciones guardadas",
+            "savedLocations": "Mis ubicaciones",
             "contactUs": "Contáctenos",
-            "savedCards": "Tarjetas guardadas"
+            "savedCards": "Mis cartas"
         },
         "components": {
             "Menu": {
@@ -39,9 +39,9 @@
         "pages": {
             "cards": {
                 "SavedCardsListView": {
-                    "cards": "Tarjetas",
+                    "cards": "Mis cartas",
                     "card": "Tarjeta",
-                    "addNew": "Agregar nueva tarjeta de crédito",
+                    "addNew": "Agregar nueva tarjeta",
                     "removeTitle": "Eliminar la tarjeta",
                     "removeDesc": "¿Estás seguro de que quieres eliminar esta tarjeta?",
                     "removeBtn": "Sí, eliminar la tarjeta"
@@ -190,7 +190,7 @@
                             "pickLocation": "Elegir del mapa"
                         },
                         "OrderSummaryCard": {
-                            "orderSummary": "Resumen de la orden",
+                            "orderSummary": "Resumen",
                             "orderCost": "Costo de la orden",
                             "deliveryCost": "Costo de envío",
                             "stripeFees": "Tarifas de tarjeta",
@@ -253,7 +253,7 @@
                         "notes": "Notas",
                         "special": "Especial",
                         "viewRestaurant": "Ver restaurante",
-                        "itemNotes": "Notas de artículos :",
+                        "itemNotes": "Notas de artículos",
                         "itemDescription": "Descripción del Artículo",
                         "availability": "Disponibilidad"
 
@@ -262,7 +262,7 @@
                 "ViewOrderScreen": {
                     "components": {
                         "CustomerRestaurantOrderEst": {
-                            "estTimes": "Tiempos estimados",
+                            "estTimes": "Hora prevista",
                             "foodReady": "preparación de la comida",
                             "toBeCalculated": "Para ser calculado",
                             "delivery": "Entrega"
@@ -394,8 +394,9 @@
                     }
                 },
                 "SavedLocationView": {
-                    "title": "Ubicaciones guardadas",
-                    "addNewLoc": "Añadir Nueva Ubicación"
+                    "title": "Mis ubicaciones",
+                    "addNewLoc": "Añadir Nueva Ubicación",
+                    "location":"Ubicación"
                 }
             },
             "Taxi": {
@@ -722,7 +723,7 @@
                     "title": "Califica tu experiencia",
                     "subtitle": "Nos gustaría escuchar sus comentarios.",
                     "hintText": "Di algo sobre tu experiencia.",
-                    "send": "Enviar",
+                    "send": "Ahorrar",
                     "close": "Cerca",
                     "successTitle": "Gracias",
                     "successSubtitle": "Su revisión ha sido enviada con éxito"
@@ -734,7 +735,7 @@
             },
             "DateTimeHelper": {
                 "today": "Hoy",
-                "tomorrow": "mañana",
+                "tomorrow": "Mañana",
                 "on": "el",
                 "in": "en",
                 "at": "a",
@@ -745,10 +746,10 @@
                 "yesterday": "El dia de ayer",
                 "hoursAgo": "Horas atras",
                 "hourAgo": "Hace una hora",
-                "minutesAgo": "Hace minutos",
-                "minuteAgo": "Hace un minuto",
-                "secondsAgo": "Hace segundos",
-                "now": "En este momento"
+                "minutesAgo": "hace mínimos",
+                "minuteAgo": "hace mínimo",
+                "secondsAgo": "Sec hace",
+                "now": "Ahora"
             }
         },
         "pages": {
@@ -910,6 +911,7 @@
                     "title": "Notificaciones",
                     "latest": "Más reciente",
                     "today": "Hoy dia",
+                    "yesterday":"Ayer",
                     "alertClearNotificationTitle": "Borrar todas las notificaciones",
                     "clear": "Borra",
                     "no": "No",
@@ -1053,7 +1055,7 @@
                 "title": "Elige tu tiempo"
             },
             "OrderSummaryCard": {
-                "orderSummary": "Resumen de pedido",
+                "orderSummary": "Resumen",
                 "orderCost": "Costo de la orden",
                 "deliveryCost": "Coste de envío",
                 "stripeFees": "Tarifas de tarjeta",
@@ -1074,7 +1076,7 @@
                 "title": "Lugar de entrega"
             },
             "OrderScheduledTimeCard": {
-                "title": "hora Programada"
+                "title": "Entrega Programada"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Información de la tarjeta de crédito",
@@ -1441,7 +1443,7 @@
                             "customer": "Cliente"
                         },
                         "LaundryOrderStatusCard": {
-                            "orderReceived": "Orden Recibida",
+                            "orderReceived": "orden recibida",
                             "otwPickUp": "Recoger en el camino",
                             "pickedUp": "Pedido recogido",
                             "atLaundry": "En la lavandería",

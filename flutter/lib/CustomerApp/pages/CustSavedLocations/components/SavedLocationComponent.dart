@@ -47,14 +47,20 @@ class SavedLocationComponent extends StatelessWidget {
                   width: 4,
                 ),
                 Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      savelocation.name,
-                      style: Get.textTheme.bodyText1?.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    )),
+                  fit: FlexFit.tight,
+                  child: Text(
+                    savelocation.name.length > 5
+                        ? savelocation.name
+                                .substring(0, 5)
+                                .capitalizeFirst
+                                .toString() +
+                            ".."
+                        : savelocation.name.capitalizeFirst.toString(),
+                    style: Get.textTheme.bodyText1?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
                 InkWell(
                   onTap: () {
                     Get.find<CustomerAuthController>()
@@ -62,30 +68,27 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   //borderRadius: BorderRadius.circular(16),
                   child: Ink(
-                    height: 30.sp,
+                    height: 3.h,
                     //width: 59.sp,
                     width: Get.find<LanguageController>().userLanguageKey ==
                             LanguageType.EN
-                        ? 70.sp
-                        : 90.sp,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        ? 20.w
+                        : 28.w,
+                    padding: EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                         color: (savelocation.defaultLocation)
                             ? primaryBlueColor
                             : backgroundShadeColor,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
-                    child: Center(
-                      child: Text(
-                        _i18n()["defaultAddressText"],
-                        style: TextStyle(
-                          fontFamily: "Montserrat",
-                          color: (savelocation.defaultLocation)
-                              ? Colors.white
-                              : Color(0xFF787878),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11.sp,
-                        ),
+                    child: Text(
+                      _i18n()["defaultAddressText"],
+                      style: TextStyle(
+                        fontFamily: "Montserrat",
+                        color: (savelocation.defaultLocation)
+                            ? Colors.white
+                            : Color(0xFF787878),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.sp,
                       ),
                     ),
                   ),
@@ -106,8 +109,8 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      height: 30.sp,
-                      width: 30.sp,
+                      height: 3.h,
+                      width: 3.h,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: backgroundShadeColor,
@@ -117,7 +120,7 @@ class SavedLocationComponent extends StatelessWidget {
                         child: Icon(
                           Icons.edit_outlined,
                           color: Color(0xFF787878),
-                          size: 17.37.sp,
+                          size: 2.h,
                         ),
                       )),
                 ),
@@ -130,9 +133,9 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      height: 30.sp,
-                      width: 30.sp,
-                      padding: const EdgeInsets.all(5),
+                      height: 3.h,
+                      width: 3.h,
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: offRedColor,
                         shape: BoxShape.circle,
@@ -141,7 +144,7 @@ class SavedLocationComponent extends StatelessWidget {
                         child: Icon(
                           Icons.delete_outline,
                           color: Color(0xFFE21132),
-                          size: 17.sp,
+                          size: 2.h,
                         ),
                       )),
                 ),
