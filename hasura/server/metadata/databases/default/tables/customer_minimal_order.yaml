@@ -5,6 +5,7 @@ select_permissions:
   - role: customer
     permission:
       columns:
+        - customer_id
         - delivery_cost
         - id
         - image
