@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType } from "../../../models/Generic/Generic";
-import { DeliveryOperator, DeliveryOperatorStatus } from "../../../models/Generic/Delivery";
+import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
+import { DeliveryOperator } from "../../../models/Generic/Delivery";
 import { AddOperatorDetails } from "../../../../delivery/addDeliveryOperator";
 
 export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails): Promise<DeliveryOperator> {
@@ -14,7 +14,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
                 delivery_company_id: addOperatorDetails.deliveryCompanyId,
                 operator_details: {
                     data: {
-                        status: DeliveryOperatorStatus.AwaitingApproval,
+                        status: AuthorizationStatus.AwaitingApproval,
                         app_type_id: AppType.DeliveryAdmin,
                         user_id: operatorUserId,
                         notification_info: (addOperatorDetails.notificationInfo) ? {
@@ -41,7 +41,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         id: mutationResponse.insert_delivery_operator_one.id,
         userId: operatorUserId,
         deliveryCompanyId: addOperatorDetails.deliveryCompanyId,
-        status: DeliveryOperatorStatus.AwaitingApproval,
+        status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addOperatorDetails.notificationInfo,
         owner: false,
     }

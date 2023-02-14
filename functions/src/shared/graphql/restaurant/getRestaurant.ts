@@ -11,18 +11,21 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
     restaurant_restaurant_by_pk: [{
       id: restaurantId
     },{
+      delivery_partners: [{}, {
+        delivery_company_id: true,
+      }],
+      delivery_details: {
+        cost_per_km: true,
+        free_delivery_km_range: true,
+        free_delivery_minimum_cost: true,
+        minimum_cost: true,
+        radius: true,
+        delivery_available: true,
+        customer_pickup: true,
+        self_delivery: true,
+      },
       details: {
         name: true,
-        delivery_details: {
-          cost_per_km: true,
-          free_delivery_km_range: true,
-          free_delivery_minimum_cost: true,
-          minimum_cost: true,
-          radius: true,
-          delivery_available: true,
-          customer_pickup: true,
-          self_delivery: true,
-        },
         description: {
           translations: [{ }, {
             language_id: true,
@@ -51,9 +54,6 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
           gps: true,
           address: true,
         },
-        delivery_partners: [{}, {
-          delivery_company_id: true,
-        }]
       },
       restaurant_operators: [{}, {
         id: true,
@@ -138,19 +138,19 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       }: undefined,
     acceptedPayments: JSON.parse(response.restaurant_restaurant_by_pk.details.accepted_payments),
     operators,
-    deliveryPartnerId: response.restaurant_restaurant_by_pk.details.delivery_partners[0] 
-      ? response.restaurant_restaurant_by_pk.details.delivery_partners[0].delivery_company_id
+    deliveryPartnerId: response.restaurant_restaurant_by_pk.delivery_partners[0] 
+      ? response.restaurant_restaurant_by_pk.delivery_partners[0].delivery_company_id
       : undefined,
-    language: JSON.parse(response.restaurant_restaurant_by_pk.details.language),
+    language: /*JSON.parse(*/response.restaurant_restaurant_by_pk.details.language,
     deliveryDetails: {
-      costPerKm: response.restaurant_restaurant_by_pk.details.delivery_details.cost_per_km,
-      freeDeliveryKmRange: response.restaurant_restaurant_by_pk.details.delivery_details.free_delivery_km_range,
-      freeDeliveryMinimumCost: response.restaurant_restaurant_by_pk.details.delivery_details.free_delivery_minimum_cost,
-      minimumCost: response.restaurant_restaurant_by_pk.details.delivery_details.minimum_cost,
-      radius: response.restaurant_restaurant_by_pk.details.delivery_details.radius,
-      customerPickup: response.restaurant_restaurant_by_pk.details.delivery_details.customer_pickup,
-      deliveryAvailable: response.restaurant_restaurant_by_pk.details.delivery_details.delivery_available,
-      selfDelivery: response.restaurant_restaurant_by_pk.details.delivery_details.self_delivery
+      costPerKm: response.restaurant_restaurant_by_pk.delivery_details.cost_per_km,
+      freeDeliveryKmRange: response.restaurant_restaurant_by_pk.delivery_details.free_delivery_km_range,
+      freeDeliveryMinimumCost: response.restaurant_restaurant_by_pk.delivery_details.free_delivery_minimum_cost,
+      minimumCost: response.restaurant_restaurant_by_pk.delivery_details.minimum_cost,
+      radius: response.restaurant_restaurant_by_pk.delivery_details.radius,
+      customerPickup: response.restaurant_restaurant_by_pk.delivery_details.customer_pickup,
+      deliveryAvailable: response.restaurant_restaurant_by_pk.delivery_details.delivery_available,
+      selfDelivery: response.restaurant_restaurant_by_pk.delivery_details.self_delivery
     }
   }
 

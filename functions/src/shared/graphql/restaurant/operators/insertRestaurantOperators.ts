@@ -1,6 +1,5 @@
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType } from "../../../models/Generic/Generic";
-import { OperatorStatus } from "../../../models/Services/Service";
+import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 
 export async function insertRestaurantOperators(data: any) {
     let chain = getHasura();
@@ -40,7 +39,7 @@ export async function insertRestaurantOperators(data: any) {
             user_id: opResponse.user[0].id,
             restaurant_id: (opResponse.restaurant_restaurant[0]) ? opResponse.restaurant_restaurant[0].id : undefined,
             operator_details: {
-                status: OperatorStatus.Authorized,
+                status: AuthorizationStatus.Authorized,
                 owner: true,
                 app_version: o.appVersion,
                 app_type_id: AppType.RestaurantApp,

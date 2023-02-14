@@ -1,5 +1,6 @@
 - "!include customer_customer.yaml"
 - "!include customer_favourited_item.yaml"
+- "!include customer_minimal_order.yaml"
 - "!include customer_saved_location.yaml"
 - "!include customer_stripe_cards.yaml"
 - "!include customer_stripe_info.yaml"

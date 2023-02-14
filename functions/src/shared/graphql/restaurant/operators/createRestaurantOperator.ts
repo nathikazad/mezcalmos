@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { AddOperatorDetails } from "../../../../restaurant/addRestaurantOperator";
 import { getHasura } from "../../../../utilities/hasura";
-import { AppType } from "../../../models/Generic/Generic";
-import { Operator, OperatorStatus } from "../../../models/Services/Service";
+import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
+import { Operator } from "../../../models/Services/Service";
 
 export async function createRestaurantOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<Operator> {
 
@@ -58,7 +58,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
                   app_type_id: addOpDetails.notificationInfo.appType
                 }
               }: undefined,
-            status: OperatorStatus.AwaitingApproval,
+            status: AuthorizationStatus.AwaitingApproval,
           }
         }
       }
@@ -76,7 +76,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     id: mutationResponse.insert_restaurant_operator_one.id,
     userId: operatorUserId,
     serviceProviderId: addOpDetails.restaurantId,
-    status: OperatorStatus.AwaitingApproval,
+    status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: addOpDetails.notificationInfo,
   }
 }

@@ -6,7 +6,6 @@ import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
 import { pushNotification } from "../utilities/senders/notifyUser"
-import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 
 
 export interface AddOperatorDetails {

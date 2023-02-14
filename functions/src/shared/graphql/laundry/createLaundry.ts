@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryDetails } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType } from "../../models/Generic/Generic";
-import { ServiceProvider, OperatorStatus } from "../../models/Services/Service";
+import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { ServiceProvider } from "../../models/Services/Service";
 
 export async function createLaundryStore(
     laundryDetails: LaundryDetails, 
@@ -53,7 +53,7 @@ export async function createLaundryStore(
                         operator_details: {
                             data: {
                                 user_id: laundryOperatorUserId,
-                                status: OperatorStatus.Authorized,
+                                status: AuthorizationStatus.Authorized,
                                 owner: true,
                                 app_type_id: AppType.LaundryApp,
                                 notification_info: (laundryDetails.laundryOperatorNotificationToken)? {

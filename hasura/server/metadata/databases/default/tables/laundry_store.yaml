@@ -15,6 +15,16 @@ object_relationships:
           name: details
           schema: service_provider
 array_relationships:
+  - name: delivery_partners
+    using:
+      manual_configuration:
+        column_mapping:
+          id: service_provider_id
+          service_provider_type: service_provider_type
+        insertion_order: null
+        remote_table:
+          name: delivery_partner
+          schema: service_provider
   - name: operators
     using:
       foreign_key_constraint_on:

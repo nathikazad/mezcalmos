@@ -9,15 +9,6 @@ object_relationships:
         table:
           name: company
           schema: delivery
-  # - name: delivery_company
-  #   using:
-  #     manual_configuration:
-  #       column_mapping:
-  #         id: delivery_details_id
-  #       insertion_order: null
-  #       remote_table:
-  #         name: company
-  #         schema: delivery
   - name: laundry
     using:
       foreign_key_constraint_on:
@@ -25,15 +16,6 @@ object_relationships:
         table:
           name: store
           schema: laundry
-  # - name: laundry
-  #   using:
-  #     manual_configuration:
-  #       column_mapping:
-  #         id: delivery_details_id
-  #       insertion_order: null
-  #       remote_table:
-  #         name: store
-  #         schema: laundry
   - name: restaurant
     using:
       foreign_key_constraint_on:
@@ -41,15 +23,6 @@ object_relationships:
         table:
           name: restaurant
           schema: restaurant
-  # - name: restaurant
-  #   using:
-  #     manual_configuration:
-  #       column_mapping:
-  #         id: delivery_details_id
-  #       insertion_order: null
-  #       remote_table:
-  #         name: restaurant
-  #         schema: restaurant
 insert_permissions:
   - role: restaurant_operator
     permission:

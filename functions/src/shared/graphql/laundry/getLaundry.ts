@@ -12,6 +12,19 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             id: storeId
         }, {
             id: true,
+            delivery_details: {
+                self_delivery: true,
+                delivery_available: true,
+                customer_pickup: true,
+                minimum_cost: true,
+                cost_per_km: true,
+                radius: true,
+                free_delivery_minimum_cost: true,
+                free_delivery_km_range: true,
+            },
+            delivery_partners: [{}, {
+                delivery_company_id: true
+            }],
             details: {
                 name: true,
                 image: true,
@@ -41,19 +54,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
                     payouts_enabled :true,
                     // requirements
                 },
-                delivery_details: {
-                    self_delivery: true,
-                    delivery_available: true,
-                    customer_pickup: true,
-                    minimum_cost: true,
-                    cost_per_km: true,
-                    radius: true,
-                    free_delivery_minimum_cost: true,
-                    free_delivery_km_range: true,
-                },
-                delivery_partners: [{}, {
-                    delivery_company_id: true
-                }]
+
             },
             operators: [{}, {
                 id: true,
@@ -117,21 +118,21 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
         acceptedPayments: JSON.parse(response.laundry_store_by_pk.details.accepted_payments),
         approved: response.laundry_store_by_pk.details.approved,
         creationTime: response.laundry_store_by_pk.details.creation_time,
-        language: JSON.parse(response.laundry_store_by_pk.details.language),
+        language: /*JSON.parse(*/response.laundry_store_by_pk.details.language,
         schedule: JSON.parse(response.laundry_store_by_pk.details.schedule),
         deliveryDetails: {
-            costPerKm: response.laundry_store_by_pk.details.delivery_details.cost_per_km,
-            freeDeliveryKmRange: response.laundry_store_by_pk.details.delivery_details.free_delivery_km_range,
-            freeDeliveryMinimumCost: response.laundry_store_by_pk.details.delivery_details.free_delivery_minimum_cost,
-            minimumCost: response.laundry_store_by_pk.details.delivery_details.minimum_cost,
-            radius: response.laundry_store_by_pk.details.delivery_details.radius,
-            customerPickup: response.laundry_store_by_pk.details.delivery_details.customer_pickup,
-            deliveryAvailable: response.laundry_store_by_pk.details.delivery_details.delivery_available,
-            selfDelivery: response.laundry_store_by_pk.details.delivery_details.self_delivery
+            costPerKm: response.laundry_store_by_pk.delivery_details.cost_per_km,
+            freeDeliveryKmRange: response.laundry_store_by_pk.delivery_details.free_delivery_km_range,
+            freeDeliveryMinimumCost: response.laundry_store_by_pk.delivery_details.free_delivery_minimum_cost,
+            minimumCost: response.laundry_store_by_pk.delivery_details.minimum_cost,
+            radius: response.laundry_store_by_pk.delivery_details.radius,
+            customerPickup: response.laundry_store_by_pk.delivery_details.customer_pickup,
+            deliveryAvailable: response.laundry_store_by_pk.delivery_details.delivery_available,
+            selfDelivery: response.laundry_store_by_pk.delivery_details.self_delivery
         },
         operators: laundryOperators,
-        deliveryPartnerId: response.laundry_store_by_pk.details.delivery_partners[0] 
-            ? response.laundry_store_by_pk.details.delivery_partners[0].delivery_company_id
+        deliveryPartnerId: response.laundry_store_by_pk.delivery_partners[0] 
+            ? response.laundry_store_by_pk.delivery_partners[0].delivery_company_id
             : undefined,
     }
 }
