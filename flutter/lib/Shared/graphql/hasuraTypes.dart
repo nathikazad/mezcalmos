@@ -43,13 +43,15 @@ Map<LanguageType, String> toLanguageMap({required List translations}) {
   });
   return map;
 }
-  Map<LanguageType, bool> convertToLanguages(languages) {
-    Map<LanguageType, bool> data = {};
-    languages.forEach((key, value) {
-      data[key] = value;
-    });
-    return data;
-  }
+
+Map<LanguageType, bool> convertToLanguages(languages) {
+  Map<LanguageType, bool> data = {};
+  languages.forEach((key, value) {
+    data[key.toString().toLanguageType()] = value;
+  });
+  return data;
+}
+
 /// Decode a jsonString into a Map<String, dynamic>
 T mapFromJson<T>(jsonString) {
   return jsonDecode(jsonString.toString()) as T;

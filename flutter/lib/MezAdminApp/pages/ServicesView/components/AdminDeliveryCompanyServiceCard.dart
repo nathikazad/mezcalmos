@@ -103,7 +103,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         label: "${_i18n()['profile']}",
                         ontap: () {
                           navigateToServiceInfoEdit(
-                              serviceProviderId: company.info.hasuraId,
+                              serviceDetailsId: company.info.hasuraId,
                               serviceProviderType:
                                   ServiceProviderType.DeliveryCompany);
                         }),

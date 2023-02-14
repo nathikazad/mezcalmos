@@ -196,9 +196,9 @@ Future<ServiceInfo> update_service_info(
       variables: Variables$Mutation$updateServiceDetails(
         detailsId: detailsId,
         data: Input$service_provider_details_set_input(
-          name: serviceInfo.name,
-          image: serviceInfo.image,
-        ),
+            name: serviceInfo.name,
+            image: serviceInfo.image,
+            description_id: serviceInfo.descriptionId),
       ),
     ),
   );

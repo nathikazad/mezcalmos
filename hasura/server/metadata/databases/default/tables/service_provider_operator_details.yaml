@@ -2,6 +2,24 @@ table:
   name: operator_details
   schema: service_provider
 object_relationships:
+  - name: delivery_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          id: details_id
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: delivery
+  - name: laundry_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          id: details_id
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: laundry
   - name: notification_info
     using:
       manual_configuration:
@@ -12,3 +30,75 @@ object_relationships:
         remote_table:
           name: notification_info
           schema: public
+  - name: restaurant_operator
+    using:
+      manual_configuration:
+        column_mapping:
+          id: details_id
+        insertion_order: null
+        remote_table:
+          name: operator
+          schema: restaurant
+select_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - current_gps
+        - id
+        - online
+        - owner
+        - status
+        - user_id
+      filter:
+        delivery_operator:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - current_gps
+        - id
+        - online
+        - owner
+        - status
+        - user_id
+      filter:
+        laundry_operator:
+          store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - current_gps
+        - id
+        - online
+        - owner
+        - status
+        - user_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - current_gps
+        - id
+        - online
+        - owner
+        - status
+        - user_id
+      filter:
+        restaurant_operator:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

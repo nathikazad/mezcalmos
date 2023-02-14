@@ -595,3 +595,13 @@ StripeInfo? parseServiceStripeInfo(data) {
 //     stripe: parseServiceStripeInfo(data.details!.stripe_info),
 //   );
 // }
+Future<int> get_restaurant_details_id({required int restaurantId}) async {
+  QueryResult<Query$getRestaurantDetailsId> res = await _db.graphQLClient
+      .query$getRestaurantDetailsId(Options$Query$getRestaurantDetailsId(
+          variables: Variables$Query$getRestaurantDetailsId(
+              restauarntId: restaurantId)));
+  if (res.parsedData?.restaurant_restaurant_by_pk == null) {
+    throwError(res.exception);
+  }
+  return res.parsedData!.restaurant_restaurant_by_pk!.details_id;
+}

@@ -214,6 +214,7 @@ update_permissions:
     permission:
       columns:
         - accepted_payments
+        - description_id
         - image
         - language
         - name
@@ -230,6 +231,7 @@ update_permissions:
     permission:
       columns:
         - accepted_payments
+        - description_id
         - image
         - language
         - name

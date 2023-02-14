@@ -19040,3 +19040,553 @@ class _CopyWithStubImpl$Query$get_restaurant_reviews$restaurant_restaurant_by_pk
   }) =>
       _res;
 }
+
+class Variables$Query$getRestaurantDetailsId {
+  factory Variables$Query$getRestaurantDetailsId({required int restauarntId}) =>
+      Variables$Query$getRestaurantDetailsId._({
+        r'restauarntId': restauarntId,
+      });
+
+  Variables$Query$getRestaurantDetailsId._(this._$data);
+
+  factory Variables$Query$getRestaurantDetailsId.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$restauarntId = data['restauarntId'];
+    result$data['restauarntId'] = (l$restauarntId as int);
+    return Variables$Query$getRestaurantDetailsId._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get restauarntId => (_$data['restauarntId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$restauarntId = restauarntId;
+    result$data['restauarntId'] = l$restauarntId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$getRestaurantDetailsId<
+          Variables$Query$getRestaurantDetailsId>
+      get copyWith => CopyWith$Variables$Query$getRestaurantDetailsId(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$getRestaurantDetailsId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restauarntId = restauarntId;
+    final lOther$restauarntId = other.restauarntId;
+    if (l$restauarntId != lOther$restauarntId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$restauarntId = restauarntId;
+    return Object.hashAll([l$restauarntId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$getRestaurantDetailsId<TRes> {
+  factory CopyWith$Variables$Query$getRestaurantDetailsId(
+    Variables$Query$getRestaurantDetailsId instance,
+    TRes Function(Variables$Query$getRestaurantDetailsId) then,
+  ) = _CopyWithImpl$Variables$Query$getRestaurantDetailsId;
+
+  factory CopyWith$Variables$Query$getRestaurantDetailsId.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$getRestaurantDetailsId;
+
+  TRes call({int? restauarntId});
+}
+
+class _CopyWithImpl$Variables$Query$getRestaurantDetailsId<TRes>
+    implements CopyWith$Variables$Query$getRestaurantDetailsId<TRes> {
+  _CopyWithImpl$Variables$Query$getRestaurantDetailsId(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$getRestaurantDetailsId _instance;
+
+  final TRes Function(Variables$Query$getRestaurantDetailsId) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? restauarntId = _undefined}) =>
+      _then(Variables$Query$getRestaurantDetailsId._({
+        ..._instance._$data,
+        if (restauarntId != _undefined && restauarntId != null)
+          'restauarntId': (restauarntId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$getRestaurantDetailsId<TRes>
+    implements CopyWith$Variables$Query$getRestaurantDetailsId<TRes> {
+  _CopyWithStubImpl$Variables$Query$getRestaurantDetailsId(this._res);
+
+  TRes _res;
+
+  call({int? restauarntId}) => _res;
+}
+
+class Query$getRestaurantDetailsId {
+  Query$getRestaurantDetailsId({
+    this.restaurant_restaurant_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantDetailsId.fromJson(Map<String, dynamic> json) {
+    final l$restaurant_restaurant_by_pk = json['restaurant_restaurant_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantDetailsId(
+      restaurant_restaurant_by_pk: l$restaurant_restaurant_by_pk == null
+          ? null
+          : Query$getRestaurantDetailsId$restaurant_restaurant_by_pk.fromJson(
+              (l$restaurant_restaurant_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurantDetailsId$restaurant_restaurant_by_pk?
+      restaurant_restaurant_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$restaurant_restaurant_by_pk = restaurant_restaurant_by_pk;
+    _resultData['restaurant_restaurant_by_pk'] =
+        l$restaurant_restaurant_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$restaurant_restaurant_by_pk = restaurant_restaurant_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$restaurant_restaurant_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantDetailsId) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$restaurant_restaurant_by_pk = restaurant_restaurant_by_pk;
+    final lOther$restaurant_restaurant_by_pk =
+        other.restaurant_restaurant_by_pk;
+    if (l$restaurant_restaurant_by_pk != lOther$restaurant_restaurant_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantDetailsId
+    on Query$getRestaurantDetailsId {
+  CopyWith$Query$getRestaurantDetailsId<Query$getRestaurantDetailsId>
+      get copyWith => CopyWith$Query$getRestaurantDetailsId(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantDetailsId<TRes> {
+  factory CopyWith$Query$getRestaurantDetailsId(
+    Query$getRestaurantDetailsId instance,
+    TRes Function(Query$getRestaurantDetailsId) then,
+  ) = _CopyWithImpl$Query$getRestaurantDetailsId;
+
+  factory CopyWith$Query$getRestaurantDetailsId.stub(TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantDetailsId;
+
+  TRes call({
+    Query$getRestaurantDetailsId$restaurant_restaurant_by_pk?
+        restaurant_restaurant_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<TRes>
+      get restaurant_restaurant_by_pk;
+}
+
+class _CopyWithImpl$Query$getRestaurantDetailsId<TRes>
+    implements CopyWith$Query$getRestaurantDetailsId<TRes> {
+  _CopyWithImpl$Query$getRestaurantDetailsId(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantDetailsId _instance;
+
+  final TRes Function(Query$getRestaurantDetailsId) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? restaurant_restaurant_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantDetailsId(
+        restaurant_restaurant_by_pk: restaurant_restaurant_by_pk == _undefined
+            ? _instance.restaurant_restaurant_by_pk
+            : (restaurant_restaurant_by_pk
+                as Query$getRestaurantDetailsId$restaurant_restaurant_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<TRes>
+      get restaurant_restaurant_by_pk {
+    final local$restaurant_restaurant_by_pk =
+        _instance.restaurant_restaurant_by_pk;
+    return local$restaurant_restaurant_by_pk == null
+        ? CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+            local$restaurant_restaurant_by_pk,
+            (e) => call(restaurant_restaurant_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurantDetailsId<TRes>
+    implements CopyWith$Query$getRestaurantDetailsId<TRes> {
+  _CopyWithStubImpl$Query$getRestaurantDetailsId(this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurantDetailsId$restaurant_restaurant_by_pk?
+        restaurant_restaurant_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<TRes>
+      get restaurant_restaurant_by_pk =>
+          CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk
+              .stub(_res);
+}
+
+const documentNodeQuerygetRestaurantDetailsId = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'getRestaurantDetailsId'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'restauarntId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'restaurant_restaurant_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'restauarntId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$getRestaurantDetailsId _parserFn$Query$getRestaurantDetailsId(
+        Map<String, dynamic> data) =>
+    Query$getRestaurantDetailsId.fromJson(data);
+
+class Options$Query$getRestaurantDetailsId
+    extends graphql.QueryOptions<Query$getRestaurantDetailsId> {
+  Options$Query$getRestaurantDetailsId({
+    String? operationName,
+    required Variables$Query$getRestaurantDetailsId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQuerygetRestaurantDetailsId,
+          parserFn: _parserFn$Query$getRestaurantDetailsId,
+        );
+}
+
+class WatchOptions$Query$getRestaurantDetailsId
+    extends graphql.WatchQueryOptions<Query$getRestaurantDetailsId> {
+  WatchOptions$Query$getRestaurantDetailsId({
+    String? operationName,
+    required Variables$Query$getRestaurantDetailsId variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQuerygetRestaurantDetailsId,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$getRestaurantDetailsId,
+        );
+}
+
+class FetchMoreOptions$Query$getRestaurantDetailsId
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$getRestaurantDetailsId({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$getRestaurantDetailsId variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQuerygetRestaurantDetailsId,
+        );
+}
+
+extension ClientExtension$Query$getRestaurantDetailsId
+    on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$getRestaurantDetailsId>>
+      query$getRestaurantDetailsId(
+              Options$Query$getRestaurantDetailsId options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$getRestaurantDetailsId>
+      watchQuery$getRestaurantDetailsId(
+              WatchOptions$Query$getRestaurantDetailsId options) =>
+          this.watchQuery(options);
+  void writeQuery$getRestaurantDetailsId({
+    required Query$getRestaurantDetailsId data,
+    required Variables$Query$getRestaurantDetailsId variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQuerygetRestaurantDetailsId),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$getRestaurantDetailsId? readQuery$getRestaurantDetailsId({
+    required Variables$Query$getRestaurantDetailsId variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation: graphql.Operation(
+            document: documentNodeQuerygetRestaurantDetailsId),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null
+        ? null
+        : Query$getRestaurantDetailsId.fromJson(result);
+  }
+}
+
+class Query$getRestaurantDetailsId$restaurant_restaurant_by_pk {
+  Query$getRestaurantDetailsId$restaurant_restaurant_by_pk({
+    required this.details_id,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurantDetailsId$restaurant_restaurant_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$details_id = json['details_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+      details_id: (l$details_id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int details_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details_id = details_id;
+    _resultData['details_id'] = l$details_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details_id = details_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getRestaurantDetailsId$restaurant_restaurant_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details_id = details_id;
+    final lOther$details_id = other.details_id;
+    if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk
+    on Query$getRestaurantDetailsId$restaurant_restaurant_by_pk {
+  CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+          Query$getRestaurantDetailsId$restaurant_restaurant_by_pk>
+      get copyWith =>
+          CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+    TRes> {
+  factory CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+    Query$getRestaurantDetailsId$restaurant_restaurant_by_pk instance,
+    TRes Function(Query$getRestaurantDetailsId$restaurant_restaurant_by_pk)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk;
+
+  factory CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk;
+
+  TRes call({
+    int? details_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurantDetailsId$restaurant_restaurant_by_pk _instance;
+
+  final TRes Function(Query$getRestaurantDetailsId$restaurant_restaurant_by_pk)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+        details_id: details_id == _undefined || details_id == null
+            ? _instance.details_id
+            : (details_id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurantDetailsId$restaurant_restaurant_by_pk(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? details_id,
+    String? $__typename,
+  }) =>
+      _res;
+}

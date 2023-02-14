@@ -704,7 +704,7 @@ SnackbarController showSavedSnackBar({String? title, String? subtitle}) {
 
 SnackbarController showErrorSnackBar(
     {String errorTitle = "Error", String errorText = ""}) {
-  return Get.snackbar(errorTitle.substring(0, 40), errorText.substring(0, 40),
+  return Get.snackbar(errorTitle, errorText,
       backgroundColor: Colors.black,
       colorText: Colors.white,
       shouldIconPulse: false,

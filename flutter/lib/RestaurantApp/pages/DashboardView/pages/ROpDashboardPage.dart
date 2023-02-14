@@ -81,9 +81,9 @@ class ROpDashboardPage extends StatelessWidget {
             children: [
               _navigationLink(
                   onClick: () async {
-                    navigateToServiceInfoEdit(
-                        serviceProviderId: viewController.restaurantId,
-                        serviceProviderType: ServiceProviderType.Restaurant);
+                    // navigateToServiceInfoEdit(
+                    //     serviceDetailsId: viewController.restaurantId,
+                    //     serviceProviderType: ServiceProviderType.Restaurant);
                   },
                   icon: Icons.person,
                   titleWidget: Text(

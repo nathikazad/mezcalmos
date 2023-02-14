@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/components/ServiceEditLocationCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/components/ServiceImageEditComponent.dart';
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/controllers/ServiceInfoEditViewController.dart';
@@ -23,14 +24,24 @@ class ServiceInfoEditView extends StatefulWidget {
 
 class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   int? detailsId;
+  int? serviceId;
+  ServiceProviderType? providerType;
 
   ServiceInfoEditViewController viewController =
       ServiceInfoEditViewController();
   @override
   void initState() {
     detailsId = int.tryParse(Get.parameters["serviceDetailsId"]!);
+    serviceId = int.tryParse(Get.parameters["serviceProviderId"]!);
+    providerType = Get.arguments["serviceProviderType"] as ServiceProviderType?;
 
-    viewController.init(serviceDetailsId: detailsId!);
+    if (providerType != null && detailsId != null && serviceId != null) {
+      viewController.init(
+          serviceDetailsId: detailsId!,
+          serviceProvidertype: providerType!,
+          serviceId: serviceId!);
+    }
+
     super.initState();
   }
 

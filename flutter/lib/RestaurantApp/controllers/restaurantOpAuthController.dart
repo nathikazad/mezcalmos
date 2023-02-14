@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
@@ -17,7 +18,10 @@ class RestaurantOpAuthController extends GetxController {
   BackgroundNotificationsController _notificationsController =
       Get.find<BackgroundNotificationsController>();
   RxnInt _restaurantId = RxnInt();
+  RxnInt _restaurantdetailsId = RxnInt();
+
   int? get restaurantId => _restaurantId.value;
+  int? get detailsId => _restaurantdetailsId.value;
 
   @override
   void onInit() {
@@ -28,6 +32,10 @@ class RestaurantOpAuthController extends GetxController {
     // Todo @m66are remove this restaurant id hard code
 
     setupRestaurantOperator().then((value) {
+      if (restaurantId != null) {
+        get_restaurant_details_id(restaurantId: restaurantId!)
+            .then((int value) => _restaurantdetailsId.value = value);
+      }
       if (operator.value?.info.hasuraId != null) {
         saveNotificationToken();
       }

@@ -15,8 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ServiceProfileView extends StatefulWidget {
   final int? serviceDetailsId;
   final int? serviceId;
-  const ServiceProfileView(
-      {super.key, this.serviceDetailsId, required this.serviceId});
+  const ServiceProfileView({super.key, this.serviceDetailsId, this.serviceId});
 
   @override
   State<ServiceProfileView> createState() => _ServiceProfileViewState();
@@ -49,108 +48,116 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
           alignment: Alignment.center,
           margin: const EdgeInsets.all(16),
           child: (_viewController.hasData)
-              ? Column(
-                  children: [
-                    _headerImageAndTitle(),
-                    Card(
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            _navigationLink(
-                                onClick: () async {
-                                  navigateToServiceInfoEdit(
-                                      serviceProviderId:
-                                          _viewController.serviceId,
-                                      serviceProviderType: _viewController
-                                          .service.serviceProviderType!);
-                                },
-                                icon: Icons.person,
-                                label: "Info"),
-                            _navigationLink(
-                                onClick: () async {
-                                  navigateToOperators(
-                                      serviceProviderId:
-                                          _viewController.serviceId,
-                                      serviceProviderType: _viewController
-                                          .service.serviceProviderType!);
-                                },
-                                icon: Icons.support_agent,
-                                label: "Operators"),
-                            _navigationLink(
-                                icon: Icons.calendar_today, label: "Schedule"),
-                            _navigationLink(
-                                onClick: () async {
-                                  navigateToServicePayments(
-                                      serviceProviderId:
-                                          _viewController.serviceId,
-                                      serviceProviderType: _viewController
-                                          .service.serviceProviderType!);
-                                },
-                                icon: Icons.payment_rounded,
-                                label: "Payments"),
-                            _navigationLink(
-                                icon: Icons.star_rate_rounded,
-                                label: "Reviews"),
-                            _navigationLink(
-                                onClick: () async {
-                                  navigateToDeliverySettings(
-                                      serviceProviderId:
-                                          _viewController.serviceId,
-                                      serviceProviderType: _viewController
-                                          .service.serviceProviderType!);
-                                },
-                                label: "",
-                                icon: Icons.delivery_dining,
-                                labelWidget: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Delivery',
-                                        style: Get.textTheme.bodyLarge),
-                                  ],
-                                )),
-                            _navigationLink(
-                                icon: Icons.share,
-                                label: "Share",
-                                trailingWidget: MezIconButton(
-                                  icon: Icons.copy,
-                                  onTap: () {},
-                                )),
-                            ServiceOpenCloseSwitcher(
-                                title: 'Service open',
-                                subtitle: 'Service open subtile',
-                                onTurnedOn: () {
-                                  _viewController.switchOpen(true);
-                                },
-                                onTurnedOff: () {
-                                  _viewController.switchOpen(false);
-                                },
-                                initialSwitcherValue:
-                                    _viewController.isAvailable),
-                            _navigationLink(
-                                onClick: () async {
-                                  await launch(
-                                      GetStorage().read(getxPrivacyPolicyLink));
-                                },
-                                icon: Icons.privacy_tip,
-                                label: "Privacy policies"),
-                            _navigationLink(
-                                onClick: () async {
-                                  await Get.find<AuthController>().signOut();
-                                },
-                                label: "",
-                                icon: Icons.logout,
-                                iconColor: Colors.red,
-                                labelWidget: Text(
-                                  'Logout',
-                                  style: Get.textTheme.bodyLarge
-                                      ?.copyWith(color: Colors.red),
-                                )),
-                          ],
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _headerImageAndTitle(),
+                      Card(
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              _navigationLink(
+                                  onClick: () async {
+                                    navigateToServiceInfoEdit(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceDetailsId:
+                                            _viewController.detailsId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  icon: Icons.person,
+                                  label: "Info"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    navigateToOperators(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  icon: Icons.support_agent,
+                                  label: "Operators"),
+                              _navigationLink(
+                                  icon: Icons.calendar_today,
+                                  label: "Schedule"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    navigateToServicePayments(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  icon: Icons.payment_rounded,
+                                  label: "Payments"),
+                              _navigationLink(
+                                  icon: Icons.star_rate_rounded,
+                                  label: "Reviews"),
+                              _navigationLink(
+                                  onClick: () async {
+                                    navigateToDeliverySettings(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
+                                  label: "",
+                                  icon: Icons.delivery_dining,
+                                  labelWidget: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Delivery',
+                                          style: Get.textTheme.bodyLarge),
+                                    ],
+                                  )),
+                              _navigationLink(
+                                  icon: Icons.share,
+                                  label: "Share",
+                                  trailingWidget: MezIconButton(
+                                    icon: Icons.copy,
+                                    onTap: () {},
+                                  )),
+                              ServiceOpenCloseSwitcher(
+                                  title: 'Service open',
+                                  subtitle: 'Service open subtile',
+                                  onTurnedOn: () {
+                                    _viewController.switchOpen(true);
+                                  },
+                                  onTurnedOff: () {
+                                    _viewController.switchOpen(false);
+                                  },
+                                  initialSwitcherValue:
+                                      _viewController.isAvailable),
+                              Divider(),
+                              _navigationLink(
+                                  onClick: () async {
+                                    await launch(GetStorage()
+                                        .read(getxPrivacyPolicyLink));
+                                  },
+                                  icon: Icons.privacy_tip,
+                                  label: "Privacy policies"),
+                              _navigationLink(
+                                  showDivider: false,
+                                  onClick: () async {
+                                    await Get.find<AuthController>().signOut();
+                                  },
+                                  label: "",
+                                  icon: Icons.logout,
+                                  iconColor: Colors.red,
+                                  labelWidget: Text(
+                                    'Logout',
+                                    style: Get.textTheme.bodyLarge
+                                        ?.copyWith(color: Colors.red),
+                                  )),
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               : CircularProgressIndicator(),
         ),
@@ -163,18 +170,21 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CircleAvatar(
-          radius: 35,
+          radius: 50,
           backgroundImage:
               CachedNetworkImageProvider(_viewController.service.info.image),
         ),
         SizedBox(
-          height: 25,
+          height: 35,
         ),
         Text(
           _viewController.service.info.name,
           style: Get.textTheme.displaySmall,
           textAlign: TextAlign.center,
-        )
+        ),
+        SizedBox(
+          height: 35,
+        ),
       ],
     );
   }
@@ -189,7 +199,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           title: "Dashboard",
-          tabBar: (_viewController.isApproved)
+          tabBar: (!_viewController.isApproved)
               ? PreferredSize(
                   preferredSize: Size(double.infinity, kToolbarHeight),
                   child: Container(
@@ -214,6 +224,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       Widget? labelWidget,
       Widget? trailingWidget,
       Color? iconColor,
+      bool showDivider = true,
       Future<void> Function()? onClick}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +261,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
             ),
           ),
         ),
-        Divider()
+        if (showDivider) Divider()
       ],
     );
   }

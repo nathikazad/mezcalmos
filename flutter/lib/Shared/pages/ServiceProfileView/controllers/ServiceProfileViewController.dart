@@ -8,9 +8,10 @@ class ServiceProfileViewController {
   late int detailsId;
   // state vars //
   Rxn<MainService> _service = Rxn();
+  RxBool _isAprroved = RxBool(false);
   // getters //
   MainService get service => _service.value!;
-  bool get isApproved => false;
+  bool get isApproved => _isAprroved.value;
   bool get hasData => _service.value != null;
 
   bool get isAvailable => true;

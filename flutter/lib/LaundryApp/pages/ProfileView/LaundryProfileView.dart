@@ -124,9 +124,9 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
             children: [
               _navigationLink(
                   onClick: () async {
-                    navigateToServiceInfoEdit(
-                        serviceProviderId: viewController.laundryStoreId,
-                        serviceProviderType: ServiceProviderType.Laundry);
+                    // navigateToServiceInfoEdit(
+                    //     serviceDetailsId: viewController.laundryStoreId,
+                    //     serviceProviderType: ServiceProviderType.Laundry);
                   },
                   icon: Icons.person,
                   titleWidget: Text(

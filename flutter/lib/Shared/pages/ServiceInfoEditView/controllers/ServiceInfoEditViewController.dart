@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as imPicker;
@@ -41,6 +40,7 @@ class ServiceInfoEditViewController {
 
 // LATE VARS
   late int detailsId;
+  late int serviceId;
   late ServiceProviderType serviceType;
 
   int? newDescId;
@@ -48,8 +48,12 @@ class ServiceInfoEditViewController {
 
   Future<void> init({
     required int serviceDetailsId,
+    required int serviceId,
+    required ServiceProviderType serviceProvidertype,
   }) async {
+    serviceType = serviceProvidertype;
     detailsId = serviceDetailsId;
+    this.serviceId = serviceId;
     mezDbgPrint("INIT EDIT PROFILE VIEW =======>$detailsId");
 
     await fetchService();
@@ -75,20 +79,21 @@ class ServiceInfoEditViewController {
   }
 
   Future<void> updateServiceDescriptionDescription() async {
-    if (!fd.mapEquals(service.value!.description, _contructDesc())) {
-      if (service.value!.descriptionId != null) {
-        _contructDesc().forEach((LanguageType key, String value) {
-          update_translation(
-              langType: key,
-              value: value,
-              translationId: service.value!.descriptionId!);
-        });
-      } else {
-        newDescId = await insert_translation(
-            translation: _contructDesc(),
-            serviceType: serviceType,
-            serviceId: detailsId);
-      }
+    // if (!fd.mapEquals(service.value!.description, _contructDesc())) {
+    if (service.value!.descriptionId != null) {
+      _contructDesc().forEach((LanguageType key, String value) {
+        update_translation(
+            langType: key,
+            value: value,
+            translationId: service.value!.descriptionId!);
+      });
+    } else {
+      newDescId = await insert_translation(
+          translation: _contructDesc(),
+          serviceType: serviceType,
+          serviceId: serviceId);
+      service.value?.descriptionId = newDescId;
+      // }
     }
   }
 
@@ -136,6 +141,7 @@ class ServiceInfoEditViewController {
     return ServiceInfo(
         location: newLocation.value!,
         hasuraId: 1,
+        descriptionId: newDescId,
         image: newImageUrl.value,
         name: serviceNameTxt.text);
   }
