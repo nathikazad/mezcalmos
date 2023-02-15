@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-
+import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["MezServiceOpenHours"];
 
@@ -17,8 +17,8 @@ class MezServiceOpenHours extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       SizedBox(
-          height: 8,
+        SizedBox(
+          height: 1.h,
         ),
         Container(
           child: Text(
@@ -27,7 +27,7 @@ class MezServiceOpenHours extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 8,
+          height: 2,
         ),
         Container(
             child: Column(

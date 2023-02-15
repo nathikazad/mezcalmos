@@ -120,16 +120,21 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               element2.timestamp.compareTo(element1.timestamp),
       physics: NeverScrollableScrollPhysics(),
       groupHeaderBuilder: (notifs.Notification element) {
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            (element.timestamp.isToday)
-                ? _i18n()['today']
-                : (element.timestamp.isYesterday)
-                    ? _i18n()['yesterday']
-                    : DateFormat('dd MMM, h:mm a').format(element.timestamp),
-            style: Get.textTheme.bodyText1,
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              (element.timestamp.isToday)
+                  ? _i18n()['today']
+                  : (element.timestamp.isYesterday)
+                      ? _i18n()['yesterday']
+                      : DateFormat('dd MMM, h:mm a').format(element.timestamp),
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 1.h,
+            )
+          ],
         );
       },
       separator: SizedBox(

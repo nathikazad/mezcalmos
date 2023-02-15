@@ -56,7 +56,10 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               _sortingSwitcher(),
               Obx(() {
                 if (viewController.byRestaurants)
-                  return _restaurantList();
+                  return Padding(
+                    padding: EdgeInsets.only(top: 2.h),
+                    child: _restaurantList(),
+                  );
                 else
                   return _searchedItemsList();
               })
@@ -230,6 +233,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   }
 
   Widget _restaurantList() {
+    mezDbgPrint(viewController.filteredRestaurants.length);
     return Obx(() {
       if (viewController.isLoading.value) {
         return Column(
@@ -259,14 +263,22 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              "assets/images/customer/restaurants/noOpenRestaurants.png",
-              height: 50.h,
-              width: 65.w,
+            //give space when its bigger size.
+
+            Container(
+              margin: MediaQuery.of(context).size.width <= 360
+                  ? EdgeInsets.only(top: 0.w)
+                  : EdgeInsets.only(top: 4.h),
+              child: Image.asset(
+                "assets/images/customer/restaurants/noOpenRestaurants.png",
+                height: 40.h,
+                width: 65.w,
+              ),
             ),
-            SizedBox(
-              height: 5,
-            ),
+
+            // SizedBox(
+            //   height: 2,
+            // ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
               style: Get.textTheme.bodyText1,

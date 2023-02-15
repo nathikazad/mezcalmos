@@ -153,7 +153,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 5),
+            //  margin: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               category.name?[userLanguage] ?? "",
               style: Get.theme.textTheme.headline3
@@ -164,8 +164,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontFamily: "Montserrat", color: Colors.grey.shade700),
+                style:
+                    Get.textTheme.bodyText2,
               ),
             ),
           _buildResturantItems(
@@ -174,7 +174,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             isSpecial: false,
           ),
           SizedBox(
-            height: 20,
+            height: 2,
           )
         ],
       ),
@@ -215,7 +215,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     mezDbgPrint("[66] called :: _buildResturantItems");
     if (restaurant.restaurantsView == RestaurantsView.Rows || isSpecial) {
       return Container(
-        margin: const EdgeInsets.only(top: 5),
+        margin: const EdgeInsets.only(top: 7),
         child: Column(
           children: items.fold<List<Widget>>(<Widget>[],
               (List<Widget> children, Item item) {

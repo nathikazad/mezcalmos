@@ -188,9 +188,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
   Widget _menuFilterChips(LanguageType userLanguage) {
     return Container(
+      // height: 60,
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,
-      padding: const EdgeInsets.all(4),
+      padding: EdgeInsets.only(top: 1.h),
       child: Obx(
         () {
           if (controller.showMenuTabs || controller.showSpecialTabs) {

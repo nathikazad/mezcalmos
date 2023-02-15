@@ -11,6 +11,7 @@ import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:sizer/sizer.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -46,25 +47,20 @@ class RestaurantInfoTab extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 1.h,
+              ),
               Container(
                 child: Text(
                   '${_i18n()["description"]}',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
-              SizedBox(
-                height: 8,
-              ),
-              Container(
-                child: Text(restaurant.info.description?[userLanguage] ?? ""),
-              ),
+              Text(restaurant.info.description?[userLanguage] ?? ""),
             ],
           ),
         if (restaurant.schedule != null)
           MezServiceOpenHours(schedule: restaurant.schedule!),
-        SizedBox(
-          height: 8,
-        ),
         if (restaurant.info.location != null)
           ServiceLocationCard(
             location: restaurant.info.location,
@@ -125,7 +121,6 @@ class RestaurantInfoTab extends StatelessWidget {
 
   Widget _topBarInfo() {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -133,42 +128,46 @@ class RestaurantInfoTab extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                Text(
-                  _getDollarsSign(),
-                  style: Get.textTheme.bodyText1?.copyWith(
-                    color: Colors.grey.shade800,
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
+                // Text(
+                //   _getDollarsSign(),
+                //   style: Get.textTheme.bodyText1?.copyWith(
+                //     color: Colors.grey.shade800,
+                //   ),
+                // ),
+                // const SizedBox(
+                //   width: 15,
+                // ),
                 Icon(
                   Icons.delivery_dining,
-                  color: Colors.grey.shade800,
+                  size: 3.4.h,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  width: 1.w,
                 ),
                 Flexible(
                   child: ShippingCostComponent(
-                    shippingCost: controller.basShippingPrice.value,
-                    alignment: MainAxisAlignment.start,
-                    textStyle: Get.textTheme.bodyText1?.copyWith(
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
+                      shippingCost: controller.basShippingPrice.value,
+                      alignment: MainAxisAlignment.start,
+                      textStyle: Get.textTheme.bodyText1),
                 ),
-                const SizedBox(
-                  width: 15,
+                SizedBox(
+                  width: 4.w,
                 ),
                 Icon(
                   Icons.payments_sharp,
-                  color: Colors.grey.shade800,
+                  size: 3.4.h,
+                  color: Colors.black,
                 ),
-                if (restaurant.paymentInfo?.acceptCard == true)
-                  Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Icon(
-                        Icons.credit_card,
-                        color: Colors.grey.shade800,
-                      )),
+                SizedBox(
+                  width: 2.w,
+                ),
+                if (restaurant.paymentInfo?.acceptCard == false)
+                  Icon(
+                    Icons.credit_card,
+                    size: 3.4.h,
+                    color: Colors.black,
+                  )
               ],
             ),
           ),
