@@ -25,24 +25,26 @@ class OrderSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: margin ?? const EdgeInsets.only(top: 20),
+      margin: margin ?? const EdgeInsets.only(top: 9),
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: txt.bodyText1,
+              style: txt.bodyText1?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  margin: const EdgeInsets.only(bottom: 5),
+                  //margin: const EdgeInsets.only(bottom: 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -66,7 +68,7 @@ class OrderSummaryCard extends StatelessWidget {
                 if (order.stripePaymentInfo != null &&
                     order.stripePaymentInfo!.chargeFeesOnCustomer == true)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 5),
+                    margin: const EdgeInsets.only(bottom: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -81,7 +83,7 @@ class OrderSummaryCard extends StatelessWidget {
                     ),
                   ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 4),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -98,7 +100,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 if (order.refundAmount != null && order.refundAmount! > 0)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -113,24 +115,32 @@ class OrderSummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      '${_i18n()["totalCost"]}',
-                      style: txt.bodyText1,
-                    ),
-                    Text(
-                      order.totalCost?.toPriceString() ?? "_",
-                      style: txt.bodyText1!.copyWith(fontSize: 14.sp),
-                    ),
-                  ],
+                Container(
+                  margin: EdgeInsets.only(top: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        '${_i18n()["totalCost"]}',
+                        style: txt.bodyText1?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Text(
+                        order.totalCost?.toPriceString() ?? "_",
+                        style: txt.bodyText1!.copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(
-            height: 8,
+            height: 2.h,
           )
         ],
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-
+import 'package:sizer/sizer.dart';
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderDeliveryLocation"];
@@ -26,7 +26,7 @@ class OrderDeliveryLocation extends StatelessWidget {
             style: titleTextStyle,
           ),
           const SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
             margin: EdgeInsets.zero,
@@ -37,10 +37,10 @@ class OrderDeliveryLocation extends StatelessWidget {
                   Icon(
                     Icons.fmd_good,
                     color: Colors.black,
-                    size: 18,
+                    size: 13.sp,
                   ),
                   const SizedBox(
-                    width: 8,
+                    width: 4,
                   ),
                   Flexible(
                     fit: FlexFit.tight,
