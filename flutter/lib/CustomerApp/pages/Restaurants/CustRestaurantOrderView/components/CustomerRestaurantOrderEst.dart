@@ -22,7 +22,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 9,
           ),
           Container(
             alignment: Alignment.centerLeft,

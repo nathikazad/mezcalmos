@@ -131,7 +131,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: viewController.order.value!,
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 10),
+                              margin: const EdgeInsets.only(top: 9),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
                                 style: Get.textTheme.bodyText1,
@@ -139,22 +139,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 10)),
+                                margin: const EdgeInsets.only(top: 9)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
                               margin: EdgeInsets.zero,
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 9),
+                              margin: const EdgeInsets.only(bottom: 9, top: 2),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
                               paymentType:
                                   viewController.order.value!.paymentType,
-                              margin:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
+                              margin: const EdgeInsets.only(top: 9, bottom: 9),
                             ),
                             if (viewController.order.value!.review != null)
                               ReviewCard(
@@ -167,15 +166,18 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                             //===============================>button cancel===========================
                             //  Expanded(child: Container()),
-                            Spacer(),
+                            SizedBox(
+                              height: 9,
+                            ),
                             Flexible(
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  child: OrderFooterCard(
-                                    order: viewController.order.value!,
-                                    cancelOrderFunction:
-                                        viewController.cancelOrder,
-                                  )),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: OrderFooterCard(
+                                  order: viewController.order.value!,
+                                  cancelOrderFunction:
+                                      viewController.cancelOrder,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -195,7 +197,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   List<Widget> get _mapWidget => <Widget>[
         SizedBox(
-          height: 20,
+          height: 9,
         ),
         Container(
           height: 350,

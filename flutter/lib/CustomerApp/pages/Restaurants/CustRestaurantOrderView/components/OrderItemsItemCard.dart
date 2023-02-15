@@ -162,6 +162,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                         widget.item.name[userLanguage]! +
                             " x${widget.item.quantity}",
                         style: txt.bodyText1?.copyWith(
+                          fontWeight: FontWeight.w700,
                             color: widget.item.unavailable
                                 ? Colors.black.withOpacity(0.5)
                                 : Colors.black,
