@@ -3,7 +3,6 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/__generated/service_provider.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -67,14 +66,8 @@ Future<MainService?> get_service_details_by_id(
   }
   Query$getServiceDetails$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
-  final PaymentInfo paymentInfo = PaymentInfo();
-  if (data.accepted_payments != null) {
-    paymentInfo.acceptedPayments =
-        parseAcceptedPayments(data.accepted_payments);
-  }
-  if (data.stripe_info != null) {
-    paymentInfo.stripe = parseServiceStripeInfo(data.stripe_info);
-  }
+  final PaymentInfo paymentInfo = PaymentInfo.fromData(
+      acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
 
   return MainService(
       info: ServiceInfo(
@@ -145,23 +138,9 @@ Future<PaymentInfo?> get_service_payment_info(
   Query$getServicePaymentInfo$service_provider_details_by_pk data =
       res.parsedData!.service_provider_details_by_pk!;
 
-  final PaymentInfo paymentInfo = PaymentInfo();
-  if (data.accepted_payments != null) {
-    paymentInfo.acceptedPayments =
-        parseAcceptedPayments(data.accepted_payments);
-  }
-  if (data.stripe_info != null) {
-    paymentInfo.stripe = StripeInfo(
-      id: data.stripe_info!.stripe_id,
-      status: data.stripe_info!.status.toStripeStatus(),
-      chargeFeesOnCustomer: data.stripe_info!.charge_fees_on_customer ?? true,
-      chargesEnabled: data.stripe_info!.charges_enabled,
-      payoutsEnabled: data.stripe_info!.payouts_enabled,
-      detailsSubmitted: data.stripe_info!.details_submitted,
-      email: data.stripe_info!.email,
-      //  requirements: data.stripe_info!.requirements,
-    );
-  }
+  final PaymentInfo paymentInfo = PaymentInfo.fromData(
+      acceptedPayments: data.accepted_payments, stripeInfo: data.stripe_info);
+
   return paymentInfo;
 }
 
@@ -236,4 +215,26 @@ Future<Schedule?> update_service_schedule(
   Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
       res.parsedData!.update_service_provider_details_by_pk;
   return Schedule.fromData(data!.schedule);
+}
+
+Future<bool> update_service_accepted_payments(
+    {required Map<PaymentType, bool> payments, required int detailsId}) async {
+  QueryResult<Mutation$updateServiceDetails> res =
+      await _db.graphQLClient.mutate$updateServiceDetails(
+    Options$Mutation$updateServiceDetails(
+      variables: Variables$Mutation$updateServiceDetails(
+        detailsId: detailsId,
+        data: Input$service_provider_details_set_input(accepted_payments:
+            payments.map<String, bool>((PaymentType key, bool value) {
+          return MapEntry(key.toFirebaseFormatString(), value);
+        })),
+      ),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
+      res.parsedData!.update_service_provider_details_by_pk;
+  return data != null;
 }

@@ -65,7 +65,8 @@ extension ParseStringToStripeStatus on String {
 
 class StripeInfo {
   StripeStatus status;
-  String id;
+  int id;
+  String stripeId;
   bool chargeFeesOnCustomer;
   bool chargesEnabled;
   bool payoutsEnabled;
@@ -73,7 +74,8 @@ class StripeInfo {
   String? email;
   List<String> requirements;
   StripeInfo(
-      {required this.id,
+      {required this.stripeId,
+      required this.id,
       required this.status,
       this.chargesEnabled = false,
       this.payoutsEnabled = false,
@@ -93,7 +95,8 @@ class StripeInfo {
     List<String>? requirements,
   }) {
     return StripeInfo(
-      id: id ?? this.id,
+      id: this.id,
+      stripeId: id ?? stripeId,
       status: status ?? this.status,
       chargeFeesOnCustomer: chargeFeesOnCustomer ?? this.chargeFeesOnCustomer,
       chargesEnabled: chargesEnabled ?? this.chargesEnabled,
@@ -107,7 +110,7 @@ class StripeInfo {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'status': status.toFirebaseFormatString(),
-      'id': id,
+      'id': stripeId,
       'chargeFeesOnCustomer': chargeFeesOnCustomer,
       'chargesEnabled': chargesEnabled,
       'payoutsEnabled': payoutsEnabled,
@@ -131,31 +134,32 @@ class PaymentInfo {
       this.stripe,
       this.bankInfo});
 
-  factory PaymentInfo.fromData({stripeInfo, acceptedPayments}) {
+  factory PaymentInfo.fromData(
+      {required stripeInfo, required acceptedPayments}) {
     final Map<PaymentType, bool> _acceptedPayments = {
       PaymentType.Card: false,
       PaymentType.BankTransfer: false,
       PaymentType.Cash: true
     };
-    mezDbgPrint(
-        "🥰🥰🥰🥰🥰🥰🥰🥰 data : =======>$stripeInfo +======== $acceptedPayments");
+  
     acceptedPayments?.forEach((String key, data) {
       _acceptedPayments[key.toPaymentType()] = data;
     });
     StripeInfo? stripe;
     if (_acceptedPayments[PaymentType.Card] == true && stripeInfo != null) {
       final List<String> requis = [];
-      stripeInfo?["requirements"]?.forEach((req) {
+      stripeInfo.requirements?.forEach((req) {
         requis.add(req.toString());
       });
       stripe = StripeInfo(
-          id: stripeInfo["id"],
-          status: stripeInfo["status"].toString().toStripeStatus(),
-          payoutsEnabled: stripeInfo["payoutsEnabled"] ?? false,
-          detailsSubmitted: stripeInfo["detailsSubmitted"] ?? false,
-          chargesEnabled: stripeInfo["chargesEnabled"] ?? false,
-          chargeFeesOnCustomer: stripeInfo["chargeFeesOnCustomer"] ?? true,
-          email: stripeInfo["email"],
+          id: stripeInfo.id,
+          stripeId: stripeInfo.stripe_id,
+          status: stripeInfo.status.toString().toStripeStatus(),
+          payoutsEnabled: stripeInfo.payouts_enabled ?? false,
+          detailsSubmitted: stripeInfo.details_submitted ?? false,
+          chargesEnabled: stripeInfo.charges_enabled ?? false,
+          chargeFeesOnCustomer: stripeInfo.charge_fees_on_customer ?? true,
+          email: stripeInfo.email,
           requirements: requis);
     }
 
@@ -214,17 +218,18 @@ class PaymentInfo {
 
     if (data != null) {
       final List<String> requis = [];
-      data["requirements"]?.forEach((req) {
+      data.requirements?.forEach((req) {
         requis.add(req.toString());
       });
       stripe = StripeInfo(
-          id: data["id"],
-          status: data["status"].toString().toStripeStatus(),
-          payoutsEnabled: data["payoutsEnabled"] ?? false,
-          detailsSubmitted: data["detailsSubmitted"] ?? false,
-          chargesEnabled: data["chargesEnabled"] ?? false,
-          chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
-          email: data["email"],
+          id: data.id,
+          stripeId: data.stripe_id,
+          status: data.status.toString().toStripeStatus(),
+          payoutsEnabled: data.payoutsEnabled ?? false,
+          detailsSubmitted: data.detailsSubmitted ?? false,
+          chargesEnabled: data.chargesEnabled ?? false,
+          chargeFeesOnCustomer: data.chargeFeesOnCustomer ?? true,
+          email: data.email,
           requirements: requis);
       return stripe;
     }

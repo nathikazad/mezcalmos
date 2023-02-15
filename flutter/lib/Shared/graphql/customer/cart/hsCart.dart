@@ -36,7 +36,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
 
   if (getCartResp.parsedData?.restaurant_cart == null) {
     throw Exception(
-        "[🛑] create_customer_cart :: exception ===> ${getCartResp.exception}!");
+        "[🛑] get_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
   mezDbgPrint(
       "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");

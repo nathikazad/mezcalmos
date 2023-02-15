@@ -1045,18 +1045,82 @@ type customer_customer {
   ): customer_saved_location_aggregate!
   service_provider_type: String
 
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
+  """An array relationship"""
+  stripe_cards(
+    """distinct select on columns"""
+    distinct_on: [customer_stripe_cards_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_stripe_cards_order_by!]
+
+    """filter the rows returned"""
+    where: customer_stripe_cards_bool_exp
+  ): [customer_stripe_cards!]!
+
+  """An aggregate relationship"""
+  stripe_cards_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_stripe_cards_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_stripe_cards_order_by!]
+
+    """filter the rows returned"""
+    where: customer_stripe_cards_bool_exp
+  ): customer_stripe_cards_aggregate!
+  stripe_id: String
   stripe_info(
     """JSON select path"""
     path: String
   ): jsonb
+
+  """An array relationship"""
+  stripe_sp_ids(
+    """distinct select on columns"""
+    distinct_on: [customer_stripe_sp_id_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_stripe_sp_id_order_by!]
+
+    """filter the rows returned"""
+    where: customer_stripe_sp_id_bool_exp
+  ): [customer_stripe_sp_id!]!
+
+  """An aggregate relationship"""
+  stripe_sp_ids_aggregate(
+    """distinct select on columns"""
+    distinct_on: [customer_stripe_sp_id_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [customer_stripe_sp_id_order_by!]
+
+    """filter the rows returned"""
+    where: customer_stripe_sp_id_bool_exp
+  ): customer_stripe_sp_id_aggregate!
 
   """An object relationship"""
   user: user!
@@ -1090,14 +1154,6 @@ type customer_customer_aggregate_fields {
 
 """append existing jsonb value of filtered columns with new jsonb value"""
 input customer_customer_append_input {
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
   stripe_info: jsonb
 }
 
@@ -1122,7 +1178,12 @@ input customer_customer_bool_exp {
   saved_locations: customer_saved_location_bool_exp
   saved_locations_aggregate: customer_saved_location_aggregate_bool_exp
   service_provider_type: String_comparison_exp
+  stripe_cards: customer_stripe_cards_bool_exp
+  stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
+  stripe_id: String_comparison_exp
   stripe_info: jsonb_comparison_exp
+  stripe_sp_ids: customer_stripe_sp_id_bool_exp
+  stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
   user_id: Int_comparison_exp
 }
@@ -1146,14 +1207,6 @@ enum customer_customer_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input customer_customer_delete_at_path_input {
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
   stripe_info: [String!]
 }
 
@@ -1162,14 +1215,6 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input customer_customer_delete_elem_input {
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
   stripe_info: Int
 }
 
@@ -1177,14 +1222,6 @@ input customer_customer_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input customer_customer_delete_key_input {
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
   stripe_info: String
 }
 
@@ -1206,16 +1243,10 @@ input customer_customer_insert_input {
   notification_info: notification_info_obj_rel_insert_input
   saved_locations: customer_saved_location_arr_rel_insert_input
   service_provider_type: String
-
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
+  stripe_cards: customer_stripe_cards_arr_rel_insert_input
+  stripe_id: String
   stripe_info: jsonb
+  stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
 }
@@ -1225,6 +1256,7 @@ type customer_customer_max_fields {
   app_type_id: String
   app_version: String
   service_provider_type: String
+  stripe_id: String
   user_id: Int
 }
 
@@ -1233,6 +1265,7 @@ type customer_customer_min_fields {
   app_type_id: String
   app_version: String
   service_provider_type: String
+  stripe_id: String
   user_id: Int
 }
 
@@ -1275,7 +1308,10 @@ input customer_customer_order_by {
   notification_info: notification_info_order_by
   saved_locations_aggregate: customer_saved_location_aggregate_order_by
   service_provider_type: order_by
+  stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
+  stripe_id: order_by
   stripe_info: order_by
+  stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
 }
@@ -1287,14 +1323,6 @@ input customer_customer_pk_columns_input {
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input customer_customer_prepend_input {
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
   stripe_info: jsonb
 }
 
@@ -1312,6 +1340,9 @@ enum customer_customer_select_column {
   service_provider_type
 
   """column name"""
+  stripe_id
+
+  """column name"""
   stripe_info
 
   """column name"""
@@ -1325,15 +1356,7 @@ input customer_customer_set_input {
   app_type_id: String
   app_version: String
   service_provider_type: String
-
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
+  stripe_id: String
   stripe_info: jsonb
   user_id: Int
 }
@@ -1369,15 +1392,7 @@ input customer_customer_stream_cursor_value_input {
   app_type_id: String
   app_version: String
   service_provider_type: String
-
-  """
-  {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-  Object) {         restaurant: {Record of restaurantIds and
-  stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-  card object: {             id: string,             last4?: string,            
-  brand?: string,             expMonth?: number,             expYear?: number,  
-            idsWithServiceProvider: same as above,         }     } }
-  """
+  stripe_id: String
   stripe_info: jsonb
   user_id: Int
 }
@@ -1399,6 +1414,9 @@ enum customer_customer_update_column {
 
   """column name"""
   service_provider_type
+
+  """column name"""
+  stripe_id
 
   """column name"""
   stripe_info
@@ -2527,8 +2545,18 @@ input customer_saved_location_variance_order_by {
 columns and relationships of "customer.stripe_cards"
 """
 type customer_stripe_cards {
+  brand: String
   card_id: String!
+
+  """An object relationship"""
+  customer: customer_customer!
   customer_id: Int!
+  exp_month: Int
+  exp_year: Int
+  id: Int!
+  last_4: String
+
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids(
     """JSON select path"""
     path: String
@@ -2541,6 +2569,17 @@ aggregated selection of "customer.stripe_cards"
 type customer_stripe_cards_aggregate {
   aggregate: customer_stripe_cards_aggregate_fields
   nodes: [customer_stripe_cards!]!
+}
+
+input customer_stripe_cards_aggregate_bool_exp {
+  count: customer_stripe_cards_aggregate_bool_exp_count
+}
+
+input customer_stripe_cards_aggregate_bool_exp_count {
+  arguments: [customer_stripe_cards_select_column!]
+  distinct: Boolean
+  filter: customer_stripe_cards_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
@@ -2560,14 +2599,55 @@ type customer_stripe_cards_aggregate_fields {
   variance: customer_stripe_cards_variance_fields
 }
 
+"""
+order by aggregate values of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_aggregate_order_by {
+  avg: customer_stripe_cards_avg_order_by
+  count: order_by
+  max: customer_stripe_cards_max_order_by
+  min: customer_stripe_cards_min_order_by
+  stddev: customer_stripe_cards_stddev_order_by
+  stddev_pop: customer_stripe_cards_stddev_pop_order_by
+  stddev_samp: customer_stripe_cards_stddev_samp_order_by
+  sum: customer_stripe_cards_sum_order_by
+  var_pop: customer_stripe_cards_var_pop_order_by
+  var_samp: customer_stripe_cards_var_samp_order_by
+  variance: customer_stripe_cards_variance_order_by
+}
+
 """append existing jsonb value of filtered columns with new jsonb value"""
 input customer_stripe_cards_append_input {
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "customer.stripe_cards"
+"""
+input customer_stripe_cards_arr_rel_insert_input {
+  data: [customer_stripe_cards_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: customer_stripe_cards_on_conflict
 }
 
 """aggregate avg on columns"""
 type customer_stripe_cards_avg_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by avg() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_avg_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """
@@ -2577,8 +2657,14 @@ input customer_stripe_cards_bool_exp {
   _and: [customer_stripe_cards_bool_exp!]
   _not: customer_stripe_cards_bool_exp
   _or: [customer_stripe_cards_bool_exp!]
+  brand: String_comparison_exp
   card_id: String_comparison_exp
+  customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  exp_month: Int_comparison_exp
+  exp_year: Int_comparison_exp
+  id: Int_comparison_exp
+  last_4: String_comparison_exp
   sp_card_ids: jsonb_comparison_exp
 }
 
@@ -2587,7 +2673,7 @@ unique or primary key constraints on table "customer.stripe_cards"
 """
 enum customer_stripe_cards_constraint {
   """
-  unique or primary key constraint on columns "card_id"
+  unique or primary key constraint on columns "id"
   """
   stripe_cards_pkey
 }
@@ -2596,6 +2682,7 @@ enum customer_stripe_cards_constraint {
 delete the field or element with specified path (for JSON arrays, negative integers count from the end)
 """
 input customer_stripe_cards_delete_at_path_input {
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: [String!]
 }
 
@@ -2604,6 +2691,7 @@ delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array
 """
 input customer_stripe_cards_delete_elem_input {
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: Int
 }
 
@@ -2611,6 +2699,7 @@ input customer_stripe_cards_delete_elem_input {
 delete key/value pair or string element. key/value pairs are matched based on their key value
 """
 input customer_stripe_cards_delete_key_input {
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: String
 }
 
@@ -2619,27 +2708,74 @@ input type for incrementing numeric columns in table "customer.stripe_cards"
 """
 input customer_stripe_cards_inc_input {
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
 }
 
 """
 input type for inserting data into table "customer.stripe_cards"
 """
 input customer_stripe_cards_insert_input {
+  brand: String
   card_id: String
+  customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+  last_4: String
+
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: jsonb
 }
 
 """aggregate max on columns"""
 type customer_stripe_cards_max_fields {
+  brand: String
   card_id: String
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+  last_4: String
+}
+
+"""
+order by max() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_max_order_by {
+  brand: order_by
+  card_id: order_by
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
+  last_4: order_by
 }
 
 """aggregate min on columns"""
 type customer_stripe_cards_min_fields {
+  brand: String
   card_id: String
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+  last_4: String
+}
+
+"""
+order by min() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_min_order_by {
+  brand: order_by
+  card_id: order_by
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
+  last_4: order_by
 }
 
 """
@@ -2664,18 +2800,25 @@ input customer_stripe_cards_on_conflict {
 
 """Ordering options when selecting data from "customer.stripe_cards"."""
 input customer_stripe_cards_order_by {
+  brand: order_by
   card_id: order_by
+  customer: customer_customer_order_by
   customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
+  last_4: order_by
   sp_card_ids: order_by
 }
 
 """primary key columns input for table: customer.stripe_cards"""
 input customer_stripe_cards_pk_columns_input {
-  card_id: String!
+  id: Int!
 }
 
 """prepend existing jsonb value of filtered columns with new jsonb value"""
 input customer_stripe_cards_prepend_input {
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: jsonb
 }
 
@@ -2684,10 +2827,25 @@ select columns of table "customer.stripe_cards"
 """
 enum customer_stripe_cards_select_column {
   """column name"""
+  brand
+
+  """column name"""
   card_id
 
   """column name"""
   customer_id
+
+  """column name"""
+  exp_month
+
+  """column name"""
+  exp_year
+
+  """column name"""
+  id
+
+  """column name"""
+  last_4
 
   """column name"""
   sp_card_ids
@@ -2697,24 +2855,70 @@ enum customer_stripe_cards_select_column {
 input type for updating data in table "customer.stripe_cards"
 """
 input customer_stripe_cards_set_input {
+  brand: String
   card_id: String
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+  last_4: String
+
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: jsonb
 }
 
 """aggregate stddev on columns"""
 type customer_stripe_cards_stddev_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_stddev_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """aggregate stddev_pop on columns"""
 type customer_stripe_cards_stddev_pop_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_stddev_pop_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """aggregate stddev_samp on columns"""
 type customer_stripe_cards_stddev_samp_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_stddev_samp_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """
@@ -2730,14 +2934,34 @@ input customer_stripe_cards_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input customer_stripe_cards_stream_cursor_value_input {
+  brand: String
   card_id: String
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+  last_4: String
+
+  """Record<sp_details_id, card_sp_id>"""
   sp_card_ids: jsonb
 }
 
 """aggregate sum on columns"""
 type customer_stripe_cards_sum_fields {
   customer_id: Int
+  exp_month: Int
+  exp_year: Int
+  id: Int
+}
+
+"""
+order by sum() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_sum_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """
@@ -2745,10 +2969,25 @@ update columns of table "customer.stripe_cards"
 """
 enum customer_stripe_cards_update_column {
   """column name"""
+  brand
+
+  """column name"""
   card_id
 
   """column name"""
   customer_id
+
+  """column name"""
+  exp_month
+
+  """column name"""
+  exp_year
+
+  """column name"""
+  id
+
+  """column name"""
+  last_4
 
   """column name"""
   sp_card_ids
@@ -2790,154 +3029,276 @@ input customer_stripe_cards_updates {
 """aggregate var_pop on columns"""
 type customer_stripe_cards_var_pop_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_var_pop_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """aggregate var_samp on columns"""
 type customer_stripe_cards_var_samp_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "customer.stripe_cards"
+"""
+input customer_stripe_cards_var_samp_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
 }
 
 """aggregate variance on columns"""
 type customer_stripe_cards_variance_fields {
   customer_id: Float
+  exp_month: Float
+  exp_year: Float
+  id: Float
 }
 
 """
-columns and relationships of "customer.stripe_info"
+order by variance() on columns of table "customer.stripe_cards"
 """
-type customer_stripe_info {
+input customer_stripe_cards_variance_order_by {
+  customer_id: order_by
+  exp_month: order_by
+  exp_year: order_by
+  id: order_by
+}
+
+"""
+columns and relationships of "customer.stripe_sp_id"
+"""
+type customer_stripe_sp_id {
+  """An object relationship"""
+  customer: customer_customer!
   customer_id: Int!
+  id: Int!
   sp_id: Int!
   stripe_id: String!
 }
 
 """
-aggregated selection of "customer.stripe_info"
+aggregated selection of "customer.stripe_sp_id"
 """
-type customer_stripe_info_aggregate {
-  aggregate: customer_stripe_info_aggregate_fields
-  nodes: [customer_stripe_info!]!
+type customer_stripe_sp_id_aggregate {
+  aggregate: customer_stripe_sp_id_aggregate_fields
+  nodes: [customer_stripe_sp_id!]!
+}
+
+input customer_stripe_sp_id_aggregate_bool_exp {
+  count: customer_stripe_sp_id_aggregate_bool_exp_count
+}
+
+input customer_stripe_sp_id_aggregate_bool_exp_count {
+  arguments: [customer_stripe_sp_id_select_column!]
+  distinct: Boolean
+  filter: customer_stripe_sp_id_bool_exp
+  predicate: Int_comparison_exp!
 }
 
 """
-aggregate fields of "customer.stripe_info"
+aggregate fields of "customer.stripe_sp_id"
 """
-type customer_stripe_info_aggregate_fields {
-  avg: customer_stripe_info_avg_fields
-  count(columns: [customer_stripe_info_select_column!], distinct: Boolean): Int!
-  max: customer_stripe_info_max_fields
-  min: customer_stripe_info_min_fields
-  stddev: customer_stripe_info_stddev_fields
-  stddev_pop: customer_stripe_info_stddev_pop_fields
-  stddev_samp: customer_stripe_info_stddev_samp_fields
-  sum: customer_stripe_info_sum_fields
-  var_pop: customer_stripe_info_var_pop_fields
-  var_samp: customer_stripe_info_var_samp_fields
-  variance: customer_stripe_info_variance_fields
+type customer_stripe_sp_id_aggregate_fields {
+  avg: customer_stripe_sp_id_avg_fields
+  count(columns: [customer_stripe_sp_id_select_column!], distinct: Boolean): Int!
+  max: customer_stripe_sp_id_max_fields
+  min: customer_stripe_sp_id_min_fields
+  stddev: customer_stripe_sp_id_stddev_fields
+  stddev_pop: customer_stripe_sp_id_stddev_pop_fields
+  stddev_samp: customer_stripe_sp_id_stddev_samp_fields
+  sum: customer_stripe_sp_id_sum_fields
+  var_pop: customer_stripe_sp_id_var_pop_fields
+  var_samp: customer_stripe_sp_id_var_samp_fields
+  variance: customer_stripe_sp_id_variance_fields
+}
+
+"""
+order by aggregate values of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_aggregate_order_by {
+  avg: customer_stripe_sp_id_avg_order_by
+  count: order_by
+  max: customer_stripe_sp_id_max_order_by
+  min: customer_stripe_sp_id_min_order_by
+  stddev: customer_stripe_sp_id_stddev_order_by
+  stddev_pop: customer_stripe_sp_id_stddev_pop_order_by
+  stddev_samp: customer_stripe_sp_id_stddev_samp_order_by
+  sum: customer_stripe_sp_id_sum_order_by
+  var_pop: customer_stripe_sp_id_var_pop_order_by
+  var_samp: customer_stripe_sp_id_var_samp_order_by
+  variance: customer_stripe_sp_id_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_arr_rel_insert_input {
+  data: [customer_stripe_sp_id_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: customer_stripe_sp_id_on_conflict
 }
 
 """aggregate avg on columns"""
-type customer_stripe_info_avg_fields {
+type customer_stripe_sp_id_avg_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
 }
 
 """
-Boolean expression to filter rows from the table "customer.stripe_info". All fields are combined with a logical 'AND'.
+order by avg() on columns of table "customer.stripe_sp_id"
 """
-input customer_stripe_info_bool_exp {
-  _and: [customer_stripe_info_bool_exp!]
-  _not: customer_stripe_info_bool_exp
-  _or: [customer_stripe_info_bool_exp!]
+input customer_stripe_sp_id_avg_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "customer.stripe_sp_id". All fields are combined with a logical 'AND'.
+"""
+input customer_stripe_sp_id_bool_exp {
+  _and: [customer_stripe_sp_id_bool_exp!]
+  _not: customer_stripe_sp_id_bool_exp
+  _or: [customer_stripe_sp_id_bool_exp!]
+  customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  id: Int_comparison_exp
   sp_id: Int_comparison_exp
   stripe_id: String_comparison_exp
 }
 
 """
-unique or primary key constraints on table "customer.stripe_info"
+unique or primary key constraints on table "customer.stripe_sp_id"
 """
-enum customer_stripe_info_constraint {
+enum customer_stripe_sp_id_constraint {
   """
   unique or primary key constraint on columns "sp_id", "customer_id"
   """
   stripe_info_customer_id_sp_id_key
 
   """
-  unique or primary key constraint on columns "stripe_id"
+  unique or primary key constraint on columns "id"
   """
   stripe_info_pkey
 }
 
 """
-input type for incrementing numeric columns in table "customer.stripe_info"
+input type for incrementing numeric columns in table "customer.stripe_sp_id"
 """
-input customer_stripe_info_inc_input {
+input customer_stripe_sp_id_inc_input {
   customer_id: Int
+  id: Int
   sp_id: Int
 }
 
 """
-input type for inserting data into table "customer.stripe_info"
+input type for inserting data into table "customer.stripe_sp_id"
 """
-input customer_stripe_info_insert_input {
+input customer_stripe_sp_id_insert_input {
+  customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  id: Int
   sp_id: Int
   stripe_id: String
 }
 
 """aggregate max on columns"""
-type customer_stripe_info_max_fields {
+type customer_stripe_sp_id_max_fields {
   customer_id: Int
-  sp_id: Int
-  stripe_id: String
-}
-
-"""aggregate min on columns"""
-type customer_stripe_info_min_fields {
-  customer_id: Int
+  id: Int
   sp_id: Int
   stripe_id: String
 }
 
 """
-response of any mutation on the table "customer.stripe_info"
+order by max() on columns of table "customer.stripe_sp_id"
 """
-type customer_stripe_info_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [customer_stripe_info!]!
-}
-
-"""
-on_conflict condition type for table "customer.stripe_info"
-"""
-input customer_stripe_info_on_conflict {
-  constraint: customer_stripe_info_constraint!
-  update_columns: [customer_stripe_info_update_column!]! = []
-  where: customer_stripe_info_bool_exp
-}
-
-"""Ordering options when selecting data from "customer.stripe_info"."""
-input customer_stripe_info_order_by {
+input customer_stripe_sp_id_max_order_by {
   customer_id: order_by
+  id: order_by
   sp_id: order_by
   stripe_id: order_by
 }
 
-"""primary key columns input for table: customer.stripe_info"""
-input customer_stripe_info_pk_columns_input {
-  stripe_id: String!
+"""aggregate min on columns"""
+type customer_stripe_sp_id_min_fields {
+  customer_id: Int
+  id: Int
+  sp_id: Int
+  stripe_id: String
 }
 
 """
-select columns of table "customer.stripe_info"
+order by min() on columns of table "customer.stripe_sp_id"
 """
-enum customer_stripe_info_select_column {
+input customer_stripe_sp_id_min_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+  stripe_id: order_by
+}
+
+"""
+response of any mutation on the table "customer.stripe_sp_id"
+"""
+type customer_stripe_sp_id_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [customer_stripe_sp_id!]!
+}
+
+"""
+on_conflict condition type for table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_on_conflict {
+  constraint: customer_stripe_sp_id_constraint!
+  update_columns: [customer_stripe_sp_id_update_column!]! = []
+  where: customer_stripe_sp_id_bool_exp
+}
+
+"""Ordering options when selecting data from "customer.stripe_sp_id"."""
+input customer_stripe_sp_id_order_by {
+  customer: customer_customer_order_by
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+  stripe_id: order_by
+}
+
+"""primary key columns input for table: customer.stripe_sp_id"""
+input customer_stripe_sp_id_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "customer.stripe_sp_id"
+"""
+enum customer_stripe_sp_id_select_column {
   """column name"""
   customer_id
+
+  """column name"""
+  id
 
   """column name"""
   sp_id
@@ -2947,62 +3308,107 @@ enum customer_stripe_info_select_column {
 }
 
 """
-input type for updating data in table "customer.stripe_info"
+input type for updating data in table "customer.stripe_sp_id"
 """
-input customer_stripe_info_set_input {
+input customer_stripe_sp_id_set_input {
   customer_id: Int
+  id: Int
   sp_id: Int
   stripe_id: String
 }
 
 """aggregate stddev on columns"""
-type customer_stripe_info_stddev_fields {
+type customer_stripe_sp_id_stddev_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
+}
+
+"""
+order by stddev() on columns of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_stddev_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
 }
 
 """aggregate stddev_pop on columns"""
-type customer_stripe_info_stddev_pop_fields {
+type customer_stripe_sp_id_stddev_pop_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_stddev_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
 }
 
 """aggregate stddev_samp on columns"""
-type customer_stripe_info_stddev_samp_fields {
+type customer_stripe_sp_id_stddev_samp_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
 }
 
 """
-Streaming cursor of the table "customer_stripe_info"
+order by stddev_samp() on columns of table "customer.stripe_sp_id"
 """
-input customer_stripe_info_stream_cursor_input {
+input customer_stripe_sp_id_stddev_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+}
+
+"""
+Streaming cursor of the table "customer_stripe_sp_id"
+"""
+input customer_stripe_sp_id_stream_cursor_input {
   """Stream column input with initial value"""
-  initial_value: customer_stripe_info_stream_cursor_value_input!
+  initial_value: customer_stripe_sp_id_stream_cursor_value_input!
 
   """cursor ordering"""
   ordering: cursor_ordering
 }
 
 """Initial value of the column from where the streaming should start"""
-input customer_stripe_info_stream_cursor_value_input {
+input customer_stripe_sp_id_stream_cursor_value_input {
   customer_id: Int
+  id: Int
   sp_id: Int
   stripe_id: String
 }
 
 """aggregate sum on columns"""
-type customer_stripe_info_sum_fields {
+type customer_stripe_sp_id_sum_fields {
   customer_id: Int
+  id: Int
   sp_id: Int
 }
 
 """
-update columns of table "customer.stripe_info"
+order by sum() on columns of table "customer.stripe_sp_id"
 """
-enum customer_stripe_info_update_column {
+input customer_stripe_sp_id_sum_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+}
+
+"""
+update columns of table "customer.stripe_sp_id"
+"""
+enum customer_stripe_sp_id_update_column {
   """column name"""
   customer_id
+
+  """column name"""
+  id
 
   """column name"""
   sp_id
@@ -3011,39 +3417,71 @@ enum customer_stripe_info_update_column {
   stripe_id
 }
 
-input customer_stripe_info_updates {
+input customer_stripe_sp_id_updates {
   """increments the numeric columns with given value of the filtered values"""
-  _inc: customer_stripe_info_inc_input
+  _inc: customer_stripe_sp_id_inc_input
 
   """sets the columns of the filtered rows to the given values"""
-  _set: customer_stripe_info_set_input
+  _set: customer_stripe_sp_id_set_input
 
   """filter the rows which have to be updated"""
-  where: customer_stripe_info_bool_exp!
+  where: customer_stripe_sp_id_bool_exp!
 }
 
 """aggregate var_pop on columns"""
-type customer_stripe_info_var_pop_fields {
+type customer_stripe_sp_id_var_pop_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
+}
+
+"""
+order by var_pop() on columns of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_var_pop_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
 }
 
 """aggregate var_samp on columns"""
-type customer_stripe_info_var_samp_fields {
+type customer_stripe_sp_id_var_samp_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
 }
 
+"""
+order by var_samp() on columns of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_var_samp_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
+}
+
 """aggregate variance on columns"""
-type customer_stripe_info_variance_fields {
+type customer_stripe_sp_id_variance_fields {
   customer_id: Float
+  id: Float
   sp_id: Float
+}
+
+"""
+order by variance() on columns of table "customer.stripe_sp_id"
+"""
+input customer_stripe_sp_id_variance_order_by {
+  customer_id: order_by
+  id: order_by
+  sp_id: order_by
 }
 
 """
 columns and relationships of "delivery.company"
 """
 type delivery_company {
+  """An object relationship"""
+  delivery_details: delivery_details!
   delivery_details_id: Int!
 
   """An array relationship"""
@@ -3128,6 +3566,7 @@ input delivery_company_bool_exp {
   _and: [delivery_company_bool_exp!]
   _not: delivery_company_bool_exp
   _or: [delivery_company_bool_exp!]
+  delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_operators: delivery_operator_bool_exp
   delivery_operators_aggregate: delivery_operator_aggregate_bool_exp
@@ -3170,6 +3609,7 @@ input delivery_company_inc_input {
 input type for inserting data into table "delivery.company"
 """
 input delivery_company_insert_input {
+  delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
   delivery_operators: delivery_operator_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
@@ -3226,6 +3666,7 @@ input delivery_company_on_conflict {
 
 """Ordering options when selecting data from "delivery.company"."""
 input delivery_company_order_by {
+  delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_operators_aggregate: delivery_operator_aggregate_order_by
   details: service_provider_details_order_by
@@ -5058,7 +5499,7 @@ type delivery_order {
   delivery_driver: delivery_driver
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String!
 
   """An object relationship"""
@@ -5113,7 +5554,7 @@ type delivery_order {
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String!
 
   """
@@ -5374,7 +5815,7 @@ input delivery_order_insert_input {
   delivery_driver: delivery_driver_obj_rel_insert_input
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer: review_obj_rel_insert_input
   driver_review_by_customer_id: Int
@@ -5403,7 +5844,7 @@ input delivery_order_insert_input {
   service_provider_review_by_driver: review_obj_rel_insert_input
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -5435,7 +5876,7 @@ type delivery_order_max_fields {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -5453,7 +5894,7 @@ type delivery_order_max_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -5487,7 +5928,7 @@ input delivery_order_max_order_by {
   delivery_cost: order_by
   delivery_driver_id: order_by
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
@@ -5505,7 +5946,7 @@ input delivery_order_max_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: order_by
 
   """
@@ -5537,7 +5978,7 @@ type delivery_order_min_fields {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -5555,7 +5996,7 @@ type delivery_order_min_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -5589,7 +6030,7 @@ input delivery_order_min_order_by {
   delivery_cost: order_by
   delivery_driver_id: order_by
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
@@ -5607,7 +6048,7 @@ input delivery_order_min_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: order_by
 
   """
@@ -6110,7 +6551,7 @@ input delivery_order_set_input {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -6131,7 +6572,7 @@ input delivery_order_set_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -6313,7 +6754,7 @@ input delivery_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -6334,7 +6775,7 @@ input delivery_order_stream_cursor_value_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -10618,20 +11059,20 @@ type mutation_root {
   """
   delete single row from the table: "customer.stripe_cards"
   """
-  delete_customer_stripe_cards_by_pk(card_id: String!): customer_stripe_cards
+  delete_customer_stripe_cards_by_pk(id: Int!): customer_stripe_cards
 
   """
-  delete data from the table: "customer.stripe_info"
+  delete data from the table: "customer.stripe_sp_id"
   """
-  delete_customer_stripe_info(
+  delete_customer_stripe_sp_id(
     """filter the rows which have to be deleted"""
-    where: customer_stripe_info_bool_exp!
-  ): customer_stripe_info_mutation_response
+    where: customer_stripe_sp_id_bool_exp!
+  ): customer_stripe_sp_id_mutation_response
 
   """
-  delete single row from the table: "customer.stripe_info"
+  delete single row from the table: "customer.stripe_sp_id"
   """
-  delete_customer_stripe_info_by_pk(stripe_id: String!): customer_stripe_info
+  delete_customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
 
   """
   delete data from the table: "delivery.company"
@@ -11128,7 +11569,7 @@ type mutation_root {
   """
   delete single row from the table: "service_provider.stripe_info"
   """
-  delete_service_provider_stripe_info_by_pk(sp_id: Int!): service_provider_stripe_info
+  delete_service_provider_stripe_info_by_pk(id: Int!): service_provider_stripe_info
 
   """
   delete data from the table: "service_provider.subscriber"
@@ -11359,26 +11800,26 @@ type mutation_root {
   ): customer_stripe_cards
 
   """
-  insert data into the table: "customer.stripe_info"
+  insert data into the table: "customer.stripe_sp_id"
   """
-  insert_customer_stripe_info(
+  insert_customer_stripe_sp_id(
     """the rows to be inserted"""
-    objects: [customer_stripe_info_insert_input!]!
+    objects: [customer_stripe_sp_id_insert_input!]!
 
     """upsert condition"""
-    on_conflict: customer_stripe_info_on_conflict
-  ): customer_stripe_info_mutation_response
+    on_conflict: customer_stripe_sp_id_on_conflict
+  ): customer_stripe_sp_id_mutation_response
 
   """
-  insert a single row into the table: "customer.stripe_info"
+  insert a single row into the table: "customer.stripe_sp_id"
   """
-  insert_customer_stripe_info_one(
+  insert_customer_stripe_sp_id_one(
     """the row to be inserted"""
-    object: customer_stripe_info_insert_input!
+    object: customer_stripe_sp_id_insert_input!
 
     """upsert condition"""
-    on_conflict: customer_stripe_info_on_conflict
-  ): customer_stripe_info
+    on_conflict: customer_stripe_sp_id_on_conflict
+  ): customer_stripe_sp_id
 
   """
   insert data into the table: "delivery.company"
@@ -12713,38 +13154,38 @@ type mutation_root {
   ): [customer_stripe_cards_mutation_response]
 
   """
-  update data of the table: "customer.stripe_info"
+  update data of the table: "customer.stripe_sp_id"
   """
-  update_customer_stripe_info(
+  update_customer_stripe_sp_id(
     """increments the numeric columns with given value of the filtered values"""
-    _inc: customer_stripe_info_inc_input
+    _inc: customer_stripe_sp_id_inc_input
 
     """sets the columns of the filtered rows to the given values"""
-    _set: customer_stripe_info_set_input
+    _set: customer_stripe_sp_id_set_input
 
     """filter the rows which have to be updated"""
-    where: customer_stripe_info_bool_exp!
-  ): customer_stripe_info_mutation_response
+    where: customer_stripe_sp_id_bool_exp!
+  ): customer_stripe_sp_id_mutation_response
 
   """
-  update single row of the table: "customer.stripe_info"
+  update single row of the table: "customer.stripe_sp_id"
   """
-  update_customer_stripe_info_by_pk(
+  update_customer_stripe_sp_id_by_pk(
     """increments the numeric columns with given value of the filtered values"""
-    _inc: customer_stripe_info_inc_input
+    _inc: customer_stripe_sp_id_inc_input
 
     """sets the columns of the filtered rows to the given values"""
-    _set: customer_stripe_info_set_input
-    pk_columns: customer_stripe_info_pk_columns_input!
-  ): customer_stripe_info
+    _set: customer_stripe_sp_id_set_input
+    pk_columns: customer_stripe_sp_id_pk_columns_input!
+  ): customer_stripe_sp_id
 
   """
-  update multiples rows of table: "customer.stripe_info"
+  update multiples rows of table: "customer.stripe_sp_id"
   """
-  update_customer_stripe_info_many(
+  update_customer_stripe_sp_id_many(
     """updates to execute, in order"""
-    updates: [customer_stripe_info_updates!]!
-  ): [customer_stripe_info_mutation_response]
+    updates: [customer_stripe_sp_id_updates!]!
+  ): [customer_stripe_sp_id_mutation_response]
 
   """
   update data of the table: "delivery.company"
@@ -15096,14 +15537,14 @@ type query_root {
   """
   fetch data from the table: "customer.stripe_cards" using primary key columns
   """
-  customer_stripe_cards_by_pk(card_id: String!): customer_stripe_cards
+  customer_stripe_cards_by_pk(id: Int!): customer_stripe_cards
 
   """
-  fetch data from the table: "customer.stripe_info"
+  fetch data from the table: "customer.stripe_sp_id"
   """
-  customer_stripe_info(
+  customer_stripe_sp_id(
     """distinct select on columns"""
-    distinct_on: [customer_stripe_info_select_column!]
+    distinct_on: [customer_stripe_sp_id_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -15112,18 +15553,18 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [customer_stripe_info_order_by!]
+    order_by: [customer_stripe_sp_id_order_by!]
 
     """filter the rows returned"""
-    where: customer_stripe_info_bool_exp
-  ): [customer_stripe_info!]!
+    where: customer_stripe_sp_id_bool_exp
+  ): [customer_stripe_sp_id!]!
 
   """
-  fetch aggregated fields from the table: "customer.stripe_info"
+  fetch aggregated fields from the table: "customer.stripe_sp_id"
   """
-  customer_stripe_info_aggregate(
+  customer_stripe_sp_id_aggregate(
     """distinct select on columns"""
-    distinct_on: [customer_stripe_info_select_column!]
+    distinct_on: [customer_stripe_sp_id_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -15132,16 +15573,16 @@ type query_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [customer_stripe_info_order_by!]
+    order_by: [customer_stripe_sp_id_order_by!]
 
     """filter the rows returned"""
-    where: customer_stripe_info_bool_exp
-  ): customer_stripe_info_aggregate!
+    where: customer_stripe_sp_id_bool_exp
+  ): customer_stripe_sp_id_aggregate!
 
   """
-  fetch data from the table: "customer.stripe_info" using primary key columns
+  fetch data from the table: "customer.stripe_sp_id" using primary key columns
   """
-  customer_stripe_info_by_pk(stripe_id: String!): customer_stripe_info
+  customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
 
   """
   fetch data from the table: "delivery.company"
@@ -17062,7 +17503,7 @@ type query_root {
   """
   fetch data from the table: "service_provider.stripe_info" using primary key columns
   """
-  service_provider_stripe_info_by_pk(sp_id: Int!): service_provider_stripe_info
+  service_provider_stripe_info_by_pk(id: Int!): service_provider_stripe_info
 
   """
   fetch data from the table: "service_provider.subscriber"
@@ -25527,6 +25968,7 @@ type service_provider_details {
   service_link: service_provider_service_link
   service_link_id: Int
   service_provider_type: String!
+  stripe_id: Int
 
   """An object relationship"""
   stripe_info: service_provider_stripe_info
@@ -25572,6 +26014,7 @@ type service_provider_details_avg_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """
@@ -25606,6 +26049,7 @@ input service_provider_details_bool_exp {
   service_link: service_provider_service_link_bool_exp
   service_link_id: Int_comparison_exp
   service_provider_type: String_comparison_exp
+  stripe_id: Int_comparison_exp
   stripe_info: service_provider_stripe_info_bool_exp
 }
 
@@ -25676,6 +26120,7 @@ input service_provider_details_inc_input {
   id: Int
   location_id: Int
   service_link_id: Int
+  stripe_id: Int
 }
 
 """
@@ -25707,6 +26152,7 @@ input service_provider_details_insert_input {
   service_link: service_provider_service_link_obj_rel_insert_input
   service_link_id: Int
   service_provider_type: String
+  stripe_id: Int
   stripe_info: service_provider_stripe_info_obj_rel_insert_input
 }
 
@@ -25723,6 +26169,7 @@ type service_provider_details_max_fields {
   phone_number: String
   service_link_id: Int
   service_provider_type: String
+  stripe_id: Int
 }
 
 """aggregate min on columns"""
@@ -25738,6 +26185,7 @@ type service_provider_details_min_fields {
   phone_number: String
   service_link_id: Int
   service_provider_type: String
+  stripe_id: Int
 }
 
 """
@@ -25795,6 +26243,7 @@ input service_provider_details_order_by {
   service_link: service_provider_service_link_order_by
   service_link_id: order_by
   service_provider_type: order_by
+  stripe_id: order_by
   stripe_info: service_provider_stripe_info_order_by
 }
 
@@ -25860,6 +26309,9 @@ enum service_provider_details_select_column {
 
   """column name"""
   service_provider_type
+
+  """column name"""
+  stripe_id
 }
 
 """
@@ -25883,6 +26335,7 @@ input service_provider_details_set_input {
   schedule: jsonb
   service_link_id: Int
   service_provider_type: String
+  stripe_id: Int
 }
 
 """aggregate stddev on columns"""
@@ -25891,6 +26344,7 @@ type service_provider_details_stddev_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """aggregate stddev_pop on columns"""
@@ -25899,6 +26353,7 @@ type service_provider_details_stddev_pop_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """aggregate stddev_samp on columns"""
@@ -25907,6 +26362,7 @@ type service_provider_details_stddev_samp_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """
@@ -25939,6 +26395,7 @@ input service_provider_details_stream_cursor_value_input {
   schedule: jsonb
   service_link_id: Int
   service_provider_type: String
+  stripe_id: Int
 }
 
 """aggregate sum on columns"""
@@ -25947,6 +26404,7 @@ type service_provider_details_sum_fields {
   id: Int
   location_id: Int
   service_link_id: Int
+  stripe_id: Int
 }
 
 """
@@ -25997,6 +26455,9 @@ enum service_provider_details_update_column {
 
   """column name"""
   service_provider_type
+
+  """column name"""
+  stripe_id
 }
 
 input service_provider_details_updates {
@@ -26038,6 +26499,7 @@ type service_provider_details_var_pop_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """aggregate var_samp on columns"""
@@ -26046,6 +26508,7 @@ type service_provider_details_var_samp_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """aggregate variance on columns"""
@@ -26054,6 +26517,7 @@ type service_provider_details_variance_fields {
   id: Float
   location_id: Float
   service_link_id: Float
+  stripe_id: Float
 }
 
 """
@@ -27331,9 +27795,9 @@ type service_provider_stripe_info {
   charges_enabled: Boolean!
   details_submitted: Boolean!
   email: String
+  id: Int!
   payouts_enabled: Boolean!
   requirements: String
-  sp_id: Int!
   status: String!
   stripe_id: String!
 }
@@ -27365,7 +27829,7 @@ type service_provider_stripe_info_aggregate_fields {
 
 """aggregate avg on columns"""
 type service_provider_stripe_info_avg_fields {
-  sp_id: Float
+  id: Float
 }
 
 """
@@ -27380,9 +27844,9 @@ input service_provider_stripe_info_bool_exp {
   charges_enabled: Boolean_comparison_exp
   details_submitted: Boolean_comparison_exp
   email: String_comparison_exp
+  id: Int_comparison_exp
   payouts_enabled: Boolean_comparison_exp
   requirements: String_comparison_exp
-  sp_id: Int_comparison_exp
   status: String_comparison_exp
   stripe_id: String_comparison_exp
 }
@@ -27392,7 +27856,7 @@ unique or primary key constraints on table "service_provider.stripe_info"
 """
 enum service_provider_stripe_info_constraint {
   """
-  unique or primary key constraint on columns "sp_id"
+  unique or primary key constraint on columns "id"
   """
   stripe_info_pkey
 
@@ -27406,7 +27870,7 @@ enum service_provider_stripe_info_constraint {
 input type for incrementing numeric columns in table "service_provider.stripe_info"
 """
 input service_provider_stripe_info_inc_input {
-  sp_id: Int
+  id: Int
 }
 
 """
@@ -27417,9 +27881,9 @@ input service_provider_stripe_info_insert_input {
   charges_enabled: Boolean
   details_submitted: Boolean
   email: String
+  id: Int
   payouts_enabled: Boolean
   requirements: String
-  sp_id: Int
   status: String
   stripe_id: String
 }
@@ -27427,8 +27891,8 @@ input service_provider_stripe_info_insert_input {
 """aggregate max on columns"""
 type service_provider_stripe_info_max_fields {
   email: String
+  id: Int
   requirements: String
-  sp_id: Int
   status: String
   stripe_id: String
 }
@@ -27436,8 +27900,8 @@ type service_provider_stripe_info_max_fields {
 """aggregate min on columns"""
 type service_provider_stripe_info_min_fields {
   email: String
+  id: Int
   requirements: String
-  sp_id: Int
   status: String
   stripe_id: String
 }
@@ -27480,16 +27944,16 @@ input service_provider_stripe_info_order_by {
   charges_enabled: order_by
   details_submitted: order_by
   email: order_by
+  id: order_by
   payouts_enabled: order_by
   requirements: order_by
-  sp_id: order_by
   status: order_by
   stripe_id: order_by
 }
 
 """primary key columns input for table: service_provider.stripe_info"""
 input service_provider_stripe_info_pk_columns_input {
-  sp_id: Int!
+  id: Int!
 }
 
 """
@@ -27509,13 +27973,13 @@ enum service_provider_stripe_info_select_column {
   email
 
   """column name"""
+  id
+
+  """column name"""
   payouts_enabled
 
   """column name"""
   requirements
-
-  """column name"""
-  sp_id
 
   """column name"""
   status
@@ -27532,26 +27996,26 @@ input service_provider_stripe_info_set_input {
   charges_enabled: Boolean
   details_submitted: Boolean
   email: String
+  id: Int
   payouts_enabled: Boolean
   requirements: String
-  sp_id: Int
   status: String
   stripe_id: String
 }
 
 """aggregate stddev on columns"""
 type service_provider_stripe_info_stddev_fields {
-  sp_id: Float
+  id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type service_provider_stripe_info_stddev_pop_fields {
-  sp_id: Float
+  id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type service_provider_stripe_info_stddev_samp_fields {
-  sp_id: Float
+  id: Float
 }
 
 """
@@ -27571,16 +28035,16 @@ input service_provider_stripe_info_stream_cursor_value_input {
   charges_enabled: Boolean
   details_submitted: Boolean
   email: String
+  id: Int
   payouts_enabled: Boolean
   requirements: String
-  sp_id: Int
   status: String
   stripe_id: String
 }
 
 """aggregate sum on columns"""
 type service_provider_stripe_info_sum_fields {
-  sp_id: Int
+  id: Int
 }
 
 """
@@ -27600,13 +28064,13 @@ enum service_provider_stripe_info_update_column {
   email
 
   """column name"""
+  id
+
+  """column name"""
   payouts_enabled
 
   """column name"""
   requirements
-
-  """column name"""
-  sp_id
 
   """column name"""
   status
@@ -27628,17 +28092,17 @@ input service_provider_stripe_info_updates {
 
 """aggregate var_pop on columns"""
 type service_provider_stripe_info_var_pop_fields {
-  sp_id: Float
+  id: Float
 }
 
 """aggregate var_samp on columns"""
 type service_provider_stripe_info_var_samp_fields {
-  sp_id: Float
+  id: Float
 }
 
 """aggregate variance on columns"""
 type service_provider_stripe_info_variance_fields {
-  sp_id: Float
+  id: Float
 }
 
 """
@@ -28492,7 +28956,7 @@ type subscription_root {
   """
   fetch data from the table: "customer.stripe_cards" using primary key columns
   """
-  customer_stripe_cards_by_pk(card_id: String!): customer_stripe_cards
+  customer_stripe_cards_by_pk(id: Int!): customer_stripe_cards
 
   """
   fetch data from the table in a streaming manner: "customer.stripe_cards"
@@ -28509,11 +28973,11 @@ type subscription_root {
   ): [customer_stripe_cards!]!
 
   """
-  fetch data from the table: "customer.stripe_info"
+  fetch data from the table: "customer.stripe_sp_id"
   """
-  customer_stripe_info(
+  customer_stripe_sp_id(
     """distinct select on columns"""
-    distinct_on: [customer_stripe_info_select_column!]
+    distinct_on: [customer_stripe_sp_id_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -28522,18 +28986,18 @@ type subscription_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [customer_stripe_info_order_by!]
+    order_by: [customer_stripe_sp_id_order_by!]
 
     """filter the rows returned"""
-    where: customer_stripe_info_bool_exp
-  ): [customer_stripe_info!]!
+    where: customer_stripe_sp_id_bool_exp
+  ): [customer_stripe_sp_id!]!
 
   """
-  fetch aggregated fields from the table: "customer.stripe_info"
+  fetch aggregated fields from the table: "customer.stripe_sp_id"
   """
-  customer_stripe_info_aggregate(
+  customer_stripe_sp_id_aggregate(
     """distinct select on columns"""
-    distinct_on: [customer_stripe_info_select_column!]
+    distinct_on: [customer_stripe_sp_id_select_column!]
 
     """limit the number of rows returned"""
     limit: Int
@@ -28542,30 +29006,30 @@ type subscription_root {
     offset: Int
 
     """sort the rows by one or more columns"""
-    order_by: [customer_stripe_info_order_by!]
+    order_by: [customer_stripe_sp_id_order_by!]
 
     """filter the rows returned"""
-    where: customer_stripe_info_bool_exp
-  ): customer_stripe_info_aggregate!
+    where: customer_stripe_sp_id_bool_exp
+  ): customer_stripe_sp_id_aggregate!
 
   """
-  fetch data from the table: "customer.stripe_info" using primary key columns
+  fetch data from the table: "customer.stripe_sp_id" using primary key columns
   """
-  customer_stripe_info_by_pk(stripe_id: String!): customer_stripe_info
+  customer_stripe_sp_id_by_pk(id: Int!): customer_stripe_sp_id
 
   """
-  fetch data from the table in a streaming manner: "customer.stripe_info"
+  fetch data from the table in a streaming manner: "customer.stripe_sp_id"
   """
-  customer_stripe_info_stream(
+  customer_stripe_sp_id_stream(
     """maximum number of rows returned in a single batch"""
     batch_size: Int!
 
     """cursor to stream the results returned by the query"""
-    cursor: [customer_stripe_info_stream_cursor_input]!
+    cursor: [customer_stripe_sp_id_stream_cursor_input]!
 
     """filter the rows returned"""
-    where: customer_stripe_info_bool_exp
-  ): [customer_stripe_info!]!
+    where: customer_stripe_sp_id_bool_exp
+  ): [customer_stripe_sp_id!]!
 
   """
   fetch data from the table: "delivery.company"
@@ -31018,7 +31482,7 @@ type subscription_root {
   """
   fetch data from the table: "service_provider.stripe_info" using primary key columns
   """
-  service_provider_stripe_info_by_pk(sp_id: Int!): service_provider_stripe_info
+  service_provider_stripe_info_by_pk(id: Int!): service_provider_stripe_info
 
   """
   fetch data from the table in a streaming manner: "service_provider.stripe_info"

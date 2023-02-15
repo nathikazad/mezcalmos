@@ -671,8 +671,33 @@ saved_locations_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["customer_saved_location_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_saved_location_bool_exp"]},ValueTypes["customer_saved_location_aggregate"]],
 	service_provider_type?:true,
+stripe_cards?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_cards_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_stripe_cards_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards"]],
+stripe_cards_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_cards_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_stripe_cards_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards_aggregate"]],
+	stripe_id?:true,
 stripe_info?: [{	/** JSON select path */
 	path?:string},true],
+stripe_sp_ids?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id"]],
+stripe_sp_ids_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_aggregate"]],
 	/** An object relationship */
 	user?:ValueTypes["user"],
 	user_id?:true,
@@ -701,12 +726,6 @@ count?: [{	columns?:ValueTypes["customer_customer_select_column"][],	distinct?:b
 }>;
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["customer_customer_append_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:ValueTypes["jsonb"]
 };
 	/** aggregate avg on columns */
@@ -728,7 +747,12 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	saved_locations?:ValueTypes["customer_saved_location_bool_exp"],
 	saved_locations_aggregate?:ValueTypes["customer_saved_location_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
+	stripe_cards?:ValueTypes["customer_stripe_cards_bool_exp"],
+	stripe_cards_aggregate?:ValueTypes["customer_stripe_cards_aggregate_bool_exp"],
+	stripe_id?:ValueTypes["String_comparison_exp"],
 	stripe_info?:ValueTypes["jsonb_comparison_exp"],
+	stripe_sp_ids?:ValueTypes["customer_stripe_sp_id_bool_exp"],
+	stripe_sp_ids_aggregate?:ValueTypes["customer_stripe_sp_id_aggregate_bool_exp"],
 	user?:ValueTypes["user_bool_exp"],
 	user_id?:ValueTypes["Int_comparison_exp"]
 };
@@ -736,33 +760,15 @@ brand?: string,             expMonth?: number,             expYear?: number,
 ["customer_customer_constraint"]:customer_customer_constraint;
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["customer_customer_delete_at_path_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:string[]
 };
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["customer_customer_delete_elem_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:number
 };
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["customer_customer_delete_key_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:string
 };
 	/** input type for incrementing numeric columns in table "customer.customer" */
@@ -778,13 +784,10 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
 	saved_locations?:ValueTypes["customer_saved_location_arr_rel_insert_input"],
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_cards?:ValueTypes["customer_stripe_cards_arr_rel_insert_input"],
+	stripe_id?:string,
 	stripe_info?:ValueTypes["jsonb"],
+	stripe_sp_ids?:ValueTypes["customer_stripe_sp_id_arr_rel_insert_input"],
 	user?:ValueTypes["user_obj_rel_insert_input"],
 	user_id?:number
 };
@@ -793,6 +796,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:true,
 	app_version?:true,
 	service_provider_type?:true,
+	stripe_id?:true,
 	user_id?:true,
 		__typename?: true
 }>;
@@ -801,6 +805,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:true,
 	app_version?:true,
 	service_provider_type?:true,
+	stripe_id?:true,
 	user_id?:true,
 		__typename?: true
 }>;
@@ -833,7 +838,10 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	notification_info?:ValueTypes["notification_info_order_by"],
 	saved_locations_aggregate?:ValueTypes["customer_saved_location_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"],
+	stripe_cards_aggregate?:ValueTypes["customer_stripe_cards_aggregate_order_by"],
+	stripe_id?:ValueTypes["order_by"],
 	stripe_info?:ValueTypes["order_by"],
+	stripe_sp_ids_aggregate?:ValueTypes["customer_stripe_sp_id_aggregate_order_by"],
 	user?:ValueTypes["user_order_by"],
 	user_id?:ValueTypes["order_by"]
 };
@@ -843,12 +851,6 @@ brand?: string,             expMonth?: number,             expYear?: number,
 };
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["customer_customer_prepend_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:ValueTypes["jsonb"]
 };
 	/** select columns of table "customer.customer" */
@@ -858,12 +860,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
@@ -894,12 +891,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:ValueTypes["jsonb"],
 	user_id?:number
 };
@@ -1686,8 +1678,15 @@ count?: [{	columns?:ValueTypes["customer_saved_location_select_column"][],	disti
 };
 	/** columns and relationships of "customer.stripe_cards" */
 ["customer_stripe_cards"]: AliasType<{
+	brand?:true,
 	card_id?:true,
+	/** An object relationship */
+	customer?:ValueTypes["customer_customer"],
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
+	last_4?:true,
 sp_card_ids?: [{	/** JSON select path */
 	path?:string},true],
 		__typename?: true
@@ -1698,6 +1697,15 @@ sp_card_ids?: [{	/** JSON select path */
 	nodes?:ValueTypes["customer_stripe_cards"],
 		__typename?: true
 }>;
+	["customer_stripe_cards_aggregate_bool_exp"]: {
+	count?:ValueTypes["customer_stripe_cards_aggregate_bool_exp_count"]
+};
+	["customer_stripe_cards_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["customer_stripe_cards_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["customer_stripe_cards_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
 	/** aggregate fields of "customer.stripe_cards" */
 ["customer_stripe_cards_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["customer_stripe_cards_avg_fields"],
@@ -1713,61 +1721,141 @@ count?: [{	columns?:ValueTypes["customer_stripe_cards_select_column"][],	distinc
 	variance?:ValueTypes["customer_stripe_cards_variance_fields"],
 		__typename?: true
 }>;
+	/** order by aggregate values of table "customer.stripe_cards" */
+["customer_stripe_cards_aggregate_order_by"]: {
+	avg?:ValueTypes["customer_stripe_cards_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["customer_stripe_cards_max_order_by"],
+	min?:ValueTypes["customer_stripe_cards_min_order_by"],
+	stddev?:ValueTypes["customer_stripe_cards_stddev_order_by"],
+	stddev_pop?:ValueTypes["customer_stripe_cards_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["customer_stripe_cards_stddev_samp_order_by"],
+	sum?:ValueTypes["customer_stripe_cards_sum_order_by"],
+	var_pop?:ValueTypes["customer_stripe_cards_var_pop_order_by"],
+	var_samp?:ValueTypes["customer_stripe_cards_var_samp_order_by"],
+	variance?:ValueTypes["customer_stripe_cards_variance_order_by"]
+};
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["customer_stripe_cards_append_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:ValueTypes["jsonb"]
+};
+	/** input type for inserting array relation for remote table "customer.stripe_cards" */
+["customer_stripe_cards_arr_rel_insert_input"]: {
+	data:ValueTypes["customer_stripe_cards_insert_input"][],
+	/** upsert condition */
+	on_conflict?:ValueTypes["customer_stripe_cards_on_conflict"]
 };
 	/** aggregate avg on columns */
 ["customer_stripe_cards_avg_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by avg() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_avg_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** Boolean expression to filter rows from the table "customer.stripe_cards". All fields are combined with a logical 'AND'. */
 ["customer_stripe_cards_bool_exp"]: {
 	_and?:ValueTypes["customer_stripe_cards_bool_exp"][],
 	_not?:ValueTypes["customer_stripe_cards_bool_exp"],
 	_or?:ValueTypes["customer_stripe_cards_bool_exp"][],
+	brand?:ValueTypes["String_comparison_exp"],
 	card_id?:ValueTypes["String_comparison_exp"],
+	customer?:ValueTypes["customer_customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
+	exp_month?:ValueTypes["Int_comparison_exp"],
+	exp_year?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
+	last_4?:ValueTypes["String_comparison_exp"],
 	sp_card_ids?:ValueTypes["jsonb_comparison_exp"]
 };
 	/** unique or primary key constraints on table "customer.stripe_cards" */
 ["customer_stripe_cards_constraint"]:customer_stripe_cards_constraint;
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["customer_stripe_cards_delete_at_path_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:string[]
 };
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["customer_stripe_cards_delete_elem_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:number
 };
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["customer_stripe_cards_delete_key_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:string
 };
 	/** input type for incrementing numeric columns in table "customer.stripe_cards" */
 ["customer_stripe_cards_inc_input"]: {
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
 };
 	/** input type for inserting data into table "customer.stripe_cards" */
 ["customer_stripe_cards_insert_input"]: {
+	brand?:string,
 	card_id?:string,
+	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:ValueTypes["jsonb"]
 };
 	/** aggregate max on columns */
 ["customer_stripe_cards_max_fields"]: AliasType<{
+	brand?:true,
 	card_id?:true,
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
+	last_4?:true,
 		__typename?: true
 }>;
+	/** order by max() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_max_order_by"]: {
+	brand?:ValueTypes["order_by"],
+	card_id?:ValueTypes["order_by"],
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	last_4?:ValueTypes["order_by"]
+};
 	/** aggregate min on columns */
 ["customer_stripe_cards_min_fields"]: AliasType<{
+	brand?:true,
 	card_id?:true,
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
+	last_4?:true,
 		__typename?: true
 }>;
+	/** order by min() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_min_order_by"]: {
+	brand?:ValueTypes["order_by"],
+	card_id?:ValueTypes["order_by"],
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	last_4?:ValueTypes["order_by"]
+};
 	/** response of any mutation on the table "customer.stripe_cards" */
 ["customer_stripe_cards_mutation_response"]: AliasType<{
 	/** number of rows affected by the mutation */
@@ -1784,41 +1872,84 @@ end). throws an error if top level container is not an array */
 };
 	/** Ordering options when selecting data from "customer.stripe_cards". */
 ["customer_stripe_cards_order_by"]: {
+	brand?:ValueTypes["order_by"],
 	card_id?:ValueTypes["order_by"],
+	customer?:ValueTypes["customer_customer_order_by"],
 	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	last_4?:ValueTypes["order_by"],
 	sp_card_ids?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: customer.stripe_cards */
 ["customer_stripe_cards_pk_columns_input"]: {
-	card_id:string
+	id:number
 };
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["customer_stripe_cards_prepend_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:ValueTypes["jsonb"]
 };
 	/** select columns of table "customer.stripe_cards" */
 ["customer_stripe_cards_select_column"]:customer_stripe_cards_select_column;
 	/** input type for updating data in table "customer.stripe_cards" */
 ["customer_stripe_cards_set_input"]: {
+	brand?:string,
 	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:ValueTypes["jsonb"]
 };
 	/** aggregate stddev on columns */
 ["customer_stripe_cards_stddev_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by stddev() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_pop on columns */
 ["customer_stripe_cards_stddev_pop_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_pop() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_pop_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_samp on columns */
 ["customer_stripe_cards_stddev_samp_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_samp() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_samp_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** Streaming cursor of the table "customer_stripe_cards" */
 ["customer_stripe_cards_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -1828,15 +1959,31 @@ end). throws an error if top level container is not an array */
 };
 	/** Initial value of the column from where the streaming should start */
 ["customer_stripe_cards_stream_cursor_value_input"]: {
+	brand?:string,
 	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:ValueTypes["jsonb"]
 };
 	/** aggregate sum on columns */
 ["customer_stripe_cards_sum_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by sum() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_sum_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** update columns of table "customer.stripe_cards" */
 ["customer_stripe_cards_update_column"]:customer_stripe_cards_update_column;
 	["customer_stripe_cards_updates"]: {
@@ -1861,187 +2008,332 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["customer_stripe_cards_var_pop_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by var_pop() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_var_pop_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** aggregate var_samp on columns */
 ["customer_stripe_cards_var_samp_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
+	/** order by var_samp() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_var_samp_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
 	/** aggregate variance on columns */
 ["customer_stripe_cards_variance_fields"]: AliasType<{
 	customer_id?:true,
+	exp_month?:true,
+	exp_year?:true,
+	id?:true,
 		__typename?: true
 }>;
-	/** columns and relationships of "customer.stripe_info" */
-["customer_stripe_info"]: AliasType<{
+	/** order by variance() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_variance_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	exp_month?:ValueTypes["order_by"],
+	exp_year?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"]
+};
+	/** columns and relationships of "customer.stripe_sp_id" */
+["customer_stripe_sp_id"]: AliasType<{
+	/** An object relationship */
+	customer?:ValueTypes["customer_customer"],
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 	stripe_id?:true,
 		__typename?: true
 }>;
-	/** aggregated selection of "customer.stripe_info" */
-["customer_stripe_info_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["customer_stripe_info_aggregate_fields"],
-	nodes?:ValueTypes["customer_stripe_info"],
+	/** aggregated selection of "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["customer_stripe_sp_id_aggregate_fields"],
+	nodes?:ValueTypes["customer_stripe_sp_id"],
 		__typename?: true
 }>;
-	/** aggregate fields of "customer.stripe_info" */
-["customer_stripe_info_aggregate_fields"]: AliasType<{
-	avg?:ValueTypes["customer_stripe_info_avg_fields"],
-count?: [{	columns?:ValueTypes["customer_stripe_info_select_column"][],	distinct?:boolean},true],
-	max?:ValueTypes["customer_stripe_info_max_fields"],
-	min?:ValueTypes["customer_stripe_info_min_fields"],
-	stddev?:ValueTypes["customer_stripe_info_stddev_fields"],
-	stddev_pop?:ValueTypes["customer_stripe_info_stddev_pop_fields"],
-	stddev_samp?:ValueTypes["customer_stripe_info_stddev_samp_fields"],
-	sum?:ValueTypes["customer_stripe_info_sum_fields"],
-	var_pop?:ValueTypes["customer_stripe_info_var_pop_fields"],
-	var_samp?:ValueTypes["customer_stripe_info_var_samp_fields"],
-	variance?:ValueTypes["customer_stripe_info_variance_fields"],
+	["customer_stripe_sp_id_aggregate_bool_exp"]: {
+	count?:ValueTypes["customer_stripe_sp_id_aggregate_bool_exp_count"]
+};
+	["customer_stripe_sp_id_aggregate_bool_exp_count"]: {
+	arguments?:ValueTypes["customer_stripe_sp_id_select_column"][],
+	distinct?:boolean,
+	filter?:ValueTypes["customer_stripe_sp_id_bool_exp"],
+	predicate:ValueTypes["Int_comparison_exp"]
+};
+	/** aggregate fields of "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate_fields"]: AliasType<{
+	avg?:ValueTypes["customer_stripe_sp_id_avg_fields"],
+count?: [{	columns?:ValueTypes["customer_stripe_sp_id_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["customer_stripe_sp_id_max_fields"],
+	min?:ValueTypes["customer_stripe_sp_id_min_fields"],
+	stddev?:ValueTypes["customer_stripe_sp_id_stddev_fields"],
+	stddev_pop?:ValueTypes["customer_stripe_sp_id_stddev_pop_fields"],
+	stddev_samp?:ValueTypes["customer_stripe_sp_id_stddev_samp_fields"],
+	sum?:ValueTypes["customer_stripe_sp_id_sum_fields"],
+	var_pop?:ValueTypes["customer_stripe_sp_id_var_pop_fields"],
+	var_samp?:ValueTypes["customer_stripe_sp_id_var_samp_fields"],
+	variance?:ValueTypes["customer_stripe_sp_id_variance_fields"],
 		__typename?: true
 }>;
+	/** order by aggregate values of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate_order_by"]: {
+	avg?:ValueTypes["customer_stripe_sp_id_avg_order_by"],
+	count?:ValueTypes["order_by"],
+	max?:ValueTypes["customer_stripe_sp_id_max_order_by"],
+	min?:ValueTypes["customer_stripe_sp_id_min_order_by"],
+	stddev?:ValueTypes["customer_stripe_sp_id_stddev_order_by"],
+	stddev_pop?:ValueTypes["customer_stripe_sp_id_stddev_pop_order_by"],
+	stddev_samp?:ValueTypes["customer_stripe_sp_id_stddev_samp_order_by"],
+	sum?:ValueTypes["customer_stripe_sp_id_sum_order_by"],
+	var_pop?:ValueTypes["customer_stripe_sp_id_var_pop_order_by"],
+	var_samp?:ValueTypes["customer_stripe_sp_id_var_samp_order_by"],
+	variance?:ValueTypes["customer_stripe_sp_id_variance_order_by"]
+};
+	/** input type for inserting array relation for remote table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_arr_rel_insert_input"]: {
+	data:ValueTypes["customer_stripe_sp_id_insert_input"][],
+	/** upsert condition */
+	on_conflict?:ValueTypes["customer_stripe_sp_id_on_conflict"]
+};
 	/** aggregate avg on columns */
-["customer_stripe_info_avg_fields"]: AliasType<{
+["customer_stripe_sp_id_avg_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
-	/** Boolean expression to filter rows from the table "customer.stripe_info". All fields are combined with a logical 'AND'. */
-["customer_stripe_info_bool_exp"]: {
-	_and?:ValueTypes["customer_stripe_info_bool_exp"][],
-	_not?:ValueTypes["customer_stripe_info_bool_exp"],
-	_or?:ValueTypes["customer_stripe_info_bool_exp"][],
+	/** order by avg() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_avg_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
+	/** Boolean expression to filter rows from the table "customer.stripe_sp_id". All fields are combined with a logical 'AND'. */
+["customer_stripe_sp_id_bool_exp"]: {
+	_and?:ValueTypes["customer_stripe_sp_id_bool_exp"][],
+	_not?:ValueTypes["customer_stripe_sp_id_bool_exp"],
+	_or?:ValueTypes["customer_stripe_sp_id_bool_exp"][],
+	customer?:ValueTypes["customer_customer_bool_exp"],
 	customer_id?:ValueTypes["Int_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
 	sp_id?:ValueTypes["Int_comparison_exp"],
 	stripe_id?:ValueTypes["String_comparison_exp"]
 };
-	/** unique or primary key constraints on table "customer.stripe_info" */
-["customer_stripe_info_constraint"]:customer_stripe_info_constraint;
-	/** input type for incrementing numeric columns in table "customer.stripe_info" */
-["customer_stripe_info_inc_input"]: {
+	/** unique or primary key constraints on table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_constraint"]:customer_stripe_sp_id_constraint;
+	/** input type for incrementing numeric columns in table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_inc_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 };
-	/** input type for inserting data into table "customer.stripe_info" */
-["customer_stripe_info_insert_input"]: {
+	/** input type for inserting data into table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_insert_input"]: {
+	customer?:ValueTypes["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 };
 	/** aggregate max on columns */
-["customer_stripe_info_max_fields"]: AliasType<{
+["customer_stripe_sp_id_max_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 	stripe_id?:true,
 		__typename?: true
 }>;
-	/** aggregate min on columns */
-["customer_stripe_info_min_fields"]: AliasType<{
-	customer_id?:true,
-	sp_id?:true,
-	stripe_id?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "customer.stripe_info" */
-["customer_stripe_info_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["customer_stripe_info"],
-		__typename?: true
-}>;
-	/** on_conflict condition type for table "customer.stripe_info" */
-["customer_stripe_info_on_conflict"]: {
-	constraint:ValueTypes["customer_stripe_info_constraint"],
-	update_columns:ValueTypes["customer_stripe_info_update_column"][],
-	where?:ValueTypes["customer_stripe_info_bool_exp"]
-};
-	/** Ordering options when selecting data from "customer.stripe_info". */
-["customer_stripe_info_order_by"]: {
+	/** order by max() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_max_order_by"]: {
 	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	sp_id?:ValueTypes["order_by"],
 	stripe_id?:ValueTypes["order_by"]
 };
-	/** primary key columns input for table: customer.stripe_info */
-["customer_stripe_info_pk_columns_input"]: {
-	stripe_id:string
+	/** aggregate min on columns */
+["customer_stripe_sp_id_min_fields"]: AliasType<{
+	customer_id?:true,
+	id?:true,
+	sp_id?:true,
+	stripe_id?:true,
+		__typename?: true
+}>;
+	/** order by min() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_min_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"],
+	stripe_id?:ValueTypes["order_by"]
 };
-	/** select columns of table "customer.stripe_info" */
-["customer_stripe_info_select_column"]:customer_stripe_info_select_column;
-	/** input type for updating data in table "customer.stripe_info" */
-["customer_stripe_info_set_input"]: {
+	/** response of any mutation on the table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["customer_stripe_sp_id"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_on_conflict"]: {
+	constraint:ValueTypes["customer_stripe_sp_id_constraint"],
+	update_columns:ValueTypes["customer_stripe_sp_id_update_column"][],
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]
+};
+	/** Ordering options when selecting data from "customer.stripe_sp_id". */
+["customer_stripe_sp_id_order_by"]: {
+	customer?:ValueTypes["customer_customer_order_by"],
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"],
+	stripe_id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: customer.stripe_sp_id */
+["customer_stripe_sp_id_pk_columns_input"]: {
+	id:number
+};
+	/** select columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_select_column"]:customer_stripe_sp_id_select_column;
+	/** input type for updating data in table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_set_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 };
 	/** aggregate stddev on columns */
-["customer_stripe_info_stddev_fields"]: AliasType<{
+["customer_stripe_sp_id_stddev_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_pop on columns */
-["customer_stripe_info_stddev_pop_fields"]: AliasType<{
+["customer_stripe_sp_id_stddev_pop_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
+	/** order by stddev_pop() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_pop_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
 	/** aggregate stddev_samp on columns */
-["customer_stripe_info_stddev_samp_fields"]: AliasType<{
+["customer_stripe_sp_id_stddev_samp_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
-	/** Streaming cursor of the table "customer_stripe_info" */
-["customer_stripe_info_stream_cursor_input"]: {
+	/** order by stddev_samp() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_samp_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
+	/** Streaming cursor of the table "customer_stripe_sp_id" */
+["customer_stripe_sp_id_stream_cursor_input"]: {
 	/** Stream column input with initial value */
-	initial_value:ValueTypes["customer_stripe_info_stream_cursor_value_input"],
+	initial_value:ValueTypes["customer_stripe_sp_id_stream_cursor_value_input"],
 	/** cursor ordering */
 	ordering?:ValueTypes["cursor_ordering"]
 };
 	/** Initial value of the column from where the streaming should start */
-["customer_stripe_info_stream_cursor_value_input"]: {
+["customer_stripe_sp_id_stream_cursor_value_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 };
 	/** aggregate sum on columns */
-["customer_stripe_info_sum_fields"]: AliasType<{
+["customer_stripe_sp_id_sum_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
-	/** update columns of table "customer.stripe_info" */
-["customer_stripe_info_update_column"]:customer_stripe_info_update_column;
-	["customer_stripe_info_updates"]: {
+	/** order by sum() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_sum_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
+	/** update columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_update_column"]:customer_stripe_sp_id_update_column;
+	["customer_stripe_sp_id_updates"]: {
 	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_stripe_info_inc_input"],
+	_inc?:ValueTypes["customer_stripe_sp_id_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["customer_stripe_info_set_input"],
+	_set?:ValueTypes["customer_stripe_sp_id_set_input"],
 	/** filter the rows which have to be updated */
-	where:ValueTypes["customer_stripe_info_bool_exp"]
+	where:ValueTypes["customer_stripe_sp_id_bool_exp"]
 };
 	/** aggregate var_pop on columns */
-["customer_stripe_info_var_pop_fields"]: AliasType<{
+["customer_stripe_sp_id_var_pop_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
+	/** order by var_pop() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_var_pop_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
 	/** aggregate var_samp on columns */
-["customer_stripe_info_var_samp_fields"]: AliasType<{
+["customer_stripe_sp_id_var_samp_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
+	/** order by var_samp() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_var_samp_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
 	/** aggregate variance on columns */
-["customer_stripe_info_variance_fields"]: AliasType<{
+["customer_stripe_sp_id_variance_fields"]: AliasType<{
 	customer_id?:true,
+	id?:true,
 	sp_id?:true,
 		__typename?: true
 }>;
+	/** order by variance() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_variance_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
+	sp_id?:ValueTypes["order_by"]
+};
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: AliasType<{
+	/** An object relationship */
+	delivery_details?:ValueTypes["delivery_details"],
 	delivery_details_id?:true,
 delivery_operators?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_operator_select_column"][],	/** limit the number of rows returned */
@@ -2095,6 +2387,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_and?:ValueTypes["delivery_company_bool_exp"][],
 	_not?:ValueTypes["delivery_company_bool_exp"],
 	_or?:ValueTypes["delivery_company_bool_exp"][],
+	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
@@ -2113,6 +2406,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
+	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:ValueTypes["delivery_operator_arr_rel_insert_input"],
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
@@ -2158,6 +2452,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
+	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
@@ -3414,7 +3709,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** An object relationship */
 	delivery_driver?:ValueTypes["delivery_driver"],
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	/** An object relationship */
 	driver_review_by_customer?:ValueTypes["review"],
@@ -3454,7 +3749,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** An object relationship */
 	service_provider_review_by_driver?:ValueTypes["review"],
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3669,7 +3964,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver?:ValueTypes["delivery_driver_obj_rel_insert_input"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:ValueTypes["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
@@ -3697,7 +3992,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	service_provider_id?:number,
 	service_provider_review_by_driver?:ValueTypes["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3722,7 +4017,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
@@ -3739,7 +4034,7 @@ cancelledByServiceProvider */
 	schedule_time?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3765,7 +4060,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
@@ -3782,7 +4077,7 @@ cancelledByServiceProvider */
 	schedule_time?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:ValueTypes["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3807,7 +4102,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
@@ -3824,7 +4119,7 @@ cancelledByServiceProvider */
 	schedule_time?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3850,7 +4145,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
@@ -3867,7 +4162,7 @@ cancelledByServiceProvider */
 	schedule_time?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:ValueTypes["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4172,7 +4467,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	customer_review_by_driver_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -4192,7 +4487,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4342,7 +4637,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -4362,7 +4657,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -7190,10 +7485,10 @@ delete_customer_saved_location?: [{	/** filter the rows which have to be deleted
 delete_customer_saved_location_by_pk?: [{	id:number},ValueTypes["customer_saved_location"]],
 delete_customer_stripe_cards?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards_mutation_response"]],
-delete_customer_stripe_cards_by_pk?: [{	card_id:string},ValueTypes["customer_stripe_cards"]],
-delete_customer_stripe_info?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info_mutation_response"]],
-delete_customer_stripe_info_by_pk?: [{	stripe_id:string},ValueTypes["customer_stripe_info"]],
+delete_customer_stripe_cards_by_pk?: [{	id:number},ValueTypes["customer_stripe_cards"]],
+delete_customer_stripe_sp_id?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
+delete_customer_stripe_sp_id_by_pk?: [{	id:number},ValueTypes["customer_stripe_sp_id"]],
 delete_delivery_company?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["delivery_company_bool_exp"]},ValueTypes["delivery_company_mutation_response"]],
 delete_delivery_company_by_pk?: [{	id:number},ValueTypes["delivery_company"]],
@@ -7308,7 +7603,7 @@ delete_service_provider_service_link?: [{	/** filter the rows which have to be d
 delete_service_provider_service_link_by_pk?: [{	id:number},ValueTypes["service_provider_service_link"]],
 delete_service_provider_stripe_info?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_stripe_info_bool_exp"]},ValueTypes["service_provider_stripe_info_mutation_response"]],
-delete_service_provider_stripe_info_by_pk?: [{	sp_id:number},ValueTypes["service_provider_stripe_info"]],
+delete_service_provider_stripe_info_by_pk?: [{	id:number},ValueTypes["service_provider_stripe_info"]],
 delete_service_provider_subscriber?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["service_provider_subscriber_bool_exp"]},ValueTypes["service_provider_subscriber_mutation_response"]],
 delete_service_provider_subscriber_by_pk?: [{	id:number},ValueTypes["service_provider_subscriber"]],
@@ -7369,12 +7664,12 @@ insert_customer_stripe_cards?: [{	/** the rows to be inserted */
 insert_customer_stripe_cards_one?: [{	/** the row to be inserted */
 	object:ValueTypes["customer_stripe_cards_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["customer_stripe_cards_on_conflict"]},ValueTypes["customer_stripe_cards"]],
-insert_customer_stripe_info?: [{	/** the rows to be inserted */
-	objects:ValueTypes["customer_stripe_info_insert_input"][],	/** upsert condition */
-	on_conflict?:ValueTypes["customer_stripe_info_on_conflict"]},ValueTypes["customer_stripe_info_mutation_response"]],
-insert_customer_stripe_info_one?: [{	/** the row to be inserted */
-	object:ValueTypes["customer_stripe_info_insert_input"],	/** upsert condition */
-	on_conflict?:ValueTypes["customer_stripe_info_on_conflict"]},ValueTypes["customer_stripe_info"]],
+insert_customer_stripe_sp_id?: [{	/** the rows to be inserted */
+	objects:ValueTypes["customer_stripe_sp_id_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["customer_stripe_sp_id_on_conflict"]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
+insert_customer_stripe_sp_id_one?: [{	/** the row to be inserted */
+	object:ValueTypes["customer_stripe_sp_id_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["customer_stripe_sp_id_on_conflict"]},ValueTypes["customer_stripe_sp_id"]],
 insert_delivery_company?: [{	/** the rows to be inserted */
 	objects:ValueTypes["delivery_company_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["delivery_company_on_conflict"]},ValueTypes["delivery_company_mutation_response"]],
@@ -7735,15 +8030,15 @@ the end). throws an error if top level container is not an array */
 	_set?:ValueTypes["customer_stripe_cards_set_input"],	pk_columns:ValueTypes["customer_stripe_cards_pk_columns_input"]},ValueTypes["customer_stripe_cards"]],
 update_customer_stripe_cards_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["customer_stripe_cards_updates"][]},ValueTypes["customer_stripe_cards_mutation_response"]],
-update_customer_stripe_info?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["customer_stripe_info_set_input"],	/** filter the rows which have to be updated */
-	where:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info_mutation_response"]],
-update_customer_stripe_info_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["customer_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["customer_stripe_info_set_input"],	pk_columns:ValueTypes["customer_stripe_info_pk_columns_input"]},ValueTypes["customer_stripe_info"]],
-update_customer_stripe_info_many?: [{	/** updates to execute, in order */
-	updates:ValueTypes["customer_stripe_info_updates"][]},ValueTypes["customer_stripe_info_mutation_response"]],
+update_customer_stripe_sp_id?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_stripe_sp_id_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["customer_stripe_sp_id_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
+update_customer_stripe_sp_id_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["customer_stripe_sp_id_inc_input"],	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["customer_stripe_sp_id_set_input"],	pk_columns:ValueTypes["customer_stripe_sp_id_pk_columns_input"]},ValueTypes["customer_stripe_sp_id"]],
+update_customer_stripe_sp_id_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["customer_stripe_sp_id_updates"][]},ValueTypes["customer_stripe_sp_id_mutation_response"]],
 update_delivery_company?: [{	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["delivery_company_inc_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["delivery_company_set_input"],	/** filter the rows which have to be updated */
@@ -8491,20 +8786,20 @@ customer_stripe_cards_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["customer_stripe_cards_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards_aggregate"]],
-customer_stripe_cards_by_pk?: [{	card_id:string},ValueTypes["customer_stripe_cards"]],
-customer_stripe_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["customer_stripe_info_select_column"][],	/** limit the number of rows returned */
+customer_stripe_cards_by_pk?: [{	id:number},ValueTypes["customer_stripe_cards"]],
+customer_stripe_sp_id?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["customer_stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info"]],
-customer_stripe_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["customer_stripe_info_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id"]],
+customer_stripe_sp_id_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["customer_stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info_aggregate"]],
-customer_stripe_info_by_pk?: [{	stripe_id:string},ValueTypes["customer_stripe_info"]],
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_aggregate"]],
+customer_stripe_sp_id_by_pk?: [{	id:number},ValueTypes["customer_stripe_sp_id"]],
 delivery_company?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -9065,7 +9360,7 @@ service_provider_stripe_info_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["service_provider_stripe_info_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["service_provider_stripe_info_bool_exp"]},ValueTypes["service_provider_stripe_info_aggregate"]],
-service_provider_stripe_info_by_pk?: [{	sp_id:number},ValueTypes["service_provider_stripe_info"]],
+service_provider_stripe_info_by_pk?: [{	id:number},ValueTypes["service_provider_stripe_info"]],
 service_provider_subscriber?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["service_provider_subscriber_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -14798,6 +15093,7 @@ schedule?: [{	/** JSON select path */
 	service_link?:ValueTypes["service_provider_service_link"],
 	service_link_id?:true,
 	service_provider_type?:true,
+	stripe_id?:true,
 	/** An object relationship */
 	stripe_info?:ValueTypes["service_provider_stripe_info"],
 		__typename?: true
@@ -14836,6 +15132,7 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** Boolean expression to filter rows from the table "service_provider.details". All fields are combined with a logical 'AND'. */
@@ -14868,6 +15165,7 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	service_link?:ValueTypes["service_provider_service_link_bool_exp"],
 	service_link_id?:ValueTypes["Int_comparison_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
+	stripe_id?:ValueTypes["Int_comparison_exp"],
 	stripe_info?:ValueTypes["service_provider_stripe_info_bool_exp"]
 };
 	/** unique or primary key constraints on table "service_provider.details" */
@@ -14899,7 +15197,8 @@ end). throws an error if top level container is not an array */
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 };
 	/** input type for inserting data into table "service_provider.details" */
 ["service_provider_details_insert_input"]: {
@@ -14927,6 +15226,7 @@ end). throws an error if top level container is not an array */
 	service_link?:ValueTypes["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
 	service_provider_type?:string,
+	stripe_id?:number,
 	stripe_info?:ValueTypes["service_provider_stripe_info_obj_rel_insert_input"]
 };
 	/** aggregate max on columns */
@@ -14942,6 +15242,7 @@ end). throws an error if top level container is not an array */
 	phone_number?:true,
 	service_link_id?:true,
 	service_provider_type?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
@@ -14957,6 +15258,7 @@ end). throws an error if top level container is not an array */
 	phone_number?:true,
 	service_link_id?:true,
 	service_provider_type?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** response of any mutation on the table "service_provider.details" */
@@ -15004,6 +15306,7 @@ end). throws an error if top level container is not an array */
 	service_link?:ValueTypes["service_provider_service_link_order_by"],
 	service_link_id?:ValueTypes["order_by"],
 	service_provider_type?:ValueTypes["order_by"],
+	stripe_id?:ValueTypes["order_by"],
 	stripe_info?:ValueTypes["service_provider_stripe_info_order_by"]
 };
 	/** primary key columns input for table: service_provider.details */
@@ -15036,7 +15339,8 @@ end). throws an error if top level container is not an array */
 	phone_number?:string,
 	schedule?:ValueTypes["jsonb"],
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 };
 	/** aggregate stddev on columns */
 ["service_provider_details_stddev_fields"]: AliasType<{
@@ -15044,6 +15348,7 @@ end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
@@ -15052,6 +15357,7 @@ end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
@@ -15060,6 +15366,7 @@ end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** Streaming cursor of the table "service_provider_details" */
@@ -15086,7 +15393,8 @@ end). throws an error if top level container is not an array */
 	phone_number?:string,
 	schedule?:ValueTypes["jsonb"],
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 };
 	/** aggregate sum on columns */
 ["service_provider_details_sum_fields"]: AliasType<{
@@ -15094,6 +15402,7 @@ end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** update columns of table "service_provider.details" */
@@ -15123,6 +15432,7 @@ the end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
@@ -15131,6 +15441,7 @@ the end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
@@ -15139,6 +15450,7 @@ the end). throws an error if top level container is not an array */
 	id?:true,
 	location_id?:true,
 	service_link_id?:true,
+	stripe_id?:true,
 		__typename?: true
 }>;
 	/** columns and relationships of "service_provider.location" */
@@ -16002,9 +16314,9 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	charges_enabled?:true,
 	details_submitted?:true,
 	email?:true,
+	id?:true,
 	payouts_enabled?:true,
 	requirements?:true,
-	sp_id?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16032,7 +16344,7 @@ count?: [{	columns?:ValueTypes["service_provider_stripe_info_select_column"][],	
 }>;
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** Boolean expression to filter rows from the table "service_provider.stripe_info".
@@ -16045,9 +16357,9 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:ValueTypes["Boolean_comparison_exp"],
 	details_submitted?:ValueTypes["Boolean_comparison_exp"],
 	email?:ValueTypes["String_comparison_exp"],
+	id?:ValueTypes["Int_comparison_exp"],
 	payouts_enabled?:ValueTypes["Boolean_comparison_exp"],
 	requirements?:ValueTypes["String_comparison_exp"],
-	sp_id?:ValueTypes["Int_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_id?:ValueTypes["String_comparison_exp"]
 };
@@ -16055,7 +16367,7 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint;
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
-	sp_id?:number
+	id?:number
 };
 	/** input type for inserting data into table "service_provider.stripe_info" */
 ["service_provider_stripe_info_insert_input"]: {
@@ -16063,17 +16375,17 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 };
 	/** aggregate max on columns */
 ["service_provider_stripe_info_max_fields"]: AliasType<{
 	email?:true,
+	id?:true,
 	requirements?:true,
-	sp_id?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16081,8 +16393,8 @@ All fields are combined with a logical 'AND'. */
 	/** aggregate min on columns */
 ["service_provider_stripe_info_min_fields"]: AliasType<{
 	email?:true,
+	id?:true,
 	requirements?:true,
-	sp_id?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16113,15 +16425,15 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:ValueTypes["order_by"],
 	details_submitted?:ValueTypes["order_by"],
 	email?:ValueTypes["order_by"],
+	id?:ValueTypes["order_by"],
 	payouts_enabled?:ValueTypes["order_by"],
 	requirements?:ValueTypes["order_by"],
-	sp_id?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
 	stripe_id?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: service_provider.stripe_info */
 ["service_provider_stripe_info_pk_columns_input"]: {
-	sp_id:number
+	id:number
 };
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column;
@@ -16131,25 +16443,25 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 };
 	/** aggregate stddev on columns */
 ["service_provider_stripe_info_stddev_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["service_provider_stripe_info_stddev_pop_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["service_provider_stripe_info_stddev_samp_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** Streaming cursor of the table "service_provider_stripe_info" */
@@ -16165,15 +16477,15 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 };
 	/** aggregate sum on columns */
 ["service_provider_stripe_info_sum_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** update columns of table "service_provider.stripe_info" */
@@ -16188,17 +16500,17 @@ All fields are combined with a logical 'AND'. */
 };
 	/** aggregate var_pop on columns */
 ["service_provider_stripe_info_var_pop_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["service_provider_stripe_info_var_samp_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["service_provider_stripe_info_variance_fields"]: AliasType<{
-	sp_id?:true,
+	id?:true,
 		__typename?: true
 }>;
 	/** columns and relationships of "service_provider.subscriber" */
@@ -16589,28 +16901,28 @@ customer_stripe_cards_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["customer_stripe_cards_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards_aggregate"]],
-customer_stripe_cards_by_pk?: [{	card_id:string},ValueTypes["customer_stripe_cards"]],
+customer_stripe_cards_by_pk?: [{	id:number},ValueTypes["customer_stripe_cards"]],
 customer_stripe_cards_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["customer_stripe_cards_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["customer_stripe_cards_bool_exp"]},ValueTypes["customer_stripe_cards"]],
-customer_stripe_info?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["customer_stripe_info_select_column"][],	/** limit the number of rows returned */
+customer_stripe_sp_id?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["customer_stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info"]],
-customer_stripe_info_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["customer_stripe_info_select_column"][],	/** limit the number of rows returned */
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id"]],
+customer_stripe_sp_id_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["customer_stripe_sp_id_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
 	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["customer_stripe_info_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info_aggregate"]],
-customer_stripe_info_by_pk?: [{	stripe_id:string},ValueTypes["customer_stripe_info"]],
-customer_stripe_info_stream?: [{	/** maximum number of rows returned in a single batch */
+	order_by?:ValueTypes["customer_stripe_sp_id_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id_aggregate"]],
+customer_stripe_sp_id_by_pk?: [{	id:number},ValueTypes["customer_stripe_sp_id"]],
+customer_stripe_sp_id_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
-	cursor?:ValueTypes["customer_stripe_info_stream_cursor_input"][],	/** filter the rows returned */
-	where?:ValueTypes["customer_stripe_info_bool_exp"]},ValueTypes["customer_stripe_info"]],
+	cursor?:ValueTypes["customer_stripe_sp_id_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["customer_stripe_sp_id_bool_exp"]},ValueTypes["customer_stripe_sp_id"]],
 delivery_company?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_company_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -17323,7 +17635,7 @@ service_provider_stripe_info_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["service_provider_stripe_info_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["service_provider_stripe_info_bool_exp"]},ValueTypes["service_provider_stripe_info_aggregate"]],
-service_provider_stripe_info_by_pk?: [{	sp_id:number},ValueTypes["service_provider_stripe_info"]],
+service_provider_stripe_info_by_pk?: [{	id:number},ValueTypes["service_provider_stripe_info"]],
 service_provider_stripe_info_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["service_provider_stripe_info_stream_cursor_input"][],	/** filter the rows returned */
@@ -18727,13 +19039,16 @@ the end). throws an error if top level container is not an array */
 			/** An aggregate relationship */
 	saved_locations_aggregate?:PartialObjects["customer_saved_location_aggregate"],
 			service_provider_type?:string,
-			/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:PartialObjects["jsonb"],
+			/** An array relationship */
+	stripe_cards?:PartialObjects["customer_stripe_cards"][],
+			/** An aggregate relationship */
+	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate"],
+			stripe_id?:string,
+			stripe_info?:PartialObjects["jsonb"],
+			/** An array relationship */
+	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id"][],
+			/** An aggregate relationship */
+	stripe_sp_ids_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate"],
 			/** An object relationship */
 	user?:PartialObjects["user"],
 			user_id?:number
@@ -18761,12 +19076,6 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	},
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["customer_customer_append_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:PartialObjects["jsonb"]
 },
 	/** aggregate avg on columns */
@@ -18788,7 +19097,12 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	saved_locations?:PartialObjects["customer_saved_location_bool_exp"],
 	saved_locations_aggregate?:PartialObjects["customer_saved_location_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
+	stripe_cards?:PartialObjects["customer_stripe_cards_bool_exp"],
+	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate_bool_exp"],
+	stripe_id?:PartialObjects["String_comparison_exp"],
 	stripe_info?:PartialObjects["jsonb_comparison_exp"],
+	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id_bool_exp"],
+	stripe_sp_ids_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate_bool_exp"],
 	user?:PartialObjects["user_bool_exp"],
 	user_id?:PartialObjects["Int_comparison_exp"]
 },
@@ -18796,33 +19110,15 @@ brand?: string,             expMonth?: number,             expYear?: number,
 ["customer_customer_constraint"]:customer_customer_constraint,
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["customer_customer_delete_at_path_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:string[]
 },
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["customer_customer_delete_elem_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:number
 },
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["customer_customer_delete_key_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:string
 },
 	/** input type for incrementing numeric columns in table "customer.customer" */
@@ -18838,13 +19134,10 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
 	saved_locations?:PartialObjects["customer_saved_location_arr_rel_insert_input"],
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_cards?:PartialObjects["customer_stripe_cards_arr_rel_insert_input"],
+	stripe_id?:string,
 	stripe_info?:PartialObjects["jsonb"],
+	stripe_sp_ids?:PartialObjects["customer_stripe_sp_id_arr_rel_insert_input"],
 	user?:PartialObjects["user_obj_rel_insert_input"],
 	user_id?:number
 },
@@ -18854,6 +19147,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 			app_type_id?:string,
 			app_version?:string,
 			service_provider_type?:string,
+			stripe_id?:string,
 			user_id?:number
 	},
 	/** aggregate min on columns */
@@ -18862,6 +19156,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 			app_type_id?:string,
 			app_version?:string,
 			service_provider_type?:string,
+			stripe_id?:string,
 			user_id?:number
 	},
 	/** response of any mutation on the table "customer.customer" */
@@ -18893,7 +19188,10 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	notification_info?:PartialObjects["notification_info_order_by"],
 	saved_locations_aggregate?:PartialObjects["customer_saved_location_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"],
+	stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate_order_by"],
+	stripe_id?:PartialObjects["order_by"],
 	stripe_info?:PartialObjects["order_by"],
+	stripe_sp_ids_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate_order_by"],
 	user?:PartialObjects["user_order_by"],
 	user_id?:PartialObjects["order_by"]
 },
@@ -18903,12 +19201,6 @@ brand?: string,             expMonth?: number,             expYear?: number,
 },
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["customer_customer_prepend_input"]: {
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
 	stripe_info?:PartialObjects["jsonb"]
 },
 	/** select columns of table "customer.customer" */
@@ -18918,12 +19210,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
@@ -18954,12 +19241,7 @@ brand?: string,             expMonth?: number,             expYear?: number,
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:PartialObjects["jsonb"],
 	user_id?:number
 },
@@ -19747,9 +20029,17 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "customer.stripe_cards" */
 ["customer_stripe_cards"]: {
 		__typename?: "customer_stripe_cards";
+			brand?:string,
 			card_id?:string,
+			/** An object relationship */
+	customer?:PartialObjects["customer_customer"],
 			customer_id?:number,
-			sp_card_ids?:PartialObjects["jsonb"]
+			exp_month?:number,
+			exp_year?:number,
+			id?:number,
+			last_4?:string,
+			/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:PartialObjects["jsonb"]
 	},
 	/** aggregated selection of "customer.stripe_cards" */
 ["customer_stripe_cards_aggregate"]: {
@@ -19757,6 +20047,15 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["customer_stripe_cards_aggregate_fields"],
 			nodes?:PartialObjects["customer_stripe_cards"][]
 	},
+	["customer_stripe_cards_aggregate_bool_exp"]: {
+	count?:PartialObjects["customer_stripe_cards_aggregate_bool_exp_count"]
+},
+	["customer_stripe_cards_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["customer_stripe_cards_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["customer_stripe_cards_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
 	/** aggregate fields of "customer.stripe_cards" */
 ["customer_stripe_cards_aggregate_fields"]: {
 		__typename?: "customer_stripe_cards_aggregate_fields";
@@ -19772,61 +20071,141 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["customer_stripe_cards_var_samp_fields"],
 			variance?:PartialObjects["customer_stripe_cards_variance_fields"]
 	},
+	/** order by aggregate values of table "customer.stripe_cards" */
+["customer_stripe_cards_aggregate_order_by"]: {
+	avg?:PartialObjects["customer_stripe_cards_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["customer_stripe_cards_max_order_by"],
+	min?:PartialObjects["customer_stripe_cards_min_order_by"],
+	stddev?:PartialObjects["customer_stripe_cards_stddev_order_by"],
+	stddev_pop?:PartialObjects["customer_stripe_cards_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["customer_stripe_cards_stddev_samp_order_by"],
+	sum?:PartialObjects["customer_stripe_cards_sum_order_by"],
+	var_pop?:PartialObjects["customer_stripe_cards_var_pop_order_by"],
+	var_samp?:PartialObjects["customer_stripe_cards_var_samp_order_by"],
+	variance?:PartialObjects["customer_stripe_cards_variance_order_by"]
+},
 	/** append existing jsonb value of filtered columns with new jsonb value */
 ["customer_stripe_cards_append_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:PartialObjects["jsonb"]
+},
+	/** input type for inserting array relation for remote table "customer.stripe_cards" */
+["customer_stripe_cards_arr_rel_insert_input"]: {
+	data:PartialObjects["customer_stripe_cards_insert_input"][],
+	/** upsert condition */
+	on_conflict?:PartialObjects["customer_stripe_cards_on_conflict"]
 },
 	/** aggregate avg on columns */
 ["customer_stripe_cards_avg_fields"]: {
 		__typename?: "customer_stripe_cards_avg_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by avg() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_avg_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** Boolean expression to filter rows from the table "customer.stripe_cards". All fields are combined with a logical 'AND'. */
 ["customer_stripe_cards_bool_exp"]: {
 	_and?:PartialObjects["customer_stripe_cards_bool_exp"][],
 	_not?:PartialObjects["customer_stripe_cards_bool_exp"],
 	_or?:PartialObjects["customer_stripe_cards_bool_exp"][],
+	brand?:PartialObjects["String_comparison_exp"],
 	card_id?:PartialObjects["String_comparison_exp"],
+	customer?:PartialObjects["customer_customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
+	exp_month?:PartialObjects["Int_comparison_exp"],
+	exp_year?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
+	last_4?:PartialObjects["String_comparison_exp"],
 	sp_card_ids?:PartialObjects["jsonb_comparison_exp"]
 },
 	/** unique or primary key constraints on table "customer.stripe_cards" */
 ["customer_stripe_cards_constraint"]:customer_stripe_cards_constraint,
 	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 ["customer_stripe_cards_delete_at_path_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:string[]
 },
 	/** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 ["customer_stripe_cards_delete_elem_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:number
 },
 	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
 ["customer_stripe_cards_delete_key_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:string
 },
 	/** input type for incrementing numeric columns in table "customer.stripe_cards" */
 ["customer_stripe_cards_inc_input"]: {
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
 },
 	/** input type for inserting data into table "customer.stripe_cards" */
 ["customer_stripe_cards_insert_input"]: {
+	brand?:string,
 	card_id?:string,
+	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:PartialObjects["jsonb"]
 },
 	/** aggregate max on columns */
 ["customer_stripe_cards_max_fields"]: {
 		__typename?: "customer_stripe_cards_max_fields";
+			brand?:string,
 			card_id?:string,
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number,
+			last_4?:string
 	},
+	/** order by max() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_max_order_by"]: {
+	brand?:PartialObjects["order_by"],
+	card_id?:PartialObjects["order_by"],
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	last_4?:PartialObjects["order_by"]
+},
 	/** aggregate min on columns */
 ["customer_stripe_cards_min_fields"]: {
 		__typename?: "customer_stripe_cards_min_fields";
+			brand?:string,
 			card_id?:string,
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number,
+			last_4?:string
 	},
+	/** order by min() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_min_order_by"]: {
+	brand?:PartialObjects["order_by"],
+	card_id?:PartialObjects["order_by"],
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	last_4?:PartialObjects["order_by"]
+},
 	/** response of any mutation on the table "customer.stripe_cards" */
 ["customer_stripe_cards_mutation_response"]: {
 		__typename?: "customer_stripe_cards_mutation_response";
@@ -19843,41 +20222,84 @@ end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "customer.stripe_cards". */
 ["customer_stripe_cards_order_by"]: {
+	brand?:PartialObjects["order_by"],
 	card_id?:PartialObjects["order_by"],
+	customer?:PartialObjects["customer_customer_order_by"],
 	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	last_4?:PartialObjects["order_by"],
 	sp_card_ids?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: customer.stripe_cards */
 ["customer_stripe_cards_pk_columns_input"]: {
-	card_id:string
+	id:number
 },
 	/** prepend existing jsonb value of filtered columns with new jsonb value */
 ["customer_stripe_cards_prepend_input"]: {
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:PartialObjects["jsonb"]
 },
 	/** select columns of table "customer.stripe_cards" */
 ["customer_stripe_cards_select_column"]:customer_stripe_cards_select_column,
 	/** input type for updating data in table "customer.stripe_cards" */
 ["customer_stripe_cards_set_input"]: {
+	brand?:string,
 	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:PartialObjects["jsonb"]
 },
 	/** aggregate stddev on columns */
 ["customer_stripe_cards_stddev_fields"]: {
 		__typename?: "customer_stripe_cards_stddev_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by stddev() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_pop on columns */
 ["customer_stripe_cards_stddev_pop_fields"]: {
 		__typename?: "customer_stripe_cards_stddev_pop_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by stddev_pop() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_pop_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_samp on columns */
 ["customer_stripe_cards_stddev_samp_fields"]: {
 		__typename?: "customer_stripe_cards_stddev_samp_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by stddev_samp() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_stddev_samp_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** Streaming cursor of the table "customer_stripe_cards" */
 ["customer_stripe_cards_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -19887,15 +20309,31 @@ end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["customer_stripe_cards_stream_cursor_value_input"]: {
+	brand?:string,
 	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:PartialObjects["jsonb"]
 },
 	/** aggregate sum on columns */
 ["customer_stripe_cards_sum_fields"]: {
 		__typename?: "customer_stripe_cards_sum_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by sum() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_sum_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** update columns of table "customer.stripe_cards" */
 ["customer_stripe_cards_update_column"]:customer_stripe_cards_update_column,
 	["customer_stripe_cards_updates"]: {
@@ -19920,188 +20358,333 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["customer_stripe_cards_var_pop_fields"]: {
 		__typename?: "customer_stripe_cards_var_pop_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by var_pop() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_var_pop_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** aggregate var_samp on columns */
 ["customer_stripe_cards_var_samp_fields"]: {
 		__typename?: "customer_stripe_cards_var_samp_fields";
-			customer_id?:number
+			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
 	},
+	/** order by var_samp() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_var_samp_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
 	/** aggregate variance on columns */
 ["customer_stripe_cards_variance_fields"]: {
 		__typename?: "customer_stripe_cards_variance_fields";
-			customer_id?:number
-	},
-	/** columns and relationships of "customer.stripe_info" */
-["customer_stripe_info"]: {
-		__typename?: "customer_stripe_info";
 			customer_id?:number,
+			exp_month?:number,
+			exp_year?:number,
+			id?:number
+	},
+	/** order by variance() on columns of table "customer.stripe_cards" */
+["customer_stripe_cards_variance_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	exp_month?:PartialObjects["order_by"],
+	exp_year?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"]
+},
+	/** columns and relationships of "customer.stripe_sp_id" */
+["customer_stripe_sp_id"]: {
+		__typename?: "customer_stripe_sp_id";
+			/** An object relationship */
+	customer?:PartialObjects["customer_customer"],
+			customer_id?:number,
+			id?:number,
 			sp_id?:number,
 			stripe_id?:string
 	},
-	/** aggregated selection of "customer.stripe_info" */
-["customer_stripe_info_aggregate"]: {
-		__typename?: "customer_stripe_info_aggregate";
-			aggregate?:PartialObjects["customer_stripe_info_aggregate_fields"],
-			nodes?:PartialObjects["customer_stripe_info"][]
+	/** aggregated selection of "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate"]: {
+		__typename?: "customer_stripe_sp_id_aggregate";
+			aggregate?:PartialObjects["customer_stripe_sp_id_aggregate_fields"],
+			nodes?:PartialObjects["customer_stripe_sp_id"][]
 	},
-	/** aggregate fields of "customer.stripe_info" */
-["customer_stripe_info_aggregate_fields"]: {
-		__typename?: "customer_stripe_info_aggregate_fields";
-			avg?:PartialObjects["customer_stripe_info_avg_fields"],
+	["customer_stripe_sp_id_aggregate_bool_exp"]: {
+	count?:PartialObjects["customer_stripe_sp_id_aggregate_bool_exp_count"]
+},
+	["customer_stripe_sp_id_aggregate_bool_exp_count"]: {
+	arguments?:PartialObjects["customer_stripe_sp_id_select_column"][],
+	distinct?:boolean,
+	filter?:PartialObjects["customer_stripe_sp_id_bool_exp"],
+	predicate:PartialObjects["Int_comparison_exp"]
+},
+	/** aggregate fields of "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate_fields"]: {
+		__typename?: "customer_stripe_sp_id_aggregate_fields";
+			avg?:PartialObjects["customer_stripe_sp_id_avg_fields"],
 			count?:number,
-			max?:PartialObjects["customer_stripe_info_max_fields"],
-			min?:PartialObjects["customer_stripe_info_min_fields"],
-			stddev?:PartialObjects["customer_stripe_info_stddev_fields"],
-			stddev_pop?:PartialObjects["customer_stripe_info_stddev_pop_fields"],
-			stddev_samp?:PartialObjects["customer_stripe_info_stddev_samp_fields"],
-			sum?:PartialObjects["customer_stripe_info_sum_fields"],
-			var_pop?:PartialObjects["customer_stripe_info_var_pop_fields"],
-			var_samp?:PartialObjects["customer_stripe_info_var_samp_fields"],
-			variance?:PartialObjects["customer_stripe_info_variance_fields"]
+			max?:PartialObjects["customer_stripe_sp_id_max_fields"],
+			min?:PartialObjects["customer_stripe_sp_id_min_fields"],
+			stddev?:PartialObjects["customer_stripe_sp_id_stddev_fields"],
+			stddev_pop?:PartialObjects["customer_stripe_sp_id_stddev_pop_fields"],
+			stddev_samp?:PartialObjects["customer_stripe_sp_id_stddev_samp_fields"],
+			sum?:PartialObjects["customer_stripe_sp_id_sum_fields"],
+			var_pop?:PartialObjects["customer_stripe_sp_id_var_pop_fields"],
+			var_samp?:PartialObjects["customer_stripe_sp_id_var_samp_fields"],
+			variance?:PartialObjects["customer_stripe_sp_id_variance_fields"]
 	},
+	/** order by aggregate values of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_aggregate_order_by"]: {
+	avg?:PartialObjects["customer_stripe_sp_id_avg_order_by"],
+	count?:PartialObjects["order_by"],
+	max?:PartialObjects["customer_stripe_sp_id_max_order_by"],
+	min?:PartialObjects["customer_stripe_sp_id_min_order_by"],
+	stddev?:PartialObjects["customer_stripe_sp_id_stddev_order_by"],
+	stddev_pop?:PartialObjects["customer_stripe_sp_id_stddev_pop_order_by"],
+	stddev_samp?:PartialObjects["customer_stripe_sp_id_stddev_samp_order_by"],
+	sum?:PartialObjects["customer_stripe_sp_id_sum_order_by"],
+	var_pop?:PartialObjects["customer_stripe_sp_id_var_pop_order_by"],
+	var_samp?:PartialObjects["customer_stripe_sp_id_var_samp_order_by"],
+	variance?:PartialObjects["customer_stripe_sp_id_variance_order_by"]
+},
+	/** input type for inserting array relation for remote table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_arr_rel_insert_input"]: {
+	data:PartialObjects["customer_stripe_sp_id_insert_input"][],
+	/** upsert condition */
+	on_conflict?:PartialObjects["customer_stripe_sp_id_on_conflict"]
+},
 	/** aggregate avg on columns */
-["customer_stripe_info_avg_fields"]: {
-		__typename?: "customer_stripe_info_avg_fields";
+["customer_stripe_sp_id_avg_fields"]: {
+		__typename?: "customer_stripe_sp_id_avg_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
-	/** Boolean expression to filter rows from the table "customer.stripe_info". All fields are combined with a logical 'AND'. */
-["customer_stripe_info_bool_exp"]: {
-	_and?:PartialObjects["customer_stripe_info_bool_exp"][],
-	_not?:PartialObjects["customer_stripe_info_bool_exp"],
-	_or?:PartialObjects["customer_stripe_info_bool_exp"][],
+	/** order by avg() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_avg_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
+	/** Boolean expression to filter rows from the table "customer.stripe_sp_id". All fields are combined with a logical 'AND'. */
+["customer_stripe_sp_id_bool_exp"]: {
+	_and?:PartialObjects["customer_stripe_sp_id_bool_exp"][],
+	_not?:PartialObjects["customer_stripe_sp_id_bool_exp"],
+	_or?:PartialObjects["customer_stripe_sp_id_bool_exp"][],
+	customer?:PartialObjects["customer_customer_bool_exp"],
 	customer_id?:PartialObjects["Int_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
 	sp_id?:PartialObjects["Int_comparison_exp"],
 	stripe_id?:PartialObjects["String_comparison_exp"]
 },
-	/** unique or primary key constraints on table "customer.stripe_info" */
-["customer_stripe_info_constraint"]:customer_stripe_info_constraint,
-	/** input type for incrementing numeric columns in table "customer.stripe_info" */
-["customer_stripe_info_inc_input"]: {
+	/** unique or primary key constraints on table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_constraint"]:customer_stripe_sp_id_constraint,
+	/** input type for incrementing numeric columns in table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_inc_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 },
-	/** input type for inserting data into table "customer.stripe_info" */
-["customer_stripe_info_insert_input"]: {
+	/** input type for inserting data into table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_insert_input"]: {
+	customer?:PartialObjects["customer_customer_obj_rel_insert_input"],
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 },
 	/** aggregate max on columns */
-["customer_stripe_info_max_fields"]: {
-		__typename?: "customer_stripe_info_max_fields";
+["customer_stripe_sp_id_max_fields"]: {
+		__typename?: "customer_stripe_sp_id_max_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number,
 			stripe_id?:string
 	},
-	/** aggregate min on columns */
-["customer_stripe_info_min_fields"]: {
-		__typename?: "customer_stripe_info_min_fields";
-			customer_id?:number,
-			sp_id?:number,
-			stripe_id?:string
-	},
-	/** response of any mutation on the table "customer.stripe_info" */
-["customer_stripe_info_mutation_response"]: {
-		__typename?: "customer_stripe_info_mutation_response";
-			/** number of rows affected by the mutation */
-	affected_rows?:number,
-			/** data from the rows affected by the mutation */
-	returning?:PartialObjects["customer_stripe_info"][]
-	},
-	/** on_conflict condition type for table "customer.stripe_info" */
-["customer_stripe_info_on_conflict"]: {
-	constraint:PartialObjects["customer_stripe_info_constraint"],
-	update_columns:PartialObjects["customer_stripe_info_update_column"][],
-	where?:PartialObjects["customer_stripe_info_bool_exp"]
-},
-	/** Ordering options when selecting data from "customer.stripe_info". */
-["customer_stripe_info_order_by"]: {
+	/** order by max() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_max_order_by"]: {
 	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	sp_id?:PartialObjects["order_by"],
 	stripe_id?:PartialObjects["order_by"]
 },
-	/** primary key columns input for table: customer.stripe_info */
-["customer_stripe_info_pk_columns_input"]: {
-	stripe_id:string
+	/** aggregate min on columns */
+["customer_stripe_sp_id_min_fields"]: {
+		__typename?: "customer_stripe_sp_id_min_fields";
+			customer_id?:number,
+			id?:number,
+			sp_id?:number,
+			stripe_id?:string
+	},
+	/** order by min() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_min_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"],
+	stripe_id?:PartialObjects["order_by"]
 },
-	/** select columns of table "customer.stripe_info" */
-["customer_stripe_info_select_column"]:customer_stripe_info_select_column,
-	/** input type for updating data in table "customer.stripe_info" */
-["customer_stripe_info_set_input"]: {
+	/** response of any mutation on the table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_mutation_response"]: {
+		__typename?: "customer_stripe_sp_id_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["customer_stripe_sp_id"][]
+	},
+	/** on_conflict condition type for table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_on_conflict"]: {
+	constraint:PartialObjects["customer_stripe_sp_id_constraint"],
+	update_columns:PartialObjects["customer_stripe_sp_id_update_column"][],
+	where?:PartialObjects["customer_stripe_sp_id_bool_exp"]
+},
+	/** Ordering options when selecting data from "customer.stripe_sp_id". */
+["customer_stripe_sp_id_order_by"]: {
+	customer?:PartialObjects["customer_customer_order_by"],
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"],
+	stripe_id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: customer.stripe_sp_id */
+["customer_stripe_sp_id_pk_columns_input"]: {
+	id:number
+},
+	/** select columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_select_column"]:customer_stripe_sp_id_select_column,
+	/** input type for updating data in table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_set_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 },
 	/** aggregate stddev on columns */
-["customer_stripe_info_stddev_fields"]: {
-		__typename?: "customer_stripe_info_stddev_fields";
+["customer_stripe_sp_id_stddev_fields"]: {
+		__typename?: "customer_stripe_sp_id_stddev_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
+	/** order by stddev() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_pop on columns */
-["customer_stripe_info_stddev_pop_fields"]: {
-		__typename?: "customer_stripe_info_stddev_pop_fields";
+["customer_stripe_sp_id_stddev_pop_fields"]: {
+		__typename?: "customer_stripe_sp_id_stddev_pop_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
+	/** order by stddev_pop() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_pop_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
 	/** aggregate stddev_samp on columns */
-["customer_stripe_info_stddev_samp_fields"]: {
-		__typename?: "customer_stripe_info_stddev_samp_fields";
+["customer_stripe_sp_id_stddev_samp_fields"]: {
+		__typename?: "customer_stripe_sp_id_stddev_samp_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
-	/** Streaming cursor of the table "customer_stripe_info" */
-["customer_stripe_info_stream_cursor_input"]: {
+	/** order by stddev_samp() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_stddev_samp_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
+	/** Streaming cursor of the table "customer_stripe_sp_id" */
+["customer_stripe_sp_id_stream_cursor_input"]: {
 	/** Stream column input with initial value */
-	initial_value:PartialObjects["customer_stripe_info_stream_cursor_value_input"],
+	initial_value:PartialObjects["customer_stripe_sp_id_stream_cursor_value_input"],
 	/** cursor ordering */
 	ordering?:PartialObjects["cursor_ordering"]
 },
 	/** Initial value of the column from where the streaming should start */
-["customer_stripe_info_stream_cursor_value_input"]: {
+["customer_stripe_sp_id_stream_cursor_value_input"]: {
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 },
 	/** aggregate sum on columns */
-["customer_stripe_info_sum_fields"]: {
-		__typename?: "customer_stripe_info_sum_fields";
+["customer_stripe_sp_id_sum_fields"]: {
+		__typename?: "customer_stripe_sp_id_sum_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
-	/** update columns of table "customer.stripe_info" */
-["customer_stripe_info_update_column"]:customer_stripe_info_update_column,
-	["customer_stripe_info_updates"]: {
+	/** order by sum() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_sum_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
+	/** update columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_update_column"]:customer_stripe_sp_id_update_column,
+	["customer_stripe_sp_id_updates"]: {
 	/** increments the numeric columns with given value of the filtered values */
-	_inc?:PartialObjects["customer_stripe_info_inc_input"],
+	_inc?:PartialObjects["customer_stripe_sp_id_inc_input"],
 	/** sets the columns of the filtered rows to the given values */
-	_set?:PartialObjects["customer_stripe_info_set_input"],
+	_set?:PartialObjects["customer_stripe_sp_id_set_input"],
 	/** filter the rows which have to be updated */
-	where:PartialObjects["customer_stripe_info_bool_exp"]
+	where:PartialObjects["customer_stripe_sp_id_bool_exp"]
 },
 	/** aggregate var_pop on columns */
-["customer_stripe_info_var_pop_fields"]: {
-		__typename?: "customer_stripe_info_var_pop_fields";
+["customer_stripe_sp_id_var_pop_fields"]: {
+		__typename?: "customer_stripe_sp_id_var_pop_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
+	/** order by var_pop() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_var_pop_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
 	/** aggregate var_samp on columns */
-["customer_stripe_info_var_samp_fields"]: {
-		__typename?: "customer_stripe_info_var_samp_fields";
+["customer_stripe_sp_id_var_samp_fields"]: {
+		__typename?: "customer_stripe_sp_id_var_samp_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
+	/** order by var_samp() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_var_samp_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
 	/** aggregate variance on columns */
-["customer_stripe_info_variance_fields"]: {
-		__typename?: "customer_stripe_info_variance_fields";
+["customer_stripe_sp_id_variance_fields"]: {
+		__typename?: "customer_stripe_sp_id_variance_fields";
 			customer_id?:number,
+			id?:number,
 			sp_id?:number
 	},
+	/** order by variance() on columns of table "customer.stripe_sp_id" */
+["customer_stripe_sp_id_variance_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
+	sp_id?:PartialObjects["order_by"]
+},
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: {
 		__typename?: "delivery_company";
+			/** An object relationship */
+	delivery_details?:PartialObjects["delivery_details"],
 			delivery_details_id?:number,
 			/** An array relationship */
 	delivery_operators?:PartialObjects["delivery_operator"][],
@@ -20146,6 +20729,7 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["delivery_company_bool_exp"][],
 	_not?:PartialObjects["delivery_company_bool_exp"],
 	_or?:PartialObjects["delivery_company_bool_exp"][],
+	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
@@ -20164,6 +20748,7 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
+	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:PartialObjects["delivery_operator_arr_rel_insert_input"],
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
@@ -20209,6 +20794,7 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
+	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
@@ -21458,7 +22044,7 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	delivery_driver?:PartialObjects["delivery_driver"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			/** An object relationship */
 	driver_review_by_customer?:PartialObjects["review"],
@@ -21498,7 +22084,7 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	service_provider_review_by_driver?:PartialObjects["review"],
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -21712,7 +22298,7 @@ cancelledByServiceProvider */
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver?:PartialObjects["delivery_driver_obj_rel_insert_input"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:PartialObjects["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
@@ -21740,7 +22326,7 @@ cancelledByServiceProvider */
 	service_provider_id?:number,
 	service_provider_review_by_driver?:PartialObjects["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -21766,7 +22352,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
@@ -21783,7 +22369,7 @@ cancelledByServiceProvider */
 			schedule_time?:string,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -21808,7 +22394,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
@@ -21825,7 +22411,7 @@ cancelledByServiceProvider */
 	schedule_time?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:PartialObjects["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -21851,7 +22437,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
@@ -21868,7 +22454,7 @@ cancelledByServiceProvider */
 			schedule_time?:string,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -21893,7 +22479,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
@@ -21910,7 +22496,7 @@ cancelledByServiceProvider */
 	schedule_time?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:PartialObjects["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22215,7 +22801,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -22235,7 +22821,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22385,7 +22971,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -22405,7 +22991,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -25212,10 +25798,10 @@ the end). throws an error if top level container is not an array */
 	delete_customer_stripe_cards?:PartialObjects["customer_stripe_cards_mutation_response"],
 			/** delete single row from the table: "customer.stripe_cards" */
 	delete_customer_stripe_cards_by_pk?:PartialObjects["customer_stripe_cards"],
-			/** delete data from the table: "customer.stripe_info" */
-	delete_customer_stripe_info?:PartialObjects["customer_stripe_info_mutation_response"],
-			/** delete single row from the table: "customer.stripe_info" */
-	delete_customer_stripe_info_by_pk?:PartialObjects["customer_stripe_info"],
+			/** delete data from the table: "customer.stripe_sp_id" */
+	delete_customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id_mutation_response"],
+			/** delete single row from the table: "customer.stripe_sp_id" */
+	delete_customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
 			/** delete data from the table: "delivery.company" */
 	delete_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** delete single row from the table: "delivery.company" */
@@ -25416,10 +26002,10 @@ the end). throws an error if top level container is not an array */
 	insert_customer_stripe_cards?:PartialObjects["customer_stripe_cards_mutation_response"],
 			/** insert a single row into the table: "customer.stripe_cards" */
 	insert_customer_stripe_cards_one?:PartialObjects["customer_stripe_cards"],
-			/** insert data into the table: "customer.stripe_info" */
-	insert_customer_stripe_info?:PartialObjects["customer_stripe_info_mutation_response"],
-			/** insert a single row into the table: "customer.stripe_info" */
-	insert_customer_stripe_info_one?:PartialObjects["customer_stripe_info"],
+			/** insert data into the table: "customer.stripe_sp_id" */
+	insert_customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id_mutation_response"],
+			/** insert a single row into the table: "customer.stripe_sp_id" */
+	insert_customer_stripe_sp_id_one?:PartialObjects["customer_stripe_sp_id"],
 			/** insert data into the table: "delivery.company" */
 	insert_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** insert a single row into the table: "delivery.company" */
@@ -25640,12 +26226,12 @@ the end). throws an error if top level container is not an array */
 	update_customer_stripe_cards_by_pk?:PartialObjects["customer_stripe_cards"],
 			/** update multiples rows of table: "customer.stripe_cards" */
 	update_customer_stripe_cards_many?:(PartialObjects["customer_stripe_cards_mutation_response"] | undefined)[],
-			/** update data of the table: "customer.stripe_info" */
-	update_customer_stripe_info?:PartialObjects["customer_stripe_info_mutation_response"],
-			/** update single row of the table: "customer.stripe_info" */
-	update_customer_stripe_info_by_pk?:PartialObjects["customer_stripe_info"],
-			/** update multiples rows of table: "customer.stripe_info" */
-	update_customer_stripe_info_many?:(PartialObjects["customer_stripe_info_mutation_response"] | undefined)[],
+			/** update data of the table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id_mutation_response"],
+			/** update single row of the table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
+			/** update multiples rows of table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id_many?:(PartialObjects["customer_stripe_sp_id_mutation_response"] | undefined)[],
 			/** update data of the table: "delivery.company" */
 	update_delivery_company?:PartialObjects["delivery_company_mutation_response"],
 			/** update single row of the table: "delivery.company" */
@@ -26144,12 +26730,12 @@ the end). throws an error if top level container is not an array */
 	customer_stripe_cards_aggregate?:PartialObjects["customer_stripe_cards_aggregate"],
 			/** fetch data from the table: "customer.stripe_cards" using primary key columns */
 	customer_stripe_cards_by_pk?:PartialObjects["customer_stripe_cards"],
-			/** fetch data from the table: "customer.stripe_info" */
-	customer_stripe_info?:PartialObjects["customer_stripe_info"][],
-			/** fetch aggregated fields from the table: "customer.stripe_info" */
-	customer_stripe_info_aggregate?:PartialObjects["customer_stripe_info_aggregate"],
-			/** fetch data from the table: "customer.stripe_info" using primary key columns */
-	customer_stripe_info_by_pk?:PartialObjects["customer_stripe_info"],
+			/** fetch data from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id"][],
+			/** fetch aggregated fields from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate"],
+			/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
+	customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
 			/** fetch data from the table: "delivery.company" */
 	delivery_company?:PartialObjects["delivery_company"][],
 			/** fetch aggregated fields from the table: "delivery.company" */
@@ -31956,6 +32542,7 @@ the end). throws an error if top level container is not an array */
 	service_link?:PartialObjects["service_provider_service_link"],
 			service_link_id?:number,
 			service_provider_type?:string,
+			stripe_id?:number,
 			/** An object relationship */
 	stripe_info?:PartialObjects["service_provider_stripe_info"]
 	},
@@ -31993,7 +32580,8 @@ the end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** Boolean expression to filter rows from the table "service_provider.details". All fields are combined with a logical 'AND'. */
 ["service_provider_details_bool_exp"]: {
@@ -32025,6 +32613,7 @@ the end). throws an error if top level container is not an array */
 	service_link?:PartialObjects["service_provider_service_link_bool_exp"],
 	service_link_id?:PartialObjects["Int_comparison_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
+	stripe_id?:PartialObjects["Int_comparison_exp"],
 	stripe_info?:PartialObjects["service_provider_stripe_info_bool_exp"]
 },
 	/** unique or primary key constraints on table "service_provider.details" */
@@ -32056,7 +32645,8 @@ end). throws an error if top level container is not an array */
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 },
 	/** input type for inserting data into table "service_provider.details" */
 ["service_provider_details_insert_input"]: {
@@ -32084,6 +32674,7 @@ end). throws an error if top level container is not an array */
 	service_link?:PartialObjects["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
 	service_provider_type?:string,
+	stripe_id?:number,
 	stripe_info?:PartialObjects["service_provider_stripe_info_obj_rel_insert_input"]
 },
 	/** aggregate max on columns */
@@ -32099,7 +32690,8 @@ end). throws an error if top level container is not an array */
 			open_status?:string,
 			phone_number?:string,
 			service_link_id?:number,
-			service_provider_type?:string
+			service_provider_type?:string,
+			stripe_id?:number
 	},
 	/** aggregate min on columns */
 ["service_provider_details_min_fields"]: {
@@ -32114,7 +32706,8 @@ end). throws an error if top level container is not an array */
 			open_status?:string,
 			phone_number?:string,
 			service_link_id?:number,
-			service_provider_type?:string
+			service_provider_type?:string,
+			stripe_id?:number
 	},
 	/** response of any mutation on the table "service_provider.details" */
 ["service_provider_details_mutation_response"]: {
@@ -32161,6 +32754,7 @@ end). throws an error if top level container is not an array */
 	service_link?:PartialObjects["service_provider_service_link_order_by"],
 	service_link_id?:PartialObjects["order_by"],
 	service_provider_type?:PartialObjects["order_by"],
+	stripe_id?:PartialObjects["order_by"],
 	stripe_info?:PartialObjects["service_provider_stripe_info_order_by"]
 },
 	/** primary key columns input for table: service_provider.details */
@@ -32193,7 +32787,8 @@ end). throws an error if top level container is not an array */
 	phone_number?:string,
 	schedule?:PartialObjects["jsonb"],
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 },
 	/** aggregate stddev on columns */
 ["service_provider_details_stddev_fields"]: {
@@ -32201,7 +32796,8 @@ end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["service_provider_details_stddev_pop_fields"]: {
@@ -32209,7 +32805,8 @@ end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["service_provider_details_stddev_samp_fields"]: {
@@ -32217,7 +32814,8 @@ end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** Streaming cursor of the table "service_provider_details" */
 ["service_provider_details_stream_cursor_input"]: {
@@ -32243,7 +32841,8 @@ end). throws an error if top level container is not an array */
 	phone_number?:string,
 	schedule?:PartialObjects["jsonb"],
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 },
 	/** aggregate sum on columns */
 ["service_provider_details_sum_fields"]: {
@@ -32251,7 +32850,8 @@ end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** update columns of table "service_provider.details" */
 ["service_provider_details_update_column"]:service_provider_details_update_column,
@@ -32280,7 +32880,8 @@ the end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** aggregate var_samp on columns */
 ["service_provider_details_var_samp_fields"]: {
@@ -32288,7 +32889,8 @@ the end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** aggregate variance on columns */
 ["service_provider_details_variance_fields"]: {
@@ -32296,7 +32898,8 @@ the end). throws an error if top level container is not an array */
 			description_id?:number,
 			id?:number,
 			location_id?:number,
-			service_link_id?:number
+			service_link_id?:number,
+			stripe_id?:number
 	},
 	/** columns and relationships of "service_provider.location" */
 ["service_provider_location"]: {
@@ -33160,9 +33763,9 @@ the end). throws an error if top level container is not an array */
 			charges_enabled?:boolean,
 			details_submitted?:boolean,
 			email?:string,
+			id?:number,
 			payouts_enabled?:boolean,
 			requirements?:string,
-			sp_id?:number,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33190,7 +33793,7 @@ the end). throws an error if top level container is not an array */
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: {
 		__typename?: "service_provider_stripe_info_avg_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** Boolean expression to filter rows from the table "service_provider.stripe_info".
 All fields are combined with a logical 'AND'. */
@@ -33202,9 +33805,9 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:PartialObjects["Boolean_comparison_exp"],
 	details_submitted?:PartialObjects["Boolean_comparison_exp"],
 	email?:PartialObjects["String_comparison_exp"],
+	id?:PartialObjects["Int_comparison_exp"],
 	payouts_enabled?:PartialObjects["Boolean_comparison_exp"],
 	requirements?:PartialObjects["String_comparison_exp"],
-	sp_id?:PartialObjects["Int_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_id?:PartialObjects["String_comparison_exp"]
 },
@@ -33212,7 +33815,7 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint,
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
-	sp_id?:number
+	id?:number
 },
 	/** input type for inserting data into table "service_provider.stripe_info" */
 ["service_provider_stripe_info_insert_input"]: {
@@ -33220,9 +33823,9 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 },
@@ -33230,8 +33833,8 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_max_fields"]: {
 		__typename?: "service_provider_stripe_info_max_fields";
 			email?:string,
+			id?:number,
 			requirements?:string,
-			sp_id?:number,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33239,8 +33842,8 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_min_fields"]: {
 		__typename?: "service_provider_stripe_info_min_fields";
 			email?:string,
+			id?:number,
 			requirements?:string,
-			sp_id?:number,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33270,15 +33873,15 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:PartialObjects["order_by"],
 	details_submitted?:PartialObjects["order_by"],
 	email?:PartialObjects["order_by"],
+	id?:PartialObjects["order_by"],
 	payouts_enabled?:PartialObjects["order_by"],
 	requirements?:PartialObjects["order_by"],
-	sp_id?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
 	stripe_id?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: service_provider.stripe_info */
 ["service_provider_stripe_info_pk_columns_input"]: {
-	sp_id:number
+	id:number
 },
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column,
@@ -33288,26 +33891,26 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 },
 	/** aggregate stddev on columns */
 ["service_provider_stripe_info_stddev_fields"]: {
 		__typename?: "service_provider_stripe_info_stddev_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["service_provider_stripe_info_stddev_pop_fields"]: {
 		__typename?: "service_provider_stripe_info_stddev_pop_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["service_provider_stripe_info_stddev_samp_fields"]: {
 		__typename?: "service_provider_stripe_info_stddev_samp_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** Streaming cursor of the table "service_provider_stripe_info" */
 ["service_provider_stripe_info_stream_cursor_input"]: {
@@ -33322,16 +33925,16 @@ All fields are combined with a logical 'AND'. */
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 },
 	/** aggregate sum on columns */
 ["service_provider_stripe_info_sum_fields"]: {
 		__typename?: "service_provider_stripe_info_sum_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** update columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_update_column"]:service_provider_stripe_info_update_column,
@@ -33346,17 +33949,17 @@ All fields are combined with a logical 'AND'. */
 	/** aggregate var_pop on columns */
 ["service_provider_stripe_info_var_pop_fields"]: {
 		__typename?: "service_provider_stripe_info_var_pop_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** aggregate var_samp on columns */
 ["service_provider_stripe_info_var_samp_fields"]: {
 		__typename?: "service_provider_stripe_info_var_samp_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** aggregate variance on columns */
 ["service_provider_stripe_info_variance_fields"]: {
 		__typename?: "service_provider_stripe_info_variance_fields";
-			sp_id?:number
+			id?:number
 	},
 	/** columns and relationships of "service_provider.subscriber" */
 ["service_provider_subscriber"]: {
@@ -33669,14 +34272,14 @@ All fields are combined with a logical 'AND'. */
 	customer_stripe_cards_by_pk?:PartialObjects["customer_stripe_cards"],
 			/** fetch data from the table in a streaming manner: "customer.stripe_cards" */
 	customer_stripe_cards_stream?:PartialObjects["customer_stripe_cards"][],
-			/** fetch data from the table: "customer.stripe_info" */
-	customer_stripe_info?:PartialObjects["customer_stripe_info"][],
-			/** fetch aggregated fields from the table: "customer.stripe_info" */
-	customer_stripe_info_aggregate?:PartialObjects["customer_stripe_info_aggregate"],
-			/** fetch data from the table: "customer.stripe_info" using primary key columns */
-	customer_stripe_info_by_pk?:PartialObjects["customer_stripe_info"],
-			/** fetch data from the table in a streaming manner: "customer.stripe_info" */
-	customer_stripe_info_stream?:PartialObjects["customer_stripe_info"][],
+			/** fetch data from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id?:PartialObjects["customer_stripe_sp_id"][],
+			/** fetch aggregated fields from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_aggregate?:PartialObjects["customer_stripe_sp_id_aggregate"],
+			/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
+	customer_stripe_sp_id_by_pk?:PartialObjects["customer_stripe_sp_id"],
+			/** fetch data from the table in a streaming manner: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_stream?:PartialObjects["customer_stripe_sp_id"][],
 			/** fetch data from the table: "delivery.company" */
 	delivery_company?:PartialObjects["delivery_company"][],
 			/** fetch aggregated fields from the table: "delivery.company" */
@@ -35485,13 +36088,16 @@ export type customer_customer = {
 	/** An aggregate relationship */
 	saved_locations_aggregate:customer_saved_location_aggregate,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	/** An array relationship */
+	stripe_cards:customer_stripe_cards[],
+	/** An aggregate relationship */
+	stripe_cards_aggregate:customer_stripe_cards_aggregate,
+	stripe_id?:string,
 	stripe_info?:jsonb,
+	/** An array relationship */
+	stripe_sp_ids:customer_stripe_sp_id[],
+	/** An aggregate relationship */
+	stripe_sp_ids_aggregate:customer_stripe_sp_id_aggregate,
 	/** An object relationship */
 	user:user,
 	user_id:number
@@ -35522,13 +36128,7 @@ export type customer_customer_aggregate_fields = {
 
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type customer_customer_append_input = {
-		/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:jsonb
+		stripe_info?:jsonb
 }
 
 /** aggregate avg on columns */
@@ -35551,7 +36151,12 @@ export type customer_customer_bool_exp = {
 	saved_locations?:customer_saved_location_bool_exp,
 	saved_locations_aggregate?:customer_saved_location_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp,
+	stripe_cards?:customer_stripe_cards_bool_exp,
+	stripe_cards_aggregate?:customer_stripe_cards_aggregate_bool_exp,
+	stripe_id?:String_comparison_exp,
 	stripe_info?:jsonb_comparison_exp,
+	stripe_sp_ids?:customer_stripe_sp_id_bool_exp,
+	stripe_sp_ids_aggregate?:customer_stripe_sp_id_aggregate_bool_exp,
 	user?:user_bool_exp,
 	user_id?:Int_comparison_exp
 }
@@ -35564,36 +36169,18 @@ export enum customer_customer_constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type customer_customer_delete_at_path_input = {
-		/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:string[]
+		stripe_info?:string[]
 }
 
 /** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 export type customer_customer_delete_elem_input = {
-		/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:number
+		stripe_info?:number
 }
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type customer_customer_delete_key_input = {
-		/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:string
+		stripe_info?:string
 }
 
 /** input type for incrementing numeric columns in table "customer.customer" */
@@ -35610,13 +36197,10 @@ export type customer_customer_insert_input = {
 	notification_info?:notification_info_obj_rel_insert_input,
 	saved_locations?:customer_saved_location_arr_rel_insert_input,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_cards?:customer_stripe_cards_arr_rel_insert_input,
+	stripe_id?:string,
 	stripe_info?:jsonb,
+	stripe_sp_ids?:customer_stripe_sp_id_arr_rel_insert_input,
 	user?:user_obj_rel_insert_input,
 	user_id?:number
 }
@@ -35627,6 +36211,7 @@ export type customer_customer_max_fields = {
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_id?:string,
 	user_id?:number
 }
 
@@ -35636,6 +36221,7 @@ export type customer_customer_min_fields = {
 	app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
+	stripe_id?:string,
 	user_id?:number
 }
 
@@ -35671,7 +36257,10 @@ export type customer_customer_order_by = {
 	notification_info?:notification_info_order_by,
 	saved_locations_aggregate?:customer_saved_location_aggregate_order_by,
 	service_provider_type?:order_by,
+	stripe_cards_aggregate?:customer_stripe_cards_aggregate_order_by,
+	stripe_id?:order_by,
 	stripe_info?:order_by,
+	stripe_sp_ids_aggregate?:customer_stripe_sp_id_aggregate_order_by,
 	user?:user_order_by,
 	user_id?:order_by
 }
@@ -35683,13 +36272,7 @@ export type customer_customer_pk_columns_input = {
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type customer_customer_prepend_input = {
-		/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
-	stripe_info?:jsonb
+		stripe_info?:jsonb
 }
 
 /** select columns of table "customer.customer" */
@@ -35697,6 +36280,7 @@ export enum customer_customer_select_column {
 	app_type_id = "app_type_id",
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
+	stripe_id = "stripe_id",
 	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
@@ -35706,12 +36290,7 @@ export type customer_customer_set_input = {
 		app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:jsonb,
 	user_id?:number
 }
@@ -35747,12 +36326,7 @@ export type customer_customer_stream_cursor_value_input = {
 		app_type_id?:string,
 	app_version?:string,
 	service_provider_type?:string,
-	/** {     id: string,     idsWithServiceProvider: (Record of orderType and ids
-Object) {         restaurant: {Record of restaurantIds and
-stripeIdsWithServiceProvider}     },     cards: Record of cardId(string) and
-card object: {             id: string,             last4?: string,            
-brand?: string,             expMonth?: number,             expYear?: number,  
-          idsWithServiceProvider: same as above,         }     } } */
+	stripe_id?:string,
 	stripe_info?:jsonb,
 	user_id?:number
 }
@@ -35768,6 +36342,7 @@ export enum customer_customer_update_column {
 	app_type_id = "app_type_id",
 	app_version = "app_version",
 	service_provider_type = "service_provider_type",
+	stripe_id = "stripe_id",
 	stripe_info = "stripe_info",
 	user_id = "user_id"
 }
@@ -36713,8 +37288,16 @@ export type customer_saved_location_variance_order_by = {
 /** columns and relationships of "customer.stripe_cards" */
 export type customer_stripe_cards = {
 	__typename?: "customer_stripe_cards",
+	brand?:string,
 	card_id:string,
+	/** An object relationship */
+	customer:customer_customer,
 	customer_id:number,
+	exp_month?:number,
+	exp_year?:number,
+	id:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:jsonb
 }
 
@@ -36723,6 +37306,17 @@ export type customer_stripe_cards_aggregate = {
 	__typename?: "customer_stripe_cards_aggregate",
 	aggregate?:customer_stripe_cards_aggregate_fields,
 	nodes:customer_stripe_cards[]
+}
+
+export type customer_stripe_cards_aggregate_bool_exp = {
+		count?:customer_stripe_cards_aggregate_bool_exp_count
+}
+
+export type customer_stripe_cards_aggregate_bool_exp_count = {
+		arguments?:customer_stripe_cards_select_column[],
+	distinct?:boolean,
+	filter?:customer_stripe_cards_bool_exp,
+	predicate:Int_comparison_exp
 }
 
 /** aggregate fields of "customer.stripe_cards" */
@@ -36741,15 +37335,49 @@ export type customer_stripe_cards_aggregate_fields = {
 	variance?:customer_stripe_cards_variance_fields
 }
 
+/** order by aggregate values of table "customer.stripe_cards" */
+export type customer_stripe_cards_aggregate_order_by = {
+		avg?:customer_stripe_cards_avg_order_by,
+	count?:order_by,
+	max?:customer_stripe_cards_max_order_by,
+	min?:customer_stripe_cards_min_order_by,
+	stddev?:customer_stripe_cards_stddev_order_by,
+	stddev_pop?:customer_stripe_cards_stddev_pop_order_by,
+	stddev_samp?:customer_stripe_cards_stddev_samp_order_by,
+	sum?:customer_stripe_cards_sum_order_by,
+	var_pop?:customer_stripe_cards_var_pop_order_by,
+	var_samp?:customer_stripe_cards_var_samp_order_by,
+	variance?:customer_stripe_cards_variance_order_by
+}
+
 /** append existing jsonb value of filtered columns with new jsonb value */
 export type customer_stripe_cards_append_input = {
-		sp_card_ids?:jsonb
+		/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:jsonb
+}
+
+/** input type for inserting array relation for remote table "customer.stripe_cards" */
+export type customer_stripe_cards_arr_rel_insert_input = {
+		data:customer_stripe_cards_insert_input[],
+	/** upsert condition */
+	on_conflict?:customer_stripe_cards_on_conflict
 }
 
 /** aggregate avg on columns */
 export type customer_stripe_cards_avg_fields = {
 	__typename?: "customer_stripe_cards_avg_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by avg() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_avg_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** Boolean expression to filter rows from the table "customer.stripe_cards". All fields are combined with a logical 'AND'. */
@@ -36757,8 +37385,14 @@ export type customer_stripe_cards_bool_exp = {
 		_and?:customer_stripe_cards_bool_exp[],
 	_not?:customer_stripe_cards_bool_exp,
 	_or?:customer_stripe_cards_bool_exp[],
+	brand?:String_comparison_exp,
 	card_id?:String_comparison_exp,
+	customer?:customer_customer_bool_exp,
 	customer_id?:Int_comparison_exp,
+	exp_month?:Int_comparison_exp,
+	exp_year?:Int_comparison_exp,
+	id?:Int_comparison_exp,
+	last_4?:String_comparison_exp,
 	sp_card_ids?:jsonb_comparison_exp
 }
 
@@ -36769,44 +37403,89 @@ export enum customer_stripe_cards_constraint {
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 export type customer_stripe_cards_delete_at_path_input = {
-		sp_card_ids?:string[]
+		/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:string[]
 }
 
 /** delete the array element with specified index (negative integers count from the
 end). throws an error if top level container is not an array */
 export type customer_stripe_cards_delete_elem_input = {
-		sp_card_ids?:number
+		/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:number
 }
 
 /** delete key/value pair or string element. key/value pairs are matched based on their key value */
 export type customer_stripe_cards_delete_key_input = {
-		sp_card_ids?:string
+		/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:string
 }
 
 /** input type for incrementing numeric columns in table "customer.stripe_cards" */
 export type customer_stripe_cards_inc_input = {
-		customer_id?:number
+		customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
 }
 
 /** input type for inserting data into table "customer.stripe_cards" */
 export type customer_stripe_cards_insert_input = {
-		card_id?:string,
+		brand?:string,
+	card_id?:string,
+	customer?:customer_customer_obj_rel_insert_input,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:jsonb
 }
 
 /** aggregate max on columns */
 export type customer_stripe_cards_max_fields = {
 	__typename?: "customer_stripe_cards_max_fields",
+	brand?:string,
 	card_id?:string,
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string
+}
+
+/** order by max() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_max_order_by = {
+		brand?:order_by,
+	card_id?:order_by,
+	customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by,
+	last_4?:order_by
 }
 
 /** aggregate min on columns */
 export type customer_stripe_cards_min_fields = {
 	__typename?: "customer_stripe_cards_min_fields",
+	brand?:string,
 	card_id?:string,
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string
+}
+
+/** order by min() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_min_order_by = {
+		brand?:order_by,
+	card_id?:order_by,
+	customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by,
+	last_4?:order_by
 }
 
 /** response of any mutation on the table "customer.stripe_cards" */
@@ -36827,51 +37506,102 @@ export type customer_stripe_cards_on_conflict = {
 
 /** Ordering options when selecting data from "customer.stripe_cards". */
 export type customer_stripe_cards_order_by = {
-		card_id?:order_by,
+		brand?:order_by,
+	card_id?:order_by,
+	customer?:customer_customer_order_by,
 	customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by,
+	last_4?:order_by,
 	sp_card_ids?:order_by
 }
 
 /** primary key columns input for table: customer.stripe_cards */
 export type customer_stripe_cards_pk_columns_input = {
-		card_id:string
+		id:number
 }
 
 /** prepend existing jsonb value of filtered columns with new jsonb value */
 export type customer_stripe_cards_prepend_input = {
-		sp_card_ids?:jsonb
+		/** Record<sp_details_id, card_sp_id> */
+	sp_card_ids?:jsonb
 }
 
 /** select columns of table "customer.stripe_cards" */
 export enum customer_stripe_cards_select_column {
+	brand = "brand",
 	card_id = "card_id",
 	customer_id = "customer_id",
+	exp_month = "exp_month",
+	exp_year = "exp_year",
+	id = "id",
+	last_4 = "last_4",
 	sp_card_ids = "sp_card_ids"
 }
 
 /** input type for updating data in table "customer.stripe_cards" */
 export type customer_stripe_cards_set_input = {
-		card_id?:string,
+		brand?:string,
+	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:jsonb
 }
 
 /** aggregate stddev on columns */
 export type customer_stripe_cards_stddev_fields = {
 	__typename?: "customer_stripe_cards_stddev_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by stddev() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_stddev_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** aggregate stddev_pop on columns */
 export type customer_stripe_cards_stddev_pop_fields = {
 	__typename?: "customer_stripe_cards_stddev_pop_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by stddev_pop() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_stddev_pop_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** aggregate stddev_samp on columns */
 export type customer_stripe_cards_stddev_samp_fields = {
 	__typename?: "customer_stripe_cards_stddev_samp_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by stddev_samp() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_stddev_samp_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** Streaming cursor of the table "customer_stripe_cards" */
@@ -36884,21 +37614,43 @@ export type customer_stripe_cards_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type customer_stripe_cards_stream_cursor_value_input = {
-		card_id?:string,
+		brand?:string,
+	card_id?:string,
 	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number,
+	last_4?:string,
+	/** Record<sp_details_id, card_sp_id> */
 	sp_card_ids?:jsonb
 }
 
 /** aggregate sum on columns */
 export type customer_stripe_cards_sum_fields = {
 	__typename?: "customer_stripe_cards_sum_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by sum() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_sum_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** update columns of table "customer.stripe_cards" */
 export enum customer_stripe_cards_update_column {
+	brand = "brand",
 	card_id = "card_id",
 	customer_id = "customer_id",
+	exp_month = "exp_month",
+	exp_year = "exp_year",
+	id = "id",
+	last_4 = "last_4",
 	sp_card_ids = "sp_card_ids"
 }
 
@@ -36925,229 +37677,393 @@ the end). throws an error if top level container is not an array */
 /** aggregate var_pop on columns */
 export type customer_stripe_cards_var_pop_fields = {
 	__typename?: "customer_stripe_cards_var_pop_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by var_pop() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_var_pop_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** aggregate var_samp on columns */
 export type customer_stripe_cards_var_samp_fields = {
 	__typename?: "customer_stripe_cards_var_samp_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
+}
+
+/** order by var_samp() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_var_samp_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
 }
 
 /** aggregate variance on columns */
 export type customer_stripe_cards_variance_fields = {
 	__typename?: "customer_stripe_cards_variance_fields",
-	customer_id?:number
+	customer_id?:number,
+	exp_month?:number,
+	exp_year?:number,
+	id?:number
 }
 
-/** columns and relationships of "customer.stripe_info" */
-export type customer_stripe_info = {
-	__typename?: "customer_stripe_info",
+/** order by variance() on columns of table "customer.stripe_cards" */
+export type customer_stripe_cards_variance_order_by = {
+		customer_id?:order_by,
+	exp_month?:order_by,
+	exp_year?:order_by,
+	id?:order_by
+}
+
+/** columns and relationships of "customer.stripe_sp_id" */
+export type customer_stripe_sp_id = {
+	__typename?: "customer_stripe_sp_id",
+	/** An object relationship */
+	customer:customer_customer,
 	customer_id:number,
+	id:number,
 	sp_id:number,
 	stripe_id:string
 }
 
-/** aggregated selection of "customer.stripe_info" */
-export type customer_stripe_info_aggregate = {
-	__typename?: "customer_stripe_info_aggregate",
-	aggregate?:customer_stripe_info_aggregate_fields,
-	nodes:customer_stripe_info[]
+/** aggregated selection of "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_aggregate = {
+	__typename?: "customer_stripe_sp_id_aggregate",
+	aggregate?:customer_stripe_sp_id_aggregate_fields,
+	nodes:customer_stripe_sp_id[]
 }
 
-/** aggregate fields of "customer.stripe_info" */
-export type customer_stripe_info_aggregate_fields = {
-	__typename?: "customer_stripe_info_aggregate_fields",
-	avg?:customer_stripe_info_avg_fields,
+export type customer_stripe_sp_id_aggregate_bool_exp = {
+		count?:customer_stripe_sp_id_aggregate_bool_exp_count
+}
+
+export type customer_stripe_sp_id_aggregate_bool_exp_count = {
+		arguments?:customer_stripe_sp_id_select_column[],
+	distinct?:boolean,
+	filter?:customer_stripe_sp_id_bool_exp,
+	predicate:Int_comparison_exp
+}
+
+/** aggregate fields of "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_aggregate_fields = {
+	__typename?: "customer_stripe_sp_id_aggregate_fields",
+	avg?:customer_stripe_sp_id_avg_fields,
 	count:number,
-	max?:customer_stripe_info_max_fields,
-	min?:customer_stripe_info_min_fields,
-	stddev?:customer_stripe_info_stddev_fields,
-	stddev_pop?:customer_stripe_info_stddev_pop_fields,
-	stddev_samp?:customer_stripe_info_stddev_samp_fields,
-	sum?:customer_stripe_info_sum_fields,
-	var_pop?:customer_stripe_info_var_pop_fields,
-	var_samp?:customer_stripe_info_var_samp_fields,
-	variance?:customer_stripe_info_variance_fields
+	max?:customer_stripe_sp_id_max_fields,
+	min?:customer_stripe_sp_id_min_fields,
+	stddev?:customer_stripe_sp_id_stddev_fields,
+	stddev_pop?:customer_stripe_sp_id_stddev_pop_fields,
+	stddev_samp?:customer_stripe_sp_id_stddev_samp_fields,
+	sum?:customer_stripe_sp_id_sum_fields,
+	var_pop?:customer_stripe_sp_id_var_pop_fields,
+	var_samp?:customer_stripe_sp_id_var_samp_fields,
+	variance?:customer_stripe_sp_id_variance_fields
+}
+
+/** order by aggregate values of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_aggregate_order_by = {
+		avg?:customer_stripe_sp_id_avg_order_by,
+	count?:order_by,
+	max?:customer_stripe_sp_id_max_order_by,
+	min?:customer_stripe_sp_id_min_order_by,
+	stddev?:customer_stripe_sp_id_stddev_order_by,
+	stddev_pop?:customer_stripe_sp_id_stddev_pop_order_by,
+	stddev_samp?:customer_stripe_sp_id_stddev_samp_order_by,
+	sum?:customer_stripe_sp_id_sum_order_by,
+	var_pop?:customer_stripe_sp_id_var_pop_order_by,
+	var_samp?:customer_stripe_sp_id_var_samp_order_by,
+	variance?:customer_stripe_sp_id_variance_order_by
+}
+
+/** input type for inserting array relation for remote table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_arr_rel_insert_input = {
+		data:customer_stripe_sp_id_insert_input[],
+	/** upsert condition */
+	on_conflict?:customer_stripe_sp_id_on_conflict
 }
 
 /** aggregate avg on columns */
-export type customer_stripe_info_avg_fields = {
-	__typename?: "customer_stripe_info_avg_fields",
+export type customer_stripe_sp_id_avg_fields = {
+	__typename?: "customer_stripe_sp_id_avg_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 }
 
-/** Boolean expression to filter rows from the table "customer.stripe_info". All fields are combined with a logical 'AND'. */
-export type customer_stripe_info_bool_exp = {
-		_and?:customer_stripe_info_bool_exp[],
-	_not?:customer_stripe_info_bool_exp,
-	_or?:customer_stripe_info_bool_exp[],
+/** order by avg() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_avg_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
+}
+
+/** Boolean expression to filter rows from the table "customer.stripe_sp_id". All fields are combined with a logical 'AND'. */
+export type customer_stripe_sp_id_bool_exp = {
+		_and?:customer_stripe_sp_id_bool_exp[],
+	_not?:customer_stripe_sp_id_bool_exp,
+	_or?:customer_stripe_sp_id_bool_exp[],
+	customer?:customer_customer_bool_exp,
 	customer_id?:Int_comparison_exp,
+	id?:Int_comparison_exp,
 	sp_id?:Int_comparison_exp,
 	stripe_id?:String_comparison_exp
 }
 
-/** unique or primary key constraints on table "customer.stripe_info" */
-export enum customer_stripe_info_constraint {
+/** unique or primary key constraints on table "customer.stripe_sp_id" */
+export enum customer_stripe_sp_id_constraint {
 	stripe_info_customer_id_sp_id_key = "stripe_info_customer_id_sp_id_key",
 	stripe_info_pkey = "stripe_info_pkey"
 }
 
-/** input type for incrementing numeric columns in table "customer.stripe_info" */
-export type customer_stripe_info_inc_input = {
+/** input type for incrementing numeric columns in table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_inc_input = {
 		customer_id?:number,
+	id?:number,
 	sp_id?:number
 }
 
-/** input type for inserting data into table "customer.stripe_info" */
-export type customer_stripe_info_insert_input = {
-		customer_id?:number,
+/** input type for inserting data into table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_insert_input = {
+		customer?:customer_customer_obj_rel_insert_input,
+	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 }
 
 /** aggregate max on columns */
-export type customer_stripe_info_max_fields = {
-	__typename?: "customer_stripe_info_max_fields",
+export type customer_stripe_sp_id_max_fields = {
+	__typename?: "customer_stripe_sp_id_max_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 }
 
-/** aggregate min on columns */
-export type customer_stripe_info_min_fields = {
-	__typename?: "customer_stripe_info_min_fields",
-	customer_id?:number,
-	sp_id?:number,
-	stripe_id?:string
-}
-
-/** response of any mutation on the table "customer.stripe_info" */
-export type customer_stripe_info_mutation_response = {
-	__typename?: "customer_stripe_info_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:customer_stripe_info[]
-}
-
-/** on_conflict condition type for table "customer.stripe_info" */
-export type customer_stripe_info_on_conflict = {
-		constraint:customer_stripe_info_constraint,
-	update_columns:customer_stripe_info_update_column[],
-	where?:customer_stripe_info_bool_exp
-}
-
-/** Ordering options when selecting data from "customer.stripe_info". */
-export type customer_stripe_info_order_by = {
+/** order by max() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_max_order_by = {
 		customer_id?:order_by,
+	id?:order_by,
 	sp_id?:order_by,
 	stripe_id?:order_by
 }
 
-/** primary key columns input for table: customer.stripe_info */
-export type customer_stripe_info_pk_columns_input = {
-		stripe_id:string
+/** aggregate min on columns */
+export type customer_stripe_sp_id_min_fields = {
+	__typename?: "customer_stripe_sp_id_min_fields",
+	customer_id?:number,
+	id?:number,
+	sp_id?:number,
+	stripe_id?:string
 }
 
-/** select columns of table "customer.stripe_info" */
-export enum customer_stripe_info_select_column {
+/** order by min() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_min_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by,
+	stripe_id?:order_by
+}
+
+/** response of any mutation on the table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_mutation_response = {
+	__typename?: "customer_stripe_sp_id_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:customer_stripe_sp_id[]
+}
+
+/** on_conflict condition type for table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_on_conflict = {
+		constraint:customer_stripe_sp_id_constraint,
+	update_columns:customer_stripe_sp_id_update_column[],
+	where?:customer_stripe_sp_id_bool_exp
+}
+
+/** Ordering options when selecting data from "customer.stripe_sp_id". */
+export type customer_stripe_sp_id_order_by = {
+		customer?:customer_customer_order_by,
+	customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by,
+	stripe_id?:order_by
+}
+
+/** primary key columns input for table: customer.stripe_sp_id */
+export type customer_stripe_sp_id_pk_columns_input = {
+		id:number
+}
+
+/** select columns of table "customer.stripe_sp_id" */
+export enum customer_stripe_sp_id_select_column {
 	customer_id = "customer_id",
+	id = "id",
 	sp_id = "sp_id",
 	stripe_id = "stripe_id"
 }
 
-/** input type for updating data in table "customer.stripe_info" */
-export type customer_stripe_info_set_input = {
+/** input type for updating data in table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_set_input = {
 		customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 }
 
 /** aggregate stddev on columns */
-export type customer_stripe_info_stddev_fields = {
-	__typename?: "customer_stripe_info_stddev_fields",
+export type customer_stripe_sp_id_stddev_fields = {
+	__typename?: "customer_stripe_sp_id_stddev_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
+}
+
+/** order by stddev() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_stddev_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
 }
 
 /** aggregate stddev_pop on columns */
-export type customer_stripe_info_stddev_pop_fields = {
-	__typename?: "customer_stripe_info_stddev_pop_fields",
+export type customer_stripe_sp_id_stddev_pop_fields = {
+	__typename?: "customer_stripe_sp_id_stddev_pop_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
+}
+
+/** order by stddev_pop() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_stddev_pop_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
 }
 
 /** aggregate stddev_samp on columns */
-export type customer_stripe_info_stddev_samp_fields = {
-	__typename?: "customer_stripe_info_stddev_samp_fields",
+export type customer_stripe_sp_id_stddev_samp_fields = {
+	__typename?: "customer_stripe_sp_id_stddev_samp_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 }
 
-/** Streaming cursor of the table "customer_stripe_info" */
-export type customer_stripe_info_stream_cursor_input = {
+/** order by stddev_samp() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_stddev_samp_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
+}
+
+/** Streaming cursor of the table "customer_stripe_sp_id" */
+export type customer_stripe_sp_id_stream_cursor_input = {
 		/** Stream column input with initial value */
-	initial_value:customer_stripe_info_stream_cursor_value_input,
+	initial_value:customer_stripe_sp_id_stream_cursor_value_input,
 	/** cursor ordering */
 	ordering?:cursor_ordering
 }
 
 /** Initial value of the column from where the streaming should start */
-export type customer_stripe_info_stream_cursor_value_input = {
+export type customer_stripe_sp_id_stream_cursor_value_input = {
 		customer_id?:number,
+	id?:number,
 	sp_id?:number,
 	stripe_id?:string
 }
 
 /** aggregate sum on columns */
-export type customer_stripe_info_sum_fields = {
-	__typename?: "customer_stripe_info_sum_fields",
+export type customer_stripe_sp_id_sum_fields = {
+	__typename?: "customer_stripe_sp_id_sum_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 }
 
-/** update columns of table "customer.stripe_info" */
-export enum customer_stripe_info_update_column {
+/** order by sum() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_sum_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
+}
+
+/** update columns of table "customer.stripe_sp_id" */
+export enum customer_stripe_sp_id_update_column {
 	customer_id = "customer_id",
+	id = "id",
 	sp_id = "sp_id",
 	stripe_id = "stripe_id"
 }
 
-export type customer_stripe_info_updates = {
+export type customer_stripe_sp_id_updates = {
 		/** increments the numeric columns with given value of the filtered values */
-	_inc?:customer_stripe_info_inc_input,
+	_inc?:customer_stripe_sp_id_inc_input,
 	/** sets the columns of the filtered rows to the given values */
-	_set?:customer_stripe_info_set_input,
+	_set?:customer_stripe_sp_id_set_input,
 	/** filter the rows which have to be updated */
-	where:customer_stripe_info_bool_exp
+	where:customer_stripe_sp_id_bool_exp
 }
 
 /** aggregate var_pop on columns */
-export type customer_stripe_info_var_pop_fields = {
-	__typename?: "customer_stripe_info_var_pop_fields",
+export type customer_stripe_sp_id_var_pop_fields = {
+	__typename?: "customer_stripe_sp_id_var_pop_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
+}
+
+/** order by var_pop() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_var_pop_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
 }
 
 /** aggregate var_samp on columns */
-export type customer_stripe_info_var_samp_fields = {
-	__typename?: "customer_stripe_info_var_samp_fields",
+export type customer_stripe_sp_id_var_samp_fields = {
+	__typename?: "customer_stripe_sp_id_var_samp_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
 }
 
+/** order by var_samp() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_var_samp_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
+}
+
 /** aggregate variance on columns */
-export type customer_stripe_info_variance_fields = {
-	__typename?: "customer_stripe_info_variance_fields",
+export type customer_stripe_sp_id_variance_fields = {
+	__typename?: "customer_stripe_sp_id_variance_fields",
 	customer_id?:number,
+	id?:number,
 	sp_id?:number
+}
+
+/** order by variance() on columns of table "customer.stripe_sp_id" */
+export type customer_stripe_sp_id_variance_order_by = {
+		customer_id?:order_by,
+	id?:order_by,
+	sp_id?:order_by
 }
 
 /** columns and relationships of "delivery.company" */
 export type delivery_company = {
 	__typename?: "delivery_company",
+	/** An object relationship */
+	delivery_details:delivery_details,
 	delivery_details_id:number,
 	/** An array relationship */
 	delivery_operators:delivery_operator[],
@@ -37196,6 +38112,7 @@ export type delivery_company_bool_exp = {
 		_and?:delivery_company_bool_exp[],
 	_not?:delivery_company_bool_exp,
 	_or?:delivery_company_bool_exp[],
+	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
 	delivery_operators?:delivery_operator_bool_exp,
 	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
@@ -37221,7 +38138,8 @@ export type delivery_company_inc_input = {
 
 /** input type for inserting data into table "delivery.company" */
 export type delivery_company_insert_input = {
-		delivery_details_id?:number,
+		delivery_details?:delivery_details_obj_rel_insert_input,
+	delivery_details_id?:number,
 	delivery_operators?:delivery_operator_arr_rel_insert_input,
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
@@ -37272,7 +38190,8 @@ export type delivery_company_on_conflict = {
 
 /** Ordering options when selecting data from "delivery.company". */
 export type delivery_company_order_by = {
-		delivery_details_id?:order_by,
+		delivery_details?:delivery_details_order_by,
+	delivery_details_id?:order_by,
 	delivery_operators_aggregate?:delivery_operator_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
@@ -38741,7 +39660,7 @@ export type delivery_order = {
 	/** An object relationship */
 	delivery_driver?:delivery_driver,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction:string,
 	/** An object relationship */
 	driver_review_by_customer?:review,
@@ -38781,7 +39700,7 @@ export type delivery_order = {
 	/** An object relationship */
 	service_provider_review_by_driver?:review,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39011,7 +39930,7 @@ export type delivery_order_insert_input = {
 	delivery_cost?:money,
 	delivery_driver?:delivery_driver_obj_rel_insert_input,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:review_obj_rel_insert_input,
 	driver_review_by_customer_id?:number,
@@ -39039,7 +39958,7 @@ export type delivery_order_insert_input = {
 	service_provider_id?:number,
 	service_provider_review_by_driver?:review_obj_rel_insert_input,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39066,7 +39985,7 @@ export type delivery_order_max_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -39083,7 +40002,7 @@ export type delivery_order_max_fields = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39109,7 +40028,7 @@ export type delivery_order_max_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
@@ -39126,7 +40045,7 @@ export type delivery_order_max_order_by = {
 	schedule_time?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:order_by,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39153,7 +40072,7 @@ export type delivery_order_min_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -39170,7 +40089,7 @@ export type delivery_order_min_fields = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39196,7 +40115,7 @@ export type delivery_order_min_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
@@ -39213,7 +40132,7 @@ export type delivery_order_min_order_by = {
 	schedule_time?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:order_by,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39599,7 +40518,7 @@ export type delivery_order_set_input = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -39619,7 +40538,7 @@ export type delivery_order_set_input = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39777,7 +40696,7 @@ export type delivery_order_stream_cursor_value_input = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -39797,7 +40716,7 @@ export type delivery_order_stream_cursor_value_input = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -43154,10 +44073,10 @@ export type mutation_root = {
 	delete_customer_stripe_cards?:customer_stripe_cards_mutation_response,
 	/** delete single row from the table: "customer.stripe_cards" */
 	delete_customer_stripe_cards_by_pk?:customer_stripe_cards,
-	/** delete data from the table: "customer.stripe_info" */
-	delete_customer_stripe_info?:customer_stripe_info_mutation_response,
-	/** delete single row from the table: "customer.stripe_info" */
-	delete_customer_stripe_info_by_pk?:customer_stripe_info,
+	/** delete data from the table: "customer.stripe_sp_id" */
+	delete_customer_stripe_sp_id?:customer_stripe_sp_id_mutation_response,
+	/** delete single row from the table: "customer.stripe_sp_id" */
+	delete_customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
 	/** delete data from the table: "delivery.company" */
 	delete_delivery_company?:delivery_company_mutation_response,
 	/** delete single row from the table: "delivery.company" */
@@ -43358,10 +44277,10 @@ export type mutation_root = {
 	insert_customer_stripe_cards?:customer_stripe_cards_mutation_response,
 	/** insert a single row into the table: "customer.stripe_cards" */
 	insert_customer_stripe_cards_one?:customer_stripe_cards,
-	/** insert data into the table: "customer.stripe_info" */
-	insert_customer_stripe_info?:customer_stripe_info_mutation_response,
-	/** insert a single row into the table: "customer.stripe_info" */
-	insert_customer_stripe_info_one?:customer_stripe_info,
+	/** insert data into the table: "customer.stripe_sp_id" */
+	insert_customer_stripe_sp_id?:customer_stripe_sp_id_mutation_response,
+	/** insert a single row into the table: "customer.stripe_sp_id" */
+	insert_customer_stripe_sp_id_one?:customer_stripe_sp_id,
 	/** insert data into the table: "delivery.company" */
 	insert_delivery_company?:delivery_company_mutation_response,
 	/** insert a single row into the table: "delivery.company" */
@@ -43582,12 +44501,12 @@ export type mutation_root = {
 	update_customer_stripe_cards_by_pk?:customer_stripe_cards,
 	/** update multiples rows of table: "customer.stripe_cards" */
 	update_customer_stripe_cards_many?:(customer_stripe_cards_mutation_response | undefined)[],
-	/** update data of the table: "customer.stripe_info" */
-	update_customer_stripe_info?:customer_stripe_info_mutation_response,
-	/** update single row of the table: "customer.stripe_info" */
-	update_customer_stripe_info_by_pk?:customer_stripe_info,
-	/** update multiples rows of table: "customer.stripe_info" */
-	update_customer_stripe_info_many?:(customer_stripe_info_mutation_response | undefined)[],
+	/** update data of the table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id?:customer_stripe_sp_id_mutation_response,
+	/** update single row of the table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
+	/** update multiples rows of table: "customer.stripe_sp_id" */
+	update_customer_stripe_sp_id_many?:(customer_stripe_sp_id_mutation_response | undefined)[],
 	/** update data of the table: "delivery.company" */
 	update_delivery_company?:delivery_company_mutation_response,
 	/** update single row of the table: "delivery.company" */
@@ -44138,12 +45057,12 @@ export type query_root = {
 	customer_stripe_cards_aggregate:customer_stripe_cards_aggregate,
 	/** fetch data from the table: "customer.stripe_cards" using primary key columns */
 	customer_stripe_cards_by_pk?:customer_stripe_cards,
-	/** fetch data from the table: "customer.stripe_info" */
-	customer_stripe_info:customer_stripe_info[],
-	/** fetch aggregated fields from the table: "customer.stripe_info" */
-	customer_stripe_info_aggregate:customer_stripe_info_aggregate,
-	/** fetch data from the table: "customer.stripe_info" using primary key columns */
-	customer_stripe_info_by_pk?:customer_stripe_info,
+	/** fetch data from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id:customer_stripe_sp_id[],
+	/** fetch aggregated fields from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_aggregate:customer_stripe_sp_id_aggregate,
+	/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
+	customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
 	/** fetch data from the table: "delivery.company" */
 	delivery_company:delivery_company[],
 	/** fetch aggregated fields from the table: "delivery.company" */
@@ -50882,6 +51801,7 @@ export type service_provider_details = {
 	service_link?:service_provider_service_link,
 	service_link_id?:number,
 	service_provider_type:string,
+	stripe_id?:number,
 	/** An object relationship */
 	stripe_info?:service_provider_stripe_info
 }
@@ -50923,7 +51843,8 @@ export type service_provider_details_avg_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** Boolean expression to filter rows from the table "service_provider.details". All fields are combined with a logical 'AND'. */
@@ -50956,6 +51877,7 @@ export type service_provider_details_bool_exp = {
 	service_link?:service_provider_service_link_bool_exp,
 	service_link_id?:Int_comparison_exp,
 	service_provider_type?:String_comparison_exp,
+	stripe_id?:Int_comparison_exp,
 	stripe_info?:service_provider_stripe_info_bool_exp
 }
 
@@ -50997,7 +51919,8 @@ export type service_provider_details_inc_input = {
 		description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** input type for inserting data into table "service_provider.details" */
@@ -51026,6 +51949,7 @@ export type service_provider_details_insert_input = {
 	service_link?:service_provider_service_link_obj_rel_insert_input,
 	service_link_id?:number,
 	service_provider_type?:string,
+	stripe_id?:number,
 	stripe_info?:service_provider_stripe_info_obj_rel_insert_input
 }
 
@@ -51042,7 +51966,8 @@ export type service_provider_details_max_fields = {
 	open_status?:string,
 	phone_number?:string,
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 }
 
 /** aggregate min on columns */
@@ -51058,7 +51983,8 @@ export type service_provider_details_min_fields = {
 	open_status?:string,
 	phone_number?:string,
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 }
 
 /** response of any mutation on the table "service_provider.details" */
@@ -51109,6 +52035,7 @@ export type service_provider_details_order_by = {
 	service_link?:service_provider_service_link_order_by,
 	service_link_id?:order_by,
 	service_provider_type?:order_by,
+	stripe_id?:order_by,
 	stripe_info?:service_provider_stripe_info_order_by
 }
 
@@ -51141,7 +52068,8 @@ export enum service_provider_details_select_column {
 	phone_number = "phone_number",
 	schedule = "schedule",
 	service_link_id = "service_link_id",
-	service_provider_type = "service_provider_type"
+	service_provider_type = "service_provider_type",
+	stripe_id = "stripe_id"
 }
 
 /** input type for updating data in table "service_provider.details" */
@@ -51161,7 +52089,8 @@ export type service_provider_details_set_input = {
 	phone_number?:string,
 	schedule?:jsonb,
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 }
 
 /** aggregate stddev on columns */
@@ -51170,7 +52099,8 @@ export type service_provider_details_stddev_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** aggregate stddev_pop on columns */
@@ -51179,7 +52109,8 @@ export type service_provider_details_stddev_pop_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** aggregate stddev_samp on columns */
@@ -51188,7 +52119,8 @@ export type service_provider_details_stddev_samp_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** Streaming cursor of the table "service_provider_details" */
@@ -51216,7 +52148,8 @@ export type service_provider_details_stream_cursor_value_input = {
 	phone_number?:string,
 	schedule?:jsonb,
 	service_link_id?:number,
-	service_provider_type?:string
+	service_provider_type?:string,
+	stripe_id?:number
 }
 
 /** aggregate sum on columns */
@@ -51225,7 +52158,8 @@ export type service_provider_details_sum_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** update columns of table "service_provider.details" */
@@ -51244,7 +52178,8 @@ export enum service_provider_details_update_column {
 	phone_number = "phone_number",
 	schedule = "schedule",
 	service_link_id = "service_link_id",
-	service_provider_type = "service_provider_type"
+	service_provider_type = "service_provider_type",
+	stripe_id = "stripe_id"
 }
 
 export type service_provider_details_updates = {
@@ -51273,7 +52208,8 @@ export type service_provider_details_var_pop_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** aggregate var_samp on columns */
@@ -51282,7 +52218,8 @@ export type service_provider_details_var_samp_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** aggregate variance on columns */
@@ -51291,7 +52228,8 @@ export type service_provider_details_variance_fields = {
 	description_id?:number,
 	id?:number,
 	location_id?:number,
-	service_link_id?:number
+	service_link_id?:number,
+	stripe_id?:number
 }
 
 /** columns and relationships of "service_provider.location" */
@@ -52341,9 +53279,9 @@ export type service_provider_stripe_info = {
 	charges_enabled:boolean,
 	details_submitted:boolean,
 	email?:string,
+	id:number,
 	payouts_enabled:boolean,
 	requirements?:string,
-	sp_id:number,
 	status:string,
 	stripe_id:string
 }
@@ -52374,7 +53312,7 @@ export type service_provider_stripe_info_aggregate_fields = {
 /** aggregate avg on columns */
 export type service_provider_stripe_info_avg_fields = {
 	__typename?: "service_provider_stripe_info_avg_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** Boolean expression to filter rows from the table "service_provider.stripe_info".
@@ -52387,9 +53325,9 @@ export type service_provider_stripe_info_bool_exp = {
 	charges_enabled?:Boolean_comparison_exp,
 	details_submitted?:Boolean_comparison_exp,
 	email?:String_comparison_exp,
+	id?:Int_comparison_exp,
 	payouts_enabled?:Boolean_comparison_exp,
 	requirements?:String_comparison_exp,
-	sp_id?:Int_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_id?:String_comparison_exp
 }
@@ -52402,7 +53340,7 @@ export enum service_provider_stripe_info_constraint {
 
 /** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 export type service_provider_stripe_info_inc_input = {
-		sp_id?:number
+		id?:number
 }
 
 /** input type for inserting data into table "service_provider.stripe_info" */
@@ -52411,9 +53349,9 @@ export type service_provider_stripe_info_insert_input = {
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 }
@@ -52422,8 +53360,8 @@ export type service_provider_stripe_info_insert_input = {
 export type service_provider_stripe_info_max_fields = {
 	__typename?: "service_provider_stripe_info_max_fields",
 	email?:string,
+	id?:number,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 }
@@ -52432,8 +53370,8 @@ export type service_provider_stripe_info_max_fields = {
 export type service_provider_stripe_info_min_fields = {
 	__typename?: "service_provider_stripe_info_min_fields",
 	email?:string,
+	id?:number,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 }
@@ -52467,16 +53405,16 @@ export type service_provider_stripe_info_order_by = {
 	charges_enabled?:order_by,
 	details_submitted?:order_by,
 	email?:order_by,
+	id?:order_by,
 	payouts_enabled?:order_by,
 	requirements?:order_by,
-	sp_id?:order_by,
 	status?:order_by,
 	stripe_id?:order_by
 }
 
 /** primary key columns input for table: service_provider.stripe_info */
 export type service_provider_stripe_info_pk_columns_input = {
-		sp_id:number
+		id:number
 }
 
 /** select columns of table "service_provider.stripe_info" */
@@ -52485,9 +53423,9 @@ export enum service_provider_stripe_info_select_column {
 	charges_enabled = "charges_enabled",
 	details_submitted = "details_submitted",
 	email = "email",
+	id = "id",
 	payouts_enabled = "payouts_enabled",
 	requirements = "requirements",
-	sp_id = "sp_id",
 	status = "status",
 	stripe_id = "stripe_id"
 }
@@ -52498,9 +53436,9 @@ export type service_provider_stripe_info_set_input = {
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 }
@@ -52508,19 +53446,19 @@ export type service_provider_stripe_info_set_input = {
 /** aggregate stddev on columns */
 export type service_provider_stripe_info_stddev_fields = {
 	__typename?: "service_provider_stripe_info_stddev_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** aggregate stddev_pop on columns */
 export type service_provider_stripe_info_stddev_pop_fields = {
 	__typename?: "service_provider_stripe_info_stddev_pop_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** aggregate stddev_samp on columns */
 export type service_provider_stripe_info_stddev_samp_fields = {
 	__typename?: "service_provider_stripe_info_stddev_samp_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** Streaming cursor of the table "service_provider_stripe_info" */
@@ -52537,9 +53475,9 @@ export type service_provider_stripe_info_stream_cursor_value_input = {
 	charges_enabled?:boolean,
 	details_submitted?:boolean,
 	email?:string,
+	id?:number,
 	payouts_enabled?:boolean,
 	requirements?:string,
-	sp_id?:number,
 	status?:string,
 	stripe_id?:string
 }
@@ -52547,7 +53485,7 @@ export type service_provider_stripe_info_stream_cursor_value_input = {
 /** aggregate sum on columns */
 export type service_provider_stripe_info_sum_fields = {
 	__typename?: "service_provider_stripe_info_sum_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** update columns of table "service_provider.stripe_info" */
@@ -52556,9 +53494,9 @@ export enum service_provider_stripe_info_update_column {
 	charges_enabled = "charges_enabled",
 	details_submitted = "details_submitted",
 	email = "email",
+	id = "id",
 	payouts_enabled = "payouts_enabled",
 	requirements = "requirements",
-	sp_id = "sp_id",
 	status = "status",
 	stripe_id = "stripe_id"
 }
@@ -52575,19 +53513,19 @@ export type service_provider_stripe_info_updates = {
 /** aggregate var_pop on columns */
 export type service_provider_stripe_info_var_pop_fields = {
 	__typename?: "service_provider_stripe_info_var_pop_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** aggregate var_samp on columns */
 export type service_provider_stripe_info_var_samp_fields = {
 	__typename?: "service_provider_stripe_info_var_samp_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** aggregate variance on columns */
 export type service_provider_stripe_info_variance_fields = {
 	__typename?: "service_provider_stripe_info_variance_fields",
-	sp_id?:number
+	id?:number
 }
 
 /** columns and relationships of "service_provider.subscriber" */
@@ -52944,14 +53882,14 @@ export type subscription_root = {
 	customer_stripe_cards_by_pk?:customer_stripe_cards,
 	/** fetch data from the table in a streaming manner: "customer.stripe_cards" */
 	customer_stripe_cards_stream:customer_stripe_cards[],
-	/** fetch data from the table: "customer.stripe_info" */
-	customer_stripe_info:customer_stripe_info[],
-	/** fetch aggregated fields from the table: "customer.stripe_info" */
-	customer_stripe_info_aggregate:customer_stripe_info_aggregate,
-	/** fetch data from the table: "customer.stripe_info" using primary key columns */
-	customer_stripe_info_by_pk?:customer_stripe_info,
-	/** fetch data from the table in a streaming manner: "customer.stripe_info" */
-	customer_stripe_info_stream:customer_stripe_info[],
+	/** fetch data from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id:customer_stripe_sp_id[],
+	/** fetch aggregated fields from the table: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_aggregate:customer_stripe_sp_id_aggregate,
+	/** fetch data from the table: "customer.stripe_sp_id" using primary key columns */
+	customer_stripe_sp_id_by_pk?:customer_stripe_sp_id,
+	/** fetch data from the table in a streaming manner: "customer.stripe_sp_id" */
+	customer_stripe_sp_id_stream:customer_stripe_sp_id[],
 	/** fetch data from the table: "delivery.company" */
 	delivery_company:delivery_company[],
 	/** fetch aggregated fields from the table: "delivery.company" */
@@ -55583,9 +56521,137 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		stripe_cards:{
+			distinct_on:{
+				type:"customer_stripe_cards_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_stripe_cards_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_stripe_cards_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		stripe_cards_aggregate:{
+			distinct_on:{
+				type:"customer_stripe_cards_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_stripe_cards_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_stripe_cards_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		stripe_info:{
 			path:{
 				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		stripe_sp_ids:{
+			distinct_on:{
+				type:"customer_stripe_sp_id_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_stripe_sp_id_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_stripe_sp_id_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		stripe_sp_ids_aggregate:{
+			distinct_on:{
+				type:"customer_stripe_sp_id_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"customer_stripe_sp_id_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -55689,8 +56755,38 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_cards:{
+			type:"customer_stripe_cards_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_cards_aggregate:{
+			type:"customer_stripe_cards_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"jsonb_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_sp_ids:{
+			type:"customer_stripe_sp_id_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_sp_ids_aggregate:{
+			type:"customer_stripe_sp_id_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -55784,8 +56880,26 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_cards:{
+			type:"customer_stripe_cards_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_sp_ids:{
+			type:"customer_stripe_sp_id_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -55880,8 +56994,26 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_cards_aggregate:{
+			type:"customer_stripe_cards_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_sp_ids_aggregate:{
+			type:"customer_stripe_sp_id_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -55935,6 +57067,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"jsonb",
 			array:false,
@@ -55976,6 +57114,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_provider_type:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -57468,6 +58612,40 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	customer_stripe_cards_aggregate_bool_exp:{
+		count:{
+			type:"customer_stripe_cards_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_aggregate_bool_exp_count:{
+		arguments:{
+			type:"customer_stripe_cards_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"customer_stripe_cards_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
 	customer_stripe_cards_aggregate_fields:{
 		count:{
 			columns:{
@@ -57484,9 +58662,117 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
+	customer_stripe_cards_aggregate_order_by:{
+		avg:{
+			type:"customer_stripe_cards_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"customer_stripe_cards_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"customer_stripe_cards_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"customer_stripe_cards_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"customer_stripe_cards_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"customer_stripe_cards_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"customer_stripe_cards_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"customer_stripe_cards_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"customer_stripe_cards_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"customer_stripe_cards_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	customer_stripe_cards_append_input:{
 		sp_card_ids:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_arr_rel_insert_input:{
+		data:{
+			type:"customer_stripe_cards_insert_input",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		on_conflict:{
+			type:"customer_stripe_cards_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_avg_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57511,14 +58797,50 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		brand:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		card_id:{
 			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
+		customer:{
+			type:"customer_customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_id:{
 			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"String_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57561,11 +58883,41 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		exp_month:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	customer_stripe_cards_insert_input:{
+		brand:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		card_id:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer:{
+			type:"customer_customer_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57576,8 +58928,120 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		exp_month:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		sp_card_ids:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_max_order_by:{
+		brand:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		card_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_min_order_by:{
+		brand:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		card_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57604,13 +59068,49 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_stripe_cards_order_by:{
+		brand:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		card_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
+		customer:{
+			type:"customer_customer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -57624,8 +59124,8 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_stripe_cards_pk_columns_input:{
-		card_id:{
-			type:"String",
+		id:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -57641,6 +59141,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	customer_stripe_cards_select_column: "enum",
 	customer_stripe_cards_set_input:{
+		brand:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		card_id:{
 			type:"String",
 			array:false,
@@ -57653,8 +59159,110 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		exp_month:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		sp_card_ids:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_stddev_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_stddev_pop_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_stddev_samp_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57675,6 +59283,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_stripe_cards_stream_cursor_value_input:{
+		brand:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		card_id:{
 			type:"String",
 			array:false,
@@ -57687,8 +59301,58 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		exp_month:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		last_4:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		sp_card_ids:{
 			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_sum_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -57745,10 +59409,122 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
-	customer_stripe_info_aggregate_fields:{
+	customer_stripe_cards_var_pop_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_var_samp_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_cards_variance_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_month:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		exp_year:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_aggregate_bool_exp:{
+		count:{
+			type:"customer_stripe_sp_id_aggregate_bool_exp_count",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_aggregate_bool_exp_count:{
+		arguments:{
+			type:"customer_stripe_sp_id_select_column",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		distinct:{
+			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		filter:{
+			type:"customer_stripe_sp_id_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		predicate:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	customer_stripe_sp_id_aggregate_fields:{
 		count:{
 			columns:{
-				type:"customer_stripe_info_select_column",
+				type:"customer_stripe_sp_id_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -57761,26 +59537,140 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
-	customer_stripe_info_bool_exp:{
+	customer_stripe_sp_id_aggregate_order_by:{
+		avg:{
+			type:"customer_stripe_sp_id_avg_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		count:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		max:{
+			type:"customer_stripe_sp_id_max_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		min:{
+			type:"customer_stripe_sp_id_min_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev:{
+			type:"customer_stripe_sp_id_stddev_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_pop:{
+			type:"customer_stripe_sp_id_stddev_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stddev_samp:{
+			type:"customer_stripe_sp_id_stddev_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sum:{
+			type:"customer_stripe_sp_id_sum_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_pop:{
+			type:"customer_stripe_sp_id_var_pop_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		var_samp:{
+			type:"customer_stripe_sp_id_var_samp_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		variance:{
+			type:"customer_stripe_sp_id_variance_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_arr_rel_insert_input:{
+		data:{
+			type:"customer_stripe_sp_id_insert_input",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		on_conflict:{
+			type:"customer_stripe_sp_id_on_conflict",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_avg_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_bool_exp:{
 		_and:{
-			type:"customer_stripe_info_bool_exp",
+			type:"customer_stripe_sp_id_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
 		},
 		_not:{
-			type:"customer_stripe_info_bool_exp",
+			type:"customer_stripe_sp_id_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_or:{
-			type:"customer_stripe_info_bool_exp",
+			type:"customer_stripe_sp_id_bool_exp",
 			array:true,
 			arrayRequired:false,
 			required:true
 		},
+		customer:{
+			type:"customer_customer_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
@@ -57799,9 +59689,15 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_constraint: "enum",
-	customer_stripe_info_inc_input:{
+	customer_stripe_sp_id_constraint: "enum",
+	customer_stripe_sp_id_inc_input:{
 		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -57814,8 +59710,20 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_insert_input:{
+	customer_stripe_sp_id_insert_input:{
+		customer:{
+			type:"customer_customer_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -57834,28 +59742,92 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_on_conflict:{
+	customer_stripe_sp_id_max_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_min_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_on_conflict:{
 		constraint:{
-			type:"customer_stripe_info_constraint",
+			type:"customer_stripe_sp_id_constraint",
 			array:false,
 			arrayRequired:false,
 			required:true
 		},
 		update_columns:{
-			type:"customer_stripe_info_update_column",
+			type:"customer_stripe_sp_id_update_column",
 			array:true,
 			arrayRequired:true,
 			required:true
 		},
 		where:{
-			type:"customer_stripe_info_bool_exp",
+			type:"customer_stripe_sp_id_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
 		}
 	},
-	customer_stripe_info_order_by:{
+	customer_stripe_sp_id_order_by:{
+		customer:{
+			type:"customer_customer_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -57874,17 +59846,23 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_pk_columns_input:{
-		stripe_id:{
-			type:"String",
+	customer_stripe_sp_id_pk_columns_input:{
+		id:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:true
 		}
 	},
-	customer_stripe_info_select_column: "enum",
-	customer_stripe_info_set_input:{
+	customer_stripe_sp_id_select_column: "enum",
+	customer_stripe_sp_id_set_input:{
 		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -57903,9 +59881,69 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_stream_cursor_input:{
+	customer_stripe_sp_id_stddev_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_stddev_pop_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_stddev_samp_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_stream_cursor_input:{
 		initial_value:{
-			type:"customer_stripe_info_stream_cursor_value_input",
+			type:"customer_stripe_sp_id_stream_cursor_value_input",
 			array:false,
 			arrayRequired:false,
 			required:true
@@ -57917,8 +59955,14 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_stream_cursor_value_input:{
+	customer_stripe_sp_id_stream_cursor_value_input:{
 		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -57937,25 +59981,105 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	customer_stripe_info_update_column: "enum",
-	customer_stripe_info_updates:{
+	customer_stripe_sp_id_sum_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_update_column: "enum",
+	customer_stripe_sp_id_updates:{
 		_inc:{
-			type:"customer_stripe_info_inc_input",
+			type:"customer_stripe_sp_id_inc_input",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		_set:{
-			type:"customer_stripe_info_set_input",
+			type:"customer_stripe_sp_id_set_input",
 			array:false,
 			arrayRequired:false,
 			required:false
 		},
 		where:{
-			type:"customer_stripe_info_bool_exp",
+			type:"customer_stripe_sp_id_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:true
+		}
+	},
+	customer_stripe_sp_id_var_pop_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_var_samp_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	customer_stripe_sp_id_variance_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		sp_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	delivery_company:{
@@ -58059,6 +60183,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		delivery_details:{
+			type:"delivery_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -58124,6 +60254,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_insert_input:{
+		delivery_details:{
+			type:"delivery_details_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"Int",
 			array:false,
@@ -58196,6 +60332,12 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_order_by:{
+		delivery_details:{
+			type:"delivery_details_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		delivery_details_id:{
 			type:"order_by",
 			array:false,
@@ -69946,24 +72088,24 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		delete_customer_stripe_cards_by_pk:{
-			card_id:{
-				type:"String",
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		delete_customer_stripe_info:{
+		delete_customer_stripe_sp_id:{
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		delete_customer_stripe_info_by_pk:{
-			stripe_id:{
-				type:"String",
+		delete_customer_stripe_sp_id_by_pk:{
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -70570,7 +72712,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		delete_service_provider_stripe_info_by_pk:{
-			sp_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -70871,29 +73013,29 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		insert_customer_stripe_info:{
+		insert_customer_stripe_sp_id:{
 			objects:{
-				type:"customer_stripe_info_insert_input",
+				type:"customer_stripe_sp_id_insert_input",
 				array:true,
 				arrayRequired:true,
 				required:true
 			},
 			on_conflict:{
-				type:"customer_stripe_info_on_conflict",
+				type:"customer_stripe_sp_id_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		insert_customer_stripe_info_one:{
+		insert_customer_stripe_sp_id_one:{
 			object:{
-				type:"customer_stripe_info_insert_input",
+				type:"customer_stripe_sp_id_insert_input",
 				array:false,
 				arrayRequired:false,
 				required:true
 			},
 			on_conflict:{
-				type:"customer_stripe_info_on_conflict",
+				type:"customer_stripe_sp_id_on_conflict",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -72631,49 +74773,49 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		update_customer_stripe_info:{
+		update_customer_stripe_sp_id:{
 			_inc:{
-				type:"customer_stripe_info_inc_input",
+				type:"customer_stripe_sp_id_inc_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			_set:{
-				type:"customer_stripe_info_set_input",
+				type:"customer_stripe_sp_id_set_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		update_customer_stripe_info_by_pk:{
+		update_customer_stripe_sp_id_by_pk:{
 			_inc:{
-				type:"customer_stripe_info_inc_input",
+				type:"customer_stripe_sp_id_inc_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			_set:{
-				type:"customer_stripe_info_set_input",
+				type:"customer_stripe_sp_id_set_input",
 				array:false,
 				arrayRequired:false,
 				required:false
 			},
 			pk_columns:{
-				type:"customer_stripe_info_pk_columns_input",
+				type:"customer_stripe_sp_id_pk_columns_input",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		update_customer_stripe_info_many:{
+		update_customer_stripe_sp_id_many:{
 			updates:{
-				type:"customer_stripe_info_updates",
+				type:"customer_stripe_sp_id_updates",
 				array:true,
 				arrayRequired:true,
 				required:true
@@ -75920,16 +78062,16 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		customer_stripe_cards_by_pk:{
-			card_id:{
-				type:"String",
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		customer_stripe_info:{
+		customer_stripe_sp_id:{
 			distinct_on:{
-				type:"customer_stripe_info_select_column",
+				type:"customer_stripe_sp_id_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -75947,21 +78089,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"customer_stripe_info_order_by",
+				type:"customer_stripe_sp_id_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		customer_stripe_info_aggregate:{
+		customer_stripe_sp_id_aggregate:{
 			distinct_on:{
-				type:"customer_stripe_info_select_column",
+				type:"customer_stripe_sp_id_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -75979,21 +78121,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"customer_stripe_info_order_by",
+				type:"customer_stripe_sp_id_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		customer_stripe_info_by_pk:{
-			stripe_id:{
-				type:"String",
+		customer_stripe_sp_id_by_pk:{
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -79088,7 +81230,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		service_provider_stripe_info_by_pk:{
-			sp_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -93757,6 +95899,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"service_provider_stripe_info_bool_exp",
 			array:false,
@@ -93845,6 +95993,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		service_link_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -93986,6 +96140,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -94170,6 +96330,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		stripe_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		stripe_info:{
 			type:"service_provider_stripe_info_order_by",
 			array:false,
@@ -94296,6 +96462,12 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:false
+		},
+		stripe_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_details_stream_cursor_input:{
@@ -94399,6 +96571,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		service_provider_type:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		stripe_id:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96042,6 +98220,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payouts_enabled:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -96050,12 +98234,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		requirements:{
 			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sp_id:{
-			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96075,7 +98253,7 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	service_provider_stripe_info_constraint: "enum",
 	service_provider_stripe_info_inc_input:{
-		sp_id:{
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -96107,6 +98285,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payouts_enabled:{
 			type:"Boolean",
 			array:false,
@@ -96115,12 +98299,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		requirements:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sp_id:{
-			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96197,6 +98375,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payouts_enabled:{
 			type:"order_by",
 			array:false,
@@ -96204,12 +98388,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sp_id:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -96229,7 +98407,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_provider_stripe_info_pk_columns_input:{
-		sp_id:{
+		id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -96262,6 +98440,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payouts_enabled:{
 			type:"Boolean",
 			array:false,
@@ -96270,12 +98454,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		requirements:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sp_id:{
-			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96332,6 +98510,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		payouts_enabled:{
 			type:"Boolean",
 			array:false,
@@ -96340,12 +98524,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		requirements:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sp_id:{
-			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -97629,8 +99807,8 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		customer_stripe_cards_by_pk:{
-			card_id:{
-				type:"String",
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -97656,9 +99834,9 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		customer_stripe_info:{
+		customer_stripe_sp_id:{
 			distinct_on:{
-				type:"customer_stripe_info_select_column",
+				type:"customer_stripe_sp_id_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -97676,21 +99854,21 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"customer_stripe_info_order_by",
+				type:"customer_stripe_sp_id_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		customer_stripe_info_aggregate:{
+		customer_stripe_sp_id_aggregate:{
 			distinct_on:{
-				type:"customer_stripe_info_select_column",
+				type:"customer_stripe_sp_id_select_column",
 				array:true,
 				arrayRequired:false,
 				required:true
@@ -97708,27 +99886,27 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			},
 			order_by:{
-				type:"customer_stripe_info_order_by",
+				type:"customer_stripe_sp_id_order_by",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
 			}
 		},
-		customer_stripe_info_by_pk:{
-			stripe_id:{
-				type:"String",
+		customer_stripe_sp_id_by_pk:{
+			id:{
+				type:"Int",
 				array:false,
 				arrayRequired:false,
 				required:true
 			}
 		},
-		customer_stripe_info_stream:{
+		customer_stripe_sp_id_stream:{
 			batch_size:{
 				type:"Int",
 				array:false,
@@ -97736,13 +99914,13 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			},
 			cursor:{
-				type:"customer_stripe_info_stream_cursor_input",
+				type:"customer_stripe_sp_id_stream_cursor_input",
 				array:true,
 				arrayRequired:false,
 				required:true
 			},
 			where:{
-				type:"customer_stripe_info_bool_exp",
+				type:"customer_stripe_sp_id_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -101597,7 +103775,7 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		service_provider_stripe_info_by_pk:{
-			sp_id:{
+			id:{
 				type:"Int",
 				array:false,
 				arrayRequired:false,
@@ -103526,7 +105704,12 @@ export const ReturnTypes: Record<string,any> = {
 		saved_locations:"customer_saved_location",
 		saved_locations_aggregate:"customer_saved_location_aggregate",
 		service_provider_type:"String",
+		stripe_cards:"customer_stripe_cards",
+		stripe_cards_aggregate:"customer_stripe_cards_aggregate",
+		stripe_id:"String",
 		stripe_info:"jsonb",
+		stripe_sp_ids:"customer_stripe_sp_id",
+		stripe_sp_ids_aggregate:"customer_stripe_sp_id_aggregate",
 		user:"user",
 		user_id:"Int"
 	},
@@ -103554,12 +105737,14 @@ export const ReturnTypes: Record<string,any> = {
 		app_type_id:"String",
 		app_version:"String",
 		service_provider_type:"String",
+		stripe_id:"String",
 		user_id:"Int"
 	},
 	customer_customer_min_fields:{
 		app_type_id:"String",
 		app_version:"String",
 		service_provider_type:"String",
+		stripe_id:"String",
 		user_id:"Int"
 	},
 	customer_customer_mutation_response:{
@@ -103857,8 +106042,14 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float"
 	},
 	customer_stripe_cards:{
+		brand:"String",
 		card_id:"String",
+		customer:"customer_customer",
 		customer_id:"Int",
+		exp_month:"Int",
+		exp_year:"Int",
+		id:"Int",
+		last_4:"String",
 		sp_card_ids:"jsonb"
 	},
 	customer_stripe_cards_aggregate:{
@@ -103879,110 +106070,157 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"customer_stripe_cards_variance_fields"
 	},
 	customer_stripe_cards_avg_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_max_fields:{
+		brand:"String",
 		card_id:"String",
-		customer_id:"Int"
+		customer_id:"Int",
+		exp_month:"Int",
+		exp_year:"Int",
+		id:"Int",
+		last_4:"String"
 	},
 	customer_stripe_cards_min_fields:{
+		brand:"String",
 		card_id:"String",
-		customer_id:"Int"
+		customer_id:"Int",
+		exp_month:"Int",
+		exp_year:"Int",
+		id:"Int",
+		last_4:"String"
 	},
 	customer_stripe_cards_mutation_response:{
 		affected_rows:"Int",
 		returning:"customer_stripe_cards"
 	},
 	customer_stripe_cards_stddev_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_stddev_pop_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_stddev_samp_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_sum_fields:{
-		customer_id:"Int"
+		customer_id:"Int",
+		exp_month:"Int",
+		exp_year:"Int",
+		id:"Int"
 	},
 	customer_stripe_cards_var_pop_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_var_samp_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
 	customer_stripe_cards_variance_fields:{
-		customer_id:"Float"
+		customer_id:"Float",
+		exp_month:"Float",
+		exp_year:"Float",
+		id:"Float"
 	},
-	customer_stripe_info:{
+	customer_stripe_sp_id:{
+		customer:"customer_customer",
 		customer_id:"Int",
+		id:"Int",
 		sp_id:"Int",
 		stripe_id:"String"
 	},
-	customer_stripe_info_aggregate:{
-		aggregate:"customer_stripe_info_aggregate_fields",
-		nodes:"customer_stripe_info"
+	customer_stripe_sp_id_aggregate:{
+		aggregate:"customer_stripe_sp_id_aggregate_fields",
+		nodes:"customer_stripe_sp_id"
 	},
-	customer_stripe_info_aggregate_fields:{
-		avg:"customer_stripe_info_avg_fields",
+	customer_stripe_sp_id_aggregate_fields:{
+		avg:"customer_stripe_sp_id_avg_fields",
 		count:"Int",
-		max:"customer_stripe_info_max_fields",
-		min:"customer_stripe_info_min_fields",
-		stddev:"customer_stripe_info_stddev_fields",
-		stddev_pop:"customer_stripe_info_stddev_pop_fields",
-		stddev_samp:"customer_stripe_info_stddev_samp_fields",
-		sum:"customer_stripe_info_sum_fields",
-		var_pop:"customer_stripe_info_var_pop_fields",
-		var_samp:"customer_stripe_info_var_samp_fields",
-		variance:"customer_stripe_info_variance_fields"
+		max:"customer_stripe_sp_id_max_fields",
+		min:"customer_stripe_sp_id_min_fields",
+		stddev:"customer_stripe_sp_id_stddev_fields",
+		stddev_pop:"customer_stripe_sp_id_stddev_pop_fields",
+		stddev_samp:"customer_stripe_sp_id_stddev_samp_fields",
+		sum:"customer_stripe_sp_id_sum_fields",
+		var_pop:"customer_stripe_sp_id_var_pop_fields",
+		var_samp:"customer_stripe_sp_id_var_samp_fields",
+		variance:"customer_stripe_sp_id_variance_fields"
 	},
-	customer_stripe_info_avg_fields:{
+	customer_stripe_sp_id_avg_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_max_fields:{
+	customer_stripe_sp_id_max_fields:{
 		customer_id:"Int",
+		id:"Int",
 		sp_id:"Int",
 		stripe_id:"String"
 	},
-	customer_stripe_info_min_fields:{
+	customer_stripe_sp_id_min_fields:{
 		customer_id:"Int",
+		id:"Int",
 		sp_id:"Int",
 		stripe_id:"String"
 	},
-	customer_stripe_info_mutation_response:{
+	customer_stripe_sp_id_mutation_response:{
 		affected_rows:"Int",
-		returning:"customer_stripe_info"
+		returning:"customer_stripe_sp_id"
 	},
-	customer_stripe_info_stddev_fields:{
+	customer_stripe_sp_id_stddev_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_stddev_pop_fields:{
+	customer_stripe_sp_id_stddev_pop_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_stddev_samp_fields:{
+	customer_stripe_sp_id_stddev_samp_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_sum_fields:{
+	customer_stripe_sp_id_sum_fields:{
 		customer_id:"Int",
+		id:"Int",
 		sp_id:"Int"
 	},
-	customer_stripe_info_var_pop_fields:{
+	customer_stripe_sp_id_var_pop_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_var_samp_fields:{
+	customer_stripe_sp_id_var_samp_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
-	customer_stripe_info_variance_fields:{
+	customer_stripe_sp_id_variance_fields:{
 		customer_id:"Float",
+		id:"Float",
 		sp_id:"Float"
 	},
 	delivery_company:{
+		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
 		delivery_operators:"delivery_operator",
 		delivery_operators_aggregate:"delivery_operator_aggregate",
@@ -105598,8 +107836,8 @@ export const ReturnTypes: Record<string,any> = {
 		delete_customer_saved_location_by_pk:"customer_saved_location",
 		delete_customer_stripe_cards:"customer_stripe_cards_mutation_response",
 		delete_customer_stripe_cards_by_pk:"customer_stripe_cards",
-		delete_customer_stripe_info:"customer_stripe_info_mutation_response",
-		delete_customer_stripe_info_by_pk:"customer_stripe_info",
+		delete_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
+		delete_customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
 		delete_delivery_company:"delivery_company_mutation_response",
 		delete_delivery_company_by_pk:"delivery_company",
 		delete_delivery_details:"delivery_details_mutation_response",
@@ -105700,8 +107938,8 @@ export const ReturnTypes: Record<string,any> = {
 		insert_customer_saved_location_one:"customer_saved_location",
 		insert_customer_stripe_cards:"customer_stripe_cards_mutation_response",
 		insert_customer_stripe_cards_one:"customer_stripe_cards",
-		insert_customer_stripe_info:"customer_stripe_info_mutation_response",
-		insert_customer_stripe_info_one:"customer_stripe_info",
+		insert_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
+		insert_customer_stripe_sp_id_one:"customer_stripe_sp_id",
 		insert_delivery_company:"delivery_company_mutation_response",
 		insert_delivery_company_one:"delivery_company",
 		insert_delivery_details:"delivery_details_mutation_response",
@@ -105812,9 +108050,9 @@ export const ReturnTypes: Record<string,any> = {
 		update_customer_stripe_cards:"customer_stripe_cards_mutation_response",
 		update_customer_stripe_cards_by_pk:"customer_stripe_cards",
 		update_customer_stripe_cards_many:"customer_stripe_cards_mutation_response",
-		update_customer_stripe_info:"customer_stripe_info_mutation_response",
-		update_customer_stripe_info_by_pk:"customer_stripe_info",
-		update_customer_stripe_info_many:"customer_stripe_info_mutation_response",
+		update_customer_stripe_sp_id:"customer_stripe_sp_id_mutation_response",
+		update_customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
+		update_customer_stripe_sp_id_many:"customer_stripe_sp_id_mutation_response",
 		update_delivery_company:"delivery_company_mutation_response",
 		update_delivery_company_by_pk:"delivery_company",
 		update_delivery_company_many:"delivery_company_mutation_response",
@@ -106042,9 +108280,9 @@ export const ReturnTypes: Record<string,any> = {
 		customer_stripe_cards:"customer_stripe_cards",
 		customer_stripe_cards_aggregate:"customer_stripe_cards_aggregate",
 		customer_stripe_cards_by_pk:"customer_stripe_cards",
-		customer_stripe_info:"customer_stripe_info",
-		customer_stripe_info_aggregate:"customer_stripe_info_aggregate",
-		customer_stripe_info_by_pk:"customer_stripe_info",
+		customer_stripe_sp_id:"customer_stripe_sp_id",
+		customer_stripe_sp_id_aggregate:"customer_stripe_sp_id_aggregate",
+		customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
 		delivery_company:"delivery_company",
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",
@@ -107903,6 +110141,7 @@ export const ReturnTypes: Record<string,any> = {
 		service_link:"service_provider_service_link",
 		service_link_id:"Int",
 		service_provider_type:"String",
+		stripe_id:"Int",
 		stripe_info:"service_provider_stripe_info"
 	},
 	service_provider_details_aggregate:{
@@ -107926,7 +110165,8 @@ export const ReturnTypes: Record<string,any> = {
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_max_fields:{
 		creation_time:"timestamptz",
@@ -107939,7 +110179,8 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		service_link_id:"Int",
-		service_provider_type:"String"
+		service_provider_type:"String",
+		stripe_id:"Int"
 	},
 	service_provider_details_min_fields:{
 		creation_time:"timestamptz",
@@ -107952,7 +110193,8 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		service_link_id:"Int",
-		service_provider_type:"String"
+		service_provider_type:"String",
+		stripe_id:"Int"
 	},
 	service_provider_details_mutation_response:{
 		affected_rows:"Int",
@@ -107962,43 +110204,50 @@ export const ReturnTypes: Record<string,any> = {
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_stddev_pop_fields:{
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_stddev_samp_fields:{
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_sum_fields:{
 		description_id:"Int",
 		id:"Int",
 		location_id:"Int",
-		service_link_id:"Int"
+		service_link_id:"Int",
+		stripe_id:"Int"
 	},
 	service_provider_details_var_pop_fields:{
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_var_samp_fields:{
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_details_variance_fields:{
 		description_id:"Float",
 		id:"Float",
 		location_id:"Float",
-		service_link_id:"Float"
+		service_link_id:"Float",
+		stripe_id:"Float"
 	},
 	service_provider_location:{
 		address:"String",
@@ -108297,9 +110546,9 @@ export const ReturnTypes: Record<string,any> = {
 		charges_enabled:"Boolean",
 		details_submitted:"Boolean",
 		email:"String",
+		id:"Int",
 		payouts_enabled:"Boolean",
 		requirements:"String",
-		sp_id:"Int",
 		status:"String",
 		stripe_id:"String"
 	},
@@ -108321,19 +110570,19 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"service_provider_stripe_info_variance_fields"
 	},
 	service_provider_stripe_info_avg_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_max_fields:{
 		email:"String",
+		id:"Int",
 		requirements:"String",
-		sp_id:"Int",
 		status:"String",
 		stripe_id:"String"
 	},
 	service_provider_stripe_info_min_fields:{
 		email:"String",
+		id:"Int",
 		requirements:"String",
-		sp_id:"Int",
 		status:"String",
 		stripe_id:"String"
 	},
@@ -108342,25 +110591,25 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"service_provider_stripe_info"
 	},
 	service_provider_stripe_info_stddev_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_stddev_pop_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_stddev_samp_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_sum_fields:{
-		sp_id:"Int"
+		id:"Int"
 	},
 	service_provider_stripe_info_var_pop_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_var_samp_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_stripe_info_variance_fields:{
-		sp_id:"Float"
+		id:"Float"
 	},
 	service_provider_subscriber:{
 		customer:"customer_customer",
@@ -108479,10 +110728,10 @@ export const ReturnTypes: Record<string,any> = {
 		customer_stripe_cards_aggregate:"customer_stripe_cards_aggregate",
 		customer_stripe_cards_by_pk:"customer_stripe_cards",
 		customer_stripe_cards_stream:"customer_stripe_cards",
-		customer_stripe_info:"customer_stripe_info",
-		customer_stripe_info_aggregate:"customer_stripe_info_aggregate",
-		customer_stripe_info_by_pk:"customer_stripe_info",
-		customer_stripe_info_stream:"customer_stripe_info",
+		customer_stripe_sp_id:"customer_stripe_sp_id",
+		customer_stripe_sp_id_aggregate:"customer_stripe_sp_id_aggregate",
+		customer_stripe_sp_id_by_pk:"customer_stripe_sp_id",
+		customer_stripe_sp_id_stream:"customer_stripe_sp_id",
 		delivery_company:"delivery_company",
 		delivery_company_aggregate:"delivery_company_aggregate",
 		delivery_company_by_pk:"delivery_company",

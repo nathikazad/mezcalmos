@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -298,20 +300,32 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-Future<ServerResponse> onboardServiceProvider(
-    int serviceProviderId,
-    ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
-  return serviceProviderFunctions(
-      "setupServiceProvider", serviceProviderId, orderType, acceptedPayments);
+Future<cModel.SetupResponse> onboardServiceProvider(
+  int serviceProviderId,
+  ServiceProviderType orderType,
+) async {
+  mezDbgPrint("Payload ================>>> $serviceProviderId");
+  mezDbgPrint("Payload ================>>> $orderType");
+  return await CloudFunctions.stripe_setupServiceProvider(
+    serviceProviderId: serviceProviderId,
+    orderType: cModel.OrderType.Restaurant,
+    // acceptedPayments: acceptedPayments!,
+  );
 }
 
-Future<ServerResponse> updateServiceProvider(
+Future<void> updateServiceProvider(
     int serviceProviderId,
     ServiceProviderType orderType,
     Map<PaymentType, bool> acceptedPayments) async {
-  return serviceProviderFunctions(
-      "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
+  mezDbgPrint("Payload ================>>> $serviceProviderId");
+  mezDbgPrint("Payload ================>>> $orderType");
+  await CloudFunctions.stripe_updateServiceProvider(
+    serviceProviderId: serviceProviderId,
+    orderType: cModel.OrderType.Restaurant,
+  );
+
+  // return serviceProviderFunctions(
+  //     "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
 
 Future<ServerResponse> serviceProviderFunctions(
@@ -364,7 +378,7 @@ Future<dynamic> addCardSheet() {
                         fit: FlexFit.tight,
                         child: Text(
                           '${_i18n()["addCard"]}',
-                          style: Get.textTheme.headline3
+                          style: Get.textTheme.displaySmall
                               ?.copyWith(fontSize: 17.sp),
                         ),
                       ),

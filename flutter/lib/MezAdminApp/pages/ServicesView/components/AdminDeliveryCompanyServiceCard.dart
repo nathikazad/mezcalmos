@@ -46,7 +46,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                       fit: FlexFit.tight,
                       child: Text(
                         company.info.name,
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                       ),
                     ),
                     SizedBox(
@@ -103,7 +103,8 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         label: "${_i18n()['profile']}",
                         ontap: () {
                           navigateToServiceInfoEdit(
-                              serviceDetailsId: company.info.hasuraId,
+                              serviceDetailsId: company.serviceDetailsId,
+                              serviceProviderId: company.info.hasuraId,
                               serviceProviderType:
                                   ServiceProviderType.DeliveryCompany);
                         }),
@@ -139,7 +140,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

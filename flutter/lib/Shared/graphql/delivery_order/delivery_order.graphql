@@ -12,11 +12,12 @@ query get_driver_order($orderId: Int!) {
     current_gps
     delivery_company {
       id
-     details{ id
-       image
-      name
-      service_provider_type
-     }
+      details {
+        id
+        image
+        name
+        service_provider_type
+      }
     }
 
     customer_id
@@ -32,52 +33,97 @@ query get_driver_order($orderId: Int!) {
     restaurant_order {
       id
       stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
       restaurant {
         id
-        details{ id firebase_id 
+        details {
+          id
+          firebase_id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
+      }
+    }
+    laundry {
+      id
+      details {
+        id
         image
         name
         location {
           gps
           address
-        }}
+        }
+        language
+        open_status
       }
-    }
-    laundry {
-      id
-     details{ id image
-      name
-      location {
-        gps
-        address
-      }
-      language
-      open_status}
     }
     laundry_pickup_order {
       id
       stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
       store {
         id
-       details{ id image
-        name
-        location {
-          gps
-          address
-        }}
+        details {
+          id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
       }
     }
     laundry_delivery_order {
       id
       stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
       store {
         id
-       details{ id image
-        name
-        location {
-          gps
-          address
-        }}
+        details {
+          id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
       }
     }
     order_time
@@ -88,15 +134,18 @@ query get_driver_order($orderId: Int!) {
 
     restaurant {
       id
-    details{ id  firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
 
     service_provider_id
@@ -148,54 +197,99 @@ subscription listen_on_driver_order($orderId: Int!) {
     }
     laundry {
       id
-    details{ id  image
-      name
-      location {
-        gps
-        address
-      }
-      language
-      open_status}
-    }
-    laundry_pickup_order {
-      id
-      stripe_info
-      store {
-        id
-      details{ id  image
-        name
-        location {
-          gps
-          address
-        }}
-      }
-    }
-    laundry_delivery_order {
-      id
-      stripe_info
-      store {
-        id
-       details{ id image
-        name
-        location {
-          gps
-          address
-        }}
-      }
-    }
-
-    restaurant_order {
-      id
-      stripe_info
-      restaurant {
-     details{ id   firebase_id
+      details {
         id
         image
         name
         location {
           gps
           address
-        }}
+        }
+        language
+        open_status
+      }
+    }
+    laundry_pickup_order {
+      id
+      stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
+      store {
+        id
+        details {
+          id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
+      }
+    }
+    laundry_delivery_order {
+      id
+      stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
+      store {
+        id
+        details {
+          id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
+      }
+    }
+
+    restaurant_order {
+      id
+      stripe_info
+      # stripe_info {
+      #   id
+      #   stripe_id
+      #   status
+      #   requirements
+      #   payouts_enabled
+      #   email
+      #   details_submitted
+      #   charges_enabled
+      #   charge_fees_on_customer
+      # }
+      restaurant {
+        details {
+          id
+          firebase_id
+          id
+          image
+          name
+          location {
+            gps
+            address
+          }
+        }
       }
     }
     current_gps
@@ -204,11 +298,12 @@ subscription listen_on_driver_order($orderId: Int!) {
     delivery_cost
     delivery_company {
       id
-      details{ id
-       image
-      name
-      service_provider_type
-     }
+      details {
+        id
+        image
+        name
+        service_provider_type
+      }
     }
 
     dropoff_address
@@ -224,15 +319,18 @@ subscription listen_on_driver_order($orderId: Int!) {
     pickup_gps
     restaurant {
       id
-    details{ id  firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
     service_provider_id
     service_provider_review_by_driver_id
@@ -271,15 +369,18 @@ subscription listen_on_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-   details{ id   firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -306,15 +407,18 @@ query get_past_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-    details{ id  firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -337,15 +441,18 @@ query get_inprocess_driver_orders($driverId: Int!) {
     }
     restaurant {
       id
-     details{ id firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -371,15 +478,18 @@ subscription listen_delivery_company_current_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details{ id firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -405,15 +515,18 @@ query get_delivery_company_past_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details{ id firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -439,15 +552,18 @@ query get_delivery_company_inprocess_orders($companyId: Int!) {
     }
     restaurant {
       id
-     details{ id firebase_id
-      image
-      name
-      location {
-        gps
-        address
+      details {
+        id
+        firebase_id
+        image
+        name
+        location {
+          gps
+          address
+        }
+        language
+        open_status
       }
-      language
-      open_status}
     }
   }
 }
@@ -464,9 +580,12 @@ query get_pick_driver_order($orderId: Int!) {
     current_gps
     delivery_company {
       id
-     details{ id image
-      name
-      service_provider_type}
+      details {
+        id
+        image
+        name
+        service_provider_type
+      }
     }
 
     delivery_cost

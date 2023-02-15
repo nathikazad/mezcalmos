@@ -33,7 +33,7 @@ query getServiceDetails($id: Int!) {
       email
       payouts_enabled
       requirements
-      sp_id
+      id
       status
       stripe_id
     }
@@ -74,7 +74,7 @@ mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_
       email
       payouts_enabled
       requirements
-      sp_id
+      id
       status
       stripe_id
     }
@@ -137,7 +137,7 @@ query getServicePaymentInfo($serviceDetailsId: Int!) {
       email
       payouts_enabled
       requirements
-      sp_id
+      id
       status
       stripe_id
     }

@@ -23,14 +23,9 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
   ServicePaymentsViewController viewController =
       ServicePaymentsViewController();
 
-  int? serviceProviderId;
   @override
   void initState() {
-    if (Get.parameters["ServiceProviderId"] != null &&
-        int.tryParse(Get.parameters["ServiceProviderId"]!) != null) {
-      serviceProviderId = int.tryParse(Get.parameters["ServiceProviderId"]!);
-      viewController.init(serviceProviderId: serviceProviderId!);
-    }
+    viewController.init();
 
     super.initState();
   }

@@ -29,7 +29,7 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
     if (Get.parameters["ServiceProviderId"] != null &&
         int.tryParse(Get.parameters["ServiceProviderId"]!) != null) {
       serviceProviderId = int.tryParse(Get.parameters["ServiceProviderId"]!);
-      viewController.init(serviceProviderId: serviceProviderId!);
+      // viewController.init(serviceProviderId: serviceProviderId!);
     }
 
     super.initState();

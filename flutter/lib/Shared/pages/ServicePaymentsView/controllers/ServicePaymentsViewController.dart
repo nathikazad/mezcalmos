@@ -1,16 +1,21 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
+import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ServicePaymentsViewController {
   // instances //
   WebViewController webViewController = WebViewController();
+  ServiceProfileController serviceProfileViewController =
+      Get.find<ServiceProfileController>();
 
   // state variables //
   Map<PaymentType, bool> _cloneAcceptedPayments = <PaymentType, bool>{
@@ -29,32 +34,33 @@ class ServicePaymentsViewController {
   final TextEditingController bankName = TextEditingController();
   final TextEditingController bankNumber = TextEditingController();
   // vars //
-  late int serviceProviderId;
+  int get serviceProviderId => serviceProfileViewController.serviceId;
   String? stripeUrl;
 // getters //
+  int get _detailsId => serviceProfileViewController.detailsId;
+  ServiceProviderType get serviceProviderType =>
+      serviceProfileViewController.service.serviceProviderType!;
 
   PaymentInfo? get paymentInfo => _paymentInfo.value;
   // init //
-  Future<void> init({required int serviceProviderId}) async {
-    this.serviceProviderId = serviceProviderId;
+  Future<void> init() async {
     // get payment info //
     await _fetchPayment(withCache: false);
   }
 
   Future<void> _fetchPayment({bool withCache = true}) async {
-    _paymentInfo.value = await get_restaurant_payment_info(
-        serviceProviderId: serviceProviderId, withCache: withCache);
+    _paymentInfo.value = await get_service_payment_info(
+        serviceDetailsId: _detailsId, withCache: withCache);
+
     _cloneAcceptedPayments = _paymentInfo.value!.acceptedPayments;
+    mezDbgPrint(
+        "after fetching payments 🤣🤣🤣🤣🤣 =>${_paymentInfo.value.toString()}");
   }
 
   void checkStripe() {
     if (_paymentInfo.value?.stripe != null &&
         _paymentInfo.value?.acceptedPayments[PaymentType.Card] == true) {
-      updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-              paymentInfo!.acceptedPayments)
-          .then((ServerResponse value) {
-        _checkStripeDetails();
-      });
+      _updateServiceProvider();
     }
   }
 
@@ -64,13 +70,18 @@ class ServicePaymentsViewController {
       ...paymentInfo!.acceptedPayments,
       PaymentType.Card: v
     };
-    _paymentInfo.value!.acceptedPayments = newMap;
 
-    mezDbgPrint("Heeerrererrere =>${_paymentInfo.value!}");
+    mezDbgPrint("Heeerrererrere =>$newMap");
     try {
-      // _paymentInfo.value = await update_restaurant_payment_info(
-      //     id: serviceProviderId, paymentInfo: paymentInfo!);
+      bool res = await update_service_accepted_payments(
+          payments: newMap, detailsId: _detailsId);
+      if (res) {
+        showSavedSnackBar();
+        _paymentInfo.value!.acceptedPayments = newMap;
+        _paymentInfo.refresh();
+      }
     } catch (e, stk) {
+      showErrorSnackBar(errorText: e.toString());
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }
@@ -85,30 +96,33 @@ class ServicePaymentsViewController {
     }
   }
 
-  void _reauthUrlHandler() {
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
-      }
-    });
+  Future<void> _reauthUrlHandler() async {
+    await _setupService();
   }
 
-  void _returnUrlHandler() {
+  Future<void> _returnUrlHandler() async {
     showStripe.value = false;
-    updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
+    await _updateServiceProvider();
+  }
+
+  Future<void> _updateServiceProvider() async {
+    try {
+      await updateServiceProvider(serviceProviderId, serviceProviderType,
+          paymentInfo!.acceptedPayments);
+      await _fetchPayment(withCache: false);
+
       _checkStripeDetails();
-      if (value.success) {
-        _fetchPayment(withCache: false);
-      }
-    });
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message ?? "");
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   void _checkStripeDetails() {
+    if (_paymentInfo.value?.stripe != null) {
+      setupClicked.value = false;
+    }
     if (_paymentInfo.value?.stripe?.detailsSubmitted == false) {
       showSetupStripe.value = true;
     } else if (_paymentInfo.value?.stripe?.chargesEnabled == false ||
@@ -153,19 +167,37 @@ class ServicePaymentsViewController {
     webViewController.loadRequest(Uri.parse(stripeUrl!));
   }
 
-  void showPaymentSetup() {
+  Future<void> showPaymentSetup() async {
     setupClicked.value = true;
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
-        initWebView();
-      } else {
-        Get.snackbar("Error", value.errorMessage ?? "Error");
-      }
-    }).whenComplete(() => setupClicked.value = false);
+
+    await _setupService();
+
+    // onboardServiceProvider(
+    //     serviceProviderId, serviceProviderType, paymentInfo!.acceptedPayments);
+
+    // if (value.success) {
+    //   mezDbgPrint("response ============> $value");
+    //   stripeUrl = value.data["url"];
+    //   showStripe.value = true;
+    //   initWebView();
+    // } else {
+    //   Get.snackbar("Error", value.errorMessage ?? "Error");
+    // }
+    // setupClicked.value = false;
+  }
+
+  Future<void> _setupService() async {
+    try {
+      cModel.SetupResponse res =
+          await onboardServiceProvider(serviceProviderId, serviceProviderType);
+      mezDbgPrint("response ============> $res");
+      stripeUrl = res.url;
+      showStripe.value = true;
+      initWebView();
+    } on FirebaseFunctionsException catch (e) {
+      showErrorSnackBar(errorText: e.message ?? "Error");
+      mezDbgPrint(e);
+    }
   }
 
   void closePaymentSetup() {

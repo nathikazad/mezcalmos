@@ -1753,13 +1753,6 @@ const documentNodeQueryget_customer_info = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'saved_locations'),
             alias: null,
             arguments: [
@@ -1952,7 +1945,6 @@ class Query$get_customer_info$customer_customer {
     this.app_version,
     this.notification_info,
     required this.user,
-    this.stripe_info,
     required this.saved_locations,
     required this.$__typename,
   });
@@ -1962,7 +1954,6 @@ class Query$get_customer_info$customer_customer {
     final l$app_version = json['app_version'];
     final l$notification_info = json['notification_info'];
     final l$user = json['user'];
-    final l$stripe_info = json['stripe_info'];
     final l$saved_locations = json['saved_locations'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_info$customer_customer(
@@ -1973,7 +1964,6 @@ class Query$get_customer_info$customer_customer {
               .fromJson((l$notification_info as Map<String, dynamic>)),
       user: Query$get_customer_info$customer_customer$user.fromJson(
           (l$user as Map<String, dynamic>)),
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
       saved_locations: (l$saved_locations as List<dynamic>)
           .map((e) => Query$get_customer_info$customer_customer$saved_locations
               .fromJson((e as Map<String, dynamic>)))
@@ -1989,8 +1979,6 @@ class Query$get_customer_info$customer_customer {
 
   final Query$get_customer_info$customer_customer$user user;
 
-  final dynamic? stripe_info;
-
   final List<Query$get_customer_info$customer_customer$saved_locations>
       saved_locations;
 
@@ -2004,9 +1992,6 @@ class Query$get_customer_info$customer_customer {
     _resultData['notification_info'] = l$notification_info?.toJson();
     final l$user = user;
     _resultData['user'] = l$user.toJson();
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$saved_locations = saved_locations;
     _resultData['saved_locations'] =
         l$saved_locations.map((e) => e.toJson()).toList();
@@ -2020,14 +2005,12 @@ class Query$get_customer_info$customer_customer {
     final l$app_version = app_version;
     final l$notification_info = notification_info;
     final l$user = user;
-    final l$stripe_info = stripe_info;
     final l$saved_locations = saved_locations;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$app_version,
       l$notification_info,
       l$user,
-      l$stripe_info,
       Object.hashAll(l$saved_locations.map((v) => v)),
       l$$__typename,
     ]);
@@ -2055,11 +2038,6 @@ class Query$get_customer_info$customer_customer {
     final l$user = user;
     final lOther$user = other.user;
     if (l$user != lOther$user) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$saved_locations = saved_locations;
@@ -2107,7 +2085,6 @@ abstract class CopyWith$Query$get_customer_info$customer_customer<TRes> {
     Query$get_customer_info$customer_customer$notification_info?
         notification_info,
     Query$get_customer_info$customer_customer$user? user,
-    dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
         saved_locations,
     String? $__typename,
@@ -2140,7 +2117,6 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
     Object? app_version = _undefined,
     Object? notification_info = _undefined,
     Object? user = _undefined,
-    Object? stripe_info = _undefined,
     Object? saved_locations = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -2155,9 +2131,6 @@ class _CopyWithImpl$Query$get_customer_info$customer_customer<TRes>
         user: user == _undefined || user == null
             ? _instance.user
             : (user as Query$get_customer_info$customer_customer$user),
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
         saved_locations:
             saved_locations == _undefined || saved_locations == null
                 ? _instance.saved_locations
@@ -2208,7 +2181,6 @@ class _CopyWithStubImpl$Query$get_customer_info$customer_customer<TRes>
     Query$get_customer_info$customer_customer$notification_info?
         notification_info,
     Query$get_customer_info$customer_customer$user? user,
-    dynamic? stripe_info,
     List<Query$get_customer_info$customer_customer$saved_locations>?
         saved_locations,
     String? $__typename,
@@ -3115,19 +3087,12 @@ const documentNodeQueryget_customer_stripe_info = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null,
-          ),
+          )
         ]),
       ),
       
@@ -3249,30 +3214,19 @@ extension ClientExtension$Query$get_customer_stripe_info
 }
 
 class Query$get_customer_stripe_info$customer_customer {
-  Query$get_customer_stripe_info$customer_customer({
-    this.stripe_info,
-    required this.$__typename,
-  });
+  Query$get_customer_stripe_info$customer_customer({required this.$__typename});
 
   factory Query$get_customer_stripe_info$customer_customer.fromJson(
       Map<String, dynamic> json) {
-    final l$stripe_info = json['stripe_info'];
     final l$$__typename = json['__typename'];
     return Query$get_customer_stripe_info$customer_customer(
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
+        $__typename: (l$$__typename as String));
   }
-
-  final dynamic? stripe_info;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -3280,12 +3234,8 @@ class Query$get_customer_stripe_info$customer_customer {
 
   @override
   int get hashCode {
-    final l$stripe_info = stripe_info;
     final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$stripe_info,
-      l$$__typename,
-    ]);
+    return Object.hashAll([l$$__typename]);
   }
 
   @override
@@ -3295,11 +3245,6 @@ class Query$get_customer_stripe_info$customer_customer {
     }
     if (!(other is Query$get_customer_stripe_info$customer_customer) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -3331,10 +3276,7 @@ abstract class CopyWith$Query$get_customer_stripe_info$customer_customer<TRes> {
           TRes res) =
       _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer;
 
-  TRes call({
-    dynamic? stripe_info,
-    String? $__typename,
-  });
+  TRes call({String? $__typename});
 }
 
 class _CopyWithImpl$Query$get_customer_stripe_info$customer_customer<TRes>
@@ -3350,18 +3292,11 @@ class _CopyWithImpl$Query$get_customer_stripe_info$customer_customer<TRes>
 
   static const _undefined = {};
 
-  TRes call({
-    Object? stripe_info = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
+  TRes call({Object? $__typename = _undefined}) =>
       _then(Query$get_customer_stripe_info$customer_customer(
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
+          $__typename: $__typename == _undefined || $__typename == null
+              ? _instance.$__typename
+              : ($__typename as String)));
 }
 
 class _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer<TRes>
@@ -3370,23 +3305,17 @@ class _CopyWithStubImpl$Query$get_customer_stripe_info$customer_customer<TRes>
 
   TRes _res;
 
-  call({
-    dynamic? stripe_info,
-    String? $__typename,
-  }) =>
-      _res;
+  call({String? $__typename}) => _res;
 }
 
 class Variables$Mutation$set_customer_info {
   factory Variables$Mutation$set_customer_info({
     required int user_id,
     required String app_version,
-    dynamic? stripe_info,
   }) =>
       Variables$Mutation$set_customer_info._({
         r'user_id': user_id,
         r'app_version': app_version,
-        if (stripe_info != null) r'stripe_info': stripe_info,
       });
 
   Variables$Mutation$set_customer_info._(this._$data);
@@ -3398,11 +3327,6 @@ class Variables$Mutation$set_customer_info {
     result$data['user_id'] = (l$user_id as int);
     final l$app_version = data['app_version'];
     result$data['app_version'] = (l$app_version as String);
-    if (data.containsKey('stripe_info')) {
-      final l$stripe_info = data['stripe_info'];
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapFromJson(l$stripe_info);
-    }
     return Variables$Mutation$set_customer_info._(result$data);
   }
 
@@ -3410,18 +3334,12 @@ class Variables$Mutation$set_customer_info {
 
   int get user_id => (_$data['user_id'] as int);
   String get app_version => (_$data['app_version'] as String);
-  dynamic? get stripe_info => (_$data['stripe_info'] as dynamic?);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
     final l$user_id = user_id;
     result$data['user_id'] = l$user_id;
     final l$app_version = app_version;
     result$data['app_version'] = l$app_version;
-    if (_$data.containsKey('stripe_info')) {
-      final l$stripe_info = stripe_info;
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    }
     return result$data;
   }
 
@@ -3450,15 +3368,6 @@ class Variables$Mutation$set_customer_info {
     if (l$app_version != lOther$app_version) {
       return false;
     }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (_$data.containsKey('stripe_info') !=
-        other._$data.containsKey('stripe_info')) {
-      return false;
-    }
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
     return true;
   }
 
@@ -3466,11 +3375,9 @@ class Variables$Mutation$set_customer_info {
   int get hashCode {
     final l$user_id = user_id;
     final l$app_version = app_version;
-    final l$stripe_info = stripe_info;
     return Object.hashAll([
       l$user_id,
       l$app_version,
-      _$data.containsKey('stripe_info') ? l$stripe_info : const {},
     ]);
   }
 }
@@ -3487,7 +3394,6 @@ abstract class CopyWith$Variables$Mutation$set_customer_info<TRes> {
   TRes call({
     int? user_id,
     String? app_version,
-    dynamic? stripe_info,
   });
 }
 
@@ -3507,7 +3413,6 @@ class _CopyWithImpl$Variables$Mutation$set_customer_info<TRes>
   TRes call({
     Object? user_id = _undefined,
     Object? app_version = _undefined,
-    Object? stripe_info = _undefined,
   }) =>
       _then(Variables$Mutation$set_customer_info._({
         ..._instance._$data,
@@ -3515,7 +3420,6 @@ class _CopyWithImpl$Variables$Mutation$set_customer_info<TRes>
           'user_id': (user_id as int),
         if (app_version != _undefined && app_version != null)
           'app_version': (app_version as String),
-        if (stripe_info != _undefined) 'stripe_info': (stripe_info as dynamic?),
       }));
 }
 
@@ -3528,7 +3432,6 @@ class _CopyWithStubImpl$Variables$Mutation$set_customer_info<TRes>
   call({
     int? user_id,
     String? app_version,
-    dynamic? stripe_info,
   }) =>
       _res;
 }
@@ -3707,15 +3610,6 @@ const documentNodeMutationset_customer_info = DocumentNode(definitions: [
         defaultValue: DefaultValueNode(value: null),
         directives: [],
       ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'stripe_info')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
@@ -3733,10 +3627,6 @@ const documentNodeMutationset_customer_info = DocumentNode(definitions: [
               ObjectFieldNode(
                 name: NameNode(value: 'app_version'),
                 value: VariableNode(name: NameNode(value: 'app_version')),
-              ),
-              ObjectFieldNode(
-                name: NameNode(value: 'stripe_info'),
-                value: VariableNode(name: NameNode(value: 'stripe_info')),
               ),
             ]),
           )
@@ -3992,614 +3882,6 @@ class _CopyWithStubImpl$Mutation$set_customer_info$insert_customer_customer_one<
 
   call({
     int? user_id,
-    String? $__typename,
-  }) =>
-      _res;
-}
-
-class Variables$Mutation$set_customer_stripe_info {
-  factory Variables$Mutation$set_customer_stripe_info({
-    required int user_id,
-    dynamic? stripe_info,
-  }) =>
-      Variables$Mutation$set_customer_stripe_info._({
-        r'user_id': user_id,
-        if (stripe_info != null) r'stripe_info': stripe_info,
-      });
-
-  Variables$Mutation$set_customer_stripe_info._(this._$data);
-
-  factory Variables$Mutation$set_customer_stripe_info.fromJson(
-      Map<String, dynamic> data) {
-    final result$data = <String, dynamic>{};
-    final l$user_id = data['user_id'];
-    result$data['user_id'] = (l$user_id as int);
-    if (data.containsKey('stripe_info')) {
-      final l$stripe_info = data['stripe_info'];
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapFromJson(l$stripe_info);
-    }
-    return Variables$Mutation$set_customer_stripe_info._(result$data);
-  }
-
-  Map<String, dynamic> _$data;
-
-  int get user_id => (_$data['user_id'] as int);
-  dynamic? get stripe_info => (_$data['stripe_info'] as dynamic?);
-  Map<String, dynamic> toJson() {
-    final result$data = <String, dynamic>{};
-    final l$user_id = user_id;
-    result$data['user_id'] = l$user_id;
-    if (_$data.containsKey('stripe_info')) {
-      final l$stripe_info = stripe_info;
-      result$data['stripe_info'] =
-          l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    }
-    return result$data;
-  }
-
-  CopyWith$Variables$Mutation$set_customer_stripe_info<
-          Variables$Mutation$set_customer_stripe_info>
-      get copyWith => CopyWith$Variables$Mutation$set_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Variables$Mutation$set_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$user_id = user_id;
-    final lOther$user_id = other.user_id;
-    if (l$user_id != lOther$user_id) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (_$data.containsKey('stripe_info') !=
-        other._$data.containsKey('stripe_info')) {
-      return false;
-    }
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    return true;
-  }
-
-  @override
-  int get hashCode {
-    final l$user_id = user_id;
-    final l$stripe_info = stripe_info;
-    return Object.hashAll([
-      l$user_id,
-      _$data.containsKey('stripe_info') ? l$stripe_info : const {},
-    ]);
-  }
-}
-
-abstract class CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  factory CopyWith$Variables$Mutation$set_customer_stripe_info(
-    Variables$Mutation$set_customer_stripe_info instance,
-    TRes Function(Variables$Mutation$set_customer_stripe_info) then,
-  ) = _CopyWithImpl$Variables$Mutation$set_customer_stripe_info;
-
-  factory CopyWith$Variables$Mutation$set_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info;
-
-  TRes call({
-    int? user_id,
-    dynamic? stripe_info,
-  });
-}
-
-class _CopyWithImpl$Variables$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithImpl$Variables$Mutation$set_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Variables$Mutation$set_customer_stripe_info _instance;
-
-  final TRes Function(Variables$Mutation$set_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? user_id = _undefined,
-    Object? stripe_info = _undefined,
-  }) =>
-      _then(Variables$Mutation$set_customer_stripe_info._({
-        ..._instance._$data,
-        if (user_id != _undefined && user_id != null)
-          'user_id': (user_id as int),
-        if (stripe_info != _undefined) 'stripe_info': (stripe_info as dynamic?),
-      }));
-}
-
-class _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Variables$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Variables$Mutation$set_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({
-    int? user_id,
-    dynamic? stripe_info,
-  }) =>
-      _res;
-}
-
-class Mutation$set_customer_stripe_info {
-  Mutation$set_customer_stripe_info({
-    this.update_customer_customer_by_pk,
-    required this.$__typename,
-  });
-
-  factory Mutation$set_customer_stripe_info.fromJson(
-      Map<String, dynamic> json) {
-    final l$update_customer_customer_by_pk =
-        json['update_customer_customer_by_pk'];
-    final l$$__typename = json['__typename'];
-    return Mutation$set_customer_stripe_info(
-      update_customer_customer_by_pk: l$update_customer_customer_by_pk == null
-          ? null
-          : Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-              .fromJson(
-                  (l$update_customer_customer_by_pk as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-      update_customer_customer_by_pk;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    _resultData['update_customer_customer_by_pk'] =
-        l$update_customer_customer_by_pk?.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$update_customer_customer_by_pk,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Mutation$set_customer_stripe_info) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$update_customer_customer_by_pk = update_customer_customer_by_pk;
-    final lOther$update_customer_customer_by_pk =
-        other.update_customer_customer_by_pk;
-    if (l$update_customer_customer_by_pk !=
-        lOther$update_customer_customer_by_pk) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$set_customer_stripe_info
-    on Mutation$set_customer_stripe_info {
-  CopyWith$Mutation$set_customer_stripe_info<Mutation$set_customer_stripe_info>
-      get copyWith => CopyWith$Mutation$set_customer_stripe_info(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  factory CopyWith$Mutation$set_customer_stripe_info(
-    Mutation$set_customer_stripe_info instance,
-    TRes Function(Mutation$set_customer_stripe_info) then,
-  ) = _CopyWithImpl$Mutation$set_customer_stripe_info;
-
-  factory CopyWith$Mutation$set_customer_stripe_info.stub(TRes res) =
-      _CopyWithStubImpl$Mutation$set_customer_stripe_info;
-
-  TRes call({
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-        update_customer_customer_by_pk,
-    String? $__typename,
-  });
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-      TRes> get update_customer_customer_by_pk;
-}
-
-class _CopyWithImpl$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithImpl$Mutation$set_customer_stripe_info(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$set_customer_stripe_info _instance;
-
-  final TRes Function(Mutation$set_customer_stripe_info) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? update_customer_customer_by_pk = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$set_customer_stripe_info(
-        update_customer_customer_by_pk: update_customer_customer_by_pk ==
-                _undefined
-            ? _instance.update_customer_customer_by_pk
-            : (update_customer_customer_by_pk
-                as Mutation$set_customer_stripe_info$update_customer_customer_by_pk?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-      TRes> get update_customer_customer_by_pk {
-    final local$update_customer_customer_by_pk =
-        _instance.update_customer_customer_by_pk;
-    return local$update_customer_customer_by_pk == null
-        ? CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-            local$update_customer_customer_by_pk,
-            (e) => call(update_customer_customer_by_pk: e));
-  }
-}
-
-class _CopyWithStubImpl$Mutation$set_customer_stripe_info<TRes>
-    implements CopyWith$Mutation$set_customer_stripe_info<TRes> {
-  _CopyWithStubImpl$Mutation$set_customer_stripe_info(this._res);
-
-  TRes _res;
-
-  call({
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk?
-        update_customer_customer_by_pk,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-          TRes>
-      get update_customer_customer_by_pk =>
-          CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-              .stub(_res);
-}
-
-const documentNodeMutationset_customer_stripe_info = DocumentNode(definitions: [
-  OperationDefinitionNode(
-    type: OperationType.mutation,
-    name: NameNode(value: 'set_customer_stripe_info'),
-    variableDefinitions: [
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'user_id')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'stripe_info')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'jsonb'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-    ],
-    directives: [],
-    selectionSet: SelectionSetNode(selections: [
-      FieldNode(
-        name: NameNode(value: 'update_customer_customer_by_pk'),
-        alias: null,
-        arguments: [
-          ArgumentNode(
-            name: NameNode(value: 'pk_columns'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'user_id'),
-                value: VariableNode(name: NameNode(value: 'user_id')),
-              )
-            ]),
-          ),
-          ArgumentNode(
-            name: NameNode(value: '_set'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'stripe_info'),
-                value: VariableNode(name: NameNode(value: 'stripe_info')),
-              )
-            ]),
-          ),
-        ],
-        directives: [],
-        selectionSet: SelectionSetNode(selections: [
-          FieldNode(
-            name: NameNode(value: 'stripe_info'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: '__typename'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-        ]),
-      ),
-      
-    ]),
-  ),
-]);
-Mutation$set_customer_stripe_info _parserFn$Mutation$set_customer_stripe_info(
-        Map<String, dynamic> data) =>
-    Mutation$set_customer_stripe_info.fromJson(data);
-typedef OnMutationCompleted$Mutation$set_customer_stripe_info = FutureOr<void>
-    Function(
-  dynamic,
-  Mutation$set_customer_stripe_info?,
-);
-
-class Options$Mutation$set_customer_stripe_info
-    extends graphql.MutationOptions<Mutation$set_customer_stripe_info> {
-  Options$Mutation$set_customer_stripe_info({
-    String? operationName,
-    required Variables$Mutation$set_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    OnMutationCompleted$Mutation$set_customer_stripe_info? onCompleted,
-    graphql.OnMutationUpdate<Mutation$set_customer_stripe_info>? update,
-    graphql.OnError? onError,
-  })  : onCompletedWithParsed = onCompleted,
-        super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          onCompleted: onCompleted == null
-              ? null
-              : (data) => onCompleted(
-                    data,
-                    data == null
-                        ? null
-                        : _parserFn$Mutation$set_customer_stripe_info(data),
-                  ),
-          update: update,
-          onError: onError,
-          document: documentNodeMutationset_customer_stripe_info,
-          parserFn: _parserFn$Mutation$set_customer_stripe_info,
-        );
-
-  final OnMutationCompleted$Mutation$set_customer_stripe_info?
-      onCompletedWithParsed;
-
-  @override
-  List<Object?> get properties => [
-        ...super.onCompleted == null
-            ? super.properties
-            : super.properties.where((property) => property != onCompleted),
-        onCompletedWithParsed,
-      ];
-}
-
-class WatchOptions$Mutation$set_customer_stripe_info
-    extends graphql.WatchQueryOptions<Mutation$set_customer_stripe_info> {
-  WatchOptions$Mutation$set_customer_stripe_info({
-    String? operationName,
-    required Variables$Mutation$set_customer_stripe_info variables,
-    graphql.FetchPolicy? fetchPolicy,
-    graphql.ErrorPolicy? errorPolicy,
-    graphql.CacheRereadPolicy? cacheRereadPolicy,
-    Object? optimisticResult,
-    graphql.Context? context,
-    Duration? pollInterval,
-    bool? eagerlyFetchResults,
-    bool carryForwardDataOnException = true,
-    bool fetchResults = false,
-  }) : super(
-          variables: variables.toJson(),
-          operationName: operationName,
-          fetchPolicy: fetchPolicy,
-          errorPolicy: errorPolicy,
-          cacheRereadPolicy: cacheRereadPolicy,
-          optimisticResult: optimisticResult,
-          context: context,
-          document: documentNodeMutationset_customer_stripe_info,
-          pollInterval: pollInterval,
-          eagerlyFetchResults: eagerlyFetchResults,
-          carryForwardDataOnException: carryForwardDataOnException,
-          fetchResults: fetchResults,
-          parserFn: _parserFn$Mutation$set_customer_stripe_info,
-        );
-}
-
-extension ClientExtension$Mutation$set_customer_stripe_info
-    on graphql.GraphQLClient {
-  Future<graphql.QueryResult<Mutation$set_customer_stripe_info>>
-      mutate$set_customer_stripe_info(
-              Options$Mutation$set_customer_stripe_info options) async =>
-          await this.mutate(options);
-  graphql.ObservableQuery<Mutation$set_customer_stripe_info>
-      watchMutation$set_customer_stripe_info(
-              WatchOptions$Mutation$set_customer_stripe_info options) =>
-          this.watchMutation(options);
-}
-
-class Mutation$set_customer_stripe_info$update_customer_customer_by_pk {
-  Mutation$set_customer_stripe_info$update_customer_customer_by_pk({
-    this.stripe_info,
-    required this.$__typename,
-  });
-
-  factory Mutation$set_customer_stripe_info$update_customer_customer_by_pk.fromJson(
-      Map<String, dynamic> json) {
-    final l$stripe_info = json['stripe_info'];
-    final l$$__typename = json['__typename'];
-    return Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-      stripe_info: l$stripe_info == null ? null : mapFromJson(l$stripe_info),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final dynamic? stripe_info;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$stripe_info = stripe_info;
-    _resultData['stripe_info'] =
-        l$stripe_info == null ? null : mapToJson(l$stripe_info);
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$stripe_info = stripe_info;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$stripe_info,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$set_customer_stripe_info$update_customer_customer_by_pk) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$stripe_info = stripe_info;
-    final lOther$stripe_info = other.stripe_info;
-    if (l$stripe_info != lOther$stripe_info) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-    on Mutation$set_customer_stripe_info$update_customer_customer_by_pk {
-  CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-          Mutation$set_customer_stripe_info$update_customer_customer_by_pk>
-      get copyWith =>
-          CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-    TRes> {
-  factory CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-    Mutation$set_customer_stripe_info$update_customer_customer_by_pk instance,
-    TRes Function(
-            Mutation$set_customer_stripe_info$update_customer_customer_by_pk)
-        then,
-  ) = _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk;
-
-  factory CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk;
-
-  TRes call({
-    dynamic? stripe_info,
-    String? $__typename,
-  });
-}
-
-class _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-        TRes>
-    implements
-        CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-            TRes> {
-  _CopyWithImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$set_customer_stripe_info$update_customer_customer_by_pk
-      _instance;
-
-  final TRes Function(
-      Mutation$set_customer_stripe_info$update_customer_customer_by_pk) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? stripe_info = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-        stripe_info: stripe_info == _undefined
-            ? _instance.stripe_info
-            : (stripe_info as dynamic?),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-}
-
-class _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-        TRes>
-    implements
-        CopyWith$Mutation$set_customer_stripe_info$update_customer_customer_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Mutation$set_customer_stripe_info$update_customer_customer_by_pk(
-      this._res);
-
-  TRes _res;
-
-  call({
-    dynamic? stripe_info,
     String? $__typename,
   }) =>
       _res;
