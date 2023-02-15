@@ -188,7 +188,8 @@ subscription listen_on_driver_order($orderId: Int!) {
       id
       stripe_info
       restaurant {
-     details{ id   firebase_id
+        id
+     details{   firebase_id
         id
         image
         name

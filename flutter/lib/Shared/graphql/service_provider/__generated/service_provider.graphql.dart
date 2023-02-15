@@ -1102,7 +1102,7 @@ const documentNodeQuerygetServiceDetails = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'sp_id'),
+                name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1881,7 +1881,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     this.email,
     required this.payouts_enabled,
     this.requirements,
-    required this.sp_id,
+    required this.id,
     required this.status,
     required this.stripe_id,
     required this.$__typename,
@@ -1895,7 +1895,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     final l$email = json['email'];
     final l$payouts_enabled = json['payouts_enabled'];
     final l$requirements = json['requirements'];
-    final l$sp_id = json['sp_id'];
+    final l$id = json['id'];
     final l$status = json['status'];
     final l$stripe_id = json['stripe_id'];
     final l$$__typename = json['__typename'];
@@ -1906,7 +1906,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
       requirements: (l$requirements as String?),
-      sp_id: (l$sp_id as int),
+      id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1925,7 +1925,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
 
   final String? requirements;
 
-  final int sp_id;
+  final int id;
 
   final String status;
 
@@ -1947,8 +1947,8 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
     _resultData['requirements'] = l$requirements;
-    final l$sp_id = sp_id;
-    _resultData['sp_id'] = l$sp_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$stripe_id = stripe_id;
@@ -1966,7 +1966,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     final l$email = email;
     final l$payouts_enabled = payouts_enabled;
     final l$requirements = requirements;
-    final l$sp_id = sp_id;
+    final l$id = id;
     final l$status = status;
     final l$stripe_id = stripe_id;
     final l$$__typename = $__typename;
@@ -1977,7 +1977,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
       l$email,
       l$payouts_enabled,
       l$requirements,
-      l$sp_id,
+      l$id,
       l$status,
       l$stripe_id,
       l$$__typename,
@@ -2024,9 +2024,9 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     if (l$requirements != lOther$requirements) {
       return false;
     }
-    final l$sp_id = sp_id;
-    final lOther$sp_id = other.sp_id;
-    if (l$sp_id != lOther$sp_id) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$status = status;
@@ -2079,7 +2079,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk$s
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,
@@ -2111,7 +2111,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk$strip
     Object? email = _undefined,
     Object? payouts_enabled = _undefined,
     Object? requirements = _undefined,
-    Object? sp_id = _undefined,
+    Object? id = _undefined,
     Object? status = _undefined,
     Object? stripe_id = _undefined,
     Object? $__typename = _undefined,
@@ -2136,9 +2136,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk$strip
         requirements: requirements == _undefined
             ? _instance.requirements
             : (requirements as String?),
-        sp_id: sp_id == _undefined || sp_id == null
-            ? _instance.sp_id
-            : (sp_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -2168,7 +2166,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk$s
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,
@@ -3195,7 +3193,7 @@ const documentNodeMutationupdateServiceDetails = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'sp_id'),
+                name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -3978,7 +3976,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     this.email,
     required this.payouts_enabled,
     this.requirements,
-    required this.sp_id,
+    required this.id,
     required this.status,
     required this.stripe_id,
     required this.$__typename,
@@ -3992,7 +3990,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     final l$email = json['email'];
     final l$payouts_enabled = json['payouts_enabled'];
     final l$requirements = json['requirements'];
-    final l$sp_id = json['sp_id'];
+    final l$id = json['id'];
     final l$status = json['status'];
     final l$stripe_id = json['stripe_id'];
     final l$$__typename = json['__typename'];
@@ -4003,7 +4001,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
       requirements: (l$requirements as String?),
-      sp_id: (l$sp_id as int),
+      id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -4022,7 +4020,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
 
   final String? requirements;
 
-  final int sp_id;
+  final int id;
 
   final String status;
 
@@ -4044,8 +4042,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
     _resultData['requirements'] = l$requirements;
-    final l$sp_id = sp_id;
-    _resultData['sp_id'] = l$sp_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$stripe_id = stripe_id;
@@ -4063,7 +4061,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     final l$email = email;
     final l$payouts_enabled = payouts_enabled;
     final l$requirements = requirements;
-    final l$sp_id = sp_id;
+    final l$id = id;
     final l$status = status;
     final l$stripe_id = stripe_id;
     final l$$__typename = $__typename;
@@ -4074,7 +4072,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
       l$email,
       l$payouts_enabled,
       l$requirements,
-      l$sp_id,
+      l$id,
       l$status,
       l$stripe_id,
       l$$__typename,
@@ -4121,9 +4119,9 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     if (l$requirements != lOther$requirements) {
       return false;
     }
-    final l$sp_id = sp_id;
-    final lOther$sp_id = other.sp_id;
-    if (l$sp_id != lOther$sp_id) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$status = status;
@@ -4177,7 +4175,7 @@ abstract class CopyWith$Mutation$updateServiceDetails$update_service_provider_de
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,
@@ -4210,7 +4208,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
     Object? email = _undefined,
     Object? payouts_enabled = _undefined,
     Object? requirements = _undefined,
-    Object? sp_id = _undefined,
+    Object? id = _undefined,
     Object? status = _undefined,
     Object? stripe_id = _undefined,
     Object? $__typename = _undefined,
@@ -4236,9 +4234,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
         requirements: requirements == _undefined
             ? _instance.requirements
             : (requirements as String?),
-        sp_id: sp_id == _undefined || sp_id == null
-            ? _instance.sp_id
-            : (sp_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -4268,7 +4264,7 @@ class _CopyWithStubImpl$Mutation$updateServiceDetails$update_service_provider_de
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,
@@ -7085,7 +7081,7 @@ const documentNodeQuerygetServicePaymentInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'sp_id'),
+                name: NameNode(value: 'id'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -7431,7 +7427,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     this.email,
     required this.payouts_enabled,
     this.requirements,
-    required this.sp_id,
+    required this.id,
     required this.status,
     required this.stripe_id,
     required this.$__typename,
@@ -7445,7 +7441,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     final l$email = json['email'];
     final l$payouts_enabled = json['payouts_enabled'];
     final l$requirements = json['requirements'];
-    final l$sp_id = json['sp_id'];
+    final l$id = json['id'];
     final l$status = json['status'];
     final l$stripe_id = json['stripe_id'];
     final l$$__typename = json['__typename'];
@@ -7456,7 +7452,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
       requirements: (l$requirements as String?),
-      sp_id: (l$sp_id as int),
+      id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -7475,7 +7471,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
 
   final String? requirements;
 
-  final int sp_id;
+  final int id;
 
   final String status;
 
@@ -7497,8 +7493,8 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
     _resultData['requirements'] = l$requirements;
-    final l$sp_id = sp_id;
-    _resultData['sp_id'] = l$sp_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$status = status;
     _resultData['status'] = l$status;
     final l$stripe_id = stripe_id;
@@ -7516,7 +7512,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     final l$email = email;
     final l$payouts_enabled = payouts_enabled;
     final l$requirements = requirements;
-    final l$sp_id = sp_id;
+    final l$id = id;
     final l$status = status;
     final l$stripe_id = stripe_id;
     final l$$__typename = $__typename;
@@ -7527,7 +7523,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
       l$email,
       l$payouts_enabled,
       l$requirements,
-      l$sp_id,
+      l$id,
       l$status,
       l$stripe_id,
       l$$__typename,
@@ -7574,9 +7570,9 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     if (l$requirements != lOther$requirements) {
       return false;
     }
-    final l$sp_id = sp_id;
-    final lOther$sp_id = other.sp_id;
-    if (l$sp_id != lOther$sp_id) {
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$status = status;
@@ -7630,7 +7626,7 @@ abstract class CopyWith$Query$getServicePaymentInfo$service_provider_details_by_
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,
@@ -7663,7 +7659,7 @@ class _CopyWithImpl$Query$getServicePaymentInfo$service_provider_details_by_pk$s
     Object? email = _undefined,
     Object? payouts_enabled = _undefined,
     Object? requirements = _undefined,
-    Object? sp_id = _undefined,
+    Object? id = _undefined,
     Object? status = _undefined,
     Object? stripe_id = _undefined,
     Object? $__typename = _undefined,
@@ -7689,9 +7685,7 @@ class _CopyWithImpl$Query$getServicePaymentInfo$service_provider_details_by_pk$s
         requirements: requirements == _undefined
             ? _instance.requirements
             : (requirements as String?),
-        sp_id: sp_id == _undefined || sp_id == null
-            ? _instance.sp_id
-            : (sp_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -7721,7 +7715,7 @@ class _CopyWithStubImpl$Query$getServicePaymentInfo$service_provider_details_by_
     String? email,
     bool? payouts_enabled,
     String? requirements,
-    int? sp_id,
+    int? id,
     String? status,
     String? stripe_id,
     String? $__typename,

@@ -7847,18 +7847,18 @@ const documentNodeSubscriptionlisten_on_driver_order =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'details'),
                     alias: null,
                     arguments: [],
                     directives: [],
                     selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
                       FieldNode(
                         name: NameNode(value: 'firebase_id'),
                         alias: null,
@@ -12288,15 +12288,18 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
 class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant {
   Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant({
+    required this.id,
     this.details,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+      id: (l$id as int),
       details: l$details == null
           ? null
           : Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details
@@ -12305,6 +12308,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     );
   }
 
+  final int id;
+
   final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details?
       details;
 
@@ -12312,6 +12317,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$details = details;
     _resultData['details'] = l$details?.toJson();
     final l$$__typename = $__typename;
@@ -12321,9 +12328,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$details,
       l$$__typename,
     ]);
@@ -12337,6 +12346,11 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     if (!(other
             is Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$details = details;
@@ -12379,6 +12393,7 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant;
 
   TRes call({
+    int? id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details?
         details,
     String? $__typename,
@@ -12407,11 +12422,13 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         details: details == _undefined
             ? _instance.details
             : (details
@@ -12442,6 +12459,7 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details?
         details,
     String? $__typename,
@@ -12456,8 +12474,8 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
 
 class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details {
   Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details({
-    required this.id,
     this.firebase_id,
+    required this.id,
     required this.image,
     required this.name,
     required this.location,
@@ -12466,15 +12484,15 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   factory Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details.fromJson(
       Map<String, dynamic> json) {
-    final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
+    final l$id = json['id'];
     final l$image = json['image'];
     final l$name = json['name'];
     final l$location = json['location'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details(
-      id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
+      id: (l$id as int),
       image: (l$image as String),
       name: (l$name as String),
       location:
@@ -12484,9 +12502,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
     );
   }
 
-  final int id;
-
   final String? firebase_id;
+
+  final int id;
 
   final String image;
 
@@ -12499,10 +12517,10 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$image = image;
     _resultData['image'] = l$image;
     final l$name = name;
@@ -12516,15 +12534,15 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
 
   @override
   int get hashCode {
-    final l$id = id;
     final l$firebase_id = firebase_id;
+    final l$id = id;
     final l$image = image;
     final l$name = name;
     final l$location = location;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$id,
       l$firebase_id,
+      l$id,
       l$image,
       l$name,
       l$location,
@@ -12542,14 +12560,14 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
     final l$firebase_id = firebase_id;
     final lOther$firebase_id = other.firebase_id;
     if (l$firebase_id != lOther$firebase_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$image = image;
@@ -12602,8 +12620,8 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
       _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details;
 
   TRes call({
-    int? id,
     String? firebase_id,
+    int? id,
     String? image,
     String? name,
     Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
@@ -12634,8 +12652,8 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
   static const _undefined = {};
 
   TRes call({
-    Object? id = _undefined,
     Object? firebase_id = _undefined,
+    Object? id = _undefined,
     Object? image = _undefined,
     Object? name = _undefined,
     Object? location = _undefined,
@@ -12643,10 +12661,10 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk$res
   }) =>
       _then(
           Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -12680,8 +12698,8 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
   TRes _res;
 
   call({
-    int? id,
     String? firebase_id,
+    int? id,
     String? image,
     String? name,
     Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant_order$restaurant$details$location?
