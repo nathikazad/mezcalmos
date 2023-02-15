@@ -1,9 +1,9 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "My Locations",
+            "savedLocations": "Saved Locations",
             "contactUs": "Contact us",
-            "savedCards": "My cards"
+            "savedCards": "Saved cards"
         },
         "components": {
             "Menu": {
@@ -38,9 +38,9 @@
         "pages": {
             "cards": {
                 "SavedCardsListView": {
-                    "cards": "My Cards",
+                    "cards": "Cards",
                     "card": "Card",
-                    "addNew": "Add new card",
+                    "addNew": "Add new credit card",
                     "removeTitle": "Remove card",
                     "removeDesc": "Are you sure you want to remove this card",
                     "removeBtn": "Yes, remove card"
@@ -176,6 +176,7 @@
                             "deleteItemConfirm": "Are you sure you would like to delete?",
                             "deleteBtn": "Yes, delete item",
                             "itemNotes": "Item notes"
+
                         },
                         "ChoosenManyOption": {
                             "options": "Options"
@@ -245,7 +246,7 @@
                         "notes": "Notes",
                         "special": "Special",
                         "viewRestaurant": "View restaurant",
-                        "itemNotes": "Item notes",
+                        "itemNotes": "Item notes :",
                         "itemDescription": "Item Description",
                         "availability": "Availability",
                         "hintNote":"Write your notes here"
@@ -272,7 +273,7 @@
                             "restaurant": "Restaurant"
                         },
                         "notesWidget": {
-                            "notes": "Order note"
+                            "notes": "Order note :"
                         },
                         "OrderFooterCard": {
                             "cancelOrder": "Cancel Order",
@@ -372,7 +373,6 @@
                         "location": "Location"
                     },
                     "SavedLocationComponent": {
-                        "defaultAddressText":"Default",
                         "editLocation": "Edit Location",
                         "deleteLocation": "Delete Location"
                     },
@@ -382,9 +382,8 @@
                     }
                 },
                 "SavedLocationView": {
-                    "title": "My Locations",
-                    "addNewLoc": "Add New Location",
-                    "location":"Location"
+                    "title": "Saved Locations",
+                    "addNewLoc": "Add New Location"
                 }
             },
             "Taxi": {
@@ -700,7 +699,7 @@
                     "title": "Rate your experience",
                     "subtitle": "We would like to hear your feedback.",
                     "hintText": "Say something about your experience..",
-                    "send": "Save",
+                    "send": "Send",
                     "close": "Close",
                     "successTitle": "Thank you",
                     "successSubtitle": "Your review have been submitted successfuly"
@@ -711,7 +710,7 @@
             },
             "DateTimeHelper": {
                 "today": "Today",
-                "tomorrow": "Tomorrow",
+                "tomorrow": "tomorrow",
                 "on": "on",
                 "in": "in",
                 "at": "at",
@@ -722,10 +721,10 @@
                 "yesterday": "Yesterday",
                 "hoursAgo": "Hours ago",
                 "hourAgo": "Hour ago",
-                "minutesAgo": "mins ago",
-                "minuteAgo": "min ago",
-                "secondsAgo": "sec ago",
-                "now": "Now"
+                "minutesAgo": "Minutes ago",
+                "minuteAgo": "Minute ago",
+                "secondsAgo": "Seconds ago",
+                "now": "Just now"
             }
         },
         "pages": {
@@ -883,12 +882,11 @@
                     "title": "Notifications",
                     "latest": "Latest",
                     "today": "Today",
-                    "yesterday" : "Yesterday",
-                    "alertClearNotificationTitle" : "Clear All Notifications",
+                    "alertClearNotificationTitle": "Clear All Notifications",
                     "clear": "Clear",
                     "no": "No",
                     "noNotifTitle": "No notifications yet !",
-                    "noNotifBody": "You have currently no notifications. \n   We will notify you when something new arrives."
+                    "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
             },
             "UserWelcomeView": {
@@ -1018,7 +1016,7 @@
                 "title": "Pick your time"
             },
             "OrderSummaryCard": {
-                "orderSummary": "Summary",
+                "orderSummary": "Order Summary",
                 "orderCost": "Order Cost",
                 "deliveryCost": "Delivery Cost",
                 "stripeFees": "Card fees",
@@ -1039,7 +1037,7 @@
                 "title": "Delivery location"
             },
             "OrderScheduledTimeCard": {
-                "title": "Delivery time"
+                "title": "Scheduled time"
             },
             "CreditCardInfo": {
                 "creditCardInfo": "Credit card info",

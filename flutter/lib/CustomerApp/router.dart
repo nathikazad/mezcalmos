@@ -16,6 +16,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Custo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
+import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 

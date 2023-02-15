@@ -54,7 +54,7 @@ export async function updateLaundryStripe(laundryStore: ServiceProvider) {
     let mutationResponse = await chain.mutation({
         update_service_provider_stripe_info_by_pk: [{
             pk_columns: {
-                sp_id: response.laundry_store_by_pk.details_id
+                id: response.laundry_store_by_pk.details_id
             },
             _set: {
                 charge_fees_on_customer: laundryStore.stripeInfo.chargeFeesOnCustomer ?? undefined,

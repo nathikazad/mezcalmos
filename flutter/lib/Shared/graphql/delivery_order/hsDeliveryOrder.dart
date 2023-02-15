@@ -199,18 +199,18 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
     case ServiceProviderType.DeliveryCompany:
       return UserInfo(
           hasuraId: orderData.delivery_company!.id,
-          name: orderData.delivery_company!.name,
-          image: orderData.delivery_company!.image);
+          name: orderData.delivery_company!.details.name,
+          image: orderData.delivery_company!.details.image);
     case ServiceProviderType.Restaurant:
       return UserInfo(
           hasuraId: orderData.restaurant!.id,
-          name: orderData.restaurant!.name,
-          image: orderData.restaurant!.image);
+          name: orderData.restaurant!.details.name,
+          image: orderData.restaurant!.details.image);
     case ServiceProviderType.Laundry:
       return UserInfo(
           hasuraId: orderData.laundry!.id,
-          name: orderData.laundry!.name,
-          image: orderData.laundry!.image);
+          name: orderData.laundry!.details.name,
+          image: orderData.laundry!.details.image);
 
     default:
   }
@@ -220,27 +220,30 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
   mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData!.laundry_pickup_order.toString()}");
-
+      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
+  mezDbgPrint(
+      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
           location: MezLocation.fromHasura(
-              orderData.restaurant_order!.restaurant.location.gps,
-              orderData.restaurant_order!.restaurant.location.address),
+              orderData.restaurant_order!.restaurant.details.location.gps,
+              orderData.restaurant_order!.restaurant.details.location.address
+                  .toString()),
           hasuraId: orderData.restaurant_order!.restaurant.id,
-          image: orderData.restaurant_order!.restaurant.image,
-          name: orderData.restaurant_order!.restaurant.name);
+          image: orderData.restaurant_order!.restaurant.details.image,
+          name: orderData.restaurant_order!.restaurant.details.name);
     case OrderType.Laundry:
       dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
       mezDbgPrint(laundryOrder);
       return ServiceInfo(
-          location: MezLocation.fromHasura(laundryOrder.store.location.gps,
-              laundryOrder.store.location.address),
-          hasuraId: laundryOrder.store.id,
-          image: laundryOrder.store.image,
-          name: laundryOrder.store.name);
+          location: MezLocation.fromHasura(
+              laundryOrder.store.details.location.gps,
+              laundryOrder.store.details.location.address),
+          hasuraId: laundryOrder.details.store.id,
+          image: laundryOrder.store.details.image,
+          name: laundryOrder.store.details.name);
 
     default:
   }

@@ -34,11 +34,7 @@ object_relationships:
       foreign_key_constraint_on: service_link_id
   - name: stripe_info
     using:
-      foreign_key_constraint_on:
-        column: sp_id
-        table:
-          name: stripe_info
-          schema: service_provider
+      foreign_key_constraint_on: stripe_id
 array_relationships:
   - name: delivery_drivers
     using:
