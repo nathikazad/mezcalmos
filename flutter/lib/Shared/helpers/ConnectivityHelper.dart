@@ -28,17 +28,22 @@ class ConnectivityHelper {
     final Connectivity connectivity = Connectivity();
     final ConnectivityResult result = await connectivity.checkConnectivity();
     _hasInternet = _hasInternetOptions.contains(result);
+
     Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult event) async {
-      try {
-        final List<InternetAddress> result =
-            await InternetAddress.lookup(sNetworkCheckUrl);
-        _pingedConnection = result.isNotEmpty;
-      } on SocketException catch (_) {
-        _pingedConnection = false;
+      _hasInternet = _hasInternetOptions.contains(event);
+      if (_hasInternet) {
+        try {
+          final List<InternetAddress> result =
+              await InternetAddress.lookup(sNetworkCheckUrl);
+          _pingedConnection = result.isNotEmpty;
+        } on SocketException catch (_) {
+          _pingedConnection = false;
+        }
+        _hasInternet = _pingedConnection;
       }
-      _hasInternet = _hasInternetOptions.contains(event) && _pingedConnection;
+
       if (!_hasInternet) {
         if (!isCurrentRoute(kNoInternetRoute)) {
           MezRouter.toNamed<void>(kNoInternetRoute);
