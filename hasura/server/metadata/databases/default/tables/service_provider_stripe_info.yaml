@@ -9,8 +9,8 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
         - email
+        - id
         - requirements
         - status
         - stripe_id
@@ -22,7 +22,7 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
+        - id
         - email
         - requirements
         - status
@@ -35,8 +35,8 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
         - email
+        - id
         - requirements
         - status
         - stripe_id
@@ -48,9 +48,9 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
         - email
         - requirements
+        - id
         - status
         - stripe_id
       filter: {}
@@ -61,10 +61,10 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
         - email
         - requirements
         - status
+        - id
         - stripe_id
       filter:
         _exists:
@@ -81,8 +81,8 @@ select_permissions:
         - charges_enabled
         - details_submitted
         - payouts_enabled
-        - sp_id
         - email
+        - id
         - requirements
         - status
         - stripe_id
