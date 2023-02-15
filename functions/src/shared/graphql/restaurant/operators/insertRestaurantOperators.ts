@@ -39,15 +39,18 @@ export async function insertRestaurantOperators(data: any) {
             user_id: opResponse.user[0].id,
             restaurant_id: (opResponse.restaurant_restaurant[0]) ? opResponse.restaurant_restaurant[0].id : undefined,
             operator_details: {
-                status: AuthorizationStatus.Authorized,
-                owner: true,
-                app_version: o.appVersion,
-                app_type_id: AppType.RestaurantApp,
-                // notification_info: (o.notificationToken) ? {
-                //     user_id: o.user_id,
-                //     app_type_id: AppType.RestaurantApp,
-                //     token: o.notification_token
-                // }: undefined
+                data: {
+                    user_id: opResponse.user[0].id,
+                    status: AuthorizationStatus.Authorized,
+                    owner: true,
+                    app_version: o.appVersion,
+                    app_type_id: AppType.RestaurantApp,
+                    // notification_info: (o.notificationToken) ? {
+                    //     user_id: o.user_id,
+                    //     app_type_id: AppType.RestaurantApp,
+                    //     token: o.notification_token
+                    // }: undefined
+                }
             },
             notification_token: o.notificationToken
         }
