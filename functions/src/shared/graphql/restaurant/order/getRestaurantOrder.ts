@@ -22,10 +22,12 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         to_location_gps: true,
         order_time: true,
         restaurant: {
-          location: {
-            gps: true
-          },
-          self_delivery :true,
+          details: {
+            location: {
+              gps: true
+            },
+            // self_delivery :true,
+          }
         },
         delivery_id: true,
         to_location_address: true,
@@ -126,10 +128,11 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
         to_location_gps: true,
         order_time: true,
         restaurant: {
-          location: {
-            gps: true
-          },
-          self_delivery :true,
+          details: {
+            location: {
+              gps: true
+            },
+          }
         },
         delivery_id: true,
         to_location_address: true,
@@ -225,29 +228,40 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       to_location_gps: true,
       order_time: true,
       restaurant: {
+        id: true,
         restaurant_operators: [{}, {
           id: true,
           user_id: true,
-          status: true,
-          owner: true,
-          notification_info: {
-            token: true,
-            turn_off_notifications: true
+          operator_details: {
+            status: true,
+            owner: true,
+            notification_info: {
+              token: true,
+              turn_off_notifications: true
+            },
           },
           user: {
             firebase_id: true,
             language_id: true,
           }
         }],
-        name: true,
-        image: true,
-        self_delivery:true,
-        location: {
-          gps: true
+        details: {
+          name: true,
+          image: true,
+          location: {
+            gps: true
+          },
+          
+          language: [{}, true]
         },
-        delivery: true,
-        customer_pickup: true,
-        language_id: true,
+        delivery_details: {
+          self_delivery: true,
+          delivery_available: true,
+          customer_pickup: true,
+          radius: true,
+          minimum_cost: true,
+          cost_per_km: true,
+        },
       },
       customer_app_type: true,
       delivery_cost: true,
@@ -277,12 +291,12 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
         userId: r.user_id,
         serviceProviderId: o.restaurant_id,
         
-        status: r.status as AuthorizationStatus,
-        owner: r.owner,
-        notificationInfo: (r.notification_info) ? {
+        status: r.operator_details.status as AuthorizationStatus,
+        owner: r.operator_details.owner,
+        notificationInfo: (r.operator_details.notification_info) ? {
           AppTypeId: AppType.RestaurantApp,
-          token: r.notification_info.token,
-          turnOffNotifications: r.notification_info.turn_off_notifications
+          token: r.operator_details.notification_info.token,
+          turnOffNotifications: r.operator_details.notification_info.turn_off_notifications
         } : undefined,
         user: {
           id: r.user_id,
@@ -317,16 +331,22 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       customerAppType: o.customer_app_type as CustomerAppType,
       deliveryCost: o.delivery_cost,
       items,
-      restaurant: {
-        name: o.restaurant.name,
-        selfDelivery : o.restaurant.self_delivery,
-        image: o.restaurant.image,
-        location: o.restaurant.location.gps as Location,
+      restaurant: (o.restaurant.details) ? {
+        id: o.restaurant.id,
+        name: o.restaurant.details.name,
+        image: o.restaurant.details.image,
+        location: o.restaurant.details.location.gps as Location,
         operators: restaurantOperators,
-        delivery: o.restaurant.delivery,
-        customerPickup: o.restaurant.customer_pickup,
-        language: o.restaurant.language_id as Language
-      }
+        language: JSON.parse(o.restaurant.details.language),
+        deliveryDetails: {
+          minimumCost:o.restaurant.delivery_details.minimum_cost,
+          costPerKm: o.restaurant.delivery_details.cost_per_km,
+          radius: o.restaurant.delivery_details.radius,
+          deliveryAvailable: o.restaurant.delivery_details.delivery_available,
+          customerPickup: o.restaurant.delivery_details.customer_pickup,
+          selfDelivery: o.restaurant.delivery_details.self_delivery,
+        }
+      }: undefined
     }
   })
 }

@@ -14,6 +14,8 @@ import { getDeliveryOperatorByUserId } from "../shared/graphql/delivery/operator
 import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/operators/getRestaurantOperators";
 import { isMezAdmin } from "../shared/helper";
 import { AuthorizationStatus } from "../shared/models/Generic/Generic"
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
@@ -80,7 +82,7 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, assignDriverDe
       deliveryDriver.user!.firebaseId!,
       notification,
       deliveryDriver.notificationInfo,
-      deliveryDriver.deliveryDriverType
+      ParticipantType.DeliveryDriver
     );
   }
 }
@@ -106,6 +108,15 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
         );
       }
       break;
+      case DeliveryServiceProviderType.Laundry:
+        operator = await getLaundryOperatorByUserId(userId);
+        if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+          throw new HttpsError(
+            "internal",
+            "Invalid operator"
+          );
+        }
+        break;
     default:
       break;
   }

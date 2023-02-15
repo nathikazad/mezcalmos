@@ -285,7 +285,7 @@ Future<List<Item>> search_items(
           name: toLanguageMap(translations: item.name.translations),
           itemType: item.item_type.toItemType(),
           id: item.id,
-          restaurantName: item.restaurant?.name,
+          restaurantName: item.restaurant?.details?.name,
           restaurantId: item.restaurant_id,
           image: item.image,
           available: item.available,

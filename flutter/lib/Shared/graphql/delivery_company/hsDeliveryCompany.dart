@@ -26,61 +26,65 @@ Future<DeliveryCompany?> get_delivery_company({required int companyId}) async {
   final Query$getDeliveryCompanyById$delivery_company_by_pk data =
       res.parsedData!.delivery_company_by_pk!;
   return DeliveryCompany(
-      creationTime: DateTime.parse(data.creation_time),
+      creationTime: DateTime.parse(data.details!.creation_time),
       info: ServiceInfo(
         hasuraId: data.id,
-        locationId: data.location_id,
-        image: data.image,
-        description: (data.description?.translations != null)
-            ? toLanguageMap(translations: data.description!.translations)
+        locationId: data.details!.location_id,
+        image: data.details!.image,
+        description: (data.details!.description?.translations != null)
+            ? toLanguageMap(
+                translations: data.details!.description!.translations)
             : null,
-        descriptionId: data.description_id,
-        location: MezLocation.fromHasura(data.location.gps, data.location.address),
-        name: data.name,
+        descriptionId: data.details!.description_id,
+        location: MezLocation.fromHasura(
+            data.details!.location.gps, data.details!.location.address),
+        name: data.details!.name,
       ),
       state: ServiceState(
-          data.open_status.toString().toServiceStatus(), data.approved),
-      primaryLanguage: LanguageType.EN);
+          data.details!.open_status.toString().toServiceStatus(),
+          data.details!.approved),
+      languages: convertToLanguages(data.details!.language),
+      serviceDetailsId: data.details!.id);
 }
 
-Future<DeliveryCompany?> update_delivery_company(
-    {required int companyId, required DeliveryCompany deliveryCompany}) async {
-  final QueryResult<Mutation$updateDeliveryCompany> res =
-      await _hasuraDb.graphQLClient.mutate$updateDeliveryCompany(
-    Options$Mutation$updateDeliveryCompany(
-      variables: Variables$Mutation$updateDeliveryCompany(
-        id: companyId,
-        data: Input$delivery_company_set_input(
-            name: deliveryCompany.info.name,
-            image: deliveryCompany.info.image,
-            description_id: deliveryCompany.info.descriptionId,
-            open_status: deliveryCompany.state.status.toFirebaseFormatString()),
-      ),
-    ),
-  );
-  if (res.parsedData?.update_delivery_company_by_pk == null) {
-    throwError(res.exception);
-  }
-  final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
-      res.parsedData!.update_delivery_company_by_pk!;
-  return DeliveryCompany(
-      creationTime: DateTime.parse(data.creation_time),
-      info: ServiceInfo(
-        hasuraId: data.id,
-        image: data.image,
-        locationId: data.location_id,
-        descriptionId: data.description_id,
-        description: (data.description?.translations != null)
-            ? toLanguageMap(translations: data.description!.translations)
-            : null,
-        location:
-            MezLocation.fromHasura(data.location.gps, data.location.address),
-        name: data.name,
-      ),
-      state: ServiceState(
-          data.open_status.toString().toServiceStatus(), data.approved),
-      primaryLanguage: LanguageType.EN);
-}
+// Future<DeliveryCompany?> update_delivery_company(
+//     {required int companyId, required DeliveryCompany deliveryCompany}) async {
+//   final QueryResult<Mutation$updateDeliveryCompany> res =
+//       await _hasuraDb.graphQLClient.mutate$updateDeliveryCompany(
+//     Options$Mutation$updateDeliveryCompany(
+//       variables: Variables$Mutation$updateDeliveryCompany(
+//         id: companyId,
+//         data: Input$delivery_company_set_input(
+//             name: deliveryCompany.info.name,
+//             image: deliveryCompany.info.image,
+//             description_id: deliveryCompany.info.descriptionId,
+//             open_status: deliveryCompany.state.status.toFirebaseFormatString()),
+//       ),
+//     ),
+//   );
+//   if (res.parsedData?.update_delivery_company_by_pk == null) {
+//     throwError(res.exception);
+//   }
+//   final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
+//       res.parsedData!.update_delivery_company_by_pk!;
+//   return DeliveryCompany(
+//       creationTime: DateTime.parse(data.details!.creation_time),
+//       info: ServiceInfo(
+//         hasuraId: data.details!.id,
+//         image: data.details!.image,
+//         locationId: data.details!.location_id,
+//         descriptionId: data.details!.description_id,
+//         description: (data.details!.description?.translations != null)
+//             ? toLanguageMap(translations: data.details!.description!.translations)
+//             : null,
+//         location:
+//             MezLocation.fromHasura(data.details!.location.gps, data.details!.location.address),
+//         name: data.details!.name,
+//       ),
+//       state: ServiceState(
+//           data.details!.open_status.toString().toServiceStatus(), data.details!.approved),
+//       primaryLanguage: LanguageType.EN);
+// }
 
 Future<List<DeliveryCompany>> get_nearby_companies(
     {required MezLocation location}) async {
@@ -101,47 +105,51 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   returnedList = dataList
       .map((Query$getNearByCompanies$delivery_get_delivery_companies data) {
     return DeliveryCompany(
-        creationTime: DateTime.parse(data.creation_time),
-        info: ServiceInfo(
-          hasuraId: data.id,
-          image: data.image,
-          description: (data.description?.translations != null)
-              ? toLanguageMap(translations: data.description!.translations)
-              : null,
-          descriptionId: data.description_id,
-          location:
-              MezLocation.fromHasura(data.location.gps, data.location.address),
-          name: data.name,
-        ),
-        state: ServiceState(
-            data.open_status.toString().toServiceStatus(), data.approved),
-        primaryLanguage: LanguageType.EN);
+      creationTime: DateTime.parse(data.details!.creation_time),
+      info: ServiceInfo(
+        hasuraId: data.id,
+        image: data.details!.image,
+        description: (data.details!.description?.translations != null)
+            ? toLanguageMap(
+                translations: data.details!.description!.translations)
+            : null,
+        descriptionId: data.details!.description_id,
+        location: MezLocation.fromHasura(
+            data.details!.location.gps, data.details!.location.address),
+        name: data.details!.name,
+      ),
+      state: ServiceState(
+          data.details!.open_status.toString().toServiceStatus(),
+          data.details!.approved),
+      languages: convertToLanguages(data.details!.language),
+      serviceDetailsId: data.details!.id,
+    );
   }).toList();
   return returnedList;
 }
 
-Future<ServiceStatus> update_deliveryCompany_status(
-    {required int id, required ServiceStatus status}) async {
-  final QueryResult<Mutation$updateDeliveryCompany> response =
-      await _hasuraDb.graphQLClient.mutate$updateDeliveryCompany(
-    Options$Mutation$updateDeliveryCompany(
-      fetchPolicy: FetchPolicy.networkOnly,
-      variables: Variables$Mutation$updateDeliveryCompany(
-        id: id,
-        data: Input$delivery_company_set_input(
-          open_status: status.toFirebaseFormatString(),
-        ),
-      ),
-    ),
-  );
-  if (response.parsedData?.update_delivery_company_by_pk == null) {
-    throw Exception(
-        "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
-  } else {
-    mezDbgPrint(
-        "✅✅✅ Hasura mutation success => ${response.parsedData?.update_delivery_company_by_pk?.open_status}");
-    final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
-        response.parsedData!.update_delivery_company_by_pk!;
-    return data.open_status.toServiceStatus();
-  }
-}
+// Future<ServiceStatus> update_deliveryCompany_status(
+//     {required int id, required ServiceStatus status}) async {
+//   final QueryResult<Mutation$updateDeliveryCompany> response =
+//       await _hasuraDb.graphQLClient.mutate$updateDeliveryCompany(
+//     Options$Mutation$updateDeliveryCompany(
+//       fetchPolicy: FetchPolicy.networkOnly,
+//       variables: Variables$Mutation$updateDeliveryCompany(
+//         id: id,
+//         data: Input$delivery_company_set_input(
+//           open_status: status.toFirebaseFormatString(),
+//         ),
+//       ),
+//     ),
+//   );
+//   if (response.parsedData?.update_delivery_company_by_pk == null) {
+//     throw Exception(
+//         "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
+//   } else {
+//     mezDbgPrint(
+//         "✅✅✅ Hasura mutation success => ${response.parsedData?.update_delivery_company_by_pk?.open_status}");
+//     final Mutation$updateDeliveryCompany$update_delivery_company_by_pk data =
+//         response.parsedData!.update_delivery_company_by_pk!;
+//     return data.details!.open_status.toServiceStatus();
+//   }
+// }

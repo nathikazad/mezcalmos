@@ -46,9 +46,9 @@ class ROpScheduleController {
   }
 
   Future<bool> updateSchedule() async {
-    await update_restaurant_info(
-        id: editInfoController.restaurantId,
-        restaurant: restaurant.value!.copyWith(schedule: newSchedule.value));
+    // await update_restaurant_info(
+    //     id: editInfoController.restaurantId,
+    //     restaurant: restaurant.value!.copyWith(schedule: newSchedule.value));
 
     await fetchSchedule();
     return true;

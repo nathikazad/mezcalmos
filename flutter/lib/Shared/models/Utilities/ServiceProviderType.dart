@@ -33,9 +33,7 @@ extension ParseServiceProviderTypeToString on ServiceProviderType {
 
 extension ParseStringToServiceProviderType on String {
   ServiceProviderType toServiceProviderType() {
-    mezDbgPrint("Caaaaaattttt ===============>$this");
-    mezDbgPrint(
-        "Caaaaaattttt ===============>${ServiceProviderType.DeliveryCompany.toFirebaseFormatString()}");
+   
     return ServiceProviderType.values.firstWhere(
         (ServiceProviderType e) => e.toFirebaseFormatString() == this);
   }

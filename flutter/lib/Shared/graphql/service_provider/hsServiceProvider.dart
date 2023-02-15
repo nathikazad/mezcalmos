@@ -1,10 +1,19 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
+import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/__generated/service_provider.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/models/Services/Service.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceLink.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -32,8 +41,6 @@ Future<ServiceLink?> get_service_link_by_id(
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
         id: data.id,
-        serivceProviderId: data.service_provider_id,
-        serviceProviderType: data.service_provider_type.toOrderType(),
         driverDeepLink: data.driver_deep_link,
         driverQrImageLink: data.driver_qr_image_link,
         operatorDeepLink: data.operator_deep_link,
@@ -41,4 +48,192 @@ Future<ServiceLink?> get_service_link_by_id(
   }
 
   return null;
+}
+
+Future<MainService?> get_service_details_by_id(
+    {required int serviceDetailsId,
+    required int serviceId,
+    bool withCache = true}) async {
+  QueryResult<Query$getServiceDetails> res =
+      await _db.graphQLClient.query$getServiceDetails(
+    Options$Query$getServiceDetails(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getServiceDetails(id: serviceDetailsId),
+    ),
+  );
+  if (res.parsedData?.service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Query$getServiceDetails$service_provider_details_by_pk data =
+      res.parsedData!.service_provider_details_by_pk!;
+  final PaymentInfo paymentInfo = PaymentInfo();
+  if (data.accepted_payments != null) {
+    paymentInfo.acceptedPayments =
+        parseAcceptedPayments(data.accepted_payments);
+  }
+  if (data.stripe_info != null) {
+    paymentInfo.stripe = parseServiceStripeInfo(data.stripe_info);
+  }
+
+  return MainService(
+      info: ServiceInfo(
+          descriptionId: data.description_id,
+          description: (data.description?.translations != null)
+              ? toLanguageMap(translations: data.description!.translations)
+              : null,
+          location:
+              MezLocation.fromHasura(data.location.gps, data.location.address),
+          hasuraId: serviceId,
+          image: data.image,
+          name: data.name),
+      serviceDetailsId: data.id,
+      state: ServiceState(data.open_status.toServiceStatus(), data.approved),
+      languages: convertToLanguages(data.language),
+      paymentInfo: paymentInfo,
+      schedule: Schedule.fromData(data.schedule),
+      phoneNumber: data.phone_number,
+      serviceLinkId: data.service_link_id,
+      serviceProviderType: data.service_provider_type.toServiceProviderType());
+}
+
+Future<ServiceInfo?> get_service_info(
+    {required int serviceDetailsId,
+    required int serviceId,
+    bool withCache = true}) async {
+  QueryResult<Query$getServiceInfo> res =
+      await _db.graphQLClient.query$getServiceInfo(
+    Options$Query$getServiceInfo(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables:
+          Variables$Query$getServiceInfo(serviceDetailsId: serviceDetailsId),
+    ),
+  );
+  if (res.parsedData?.service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Query$getServiceInfo$service_provider_details_by_pk data =
+      res.parsedData!.service_provider_details_by_pk!;
+
+  return ServiceInfo(
+      descriptionId: data.description_id,
+      description: (data.description?.translations != null)
+          ? toLanguageMap(translations: data.description!.translations)
+          : null,
+      location:
+          MezLocation.fromHasura(data.location.gps, data.location.address),
+      hasuraId: serviceId,
+      image: data.image,
+      name: data.name);
+}
+
+Future<PaymentInfo?> get_service_payment_info(
+    {required int serviceDetailsId, bool withCache = true}) async {
+  QueryResult<Query$getServicePaymentInfo> res =
+      await _db.graphQLClient.query$getServicePaymentInfo(
+    Options$Query$getServicePaymentInfo(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getServicePaymentInfo(
+          serviceDetailsId: serviceDetailsId),
+    ),
+  );
+  if (res.parsedData?.service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Query$getServicePaymentInfo$service_provider_details_by_pk data =
+      res.parsedData!.service_provider_details_by_pk!;
+
+  final PaymentInfo paymentInfo = PaymentInfo();
+  if (data.accepted_payments != null) {
+    paymentInfo.acceptedPayments =
+        parseAcceptedPayments(data.accepted_payments);
+  }
+  if (data.stripe_info != null) {
+    paymentInfo.stripe = StripeInfo(
+      id: data.stripe_info!.stripe_id,
+      status: data.stripe_info!.status.toStripeStatus(),
+      chargeFeesOnCustomer: data.stripe_info!.charge_fees_on_customer ?? true,
+      chargesEnabled: data.stripe_info!.charges_enabled,
+      payoutsEnabled: data.stripe_info!.payouts_enabled,
+      detailsSubmitted: data.stripe_info!.details_submitted,
+      email: data.stripe_info!.email,
+      //  requirements: data.stripe_info!.requirements,
+    );
+  }
+  return paymentInfo;
+}
+
+Future<Schedule?> get_service_schedule(
+    {required int serviceDetailsId, bool withCache = true}) async {
+  QueryResult<Query$getServiceSchedule> res =
+      await _db.graphQLClient.query$getServiceSchedule(
+    Options$Query$getServiceSchedule(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables: Variables$Query$getServiceSchedule(
+          serviceDetailsId: serviceDetailsId),
+    ),
+  );
+  if (res.parsedData?.service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Query$getServiceSchedule$service_provider_details_by_pk data =
+      res.parsedData!.service_provider_details_by_pk!;
+
+  if (data.schedule != null) {
+    return Schedule.fromData(data.schedule!);
+  }
+  return null;
+}
+
+Future<ServiceInfo> update_service_info(
+    {required ServiceInfo serviceInfo, required int detailsId}) async {
+  QueryResult<Mutation$updateServiceDetails> res =
+      await _db.graphQLClient.mutate$updateServiceDetails(
+    Options$Mutation$updateServiceDetails(
+      variables: Variables$Mutation$updateServiceDetails(
+        detailsId: detailsId,
+        data: Input$service_provider_details_set_input(
+            name: serviceInfo.name,
+            image: serviceInfo.image,
+            description_id: serviceInfo.descriptionId),
+      ),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Mutation$updateServiceDetails$update_service_provider_details_by_pk data =
+      res.parsedData!.update_service_provider_details_by_pk!;
+  return ServiceInfo(
+      descriptionId: data.description_id,
+      description: (data.description?.translations != null)
+          ? toLanguageMap(translations: data.description!.translations)
+          : null,
+      location:
+          MezLocation.fromHasura(data.location.gps, data.location.address),
+      hasuraId: 1,
+      image: data.image,
+      name: data.name);
+}
+
+Future<Schedule?> update_service_schedule(
+    {required Schedule schedule, required int detailsId}) async {
+  QueryResult<Mutation$updateServiceDetails> res =
+      await _db.graphQLClient.mutate$updateServiceDetails(
+    Options$Mutation$updateServiceDetails(
+      variables: Variables$Mutation$updateServiceDetails(
+        detailsId: detailsId,
+        data: Input$service_provider_details_set_input(schedule: schedule),
+      ),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
+      res.parsedData!.update_service_provider_details_by_pk;
+  return Schedule.fromData(data!.schedule);
 }

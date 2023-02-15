@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, Language } from "../../../models/Generic/Generic";
 import { DeliveryDriver, DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
-import { ParticipantType } from "../../../models/Generic/Chat";
+// import { ParticipantType } from "../../../models/Generic/Chat";
 
 export async function getDeliveryDriver(deliveryDriverId: number): Promise<DeliveryDriver> {
 
@@ -100,7 +100,7 @@ export async function getDeliveryDriver(deliveryDriverId: number): Promise<Deliv
         token: response.delivery_driver_by_pk.notification_info.token,
         turnOffNotifications: response.delivery_driver_by_pk.notification_info.turn_off_notifications
       } : undefined,
-      deliveryDriverType: ParticipantType.DeliveryDriver
+      // deliveryDriverType: ParticipantType.DeliveryDriver
     }
   // }
 }

@@ -303,18 +303,33 @@ const documentNodeQuerygetOperatorByUserId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'owner'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user_id'),
@@ -500,8 +515,7 @@ extension ClientExtension$Query$getOperatorByUserId on graphql.GraphQLClient {
 class Query$getOperatorByUserId$delivery_operator {
   Query$getOperatorByUserId$delivery_operator({
     required this.id,
-    required this.owner,
-    required this.status,
+    required this.operator_details,
     required this.user_id,
     required this.user,
     required this.delivery_company_id,
@@ -511,16 +525,16 @@ class Query$getOperatorByUserId$delivery_operator {
   factory Query$getOperatorByUserId$delivery_operator.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$owner = json['owner'];
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$user_id = json['user_id'];
     final l$user = json['user'];
     final l$delivery_company_id = json['delivery_company_id'];
     final l$$__typename = json['__typename'];
     return Query$getOperatorByUserId$delivery_operator(
       id: (l$id as int),
-      owner: (l$owner as bool),
-      status: (l$status as String),
+      operator_details:
+          Query$getOperatorByUserId$delivery_operator$operator_details.fromJson(
+              (l$operator_details as Map<String, dynamic>)),
       user_id: (l$user_id as int),
       user: Query$getOperatorByUserId$delivery_operator$user.fromJson(
           (l$user as Map<String, dynamic>)),
@@ -531,9 +545,8 @@ class Query$getOperatorByUserId$delivery_operator {
 
   final int id;
 
-  final bool owner;
-
-  final String status;
+  final Query$getOperatorByUserId$delivery_operator$operator_details
+      operator_details;
 
   final int user_id;
 
@@ -547,10 +560,8 @@ class Query$getOperatorByUserId$delivery_operator {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$owner = owner;
-    _resultData['owner'] = l$owner;
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$user_id = user_id;
     _resultData['user_id'] = l$user_id;
     final l$user = user;
@@ -565,16 +576,14 @@ class Query$getOperatorByUserId$delivery_operator {
   @override
   int get hashCode {
     final l$id = id;
-    final l$owner = owner;
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$user_id = user_id;
     final l$user = user;
     final l$delivery_company_id = delivery_company_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$owner,
-      l$status,
+      l$operator_details,
       l$user_id,
       l$user,
       l$delivery_company_id,
@@ -596,14 +605,9 @@ class Query$getOperatorByUserId$delivery_operator {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$owner = owner;
-    final lOther$owner = other.owner;
-    if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$user_id = user_id;
@@ -651,13 +655,15 @@ abstract class CopyWith$Query$getOperatorByUserId$delivery_operator<TRes> {
 
   TRes call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getOperatorByUserId$delivery_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getOperatorByUserId$delivery_operator$user? user,
     int? delivery_company_id,
     String? $__typename,
   });
+  CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<TRes>
+      get operator_details;
   CopyWith$Query$getOperatorByUserId$delivery_operator$user<TRes> get user;
 }
 
@@ -676,8 +682,7 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? owner = _undefined,
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? user_id = _undefined,
     Object? user = _undefined,
     Object? delivery_company_id = _undefined,
@@ -685,12 +690,11 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator<TRes>
   }) =>
       _then(Query$getOperatorByUserId$delivery_operator(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        owner: owner == _undefined || owner == null
-            ? _instance.owner
-            : (owner as bool),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Query$getOperatorByUserId$delivery_operator$operator_details),
         user_id: user_id == _undefined || user_id == null
             ? _instance.user_id
             : (user_id as int),
@@ -705,6 +709,13 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<TRes>
+      get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+
   CopyWith$Query$getOperatorByUserId$delivery_operator$user<TRes> get user {
     final local$user = _instance.user;
     return CopyWith$Query$getOperatorByUserId$delivery_operator$user(
@@ -720,16 +731,180 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator<TRes>
 
   call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getOperatorByUserId$delivery_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getOperatorByUserId$delivery_operator$user? user,
     int? delivery_company_id,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<TRes>
+      get operator_details =>
+          CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details
+              .stub(_res);
   CopyWith$Query$getOperatorByUserId$delivery_operator$user<TRes> get user =>
       CopyWith$Query$getOperatorByUserId$delivery_operator$user.stub(_res);
+}
+
+class Query$getOperatorByUserId$delivery_operator$operator_details {
+  Query$getOperatorByUserId$delivery_operator$operator_details({
+    required this.owner,
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorByUserId$delivery_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$owner = json['owner'];
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorByUserId$delivery_operator$operator_details(
+      owner: (l$owner as bool),
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool owner;
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$owner = owner;
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$owner,
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getOperatorByUserId$delivery_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorByUserId$delivery_operator$operator_details
+    on Query$getOperatorByUserId$delivery_operator$operator_details {
+  CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<
+          Query$getOperatorByUserId$delivery_operator$operator_details>
+      get copyWith =>
+          CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<
+    TRes> {
+  factory CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details(
+    Query$getOperatorByUserId$delivery_operator$operator_details instance,
+    TRes Function(Query$getOperatorByUserId$delivery_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$operator_details;
+
+  factory CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$operator_details;
+
+  TRes call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorByUserId$delivery_operator$operator_details _instance;
+
+  final TRes Function(
+      Query$getOperatorByUserId$delivery_operator$operator_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? owner = _undefined,
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOperatorByUserId$delivery_operator$operator_details(
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$operator_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getOperatorByUserId$delivery_operator$user {
@@ -1218,11 +1393,33 @@ const documentNodeSubscriptiondvOperatorStatusStream =
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1321,28 +1518,31 @@ extension ClientExtension$Subscription$dvOperatorStatusStream
 
 class Subscription$dvOperatorStatusStream$delivery_operator {
   Subscription$dvOperatorStatusStream$delivery_operator({
-    required this.status,
+    required this.operator_details,
     required this.$__typename,
   });
 
   factory Subscription$dvOperatorStatusStream$delivery_operator.fromJson(
       Map<String, dynamic> json) {
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$$__typename = json['__typename'];
     return Subscription$dvOperatorStatusStream$delivery_operator(
-      status: (l$status as String),
+      operator_details:
+          Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+              .fromJson((l$operator_details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String status;
+  final Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+      operator_details;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1350,10 +1550,10 @@ class Subscription$dvOperatorStatusStream$delivery_operator {
 
   @override
   int get hashCode {
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$status,
+      l$operator_details,
       l$$__typename,
     ]);
   }
@@ -1367,9 +1567,9 @@ class Subscription$dvOperatorStatusStream$delivery_operator {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1404,9 +1604,12 @@ abstract class CopyWith$Subscription$dvOperatorStatusStream$delivery_operator<
       _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator;
 
   TRes call({
-    String? status,
+    Subscription$dvOperatorStatusStream$delivery_operator$operator_details?
+        operator_details,
     String? $__typename,
   });
+  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+      TRes> get operator_details;
 }
 
 class _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator<TRes>
@@ -1425,17 +1628,25 @@ class _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$dvOperatorStatusStream$delivery_operator(
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Subscription$dvOperatorStatusStream$delivery_operator$operator_details),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+      TRes> get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
 }
 
 class _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator<
@@ -1448,6 +1659,177 @@ class _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator<
   TRes _res;
 
   call({
+    Subscription$dvOperatorStatusStream$delivery_operator$operator_details?
+        operator_details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+          TRes>
+      get operator_details =>
+          CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+              .stub(_res);
+}
+
+class Subscription$dvOperatorStatusStream$delivery_operator$operator_details {
+  Subscription$dvOperatorStatusStream$delivery_operator$operator_details({
+    required this.owner,
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Subscription$dvOperatorStatusStream$delivery_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$owner = json['owner'];
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+      owner: (l$owner as bool),
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool owner;
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$owner = owner;
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$owner,
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$dvOperatorStatusStream$delivery_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+    on Subscription$dvOperatorStatusStream$delivery_operator$operator_details {
+  CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+          Subscription$dvOperatorStatusStream$delivery_operator$operator_details>
+      get copyWith =>
+          CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+    TRes> {
+  factory CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+    Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+        instance,
+    TRes Function(
+            Subscription$dvOperatorStatusStream$delivery_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details;
+
+  factory CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details;
+
+  TRes call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$dvOperatorStatusStream$delivery_operator$operator_details
+      _instance;
+
+  final TRes Function(
+          Subscription$dvOperatorStatusStream$delivery_operator$operator_details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? owner = _undefined,
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Subscription$dvOperatorStatusStream$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithStubImpl$Subscription$dvOperatorStatusStream$delivery_operator$operator_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? owner,
     String? status,
     String? $__typename,
   }) =>
@@ -1748,20 +2130,6 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'app_version'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'current_gps'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company_id'),
             alias: null,
             arguments: [],
@@ -1783,18 +2151,47 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'owner'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'app_version'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'current_gps'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user'),
@@ -1972,46 +2369,34 @@ extension ClientExtension$Query$getCompanyOerators on graphql.GraphQLClient {
 
 class Query$getCompanyOerators$delivery_operator {
   Query$getCompanyOerators$delivery_operator({
-    this.app_version,
-    this.current_gps,
     required this.delivery_company_id,
     required this.delivery_driver_type,
     required this.id,
-    required this.owner,
-    required this.status,
+    required this.operator_details,
     required this.user,
     required this.$__typename,
   });
 
   factory Query$getCompanyOerators$delivery_operator.fromJson(
       Map<String, dynamic> json) {
-    final l$app_version = json['app_version'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_company_id = json['delivery_company_id'];
     final l$delivery_driver_type = json['delivery_driver_type'];
     final l$id = json['id'];
-    final l$owner = json['owner'];
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$getCompanyOerators$delivery_operator(
-      app_version: (l$app_version as String?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_company_id: (l$delivery_company_id as int),
       delivery_driver_type: (l$delivery_driver_type as String),
       id: (l$id as int),
-      owner: (l$owner as bool),
-      status: (l$status as String),
+      operator_details:
+          Query$getCompanyOerators$delivery_operator$operator_details.fromJson(
+              (l$operator_details as Map<String, dynamic>)),
       user: Query$getCompanyOerators$delivery_operator$user.fromJson(
           (l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final String? app_version;
-
-  final Geography? current_gps;
 
   final int delivery_company_id;
 
@@ -2019,9 +2404,8 @@ class Query$getCompanyOerators$delivery_operator {
 
   final int id;
 
-  final bool owner;
-
-  final String status;
+  final Query$getCompanyOerators$delivery_operator$operator_details
+      operator_details;
 
   final Query$getCompanyOerators$delivery_operator$user user;
 
@@ -2029,21 +2413,14 @@ class Query$getCompanyOerators$delivery_operator {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$app_version = app_version;
-    _resultData['app_version'] = l$app_version;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_company_id = delivery_company_id;
     _resultData['delivery_company_id'] = l$delivery_company_id;
     final l$delivery_driver_type = delivery_driver_type;
     _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$owner = owner;
-    _resultData['owner'] = l$owner;
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -2053,23 +2430,17 @@ class Query$getCompanyOerators$delivery_operator {
 
   @override
   int get hashCode {
-    final l$app_version = app_version;
-    final l$current_gps = current_gps;
     final l$delivery_company_id = delivery_company_id;
     final l$delivery_driver_type = delivery_driver_type;
     final l$id = id;
-    final l$owner = owner;
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$app_version,
-      l$current_gps,
       l$delivery_company_id,
       l$delivery_driver_type,
       l$id,
-      l$owner,
-      l$status,
+      l$operator_details,
       l$user,
       l$$__typename,
     ]);
@@ -2082,16 +2453,6 @@ class Query$getCompanyOerators$delivery_operator {
     }
     if (!(other is Query$getCompanyOerators$delivery_operator) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$app_version = app_version;
-    final lOther$app_version = other.app_version;
-    if (l$app_version != lOther$app_version) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$delivery_company_id = delivery_company_id;
@@ -2109,14 +2470,9 @@ class Query$getCompanyOerators$delivery_operator {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$owner = owner;
-    final lOther$owner = other.owner;
-    if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$user = user;
@@ -2153,16 +2509,16 @@ abstract class CopyWith$Query$getCompanyOerators$delivery_operator<TRes> {
       _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator;
 
   TRes call({
-    String? app_version,
-    Geography? current_gps,
     int? delivery_company_id,
     String? delivery_driver_type,
     int? id,
-    bool? owner,
-    String? status,
+    Query$getCompanyOerators$delivery_operator$operator_details?
+        operator_details,
     Query$getCompanyOerators$delivery_operator$user? user,
     String? $__typename,
   });
+  CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<TRes>
+      get operator_details;
   CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user;
 }
 
@@ -2180,23 +2536,14 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? app_version = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_company_id = _undefined,
     Object? delivery_driver_type = _undefined,
     Object? id = _undefined,
-    Object? owner = _undefined,
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCompanyOerators$delivery_operator(
-        app_version: app_version == _undefined
-            ? _instance.app_version
-            : (app_version as String?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_company_id:
             delivery_company_id == _undefined || delivery_company_id == null
                 ? _instance.delivery_company_id
@@ -2206,12 +2553,11 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
                 ? _instance.delivery_driver_type
                 : (delivery_driver_type as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        owner: owner == _undefined || owner == null
-            ? _instance.owner
-            : (owner as bool),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Query$getCompanyOerators$delivery_operator$operator_details),
         user: user == _undefined || user == null
             ? _instance.user
             : (user as Query$getCompanyOerators$delivery_operator$user),
@@ -2219,6 +2565,13 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<TRes>
+      get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Query$getCompanyOerators$delivery_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+
   CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user {
     final local$user = _instance.user;
     return CopyWith$Query$getCompanyOerators$delivery_operator$user(
@@ -2233,19 +2586,223 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator<TRes>
   TRes _res;
 
   call({
-    String? app_version,
-    Geography? current_gps,
     int? delivery_company_id,
     String? delivery_driver_type,
     int? id,
-    bool? owner,
-    String? status,
+    Query$getCompanyOerators$delivery_operator$operator_details?
+        operator_details,
     Query$getCompanyOerators$delivery_operator$user? user,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<TRes>
+      get operator_details =>
+          CopyWith$Query$getCompanyOerators$delivery_operator$operator_details
+              .stub(_res);
   CopyWith$Query$getCompanyOerators$delivery_operator$user<TRes> get user =>
       CopyWith$Query$getCompanyOerators$delivery_operator$user.stub(_res);
+}
+
+class Query$getCompanyOerators$delivery_operator$operator_details {
+  Query$getCompanyOerators$delivery_operator$operator_details({
+    required this.owner,
+    this.app_version,
+    this.current_gps,
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOerators$delivery_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$owner = json['owner'];
+    final l$app_version = json['app_version'];
+    final l$current_gps = json['current_gps'];
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOerators$delivery_operator$operator_details(
+      owner: (l$owner as bool),
+      app_version: (l$app_version as String?),
+      current_gps:
+          l$current_gps == null ? null : geographyFromJson(l$current_gps),
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool owner;
+
+  final String? app_version;
+
+  final Geography? current_gps;
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$app_version = app_version;
+    _resultData['app_version'] = l$app_version;
+    final l$current_gps = current_gps;
+    _resultData['current_gps'] =
+        l$current_gps == null ? null : geographyToJson(l$current_gps);
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$owner = owner;
+    final l$app_version = app_version;
+    final l$current_gps = current_gps;
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$owner,
+      l$app_version,
+      l$current_gps,
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCompanyOerators$delivery_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$app_version = app_version;
+    final lOther$app_version = other.app_version;
+    if (l$app_version != lOther$app_version) {
+      return false;
+    }
+    final l$current_gps = current_gps;
+    final lOther$current_gps = other.current_gps;
+    if (l$current_gps != lOther$current_gps) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOerators$delivery_operator$operator_details
+    on Query$getCompanyOerators$delivery_operator$operator_details {
+  CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<
+          Query$getCompanyOerators$delivery_operator$operator_details>
+      get copyWith =>
+          CopyWith$Query$getCompanyOerators$delivery_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<
+    TRes> {
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$operator_details(
+    Query$getCompanyOerators$delivery_operator$operator_details instance,
+    TRes Function(Query$getCompanyOerators$delivery_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details;
+
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$operator_details;
+
+  TRes call({
+    bool? owner,
+    String? app_version,
+    Geography? current_gps,
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOerators$delivery_operator$operator_details _instance;
+
+  final TRes Function(
+      Query$getCompanyOerators$delivery_operator$operator_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? owner = _undefined,
+    Object? app_version = _undefined,
+    Object? current_gps = _undefined,
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOerators$delivery_operator$operator_details(
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        app_version: app_version == _undefined
+            ? _instance.app_version
+            : (app_version as String?),
+        current_gps: current_gps == _undefined
+            ? _instance.current_gps
+            : (current_gps as Geography?),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOerators$delivery_operator$operator_details<
+            TRes> {
+  _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$operator_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? owner,
+    String? app_version,
+    Geography? current_gps,
+    String? status,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getCompanyOerators$delivery_operator$user {

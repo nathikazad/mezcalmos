@@ -42,6 +42,7 @@ class _CustLaundryOrderRequestViewState
     return Scaffold(
         appBar: mezcalmosAppBar(
           AppBarLeftButtonType.Back,
+          onClick: MezRouter.back,
           titleWidget:
               Obx(() => Text(viewController.laundry.value?.info.name ?? "")),
         ),

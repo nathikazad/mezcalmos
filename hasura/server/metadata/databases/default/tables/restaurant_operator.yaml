@@ -2,16 +2,9 @@ table:
   name: operator
   schema: restaurant
 object_relationships:
-  - name: notification_info
+  - name: operator_details
     using:
-      manual_configuration:
-        column_mapping:
-          app_type_id: app_type_id
-          user_id: user_id
-        insertion_order: null
-        remote_table:
-          name: notification_info
-          schema: public
+      foreign_key_constraint_on: details_id
   - name: restaurant
     using:
       manual_configuration:
@@ -31,31 +24,17 @@ insert_permissions:
         user_id:
           _eq: X-Hasura-User-Id
       columns:
-        - owner
         - restaurant_id
         - user_id
 select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - current_gps
         - id
-        - owner
         - restaurant_id
-        - status
         - user_id
       filter:
         restaurant:
           restaurant_operators:
             user_id:
               _eq: X-Hasura-User-Id
-update_permissions:
-  - role: restaurant_operator
-    permission:
-      columns:
-        - app_version
-        - current_gps
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
-      check: null

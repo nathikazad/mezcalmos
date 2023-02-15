@@ -62,9 +62,6 @@ select_permissions:
     permission:
       columns:
         - user_id
-        - stripe_info
-        - app_version
-        - service_provider_type
       filter:
         deliveries:
           delivery_driver:
@@ -73,8 +70,6 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - app_version
-        - service_provider_type
         - user_id
       filter: {}
   - role: laundry_operator
@@ -86,9 +81,6 @@ select_permissions:
     permission:
       columns:
         - user_id
-        - app_version
-        - service_provider_type
-        - stripe_info
       filter:
         _exists:
           _table:

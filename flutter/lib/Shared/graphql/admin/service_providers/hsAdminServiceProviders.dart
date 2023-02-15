@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/admin/service_providers/__generated/service_providers.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -28,17 +29,19 @@ Future<List<Restaurant>> admin_get_restaurants(
   final List<Restaurant> returnedList = data
       .map((Query$admin_get_restaurants$restaurant_restaurant data) =>
           Restaurant(
+              languages: convertToLanguages(data.details!.language),
+              serviceDetailsId: data.details!.id,
               deliveryDetailsId: data.delivery_details_id,
               userInfo: ServiceInfo(
-                  location: MezLocation.fromHasura(
-                      data.location.gps, data.location.address),
+                  location: MezLocation.fromHasura(data.details!.location.gps,
+                      data.details!.location.address),
                   hasuraId: data.id,
-                  image: data.image,
-                  name: data.name),
+                  image: data.details!.image,
+                  name: data.details!.name),
               paymentInfo: null,
-              primaryLanguage: LanguageType.EN,
               restaurantState: ServiceState(
-                  data.open_status.toServiceStatus(), data.approved),
+                  data.details!.open_status.toServiceStatus(),
+                  data.details!.approved),
               schedule: null))
       .toList();
   returnedList.sort((Restaurant a, Restaurant b) =>
@@ -63,17 +66,18 @@ Future<List<DeliveryCompany>> admin_get_dv_companies(
   final List<DeliveryCompany> returnedList = data
       .map((Query$admin_get_dv_companies$delivery_company data) =>
           DeliveryCompany(
+              languages: convertToLanguages(data.details!.language),
+              serviceDetailsId: data.details!.id,
               deliveryDetailsId: data.delivery_details_id,
               info: ServiceInfo(
                   hasuraId: data.id,
-                  image: data.image,
-                  name: data.name,
-                  location: MezLocation.fromHasura(
-                      data.location.gps, data.location.address)),
-              creationTime: DateTime.parse(data.creation_time),
-              primaryLanguage: LanguageType.EN,
-              state: ServiceState(
-                  data.open_status.toServiceStatus(), data.approved)))
+                  image: data.details!.image,
+                  name: data.details!.name,
+                  location: MezLocation.fromHasura(data.details!.location.gps,
+                      data.details!.location.address)),
+              creationTime: DateTime.parse(data.details!.creation_time),
+              state: ServiceState(data.details!.open_status.toServiceStatus(),
+                  data.details!.approved)))
       .toList();
   returnedList.sort((DeliveryCompany a, DeliveryCompany b) =>
       a.info.hasuraId.compareTo(b.info.hasuraId));

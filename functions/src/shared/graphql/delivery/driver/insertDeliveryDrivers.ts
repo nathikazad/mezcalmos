@@ -1,4 +1,6 @@
 import { getHasura } from "../../../../utilities/hasura";
+import { DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
+import { AppType } from "../../../models/Generic/Generic";
 
 export async function insertDeliveryDrivers(data: any) {
     let chain = getHasura();
@@ -29,7 +31,7 @@ export async function insertDeliveryDrivers(data: any) {
     let driversNotif = drivers.map((d: any) => {
         return {
             user_id: d.user_id,
-            app_type_id: "delivery",
+            app_type_id: AppType.DeliveryApp,
             token: d.notification_token
         }
     })
@@ -38,7 +40,7 @@ export async function insertDeliveryDrivers(data: any) {
     drivers = drivers.map((d: any) => {
         return {
             user_id: d.user_id,
-            delivery_company_type: "delivery_company",
+            delivery_company_type: DeliveryServiceProviderType.DeliveryCompany,
             delivery_company_id: 1,
             status: d.status,
             app_version: d.appVersion,

@@ -47,25 +47,24 @@ class Restaurant extends Service {
   PaymentInfo? paymentInfo;
   Schedule? schedule;
   DeliveryCost? deliveryCost;
-  Restaurant(
-      {required ServiceInfo userInfo,
-      this.restaurantsView = RestaurantsView.Rows,
-      required this.schedule,
-      required this.paymentInfo,
-      required ServiceState restaurantState,
-      required LanguageType primaryLanguage,
-      this.deliveryCost,
-      this.rate,
-      this.serviceLink,
-      this.deliveryDetailsId,
-      this.selfDelivery = false,
-      LanguageType? secondaryLanguage})
-      : super(
+  Restaurant({
+    required ServiceInfo userInfo,
+    this.restaurantsView = RestaurantsView.Rows,
+    required this.schedule,
+    required this.paymentInfo,
+    required ServiceState restaurantState,
+    required Map<LanguageType, bool> languages,
+    required super.serviceDetailsId,
+    this.deliveryCost,
+    this.rate,
+    this.serviceLink,
+    this.deliveryDetailsId,
+    this.selfDelivery = false,
+  }) : super(
             info: userInfo,
             schedule: schedule,
+            languages: languages,
             state: restaurantState,
-            primaryLanguage: primaryLanguage,
-            secondaryLanguage: secondaryLanguage,
             paymentInfo: paymentInfo);
 
   factory Restaurant.fromRestaurantData(
@@ -114,12 +113,12 @@ class Restaurant extends Service {
         : null;
     primaryLanguage.toOpLang();
     final Restaurant restaurant = Restaurant(
+        serviceDetailsId: 1,
         userInfo: ServiceInfo.fromData(restaurantData["info"]),
         schedule: schedule,
         restaurantState: restaurantState,
         restaurantsView: restaurantsView,
-        primaryLanguage: primaryLanguage,
-        secondaryLanguage: secondaryLanguage,
+        languages: {},
         rate: rate,
         paymentInfo: paymentInfo);
     // if (restaurantData["details"]["reviews"] != null) {
@@ -340,14 +339,17 @@ class Restaurant extends Service {
     LanguageType? primaryLanguage,
     Schedule? schedule,
     int? deliveryDetailsId,
+    Map<LanguageType, bool>? languages,
   }) {
     return Restaurant(
-        userInfo: userInfo ?? info,
-        deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,
-        selfDelivery: selfDelivery ?? this.selfDelivery,
-        schedule: schedule ?? this.schedule,
-        paymentInfo: paymentInfo ?? this.paymentInfo,
-        restaurantState: state ?? this.state,
-        primaryLanguage: primaryLanguage ?? this.primaryLanguage);
+      serviceDetailsId: 1,
+      userInfo: userInfo ?? info,
+      languages: languages ?? this.languages,
+      deliveryDetailsId: deliveryDetailsId ?? this.deliveryDetailsId,
+      selfDelivery: selfDelivery ?? this.selfDelivery,
+      schedule: schedule ?? this.schedule,
+      paymentInfo: paymentInfo ?? this.paymentInfo,
+      restaurantState: state ?? this.state,
+    );
   }
 }

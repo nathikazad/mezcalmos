@@ -23,8 +23,8 @@ export interface RestaurantDetails {
   customerPickup: boolean,
   selfDelivery?: boolean,
   deliveryPartnerId?: number,
-  deliveryDetails?: DeliveryDetails,
-  language: Language
+  deliveryDetails: DeliveryDetails,
+  language: Record<Language, boolean>
 }
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
@@ -47,21 +47,8 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-    let restaurant: ServiceProvider = {
-      name: restaurantDetails.name,
-      image: restaurantDetails.image,
-      location: restaurantDetails.location,
-      schedule: restaurantDetails.schedule,
-      selfDelivery: restaurantDetails.selfDelivery ?? false,
-      customerPickup: restaurantDetails.customerPickup,
-      delivery: restaurantDetails.delivery,
-      deliveryPartnerId: restaurantDetails.deliveryPartnerId,
-      deliveryDetails: restaurantDetails.deliveryDetails,
-      language: restaurantDetails.language,
-      firebaseId: restaurantDetails.firebaseId
-    }
-
-  await createRestaurant(restaurant, userId, restaurantDetails.restaurantOperatorNotificationToken);
+    
+  let restaurant: ServiceProvider = await createRestaurant(restaurantDetails, userId);
   
   let notification: Notification = {
     foreground: <NewRestaurantNotification>{

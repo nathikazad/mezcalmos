@@ -24,7 +24,7 @@ query get_customer_info($customer_id: Int!) {
   customer_customer(where: { user_id: { _eq: $customer_id } }) {
     app_version
     notification_info {
-      token,
+      token
       turn_off_notifications
     }
     user {
@@ -75,144 +75,33 @@ mutation set_customer_stripe_info($user_id: Int!, $stripe_info: jsonb) {
     stripe_info
   }
 }
-
-# Get customer's order
-query get_customer_restaurant_orders($customer_id: Int!) {
-  restaurant_order(where: { customer_id: { _eq: $customer_id } }) {
+query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
+  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
     id
-    restaurant {
-      id
-      firebase_id
-      image
-      language_id
-      location {
-        gps
-        address
-      }
-      name
-    }
-    items {
-      restaurant_item {
-        item_type
-        name {
-          translations {
-            language_id
-            value
-          }
-        }
-        description {
-          translations {
-            language_id
-            value
-          }
-        }
-        position
-        category_id
-        available
-        restaurant_id
-        special_period_end
-        special_period_start
-        archived
-        cost
-      }
-      cost_per_one
-      id
-      notes
-      quantity
-    }
-    payment_type
-    to_location_gps
-    to_location_address
-    estimated_food_ready_time
-    actual_food_ready_time
-    refund_amount
-    delivery_id
-    status
-    review_id
-
-    order_time
-    firebase_id
-    customer_app_type
-    notes
-    tax
-    chat_id
+    image
+    in_process
+    name
     delivery_cost
-    delivery {
-      actual_delivered_time
-      actual_package_ready_time
-      actual_arrival_at_pickup_time
-      actual_arrival_at_dropoff_time
-      cancellation_time
-      current_gps
-      #deliverer_id,
-      delivery_cost
-    }
-  }
-}
-subscription listenOnCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
-  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
-    id
+    to_address
     order_time
+    order_type
+    payment_type
     status
-delivery_cost
     total_cost
-    to_location_address
-    restaurant {
-    
-        name
-        image
-      
-    }
   }
-  
-}subscription listenOnCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
- laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
-     id
-    order_time
-    status
-delivery_cost
-    # total_cost
-    customer_address
-    store {
-     
-        name
-        image
-      
-    }
-  }
-  
 }
-query getCustomerRestaurantInProcessOrders($customerId: Int!,$inprocess: Boolean!){
-  restaurant_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
+subscription listen_on_customer_orders($custId: Int!,$inProcess: Boolean!) {
+  customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
     id
+    image
+    in_process
+    name
+    delivery_cost
+    to_address
     order_time
+    order_type
+    payment_type
     status
-delivery_cost
     total_cost
-    to_location_address
-    restaurant {
-     
-        name
-        image
-      
-    }
   }
-  
-}
-query getCustomerLaundryInProcessOrders($customerId: Int!,$inprocess: Boolean!){
- laundry_order(where: {customer_id: {_eq: $customerId}, in_process: {_eq: $inprocess}}) {
-     id
-    order_time
-    status
-delivery_cost
-    # total_cost
-    customer_address
-    store {
-      
-        name
-        image
-      
-    }
-  }
-  
 }

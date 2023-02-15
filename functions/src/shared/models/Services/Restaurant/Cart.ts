@@ -14,7 +14,7 @@ export interface CartItem {
   selectedOptions?: Array<SelectedOption>;
   quantity: number;
   costPerOne: number;
-  note?: string;
+  notes?: string;
   name:any;
   image?:string;
 }

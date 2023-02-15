@@ -4,7 +4,6 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.d
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
@@ -71,8 +70,8 @@ class _CreateServiceViewState extends State<CreateServiceView> {
 
   Future<void> _handleButton() async {
     if (viewController.currentPage.value == 2) {
-      final ServerResponse? res = await viewController.handleNext();
-      if (res?.success == true) {
+      final bool? res = await viewController.handleNext();
+      if (res == true) {
         await showStatusInfoDialog(
           context,
           primaryClickTitle: "${_i18n()['ok']}",

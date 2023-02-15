@@ -36,17 +36,20 @@ Future<Laundry?> get_laundry_store_by_id(
     Query$getLaundryStoreById$laundry_store_by_pk data =
         response.parsedData!.laundry_store_by_pk!;
     final PaymentInfo paymentInfo = PaymentInfo();
-    if (data.accepted_payments != null) {
+    if (data.details?.accepted_payments != null) {
       paymentInfo.acceptedPayments =
-          paymentInfo.parseAcceptedPayments(data.accepted_payments);
+          paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    if (data.stripe_info != null) {
-      paymentInfo.stripe = paymentInfo.parseServiceStripeInfo(data.stripe_info);
-    }
+    // if (data.details!.stripe_info != null) {
+    //   paymentInfo.stripe =
+    //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
+    // }
     mezDbgPrint(
-        "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.schedule}");
+        "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.details?.schedule}");
     return Laundry(
-        deliveryDetailsId: data.delivery_details_id!,
+        languages: convertToLanguages(data.details!.language),
+        serviceDetailsId: data.details!.id,
+        deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
           freeDeliveryMinimumCost: data
@@ -57,33 +60,31 @@ Future<Laundry?> get_laundry_store_by_id(
               data.delivery_details_of_deliverer!.first.free_delivery_km_range,
         ),
         userInfo: ServiceInfo(
-            locationId: data.location_id,
+            locationId: data.details!.location_id,
             hasuraId: data.id,
-            image: data.image,
-            description: (data.description?.translations != null)
+            image: data.details!.image,
+            description: (data.details?.description?.translations != null)
                 ? {
-                    data.description!.translations.first.language_id
+                    data.details!.description!.translations.first.language_id
                             .toLanguageType():
-                        data.description!.translations.first.value,
-                    data.description!.translations[1].language_id
+                        data.details!.description!.translations.first.value,
+                    data.details!.description!.translations[1].language_id
                             .toLanguageType():
-                        data.description!.translations[1].value,
+                        data.details!.description!.translations[1].value,
                   }
                 : null,
-            name: data.name,
-            descriptionId: data.description_id,
+            name: data.details!.name,
+            descriptionId: data.details!.description_id,
             location: MezLocation.fromHasura(
-                data.location.gps, data.location.address)),
-        schedule:
-            data.schedule != null ? Schedule.fromData(data.schedule) : null,
+                data.details!.location.gps, data.details!.location.address)),
+        schedule: data.details?.schedule != null
+            ? Schedule.fromData(data.details!.schedule)
+            : null,
         paymentInfo: paymentInfo,
-        selfDelivery: data.self_delivery,
+        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
         averageNumberOfDays: data.normal_delivery_time,
-        laundryState:
-            ServiceState(data.open_status.toServiceStatus(), data.approved),
-        primaryLanguage: data.language_id.toString().toLanguageType(),
-        secondaryLanguage:
-            data.language_id.toString().toLanguageType().toOpLang(),
+        laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
+            data.details!.approved),
         laundryCosts: LaundryCosts());
   } else
     return null;
@@ -101,7 +102,7 @@ Future<ServiceStatus?> get_laundry_status({required int laundryID}) async {
     throw Exception(
         "🚨🚨🚨 Getting restaurant $laundryID status exception \n ${response.exception}");
   } else {
-    return response.parsedData!.laundry_store_by_pk!.open_status
+    return response.parsedData!.laundry_store_by_pk!.details!.open_status
         .toServiceStatus();
   }
 }
@@ -119,35 +120,35 @@ Future<bool?> get_laundry_approved({required int laundryID}) async {
         "🚨🚨🚨 Getting restaurant $laundryID status exception \n ${response.exception}");
   } else {
     mezDbgPrint(
-        "laundry approved =====> ✅ ${response.parsedData!.laundry_store_by_pk!.approved}");
-    return response.parsedData!.laundry_store_by_pk!.approved;
+        "laundry approved =====> ✅ ${response.parsedData!.laundry_store_by_pk!.details!.approved}");
+    return response.parsedData!.laundry_store_by_pk!.details!.approved;
   }
 }
 
-Future<ServiceStatus> update_laundry_status(
-    {required int id, required ServiceStatus status}) async {
-  final QueryResult<Mutation$updateLaundryInfo> response =
-      await _db.graphQLClient.mutate$updateLaundryInfo(
-    Options$Mutation$updateLaundryInfo(
-      fetchPolicy: FetchPolicy.networkOnly,
-      variables: Variables$Mutation$updateLaundryInfo(
-        id: id,
-        data: Input$laundry_store_set_input(
-          open_status: status.toFirebaseFormatString(),
-        ),
-      ),
-    ),
-  );
-  if (response.parsedData?.update_laundry_store_by_pk == null) {
-    throw Exception(
-        "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
-  } else {
-    mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
-    Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
-        response.parsedData!.update_laundry_store_by_pk!;
-    return data.open_status.toServiceStatus();
-  }
-}
+// Future<ServiceStatus> update_laundry_status(
+//     {required int id, required ServiceStatus status}) async {
+//   final QueryResult<Mutation$updateLaundryInfo> response =
+//       await _db.graphQLClient.mutate$updateLaundryInfo(
+//     Options$Mutation$updateLaundryInfo(
+//       fetchPolicy: FetchPolicy.networkOnly,
+//       variables: Variables$Mutation$updateLaundryInfo(
+//         id: id,
+//         data: Input$laundry_store_set_input(
+//           open_status: status.toFirebaseFormatString(),
+//         ),
+//       ),
+//     ),
+//   );
+//   if (response.parsedData?.update_laundry_store_by_pk == null) {
+//     throw Exception(
+//         "🚨🚨🚨 Hasura status mutation exception =>${response.exception}");
+//   } else {
+//     mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
+//     Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
+//         response.parsedData!.update_laundry_store_by_pk!;
+//     return data.open_status.toServiceStatus();
+//   }
+// }
 
 Future<int> update_laundry_delivery_days(
     {required int id, required int days}) async {
@@ -292,17 +293,19 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
   List<Laundry> laundries = res.parsedData!.laundry_store
       .map((Query$getLaundries$laundry_store data) {
     final PaymentInfo paymentInfo = PaymentInfo();
-    if (data.accepted_payments != null) {
+    if (data.details?.accepted_payments != null) {
       paymentInfo.acceptedPayments =
-          paymentInfo.parseAcceptedPayments(data.accepted_payments);
+          paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    if (data.stripe_info != null) {
-      paymentInfo.stripe = paymentInfo.parseServiceStripeInfo(data.stripe_info);
-    }
-    mezDbgPrint(
-        "response data ====> ${res.data} 🍔🍔🍔 Restaurant data ${data.schedule}");
+    // if (data.details!.stripe_info != null) {
+    //   paymentInfo.stripe =
+    //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
+    // }
+
     return Laundry(
-        deliveryDetailsId: data.delivery_details_id!,
+        languages: convertToLanguages(data.details!.language),
+        serviceDetailsId: data.details!.id,
+        deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
           freeDeliveryMinimumCost: data
@@ -313,33 +316,35 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
               data.delivery_details_of_deliverer!.first.free_delivery_km_range,
         ),
         userInfo: ServiceInfo(
-            locationId: data.location_id,
+            locationId: data.details!.location_id,
             hasuraId: data.id,
-            image: data.image,
-            description: (data.description?.translations != null)
+            image: data.details!.image,
+            description: (data.details?.description?.translations != null)
                 ? {
-                    data.description!.translations.first.language_id
+                    data.details!.description!.translations.first.language_id
                             .toLanguageType():
-                        data.description!.translations.first.value,
-                    data.description!.translations[1].language_id
+                        data.details!.description!.translations.first.value,
+                    data.details!.description!.translations[1].language_id
                             .toLanguageType():
-                        data.description!.translations[1].value,
+                        data.details!.description!.translations[1].value,
                   }
                 : null,
-            name: data.name,
-            descriptionId: data.description_id,
+            name: data.details!.name,
+            descriptionId: data.details!.description_id,
             location: MezLocation.fromHasura(
-                data.location.gps, data.location.address)),
-        schedule:
-            data.schedule != null ? Schedule.fromData(data.schedule) : null,
+                data.details!.location.gps, data.details!.location.address)),
+        schedule: data.details?.schedule != null
+            ? Schedule.fromData(data.details!.schedule)
+            : null,
         paymentInfo: paymentInfo,
-        selfDelivery: data.self_delivery,
+        selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
         averageNumberOfDays: data.normal_delivery_time,
-        laundryState:
-            ServiceState(data.open_status.toServiceStatus(), data.approved),
-        primaryLanguage: data.language_id.toString().toLanguageType(),
-        secondaryLanguage:
-            data.language_id.toString().toLanguageType().toOpLang(),
+        laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
+            data.details!.approved),
+
+        // primaryLanguage: data.details!.language_id.toString().toLanguageType(),
+        // secondaryLanguage:
+        //     data.data.details!.toString().toLanguageType().toOpLang(),
         laundryCosts: LaundryCosts());
   }).toList();
   return laundries;

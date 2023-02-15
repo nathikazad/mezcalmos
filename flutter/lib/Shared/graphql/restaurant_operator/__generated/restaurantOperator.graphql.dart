@@ -302,18 +302,33 @@ const documentNodeQuerygetOperatorByUserId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'owner'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'status'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'owner'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: 'user_id'),
@@ -499,8 +514,7 @@ extension ClientExtension$Query$getOperatorByUserId on graphql.GraphQLClient {
 class Query$getOperatorByUserId$restaurant_operator {
   Query$getOperatorByUserId$restaurant_operator({
     required this.id,
-    required this.owner,
-    required this.status,
+    required this.operator_details,
     required this.user_id,
     required this.user,
     required this.restaurant_id,
@@ -510,16 +524,16 @@ class Query$getOperatorByUserId$restaurant_operator {
   factory Query$getOperatorByUserId$restaurant_operator.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
-    final l$owner = json['owner'];
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$user_id = json['user_id'];
     final l$user = json['user'];
     final l$restaurant_id = json['restaurant_id'];
     final l$$__typename = json['__typename'];
     return Query$getOperatorByUserId$restaurant_operator(
       id: (l$id as int),
-      owner: (l$owner as bool),
-      status: (l$status as String),
+      operator_details:
+          Query$getOperatorByUserId$restaurant_operator$operator_details
+              .fromJson((l$operator_details as Map<String, dynamic>)),
       user_id: (l$user_id as int),
       user: Query$getOperatorByUserId$restaurant_operator$user.fromJson(
           (l$user as Map<String, dynamic>)),
@@ -530,9 +544,8 @@ class Query$getOperatorByUserId$restaurant_operator {
 
   final int id;
 
-  final bool owner;
-
-  final String status;
+  final Query$getOperatorByUserId$restaurant_operator$operator_details
+      operator_details;
 
   final int user_id;
 
@@ -546,10 +559,8 @@ class Query$getOperatorByUserId$restaurant_operator {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
-    final l$owner = owner;
-    _resultData['owner'] = l$owner;
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$user_id = user_id;
     _resultData['user_id'] = l$user_id;
     final l$user = user;
@@ -564,16 +575,14 @@ class Query$getOperatorByUserId$restaurant_operator {
   @override
   int get hashCode {
     final l$id = id;
-    final l$owner = owner;
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$user_id = user_id;
     final l$user = user;
     final l$restaurant_id = restaurant_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
-      l$owner,
-      l$status,
+      l$operator_details,
       l$user_id,
       l$user,
       l$restaurant_id,
@@ -595,14 +604,9 @@ class Query$getOperatorByUserId$restaurant_operator {
     if (l$id != lOther$id) {
       return false;
     }
-    final l$owner = owner;
-    final lOther$owner = other.owner;
-    if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$user_id = user_id;
@@ -651,13 +655,15 @@ abstract class CopyWith$Query$getOperatorByUserId$restaurant_operator<TRes> {
 
   TRes call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getOperatorByUserId$restaurant_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getOperatorByUserId$restaurant_operator$user? user,
     int? restaurant_id,
     String? $__typename,
   });
+  CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<TRes>
+      get operator_details;
   CopyWith$Query$getOperatorByUserId$restaurant_operator$user<TRes> get user;
 }
 
@@ -676,8 +682,7 @@ class _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator<TRes>
 
   TRes call({
     Object? id = _undefined,
-    Object? owner = _undefined,
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? user_id = _undefined,
     Object? user = _undefined,
     Object? restaurant_id = _undefined,
@@ -685,12 +690,11 @@ class _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator<TRes>
   }) =>
       _then(Query$getOperatorByUserId$restaurant_operator(
         id: id == _undefined || id == null ? _instance.id : (id as int),
-        owner: owner == _undefined || owner == null
-            ? _instance.owner
-            : (owner as bool),
-        status: status == _undefined || status == null
-            ? _instance.status
-            : (status as String),
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Query$getOperatorByUserId$restaurant_operator$operator_details),
         user_id: user_id == _undefined || user_id == null
             ? _instance.user_id
             : (user_id as int),
@@ -704,6 +708,13 @@ class _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<TRes>
+      get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+
   CopyWith$Query$getOperatorByUserId$restaurant_operator$user<TRes> get user {
     final local$user = _instance.user;
     return CopyWith$Query$getOperatorByUserId$restaurant_operator$user(
@@ -719,16 +730,182 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$restaurant_operator<TRes>
 
   call({
     int? id,
-    bool? owner,
-    String? status,
+    Query$getOperatorByUserId$restaurant_operator$operator_details?
+        operator_details,
     int? user_id,
     Query$getOperatorByUserId$restaurant_operator$user? user,
     int? restaurant_id,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<TRes>
+      get operator_details =>
+          CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details
+              .stub(_res);
   CopyWith$Query$getOperatorByUserId$restaurant_operator$user<TRes> get user =>
       CopyWith$Query$getOperatorByUserId$restaurant_operator$user.stub(_res);
+}
+
+class Query$getOperatorByUserId$restaurant_operator$operator_details {
+  Query$getOperatorByUserId$restaurant_operator$operator_details({
+    required this.owner,
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorByUserId$restaurant_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$owner = json['owner'];
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorByUserId$restaurant_operator$operator_details(
+      owner: (l$owner as bool),
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final bool owner;
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$owner = owner;
+    _resultData['owner'] = l$owner;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$owner = owner;
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$owner,
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getOperatorByUserId$restaurant_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$owner = owner;
+    final lOther$owner = other.owner;
+    if (l$owner != lOther$owner) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorByUserId$restaurant_operator$operator_details
+    on Query$getOperatorByUserId$restaurant_operator$operator_details {
+  CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<
+          Query$getOperatorByUserId$restaurant_operator$operator_details>
+      get copyWith =>
+          CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<
+    TRes> {
+  factory CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details(
+    Query$getOperatorByUserId$restaurant_operator$operator_details instance,
+    TRes Function(
+            Query$getOperatorByUserId$restaurant_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator$operator_details;
+
+  factory CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getOperatorByUserId$restaurant_operator$operator_details;
+
+  TRes call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Query$getOperatorByUserId$restaurant_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorByUserId$restaurant_operator$operator_details
+      _instance;
+
+  final TRes Function(
+      Query$getOperatorByUserId$restaurant_operator$operator_details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? owner = _undefined,
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getOperatorByUserId$restaurant_operator$operator_details(
+        owner: owner == _undefined || owner == null
+            ? _instance.owner
+            : (owner as bool),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getOperatorByUserId$restaurant_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$restaurant_operator$operator_details<
+            TRes> {
+  _CopyWithStubImpl$Query$getOperatorByUserId$restaurant_operator$operator_details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    bool? owner,
+    String? status,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getOperatorByUserId$restaurant_operator$user {
@@ -1229,11 +1406,26 @@ const documentNodeSubscriptionrestaurantOperatorStatusStream =
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'status'),
+            name: NameNode(value: 'operator_details'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: null,
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1334,28 +1526,31 @@ extension ClientExtension$Subscription$restaurantOperatorStatusStream
 
 class Subscription$restaurantOperatorStatusStream$restaurant_operator {
   Subscription$restaurantOperatorStatusStream$restaurant_operator({
-    required this.status,
+    required this.operator_details,
     required this.$__typename,
   });
 
   factory Subscription$restaurantOperatorStatusStream$restaurant_operator.fromJson(
       Map<String, dynamic> json) {
-    final l$status = json['status'];
+    final l$operator_details = json['operator_details'];
     final l$$__typename = json['__typename'];
     return Subscription$restaurantOperatorStatusStream$restaurant_operator(
-      status: (l$status as String),
+      operator_details:
+          Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+              .fromJson((l$operator_details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final String status;
+  final Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+      operator_details;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$status = status;
-    _resultData['status'] = l$status;
+    final l$operator_details = operator_details;
+    _resultData['operator_details'] = l$operator_details.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1363,10 +1558,10 @@ class Subscription$restaurantOperatorStatusStream$restaurant_operator {
 
   @override
   int get hashCode {
-    final l$status = status;
+    final l$operator_details = operator_details;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$status,
+      l$operator_details,
       l$$__typename,
     ]);
   }
@@ -1381,9 +1576,9 @@ class Subscription$restaurantOperatorStatusStream$restaurant_operator {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$status = status;
-    final lOther$status = other.status;
-    if (l$status != lOther$status) {
+    final l$operator_details = operator_details;
+    final lOther$operator_details = other.operator_details;
+    if (l$operator_details != lOther$operator_details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1420,9 +1615,12 @@ abstract class CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_o
       _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator;
 
   TRes call({
-    String? status,
+    Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details?
+        operator_details,
     String? $__typename,
   });
+  CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+      TRes> get operator_details;
 }
 
 class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator<
@@ -1444,10 +1642,169 @@ class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_opera
   static const _undefined = {};
 
   TRes call({
-    Object? status = _undefined,
+    Object? operator_details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Subscription$restaurantOperatorStatusStream$restaurant_operator(
+        operator_details: operator_details == _undefined ||
+                operator_details == null
+            ? _instance.operator_details
+            : (operator_details
+                as Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+      TRes> get operator_details {
+    final local$operator_details = _instance.operator_details;
+    return CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
+        local$operator_details, (e) => call(operator_details: e));
+  }
+}
+
+class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator<
+        TRes>
+    implements
+        CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator<
+            TRes> {
+  _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details?
+        operator_details,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+          TRes>
+      get operator_details =>
+          CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+              .stub(_res);
+}
+
+class Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details {
+  Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details({
+    required this.status,
+    required this.$__typename,
+  });
+
+  factory Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details.fromJson(
+      Map<String, dynamic> json) {
+    final l$status = json['status'];
+    final l$$__typename = json['__typename'];
+    return Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
+      status: (l$status as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String status;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$status = status;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$status,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+    on Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details {
+  CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+          Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details>
+      get copyWith =>
+          CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+    TRes> {
+  factory CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
+    Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+        instance,
+    TRes Function(
+            Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details)
+        then,
+  ) = _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details;
+
+  factory CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details;
+
+  TRes call({
+    String? status,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+        TRes>
+    implements
+        CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
+            TRes> {
+  _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details
+      _instance;
+
+  final TRes Function(
+          Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? status = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -1457,12 +1814,12 @@ class _CopyWithImpl$Subscription$restaurantOperatorStatusStream$restaurant_opera
       ));
 }
 
-class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator<
+class _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
         TRes>
     implements
-        CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator<
+        CopyWith$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details<
             TRes> {
-  _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator(
+  _CopyWithStubImpl$Subscription$restaurantOperatorStatusStream$restaurant_operator$operator_details(
       this._res);
 
   TRes _res;

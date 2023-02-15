@@ -1,8 +1,11 @@
 query getOperatorByUserId($userId: Int!) {
   restaurant_operator(where: {user_id: {_eq: $userId}}) {
     id
-    owner
+    operator_details {
+  owner
     status
+    }
+  
     user_id
     user {
       firebase_id
@@ -20,6 +23,9 @@ query getOperatorByUserId($userId: Int!) {
 }
 subscription restaurantOperatorStatusStream($userId: Int!) {
   restaurant_operator(where: {user_id: {_eq: $userId}}) {
+     operator_details {
+  
     status
+    }
   }
 }

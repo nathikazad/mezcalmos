@@ -1,29 +1,42 @@
 query admin_get_dv_companies($limit: Int!) {
-  delivery_company (limit: $limit) {
-    approved
-    image
-    name
-    open_status
-    creation_time
-    service_provider_type
-    delivery_details_id
+  delivery_company(limit: $limit) {
+    details{ 
+      id
+      approved
+      image
+      name
+      language
+      open_status
+      creation_time
+      service_provider_type
+        location {
+      gps
+      address
+    }
+    }
+   delivery_details_id
     id
-     location {  gps
-    address}   
+   
   }
 }
 query admin_get_restaurants($limit: Int!) {
   restaurant_restaurant(limit: $limit) {
-    approved
-    firebase_id
     id
-    image
-    delivery_details_id
-    language_id
-   location {  gps
-    address}   
-    name
-    open_status
-    service_provider_type
+      delivery_details_id
+    details{ id
+      approved
+      firebase_id
+
+      image
+    
+      language
+      location {
+        gps
+        address
+      }
+      name
+      open_status
+      service_provider_type
+    }
   }
 }

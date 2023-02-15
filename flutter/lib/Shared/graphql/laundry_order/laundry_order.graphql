@@ -11,7 +11,7 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     delivery_type
     discount_value
     estimated_ready_time
-    firebase_id
+    # firebase_id
     to_customer_delivery_id
     from_customer_delivery_id
     id
@@ -48,11 +48,13 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
 
     store_id
     store {
-      name
-      image
-      location {
-        gps
-        address
+      details{ id
+        name
+        image
+        location {
+          gps
+          address
+        }
       }
     }
     stripe_fees
@@ -116,7 +118,7 @@ query get_laundry_order_by_id($orderId: Int!) {
     delivery_type
     discount_value
     estimated_ready_time
-    firebase_id
+    # firebase_id
     to_customer_delivery_id
     from_customer_delivery_id
     id
@@ -152,11 +154,13 @@ query get_laundry_order_by_id($orderId: Int!) {
     }
     store_id
     store {
-      name
-      image
-      location {
-        gps
-        address
+      details{ id
+        name
+        image
+        location {
+          gps
+          address
+        }
       }
     }
     stripe_fees

@@ -2,34 +2,17 @@ table:
   name: service_link
   schema: service_provider
 object_relationships:
-  - name: delivery_company
+  - name: service_provider
     using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: company
-          schema: delivery
-  - name: restaurant
-    using:
-      manual_configuration:
-        column_mapping:
-          service_provider_id: id
-          service_provider_type: service_provider_type
-        insertion_order: null
-        remote_table:
-          name: restaurant
-          schema: restaurant
+      foreign_key_constraint_on:
+        column: service_link_id
+        table:
+          name: details
+          schema: service_provider
 insert_permissions:
   - role: restaurant_operator
     permission:
-      check:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      check: {}
       columns:
         - driver_deep_link
         - driver_qr_image_link
@@ -44,25 +27,17 @@ select_permissions:
         - id
         - operator_deep_link
         - operator_qr_image_link
-        - service_provider_id
-        - service_provider_type
-      filter:
-        delivery_company:
-          delivery_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
         - id
-        - service_provider_id
         - customer_deep_link
         - customer_qr_image_link
         - driver_deep_link
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-        - service_provider_type
       filter:
         _exists:
           _table:
@@ -75,17 +50,11 @@ select_permissions:
     permission:
       columns:
         - id
-        - service_provider_id
         - driver_deep_link
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-        - service_provider_type
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: restaurant_operator
     permission:
@@ -94,9 +63,5 @@ update_permissions:
         - driver_qr_image_link
         - operator_deep_link
         - operator_qr_image_link
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
       check: null

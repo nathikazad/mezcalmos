@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
@@ -15,24 +14,23 @@ class Laundry extends Service {
   bool selfDelivery;
   int deliveryDetailsId;
   DeliveryCost deliveryCost;
-  Laundry(
-      {required ServiceInfo userInfo,
-      required Schedule? schedule,
-      required PaymentInfo paymentInfo,
-      required ServiceState laundryState,
-      required this.deliveryCost,
-      required this.deliveryDetailsId,
-      this.averageNumberOfDays = 2,
-      required this.selfDelivery,
-      required this.laundryCosts,
-      required LanguageType primaryLanguage,
-      LanguageType? secondaryLanguage})
-      : super(
+  Laundry({
+    required ServiceInfo userInfo,
+    required Schedule? schedule,
+    required PaymentInfo paymentInfo,
+    required ServiceState laundryState,
+    required this.deliveryCost,
+    required this.deliveryDetailsId,
+    this.averageNumberOfDays = 2,
+    required super.serviceDetailsId,
+    required this.selfDelivery,
+    required this.laundryCosts,
+    required Map<LanguageType, bool> languages,
+  }) : super(
             info: userInfo,
             schedule: schedule,
+            languages: languages,
             state: laundryState,
-            primaryLanguage: primaryLanguage,
-            secondaryLanguage: secondaryLanguage,
             paymentInfo: paymentInfo);
 
   // factory Laundry.fromLaundryData(
@@ -202,11 +200,8 @@ class LaundryCostLineItem {
   @override
   bool operator ==(covariant LaundryCostLineItem other) {
     if (identical(this, other)) return true;
-    final bool Function(dynamic e1, dynamic e2) mapEquals =
-        const DeepCollectionEquality().equals;
 
     return other.id == id &&
-        mapEquals(other.name, name) &&
         other.cost == cost &&
         other.nameId == nameId &&
         other.storeId == storeId &&

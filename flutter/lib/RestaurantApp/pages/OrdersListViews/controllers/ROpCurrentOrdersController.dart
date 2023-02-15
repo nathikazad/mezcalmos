@@ -72,13 +72,13 @@ class ROpCurrentOrdersController {
   }
 
   Future<void> turnOffOrders() async {
-    _serviceStatus.value = await update_restaurant_status(
-        id: restaurantId, status: ServiceStatus.Closed_temporarily);
+    // _serviceStatus.value = await update_restaurant_status(
+    //     id: restaurantId, status: ServiceStatus.Closed_temporarily);
   }
 
   Future<void> turnOnOrders() async {
-    _serviceStatus.value = await update_restaurant_status(
-        id: restaurantId, status: ServiceStatus.Open);
+    // _serviceStatus.value = await update_restaurant_status(
+    //     id: restaurantId, status: ServiceStatus.Open);
   }
 
   void dispose() {

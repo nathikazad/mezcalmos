@@ -9,43 +9,42 @@ import {
 import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
-  deliveryId?: number;
-  pickupLocation: Location;
-  dropoffLocation: Location;
-  deliveryDriverType?: ParticipantType;
-  deliveryDriverId?: number;
-  chatWithServiceProviderId?: number;
-  packageReady: boolean;
-
-  chatWithCustomerId: number;
-  paymentType: PaymentType;
-  stripePaymentId?: number;
-  estimatedPackageReadyTime?: string;
-  actualPackageReadyTime?: string;
-  estimatedArrivalAtPickupTime?: string;
-  actualArrivalAtPickupTime?: string;
-  estimatedArrivalAtDropoffTime?: string;
-  actualArrivalAtDropoffTime?: string;
-  actualDeliveredTime?: string;
-  status: DeliveryOrderStatus;
-  driverReviewByServiceProviderId?: number;
-  driverReviewByCustomerId?: number;
-  serviceProviderReviewBydriverId?: number;
-  customerReviewByDriverId?: number;
-  customerId: number;
-  serviceProviderId: number;
-  serviceProviderType: DeliveryServiceProviderType;
-  tripPolyline?: string;
-  deliveryCost: number;
-  packageCost?: number;
-  currentGps?: Location;
-  tripDistance?: number;
-  tripDuration?: number;
-  orderTime: string;
-  cancellationTime?: string;
-  deliveryDriver?: DeliveryDriver;
-  orderType: OrderType;
-  direction: DeliveryDirection;
+    deliveryId: number;
+    pickupLocation: Location;
+    dropoffLocation: Location;
+    // deliveryDriverType?: ParticipantType
+    deliveryDriverId?: number;
+    chatWithServiceProviderId?: number;
+    packageReady: boolean;
+    chatWithCustomerId: number;
+    paymentType: PaymentType;
+    stripePaymentId?: number;
+    estimatedPackageReadyTime?: string;
+    actualPackageReadyTime?: string;
+    estimatedArrivalAtPickupTime?: string;
+    actualArrivalAtPickupTime?: string;
+    estimatedArrivalAtDropoffTime?: string;
+    actualArrivalAtDropoffTime?: string;
+    actualDeliveredTime?: string;
+    status: DeliveryOrderStatus;
+    driverReviewByServiceProviderId?: number;
+    driverReviewByCustomerId?: number;
+    serviceProviderReviewBydriverId?: number;
+    customerReviewByDriverId?: number;
+    customerId: number;
+    serviceProviderId: number;
+    serviceProviderType: DeliveryServiceProviderType;
+    tripPolyline?: string;
+    deliveryCost: number;
+    packageCost?: number;
+    currentGps?: Location
+    tripDistance?: number;
+    tripDuration?: number;
+    orderTime: string;
+    cancellationTime?: string;
+    deliveryDriver?: DeliveryDriver;
+    orderType: OrderType;
+    direction: DeliveryDirection;
 }
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",
@@ -53,7 +52,7 @@ export enum DeliveryDirection {
 }
 
 export interface DeliveryDriver {
-  id?: number;
+  id: number;
   userId: number;
   deliveryCompanyType?: DeliveryServiceProviderType;
   deliveryCompanyId?: number;
@@ -63,27 +62,30 @@ export interface DeliveryDriver {
   user?: UserInfo;
   online?: boolean;
   notificationInfo?: NotificationInfo;
-  deliveryDriverType: ParticipantType;
+  // deliveryDriverType: ParticipantType;
 }
 
 export interface DeliveryOperator {
-  id?: number;
-  userId: number;
-  deliveryCompanyId: number;
-  status: AuthorizationStatus;
-  owner: boolean;
-  appVersion?: string;
-  currentGPS?: Location;
-  // deliveryDriverType:,
-  notificationInfo?: NotificationInfo;
-  user?: UserInfo;
+    id: number,
+    userId: number,
+    deliveryCompanyId: number,
+    status: AuthorizationStatus,
+    owner: boolean,
+    appVersion?: string,
+    currentGPS?: Location,
+    // deliveryDriverType:,
+    notificationInfo?: NotificationInfo,
+    user?: UserInfo
 }
 export interface DeliveryDetails {
-  minimumCost: number;
-  costPerKm: number;
-  radius: number;
-  freeDeliveryMinimumCost?: number;
-  freeDeliveryKmRange?: number;
+    minimumCost?: number,
+    costPerKm?: number,
+    radius?: number,
+    freeDeliveryMinimumCost?: number,
+    freeDeliveryKmRange?: number,
+    deliveryAvailable: boolean;
+    customerPickup: boolean;
+    selfDelivery: boolean;
 }
 
 export enum DeliveryOrderStatus {

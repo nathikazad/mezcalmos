@@ -112,11 +112,11 @@ class DeliverySettingsViewController {
           serviceId: serviceProviderId!,
           providerType: serviceProviderType!,
           newCompanyId: deliveryPartnerId.value!);
-      await update_restaurant_info(
-          id: serviceProviderId!,
-          restaurant: restaurant.value!.copyWith(
-            selfDelivery: false,
-          ));
+      // await update_restaurant_info(
+      //     id: serviceProviderId!,
+      //     restaurant: restaurant.value!.copyWith(
+      //       selfDelivery: false,
+      //     ));
       return true;
     }
   }
@@ -127,26 +127,27 @@ class DeliverySettingsViewController {
         final int? newId =
             await add_delivery_cost(deliveryCost: _constructDeliveryCost());
         if (newId != null) {
-          await update_restaurant_info(
-              id: serviceProviderId!,
-              restaurant: restaurant.value!
-                  .copyWith(selfDelivery: true, deliveryDetailsId: newId));
+          // await update_restaurant_info(
+          //     id: serviceProviderId!,
+          //     restaurant: restaurant.value!
+          //         .copyWith(selfDelivery: true, deliveryDetailsId: newId));
           return true;
         }
       } else {
         await update_delivery_cost(
             deliveryCostId: deliveryCost.value!.id!,
             deliveryCost: _constructDeliveryCost());
-        await update_restaurant_info(
-            id: serviceProviderId!,
-            restaurant: restaurant.value!.copyWith(
-              selfDelivery: true,
-            ));
+        // await update_restaurant_info(
+        //     id: serviceProviderId!,
+        //     restaurant: restaurant.value!.copyWith(
+        //       selfDelivery: true,
+        //     ));
       }
       return true;
     }
     return false;
   }
+  // TODO @m66are RFC
 
   // getters //
   DeliveryCost _constructDeliveryCost() {

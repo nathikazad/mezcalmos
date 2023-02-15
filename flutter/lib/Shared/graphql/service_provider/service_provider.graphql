@@ -1,12 +1,145 @@
 query getServiceProviderLinks($serviceProviderId: Int!) {
-  service_provider_service_link(where: {service_provider_id: {_eq: $serviceProviderId}}) {
+  service_provider_service_link(
+    where: { service_provider_id: { _eq: $serviceProviderId } }
+  ) {
     id
     driver_deep_link
     driver_qr_image_link
     operator_deep_link
     operator_qr_image_link
-    service_provider_id
-    service_provider_type
+    # service_provider_id
+    # service_provider_type
   }
 }
 
+query getServiceDetails($id: Int!) {
+  service_provider_details_by_pk(id: $id) {
+    accepted_payments
+    approved
+    creation_time
+    description_id
+    firebase_id
+    id
+    image
+    language
+    name
+    open_status
+    phone_number
+    service_link_id
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      sp_id
+      status
+      stripe_id
+    }
+    service_provider_type
+    schedule
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+mutation updateServiceDetails($detailsId: Int!, $data: service_provider_details_set_input) {
+  update_service_provider_details_by_pk(pk_columns: {id: $detailsId}, _set: $data) {
+    accepted_payments
+    approved
+    creation_time
+    description_id
+    firebase_id
+    id
+    image
+    language
+    name
+    open_status
+    phone_number
+    service_link_id
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      sp_id
+      status
+      stripe_id
+    }
+    service_provider_type
+    schedule
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      id
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+
+query getServiceInfo($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    description_id
+    firebase_id
+    id
+    image
+
+    name
+
+    phone_number
+
+   
+    service_provider_type
+
+    location {
+      id
+      gps
+      address
+    }
+    description {
+      translations {
+        language_id
+        value
+      }
+    }
+  }
+}
+query getServiceSchedule($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    schedule
+  }
+}
+query getServicePaymentInfo($serviceDetailsId: Int!) {
+  service_provider_details_by_pk(id: $serviceDetailsId) {
+    accepted_payments
+    stripe_info {
+      charge_fees_on_customer
+      charges_enabled
+      details_submitted
+      email
+      payouts_enabled
+      requirements
+      sp_id
+      status
+      stripe_id
+    }
+  }
+}

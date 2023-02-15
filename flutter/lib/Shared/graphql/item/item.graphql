@@ -205,7 +205,7 @@ query searchItems($servicesIds: [Int!], $languageId: String, $keyword: String) {
     item_type
     restaurant_id
     restaurant {
-      name
+      details{ id name}
     }
     id
     name {

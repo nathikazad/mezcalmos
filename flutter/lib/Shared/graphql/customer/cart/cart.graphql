@@ -28,42 +28,46 @@ mutation set_cart_restaurant_id($restaurant_id: Int!, $customer_id: Int!) {
 }
 
 query getCustomerCart($customer_id: Int!) {
-  customer_customer_by_pk(user_id: $customer_id) {
-    cart {
+  restaurant_cart(where: {customer_id: {_eq: $customer_id}}) {
+  
       restaurant {
         id
-        stripe_info
-        accepted_payments
-delivery_details_id
- delivery_details_of_deliverer{
-         cost_per_km
-      free_delivery_km_range
-      free_delivery_minimum_cost
-      id
-      minimum_cost
-      radius
-    }
 
-        firebase_id
-        image
-        language_id
-        description_id
-        name
-        location {
-          gps
-          address
+        delivery_details_of_deliverer {
+          cost_per_km
+          free_delivery_km_range
+          free_delivery_minimum_cost
+          id
+          minimum_cost
+          radius
         }
-        self_delivery
-        #schedule_id
-        schedule
-        description {
-          translations {
-            language_id
-            value
+        delivery_details_id
+        details_id
+        details {
+          # stripe_info
+          accepted_payments
+
+          firebase_id
+          image
+          language
+          description_id
+          name
+          location {
+            gps
+            address
           }
+
+          #schedule_id
+          schedule
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          approved
+          open_status
         }
-        approved
-        open_status
       }
       items {
         id
@@ -131,55 +135,59 @@ delivery_details_id
         selected_options
       }
     }
-  }
+  
 }
-
-# Create a customer Cart
 mutation create_customer_cart($cart: restaurant_cart_insert_input!) {
-  insert_restaurant_cart_one(object: $cart) {
+  insert_restaurant_cart_one(object: $cart, on_conflict: {constraint: restaurant_cart_pkey1, update_columns: restaurant_id}) {
     customer_id
     restaurant_id
   }
 }
 
+
 subscription listen_on_customer_cart($customer_id: Int!) {
-  customer_customer_by_pk(user_id: $customer_id) {
-    cart {
+   restaurant_cart(where: {customer_id: {_eq: $customer_id}}) {
+ 
       restaurant_id
       restaurant {
         id
-delivery_details_id
- delivery_details_of_deliverer{
-         cost_per_km
-      free_delivery_km_range
-      free_delivery_minimum_cost
-      id
-      minimum_cost
-      radius
-    }
-        firebase_id
-        name
-        stripe_info
-        accepted_payments
-        image
-        language_id
-        description_id
-        location {
-          gps
-          address
+        details_id
+        delivery_details_of_deliverer {
+          cost_per_km
+          free_delivery_km_range
+          free_delivery_minimum_cost
+          id
+          minimum_cost
+          radius
         }
-        
-        self_delivery
-        #schedule_id
-        schedule
-        description {
-          translations {
-            language_id
-            value
+        delivery_details_id
+        details {
+          id
+
+          firebase_id
+          name
+          # stripe_info
+          accepted_payments
+          image
+          language
+          description_id
+          location {
+            gps
+            address
           }
+
+          # self_delivery
+          #schedule_id
+          schedule
+          description {
+            translations {
+              language_id
+              value
+            }
+          }
+          approved
+          open_status
         }
-        approved
-        open_status
       }
       items {
         restaurant_item {
@@ -247,7 +255,7 @@ delivery_details_id
       }
     }
   }
-}
+
 
 # Remove all items from Cart by customerId.
 mutation clearCart($customer_id: Int!) {

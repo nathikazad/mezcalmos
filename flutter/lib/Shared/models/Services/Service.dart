@@ -2,24 +2,36 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 abstract class Service {
   ServiceInfo info;
+  int serviceDetailsId;
   Schedule? schedule;
+  String? phoneNumber;
+  int? serviceLinkId;
+  ServiceProviderType? serviceProviderType;
   ServiceState state;
-  ServiceStatus? status;
-  LanguageType primaryLanguage;
-  LanguageType? secondaryLanguage;
+  Map<LanguageType, bool> languages;
+
   PaymentInfo? paymentInfo;
-  
+
   Service(
       {required this.info,
+      required this.serviceDetailsId,
       this.schedule,
-      this.status,
+      this.phoneNumber,
+      this.serviceLinkId,
+      this.serviceProviderType,
       required this.state,
-      required this.primaryLanguage,
-      this.secondaryLanguage,
+      required this.languages,
       this.paymentInfo});
+
+  LanguageType get primaryLanguage => languages.entries
+      .firstWhere(
+          (MapEntry<LanguageType, bool> element) => element.value == true)
+      .key;
+  LanguageType get secondaryLanguage => primaryLanguage.toOpLang();
 }
 
 class ServiceState {
@@ -59,37 +71,16 @@ class ServiceState {
   bool get isOpen => status == ServiceStatus.Open;
 }
 
-// enum ServiceStatus {
-//   Awaiting_verification,
-//   Open,
-//   Closed_temporarily,
-//   Closed_indefinitely
-// }
-
-// extension ServiceStatusHelper on ServiceStatus {
-//   String toHasuraFormat() {
-//     final String str = toString().split('.').last;
-//     mezDbgPrint("Hasura format ====>${str.toLowerCase()}");
-//     return str.toLowerCase();
-//   }
-
-//   ServiceState toServiceState() {
-//     ServiceState state =
-//         ServiceState(AuthorizationStatus.Authorized, false, false);
-//     if (this == ServiceStatus.Awaiting_verification) {
-//       state = ServiceState(AuthorizationStatus.InReview, false, false);
-//     } else if (this == ServiceStatus.Open) {
-//       state = ServiceState(AuthorizationStatus.Authorized, true, true);
-//     } else if (this == ServiceStatus.Closed_temporarily) {
-//       state = ServiceState(AuthorizationStatus.Authorized, true, false);
-//     }
-//     return state;
-//   }
-// }
-
-// extension ServiceStatusStringHelper on String {
-//   ServiceStatus toServiceStatus() {
-//     return ServiceStatus.values
-//         .firstWhere((ServiceStatus e) => e.toHasuraFormat() == this);
-//   }
-// }
+class MainService extends Service {
+  MainService({
+    required super.info,
+    required super.serviceDetailsId,
+    required super.state,
+    required super.languages,
+    required super.paymentInfo,
+    required super.schedule,
+    required super.phoneNumber,
+    required super.serviceLinkId,
+    required super.serviceProviderType,
+  });
+}

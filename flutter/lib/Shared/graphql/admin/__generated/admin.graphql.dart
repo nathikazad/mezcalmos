@@ -2540,32 +2540,34 @@ class _CopyWithStubImpl$Variables$Mutation$set_service_status<TRes>
 
 class Mutation$set_service_status {
   Mutation$set_service_status({
-    this.update_restaurant_restaurant,
+    this.update_service_provider_details,
     required this.$__typename,
   });
 
   factory Mutation$set_service_status.fromJson(Map<String, dynamic> json) {
-    final l$update_restaurant_restaurant = json['update_restaurant_restaurant'];
+    final l$update_service_provider_details =
+        json['update_service_provider_details'];
     final l$$__typename = json['__typename'];
     return Mutation$set_service_status(
-      update_restaurant_restaurant: l$update_restaurant_restaurant == null
+      update_service_provider_details: l$update_service_provider_details == null
           ? null
-          : Mutation$set_service_status$update_restaurant_restaurant.fromJson(
-              (l$update_restaurant_restaurant as Map<String, dynamic>)),
+          : Mutation$set_service_status$update_service_provider_details
+              .fromJson(
+                  (l$update_service_provider_details as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$set_service_status$update_restaurant_restaurant?
-      update_restaurant_restaurant;
+  final Mutation$set_service_status$update_service_provider_details?
+      update_service_provider_details;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_restaurant_restaurant = update_restaurant_restaurant;
-    _resultData['update_restaurant_restaurant'] =
-        l$update_restaurant_restaurant?.toJson();
+    final l$update_service_provider_details = update_service_provider_details;
+    _resultData['update_service_provider_details'] =
+        l$update_service_provider_details?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2573,10 +2575,10 @@ class Mutation$set_service_status {
 
   @override
   int get hashCode {
-    final l$update_restaurant_restaurant = update_restaurant_restaurant;
+    final l$update_service_provider_details = update_service_provider_details;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_restaurant_restaurant,
+      l$update_service_provider_details,
       l$$__typename,
     ]);
   }
@@ -2590,10 +2592,11 @@ class Mutation$set_service_status {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_restaurant_restaurant = update_restaurant_restaurant;
-    final lOther$update_restaurant_restaurant =
-        other.update_restaurant_restaurant;
-    if (l$update_restaurant_restaurant != lOther$update_restaurant_restaurant) {
+    final l$update_service_provider_details = update_service_provider_details;
+    final lOther$update_service_provider_details =
+        other.update_service_provider_details;
+    if (l$update_service_provider_details !=
+        lOther$update_service_provider_details) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2624,12 +2627,12 @@ abstract class CopyWith$Mutation$set_service_status<TRes> {
       _CopyWithStubImpl$Mutation$set_service_status;
 
   TRes call({
-    Mutation$set_service_status$update_restaurant_restaurant?
-        update_restaurant_restaurant,
+    Mutation$set_service_status$update_service_provider_details?
+        update_service_provider_details,
     String? $__typename,
   });
-  CopyWith$Mutation$set_service_status$update_restaurant_restaurant<TRes>
-      get update_restaurant_restaurant;
+  CopyWith$Mutation$set_service_status$update_service_provider_details<TRes>
+      get update_service_provider_details;
 }
 
 class _CopyWithImpl$Mutation$set_service_status<TRes>
@@ -2646,28 +2649,29 @@ class _CopyWithImpl$Mutation$set_service_status<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? update_restaurant_restaurant = _undefined,
+    Object? update_service_provider_details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$set_service_status(
-        update_restaurant_restaurant: update_restaurant_restaurant == _undefined
-            ? _instance.update_restaurant_restaurant
-            : (update_restaurant_restaurant
-                as Mutation$set_service_status$update_restaurant_restaurant?),
+        update_service_provider_details: update_service_provider_details ==
+                _undefined
+            ? _instance.update_service_provider_details
+            : (update_service_provider_details
+                as Mutation$set_service_status$update_service_provider_details?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$set_service_status$update_restaurant_restaurant<TRes>
-      get update_restaurant_restaurant {
-    final local$update_restaurant_restaurant =
-        _instance.update_restaurant_restaurant;
-    return local$update_restaurant_restaurant == null
-        ? CopyWith$Mutation$set_service_status$update_restaurant_restaurant
+  CopyWith$Mutation$set_service_status$update_service_provider_details<TRes>
+      get update_service_provider_details {
+    final local$update_service_provider_details =
+        _instance.update_service_provider_details;
+    return local$update_service_provider_details == null
+        ? CopyWith$Mutation$set_service_status$update_service_provider_details
             .stub(_then(_instance))
-        : CopyWith$Mutation$set_service_status$update_restaurant_restaurant(
-            local$update_restaurant_restaurant,
-            (e) => call(update_restaurant_restaurant: e));
+        : CopyWith$Mutation$set_service_status$update_service_provider_details(
+            local$update_service_provider_details,
+            (e) => call(update_service_provider_details: e));
   }
 }
 
@@ -2678,14 +2682,14 @@ class _CopyWithStubImpl$Mutation$set_service_status<TRes>
   TRes _res;
 
   call({
-    Mutation$set_service_status$update_restaurant_restaurant?
-        update_restaurant_restaurant,
+    Mutation$set_service_status$update_service_provider_details?
+        update_service_provider_details,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$set_service_status$update_restaurant_restaurant<TRes>
-      get update_restaurant_restaurant =>
-          CopyWith$Mutation$set_service_status$update_restaurant_restaurant
+  CopyWith$Mutation$set_service_status$update_service_provider_details<TRes>
+      get update_service_provider_details =>
+          CopyWith$Mutation$set_service_status$update_service_provider_details
               .stub(_res);
 }
 
@@ -2716,7 +2720,7 @@ const documentNodeMutationset_service_status = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_restaurant_restaurant'),
+        name: NameNode(value: 'update_service_provider_details'),
         alias: null,
         arguments: [
           ArgumentNode(
@@ -2878,27 +2882,28 @@ extension ClientExtension$Mutation$set_service_status on graphql.GraphQLClient {
           this.watchMutation(options);
 }
 
-class Mutation$set_service_status$update_restaurant_restaurant {
-  Mutation$set_service_status$update_restaurant_restaurant({
+class Mutation$set_service_status$update_service_provider_details {
+  Mutation$set_service_status$update_service_provider_details({
     required this.returning,
     required this.$__typename,
   });
 
-  factory Mutation$set_service_status$update_restaurant_restaurant.fromJson(
+  factory Mutation$set_service_status$update_service_provider_details.fromJson(
       Map<String, dynamic> json) {
     final l$returning = json['returning'];
     final l$$__typename = json['__typename'];
-    return Mutation$set_service_status$update_restaurant_restaurant(
+    return Mutation$set_service_status$update_service_provider_details(
       returning: (l$returning as List<dynamic>)
           .map((e) =>
-              Mutation$set_service_status$update_restaurant_restaurant$returning
+              Mutation$set_service_status$update_service_provider_details$returning
                   .fromJson((e as Map<String, dynamic>)))
           .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Mutation$set_service_status$update_restaurant_restaurant$returning>
+  final List<
+          Mutation$set_service_status$update_service_provider_details$returning>
       returning;
 
   final String $__typename;
@@ -2927,7 +2932,8 @@ class Mutation$set_service_status$update_restaurant_restaurant {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other is Mutation$set_service_status$update_restaurant_restaurant) ||
+    if (!(other
+            is Mutation$set_service_status$update_service_provider_details) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2952,56 +2958,56 @@ class Mutation$set_service_status$update_restaurant_restaurant {
   }
 }
 
-extension UtilityExtension$Mutation$set_service_status$update_restaurant_restaurant
-    on Mutation$set_service_status$update_restaurant_restaurant {
-  CopyWith$Mutation$set_service_status$update_restaurant_restaurant<
-          Mutation$set_service_status$update_restaurant_restaurant>
+extension UtilityExtension$Mutation$set_service_status$update_service_provider_details
+    on Mutation$set_service_status$update_service_provider_details {
+  CopyWith$Mutation$set_service_status$update_service_provider_details<
+          Mutation$set_service_status$update_service_provider_details>
       get copyWith =>
-          CopyWith$Mutation$set_service_status$update_restaurant_restaurant(
+          CopyWith$Mutation$set_service_status$update_service_provider_details(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$set_service_status$update_restaurant_restaurant<
+abstract class CopyWith$Mutation$set_service_status$update_service_provider_details<
     TRes> {
-  factory CopyWith$Mutation$set_service_status$update_restaurant_restaurant(
-    Mutation$set_service_status$update_restaurant_restaurant instance,
-    TRes Function(Mutation$set_service_status$update_restaurant_restaurant)
+  factory CopyWith$Mutation$set_service_status$update_service_provider_details(
+    Mutation$set_service_status$update_service_provider_details instance,
+    TRes Function(Mutation$set_service_status$update_service_provider_details)
         then,
-  ) = _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant;
+  ) = _CopyWithImpl$Mutation$set_service_status$update_service_provider_details;
 
-  factory CopyWith$Mutation$set_service_status$update_restaurant_restaurant.stub(
+  factory CopyWith$Mutation$set_service_status$update_service_provider_details.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant;
+      _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details;
 
   TRes call({
-    List<Mutation$set_service_status$update_restaurant_restaurant$returning>?
+    List<Mutation$set_service_status$update_service_provider_details$returning>?
         returning,
     String? $__typename,
   });
   TRes returning(
-      Iterable<Mutation$set_service_status$update_restaurant_restaurant$returning> Function(
+      Iterable<Mutation$set_service_status$update_service_provider_details$returning> Function(
               Iterable<
-                  CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
-                      Mutation$set_service_status$update_restaurant_restaurant$returning>>)
+                  CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
+                      Mutation$set_service_status$update_service_provider_details$returning>>)
           _fn);
 }
 
-class _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant<
+class _CopyWithImpl$Mutation$set_service_status$update_service_provider_details<
         TRes>
     implements
-        CopyWith$Mutation$set_service_status$update_restaurant_restaurant<
+        CopyWith$Mutation$set_service_status$update_service_provider_details<
             TRes> {
-  _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant(
+  _CopyWithImpl$Mutation$set_service_status$update_service_provider_details(
     this._instance,
     this._then,
   );
 
-  final Mutation$set_service_status$update_restaurant_restaurant _instance;
+  final Mutation$set_service_status$update_service_provider_details _instance;
 
-  final TRes Function(Mutation$set_service_status$update_restaurant_restaurant)
-      _then;
+  final TRes Function(
+      Mutation$set_service_status$update_service_provider_details) _then;
 
   static const _undefined = {};
 
@@ -3009,41 +3015,41 @@ class _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant<
     Object? returning = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$set_service_status$update_restaurant_restaurant(
+      _then(Mutation$set_service_status$update_service_provider_details(
         returning: returning == _undefined || returning == null
             ? _instance.returning
             : (returning as List<
-                Mutation$set_service_status$update_restaurant_restaurant$returning>),
+                Mutation$set_service_status$update_service_provider_details$returning>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
   TRes returning(
-          Iterable<Mutation$set_service_status$update_restaurant_restaurant$returning> Function(
+          Iterable<Mutation$set_service_status$update_service_provider_details$returning> Function(
                   Iterable<
-                      CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
-                          Mutation$set_service_status$update_restaurant_restaurant$returning>>)
+                      CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
+                          Mutation$set_service_status$update_service_provider_details$returning>>)
               _fn) =>
       call(
           returning: _fn(_instance.returning.map((e) =>
-              CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning(
+              CopyWith$Mutation$set_service_status$update_service_provider_details$returning(
                 e,
                 (i) => i,
               ))).toList());
 }
 
-class _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant<
+class _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details<
         TRes>
     implements
-        CopyWith$Mutation$set_service_status$update_restaurant_restaurant<
+        CopyWith$Mutation$set_service_status$update_service_provider_details<
             TRes> {
-  _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant(
+  _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details(
       this._res);
 
   TRes _res;
 
   call({
-    List<Mutation$set_service_status$update_restaurant_restaurant$returning>?
+    List<Mutation$set_service_status$update_service_provider_details$returning>?
         returning,
     String? $__typename,
   }) =>
@@ -3051,17 +3057,17 @@ class _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant
   returning(_fn) => _res;
 }
 
-class Mutation$set_service_status$update_restaurant_restaurant$returning {
-  Mutation$set_service_status$update_restaurant_restaurant$returning({
+class Mutation$set_service_status$update_service_provider_details$returning {
+  Mutation$set_service_status$update_service_provider_details$returning({
     required this.open_status,
     required this.$__typename,
   });
 
-  factory Mutation$set_service_status$update_restaurant_restaurant$returning.fromJson(
+  factory Mutation$set_service_status$update_service_provider_details$returning.fromJson(
       Map<String, dynamic> json) {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
-    return Mutation$set_service_status$update_restaurant_restaurant$returning(
+    return Mutation$set_service_status$update_service_provider_details$returning(
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3096,7 +3102,7 @@ class Mutation$set_service_status$update_restaurant_restaurant$returning {
       return true;
     }
     if (!(other
-            is Mutation$set_service_status$update_restaurant_restaurant$returning) ||
+            is Mutation$set_service_status$update_service_provider_details$returning) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -3114,29 +3120,30 @@ class Mutation$set_service_status$update_restaurant_restaurant$returning {
   }
 }
 
-extension UtilityExtension$Mutation$set_service_status$update_restaurant_restaurant$returning
-    on Mutation$set_service_status$update_restaurant_restaurant$returning {
-  CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
-          Mutation$set_service_status$update_restaurant_restaurant$returning>
+extension UtilityExtension$Mutation$set_service_status$update_service_provider_details$returning
+    on Mutation$set_service_status$update_service_provider_details$returning {
+  CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
+          Mutation$set_service_status$update_service_provider_details$returning>
       get copyWith =>
-          CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning(
+          CopyWith$Mutation$set_service_status$update_service_provider_details$returning(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
+abstract class CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
     TRes> {
-  factory CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning(
-    Mutation$set_service_status$update_restaurant_restaurant$returning instance,
+  factory CopyWith$Mutation$set_service_status$update_service_provider_details$returning(
+    Mutation$set_service_status$update_service_provider_details$returning
+        instance,
     TRes Function(
-            Mutation$set_service_status$update_restaurant_restaurant$returning)
+            Mutation$set_service_status$update_service_provider_details$returning)
         then,
-  ) = _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant$returning;
+  ) = _CopyWithImpl$Mutation$set_service_status$update_service_provider_details$returning;
 
-  factory CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning.stub(
+  factory CopyWith$Mutation$set_service_status$update_service_provider_details$returning.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant$returning;
+      _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details$returning;
 
   TRes call({
     String? open_status,
@@ -3144,21 +3151,22 @@ abstract class CopyWith$Mutation$set_service_status$update_restaurant_restaurant
   });
 }
 
-class _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant$returning<
+class _CopyWithImpl$Mutation$set_service_status$update_service_provider_details$returning<
         TRes>
     implements
-        CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
+        CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
             TRes> {
-  _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant$returning(
+  _CopyWithImpl$Mutation$set_service_status$update_service_provider_details$returning(
     this._instance,
     this._then,
   );
 
-  final Mutation$set_service_status$update_restaurant_restaurant$returning
+  final Mutation$set_service_status$update_service_provider_details$returning
       _instance;
 
   final TRes Function(
-      Mutation$set_service_status$update_restaurant_restaurant$returning) _then;
+          Mutation$set_service_status$update_service_provider_details$returning)
+      _then;
 
   static const _undefined = {};
 
@@ -3166,7 +3174,8 @@ class _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant$ret
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Mutation$set_service_status$update_restaurant_restaurant$returning(
+      _then(
+          Mutation$set_service_status$update_service_provider_details$returning(
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -3176,12 +3185,12 @@ class _CopyWithImpl$Mutation$set_service_status$update_restaurant_restaurant$ret
       ));
 }
 
-class _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant$returning<
+class _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details$returning<
         TRes>
     implements
-        CopyWith$Mutation$set_service_status$update_restaurant_restaurant$returning<
+        CopyWith$Mutation$set_service_status$update_service_provider_details$returning<
             TRes> {
-  _CopyWithStubImpl$Mutation$set_service_status$update_restaurant_restaurant$returning(
+  _CopyWithStubImpl$Mutation$set_service_status$update_service_provider_details$returning(
       this._res);
 
   TRes _res;
