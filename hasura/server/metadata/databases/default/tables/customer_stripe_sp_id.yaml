@@ -1,5 +1,5 @@
 table:
-  name: stripe_cards
+  name: stripe_sp_id
   schema: customer
 object_relationships:
   - name: customer

@@ -3,7 +3,7 @@
 - "!include customer_minimal_order.yaml"
 - "!include customer_saved_location.yaml"
 - "!include customer_stripe_cards.yaml"
-- "!include customer_stripe_info.yaml"
+- "!include customer_stripe_sp_id.yaml"
 - "!include delivery_company.yaml"
 - "!include delivery_details.yaml"
 - "!include delivery_driver.yaml"

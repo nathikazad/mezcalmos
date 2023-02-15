@@ -220,14 +220,16 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
   mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData!.laundry_pickup_order.toString()}");
-
+      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
+  mezDbgPrint(
+      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
           location: MezLocation.fromHasura(
               orderData.restaurant_order!.restaurant.details.location.gps,
-              orderData.restaurant_order!.restaurant..details.location.address),
+              orderData.restaurant_order!.restaurant.details.location.address
+                  .toString()),
           hasuraId: orderData.restaurant_order!.restaurant.id,
           image: orderData.restaurant_order!.restaurant.details.image,
           name: orderData.restaurant_order!.restaurant.details.name);

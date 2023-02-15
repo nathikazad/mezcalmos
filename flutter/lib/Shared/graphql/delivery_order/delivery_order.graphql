@@ -197,7 +197,48 @@ subscription listen_on_driver_order($orderId: Int!) {
     }
     laundry {
       id
-      details {
+    details{ id  image
+      name
+      location {
+        gps
+        address
+      }
+      language
+      open_status}
+    }
+    laundry_pickup_order {
+      id
+      stripe_info
+      store {
+        id
+      details{ id  image
+        name
+        location {
+          gps
+          address
+        }}
+      }
+    }
+    laundry_delivery_order {
+      id
+      stripe_info
+      store {
+        id
+       details{ id image
+        name
+        location {
+          gps
+          address
+        }}
+      }
+    }
+
+    restaurant_order {
+      id
+      stripe_info
+      restaurant {
+        id
+     details{   firebase_id
         id
         image
         name

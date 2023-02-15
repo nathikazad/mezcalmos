@@ -28,7 +28,7 @@ export async function updateRestaurantStripe(restaurant: ServiceProvider) {
     let mutationResponse = await chain.mutation({
         update_service_provider_stripe_info_by_pk: [{
             pk_columns: {
-                sp_id: response.restaurant_restaurant_by_pk.details_id
+                id: response.restaurant_restaurant_by_pk.details_id
             },
             _set: {
                 charge_fees_on_customer: restaurant.stripeInfo.chargeFeesOnCustomer ?? undefined,

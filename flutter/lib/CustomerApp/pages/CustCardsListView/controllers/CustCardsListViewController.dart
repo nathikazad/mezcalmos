@@ -31,8 +31,8 @@ class CustCardsListViewController {
   }
 
   Future<bool> deleteCard({required String cardId}) async {
-    stripeInfo.value?.cards
-        .removeWhere((CreditCard element) => element.id == cardId);
+    // stripeInfo.value?.cards
+    //     .removeWhere((CreditCard element) => element.id == cardId);
     // stripeInfo.value = await update_customer_stripe_info(
     //     stripeInfo: stripeInfo.value!,
     //     customer_id: _authController.hasuraUserId!);
