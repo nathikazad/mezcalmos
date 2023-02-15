@@ -35,7 +35,7 @@ query get_customer_info($customer_id: Int!) {
       phone
       language_id
     }
-    stripe_info
+    # stripe_info
     saved_locations(where: { customer_id: { _eq: $customer_id } }) {
       id
       name
@@ -47,7 +47,7 @@ query get_customer_info($customer_id: Int!) {
 }
 query get_customer_stripe_info($customer_id: Int!) {
   customer_customer(where: { user_id: { _eq: $customer_id } }) {
-    stripe_info
+    # stripe_info
   }
 }
 
@@ -55,26 +55,19 @@ query get_customer_stripe_info($customer_id: Int!) {
 mutation set_customer_info(
   $user_id: Int!
   $app_version: String!
-  $stripe_info: jsonb
+ 
 ) {
   insert_customer_customer_one(
     object: {
       user_id: $user_id
       app_version: $app_version
-      stripe_info: $stripe_info
+     
     }
   ) {
     user_id
   }
 }
-mutation set_customer_stripe_info($user_id: Int!, $stripe_info: jsonb) {
-  update_customer_customer_by_pk(
-    pk_columns: { user_id: $user_id }
-    _set: { stripe_info: $stripe_info }
-  ) {
-    stripe_info
-  }
-}
+
 query get_customer_orders($custId: Int!,$inProcess: Boolean!) {
   customer_minimal_orders(args: {cus_id: $custId}, where: {in_process: {_eq: $inProcess}}) {
     id
