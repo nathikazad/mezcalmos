@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class ConnectivityHelper {
@@ -18,6 +20,7 @@ class ConnectivityHelper {
   ];
 
   bool _hasInternet = false;
+  bool _pingedConnection = false;
 
   bool get hasInternet => _hasInternet;
 
@@ -25,17 +28,26 @@ class ConnectivityHelper {
     final Connectivity connectivity = Connectivity();
     final ConnectivityResult result = await connectivity.checkConnectivity();
     _hasInternet = _hasInternetOptions.contains(result);
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult event) {
-      _hasInternet = _hasInternetOptions.contains(event);
+    Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult event) async {
+      try {
+        final List<InternetAddress> result =
+            await InternetAddress.lookup(sNetworkCheckUrl);
+        _pingedConnection = result.isNotEmpty;
+      } on SocketException catch (_) {
+        _pingedConnection = false;
+      }
+      _hasInternet = _hasInternetOptions.contains(event) && _pingedConnection;
       if (!_hasInternet) {
-        MezRouter.toNamed<void>(kNoInternetRoute);
+        if (!isCurrentRoute(kNoInternetRoute)) {
+          MezRouter.toNamed<void>(kNoInternetRoute);
+        }
+      } else {
+        if (isCurrentRoute(kNoInternetRoute)) {
+          Get.back();
+        }
       }
     });
-  }
-
-  Future<void> tryAgain() async {
-    if (_hasInternet) {
-      Get.back();
-    }
   }
 }

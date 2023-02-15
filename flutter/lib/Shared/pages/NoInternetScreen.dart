@@ -5,6 +5,7 @@ import 'package:mezcalmos/Shared/Utils/Themes/AppColors.dart';
 import 'package:mezcalmos/Shared/Utils/Themes/styles.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
+import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/CustomFlatButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,13 +30,13 @@ class NoInternetScreen extends StatelessWidget {
           SizedBox(
             height: 1.h,
           ),
-          Text(
-            _i18n()['noInternetDesc'],
-            style: Styles.tsGreySmall,
-            // style: Get.textTheme.bodyMedium?.copyWith(
-            //   color: Color(0xFF787878),
-            // ),
-            textAlign: TextAlign.center,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              _i18n()['noInternetDesc'],
+              style: Styles.tsGreySmall,
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(
             height: 2.h,
@@ -49,7 +50,9 @@ class NoInternetScreen extends StatelessWidget {
             width: 50.w,
             borderRadius: 20.0,
             onTap: () {
-              ConnectivityHelper.instance.tryAgain();
+              if (ConnectivityHelper.instance.hasInternet) {
+                Get.back();
+              }
             },
             textAlignement: Alignment.center,
             text: Text(

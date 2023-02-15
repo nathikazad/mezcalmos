@@ -47,13 +47,6 @@
         }
       },
       "ListOrdersScreen": {
-    "CustomerApp": {
-        "main": {
-            "savedLocations": "Ubicaciones guardadas",
-            "contactUs": "Contáctenos",
-            "savedCards": "Tarjetas guardadas"
-        },
-        
         "components": {
           "RestaurantOngoingOrderCard": {
             "totalCost": "Costo Total"
@@ -190,53 +183,6 @@
             },
             "DropDownListCartView": {
               "pickLocation": "Elegir del mapa"
-        "helpers": {
-            "DeliveryOrderHelper" : {
-                "status" : {
-                    "ready" : "Paquete listo",
-                    "atPickUp" : "En la recogida",
-                    "otwDropOff" : "En el camino de caída",
-                    "delivered" :"Entregada",
-                    "received" : "Recibió" ,
-                    "canceled" :"Cancelada",
-                    "atDropOff" : "En la caídaa"
-                }
-            },
-            "StripeHelper": {
-                "addCard": "Agregar tarjeta",
-                "powered": "Energizado por",
-                "save": "Ahorrar"
-            },
-            "ImageHelper": {
-                "fromCamera": "Toma una foto",
-                "fromGallery": "Subiendo desde la galería",
-                "camera": "Cámara",
-                "gallery": "Galería",
-                "cameraAccessOffTitle": "La aplicación no puede acceder a la cámara.",
-                "cameraAccessOffBody": "Aparentemente, denegó el acceso a la aplicación desde la cámara, vaya a General > Aplicación > ¡Permitir cámara!",
-                "photoAccessOffTitle": "App can't access Photos.",
-                "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
-            },
-            "GeneralPurposeHelper": {
-                "saved" : "Guardado",
-                "savedTitle" : "tu información ha sido guardada",
-                "yesCancel": "Sí, Cancelar pedido",
-                "no": "No",
-                "cancelOrder": "Cancelar orden",
-                "cancelConfirmationText": "¿Estás seguro de que te gustaría cancelar?",
-                "subtitle": "Esta acción no se puede deshacer.",
-                "ok": "OK",
-                "viewOrder": "Ver pedido",
-                "review": {
-                    "title": "Califica tu experiencia",
-                    "subtitle": "Nos gustaría escuchar sus comentarios.",
-                    "hintText": "Di algo sobre tu experiencia.",
-                    "send": "Enviar",
-                    "close": "Cerca",
-                    "successTitle": "Gracias",
-                    "successSubtitle": "Su revisión ha sido enviada con éxito"
-
-                }
             },
             "OrderSummaryCard": {
               "orderSummary": "Resumen de la orden",
@@ -294,291 +240,6 @@
               "title": "Debe iniciar sesión para agregar artículos a su carrito",
               "signBtn": "Apuntame dentro",
               "notNowBtn": "Ahora no ?"
-        "pages": {
-            "CreateServiceView" :{
-                "pages": {
-                    "CreateServiceInfoPage": {
-                        "name": "Nombre",
-                        "nameError": "Proporcione un nombre",
-                        "location": "Nombre",
-                        "locationError": "Proporcione una ubicación",
-                        "pickLoc" : "Ubicación de selección",
-                        "imageError" : "Se requiere una imagen"
-                    }
-                },
-                "info" : "Información",
-                "schedule" : "Calendario",
-                "delivery" : "Entrega",
-                "save" : "Guardar",
-                "next" :"Próxima",
-                "ok" : "OK",
-                "selectCompany": "Seleccione una empresa",
-                "selectCompanyText": "Necesita seleccionar una empresa de entrega",
-                "restTitle" : "Tu restaurante está en revisión",
-                "restBody" : "Puede comenzar a agregar elementos a su menú y se le notificará una vez que su restaurante esté aprobado."
-            },
-            "DeliveryCostSettingView" : {
-                "dvCost" : "Coste de envío",
-                "km" : "km",
-                "minCost" : "Costo mínimo",
-                "costPerKm" : "Costo por km",
-                "freeKmRange" : "Gama de entrega gratuita" ,
-                "freeKmRangeText" : "Dentro de esta distancia, al cliente no se le cobrará por la entrega." ,
-                "numberError" : "por favor ingrese un número valido",
-                "preview" : "Avance",
-                "custDistance" : "Distancia del cliente",
-                "save" : "Guardar",
-                "cost" : "Costo"
-                
-            },
-            "DeliverySettingsView": {
-                "DeliverySettingsView": {
-                    "delivery": "Entrega",
-                    "save": "Guardar",
-                    "title": "¿Cómo le gustaría entregar?"
-                },
-                "components": {
-                    "DeliverySettingsCompaniesList": {
-                        "title": "Compañero de entrega a su lado",
-                        "notFoundTitle": "No se encontraron socios de entrega",
-                        "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-                        "joinded": "Unida"
-                    }
-                }
-            },
-            "ServicePaymentsView" : {
-                "payments" : "Pagos",
-                "components" : {
-                    "ServiceAcceptedPayments" : {
-                        "bankName": "Nombre del banco",
-                        "bankNumber": "Número de cuenta",
-                        "bankTitle": "Información de la cuenta bancaria",
-                        "confirm": "Confirmar",
-                        "cancel": "Cancelar",
-                        "error": "Error",
-                        "bankTransfer": "Transferencia bancaria",
-                        "bankError": "El número de cuenta no es válido",
-                        "cash": "Dinero",
-                        "card": "Tarjeta",
-                        "requirements": "Requisitos",
-                        "acceptedPayments": "Pagos aceptados",
-                        "setup": "configurar",
-                        "fees": "Tarifa",
-                        "chargeCustomer": "cobrar tarifas de procesamiento del cliente",
-
-                        "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
-                        "reqs": "Requisitos",
-                        "emailId": "Identificación de correo",
-                        "empty": "Vacía",
-                        "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
-                 
-                    }
-                }
-            },
-            "OperatorsListView" : {
-                "operators" : "Operadoras",
-                "addOperator" : "Agregar operador",
-                "title" : "Pídale a su operador que escanee este código QR en su teléfono",
-                "copyLink": "Copiar link",
-                "shrWhatsapp" : "Compartir en WhatsApp",
-                "copied" : "Copiada",
-                "copiedText" : "Enlace copiado con éxito"
-            }, 
-             "ServiceDriversListView" : {
-                "drivers" : "Conductoras",
-                "addDriver" : "Agregar controlador",
-                "title" : "Pídale a su operador que escanee este código QR en su teléfono",
-                "copyLink": "Copiar link",
-                "shrWhatsapp" : "Compartir en WhatsApp",
-                "copied" : "Copiada",
-                "copiedText" : "Enlace copiado con éxito"
-            },
-            "ServiceInfoEditView" : {
-                "name" : "Nombre",
-                "location" :"Localización",
-                "description" :"Descripción",
-                "info" : "Información",
-                "save" :"Guardar",
-                "saved" : "Guardado",
-                "error" : "error",
-                "savedSuccess" : "Su información ha sido guardada con éxito"
-            },
-            "SomethingWentWrongScreen": {
-                "noRestaurantFoundOnOperator": "No se encontró ningún restaurante en su operador",
-                "pleaseContactAdmin": "Póngase en contacto con el administrador: +5219541184711"
-            },
-            "AuthScreens": {
-                "SMS": {
-                    "OtpConfirmationScreen": {
-                        "confirmation": "Confirmación",
-                        "OtpConfirmation": "Confirmación del \ncódigo OTP",
-                        "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
-                        "enterOtpCode": "Ingrese el código OTP enviado a",
-                        "otpDidnReceiveTxt": "No has recibido el mensaje de texto?",
-                        "resend": "Reenviar",
-                        "resendAfter": "Reenviar después",
-                        "seconds": "segundos",
-                        "wrongOTPCode": "El código de confirmación es incorrecto, inténtelo de nuevo.",
-                        "confirm": "Confirmar"
-                    },
-                    "PhoneNumberScreen": {
-                        "otpCode": "OTP código",
-                        "twilioNote": "Al continuar, recibirá un código de verificación a su número de teléfono por SMS. Se pueden aplicar tarifas por mensajes y datos.",
-                        "enterPhoneNumber": "Ingrese el número teléfono para recibir el código OTP",
-                        "submit": "ENVIAR"
-                    }
-                },
-                "SignInScreen": {
-                    "title": "Conéctese usando Facebook o usando SMS! ",
-                    "loginWithApple": "INICIAR CON APPLE",
-                    "loginWithSms": "INICIAR CON SMS",
-                    "fbBtn": "INICIAR CON FACEBOOK"
-                },
-                "UnauthorizedScreen": {
-                    "unauthorized": "No autorizado",
-                    "subTitle1": "No está autorizado, póngase en contacto con Alejandro.",
-                    "subTitle2": " , para obtener la autorización."
-                }
-            },
-            "Notifications": {
-                "components": {
-                    "ClearNotificationButton": {
-                        "latest": "Último",
-                        "today": "Today",
-                        "alertClearNotificationTitle": "Eliminar todas las notificaciones"
-                    }
-                },
-                "ViewNotifications": {
-
-                    "title": "Notificaciones",
-                    "latest": "Más reciente",
-                    "today": "Hoy dia",
-                    "alertClearNotificationTitle": "Borrar todas las notificaciones",
-                    "clear": "Borra",
-                    "no": "No",
-                    "noNotifTitle": "¡No hay notificaciones todavía!",
-                    "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
-                }
-            },
-            "UserWelcomeView" : {
-                "title" : "Feliz de ver que lo hiciste 👋",
-                "subtitle" : "¡Complete su perfil configurando su imagen y nombre!",
-                "nameTitle" : "Como deberíamos llamarte ?",
-                "save" :  "Guardar mi información",
-                "hint" : "Escriba su nombre",
-                "imageHint" : "Tu cara, tu perfil"
-
-            },
-            "UserProfileView": {
-                "profile": "Perfil",
-                "imageHint" : "Tu cara, tu perfil",
-                "name" : "Nombre",
-                "save" :  "Guardar mi información",
-                "edit" : "Editar mi información",
-                "hint" : "Escriba su nombre",
-                "mustSetUserNameError": "Por favor, introduzca su nombre de pila.",
-                "mustSetUserImgError": "Sube una imagen.",
-                "nameMustBeLettersOnly": "Your first name must only have letters.",
-                "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
-                "deleteAccount": "Borrar cuenta",
-                "deleteTitle": "¡Confirme la eliminación de la cuenta!",
-                "deletePrBtn": "¡Sí, eliminar!",
-                "deleteScBtn": "Cancelar",
-                "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
-            },
-            "UserProfileScreen": {
-                "UserProfileScreen": {
-                    "mustSetUserNameError": "Por favor, ponga su primer nombre.",
-                    "mustSetUserImgError": "Por favor, sube una imagen.",
-                    "nameMustBeLettersOnly": "Tu primer nombre solo debe tener letras.",
-                    "nameMustBeFourLettersOrMore": "Tu nombre debe tener al menos 4 letras.",
-                    "deleteAccount": "Borrar cuenta",
-                    "deleteTitle": "¡Confirme la eliminación de la cuenta!",
-                    "deletePrBtn": "¡Sí, eliminar!",
-                    "deleteScBtn": "Cancelar",
-                    "deleteHelper": "Haga clic en SÍ Eliminará permanentemente su cuenta, ¿está seguro?"
-
-                },
-                "UserProfileWidgets": {
-                    "namePlaceHolder": "Ponga su primer nombre",
-                    "uploadPic": "Subir imagen",
-                    "name": "Nombre",
-                    "memberSince": "Miembro desde",
-                    "title": " Información del usuario ",
-                    "cancel": "Cancelar",
-                    "editInfo": "Editar Información",
-                    "noChangesToApply": "¡No hay cambios que aplicar!",
-                    "saveBtn": "Guardar"
-                }
-            },
-            "CounterOffers": {
-                "offers": "ofertas",
-                "offerPrice": "Precio de oferta",
-                "offerStatus": "Estado de la oferta",
-                "offerTip": "Cada oferta que realice tiene un tiempo de espera de 60 segundos, si el cliente no acepta su oferta, la oferta se cancelará."
-            },
-            "NoInternetConnectionScreen": {
-                "noInternetConnection": "Sin conexión a Internet",
-                "reconnecting": "Reconectando"
-            },
-            "MessagingScreen": {
-                "viewOrder" :"Ver detalles de la orden",
-                "order": "Orden",
-                "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
-            },
-            "ViewNotifications": {
-                "title": "Notificaciones",
-                "latest": "Último",
-                "alertClearNotificationTitle": "Eliminar todas las notificaciones"
-            },
-            "LocationPermissionScreen": {
-                "permissionBtn": "ACTIVAR AHORA",
-                "askForNotif": "La aplicación recopila los datos de su ubicación para emparejarlo con los mejores viajes y compartir su ubicación con los clientes, incluso cuando la aplicación está en segundo plano.",
-                "locationPermissionDenied": "Oops, lamentablemente, sin permisos de ubicación, ¡no puede usar nuestra aplicación!",
-                "locationPermissionDeniedForever": "¡Los permisos de ubicación se niegan para siempre! Por favor cámbielo.",
-                "locationIsOff": "Servicio de ubicación desactivado",
-                "locationPermissionStatus": {
-                    "denied": "El acceso a su ubicación está denegado :(",
-                    "backgroundAccessDenied": "El acceso a la ubicación de fondo está denegado :(",
-                    "foreverDenied": "Haga clic en el botón, luego vaya a permisos -> ubicación y marque `Siempre`",
-                    "serviceOff": "El servicio de ubicación del teléfono está deshabilitado/apagado :("
-                },
-                "locationPermissionText": {
-                    "ios": {
-                        "foreground": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Guardar solo mientras se usa`.",
-                        "background": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Cambie los permisos de ubicación en la configuración de la aplicación a `Permitir siempre`."
-                    },
-                    "android": {
-                        "foreground": {
-                            "android9": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `Permitir` .",
-                            "android10": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MANTENER Y NO PREGUNTAR DE NUEVO`.",
-                            "android11": "Necesitamos acceder a tu ubicación mientras usas la aplicación. Haga clic en `MIENTRAS UTILIZA LA APLICACIÓN`."
-                        },
-                        "background": {
-                            "android9": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `Permitir` .",
-                            "android10": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en `PERMITIR TODO EL TIEMPO`.",
-                            "android11": "Necesitamos acceder a tu ubicación incluso cuando la aplicación está en segundo plano. Haga clic en Dar permisos -> Permisos -> Ubicación -> Todo el tiempo."
-                        }
-                    }
-                }
-            },
-            "AppNeedsUpdateScreen": {
-                "newVersion": "¡Ya salió la nueva versión!",
-                "downloadNewVersion": "Descarga la nueva versión!",
-                "downloading": "Se está descargando una nueva versión.",
-                "news": "Noticias",
-                "update": "¡Actualizar ahora!"
-            },
-            "ContactUsView": {
-                "name": "Nombre",
-                "email": "Dirección de correo electrónico",
-                "subject": "Tema",
-                "message": "Mensaje",
-                "send": "Enviar",
-                "sendedTitle": "Gracias",
-                "sendedBody": "¡Estaremos en contacto dentro de poco!",
-                "requiredError": "Campo requerido",
-                "emailError": "El correo electrónico no es correcto"
             }
           },
           "ViewItemScreen": {
@@ -1025,7 +686,7 @@
         "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
-        "saved": "Salvado",
+        "saved": "Guardado",
         "savedTitle": "tu información ha sido guardada",
         "yesCancel": "Sí, Cancelar pedido",
         "no": "No",
@@ -1081,7 +742,7 @@
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",
-        "save": "Salvar",
+        "save": "Guardar",
         "next": "Próxima",
         "ok": "OK",
         "selectCompany": "Seleccione una empresa",
@@ -1099,13 +760,13 @@
         "numberError": "por favor ingrese un número valido",
         "preview": "Avance",
         "custDistance": "Distancia del cliente",
-        "save": "Salvar",
+        "save": "Guardar",
         "cost": "Costo"
       },
       "DeliverySettingsView": {
         "DeliverySettingsView": {
           "delivery": "Entrega",
-          "save": "Salvar",
+          "save": "Guardar",
           "title": "¿Cómo le gustaría entregar?"
         },
         "components": {
@@ -1167,8 +828,8 @@
         "location": "Localización",
         "description": "Descripción",
         "info": "Información",
-        "save": "Salvar",
-        "saved": "Salvado",
+        "save": "Guardar",
+        "saved": "Guardado",
         "error": "error",
         "savedSuccess": "Su información ha sido guardada con éxito"
       },
@@ -1932,342 +1593,6 @@
               "delivered": "Entregada",
               "cancelled": "Cancelada",
               "scheduled": "Programada"
-    },
-    "RestaurantApp": {
-        "pages": {
-            "ROpChoiceView" :{
-                "newChoice" : "Nueva elección",
-                "required" : "Requerida",
-                "save" : "Guardar elección",
-                "saved" : "Guardado",
-                "savedText" : "La elección se ha guardado con éxito",
-                "added" : "Agregada",
-                "addedText" : "La elección se ha agregado con éxito",
-                "choiceName" : "Nombre de elección",
-                "choiceNameIn": "Nombre de elección en",
-                "choicePrice" : "Precio de elección",
-                "deleteChoice" : "Eliminar la elección",
-                "yDeleteChoice" : "SÍ ELECHE ELECCIÓN",
-                "helperText" : "¿Estás seguro de que quieres eliminar esta elección?"
-
-            }, 
-            "ROpReviewsView": {
-                "reviews": "Reseñas",
-                "base": "Basado en",
-                "perfomTitle": "Su rendimiento de revisión es",
-                "excellent": "Excelente",
-                "poor": "Pobre",
-                "good": "Buena",
-                "average": "Promedio",
-                "bad": "Mala",
-                "default": "Ver todo",
-                "highestrate": "Tasa más alta",
-                "lowestrate": "La tasa más baja",
-                "noRevTitle": "Todavía no hay críticas",
-                "noRevDesc": "Una vez que reciba comentarios, se mostrará aquí."
-            },
-            "ROpItemView": {
-                "nameExist": "El nombre ya existe",
-                "item": "Artículo",
-                "addItem": "Añadir artículo",
-                "saveItem": "Guardar el artículo",
-                "itemName": "Nombre del árticulo",
-                "itemDesc": "Descripción del Artículo",
-                "required": "Requerida",
-                "itemPrice": "Precio del articulo",
-                "category": "Categoría",
-                "itemOptions": "Opciones de artículos",
-                "addOption": "Añadir opción",
-                "deleteBtn": "Sí, eliminar el artículo",
-                "deleteHelper": "¿Estás seguro de que quieres eliminar este artículo?",
-                "deleteTitle": "Eliminar este artículo",
-                "deleteItem": "Eliminar elemento",
-                "components": {
-                    "ROpItemCategorySelector": {
-                        "errorText": "Porfavor seleccione una categoría",
-                        "none": "Ninguna"
-                    },
-                    "ROpItemAvChips": {
-                        "available": "Disponible",
-                        "unavailable": "Indisponible"
-                    },
-                    "ROpItemImage": {
-                        "addImage": "Agregar imagen del artículo",
-                        "errorText": "Se requiere una imagen"
-                    }
-                }
-
-            },
-
-            "ROpOrderView": {
-                "schTitle" : "Programado para",
-                "cancelOrder": "Cancelar orden",
-                "orderItems": "Encargar artículos",
-                "components": {
-                    "ROpSpecialItemTime": {
-                        "selectTime": "Seleccione su tiempo",
-                        "itemAv": "Disponibilidad de artículos",
-                        "required": "Requerida"
-                    },
-                    "ROpRefundButton": {
-                        "refundCustomer": "Reembolso del cliente",
-                        "refundYourCustomer": "Reembolsar a su cliente",
-                        "refundMax": "Máximo",
-                        "amount": "Monto",
-                        "to": "To",
-                        "req": "Requirió un número válido",
-                        "maxError": "Máximo es:",
-                        "minError": "El monto mínimo de reembolso debería ser más que 0 ",
-                        "cancel": "Cancelar",
-                        "confirmRefund": "Confirmar",
-                        "dialogTitle": "Reembolso confirmado",
-                        "dialogDesc": "Su cliente recibirá el reembolso pronto."
-
-                    },
-                    "ROpOrderHandleButton": {
-                        "prepareOrder": "Preparar orden",
-                        "orderReady": "El pedido está listo"
-                    },
-                    "ROpOrderEstTime": {
-                        "title": "Tiempo estimado de preparación",
-                        "deliveryTitle": "Tiempo de entrega estimado",
-                        "set": "Establecer",
-                        "confirm": "Confirmar",
-                        "cancel": "Cancelar",
-                        "error": "Error",
-                        "minTimes": "Mínimo 5 Miutes Prepare el tiempo",
-                        "deliveryMinTimes": "Tiempo de entrega bajo 5 minutos"
-                    },
-                    "ROpDriverCard": {
-                        "driver" : "Conductor",
-                        "noDriver": "No hay controlador asignado todavía",
-                        "set": "Colocar",
-                        "selfDelivery": "Autoentrega",
-                        "forwarded": "Reenviado a Mezcalmos"
-                    },
-                    "ROpOrderCustomer": {
-                        "customer": "Cliente"
-                    },
-                    "ROpOrderItems": {
-                        "note": "Nota",
-                        "markitemUnav": "Marca como no disponible",
-                        "itemUnav": "no disponible"
-                    },
-                    "ROpOrderSummaryCard": {
-                        "orderSummary": "Resumen",
-                        "orderCost": "Costo de la orden",
-                        "deliveryCost": "Coste de envío",
-                        "totalCost": "Coste total",
-                        "deliveryLocation": "Lugar de entrega"
-                    },
-                    "ROpOrderNote": {
-                        "notes": "Notas"
-                    }
-                }
-            },
-            "ROpOptionView": {
-                "addOption": "Opción Guardar",
-                "editOption": "Opción Guardar",
-                "optionName": "Nombre de opción",
-                "required": "Requeridaa",
-                "optionChoices": "Opciones de opcionesciones",
-                "optionType": "Tipo de opción ",
-                "deleteOp": "Opción Eliminar",
-                "deleteOpHelper": "¿Estás seguro de que quieres eliminar esta opción?",
-                "deleteOpBtn": "Eliminar esta opción",
-                "components": {
-                    "ROpOptionChoice": {
-                        "chName": "Nombre de elección",
-                        "chNameIn": "Nombre de elección en",
-                        "required": "Requerida"
-                    },
-                    "ROpOptionSelector": {
-                        "one": "Una",
-                        "many": "Muchas",
-                        "custom": "Disfraz",
-                        "opChoiches": "Opciones de opciones",
-                        "min": "Mínimo",
-                        "free": "Gratis",
-                        "max": "Máximo",
-                        "costAboveLimit": "Costo de elección por encima del límite gratuito",
-                        "choooseManyHelper": "El cliente puede elegir muchas opciones",
-                        "chooseOneHelper": "El cliente puede elegir solo una opción"
-                    }
-                }
-            },
-            "ROpPastOrdersList": {
-                "components": {
-                    "ROpOrderCard": {
-                        "date": "Fecha :",
-                        "totalCost": "Coste total :",
-                        "waiting": "Esperando",
-                        "delivered": "Entregada",
-                        "canceled": "Cancelada"
-                    }
-                },
-                "incomingOrders": "Órdenes entrantes",
-                "pastButton": "ver pasadas",
-                "currentOrders": "Órdenes actuales",
-                "pastOrders": "Órdenes pasadas",
-                "offlineTitle": "Estas desconectado",
-                "offlineBody": "Enciende para ver las órdenes entrantes"
-            },
-            "ROpMenuView": {
-                "menu": "Menú",
-                "addCategory": "Añadir categoría",
-                "addItem": "Añadir artículo",
-                "categories": "Categorías",
-                "reorder": "Reordenar",
-                "saveOrder": "Guardar pedido",
-                "myItems": "Mis cosas",
-                "specials": "Especiales",
-                "noCategory": "Ninguna Categoria",
-                "cancelTitle": "Cancelar reordenar",
-                "prCancelBtn": "Sí, cancelar reorden",
-                "cancelHelperText": "¿Estás seguro de que quieres cancelar el proceso de reorden?",
-                "components": {
-                    "ROpSpecialsComponent": {
-                        "currentSp": "Especiales actuales",
-                        "recentSp": "Especiales viejos"
-                    },
-                    "ROpItemCard": {
-                        "category": "Categoría",
-                        "available": "Disponible",
-                        "itemStatus": "Estado del artículo"
-                    },
-                    "ROpCategoryItems": {
-                        "noItems": "No hay artículos",
-                        "editCatgeory": "Editar categoria",
-                        "deleteCatgeory": "Eliminar la categoría",
-                        "deleteTitle": "Eliminar la categoría",
-                        "deleteHelper": "¿Estás seguro de que quieres eliminar esta categoría?",
-                        "deleteBtn": "Sí, eliminar la categoría"
-
-                    }
-
-                }
-            },
-            "ROpPickDriverView": {
-                "components": {
-                    "ROpSelfDeliveryCard": {
-                        "selfDelivery": "Autoentrega",
-                        "assign": "Asignar"
-                    },
-                    "ROpDriverSelectCard": {
-                        "available": "Disponible",
-                        "unavailable": "Indisponible",
-                        "assign": "Asignar"
-                    }
-                },
-                "pick": "Seleccionar conductor",
-                "fwdMezcalmos": "Avanzar a MezCalmos",
-                "assigning": "Asignación del controlador ..."
-
-            },
-            "ROpDriversView": {
-                "components": {
-                    "ROpListDriverCard": {
-                        "available": "Disponible",
-                        "unavailable": "Indisponible",
-                        "rmBtn": "Sí, retire el controlador",
-                        "rmTitle": "Eliminar el controlador",
-                        "rmText": "¿Estás seguro de que quieres eliminar este controlador?"
-                    }
-                },
-                "drivers": "Conductoras",
-                "falseTitle": "Active la entrega de autocontrol para entregar con sus propios controladores",
-                "falseDesc": "Vaya a Perfil> En atajos, active la entrega de sí mismo",
-                "trueTitle": "Controle su entrega agregando sus propios controladores",
-                "trueDesc": "Autorice los controladores agregándolos usando correo electrónico o número de teléfono (deben haber creado una cuenta con nuestra aplicación de entrega)",
-                "assDrivers": "Conductores asociados",
-                "addDriver": "Agregar controlador",
-                "newDv": "Nuevo conductor",
-                "phoneOrEmail": "Número de teléfono o correo electrónico",
-                "cancel": "Cancelar"
-            },
-            "ROpTabsViewView": {
-                "orders": "Pedidos",
-                "menu": "Menú",
-                "drivers": "Conductoras",
-                "profile": "Perfil"
-            },
-            "ROpDashboardPage": {
-                "openTitle": "Disponibilidad de restaurantes",
-                "openSubtitle": "Esto cerrará su restaurante indefinidamente",
-                "settings": "Ajustes",
-                "restInfo": "Informacións",
-                "schedule": "Horas Laborales",
-                "payments": "Pagos",
-                "reviews": "Reseñas",
-                "shortcuts": "Atajos",
-                "shareRest": "Compartir restaurante",
-                "selfDvTitle": "Entrega",
-                "selfDvDesc": "Controle sus propias entregas.",
-                "privacyPolicies": "Políticas de privacidad",
-                "logout": "Cerrar sesión"
-            },
-            "ROpEditInfoView": {
-                "controllers": {
-                    "ROpEditInfoController": {
-                        "error": "error",
-                        "selectPrimaryFirst": "Seleccione primero el idioma primario",
-                        "dashboard": "Tablero",
-                        "informations": "Información",
-                        "reviews": "Reseñas",
-                        "schedule": "Horas Laborales",
-                        "payments": "Pagos"
-
-                    }
-                },
-                "components": {
-                    "ROpLanguageSelectorComponent": {
-                        "none": "Ninguna",
-                        "errorText": "Seleccione el idioma"
-                    },
-                    "ROpAcceptedPayments": {
-                        "bankName": "Nombre del banco",
-                        "bankNumber": "Número de cuenta",
-                        "bankTitle": "Información de la cuenta bancaria",
-                        "confirm": "Confirmar",
-                        "cancel": "Cancelar",
-                        "error": "Error",
-                        "bankTransfer": "Transferencia bancaria",
-                        "bankError": "El número de cuenta no es válido",
-                        "cash": "Dinero",
-                        "card": "Tarjeta",
-                        "requirements": "Requisitos",
-                        "acceptedPayments": "Pagos aceptados",
-                        "setup": "configurar",
-                        "fees": "Tarifa",
-                        "chargeCustomer": "cobrar tarifas de procesamiento del cliente",
-
-                        "setupHelper": "Gracias por la configuración, ahora puede recibir pagos, pero no podrá retirar dinero a su cuenta bancaria.",
-                        "reqs": "Requisitos",
-                        "emailId": "Identificación de correo",
-                        "empty": "Vacía",
-                        "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
-                    }
-                },
-                "ROpEditInfoView": {
-                    "saved":"Guardado",
-                    "savedText": "Su información ha sido guardada",
-                    "openTitle": "Disponibilidad de restaurantes",
-                    "openSubtitle": "Esto cerrará su restaurante indefinidamente",
-                    "restaurantName": "Nombre del restaurante",
-                    "nameErrorText": "Proporcione un nombre",
-                    "defaultLanguage": "Idioma predeterminado",
-                    "secondaryLanguage": "Lenguaje secundario",
-                    "description": "Descripción en",
-                    "location": "Ubicación",
-                    "saveInfo": "Guardar información",
-                    "components": {
-                        "ROpOpenClose": {
-                            "open": "Abierto",
-                            "closed": "Cerrada"
-                        }
-
-                    }
-                }
             }
           },
           "CurrentOrdersListScreen": {
@@ -2617,7 +1942,7 @@
         "newChoice": "Nueva elección",
         "required": "Requerida",
         "save": "Guardar elección",
-        "saved": "Salvado",
+        "saved": "Guardado",
         "savedText": "La elección se ha guardado con éxito",
         "added": "Agregada",
         "addedText": "La elección se ha agregado con éxito",
@@ -2918,7 +2243,7 @@
           }
         },
         "ROpEditInfoView": {
-          "saved": "Salvado",
+          "saved": "Guardado",
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",
