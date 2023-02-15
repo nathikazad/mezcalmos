@@ -117,9 +117,8 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                       icon: Icons.add,
                       onTap: () {
                         navigateToPickDriver(
-                            deliveryOrderId: viewController.order.inPickup
-                                ? viewController.order.fromCustomerDeliveryId
-                                : viewController.order.toCustomerDeliveryId,
+                            deliveryOrderId:
+                                viewController.order.deliveryOrderId,
                             showForwardButton: false);
                       },
                     )

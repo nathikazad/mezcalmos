@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/components/CustomerOrderCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
+import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -25,7 +28,7 @@ class CustomerPastOrdersList extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
-        () => viewController.pastOrders().length >= 1
+        () => viewController.pastOrders.length >= 1
             ? pastOrdersWidget()
             : _noPastOrdersWidget(context),
       ),
@@ -36,17 +39,17 @@ class CustomerPastOrdersList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        GroupedListView<Order, DateTime>(
+        GroupedListView<MinimalOrder, DateTime>(
           shrinkWrap: true,
-          elements: viewController.pastOrders(),
-          groupBy: (Order element) => DateTime(element.orderTime.year,
+          elements: viewController.pastOrders,
+          groupBy: (MinimalOrder element) => DateTime(element.orderTime.year,
               element.orderTime.month, element.orderTime.day),
           groupComparator: (DateTime value1, DateTime value2) =>
               value2.compareTo(value1),
-          itemComparator: (Order element1, Order element2) =>
+          itemComparator: (MinimalOrder element1, MinimalOrder element2) =>
               element2.orderTime.compareTo(element1.orderTime),
           physics: NeverScrollableScrollPhysics(),
-          groupHeaderBuilder: (Order element) {
+          groupHeaderBuilder: (MinimalOrder element) {
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
@@ -55,15 +58,24 @@ class CustomerPastOrdersList extends StatelessWidget {
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
-                style: txt.headline3,
+                style: txt.displaySmall,
               ),
             );
           },
           separator: SizedBox(
             height: 5,
           ),
-          itemBuilder: (BuildContext context, Order element) {
-            return CustomerOrderCard(order: element);
+          itemBuilder: (BuildContext context, MinimalOrder element) {
+            return MinimalOrderCard(
+              order: element,
+              onTap: () {
+                if (element.orderType == OrderType.Laundry) {
+                  MezRouter.toNamed(getLaundryOrderRoute(element.id));
+                } else {
+                  MezRouter.toNamed(getRestaurantOrderRoute(element.id));
+                }
+              },
+            );
           },
         ),
       ],
@@ -80,7 +92,7 @@ class CustomerPastOrdersList extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(color: Colors.black),
           ),
         ],

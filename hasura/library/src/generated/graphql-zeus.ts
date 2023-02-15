@@ -1139,6 +1139,8 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 }>;
 	/** columns and relationships of "customer.minimal_order" */
 ["customer_minimal_order"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	image?:true,
 	in_process?:true,
@@ -1147,6 +1149,7 @@ count?: [{	columns?:ValueTypes["customer_favourited_item_select_column"][],	dist
 	order_type?:true,
 	payment_type?:true,
 	status?:true,
+	to_address?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1173,6 +1176,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 }>;
 	/** aggregate avg on columns */
 ["customer_minimal_order_avg_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
@@ -1182,6 +1187,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	_and?:ValueTypes["customer_minimal_order_bool_exp"][],
 	_not?:ValueTypes["customer_minimal_order_bool_exp"],
 	_or?:ValueTypes["customer_minimal_order_bool_exp"][],
+	customer_id?:ValueTypes["Int_comparison_exp"],
+	delivery_cost?:ValueTypes["money_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	image?:ValueTypes["String_comparison_exp"],
 	in_process?:ValueTypes["Boolean_comparison_exp"],
@@ -1190,17 +1197,22 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:ValueTypes["String_comparison_exp"],
 	payment_type?:ValueTypes["String_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
+	to_address?:ValueTypes["String_comparison_exp"],
 	total_cost?:ValueTypes["money_comparison_exp"]
 };
 	/** unique or primary key constraints on table "customer.minimal_order" */
 ["customer_minimal_order_constraint"]:customer_minimal_order_constraint;
 	/** input type for incrementing numeric columns in table "customer.minimal_order" */
 ["customer_minimal_order_inc_input"]: {
+	customer_id?:number,
+	delivery_cost?:ValueTypes["money"],
 	id?:number,
 	total_cost?:ValueTypes["money"]
 };
 	/** input type for inserting data into table "customer.minimal_order" */
 ["customer_minimal_order_insert_input"]: {
+	customer_id?:number,
+	delivery_cost?:ValueTypes["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -1209,10 +1221,13 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:ValueTypes["money"]
 };
 	/** aggregate max on columns */
 ["customer_minimal_order_max_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	image?:true,
 	name?:true,
@@ -1220,11 +1235,14 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:true,
 	payment_type?:true,
 	status?:true,
+	to_address?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregate min on columns */
 ["customer_minimal_order_min_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	image?:true,
 	name?:true,
@@ -1232,6 +1250,7 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:true,
 	payment_type?:true,
 	status?:true,
+	to_address?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
@@ -1251,6 +1270,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 };
 	/** Ordering options when selecting data from "customer.minimal_order". */
 ["customer_minimal_order_order_by"]: {
+	customer_id?:ValueTypes["order_by"],
+	delivery_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	image?:ValueTypes["order_by"],
 	in_process?:ValueTypes["order_by"],
@@ -1259,6 +1280,7 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:ValueTypes["order_by"],
 	payment_type?:ValueTypes["order_by"],
 	status?:ValueTypes["order_by"],
+	to_address?:ValueTypes["order_by"],
 	total_cost?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: customer.minimal_order */
@@ -1270,6 +1292,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 ["customer_minimal_order_select_column"]:customer_minimal_order_select_column;
 	/** input type for updating data in table "customer.minimal_order" */
 ["customer_minimal_order_set_input"]: {
+	customer_id?:number,
+	delivery_cost?:ValueTypes["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -1278,22 +1302,29 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:ValueTypes["money"]
 };
 	/** aggregate stddev on columns */
 ["customer_minimal_order_stddev_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_pop on columns */
 ["customer_minimal_order_stddev_pop_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregate stddev_samp on columns */
 ["customer_minimal_order_stddev_samp_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
@@ -1307,6 +1338,8 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 };
 	/** Initial value of the column from where the streaming should start */
 ["customer_minimal_order_stream_cursor_value_input"]: {
+	customer_id?:number,
+	delivery_cost?:ValueTypes["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -1315,10 +1348,13 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:ValueTypes["money"]
 };
 	/** aggregate sum on columns */
 ["customer_minimal_order_sum_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
@@ -1335,24 +1371,30 @@ count?: [{	columns?:ValueTypes["customer_minimal_order_select_column"][],	distin
 };
 	/** aggregate var_pop on columns */
 ["customer_minimal_order_var_pop_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregate var_samp on columns */
 ["customer_minimal_order_var_samp_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	/** aggregate variance on columns */
 ["customer_minimal_order_variance_fields"]: AliasType<{
+	customer_id?:true,
+	delivery_cost?:true,
 	id?:true,
 	total_cost?:true,
 		__typename?: true
 }>;
 	["customer_minimal_orders_args"]: {
-	customer_id?:number
+	cus_id?:number
 };
 	/** Customer's saved locations */
 ["customer_saved_location"]: AliasType<{
@@ -2000,8 +2042,6 @@ count?: [{	columns?:ValueTypes["customer_stripe_info_select_column"][],	distinct
 }>;
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: AliasType<{
-	/** An object relationship */
-	delivery_details?:ValueTypes["delivery_details"],
 	delivery_details_id?:true,
 delivery_operators?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["delivery_operator_select_column"][],	/** limit the number of rows returned */
@@ -2055,7 +2095,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	_and?:ValueTypes["delivery_company_bool_exp"][],
 	_not?:ValueTypes["delivery_company_bool_exp"],
 	_or?:ValueTypes["delivery_company_bool_exp"][],
-	delivery_details?:ValueTypes["delivery_details_bool_exp"],
 	delivery_details_id?:ValueTypes["Int_comparison_exp"],
 	delivery_operators?:ValueTypes["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_bool_exp"],
@@ -2074,7 +2113,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
-	delivery_details?:ValueTypes["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:ValueTypes["delivery_operator_arr_rel_insert_input"],
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
@@ -2120,7 +2158,6 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
-	delivery_details?:ValueTypes["delivery_details_order_by"],
 	delivery_details_id?:ValueTypes["order_by"],
 	delivery_operators_aggregate?:ValueTypes["delivery_operator_aggregate_order_by"],
 	details?:ValueTypes["service_provider_details_order_by"],
@@ -19163,6 +19200,8 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "customer.minimal_order" */
 ["customer_minimal_order"]: {
 		__typename?: "customer_minimal_order";
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
 			id?:number,
 			image?:string,
 			in_process?:boolean,
@@ -19171,6 +19210,7 @@ the end). throws an error if top level container is not an array */
 			order_type?:string,
 			payment_type?:string,
 			status?:string,
+			to_address?:string,
 			total_cost?:PartialObjects["money"]
 	},
 	/** aggregated selection of "customer.minimal_order" */
@@ -19197,6 +19237,8 @@ the end). throws an error if top level container is not an array */
 	/** aggregate avg on columns */
 ["customer_minimal_order_avg_fields"]: {
 		__typename?: "customer_minimal_order_avg_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
@@ -19205,6 +19247,8 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["customer_minimal_order_bool_exp"][],
 	_not?:PartialObjects["customer_minimal_order_bool_exp"],
 	_or?:PartialObjects["customer_minimal_order_bool_exp"][],
+	customer_id?:PartialObjects["Int_comparison_exp"],
+	delivery_cost?:PartialObjects["money_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	image?:PartialObjects["String_comparison_exp"],
 	in_process?:PartialObjects["Boolean_comparison_exp"],
@@ -19213,17 +19257,22 @@ the end). throws an error if top level container is not an array */
 	order_type?:PartialObjects["String_comparison_exp"],
 	payment_type?:PartialObjects["String_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
+	to_address?:PartialObjects["String_comparison_exp"],
 	total_cost?:PartialObjects["money_comparison_exp"]
 },
 	/** unique or primary key constraints on table "customer.minimal_order" */
 ["customer_minimal_order_constraint"]:customer_minimal_order_constraint,
 	/** input type for incrementing numeric columns in table "customer.minimal_order" */
 ["customer_minimal_order_inc_input"]: {
+	customer_id?:number,
+	delivery_cost?:PartialObjects["money"],
 	id?:number,
 	total_cost?:PartialObjects["money"]
 },
 	/** input type for inserting data into table "customer.minimal_order" */
 ["customer_minimal_order_insert_input"]: {
+	customer_id?:number,
+	delivery_cost?:PartialObjects["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -19232,11 +19281,14 @@ the end). throws an error if top level container is not an array */
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:PartialObjects["money"]
 },
 	/** aggregate max on columns */
 ["customer_minimal_order_max_fields"]: {
 		__typename?: "customer_minimal_order_max_fields";
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
 			id?:number,
 			image?:string,
 			name?:string,
@@ -19244,11 +19296,14 @@ the end). throws an error if top level container is not an array */
 			order_type?:string,
 			payment_type?:string,
 			status?:string,
+			to_address?:string,
 			total_cost?:PartialObjects["money"]
 	},
 	/** aggregate min on columns */
 ["customer_minimal_order_min_fields"]: {
 		__typename?: "customer_minimal_order_min_fields";
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
 			id?:number,
 			image?:string,
 			name?:string,
@@ -19256,6 +19311,7 @@ the end). throws an error if top level container is not an array */
 			order_type?:string,
 			payment_type?:string,
 			status?:string,
+			to_address?:string,
 			total_cost?:PartialObjects["money"]
 	},
 	/** response of any mutation on the table "customer.minimal_order" */
@@ -19274,6 +19330,8 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "customer.minimal_order". */
 ["customer_minimal_order_order_by"]: {
+	customer_id?:PartialObjects["order_by"],
+	delivery_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	image?:PartialObjects["order_by"],
 	in_process?:PartialObjects["order_by"],
@@ -19282,6 +19340,7 @@ the end). throws an error if top level container is not an array */
 	order_type?:PartialObjects["order_by"],
 	payment_type?:PartialObjects["order_by"],
 	status?:PartialObjects["order_by"],
+	to_address?:PartialObjects["order_by"],
 	total_cost?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: customer.minimal_order */
@@ -19293,6 +19352,8 @@ the end). throws an error if top level container is not an array */
 ["customer_minimal_order_select_column"]:customer_minimal_order_select_column,
 	/** input type for updating data in table "customer.minimal_order" */
 ["customer_minimal_order_set_input"]: {
+	customer_id?:number,
+	delivery_cost?:PartialObjects["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -19301,23 +19362,30 @@ the end). throws an error if top level container is not an array */
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:PartialObjects["money"]
 },
 	/** aggregate stddev on columns */
 ["customer_minimal_order_stddev_fields"]: {
 		__typename?: "customer_minimal_order_stddev_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
 	/** aggregate stddev_pop on columns */
 ["customer_minimal_order_stddev_pop_fields"]: {
 		__typename?: "customer_minimal_order_stddev_pop_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
 	/** aggregate stddev_samp on columns */
 ["customer_minimal_order_stddev_samp_fields"]: {
 		__typename?: "customer_minimal_order_stddev_samp_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
@@ -19330,6 +19398,8 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["customer_minimal_order_stream_cursor_value_input"]: {
+	customer_id?:number,
+	delivery_cost?:PartialObjects["money"],
 	id?:number,
 	image?:string,
 	in_process?:boolean,
@@ -19338,11 +19408,14 @@ the end). throws an error if top level container is not an array */
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:PartialObjects["money"]
 },
 	/** aggregate sum on columns */
 ["customer_minimal_order_sum_fields"]: {
 		__typename?: "customer_minimal_order_sum_fields";
+			customer_id?:number,
+			delivery_cost?:PartialObjects["money"],
 			id?:number,
 			total_cost?:PartialObjects["money"]
 	},
@@ -19359,23 +19432,29 @@ the end). throws an error if top level container is not an array */
 	/** aggregate var_pop on columns */
 ["customer_minimal_order_var_pop_fields"]: {
 		__typename?: "customer_minimal_order_var_pop_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
 	/** aggregate var_samp on columns */
 ["customer_minimal_order_var_samp_fields"]: {
 		__typename?: "customer_minimal_order_var_samp_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
 	/** aggregate variance on columns */
 ["customer_minimal_order_variance_fields"]: {
 		__typename?: "customer_minimal_order_variance_fields";
+			customer_id?:number,
+			delivery_cost?:number,
 			id?:number,
 			total_cost?:number
 	},
 	["customer_minimal_orders_args"]: {
-	customer_id?:number
+	cus_id?:number
 },
 	/** Customer's saved locations */
 ["customer_saved_location"]: {
@@ -20023,8 +20102,6 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "delivery.company" */
 ["delivery_company"]: {
 		__typename?: "delivery_company";
-			/** An object relationship */
-	delivery_details?:PartialObjects["delivery_details"],
 			delivery_details_id?:number,
 			/** An array relationship */
 	delivery_operators?:PartialObjects["delivery_operator"][],
@@ -20069,7 +20146,6 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["delivery_company_bool_exp"][],
 	_not?:PartialObjects["delivery_company_bool_exp"],
 	_or?:PartialObjects["delivery_company_bool_exp"][],
-	delivery_details?:PartialObjects["delivery_details_bool_exp"],
 	delivery_details_id?:PartialObjects["Int_comparison_exp"],
 	delivery_operators?:PartialObjects["delivery_operator_bool_exp"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_bool_exp"],
@@ -20088,7 +20164,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "delivery.company" */
 ["delivery_company_insert_input"]: {
-	delivery_details?:PartialObjects["delivery_details_obj_rel_insert_input"],
 	delivery_details_id?:number,
 	delivery_operators?:PartialObjects["delivery_operator_arr_rel_insert_input"],
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
@@ -20134,7 +20209,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "delivery.company". */
 ["delivery_company_order_by"]: {
-	delivery_details?:PartialObjects["delivery_details_order_by"],
 	delivery_details_id?:PartialObjects["order_by"],
 	delivery_operators_aggregate?:PartialObjects["delivery_operator_aggregate_order_by"],
 	details?:PartialObjects["service_provider_details_order_by"],
@@ -35971,6 +36045,8 @@ export type customer_favourited_item_variance_fields = {
 /** columns and relationships of "customer.minimal_order" */
 export type customer_minimal_order = {
 	__typename?: "customer_minimal_order",
+	customer_id:number,
+	delivery_cost:money,
 	id:number,
 	image:string,
 	in_process:boolean,
@@ -35979,6 +36055,7 @@ export type customer_minimal_order = {
 	order_type:string,
 	payment_type:string,
 	status:string,
+	to_address?:string,
 	total_cost:money
 }
 
@@ -36008,6 +36085,8 @@ export type customer_minimal_order_aggregate_fields = {
 /** aggregate avg on columns */
 export type customer_minimal_order_avg_fields = {
 	__typename?: "customer_minimal_order_avg_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36017,6 +36096,8 @@ export type customer_minimal_order_bool_exp = {
 		_and?:customer_minimal_order_bool_exp[],
 	_not?:customer_minimal_order_bool_exp,
 	_or?:customer_minimal_order_bool_exp[],
+	customer_id?:Int_comparison_exp,
+	delivery_cost?:money_comparison_exp,
 	id?:Int_comparison_exp,
 	image?:String_comparison_exp,
 	in_process?:Boolean_comparison_exp,
@@ -36025,6 +36106,7 @@ export type customer_minimal_order_bool_exp = {
 	order_type?:String_comparison_exp,
 	payment_type?:String_comparison_exp,
 	status?:String_comparison_exp,
+	to_address?:String_comparison_exp,
 	total_cost?:money_comparison_exp
 }
 
@@ -36035,13 +36117,17 @@ export enum customer_minimal_order_constraint {
 
 /** input type for incrementing numeric columns in table "customer.minimal_order" */
 export type customer_minimal_order_inc_input = {
-		id?:number,
+		customer_id?:number,
+	delivery_cost?:money,
+	id?:number,
 	total_cost?:money
 }
 
 /** input type for inserting data into table "customer.minimal_order" */
 export type customer_minimal_order_insert_input = {
-		id?:number,
+		customer_id?:number,
+	delivery_cost?:money,
+	id?:number,
 	image?:string,
 	in_process?:boolean,
 	name?:string,
@@ -36049,12 +36135,15 @@ export type customer_minimal_order_insert_input = {
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:money
 }
 
 /** aggregate max on columns */
 export type customer_minimal_order_max_fields = {
 	__typename?: "customer_minimal_order_max_fields",
+	customer_id?:number,
+	delivery_cost?:money,
 	id?:number,
 	image?:string,
 	name?:string,
@@ -36062,12 +36151,15 @@ export type customer_minimal_order_max_fields = {
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:money
 }
 
 /** aggregate min on columns */
 export type customer_minimal_order_min_fields = {
 	__typename?: "customer_minimal_order_min_fields",
+	customer_id?:number,
+	delivery_cost?:money,
 	id?:number,
 	image?:string,
 	name?:string,
@@ -36075,6 +36167,7 @@ export type customer_minimal_order_min_fields = {
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:money
 }
 
@@ -36096,7 +36189,9 @@ export type customer_minimal_order_on_conflict = {
 
 /** Ordering options when selecting data from "customer.minimal_order". */
 export type customer_minimal_order_order_by = {
-		id?:order_by,
+		customer_id?:order_by,
+	delivery_cost?:order_by,
+	id?:order_by,
 	image?:order_by,
 	in_process?:order_by,
 	name?:order_by,
@@ -36104,6 +36199,7 @@ export type customer_minimal_order_order_by = {
 	order_type?:order_by,
 	payment_type?:order_by,
 	status?:order_by,
+	to_address?:order_by,
 	total_cost?:order_by
 }
 
@@ -36115,6 +36211,8 @@ export type customer_minimal_order_pk_columns_input = {
 
 /** select columns of table "customer.minimal_order" */
 export enum customer_minimal_order_select_column {
+	customer_id = "customer_id",
+	delivery_cost = "delivery_cost",
 	id = "id",
 	image = "image",
 	in_process = "in_process",
@@ -36123,12 +36221,15 @@ export enum customer_minimal_order_select_column {
 	order_type = "order_type",
 	payment_type = "payment_type",
 	status = "status",
+	to_address = "to_address",
 	total_cost = "total_cost"
 }
 
 /** input type for updating data in table "customer.minimal_order" */
 export type customer_minimal_order_set_input = {
-		id?:number,
+		customer_id?:number,
+	delivery_cost?:money,
+	id?:number,
 	image?:string,
 	in_process?:boolean,
 	name?:string,
@@ -36136,12 +36237,15 @@ export type customer_minimal_order_set_input = {
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:money
 }
 
 /** aggregate stddev on columns */
 export type customer_minimal_order_stddev_fields = {
 	__typename?: "customer_minimal_order_stddev_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36149,6 +36253,8 @@ export type customer_minimal_order_stddev_fields = {
 /** aggregate stddev_pop on columns */
 export type customer_minimal_order_stddev_pop_fields = {
 	__typename?: "customer_minimal_order_stddev_pop_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36156,6 +36262,8 @@ export type customer_minimal_order_stddev_pop_fields = {
 /** aggregate stddev_samp on columns */
 export type customer_minimal_order_stddev_samp_fields = {
 	__typename?: "customer_minimal_order_stddev_samp_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36170,7 +36278,9 @@ export type customer_minimal_order_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type customer_minimal_order_stream_cursor_value_input = {
-		id?:number,
+		customer_id?:number,
+	delivery_cost?:money,
+	id?:number,
 	image?:string,
 	in_process?:boolean,
 	name?:string,
@@ -36178,18 +36288,23 @@ export type customer_minimal_order_stream_cursor_value_input = {
 	order_type?:string,
 	payment_type?:string,
 	status?:string,
+	to_address?:string,
 	total_cost?:money
 }
 
 /** aggregate sum on columns */
 export type customer_minimal_order_sum_fields = {
 	__typename?: "customer_minimal_order_sum_fields",
+	customer_id?:number,
+	delivery_cost?:money,
 	id?:number,
 	total_cost?:money
 }
 
 /** update columns of table "customer.minimal_order" */
 export enum customer_minimal_order_update_column {
+	customer_id = "customer_id",
+	delivery_cost = "delivery_cost",
 	id = "id",
 	image = "image",
 	in_process = "in_process",
@@ -36198,6 +36313,7 @@ export enum customer_minimal_order_update_column {
 	order_type = "order_type",
 	payment_type = "payment_type",
 	status = "status",
+	to_address = "to_address",
 	total_cost = "total_cost"
 }
 
@@ -36213,6 +36329,8 @@ export type customer_minimal_order_updates = {
 /** aggregate var_pop on columns */
 export type customer_minimal_order_var_pop_fields = {
 	__typename?: "customer_minimal_order_var_pop_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36220,6 +36338,8 @@ export type customer_minimal_order_var_pop_fields = {
 /** aggregate var_samp on columns */
 export type customer_minimal_order_var_samp_fields = {
 	__typename?: "customer_minimal_order_var_samp_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
@@ -36227,12 +36347,14 @@ export type customer_minimal_order_var_samp_fields = {
 /** aggregate variance on columns */
 export type customer_minimal_order_variance_fields = {
 	__typename?: "customer_minimal_order_variance_fields",
+	customer_id?:number,
+	delivery_cost?:number,
 	id?:number,
 	total_cost?:number
 }
 
 export type customer_minimal_orders_args = {
-		customer_id?:number
+		cus_id?:number
 }
 
 /** Customer's saved locations */
@@ -37026,8 +37148,6 @@ export type customer_stripe_info_variance_fields = {
 /** columns and relationships of "delivery.company" */
 export type delivery_company = {
 	__typename?: "delivery_company",
-	/** An object relationship */
-	delivery_details:delivery_details,
 	delivery_details_id:number,
 	/** An array relationship */
 	delivery_operators:delivery_operator[],
@@ -37076,7 +37196,6 @@ export type delivery_company_bool_exp = {
 		_and?:delivery_company_bool_exp[],
 	_not?:delivery_company_bool_exp,
 	_or?:delivery_company_bool_exp[],
-	delivery_details?:delivery_details_bool_exp,
 	delivery_details_id?:Int_comparison_exp,
 	delivery_operators?:delivery_operator_bool_exp,
 	delivery_operators_aggregate?:delivery_operator_aggregate_bool_exp,
@@ -37102,8 +37221,7 @@ export type delivery_company_inc_input = {
 
 /** input type for inserting data into table "delivery.company" */
 export type delivery_company_insert_input = {
-		delivery_details?:delivery_details_obj_rel_insert_input,
-	delivery_details_id?:number,
+		delivery_details_id?:number,
 	delivery_operators?:delivery_operator_arr_rel_insert_input,
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
@@ -37154,8 +37272,7 @@ export type delivery_company_on_conflict = {
 
 /** Ordering options when selecting data from "delivery.company". */
 export type delivery_company_order_by = {
-		delivery_details?:delivery_details_order_by,
-	delivery_details_id?:order_by,
+		delivery_details_id?:order_by,
 	delivery_operators_aggregate?:delivery_operator_aggregate_order_by,
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
@@ -56218,6 +56335,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
+		customer_id:{
+			type:"Int_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -56266,6 +56395,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		to_address:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		total_cost:{
 			type:"money_comparison_exp",
 			array:false,
@@ -56275,6 +56410,18 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	customer_minimal_order_constraint: "enum",
 	customer_minimal_order_inc_input:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -56289,6 +56436,18 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_minimal_order_insert_input:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -56332,6 +56491,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -56365,6 +56530,18 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_minimal_order_order_by:{
+		customer_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -56408,6 +56585,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_address:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -56436,6 +56619,18 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	customer_minimal_order_select_column: "enum",
 	customer_minimal_order_set_input:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -56479,6 +56674,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -56506,6 +56707,18 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_minimal_order_stream_cursor_value_input:{
+		customer_id:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		delivery_cost:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		id:{
 			type:"Int",
 			array:false,
@@ -56549,6 +56762,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		status:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		to_address:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -56583,7 +56802,7 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	customer_minimal_orders_args:{
-		customer_id:{
+		cus_id:{
 			type:"Int",
 			array:false,
 			arrayRequired:false,
@@ -57840,12 +58059,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
-		delivery_details:{
-			type:"delivery_details_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		delivery_details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -57911,12 +58124,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_insert_input:{
-		delivery_details:{
-			type:"delivery_details_obj_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		delivery_details_id:{
 			type:"Int",
 			array:false,
@@ -57989,12 +58196,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_company_order_by:{
-		delivery_details:{
-			type:"delivery_details_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		delivery_details_id:{
 			type:"order_by",
 			array:false,
@@ -103474,6 +103675,8 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_item_id:"Float"
 	},
 	customer_minimal_order:{
+		customer_id:"Int",
+		delivery_cost:"money",
 		id:"Int",
 		image:"String",
 		in_process:"Boolean",
@@ -103482,6 +103685,7 @@ export const ReturnTypes: Record<string,any> = {
 		order_type:"String",
 		payment_type:"String",
 		status:"String",
+		to_address:"String",
 		total_cost:"money"
 	},
 	customer_minimal_order_aggregate:{
@@ -103502,10 +103706,14 @@ export const ReturnTypes: Record<string,any> = {
 		variance:"customer_minimal_order_variance_fields"
 	},
 	customer_minimal_order_avg_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_max_fields:{
+		customer_id:"Int",
+		delivery_cost:"money",
 		id:"Int",
 		image:"String",
 		name:"String",
@@ -103513,9 +103721,12 @@ export const ReturnTypes: Record<string,any> = {
 		order_type:"String",
 		payment_type:"String",
 		status:"String",
+		to_address:"String",
 		total_cost:"money"
 	},
 	customer_minimal_order_min_fields:{
+		customer_id:"Int",
+		delivery_cost:"money",
 		id:"Int",
 		image:"String",
 		name:"String",
@@ -103523,6 +103734,7 @@ export const ReturnTypes: Record<string,any> = {
 		order_type:"String",
 		payment_type:"String",
 		status:"String",
+		to_address:"String",
 		total_cost:"money"
 	},
 	customer_minimal_order_mutation_response:{
@@ -103530,30 +103742,44 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"customer_minimal_order"
 	},
 	customer_minimal_order_stddev_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_stddev_pop_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_stddev_samp_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_sum_fields:{
+		customer_id:"Int",
+		delivery_cost:"money",
 		id:"Int",
 		total_cost:"money"
 	},
 	customer_minimal_order_var_pop_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_var_samp_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
 	customer_minimal_order_variance_fields:{
+		customer_id:"Float",
+		delivery_cost:"Float",
 		id:"Float",
 		total_cost:"Float"
 	},
@@ -103757,7 +103983,6 @@ export const ReturnTypes: Record<string,any> = {
 		sp_id:"Float"
 	},
 	delivery_company:{
-		delivery_details:"delivery_details",
 		delivery_details_id:"Int",
 		delivery_operators:"delivery_operator",
 		delivery_operators_aggregate:"delivery_operator_aggregate",

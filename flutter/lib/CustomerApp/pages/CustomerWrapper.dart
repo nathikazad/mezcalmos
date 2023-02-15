@@ -36,40 +36,32 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
       ['pages']['CustomerWrapper'];
 
-  /// AuthController
   AuthController auth = Get.find<AuthController>();
   CustomerOrderController? _orderController;
 
   AppLifeCycleController appLifeCycleController =
       Get.find<AppLifeCycleController>();
 
-  /// appClosedTime
   DateTime? appClosedTime;
 
-  /// DeepLinkHandler
   final DeepLinkHandler _deepLinkHandler = DeepLinkHandler();
 
-  /// _notificationsStreamListener
   StreamSubscription<MezNotification.Notification>?
       _notificationsStreamListener;
 
-  /// _locationStreamSub
   StreamSubscription<bool>? _locationStreamSub;
 
-  /// numberOfCurrentOrders
   RxInt numberOfCurrentOrders = RxInt(0);
 
-  /// _orderCountListener
   StreamSubscription<dynamic>? _orderCountListener;
 
-  /// _authStateChnagesListener
   StreamSubscription<dynamic>? _authStateChnagesListener;
 
   @override
   void initState() {
     super.initState();
     Get.put(TaxiController(), permanent: true);
-    // Get.put(CustomerCartController(), permanent: true);
+
     Get.put(CustomerOrderController(), permanent: true);
     _orderController = Get.find<CustomerOrderController>();
     WidgetsBinding.instance.addObserver(this);
@@ -77,9 +69,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       _doIfFireAuthUserIsNotNull();
     }
     startAuthListener();
-    //
 
-    /// Check if app was opened through a DeepLink
     Future.wait([_deepLinkHandler.startDynamicLinkCheckRoutine()]);
   }
 
@@ -123,21 +113,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               const SizedBox(height: 10),
-
               mezWelcomeContainer(
                 Theme.of(context).textTheme.displayMedium!,
               ),
-              //============================== description=============================
               mezDescription(txt.titleMedium!),
-
-              //============================Service title===================================
               const SizedBox(height: 10),
               mezServiceTitle(txt.displayMedium!),
-
-              //========================= list of services ===========================
               mezListOfServices(),
-              // Spacer(),
-              //  HomeFooterButtons(),
             ],
           ),
         ),
@@ -164,14 +146,12 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   Future<void> _doIfFireAuthUserIsNotNull() async {
     final String? userId = Get.find<AuthController>().fireAuthUser!.uid;
     _notificationsStreamListener = initializeShowNotificationsListener();
-    // listening for notification Permissions!
-    // listenForLocationPermissions();
+
     Get.find<ForegroundNotificationsController>()
         .startListeningForNotificationsFromFirebase(
             customerNotificationsNode(userId!), customerNotificationHandler);
     if (isCurrentRoute(kHomeRoute)) {
-      // ignore: unawaited_futures
-      Future.microtask(() {
+      await Future.microtask(() {
         _navigateToOrdersIfNecessary();
       });
     }
@@ -181,26 +161,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       appClosedTime = DateTime.now();
     });
   }
-
-  // void checkTaxiCurrentOrdersAndNavigate() {
-  //   _orderController = Get.find<OrderController>();
-  //   // return;
-  //   final num noOfCurrentTaxiOrders = _orderController
-  //           ?.currentOrders()
-  //           .where((Order currentOrder) =>
-  //               currentOrder.orderType == OrderType.Taxi)
-  //           .length ??
-  //       0;
-  //   if (noOfCurrentTaxiOrders == 0) {
-  //     MezRouter.toNamed<void>(kTaxiRequestRoute);
-  //   } else {
-  //     final int orderId = _orderController!.currentOrders
-  //         .firstWhere(
-  //             (Order currentOrder) => currentOrder.orderType == OrderType.Taxi)
-  //         .orderId;
-  //     MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
-  //   }
-  // }
 
   Widget mezWelcomeContainer(TextStyle textStyle) {
     return Container(
@@ -242,9 +202,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
   Widget mezListOfServices() {
     return Column(
       children: [
-        //====================Taxi===================
-
-        //==================Food====================
         Obx(
           () => ServicesCard(
             title: "${_i18n()['food']["title"]}",
@@ -260,8 +217,6 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             },
           ),
         ),
-
-        //==================Laundry=================
         Obx(
           () => ServicesCard(
             title: "${_i18n()['laundry']["title"]}",
@@ -281,16 +236,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
           () => ServicesCard(
             title: "${_i18n()['taxi']["title"]}",
             url: "assets/images/customer/taxi/taxiService.png",
-            // subtitle: "${_i18n()['taxi']["subtitle"]}",
             subtitle: "${_i18n()["comingSoon"]}",
-            // onTap: () {
-            //   getServiceRoute(
-            //       orderType: OrderType.Taxi,
-            //       serviceRoute: kTaxiRequestRoute,
-            //       singleOrderRoute: (String orderId) {
-            //         MezRouter.toNamed<void>(getTaxiOrderRoute(orderId));
-            //       });
-            // },
           ),
         ),
       ],
@@ -303,33 +249,23 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       required void Function(int) singleOrderRoute}) async {
     if (Get.find<AuthController>().fireAuthUser != null &&
         _orderController != null) {
-      await _orderController!.fetchOrders();
-      if (_orderController!.hasOneOrder) {
-        //   MezRouter.toNamed(getLaundyOrderRoute(orders[0].orderId));
-        singleOrderRoute(_orderController!.hasOneOrderId!);
-      } else if (_orderController!.hasManyOrders) {
-        // ignore: unawaited_futures
-        MezRouter.toNamed<void>(kOrdersRoute);
+      if (_orderController!.firstOrderIdBasedOnType(orderType) != null) {
+        singleOrderRoute(_orderController!.firstOrderIdBasedOnType(orderType)!);
       } else {
-        // ignore: unawaited_futures
-        MezRouter.toNamed<void>(serviceRoute);
+        await MezRouter.toNamed<void>(serviceRoute);
       }
     } else {
-      // ignore: unawaited_futures
-      MezRouter.toNamed<void>(serviceRoute);
+      await MezRouter.toNamed<void>(serviceRoute);
     }
   }
 
-  // when app resumes check if there are current orders and if yes navigate to orders page
   Future<void> _navigateToOrdersIfNecessary() async {
     if (_orderController != null) {
-      await _orderController!.fetchOrders();
+      await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
-        // Restaurant
         if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
           popEverythingAndNavigateTo(
               getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
-          // Taxi
         } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
           popEverythingAndNavigateTo(
               getTaxiOrderRoute(_orderController!.hasOneOrderId!));
@@ -342,16 +278,4 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       }
     }
   }
-
-  // void listenForLocationPermissions() {
-  //   _locationStreamSub?.cancel();
-  //   _locationStreamSub = Get.find<LocationController>().locationPermissionStream
-  //       // .distinct()
-  //       .listen((bool locationPermission) {
-  //     if (locationPermission == false &&
-  //         Get.currentRoute != kLocationPermissionPage) {
-  //       MezRouter.toNamed<void>(kLocationPermissionPage);
-  //     }
-  //   });
-  // }
 }

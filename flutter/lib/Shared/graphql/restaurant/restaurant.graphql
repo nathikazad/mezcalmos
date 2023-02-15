@@ -75,7 +75,7 @@ query getOneRestaurant($id: Int!) {
         address
       }
       accepted_payments
-      stripe_info
+      # stripe_info
       name
       description {
         translations {
@@ -113,7 +113,7 @@ query getRestaurantAprroved($id: Int!) {
 query getRestaurantPaymentInfo($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
     details{ id
-      stripe_info
+      # stripe_info
       accepted_payments
     }
   }
@@ -166,7 +166,7 @@ mutation updateRestaurantInfo(
         address
       }
       accepted_payments
-      stripe_info
+      # stripe_info
       name
       schedule
       description {

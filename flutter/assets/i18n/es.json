@@ -5,6 +5,7 @@
             "contactUs": "Contáctenos",
             "savedCards": "Mis cartas"
         },
+        
         "components": {
             "Menu": {
                 "UserMenuComponent": {
@@ -710,7 +711,7 @@
                 "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
             },
             "GeneralPurposeHelper": {
-                "saved" : "Salvado",
+                "saved" : "Guardado",
                 "savedTitle" : "tu información ha sido guardada",
                 "yesCancel": "Sí, Cancelar pedido",
                 "no": "No",
@@ -767,7 +768,7 @@
                 "info" : "Información",
                 "schedule" : "Calendario",
                 "delivery" : "Entrega",
-                "save" : "Salvar",
+                "save" : "Guardar",
                 "next" :"Próxima",
                 "ok" : "OK",
                 "selectCompany": "Seleccione una empresa",
@@ -785,14 +786,14 @@
                 "numberError" : "por favor ingrese un número valido",
                 "preview" : "Avance",
                 "custDistance" : "Distancia del cliente",
-                "save" : "Salvar",
+                "save" : "Guardar",
                 "cost" : "Costo"
                 
             },
             "DeliverySettingsView": {
                 "DeliverySettingsView": {
                     "delivery": "Entrega",
-                    "save": "Salvar",
+                    "save": "Guardar",
                     "title": "¿Cómo le gustaría entregar?"
                 },
                 "components": {
@@ -856,8 +857,8 @@
                 "location" :"Localización",
                 "description" :"Descripción",
                 "info" : "Información",
-                "save" :"Salvar",
-                "saved" : "Salvado",
+                "save" :"Guardar",
+                "saved" : "Guardado",
                 "error" : "error",
                 "savedSuccess" : "Su información ha sido guardada con éxito"
             },
@@ -2023,7 +2024,7 @@
                 "newChoice" : "Nueva elección",
                 "required" : "Requerida",
                 "save" : "Guardar elección",
-                "saved" : "Salvado",
+                "saved" : "Guardado",
                 "savedText" : "La elección se ha guardado con éxito",
                 "added" : "Agregada",
                 "addedText" : "La elección se ha agregado con éxito",
@@ -2333,7 +2334,7 @@
                     }
                 },
                 "ROpEditInfoView": {
-                    "saved": "Salvado",
+                    "saved":"Guardado",
                     "savedText": "Su información ha sido guardada",
                     "openTitle": "Disponibilidad de restaurantes",
                     "openSubtitle": "Esto cerrará su restaurante indefinidamente",

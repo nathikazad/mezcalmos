@@ -41,18 +41,18 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 physics: NeverScrollableScrollPhysics(),
                 reverse: true,
-                itemCount: viewController.inProcessOrder.length,
+                itemCount: viewController.currentOrders.length,
                 itemBuilder: (BuildContext context, int index) {
                   return MinimalOrderCard(
-                    order: viewController.inProcessOrder[index],
+                    order: viewController.currentOrders[index],
                     onTap: () {
-                      if (viewController.inProcessOrder[index].orderType ==
+                      if (viewController.currentOrders[index].orderType ==
                           OrderType.Laundry) {
                         MezRouter.toNamed(getLaundryOrderRoute(
-                            viewController.inProcessOrder[index].id));
+                            viewController.currentOrders[index].id));
                       } else {
                         MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.inProcessOrder[index].id));
+                            viewController.currentOrders[index].id));
                       }
                     },
                   );

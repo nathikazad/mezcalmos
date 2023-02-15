@@ -40,10 +40,10 @@ Future<Laundry?> get_laundry_store_by_id(
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    if (data.details!.stripe_info != null) {
-      paymentInfo.stripe =
-          paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
-    }
+    // if (data.details!.stripe_info != null) {
+    //   paymentInfo.stripe =
+    //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
+    // }
     mezDbgPrint(
         "response data ====> ${response.data} 🧺🧺🧺 laundry data ${data.details?.schedule}");
     return Laundry(
@@ -297,10 +297,10 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
-    if (data.details!.stripe_info != null) {
-      paymentInfo.stripe =
-          paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
-    }
+    // if (data.details!.stripe_info != null) {
+    //   paymentInfo.stripe =
+    //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
+    // }
 
     return Laundry(
         languages: convertToLanguages(data.details!.language),

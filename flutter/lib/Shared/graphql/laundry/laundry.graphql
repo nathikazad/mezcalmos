@@ -35,7 +35,7 @@ query getLaundries {
         }
       }
       accepted_payments
-      stripe_info
+      # stripe_info
       # self_delivery
       open_status
       schedule
@@ -71,7 +71,7 @@ query getLaundryStoreById($id: Int!) {
       }
 
       accepted_payments
-      stripe_info
+      # stripe_info
       name
       description {
         translations {
@@ -133,7 +133,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
         address
       }
       accepted_payments
-      stripe_info
+      # stripe_info
       name
       schedule
       description {
