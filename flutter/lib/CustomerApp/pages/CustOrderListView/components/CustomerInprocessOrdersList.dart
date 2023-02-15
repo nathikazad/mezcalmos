@@ -23,7 +23,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green.withOpacity(0.3),
+      color: Color(0xFFE4F2E5),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
         () => Column(

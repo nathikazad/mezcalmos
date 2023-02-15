@@ -45,33 +45,32 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 15),
+      //  margin: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.option.name[userLanguage].toString().inCaps,
               style: Get.theme.textTheme.bodyText1),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: Text(
-                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
-              ),
-            ),
-          SizedBox(
-            height: 10,
-          ),
+          widget.option.optionType == OptionType.Custom
+              ? Container(
+                  //   margin: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                    style: Get.textTheme.bodyText2?.copyWith(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600),
+                  ),
+                )
+              : SizedBox(
+                  height: 0,
+                ),
           Column(
             children: List.generate(
-                widget.option.choices.length,
-                (int index) => optionChoiceCard(
-                      choice: widget.option.choices[index],
-                    )),
-          ),
-          SizedBox(
-            height: 10,
+              widget.option.choices.length,
+              (int index) => optionChoiceCard(
+                choice: widget.option.choices[index],
+              ),
+            ),
           ),
         ],
       ),
@@ -83,7 +82,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 15),
+      //  padding: const EdgeInsets.only(bottom: 2),
       child: Row(
         children: [
           Flexible(
@@ -139,20 +138,24 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
                 }),
           if (widget.option.optionType == OptionType.ChooseOne)
             _radioCircle(
-                value: widget.cartItem.value!.chosenChoices[optionId]
-                        ?.contains(choice) ??
-                    false,
-                onTap: (bool? v) {
-                  handleChoiceCheckBox(choice);
-                }),
+              value: widget.cartItem.value!.chosenChoices[optionId]
+                      ?.contains(choice) ??
+                  false,
+              onTap: (bool? v) {
+                handleChoiceCheckBox(choice);
+              },
+            ),
           if (widget.option.optionType == OptionType.Custom)
-            _selectCircle(
-                value: widget.cartItem.value!.chosenChoices[optionId]
-                        ?.contains(choice) ??
-                    false,
-                onTap: (bool? v) {
-                  handleChoiceCheckBox(choice);
-                }),
+            Container(
+              margin: EdgeInsets.only(bottom: 8),
+              child: _selectCircle(
+                  value: widget.cartItem.value!.chosenChoices[optionId]
+                          ?.contains(choice) ??
+                      false,
+                  onTap: (bool? v) {
+                    handleChoiceCheckBox(choice);
+                  }),
+            ),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
@@ -90,7 +91,7 @@ class _RestaurantsListOfItemsComponentState
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "\$${widget.item.cost.toString().replaceAll(RegExp(r"([.]*0+)(?!.*\d)"), "")}",
+                    widget.item.cost.toPriceString(),
                     style: Get.textTheme.headline3,
                   ),
                 ),

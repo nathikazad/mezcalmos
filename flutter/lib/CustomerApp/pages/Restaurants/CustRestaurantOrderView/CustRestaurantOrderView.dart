@@ -105,14 +105,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            SizedBox(
-                              height: 10,
-                            ),
                             OrderStatusCard(
                               order: viewController.order.value!,
                               ordersStates: viewController.order.value!.status,
                             ),
-
                             if (viewController.order.value!.paymentType ==
                                 PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
@@ -135,7 +131,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: viewController.order.value!,
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 10),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
                                 style: Get.textTheme.bodyText1,
@@ -157,7 +153,8 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                                   viewController.order.value!.stripePaymentInfo,
                               paymentType:
                                   viewController.order.value!.paymentType,
-                              margin: const EdgeInsets.only(top: 20,bottom: 20),
+                              margin:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
                             ),
                             if (viewController.order.value!.review != null)
                               ReviewCard(

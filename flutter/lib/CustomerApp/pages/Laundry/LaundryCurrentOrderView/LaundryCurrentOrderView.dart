@@ -127,9 +127,6 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           children: <Widget>[
-                            SizedBox(
-                              height: 20,
-                            ),
                             Obx(
                               () => LaundryOrderStatusCard(
                                 order: viewController.order.value!,
@@ -147,7 +144,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                                   Column(
                                     children: _mapWidget,
                                   ),
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 10),
                                 ],
                               ),
 

@@ -101,7 +101,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   "${widget.itemName}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: txt.headline3,
+                  style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
                   height: 3,

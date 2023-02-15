@@ -48,7 +48,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 9,
                 ),
                 Obx(
                   () {
@@ -111,10 +111,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                             PickerChoice.SavedCard)
                                         ? value.entries.first.value!.brand.name
                                         : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                    style: Get.textTheme.bodyText2?.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    )),
+                                    style: Get.textTheme.bodyText2),
                                 if (value.entries.first.value != null)
                                   Container(
                                     margin: EdgeInsets.only(left: 5),
@@ -123,7 +120,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                           value.entries.first.value!.last4
                                               .toString(),
                                       //style: Get.textTheme.bodyText2,
-                                      style: Get.textTheme.bodyText2,
+                                      style: Get.textTheme.subtitle1,
                                     ),
                                   ),
                               ],

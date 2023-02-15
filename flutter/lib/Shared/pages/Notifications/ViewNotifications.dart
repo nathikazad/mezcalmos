@@ -111,6 +111,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     return GroupedListView<notifs.Notification, DateTime>(
       shrinkWrap: true,
       elements: notifications,
+      padding: EdgeInsets.zero,
       groupBy: (notifs.Notification element) => DateTime(element.timestamp.year,
           element.timestamp.month, element.timestamp.day),
       groupComparator: (DateTime value1, DateTime value2) =>
@@ -120,22 +121,19 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               element2.timestamp.compareTo(element1.timestamp),
       physics: NeverScrollableScrollPhysics(),
       groupHeaderBuilder: (notifs.Notification element) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              (element.timestamp.isToday)
-                  ? _i18n()['today']
-                  : (element.timestamp.isYesterday)
-                      ? _i18n()['yesterday']
-                      : DateFormat('dd MMM, h:mm a').format(element.timestamp),
-              style: Get.textTheme.bodyText1,
+        if (element.timestamp.isToday) {
+          return SizedBox();
+        } else {
+          return Container(
+            margin: EdgeInsets.only(top: 10, left: 8, bottom: 10),
+            child: Text(
+              (element.timestamp.isYesterday)
+                  ? _i18n()['yesterday']
+                  : DateFormat('dd MMM, h:mm a').format(element.timestamp),
+              style: Theme.of(context).textTheme.headline3,
             ),
-            SizedBox(
-              height: 1.h,
-            )
-          ],
-        );
+          );
+        }
       },
       separator: SizedBox(
         height: 5,

@@ -54,7 +54,7 @@ class _CustItemViewState extends State<CustItemView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         bottomSheet: (viewController.hasData)
             ? ItemViewBottomBar(
                 viewController: viewController,
@@ -88,12 +88,12 @@ class _CustItemViewState extends State<CustItemView> {
                               ),
                             ),
                           SizedBox(
-                            height: 15,
+                            height: 10,
                           ),
                           _itemNotesComponent(),
                           SizedBox(
-                            height: 15,
-                          )
+                            height: 100,
+                          ),
                         ],
                       ),
                     ),
@@ -196,20 +196,16 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 10),
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 2),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
-            style: Get.textTheme.bodyText2!.copyWith(
-              fontSize: 12.sp,
-            ),
+            style: Get.textTheme.bodyText2,
           ),
         ],
       ),
@@ -227,17 +223,18 @@ class _CustItemViewState extends State<CustItemView> {
             style: Get.textTheme.bodyText1,
           )),
           SizedBox(
-            height: 5,
+            height: 3,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
               minLines: 3,
-              maxLines: 10,
-              style: Get.textTheme.bodyText2,
+              maxLines: 7,
+              style: Get.textTheme.subtitle1,
               decoration: InputDecoration(
                 alignLabelWithHint: false,
+                hintText: "${_i18n()["hintNote"]}",
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 filled: true,
                 fillColor: Colors.white,

@@ -23,7 +23,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(12),

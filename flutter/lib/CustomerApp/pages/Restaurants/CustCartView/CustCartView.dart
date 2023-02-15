@@ -63,13 +63,13 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   ),
                 Container(
                   margin: const EdgeInsets.only(
-                    bottom: 12,
+                    bottom: 9,
                   ),
                   child: DeliveryTimePicker(viewCartController: viewController),
                 ),
                 _deliveryLocation(),
                 SizedBox(
-                  height: 12,
+                  height: 9,
                 ),
                 Container(
                   child: PaymentMethodPicker(
@@ -85,17 +85,17 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       style: Get.textTheme.bodyText1),
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 9,
                 ),
                 _notesComponent(context),
                 SizedBox(
-                  height: 12,
+                  height: 14,
                 ),
                 CardSummaryCard(
                   controller: viewController,
                 ),
                 SizedBox(
-                  height: 75.sp,
+                  height: 15.h,
                 ),
               ],
             ),
@@ -158,7 +158,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
         decoration: InputDecoration(
           hintText: "${_i18n()["notes"]}",
           fillColor: Colors.white,
-          hintStyle: Get.textTheme.bodyText2,
+          hintStyle: Get.textTheme.subtitle1,
         ),
       ),
     );

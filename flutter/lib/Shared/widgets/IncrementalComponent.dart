@@ -43,17 +43,14 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
       children: <Widget>[
         InkWell(
             child: Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(32)),
-                    color: (widget.value > widget.minVal)
-                        ? secondaryLightBlueColor
-                        : widget.onMinValueBtnColor ?? Colors.grey),
+                  shape: BoxShape.circle,
+                  color: widget.btnColors,
+                ),
                 child: Icon(
                   Icons.remove,
-                  color: (widget.value > widget.minVal)
-                      ? primaryBlueColor
-                      : widget.minusIconColor,
+                  color:widget.minusIconColor,
                   size: widget.size,
                 )),
             onTap: () {
@@ -70,7 +67,7 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(),
           child: Text("${widget.value}",
-              style: Theme.of(context).textTheme.headline3),
+              style: Theme.of(context).textTheme.bodyText1),
         ),
         SizedBox(
           width: 5,

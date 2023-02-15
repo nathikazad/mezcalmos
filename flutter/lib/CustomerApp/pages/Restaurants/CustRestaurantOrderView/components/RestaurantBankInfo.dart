@@ -39,7 +39,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
       if (restaurant.value != null &&
           restaurant.value!.paymentInfo?.bankInfo != null) {
         return Card(
-          margin: const EdgeInsets.only(top: 20),
+          margin: const EdgeInsets.only(top: 10),
           child: Container(
             margin: const EdgeInsets.all(5),
             child: Column(

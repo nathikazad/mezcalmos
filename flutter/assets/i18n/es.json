@@ -181,7 +181,7 @@
                             "deleteItem": "Eliminar elemento",
                             "deleteItemConfirm": "¿Estás seguro de que te gustaría eliminar?",
                             "deleteBtn": "Sí, eliminar el elemento",
-                            "itemNotes": "Notas de artículos :"
+                            "itemNotes": "Notas de artículos"
 
                         },
                         "ChoosenManyOption": {
@@ -256,8 +256,8 @@
                         "viewRestaurant": "Ver restaurante",
                         "itemNotes": "Notas de artículos",
                         "itemDescription": "Descripción del Artículo",
-                        "availability": "Disponibilidad"
-
+                        "availability": "Disponibilidad",
+                        "hintNote":"Escribe tus notas aquí"
                     }
                 },
                 "ViewOrderScreen": {

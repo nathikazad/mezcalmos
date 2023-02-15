@@ -153,19 +153,24 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            //  margin: const EdgeInsets.only(top: 10, bottom: 5),
+            margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage] ?? "",
-              style: Get.theme.textTheme.headline3
-                  ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+              category.name?[userLanguage] ?? "Undefined Category",
+              style: category.name?[userLanguage] != null
+                  ? Get.theme.textTheme.headline3
+                      ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700)
+                  : Get.textTheme.bodyText2?.copyWith(
+                      color: Color(0xFF787878),
+                    ),
             ),
           ),
           if (category.dialog?[userLanguage] != null)
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
-                style:
-                    Get.textTheme.bodyText2,
+                style: Get.textTheme.bodyText2?.copyWith(
+                  color: Color(0xFF787878),
+                ),
               ),
             ),
           _buildResturantItems(
@@ -187,7 +192,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 5),
+            margin: const EdgeInsets.only(top: 7),
             child: Text(
               "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
                   .inCaps,
@@ -200,9 +205,6 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             restaurantId: restaurant.info.hasuraId,
             isSpecial: true,
           ),
-          SizedBox(
-            height: 20,
-          )
         ],
       ),
     );

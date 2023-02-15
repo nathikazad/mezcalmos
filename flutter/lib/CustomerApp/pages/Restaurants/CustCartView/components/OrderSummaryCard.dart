@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -41,12 +42,15 @@ class CardSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               width: Get.width,
-              child: Text("${_i18n()["orderSummary"]}", style: txt.bodyText1),
+              child: Text(
+                "${_i18n()["orderSummary"]}",
+                style: txt.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 1.5.h),
             //==================Order cost :==================
             Container(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 5),
               width: Get.width,
               child: Row(
                 children: <Widget>[
@@ -59,7 +63,8 @@ class CardSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(controller.cart.itemsCost().toPriceString()),
+                      child: Text(controller.cart.itemsCost().toPriceString(),
+                          style: txt.bodyText2),
                     ),
                   )
                 ],
@@ -97,10 +102,11 @@ class CardSummaryCard extends StatelessWidget {
                                     child: CircularProgressIndicator(
                                       color: primaryBlueColor,
                                     )),
-                                Text(
-                                  '${_i18n()["toBeCalc"]}',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                                Text('${_i18n()["toBeCalc"]}',
+                                    style: txt.bodyText2
+                                        ?.copyWith(fontStyle: FontStyle.italic)
+                                    // TextStyle(fontStyle: FontStyle.italic),
+                                    ),
                               ],
                             )
                 ],
@@ -125,7 +131,8 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.stripeFees.toPriceString()),
+                        child: Text(controller.cart.stripeFees.toPriceString(),
+                            style: txt.bodyText2),
                       ),
                     )
                   ],
@@ -139,15 +146,21 @@ class CardSummaryCard extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text("${_i18n()["totalCost"]} :",
-                          style: txt.bodyText1),
+                      child: Text(
+                        "${_i18n()["totalCost"]} :",
+                        style: txt.bodyText1
+                            ?.copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(controller.cart.totalCost.toPriceString(),
-                          style: txt.bodyText1),
+                      child: Text(
+                        controller.cart.totalCost.toPriceString(),
+                        style: txt.bodyText1?.copyWith(
+                            fontWeight: FontWeight.w700, fontSize: 14.sp),
+                      ),
                     ),
                   ),
                 ],

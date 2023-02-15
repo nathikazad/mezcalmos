@@ -175,7 +175,7 @@
                             "deleteItem": "Delete  item",
                             "deleteItemConfirm": "Are you sure you would like to delete?",
                             "deleteBtn": "Yes, delete item",
-                            "itemNotes": "Item notes :"
+                            "itemNotes": "Item notes"
                         },
                         "ChoosenManyOption": {
                             "options": "Options"
@@ -247,7 +247,8 @@
                         "viewRestaurant": "View restaurant",
                         "itemNotes": "Item notes",
                         "itemDescription": "Item Description",
-                        "availability": "Availability"
+                        "availability": "Availability",
+                        "hintNote":"Write your notes here"
                     }
                 },
                 "ViewOrderScreen": {

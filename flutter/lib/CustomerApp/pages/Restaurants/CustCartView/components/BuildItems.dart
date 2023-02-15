@@ -53,16 +53,16 @@ class CartItemsBuilder extends StatelessWidget {
                   )),
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 9),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: buildChoices(cartItem),
                       ),
                     ),
-                    if (cartItem.notes != null)
+                    if (cartItem.notes != null && cartItem.notes != "")
                       _itemNotesComponent(cartItem, context),
                     SizedBox(
-                      height: 10,
+                      height: 9,
                     ),
                   ],
                   onEdit: () {
@@ -76,7 +76,7 @@ class CartItemsBuilder extends StatelessWidget {
               return children;
             }),
           ),
-          SizedBox(height: 22),
+          SizedBox(height: 9),
         ],
       ),
     );

@@ -134,7 +134,10 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             dropdownColor: widget.bgColor,
             isDense: true,
             isExpanded: true,
-            icon: Icon(Icons.expand_more),
+            icon: Icon(
+              Icons.expand_more,
+              color: Colors.black,
+            ),
             hint: Text(
               '${_i18n()["chooseLoc"]}',
               style: Get.textTheme.bodyText1,
@@ -256,7 +259,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
         children: <Widget>[
           Icon(
             Icons.fmd_good,
-            //  size: 18,
+            size: 14.sp,
             color: Colors.black,
           ),
           const SizedBox(width: 15),
@@ -264,9 +267,11 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             child: Container(
               width: Get.width * 0.72,
               child: Text(
-                e.name,
+                e.name.capitalizeFirst.toString(),
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.bodyText1, //for dropdownItems
+                style: Get.textTheme.bodyText1?.copyWith(
+                  fontSize: 12.sp,
+                ), //for dropdownItems
               ),
             ),
           ),
@@ -288,7 +293,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                     // margin: const EdgeInsets.only(top: 3),
                     child: Icon(
                       Icons.fmd_good,
-                      //    size: 18,
+                      size: 14.sp,
                       color: Colors.black,
                     ),
                   ),
@@ -300,7 +305,8 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                       item.name,
                       overflow: TextOverflow.ellipsis,
                       style: Get.textTheme.bodyText1?.copyWith(
-                          fontSize: 12.sp, fontWeight: FontWeight.w600), //for dropDownShownValue
+                        fontSize: 12.sp,
+                      ), //for dropDownShownValue
                     ),
                   ),
                 ],

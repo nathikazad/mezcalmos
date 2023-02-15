@@ -97,34 +97,40 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      Icon(Icons.watch_later, color: Colors.black),
+                      Icon(
+                        Icons.watch_later,
+                        color: Colors.black,
+                        size: 14.sp,
+                      ),
                       SizedBox(
-                        width: 10,
+                        width: 9,
                       ),
                       (widget.viewCartController.cart.deliveryTime == null)
                           ? Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                (widget.viewCartController.cart.restaurant
-                                            ?.isOpen() ==
-                                        false)
-                                    ? '${_i18n()["pickTime"]}'
-                                    : '${_i18n()["now"]}',
-                                style: Get.textTheme.bodyText1?.copyWith(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                                  (widget.viewCartController.cart.restaurant
+                                              ?.isOpen() ==
+                                          false)
+                                      ? '${_i18n()["pickTime"]}'
+                                      : '${_i18n()["now"]}',
+                                  style: Get.textTheme.bodyText1?.copyWith(
+                                    fontSize: 12.sp,
+                                  )),
                             )
                           : Flexible(
                               fit: FlexFit.tight,
                               child: Text(
-                                "${DateFormat.MMMEd(userLangCode).format(widget.viewCartController.cart.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewCartController.cart.deliveryTime!.toLocal())}",
-                                style: Get.textTheme.bodyText1,
-                              ),
+                                  "${DateFormat.MMMEd(userLangCode).format(widget.viewCartController.cart.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewCartController.cart.deliveryTime!.toLocal())}",
+                                  style: Get.textTheme.bodyText1?.copyWith(
+                                    fontSize: 12.sp,
+                                  )),
                             ),
                       if (widget.viewCartController.cart.deliveryTime == null)
-                        Icon(Icons.chevron_right),
+                        Icon(
+                          Icons.chevron_right,
+                          color: Colors.black,
+                        ),
                       if (widget.viewCartController.cart.deliveryTime != null)
                         InkWell(
                           onTap: () {
@@ -139,7 +145,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                             child: Icon(
                               Icons.expand_more,
                               size: 24,
-                              color: Colors.grey.shade800,
+                              color: Colors.black,
                             ),
                           ),
                         ),

@@ -188,28 +188,33 @@ class RestaurantSliverAppBar extends StatelessWidget {
 
   Widget _menuFilterChips(LanguageType userLanguage) {
     return Container(
-      // height: 60,
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,
-      padding: EdgeInsets.only(top: 1.h),
+      // padding: EdgeInsets.only(top: 0.2.h),
       child: Obx(
         () {
           if (controller.showMenuTabs || controller.showSpecialTabs) {
             return TabBar(
+              padding: EdgeInsets.only(left: 6),
               isScrollable: true,
               controller: controller.getTabController,
               labelColor: primaryBlueColor,
-              labelStyle: Get.textTheme.bodyLarge,
-              unselectedLabelStyle: Get.textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w500, color: Colors.grey.shade800),
+              labelStyle: Get.textTheme.bodyText2
+                  ?.copyWith(fontWeight: FontWeight.w600),
+              unselectedLabelStyle: Get.textTheme.bodyText2?.copyWith(
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade800,
+              ),
               unselectedLabelColor: Colors.grey.shade700,
-              indicatorPadding: const EdgeInsets.all(5),
+              indicatorPadding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: Colors.transparent,
               indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  shape: BoxShape.rectangle,
-                  color: secondaryLightBlueColor),
+                borderRadius: BorderRadius.circular(25),
+                shape: BoxShape.rectangle,
+                color: secondaryLightBlueColor,
+              ),
               tabs: (controller.showSpecialTabs)
                   ? List.generate(controller.getGroupedSpecials().length,
                       (int index) {
@@ -252,14 +257,14 @@ class RestaurantSliverAppBar extends StatelessWidget {
       () => Container(
         width: double.infinity,
         color: Colors.white,
-        height: 50,
+        height: 55,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Flexible(
-              child: Card(
-                shape: RoundedRectangleBorder(),
-                elevation: 0,
+              child: Container(
+                // shape: RoundedRectangleBorder(),
+                // elevation: 0,
                 child: InkWell(
                   onTap: () {
                     controller.mainTab.value = RestaurantViewTab.Menu;
@@ -270,24 +275,29 @@ class RestaurantSliverAppBar extends StatelessWidget {
                         border: controller.isOnMenuView
                             ? Border(
                                 bottom: BorderSide(
-                                    color: primaryBlueColor, width: 2))
+                                  color: primaryBlueColor,
+                                  width: 2,
+                                ),
+                              )
                             : null),
                     alignment: Alignment.center,
                     child: Text(
                       '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
-                          ? Get.textTheme.bodyLarge
-                              ?.copyWith(color: primaryBlueColor)
-                          : null,
+                          ? Get.textTheme.bodyText1?.copyWith(
+                              color: primaryBlueColor,
+                              fontWeight: FontWeight.w700,
+                            )
+                          : Get.textTheme.subtitle2,
                     ),
                   ),
                 ),
               ),
             ),
             Flexible(
-              child: Card(
-                shape: RoundedRectangleBorder(),
-                elevation: 0,
+              child: Container(
+                // shape: RoundedRectangleBorder(),
+                // elevation: 0,
                 child: InkWell(
                   onTap: () {
                     controller.mainTab.value = RestaurantViewTab.Specials;
@@ -304,9 +314,11 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
-                          ? Get.textTheme.bodyLarge
-                              ?.copyWith(color: primaryBlueColor)
-                          : null,
+                          ? Get.textTheme.bodyText1?.copyWith(
+                              color: primaryBlueColor,
+                              fontWeight: FontWeight.w700,
+                            )
+                          : Get.textTheme.subtitle2,
                     ),
                   ),
                 ),
