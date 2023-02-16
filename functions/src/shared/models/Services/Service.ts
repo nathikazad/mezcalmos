@@ -6,7 +6,7 @@ import { UserInfo } from "../Generic/User";
 
 export interface ServiceProvider {
   id: number;
-  serviceProviderDetailsId?: number;
+  serviceProviderDetailsId: number;
   name: string;
   image: string;
   phoneNumber?: string;

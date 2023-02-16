@@ -39,6 +39,9 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
                 discount_value: true,
                 items_cost: true,
                 total_cost: true,
+                store: {
+                  details_id: true
+                },
                 //   customer: {
                 //     user: {
                 //       firebase_id: true,
@@ -87,6 +90,7 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
     })
     let laundryOrder: LaundryOrder = {
       orderId,
+      spDetailsId: response.laundry_order_by_pk.store.details_id,
       customerId: response.laundry_order_by_pk.customer_id,
       storeId: response.laundry_order_by_pk.store_id,
       paymentType: response.laundry_order_by_pk.payment_type as PaymentType,
@@ -160,6 +164,9 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
         discount_value: true,
         items_cost: true,
         total_cost: true,
+        store: {
+          details_id: true
+        },
         //   customer: {
         //     user: {
         //       firebase_id: true,
@@ -210,6 +217,7 @@ export async function getLaundryOrderFromDelivery(deliveryOrder: DeliveryOrder):
     orderId: response.laundry_order[0].id,
     customerId: response.laundry_order[0].customer_id,
     storeId: response.laundry_order[0].store_id,
+    spDetailsId: response.laundry_order[0].store.details_id,
     paymentType: response.laundry_order[0].payment_type as PaymentType,
     customerLocation,
     refundAmount: parseFloat(response.laundry_order[0].refund_amount.replace("$","")),
@@ -249,6 +257,9 @@ export async function getCustomerLaundryOrders(customerId: number): Promise<Laun
     }, {
       id: true,
       store_id: true,
+      store: {
+        details_id: true
+      },
       delivery_type: true,
       status: true,
       payment_type: true,
@@ -286,6 +297,7 @@ export async function getCustomerLaundryOrders(customerId: number): Promise<Laun
     })
     return {
       orderId: o.id,
+      spDetailsId: o.store.details_id,
       customerId: o.customer_id,
       storeId: o.store_id,
       paymentType: o.payment_type as PaymentType,

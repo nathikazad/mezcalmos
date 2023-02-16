@@ -52,8 +52,7 @@ export async function cancelOrderFromCustomer(userId: number, data: CancelOrderD
   }
   let paymentDetails: PaymentDetails = {
     orderId: order.orderId!,
-    orderType: OrderType.Restaurant,
-    serviceProviderId: order.restaurantId,
+    serviceProviderDetailsId: order.spDetailsId,
     orderStripePaymentInfo: order.stripeInfo
   }
   switch (order.status) {

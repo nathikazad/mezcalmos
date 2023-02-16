@@ -74,6 +74,7 @@ export async function createRestaurant(
       }
     }, {
       id: true,
+      details_id: true,
       restaurant_operators: [{}, {
         id: true
       }]
@@ -157,6 +158,7 @@ export async function createRestaurant(
 
   return {
     id: response.insert_restaurant_restaurant_one.id,
+    serviceProviderDetailsId: response.insert_restaurant_restaurant_one.details_id,
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,

@@ -81,8 +81,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   if(checkoutRequest.paymentType == PaymentType.Card) {
     let paymentDetails: PaymentDetails = {
       orderId: orderResponse.restaurantOrder.orderId,
-      orderType: OrderType.Restaurant,
-      serviceProviderId: checkoutRequest.restaurantId
+      serviceProviderDetailsId: restaurant.serviceProviderDetailsId
     }
     await updateOrderIdAndFetchPaymentInfo(paymentDetails, checkoutRequest.stripePaymentId!, checkoutRequest.stripeFees ?? 0)
   }

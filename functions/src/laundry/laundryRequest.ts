@@ -67,8 +67,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
     if(laundryRequestDetails.paymentType == PaymentType.Card) {
         let paymentDetails: PaymentDetails = {
             orderId: orderResponse.laundryOrder.orderId!,
-            orderType: OrderType.Laundry,
-            serviceProviderId: laundryRequestDetails.storeId
+            serviceProviderDetailsId: laundryStore.serviceProviderDetailsId
         }
         await updateOrderIdAndFetchPaymentInfo(paymentDetails, laundryRequestDetails.stripePaymentId!, laundryRequestDetails.stripeFees ?? 0)
     }

@@ -73,8 +73,7 @@ async function changeStatus(orderId: number, newStatus: RestaurantOrderStatus, u
     if (order.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
         orderId: orderId,
-        orderType: OrderType.Restaurant,
-        serviceProviderId: order.restaurantId,
+        serviceProviderDetailsId: order.spDetailsId,
         orderStripePaymentInfo: order.stripeInfo!
       }
       capturePayment(paymentDetails, 0)
