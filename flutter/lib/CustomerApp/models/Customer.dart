@@ -94,7 +94,8 @@ class SavedLocation {
 typedef SavedLocations = List<SavedLocation>;
 
 class CreditCard {
-  String id;
+  int id;
+  String cardId;
   CardBrand brand;
   num expMonth;
   num expYear;
@@ -103,25 +104,26 @@ class CreditCard {
 
   CreditCard({
     required this.id,
+    required this.cardId,
     required this.brand,
     required this.expYear,
     required this.expMonth,
     required this.last4,
   });
 
-  factory CreditCard.fromData({required data}) {
-    return CreditCard(
-      id: data["id"],
-      brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
-      expYear: data["expYear"],
-      expMonth: data["expMonth"],
-      last4: data["last4"],
-    );
-  }
+  // factory CreditCard.fromData({required data}) {
+  //   return CreditCard(
+  //     cardId: data["id"],
+  //     brand: data["brand"]?.toString().toCardBrand() ?? CardBrand.Visa,
+  //     expYear: data["expYear"],
+  //     expMonth: data["expMonth"],
+  //     last4: data["last4"],
+  //   );
+  // }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      'id': cardId,
       'brand': brand.toFirebaseFormatString(),
       'expMonth': expMonth,
       'expYear': expYear,
@@ -133,7 +135,7 @@ class CreditCard {
   bool operator ==(covariant CreditCard other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
+    return other.cardId == cardId &&
         other.brand == brand &&
         other.expMonth == expMonth &&
         other.expYear == expYear &&
@@ -142,7 +144,7 @@ class CreditCard {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return cardId.hashCode ^
         brand.hashCode ^
         expMonth.hashCode ^
         expYear.hashCode ^

@@ -49,7 +49,7 @@ class _CustCardsListViewState extends State<CustCardsListView> {
             child: Column(
               children: [
                 // cards list
-                if (viewController.stripeInfo.value != null)
+                if (viewController.hasData)
                   Container(
                     child: Column(
                       children: List.generate(
@@ -84,7 +84,7 @@ class _CustCardsListViewState extends State<CustCardsListView> {
             ),
             Text(
               '${_i18n()["card"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               width: 15,

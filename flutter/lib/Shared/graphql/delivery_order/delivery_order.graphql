@@ -233,77 +233,77 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
 
-    restaurant_order {
-      id
-      stripe_info
-      restaurant {
-        id
-     details{   firebase_id
-        id
-        image
-        name
-        location {
-          gps
-          address
-        }
-        language
-        open_status
-      }
-    }
-    laundry_pickup_order {
-      id
-      stripe_info
-      # stripe_info {
-      #   id
-      #   stripe_id
-      #   status
-      #   requirements
-      #   payouts_enabled
-      #   email
-      #   details_submitted
-      #   charges_enabled
-      #   charge_fees_on_customer
-      # }
-      store {
-        id
-        details {
-          id
-          image
-          name
-          location {
-            gps
-            address
-          }
-        }
-      }
-    }
-    laundry_delivery_order {
-      id
-      stripe_info
-      # stripe_info {
-      #   id
-      #   stripe_id
-      #   status
-      #   requirements
-      #   payouts_enabled
-      #   email
-      #   details_submitted
-      #   charges_enabled
-      #   charge_fees_on_customer
-      # }
-      store {
-        id
-        details {
-          id
-          image
-          name
-          location {
-            gps
-            address
-          }
-        }
-      }
-    }
+    # restaurant_order {
+    #   id
+    #   stripe_info
+    #   restaurant {
+    #     id
+    #  details{   firebase_id
+    #     id
+    #     image
+    #     name
+    #     location {
+    #       gps
+    #       address
+    #     }
+    #     language
+    #     open_status
+    #   }
+    # }
+    # laundry_pickup_order {
+    #   id
+    #   stripe_info
+    #   # stripe_info {
+    #   #   id
+    #   #   stripe_id
+    #   #   status
+    #   #   requirements
+    #   #   payouts_enabled
+    #   #   email
+    #   #   details_submitted
+    #   #   charges_enabled
+    #   #   charge_fees_on_customer
+    #   # }
+    #   store {
+    #     id
+    #     details {
+    #       id
+    #       image
+    #       name
+    #       location {
+    #         gps
+    #         address
+    #       }
+    #     }
+    #   }
+    # }
+    # laundry_delivery_order {
+    #   id
+    #   stripe_info
+    #   # stripe_info {
+    #   #   id
+    #   #   stripe_id
+    #   #   status
+    #   #   requirements
+    #   #   payouts_enabled
+    #   #   email
+    #   #   details_submitted
+    #   #   charges_enabled
+    #   #   charge_fees_on_customer
+    #   # }
+    #   store {
+    #     id
+    #     details {
+    #       id
+    #       image
+    #       name
+    #       location {
+    #         gps
+    #         address
+    #       }
+    #     }
+    #   }
+    # }
 
     restaurant_order {
       id

@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
@@ -31,8 +30,10 @@ class CustCartViewController {
   CustomerCartController cartController = Get.find<CustomerCartController>();
 
   // Obs variables //
-  Rxn<CustStripeInfo> custStripeInfo = Rxn();
-  List<CreditCard>? get customerCards => custStripeInfo.value?.cards;
+  //Rxn<CustStripeInfo> custStripeInfo = Rxn();
+  Rxn<List<CreditCard>> _cards = Rxn();
+
+  List<CreditCard>? get customerCards => _cards.value;
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.MezLocation> orderToLocation = Rxn();
 
@@ -111,20 +112,17 @@ class CustCartViewController {
 
   Future<void> getCustomerCards() async {
     // TODO: hasura-ch
-    final CustStripeInfo? data = await get_customer_stripe_info(
-        userId: Get.find<AuthController>().hasuraUserId!, withCache: false);
-    mezDbgPrint("Data from controller ==========>>> 😛${data?.toJson()}");
-    if (data != null) {
-      custStripeInfo.value = data;
-      custStripeInfo.value?.cards = data.cards;
-    }
+    final List<CreditCard> data = await get_customer_cards(
+        customerId: Get.find<AuthController>().hasuraUserId!, withCache: false);
+    mezDbgPrint("Data from controller ==========>>> 😛${data.length}");
+    _cards.value = data;
 
-    if (custStripeInfo.value?.cards.isEmpty == true) {
+    if (_cards.value?.isEmpty == true) {
       options.removeWhere((PaymentOption element) =>
           element.entries.first.key == PickerChoice.SavedCard);
     }
     if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
-        custStripeInfo.value?.cards.isEmpty == true) {
+        _cards.value?.isEmpty == true) {
       pickerChoice.value = options.first;
     }
     //   }
@@ -181,14 +179,14 @@ class CustCartViewController {
           mezDbgPrint(
               "Before first wheeeeereeee =========>${customerCards?.length}");
           final CreditCard? newCard = customerCards
-              ?.firstWhere((CreditCard element) => element.id == newCardId);
+              ?.firstWhere((CreditCard element) => element.cardId == newCardId);
 
           if (newCard != null) {
             card.value = newCard;
             // options
             //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
             pickerChoice.value = options.firstWhere((PaymentOption element) =>
-                element.entries.first.value?.id == newCard.id);
+                element.entries.first.value?.cardId == newCard.cardId);
           }
         } else {
           switchPaymentMedthod(paymentType: PaymentType.Cash);
@@ -292,7 +290,7 @@ class CustCartViewController {
         cart.restaurant?.paymentInfo
                     ?.acceptedPayments[PaymentType.BankTransfer] ==
                 true &&
-            custStripeInfo.value != null;
+            _cards.value != null;
   }
 
   bool get showFees {

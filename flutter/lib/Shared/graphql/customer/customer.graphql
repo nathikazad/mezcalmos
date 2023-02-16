@@ -45,11 +45,7 @@ query get_customer_info($customer_id: Int!) {
     }
   }
 }
-query get_customer_stripe_info($customer_id: Int!) {
-  customer_customer(where: { user_id: { _eq: $customer_id } }) {
-    # stripe_info
-  }
-}
+
 
 # Set customer's infos
 mutation set_customer_info(

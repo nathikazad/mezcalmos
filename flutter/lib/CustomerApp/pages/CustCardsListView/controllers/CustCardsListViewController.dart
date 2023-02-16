@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 
 class CustCardsListViewController {
@@ -10,10 +9,11 @@ class CustCardsListViewController {
   AuthController _authController = Get.find<AuthController>();
 
   // state variables //
-  Rxn<CustStripeInfo> stripeInfo = Rxn();
+  Rxn<List<CreditCard>> _cards = Rxn();
 
   // getters //
-  List<CreditCard> get cards => stripeInfo.value!.cards;
+  bool get hasData => _cards.value != null;
+  List<CreditCard> get cards => _cards.value!;
 
   Future<void> init() async {
     await fetchCards();
@@ -21,9 +21,8 @@ class CustCardsListViewController {
 
   Future<void> fetchCards() async {
     try {
-      stripeInfo.value = await get_customer_stripe_info(
-          userId: _authController.hasuraUserId!, withCache: false);
-      stripeInfo.refresh();
+      _cards.value = await get_customer_cards(
+          customerId: _authController.hasuraUserId!, withCache: false);
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
@@ -36,7 +35,7 @@ class CustCardsListViewController {
     // stripeInfo.value = await update_customer_stripe_info(
     //     stripeInfo: stripeInfo.value!,
     //     customer_id: _authController.hasuraUserId!);
-    stripeInfo.refresh();
+
     return true;
   }
 }

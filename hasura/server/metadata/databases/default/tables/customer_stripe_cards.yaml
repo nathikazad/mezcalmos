@@ -5,3 +5,18 @@ object_relationships:
   - name: customer
     using:
       foreign_key_constraint_on: customer_id
+select_permissions:
+  - role: customer
+    permission:
+      columns:
+        - customer_id
+        - exp_month
+        - exp_year
+        - id
+        - brand
+        - card_id
+        - last_4
+        - sp_card_ids
+      filter:
+        customer_id:
+          _eq: X-Hasura-User-Id

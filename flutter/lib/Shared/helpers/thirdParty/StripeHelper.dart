@@ -151,18 +151,17 @@ Future<ServerResponse> getPaymentIntent(
   }
 }
 
-Future<ServerResponse> addCard({required String paymentMethod}) async {
-  final HttpsCallable addCardFunction =
-      FirebaseFunctions.instance.httpsCallable("stripe-addCard");
+Future<String?> addCard({required String paymentMethod}) async {
   try {
-    final HttpsCallableResult<dynamic> response = await addCardFunction
-        .call(<String, String>{"paymentMethod": paymentMethod});
-    return ServerResponse.fromJson(response.data);
-  } catch (e) {
-    mezDbgPrint("Error ==========>$e");
-    return ServerResponse(ResponseStatus.Error,
-        errorMessage: "Server Error", errorCode: "serverError");
+    cModel.AddCardResponse res =
+        await CloudFunctions.stripe_addCard(paymentMethod: paymentMethod);
+    return res.cardId;
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message ?? "");
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
 }
 
 Future<ServerResponse> removeCard({required String cardId}) async {
@@ -189,7 +188,7 @@ Future<String> acceptPaymentWithSavedCard(
     final HttpsCallableResult<dynamic> response =
         await addCardFunction.call(<String, dynamic>{
       "serviceProviderId": serviceProviderId,
-      "cardId": card.id,
+      "cardId": card.cardId,
       "orderType": OrderType.Restaurant.toFirebaseFormatString(),
       "paymentAmount": paymentAmount
     });
@@ -433,14 +432,10 @@ class _CardFormState extends State<CardForm> {
               params: PaymentMethodParams.card(
                   paymentMethodData: PaymentMethodData()));
       mezDbgPrint("payment method from stripe =========>$paymentMethod");
-      final ServerResponse serverResponse =
-          await addCard(paymentMethod: paymentMethod.id);
-      mezDbgPrint("Response ====> ${serverResponse.data}");
-      if (serverResponse.success) {
-        MezRouter.back(result: serverResponse.data['cardId']);
-      } else {
-        MezSnackbar(
-            "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
+      String? res = await addCard(paymentMethod: paymentMethod.id);
+      mezDbgPrint("Response ====> $res");
+      if (res != null) {
+        MezRouter.back(result: res);
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");
