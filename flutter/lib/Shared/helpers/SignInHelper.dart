@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -19,7 +20,7 @@ Future<void> signUp(String email, String password) async {
   try {
     await fireAuth.FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    Get.back();
+    MezRouter.back<Null>();
   } catch (e) {
     Get.snackbar("Error creating your account!", e.toString(),
         snackPosition: SnackPosition.BOTTOM);

@@ -45,7 +45,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
           serviceId: serviceProviderId!,
           serviceProviderType: serviceProviderType!);
     } else {
-      Get.back();
+      MezRouter.back<Null>();
     }
     super.initState();
   }

@@ -50,7 +50,8 @@ class SettingsController extends GetxController {
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
         sideMenuItems;
 
-    await ConnectivityHelper.instance.networkCheck();
+    Timer(Duration(seconds: 10),
+        () => ConnectivityHelper.instance.networkCheck());
 
     // NOTIFICATION SOUND SETUP
 

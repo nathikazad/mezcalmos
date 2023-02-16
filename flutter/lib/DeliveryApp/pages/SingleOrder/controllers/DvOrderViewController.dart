@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -126,7 +127,7 @@ class DvOrderViewcontroller {
       if (_order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
