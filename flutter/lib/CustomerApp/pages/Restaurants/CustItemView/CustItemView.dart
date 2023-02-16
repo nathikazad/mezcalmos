@@ -78,21 +78,26 @@ class _CustItemViewState extends State<CustItemView> {
                             Column(
                               children: List.generate(
                                 viewController.getItem!.options.length,
-                                (int index) => ItemOptionCard(
-                                  cartItem: viewController.cartItem,
-                                  editMode: widget.viewItemScreenMode ==
-                                      ViewItemScreenMode.EditItemMode,
-                                  option:
-                                      viewController.getItem!.options[index],
+                                (int index) => Column(
+                                  children: [
+                                    ItemOptionCard(
+                                      cartItem: viewController.cartItem,
+                                      editMode: widget.viewItemScreenMode ==
+                                          ViewItemScreenMode.EditItemMode,
+                                      option: viewController
+                                          .getItem!.options[index],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          SizedBox(
-                            height: 10,
-                          ),
+                            
                           _itemNotesComponent(),
                           SizedBox(
-                            height: 100,
+                            height: 15.h,
                           ),
                         ],
                       ),
@@ -196,12 +201,12 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(top: 10, bottom: 10),
+      margin: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
-          SizedBox(height: 2),
+          SizedBox(height: 5),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
@@ -222,16 +227,16 @@ class _CustItemViewState extends State<CustItemView> {
             "${_i18n()["itemNotes"]}",
             style: Get.textTheme.bodyText1,
           )),
-          SizedBox(
-            height: 3,
-          ),
+          SizedBox(height: 2),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
               minLines: 3,
               maxLines: 7,
-              style: Get.textTheme.subtitle1,
+              style: Get.textTheme.subtitle1?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
               decoration: InputDecoration(
                 alignLabelWithHint: false,
                 hintText: "${_i18n()["hintNote"]}",

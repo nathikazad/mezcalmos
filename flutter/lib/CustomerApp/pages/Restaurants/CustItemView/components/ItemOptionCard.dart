@@ -51,19 +51,14 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         children: [
           Text(widget.option.name[userLanguage].toString().inCaps,
               style: Get.theme.textTheme.bodyText1),
-          widget.option.optionType == OptionType.Custom
-              ? Container(
-                  //   margin: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                    style: Get.textTheme.bodyText2?.copyWith(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.w600),
-                  ),
-                )
-              : SizedBox(
-                  height: 0,
-                ),
+          if (widget.option.optionType == OptionType.Custom)
+            Container(
+              child: Text(
+                "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
+                style: Get.textTheme.bodyText2?.copyWith(
+                    fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
+              ),
+            ),
           Column(
             children: List.generate(
               widget.option.choices.length,
@@ -82,7 +77,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
     required Choice choice,
   }) {
     return Container(
-      //  padding: const EdgeInsets.only(bottom: 2),
       child: Row(
         children: [
           Flexible(
@@ -91,24 +85,21 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Flexible(
-                  child: Text(
-                    choice.name[userLanguage].toString().inCaps,
-                    style: Get.theme.textTheme.bodyText2?.copyWith(
-                      color: (widget.cartItem.value!.chosenChoices[optionId]
-                                  ?.contains(choice) ??
-                              false)
-                          ? primaryBlueColor
-                          : null,
-                      fontWeight: (widget
-                                  .cartItem.value!.chosenChoices[optionId]
-                                  ?.contains(choice) ??
-                              false)
-                          ? FontWeight.w700
-                          : null,
-                    ),
-                    maxLines: 2,
+                Text(
+                  choice.name[userLanguage].toString().inCaps,
+                  style: Get.theme.textTheme.bodyText2?.copyWith(
+                    color: (widget.cartItem.value!.chosenChoices[optionId]
+                                ?.contains(choice) ??
+                            false)
+                        ? primaryBlueColor
+                        : null,
+                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
+                                ?.contains(choice) ??
+                            false)
+                        ? FontWeight.w700
+                        : null,
                   ),
+                  maxLines: 2,
                 ),
                 SizedBox(
                   width: 5,
@@ -127,7 +118,7 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
               ],
             ),
           ),
-          Spacer(),
+          //  Spacer(),
           if (widget.option.optionType == OptionType.ChooseMany)
             _selectCircle(
                 value: widget.cartItem.value!.chosenChoices[optionId]
@@ -147,7 +138,6 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
             ),
           if (widget.option.optionType == OptionType.Custom)
             Container(
-              margin: EdgeInsets.only(bottom: 8),
               child: _selectCircle(
                   value: widget.cartItem.value!.chosenChoices[optionId]
                           ?.contains(choice) ??
@@ -169,8 +159,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         onTap.call(null);
       },
       child: Container(
+          margin: EdgeInsets.only(top: 5),
           alignment: Alignment.center,
-          // padding: const EdgeInsets.all(5),
           child: (value)
               ? Icon(
                   Icons.check,
@@ -196,7 +186,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
       onTap: () {
         onTap.call(null);
       },
-      child: Ink(
+      child: Container(
+          margin: EdgeInsets.only(top: 2, bottom: 0),
           child: (value)
               ? Icon(
                   Icons.radio_button_checked,

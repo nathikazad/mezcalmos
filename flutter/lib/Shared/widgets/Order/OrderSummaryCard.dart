@@ -25,7 +25,7 @@ class OrderSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: margin ?? const EdgeInsets.only(top: 9),
+      margin: margin ?? const EdgeInsets.only(top: 15),
       child: Column(
         children: <Widget>[
           Container(

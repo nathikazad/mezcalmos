@@ -24,7 +24,7 @@ class OrderItemsCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 9,
+          height: 15,
         ),
         Container(
           alignment: Alignment.centerLeft,

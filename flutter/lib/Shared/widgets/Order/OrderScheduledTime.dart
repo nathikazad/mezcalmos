@@ -28,7 +28,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
               style: titleTextStyle,
             ),
             const SizedBox(
-              height: 10,
+              height: 4,
             ),
             Card(
               margin: EdgeInsets.zero,

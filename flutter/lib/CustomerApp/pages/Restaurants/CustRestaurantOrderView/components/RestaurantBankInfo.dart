@@ -39,9 +39,8 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
       if (restaurant.value != null &&
           restaurant.value!.paymentInfo?.bankInfo != null) {
         return Card(
-          margin: const EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 15),
           child: Container(
-            margin: const EdgeInsets.all(5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -54,7 +53,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 4,
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),

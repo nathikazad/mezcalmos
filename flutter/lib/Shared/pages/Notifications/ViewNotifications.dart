@@ -52,7 +52,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: [
-                    _notifsHeader(),
+                    // _notifsHeader(),
+
                     Obx(() => _buildNotification(
                         controller.notifications.reversed.toList()))
                   ],
@@ -108,6 +109,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
   }
 
   Widget _buildNotification(List<notifs.Notification> notifications) {
+    int indexNotification = 0;
     return GroupedListView<notifs.Notification, DateTime>(
       shrinkWrap: true,
       elements: notifications,
@@ -121,19 +123,27 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               element2.timestamp.compareTo(element1.timestamp),
       physics: NeverScrollableScrollPhysics(),
       groupHeaderBuilder: (notifs.Notification element) {
-        if (element.timestamp.isToday) {
-          return SizedBox();
-        } else {
-          return Container(
-            margin: EdgeInsets.only(top: 10, left: 8, bottom: 10),
-            child: Text(
-              (element.timestamp.isYesterday)
-                  ? _i18n()['yesterday']
-                  : DateFormat('dd MMM, h:mm a').format(element.timestamp),
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          );
-        }
+        indexNotification++;
+        mezDbgPrint(indexNotification);
+        return Container(
+          margin: EdgeInsets.only(top: 10, left: 8, bottom: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                (element.timestamp.isToday)
+                    ? _i18n()["today"]
+                    : (element.timestamp.isYesterday)
+                        ? _i18n()['yesterday']
+                        : DateFormat('dd MMM, h:mm a')
+                            .format(element.timestamp),
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              indexNotification == 1 ? _deleteButton() : SizedBox()
+              // if(element.) _deleteButton(),
+            ],
+          ),
+        );
       },
       separator: SizedBox(
         height: 5,
@@ -255,55 +265,57 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     );
   }
 
-  Widget _notifsHeader() {
-    return Obx(
-      () => (controller.notifications.length <= 0)
-          ? Container()
-          : Container(
-              // padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      _isTodayNotifsExist() ? _i18n()["today"] : "",
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: InkWell(
-                        customBorder: CircleBorder(),
-                        onTap: () async {
-                          await showConfirmationDialog(context,
-                              title: _i18n()["alertClearNotificationTitle"],
-                              helperText: "",
-                              primaryButtonText: "${_i18n()["clear"]}",
-                              secondaryButtonText: "${_i18n()["no"]}",
-                              onYesClick: () async {
-                            controller.clearAllNotification();
-                            MezRouter.back();
-                          });
-                        },
-                        child: Ink(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.delete_outline_rounded,
-                              color: Colors.black,
-                            ),
-                          ),
-                        )),
-                  ),
-                ],
+  // Widget _notifsHeader() {
+  //   return Obx(
+  //     () => (controller.notifications.length <= 0)
+  //         ? Container()
+  //         : Container(
+  //             // padding: const EdgeInsets.symmetric(horizontal: 8),
+  //             child: Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 // Container(
+  //                 //   padding: const EdgeInsets.only(left: 8.0),
+  //                 //   child: Text(
+  //                 //     _isTodayNotifsExist() ? _i18n()["today"] : "",
+  //                 //     style: Theme.of(context).textTheme.headline3,
+  //                 //   ),
+  //                 // ),
+  //                 _deleteButton(),
+  //               ],
+  //             ),
+  //           ),
+  //   );
+  // }
+
+  Container _deleteButton() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: InkWell(
+          customBorder: CircleBorder(),
+          onTap: () async {
+            await showConfirmationDialog(context,
+                title: _i18n()["alertClearNotificationTitle"],
+                helperText: "",
+                primaryButtonText: "${_i18n()["clear"]}",
+                secondaryButtonText: "${_i18n()["no"]}", onYesClick: () async {
+              controller.clearAllNotification();
+              MezRouter.back();
+            });
+          },
+          child: Ink(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Icon(
+                Icons.delete_outline_rounded,
+                color: Colors.black,
               ),
             ),
+          )),
     );
   }
 

@@ -25,7 +25,7 @@ class _ReviewCardState extends State<ReviewCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.3,
-      margin: const EdgeInsets.only(bottom: 9),
+      margin: const EdgeInsets.only(bottom: 15),
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Column(

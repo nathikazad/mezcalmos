@@ -24,7 +24,7 @@ class OrderRestaurantCard extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 9,
+          height: 15,
         ),
         Container(
           alignment: Alignment.centerLeft,

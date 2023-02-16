@@ -54,7 +54,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      _buildSideMenuItem(),
+                     _buildSideMenuItem(),
                       _basicSideMenuItems(context),
                       MediaQuery.of(context).size.width <= 360
                           ? Container(

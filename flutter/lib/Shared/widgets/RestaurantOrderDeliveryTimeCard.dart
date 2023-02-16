@@ -24,7 +24,7 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 9,
+            height: 15,
           ),
           Text('${_i18n()["dvTime"]} :'),
           SizedBox(
