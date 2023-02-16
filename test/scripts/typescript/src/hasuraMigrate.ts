@@ -27,11 +27,11 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/deliveryDrivers/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/customers/info`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot-delivery-drivers.json", data);
+  fs.writeFileSync("./data/db-snapshot-customers.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -456,9 +456,8 @@ async function writeToDBRestoOrders() {
 
 async function writeToDBCustomers() {
   let customers = JSON.parse(
-    fs.readFileSync('./../../../../../../data/db-snapshot-customers.json').toString()
+    fs.readFileSync('./data/db-snapshot-customers.json').toString()
   );
-  let array = []
   // let c: Record<string, number> = {}
   // for (let customerId in customers) {
   //     c[customerId] = 1;
@@ -470,25 +469,73 @@ async function writeToDBCustomers() {
   //   }
   //   array.push(customerObject)
   // }
-  for (let customerId in customers) {
-    let customer = customers[customerId]
-    if (!customer)
-      continue
+  // for(let i=0; i<1100; i+=100) {
+    // console.log(i)
+    let array = []
 
-    let customerObject = {
-      userFirebaseId: customerId,
-      stripeInfo: customer.stripe
+    for (let customerId of Object.keys(customers).slice(1100, 1163)) {
+      let customer = customers[customerId]
+      if (!customer)
+        continue
+
+      let cardArray = [];
+      let idsWithServiceProviderObject: Record<any, any> = 
+        (customer.stripe 
+          && customer.stripe.idsWithServiceProvider 
+          && customer.stripe.idsWithServiceProvider.restaurant
+        )
+        ? customer.stripe.idsWithServiceProvider.restaurant
+        : undefined;
+
+      if(customer.stripe && customer.stripe.cards) {
+        let cards = customer.stripe.cards      
+          for (let cardId in cards) {
+            let card = cards[cardId]
+            if (!card)
+              continue
+    
+            // let cardIdsWithServiceProviderObject: Record<any, any> = {};
+            // if(card.idsWithServiceProvider) {
+            //   let idsWithServiceProvider = card.idsWithServiceProvider
+            //   for (let id in idsWithServiceProvider) {
+            //     let idWithServiceProvider = idsWithServiceProvider[id];
+    
+            //     cardIdsWithServiceProviderObject[id] = idWithServiceProvider.restaurant;
+            //   }
+            // }
+            let cardObject = {
+              brand: "visa",
+              expMonth: 7,
+              expYear: 2025,
+              id: "pm_1MbbFQDV5wKm9SNKSbkC1sBR",
+              last4: "8620",
+              // idsWithServiceProvider: cardIdsWithServiceProviderObject
+            }
+            cardArray.push(cardObject)
+          }
+      }
+
+      let customerObject = {
+        userFirebaseId: customerId,
+        // stripeInfo: customer.stripe,
+        stripeId: (customer.stripe) ? customer.stripe.id: undefined,
+        cards: cardArray,
+        stripeSPIds: idsWithServiceProviderObject
+      }
+      // console.log(customerObject)
+
+      array.push(customerObject)
     }
-    array.push(customerObject)
-  }
-  await insertCustomers(array)
+    console.log(array.length)
+    await insertCustomers(array)
+  // }
 }
 
 
-  // saveFile()
+  saveFile()
   // writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
-writeToDBDeliDrivers()
+// writeToDBDeliDrivers()
 // writeToDBCustomers()
 // writeToDBRestoOrders()

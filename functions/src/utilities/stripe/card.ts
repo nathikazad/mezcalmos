@@ -1,20 +1,19 @@
 import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { CustomerCard, emptyIdsWithServiceProvider, StripeStatus } from './model';
-import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
+import { CustomerCard, StripeStatus } from './model';
+import { PaymentType } from '../../shared/models/Generic/Order';
 import { getCustomer } from '../../shared/graphql/user/customer/getCustomer';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { HttpsError } from 'firebase-functions/v1/auth';
-import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
 import { getCustomerRestaurantOrders } from '../../shared/graphql/restaurant/order/getRestaurantOrder';
 import { RestaurantOrder, RestaurantOrderStatus } from '../../shared/models/Services/Restaurant/RestaurantOrder';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { verifyCustomerIdForServiceAccount } from './serviceProvider';
 import { ServiceProvider } from '../../shared/models/Services/Service';
-import { getLaundryStore } from '../../shared/graphql/laundry/getLaundry';
 import { getCustomerLaundryOrders } from '../../shared/graphql/laundry/order/getLaundryOrder';
 import { LaundryOrder, LaundryOrderStatus } from '../../shared/models/Services/Laundry/LaundryOrder';
+import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
 let keys: Keys = getKeys();
 
 export interface CardDetails {
@@ -37,12 +36,12 @@ export async function addCard(userId: number, cardDetails: CardDetails): Promise
   );
   customer.stripeInfo!.cards = customer.stripeInfo!.cards ?? {}
   customer.stripeInfo!.cards[paymentMethod.id] = {
-    id: paymentMethod.id,
+    cardId: paymentMethod.id,
     last4: paymentMethod.card?.last4,
     brand: paymentMethod.card?.brand,
     expMonth: paymentMethod.card?.exp_month,
     expYear: paymentMethod.card?.exp_year,
-    idsWithServiceProvider: emptyIdsWithServiceProvider
+    idsWithServiceProvider: {}
   };
   updateCustomerStripe(customer);
 
@@ -54,7 +53,7 @@ export async function addCard(userId: number, cardDetails: CardDetails): Promise
 export interface ChargeCardDetails {
   serviceProviderId: number,
   cardId: string,
-  orderType: OrderType,
+  // orderType: OrderType,
   paymentAmount: number
 }
 export interface ChargeCardResponse {
@@ -65,20 +64,21 @@ export interface ChargeCardResponse {
 }
 export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDetails): Promise<ChargeCardResponse> {
 
-  let serviceProvider: ServiceProvider;
-  switch (chargeCardDetails.orderType) {
-    case OrderType.Restaurant:
-      serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderId);
-      break;
-    case OrderType.Laundry:
-      serviceProvider = await getLaundryStore(chargeCardDetails.serviceProviderId);
-      break;
-    default:
-      throw new HttpsError(
-        "internal",
-        "invalid order type"
-      );
-  }
+  
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(chargeCardDetails.serviceProviderId)
+  // switch (chargeCardDetails.orderType) {
+  //   case OrderType.Restaurant:
+  //     serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderId);
+  //     break;
+  //   case OrderType.Laundry:
+  //     serviceProvider = await getLaundryStore(chargeCardDetails.serviceProviderId);
+  //     break;
+  //   default:
+  //     throw new HttpsError(
+  //       "internal",
+  //       "invalid order type"
+  //     );
+  // }
   if (!(serviceProvider.stripeInfo)
     || !(serviceProvider.acceptedPayments)
     || serviceProvider.acceptedPayments[PaymentType.Card] == false
@@ -93,7 +93,8 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
   let stripe = new Stripe(keys.stripe.secretkey, stripeOptionsDefault);
   let customer: CustomerInfo = await getCustomer(userId);
   customer = await verifyCustomerStripeInfo(customer, stripe);
-  if (!(customer.stripeInfo!.cards[chargeCardDetails.cardId])) {
+
+  if(customer.stripeInfo!.cards[chargeCardDetails.cardId] == undefined) {
     throw new HttpsError(
       "internal",
       "There is no card with this key"
@@ -104,14 +105,13 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
 
   customer = await verifyCustomerIdForServiceAccount(
     customer, 
-    chargeCardDetails.serviceProviderId, 
-    chargeCardDetails.orderType, 
+    chargeCardDetails.serviceProviderId,
     stripe, 
     stripeOptions
   );
-  let stripeCustomerId: string = customer.stripeInfo!.idsWithServiceProvider[chargeCardDetails.orderType][chargeCardDetails.serviceProviderId];
-  let card: CustomerCard = await verifyCardForServiceAccount(customer, chargeCardDetails.cardId, chargeCardDetails.serviceProviderId, chargeCardDetails.orderType, stripeCustomerId, stripe, stripeOptions);
-  let stripeCardId: string = card.idsWithServiceProvider[chargeCardDetails.orderType][chargeCardDetails.serviceProviderId];
+  let stripeCustomerId: string = customer.stripeInfo!.idsWithServiceProvider[chargeCardDetails.serviceProviderId];
+  let card: CustomerCard = await verifyCardForServiceAccount(customer, chargeCardDetails.cardId, chargeCardDetails.serviceProviderId, stripeCustomerId, stripe, stripeOptions);
+  let stripeCardId: string = card.idsWithServiceProvider[chargeCardDetails.serviceProviderId];
 
   const paymentIntent = await stripe.paymentIntents.create(
     {
@@ -171,28 +171,25 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
 
   const stripe = new Stripe(keys.stripe.secretkey, { apiVersion: <any>'2020-08-27' });
   await stripe.paymentMethods.detach(
-    card.id,
+    card.cardId,
     { apiVersion: <any>'2020-08-27' }
   );
-
-  for (let orderTypeId in card.idsWithServiceProvider) {
-    let orderType: OrderType = orderTypeId as OrderType;
-    for (let serviceProviderId in card.idsWithServiceProvider[orderType]) {
-      let clonedCardId = card.idsWithServiceProvider[orderType][serviceProviderId];
-      let serviceProvider: ServiceProvider;
-      switch (orderType) {
-        case OrderType.Restaurant:
-          serviceProvider = await getRestaurant(parseInt(serviceProviderId));
-          break;
-        case OrderType.Laundry:
-          serviceProvider = await getLaundryStore(parseInt(serviceProviderId));
-          break;
-        default:
-          throw new HttpsError(
-            "internal",
-            "invalid order type"
-          );
-      }
+    for (let serviceProviderId in card.idsWithServiceProvider) {
+      let clonedCardId = card.idsWithServiceProvider[serviceProviderId];
+      let serviceProvider: ServiceProvider = await getServiceProviderDetails(parseInt(serviceProviderId))
+      // switch (orderType) {
+      //   case OrderType.Restaurant:
+      //     serviceProvider = await getRestaurant(parseInt(serviceProviderId));
+      //     break;
+      //   case OrderType.Laundry:
+      //     serviceProvider = await getLaundryStore(parseInt(serviceProviderId));
+      //     break;
+      //   default:
+      //     throw new HttpsError(
+      //       "internal",
+      //       "invalid order type"
+      //     );
+      // }
       
       if (!clonedCardId || !(serviceProvider.stripeInfo))
         continue
@@ -203,7 +200,6 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
         stripeOptions
       );
     }
-  }
   delete customer.stripeInfo.cards[removeCardDetails.cardId];
   await updateCustomerStripe(customer);
 };
@@ -218,14 +214,14 @@ export async function verifyCustomerStripeInfo(customerInfo: CustomerInfo, strip
     customerInfo.stripeInfo = {
       id: customer.id,
       cards: {},
-      idsWithServiceProvider: emptyIdsWithServiceProvider
+      idsWithServiceProvider: {}
     }
     updateCustomerStripe(customerInfo);
   }
   return customerInfo;
 }
 
-export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId: string, serviceProviderId: number, orderType: OrderType, stripeCustomerServiceAccountId: string, stripe: Stripe, stripeOptions: any): Promise<CustomerCard> {
+export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId: string, serviceProviderId: number, stripeCustomerServiceAccountId: string, stripe: Stripe, stripeOptions: any): Promise<CustomerCard> {
 
   if(!(customer.stripeInfo)) {
     throw new HttpsError(
@@ -233,18 +229,18 @@ export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId
       "Customer does not have stripe account"
     );
   }
-  if(!(customer.stripeInfo.cards[cardId])) {
+  if(customer.stripeInfo!.cards[cardId] == null) {
     throw new HttpsError(
       "internal",
       "There is no card with this key"
     );
   }
-  let card: CustomerCard = customer.stripeInfo.cards[cardId];
+  let card: CustomerCard = customer.stripeInfo!.cards[cardId];
 
-  if(card.idsWithServiceProvider[orderType][serviceProviderId] == null) {
+  if(card.idsWithServiceProvider[serviceProviderId] == null) {
     const clonedPaymentMethod = await stripe.paymentMethods.create({
       customer: customer.stripeInfo.id,
-      payment_method: card.id,
+      payment_method: card.cardId,
     }, stripeOptions);
   
     const paymentMethod = await stripe.paymentMethods.attach(
@@ -252,7 +248,8 @@ export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId
       { customer: stripeCustomerServiceAccountId },
       stripeOptions
     );
-    card.idsWithServiceProvider[orderType][serviceProviderId] = paymentMethod.id;
+    card.idsWithServiceProvider[serviceProviderId] = paymentMethod.id;
+
     customer.stripeInfo.cards[cardId] = card;
     updateCustomerStripe(customer);
   }

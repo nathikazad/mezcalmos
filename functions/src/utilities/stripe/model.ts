@@ -1,25 +1,24 @@
 // **** Customer Models ****
 
-import { OrderType } from "../../shared/models/Generic/Order";
 
 export interface CustomerStripe {
   id: string,
-  idsWithServiceProvider: Record<OrderType, Record<number, string>>,
+  idsWithServiceProvider: Record<number, string>, // Record<OrderType, Record<number, string>>,
   cards: Record<string, CustomerCard>
 }
-export const emptyIdsWithServiceProvider: Record<OrderType, Record<number, string>> = {
-  restaurant: {},
-  laundry: {},
-  taxi: {},
-  water: {}
-}
+// export const emptyIdsWithServiceProvider: Record<OrderType, Record<number, string>> = {
+//   restaurant: {},
+//   laundry: {},
+//   taxi: {},
+//   water: {}
+// }
 export interface CustomerCard {
-  id: string,
+  cardId: string,
   last4?: string,
   brand?: string,
   expMonth?: number,
   expYear?: number,
-  idsWithServiceProvider: Record<OrderType, Record<number, string>>,
+  idsWithServiceProvider: Record<number, string>, // Record<OrderType, Record<number, string>>,
 }
 
 // **** Order Models ****
