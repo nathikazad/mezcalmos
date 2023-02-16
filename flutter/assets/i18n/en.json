@@ -823,6 +823,8 @@
       },
       "ServiceInfoEditView": {
         "name": "Name",
+        "phoneNumber" : "Phone number",
+        "phoneErrorText" : "Please enter a valid phone number",
         "location": "Location",
         "description": "Description in",
         "info": "Info",

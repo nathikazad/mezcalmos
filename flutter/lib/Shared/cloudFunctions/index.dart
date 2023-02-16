@@ -46,13 +46,11 @@ class CloudFunctions {
 
   static Future<PaymentIntentResponse> stripe_getPaymentIntent(
       {required num serviceProviderId,
-      required OrderType orderType,
       required num paymentAmount}  ) async {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-getPaymentIntent",
       parameters: <String, dynamic>{
         "serviceProviderId":serviceProviderId,
-        "orderType":orderType.toFirebaseFormatString(),
         "paymentAmount":paymentAmount,
       }));
   }
@@ -69,14 +67,12 @@ class CloudFunctions {
   static Future<ChargeCardResponse> stripe_chargeCard(
       {required num serviceProviderId,
       required String cardId,
-      required OrderType orderType,
       required num paymentAmount}  ) async {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-chargeCard",
       parameters: <String, dynamic>{
         "serviceProviderId":serviceProviderId,
         "cardId":cardId,
-        "orderType":orderType.toFirebaseFormatString(),
         "paymentAmount":paymentAmount,
       }));
   }
@@ -92,14 +88,12 @@ class CloudFunctions {
 
   static Future<SetupResponse> stripe_setupServiceProvider(
       {required num serviceProviderId,
-      required OrderType orderType,
-      Map<PaymentType,bool>? acceptedPayments}  ) async {
+      required OrderType orderType}  ) async {
     return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-setupServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderId":serviceProviderId,
         "orderType":orderType.toFirebaseFormatString(),
-        "acceptedPayments":acceptedPayments,
       }));
   }
 
@@ -136,8 +130,8 @@ class CloudFunctions {
       required bool customerPickup,
       bool? selfDelivery,
       num? deliveryPartnerId,
-      DeliveryDetails? deliveryDetails,
-      required Language language}  ) async {
+      required DeliveryDetails deliveryDetails,
+      required Map<Language,bool> language}  ) async {
     return await callCloudFunction(
       functionName: "restaurant2-createRestaurant",
       parameters: <String, dynamic>{
@@ -151,8 +145,8 @@ class CloudFunctions {
         "customerPickup":customerPickup,
         "selfDelivery":selfDelivery,
         "deliveryPartnerId":deliveryPartnerId,
-        "deliveryDetails":deliveryDetails?.toFirebaseFormattedJson(),
-        "language":language.toFirebaseFormatString(),
+        "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
+        "language":language,
       });
   }
 
@@ -236,12 +230,14 @@ class CloudFunctions {
 
   static Future<void> restaurant2_addRestaurantOperator(
       {required num restaurantId,
-      NotificationInfo? notificationInfo}  ) async {
+      NotificationInfo? notificationInfo,
+      String? appVersion}  ) async {
     return await callCloudFunction(
       functionName: "restaurant2-addRestaurantOperator",
       parameters: <String, dynamic>{
         "restaurantId":restaurantId,
         "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
+        "appVersion":appVersion,
       });
   }
 
@@ -285,12 +281,9 @@ class CloudFunctions {
       required Map<String, dynamic> schedule,
       String? laundryOperatorNotificationToken,
       String? firebaseId,
-      required bool delivery,
-      required bool customerPickup,
-      bool? selfDelivery,
       num? deliveryPartnerId,
-      DeliveryDetails? deliveryDetails,
-      required Language language}  ) async {
+      required DeliveryDetails deliveryDetails,
+      required Map<Language,bool> language}  ) async {
     return await callCloudFunction(
       functionName: "laundry-createLaundry",
       parameters: <String, dynamic>{
@@ -300,12 +293,9 @@ class CloudFunctions {
         "schedule":json.encode(schedule),
         "laundryOperatorNotificationToken":laundryOperatorNotificationToken,
         "firebaseId":firebaseId,
-        "delivery":delivery,
-        "customerPickup":customerPickup,
-        "selfDelivery":selfDelivery,
         "deliveryPartnerId":deliveryPartnerId,
-        "deliveryDetails":deliveryDetails?.toFirebaseFormattedJson(),
-        "language":language.toFirebaseFormatString(),
+        "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
+        "language":language,
       });
   }
 
@@ -436,15 +426,11 @@ class CloudFunctions {
 
   static Future<void> delivery2_changeStatus(
       {required num deliveryId,
-      required num deliveryDriverId,
-      required ParticipantType deliveryDriverType,
       required DeliveryOrderStatus newStatus}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-changeStatus",
       parameters: <String, dynamic>{
         "deliveryId":deliveryId,
-        "deliveryDriverId":deliveryDriverId,
-        "deliveryDriverType":deliveryDriverType.toFirebaseFormatString(),
         "newStatus":newStatus.toFirebaseFormatString(),
       });
   }
