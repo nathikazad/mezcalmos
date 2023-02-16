@@ -4,7 +4,6 @@ import 'package:mezcalmos/RestaurantApp/components/ROpAppBar.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpDashboardPage.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpReviewsPage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/pages/ROpSchedulePage.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -75,7 +74,6 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                 ROpSchedulePage(
                   editInfoController: editInfoController,
                 ),
-                ROpReviewsView(restId: restaurantID!),
               ],
             ),
             // bottomNavigationBar: _editInfoSaveButton(),
@@ -130,7 +128,7 @@ class _ROpDashboardViewState extends State<ROpDashboardView> {
                     color: Colors.amber.shade200,
                     child: Text(
                       "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
-                      style: Get.textTheme.bodyText1
+                      style: Get.textTheme.bodyLarge
                           ?.copyWith(color: Colors.amber.shade700),
                     ),
                   ),

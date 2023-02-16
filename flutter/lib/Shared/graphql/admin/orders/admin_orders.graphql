@@ -114,6 +114,7 @@ query admin_get_service__orders(
     order_time
     status
     package_cost
+    package_ready
     dropoff_address
     order_type
     dropoff_gps
