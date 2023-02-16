@@ -61,15 +61,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   CartItemsBuilder(
                     viewController: viewController,
                   ),
-                Container(
-                  margin: const EdgeInsets.only(
-                    bottom: 9,
-                  ),
-                  child: DeliveryTimePicker(viewCartController: viewController),
-                ),
+                DeliveryTimePicker(viewCartController: viewController),
+
                 _deliveryLocation(),
                 SizedBox(
-                  height: 9,
+                  height: 15,
                 ),
                 Container(
                   child: PaymentMethodPicker(
@@ -85,11 +81,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       style: Get.textTheme.bodyText1),
                 ),
                 SizedBox(
-                  height: 9,
+                  height: 15,
                 ),
                 _notesComponent(context),
                 SizedBox(
-                  height: 14,
+                  height: 15,
                 ),
                 CardSummaryCard(
                   controller: viewController,
@@ -113,6 +109,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
+          margin: EdgeInsets.only(top: 15),
           alignment: Alignment.centerLeft,
           child: Text(
             "${_i18n()["deliveryLocation"]}",

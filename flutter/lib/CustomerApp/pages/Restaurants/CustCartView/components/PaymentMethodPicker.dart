@@ -39,7 +39,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
     return Builder(
       builder: (BuildContext context) {
         if (widget.viewCartController.showPaymentPicker) {
-          return Container(
+          return Container(     
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,7 +130,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                   },
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 15,
                 ),
               ],
             ),

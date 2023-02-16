@@ -1,15 +1,15 @@
 {
     "CustomerApp": {
         "main": {
-            "savedLocations": "Saved Locations",
+            "savedLocations": "My locations",
             "contactUs": "Contact us",
-            "savedCards": "Saved cards"
+            "savedCards": "My cards"
         },
         "components": {
             "Menu": {
                 "UserMenuComponent": {
-                    "savedLocations": "Saved Locations",
-                    "userInfo": "User Information",
+                    "savedLocations": "My locations",
+                    "userInfo": "User information",
                     "logout": "Logout",
                     "notifications": "Notifications",
                     "orders": "Orders"
@@ -27,7 +27,7 @@
             },
             "LocationPicker": {
                 "pick": "PICK",
-                "confirm": "confirm",
+                "confirm": "Confirm",
                 "signInToMakeOrder": "Sign in to make order",
                 "moveMapIfNotPrecise": "You can move the map if the location is not exact."
             },
@@ -38,9 +38,9 @@
         "pages": {
             "cards": {
                 "SavedCardsListView": {
-                    "cards": "Cards",
+                    "cards": "My cards",
                     "card": "Card",
-                    "addNew": "Add new credit card",
+                    "addNew": "Add new card",
                     "removeTitle": "Remove card",
                     "removeDesc": "Are you sure you want to remove this card",
                     "removeBtn": "Yes, remove card"
@@ -49,19 +49,19 @@
             "ListOrdersScreen": {
                 "components": {
                     "RestaurantOngoingOrderCard": {
-                        "totalCost": "Total Cost"
+                        "totalCost": "Total cost"
                     },
                     "RestaurantPastOrderCard": {
-                        "totalCost": "Total Cost"
+                        "totalCost": "Total cost"
                     },
                     "TaxiOrderOngoingCard": {
                         "taxiOrder": "Taxi order",
-                        "totalCost": "Total Cost",
+                        "totalCost": "Total cost",
                         "orderStatus": {
                             "canceledByTaxi": "Cancelled",
                             "canceledByCustomer": "Cancelled",
                             "onTheWay": "Taxi on the way",
-                            "lookingForTaxi": "Looking for Taxi",
+                            "lookingForTaxi": "Looking for taxi",
                             "inTransit": "Taxi in transit",
                             "droppedOff": "Delivered",
                             "expired": "Expired",
@@ -75,28 +75,28 @@
                         "totalCost": "Total Cost"
                     },
                     "LaundryOngoingOrderCard": {
-                        "totalCost": "Total Cost",
+                        "totalCost": "Total cost",
                         "status": {
-                            "canceled": "Order Cancelled",
-                            "orderReceived": "Order Received",
+                            "canceled": "Order cancelled",
+                            "orderReceived": "Order received",
                             "otwPickUp": "Pickup on the way",
-                            "pickedUp": "Order Picked up",
-                            "atLaundry": "At Laundry",
-                            "readyForDelivery": "Ready for Delivery",
+                            "pickedUp": "Order picked up",
+                            "atLaundry": "At laundry",
+                            "readyForDelivery": "Ready for delivery",
                             "otwDelivery": "Delivery on the way",
-                            "delivered": "Order Delivered"
+                            "delivered": "Order delivered"
                         }
                     },
                     "LaundryPastOrderCard": {
-                        "totalCost": "Total Cost",
+                        "totalCost": "Total cost",
                         "status": {
                             "orderReceived": "Order Received",
                             "otwPickUp": "Pickup on the way",
                             "pickedUp": "Order Picked up",
                             "atLaundry": "At Laundry",
-                            "readyForDelivery": "Ready for Delivery",
+                            "readyForDelivery": "Ready for delivery",
                             "otwDelivery": "Delivery on the way",
-                            "delivered": "Order Delivered"
+                            "delivered": "Order delivered"
                         }
                     }
                 },
@@ -111,7 +111,7 @@
                     "orders": {
                         "noOrders": "No orders yet",
                         "noOrdersBody": "You have currently no orders.",
-                        "onGoingOrders": "Ongoing Orders"
+                        "onGoingOrders": "Ongoing orders"
                     }
                 }
             },
@@ -164,7 +164,7 @@
                             "inCart": "My orders",
                             "yesClear": "Yes",
                             "no": "No",
-                            "clearCart": "Clear Cart",
+                            "clearCart": "Clear cart",
                             "clearCartConfirm": "Are you sure you want to clear the cart ?",
                             "clear": "Clear"
                         },
@@ -185,11 +185,11 @@
                             "pickLocation": "Pick from map"
                         },
                         "OrderSummaryCard": {
-                            "orderSummary": "Order Summary",
-                            "orderCost": "Order Cost",
-                            "deliveryCost": "Delivery Cost",
+                            "orderSummary": "Summary",
+                            "orderCost": "Order cost",
+                            "deliveryCost": "Delivery cost",
                             "stripeFees": "Card fees",
-                            "totalCost": "Total Cost",
+                            "totalCost": "Total cost",
                             "deliveryLocation": "Delivery Location",
                             "toBeCalc": "Calculating..."
                         },
@@ -204,7 +204,7 @@
                     "ViewCartScreen": {
                         "notesTitle": "Notes",
                         "notes": "Write your notes here",
-                        "deliveryLocation": "Delivery Location",
+                        "deliveryLocation": "Delivery location",
                         "deliveryType": "Delivery type",
                         "paymentMethod": "Payment method",
                         "ops": "Oops",
@@ -246,8 +246,8 @@
                         "notes": "Notes",
                         "special": "Special",
                         "viewRestaurant": "View restaurant",
-                        "itemNotes": "Item notes :",
-                        "itemDescription": "Item Description",
+                        "itemNotes": "Item notes",
+                        "itemDescription": "Item description",
                         "availability": "Availability",
                         "hintNote":"Write your notes here"
                     }
@@ -273,10 +273,10 @@
                             "restaurant": "Restaurant"
                         },
                         "notesWidget": {
-                            "notes": "Order note :"
+                            "notes": "Order note"
                         },
                         "OrderFooterCard": {
-                            "cancelOrder": "Cancel Order",
+                            "cancelOrder": "Cancel order",
                             "orderCanceled": "Order is being cancelled ...",
                             "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
                             "titleSuccess": "Success :)",
@@ -285,18 +285,18 @@
                             "orderCancelFailed": "Failed to cancel the order.",
                             "yes": "Yes, I'm sure!",
                             "no": "No",
-                            "orderDelivered": "Order Delivered",
-                            "orderCancelled": "Order Cancelled"
+                            "orderDelivered": "Order delivered",
+                            "orderCancelled": "Order cancelled"
                         },
                         "OrdersItemsCard": {
                             "itemUnav": "Item unavailable",
-                            "orderItems": "Order Items",
+                            "orderItems": "Order items",
                             "canceledByAdmin": "Cancelled",
                             "canceledByCustomer": "Cancelled",
-                            "received": "Order Received",
+                            "received": "Order received",
                             "preparing": "Preparing the order",
-                            "onTheWay": "On The Way",
-                            "readyForPickUp": "Ready For Pickup",
+                            "onTheWay": "On the way",
+                            "readyForPickUp": "Ready For pickup",
                             "delivered": "Delivered",
                             "helperText-canceledByAdmin": "Your order has been cancelled by the restaurant",
                             "helperText-canceledByCustomer": "Your order has been cancelled",
@@ -308,14 +308,14 @@
                             "itemNotes": "Note : "
                         },
                         "OrderSummaryCard": {
-                            "totalCost": "Total Cost",
+                            "totalCost": "Total cost",
                             "orderSummary": "Summary",
                             "stripeFees": "Card fees",
-                            "orderCost": "Order Cost",
-                            "deliveryCost": "Delivery Cost",
+                            "orderCost": "Order cost",
+                            "deliveryCost": "Delivery cost",
                             "free": "Free",
                             "total": "Total",
-                            "deliveryLocation": "Delivery Location"
+                            "deliveryLocation": "Delivery location"
                         },
                         "RestaurantBankInfoCard": {
                             "title": "Restaurant bank account",
@@ -324,14 +324,14 @@
                         }
                     },
                     "ViewRestaurantOrderScreen": {
-                        "orderStatus": "Order Status",
+                        "orderStatus": "Order status",
                         "writeReview": "Write review",
                         "deliveryDet": "Delivery details"
                     }
                 },
                 "ViewRestaurantScreen": {
                     "CustomerRestaurantView": {
-                        "specials": "specials",
+                        "specials": "Specials",
                         "scheduleTitle": "Only available for scheduling orders"
                     },
                     "components": {
@@ -344,7 +344,7 @@
                             "description": "Description",
                             "location": "Location",
                             "reviews": "Reviews",
-                            "workingHours": "Working Hours",
+                            "workingHours": "Working hours",
                             "weekDays": {
                                 "monday": "Monday",
                                 "tuesday": "Tuesday",
@@ -373,17 +373,19 @@
                         "location": "Location"
                     },
                     "SavedLocationComponent": {
-                        "editLocation": "Edit Location",
-                        "deleteLocation": "Delete Location"
+                        "editLocation": "Edit location",
+                        "deleteLocation": "Delete location",
+                        "defaultAddressText":"Default"
                     },
                     "SavedLocationIsEmpty": {
-                        "savedLocationsListEmpty": "Your Saved locations list is empty",
+                        "savedLocationsListEmpty": "Your saved locations list is empty",
                         "clickBtnToAddNewLocation": "Add new location by clicking the button below"
                     }
                 },
                 "SavedLocationView": {
-                    "title": "Saved Locations",
-                    "addNewLoc": "Add New Location"
+                    "title": "Saved locations",
+                    "addNewLoc": "Add new location",
+                    "location":"Location"
                 }
             },
             "Taxi": {
@@ -396,7 +398,7 @@
                     "TaxiBottomBars": {
                         "TaxiOrderBottomBar": {
                             "rideFinished": "Ride finished",
-                            "ride": "ride",
+                            "ride": "Ride",
                             "rideExpired": "Your ride has been expired",
                             "rideCancelledByTaxi": "Ride cancelled by taxi",
                             "rideCancelledByCustomer": "You have cancelled your ride",
@@ -450,7 +452,7 @@
                 }
             },
             "CustomerWrapper": {
-                "savedLocations": "Saved Locations",
+                "savedLocations": "Saved locations",
                 "welcomeText": "Welcome to MEZCALMOS 👋",
                 "appDescription": "Your one stop place to find all your needed local services and where you can enjoy fast and high quality services.",
                 "services": "Services",
@@ -467,7 +469,7 @@
                     "title": "Laundry"
                 },
                 "comingSoon": "Coming soon ...",
-                "supportText": "need help ? Contact our support team"
+                "supportText": "Need help ? contact our support team"
             },
             "Laundry": {
                 "Components": {
@@ -491,10 +493,10 @@
                             "notes": "Notes"
                         },
                         "LaundryOrderFooterCard": {
-                            "cancelOrder": "Cancel Order",
+                            "cancelOrder": "Cancel order",
                             "orderCanceled": "Order is being cancelled ...",
-                            "orderStatusCanceled": "Order Cancelled",
-                            "orderStatusDeliverd": "Order Delivered",
+                            "orderStatusCanceled": "Order cancelled",
+                            "orderStatusDeliverd": "Order delivered",
                             "cancelOrderConfirm": "Are you sure you want to\ncancel this order?",
                             "titleSuccess": "Success :)",
                             "orderCancelSuccess": "Order cancelled successfully.",
@@ -504,11 +506,11 @@
                             "cancelOrderDialogNo": "No"
                         },
                         "LaundryOrderStatusCard": {
-                            "orderReceived": "Order Received",
+                            "orderReceived": "Order received",
                             "otwPickUp": "Pickup on the way",
                             "pickedUp": "Order picked up",
                             "atLaundry": "At laundry",
-                            "readyForDelivery": "Ready for Delivery",
+                            "readyForDelivery": "Ready for delivery",
                             "otwDelivery": "Delivery on the way",
                             "delivered": "Delivered",
                             "canceled": "Cancelled",
@@ -516,7 +518,7 @@
                             "otwToLaundry": "On the way to laundry",
                             "pickedUpFromCustomer": "On the way to laundry",
                             "pickedUpFromLaundry": "Delivery on the way",
-                            "cancelByAdmin": " Order Canceled by the admin",
+                            "cancelByAdmin": " Order canceled by the admin",
                             "cancelByUser": " You canceled the order",
                             "received": " Order received and will be proceed as soon as possible",
                             "orderHelperOtwPickup": "Our driver is on the way to pick up your order from your location ",
@@ -531,9 +533,9 @@
                         },
                         "LaundryPricingComponent": {
                             "laundryPricing": "Laundry cost",
-                            "fixedRate": "Cost Per Kilo",
-                            "orderWeight": "Order Weight",
-                            "minimumCost": "Minimum Cost",
+                            "fixedRate": "Cost per kilo",
+                            "orderWeight": "Order weight",
+                            "minimumCost": "Minimum cost",
                             "total": "Total",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order.",
                             "item": "Item",
@@ -543,19 +545,19 @@
                         },
                         "OrderSummaryComponent": {
                             "orderSummary": "Summary",
-                            "orderCost": "Order Cost",
-                            "deliveryCost": "Delivery Cost",
-                            "totalCost": "Total Cost",
-                            "deliveryLocation": "Delivery Location",
-                            "laundryPricing": "Laundry Pricing",
-                            "fixedRate": "Cost Per Kilo",
-                            "orderWeight": "Order Weight",
+                            "orderCost": "Order cost",
+                            "deliveryCost": "Delivery cost",
+                            "totalCost": "Total cost",
+                            "deliveryLocation": "Delivery location",
+                            "laundryPricing": "Laundry pricing",
+                            "fixedRate": "Cost per kilo",
+                            "orderWeight": "Order weight",
                             "free": "Free",
                             "laundryPricingNote": "Order weight and total cost will be updated once the laundry service receive your order."
                         }
                     },
                     "LaundryCurrentOrderView": {
-                        "orderStatus": "Order Status",
+                        "orderStatus": "Order status",
                         "laundry": "Laundry",
                         "estimatedDeliveryTime": "Estimated delivery time"
                     }
@@ -576,7 +578,7 @@
                 },
                 "SingleLaundryScreen": {
                     "startingFrom": "Starting from ",
-                    "minimumCost": "Minimum Cost",
+                    "minimumCost": "Minimum cost",
                     "description": "Description",
                     "openHours": "openHours",
                     "sendMyLaundry": "Send my laundry",
@@ -585,14 +587,14 @@
                 "LaundryRequestView": {
                     "LaundryOrderRequestView": {
                         "howItWorks": "How it works",
-                        "deliveryLocation": "Delivery Location",
-                        "orderSummary": "Order Summary",
-                        "orderCost": "Order Cost",
-                        "minimumCost": "Minimum Cost",
-                        "deliveryCost": "Delivery Cost",
+                        "deliveryLocation": "Delivery location",
+                        "orderSummary": "Order summary",
+                        "orderCost": "Order cost",
+                        "minimumCost": "Minimum cost",
+                        "deliveryCost": "Delivery cost",
                         "noLocation": "No location selected",
                         "pickLocation": "Pick from map",
-                        "orderNow": "Order Now",
+                        "orderNow": "Order now",
                         "signInToMakeOrder": "Sign in to make order",
                         "notes": "Notes",
                         "error": "Error",
@@ -601,38 +603,38 @@
                     }
                 },
                 "LaundryPickLocView": {
-                    "pickLocation": "Pick Location",
+                    "pickLocation": "Pick location",
                     "pickLabele": "Search for location or move map and pick location"
                 }
             }
         },
         "notificationHandler": {
-            "viewOrder": "View Order",
-            "preparingOrderTitle": "Preparing Order",
+            "viewOrder": "View order",
+            "preparingOrderTitle": "Preparing order",
             "preparingOrderBody": "Your order is being prepared",
-            "readyForPickUpTitle": "Ready For Pickup",
+            "readyForPickUpTitle": "Ready For pickup",
             "readyForPickUpBody": "Your order is ready for pickup",
-            "onTheWayRestaurantTitle": "On the Way",
+            "onTheWayRestaurantTitle": "On the way",
             "onTheWayRestaurantBody": "Your order is on the way",
             "deliveredTitle": "Delivered",
             "deliveredBody": "Your order has been delivered",
-            "cancelledTitle": "Order Cancelled",
+            "cancelledTitle": "Order cancelled",
             "cancelledBody": "Your order has been cancelled",
             "taxiOnTheWayTitle": "On the Way",
             "taxiOnTheWayBody": "Your taxi is on the way",
-            "taxiInTransitTitle": "In Transit",
+            "taxiInTransitTitle": "In transit",
             "taxiInTransitBody": "You are on the way to your destination",
             "taxiDroppedOffTitle": "Reached",
             "taxiDroppedOffBody": "Your have reached your destination",
-            "taxiCancelledTitle": "Order Cancelled",
+            "taxiCancelledTitle": "Order cancelled",
             "taxiCancelledBody": "Your order has been cancelled",
             "taxiExpiredTitle": "No taxis available",
-            "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. Please try again later",
+            "taxiExpiredBody": "Unfortunately, we could not find a taxi for you. please try again later",
             "taxiFwdToCompanyTitle": "Forwarding to company",
             "taxiFwdToCompanyBody": "We are calling a local company to find you a taxi",
             "taxiFwdSuccessTitle": "Forwarded",
             "taxiFwdSuccessBody": "Local taxi driver found ",
-            "taxiFwdCancelTitle": "Forwarding Cancelled ",
+            "taxiFwdCancelTitle": "Forwarding cancelled ",
             "taxiFwdCancelBody": "Your order has been cancelled ",
             "laundryOtwPickupTitle": "Pickup on the way",
             "laundryOtwPickupBody": "Driver on the way to pick up your order",
@@ -646,9 +648,9 @@
             "laundryOtwDeliveryBody": "Your order is on the way",
             "laundryDeliveredTitle": "Delivered",
             "LaundryDeliveredBody": "Your order has been delivered",
-            "LaundryCancelledTitle": "Order Cancelled",
+            "LaundryCancelledTitle": "Order cancelled",
             "LaundryCancelledBody": "Your order has been cancelled",
-            "counterOfferTitle": "New Counter Offer",
+            "counterOfferTitle": "New counter offer",
             "counterOfferBody": "New offer from "
         }
     },
@@ -885,6 +887,7 @@
                     "alertClearNotificationTitle": "Clear All Notifications",
                     "clear": "Clear",
                     "no": "No",
+                    "yesterday":"Yesterday",
                     "noNotifTitle": "No notifications yet !",
                     "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
                 }
@@ -2324,7 +2327,7 @@
         "to": "To",
         "required": "Required",
         "error": "Error",
-        "noRoute": "No route found. Please enter a valid destination",
+        "noRoute": "No route found. please enter a valid destination",
         "confirm": "Confirm",
         "cancel": "Cancel"
     }

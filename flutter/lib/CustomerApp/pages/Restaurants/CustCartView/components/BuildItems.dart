@@ -76,7 +76,7 @@ class CartItemsBuilder extends StatelessWidget {
               return children;
             }),
           ),
-          SizedBox(height: 9),
+          SizedBox(height: 15),
         ],
       ),
     );

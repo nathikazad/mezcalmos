@@ -302,7 +302,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                   ),
                   Flexible(
                     child: Text(
-                      item.name,
+                      item.name.capitalizeFirst.toString(),
                       overflow: TextOverflow.ellipsis,
                       style: Get.textTheme.bodyText1?.copyWith(
                         fontSize: 12.sp,
