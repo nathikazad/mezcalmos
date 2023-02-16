@@ -5003,6 +5003,13 @@ const documentNodeQueryadmin_get_service__orders = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'package_ready'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'dropoff_address'),
             alias: null,
             arguments: [],
@@ -5214,6 +5221,7 @@ class Query$admin_get_service__orders$delivery_order {
     required this.order_time,
     required this.status,
     required this.package_cost,
+    required this.package_ready,
     required this.dropoff_address,
     required this.order_type,
     required this.dropoff_gps,
@@ -5229,6 +5237,7 @@ class Query$admin_get_service__orders$delivery_order {
     final l$order_time = json['order_time'];
     final l$status = json['status'];
     final l$package_cost = json['package_cost'];
+    final l$package_ready = json['package_ready'];
     final l$dropoff_address = json['dropoff_address'];
     final l$order_type = json['order_type'];
     final l$dropoff_gps = json['dropoff_gps'];
@@ -5241,6 +5250,7 @@ class Query$admin_get_service__orders$delivery_order {
       order_time: (l$order_time as String),
       status: (l$status as String),
       package_cost: moneyFromJson(l$package_cost),
+      package_ready: (l$package_ready as bool),
       dropoff_address: (l$dropoff_address as String),
       order_type: (l$order_type as String),
       dropoff_gps: geographyFromJson(l$dropoff_gps),
@@ -5260,6 +5270,8 @@ class Query$admin_get_service__orders$delivery_order {
   final String status;
 
   final double package_cost;
+
+  final bool package_ready;
 
   final String dropoff_address;
 
@@ -5285,6 +5297,8 @@ class Query$admin_get_service__orders$delivery_order {
     _resultData['status'] = l$status;
     final l$package_cost = package_cost;
     _resultData['package_cost'] = moneyToJson(l$package_cost);
+    final l$package_ready = package_ready;
+    _resultData['package_ready'] = l$package_ready;
     final l$dropoff_address = dropoff_address;
     _resultData['dropoff_address'] = l$dropoff_address;
     final l$order_type = order_type;
@@ -5308,6 +5322,7 @@ class Query$admin_get_service__orders$delivery_order {
     final l$order_time = order_time;
     final l$status = status;
     final l$package_cost = package_cost;
+    final l$package_ready = package_ready;
     final l$dropoff_address = dropoff_address;
     final l$order_type = order_type;
     final l$dropoff_gps = dropoff_gps;
@@ -5320,6 +5335,7 @@ class Query$admin_get_service__orders$delivery_order {
       l$order_time,
       l$status,
       l$package_cost,
+      l$package_ready,
       l$dropoff_address,
       l$order_type,
       l$dropoff_gps,
@@ -5357,6 +5373,11 @@ class Query$admin_get_service__orders$delivery_order {
     final l$package_cost = package_cost;
     final lOther$package_cost = other.package_cost;
     if (l$package_cost != lOther$package_cost) {
+      return false;
+    }
+    final l$package_ready = package_ready;
+    final lOther$package_ready = other.package_ready;
+    if (l$package_ready != lOther$package_ready) {
       return false;
     }
     final l$dropoff_address = dropoff_address;
@@ -5423,6 +5444,7 @@ abstract class CopyWith$Query$admin_get_service__orders$delivery_order<TRes> {
     String? order_time,
     String? status,
     double? package_cost,
+    bool? package_ready,
     String? dropoff_address,
     String? order_type,
     Geography? dropoff_gps,
@@ -5453,6 +5475,7 @@ class _CopyWithImpl$Query$admin_get_service__orders$delivery_order<TRes>
     Object? order_time = _undefined,
     Object? status = _undefined,
     Object? package_cost = _undefined,
+    Object? package_ready = _undefined,
     Object? dropoff_address = _undefined,
     Object? order_type = _undefined,
     Object? dropoff_gps = _undefined,
@@ -5472,6 +5495,9 @@ class _CopyWithImpl$Query$admin_get_service__orders$delivery_order<TRes>
         package_cost: package_cost == _undefined || package_cost == null
             ? _instance.package_cost
             : (package_cost as double),
+        package_ready: package_ready == _undefined || package_ready == null
+            ? _instance.package_ready
+            : (package_ready as bool),
         dropoff_address:
             dropoff_address == _undefined || dropoff_address == null
                 ? _instance.dropoff_address
@@ -5517,6 +5543,7 @@ class _CopyWithStubImpl$Query$admin_get_service__orders$delivery_order<TRes>
     String? order_time,
     String? status,
     double? package_cost,
+    bool? package_ready,
     String? dropoff_address,
     String? order_type,
     Geography? dropoff_gps,
