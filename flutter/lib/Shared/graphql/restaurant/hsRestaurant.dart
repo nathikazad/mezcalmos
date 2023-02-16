@@ -15,9 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -341,62 +339,6 @@ Future<Schedule?> get_restaurant_schedule(
 //     return true;
 //   }
 // }
-
-Future<double?> get_restaurant_review_average(
-    {required int restaurantId, bool withCache = true}) async {
-  final QueryResult<Query$get_restaurant_review_average> response =
-      await _db.graphQLClient.query$get_restaurant_review_average(
-    Options$Query$get_restaurant_review_average(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$get_restaurant_review_average(
-          restaurantId: restaurantId),
-    ),
-  );
-  Query$get_restaurant_review_average$restaurant_restaurant_by_pk$details$reviews_aggregate$aggregate$avg
-      data = response.parsedData!.restaurant_restaurant_by_pk!.details!
-          .reviews_aggregate.aggregate!.avg!;
-
-  if (data == null) {
-    throw Exception(
-        "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
-  } else {
-    return data.rating;
-  }
-}
-
-Future<List<Review>?> get_restaurant_reviews(
-    {required int restaurantId, bool withCache = true}) async {
-  final QueryResult<Query$get_restaurant_reviews> response =
-      await _db.graphQLClient.query$get_restaurant_reviews(
-    Options$Query$get_restaurant_reviews(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables:
-          Variables$Query$get_restaurant_reviews(restaurantId: restaurantId),
-    ),
-  );
-  List<Query$get_restaurant_reviews$restaurant_restaurant_by_pk$details$reviews>
-      data = response.parsedData!.restaurant_restaurant_by_pk!.details!.reviews;
-
-  if (data == null) {
-    throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
-  } else {
-    return data.map(
-        (Query$get_restaurant_reviews$restaurant_restaurant_by_pk$details$reviews
-            reviewData) {
-      return Review(
-          id: reviewData.id,
-          rating: reviewData.rating,
-          comment: reviewData.note,
-          reviewTime: DateTime.parse(reviewData.created_at),
-          toEntityId: reviewData.to_entity_id,
-          toEntityType: reviewData.to_entity_type.toServiceProviderType(),
-          fromEntityId: reviewData.from_entity_id,
-          fromEntityType: reviewData.from_entity_type.toServiceProviderType());
-    }).toList();
-  }
-}
 
 Future<List<Operator>?> get_restaurant_operators(
     {required int restaurantId, bool withCache = true}) async {

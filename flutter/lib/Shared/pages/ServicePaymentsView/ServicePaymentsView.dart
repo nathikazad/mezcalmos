@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceAcceptedPayments.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
@@ -42,10 +43,20 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
       if (viewController.showStripe.isTrue) {
         return ServiceStripePaymentSetup(viewController: viewController);
       } else if (viewController.setupClicked.isTrue) {
-        return Container(
-          alignment: Alignment.center,
-          color: Colors.white,
-          child: CircularProgressIndicator(),
+        return Scaffold(
+          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+              onClick: MezRouter.back, title: "${_i18n()['payments']}"),
+          body: Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  color: primaryBlueColor,
+                ),
+              ],
+            ),
+          ),
         );
       } else
         return Scaffold(

@@ -42,6 +42,10 @@ class ServicePaymentsViewController {
       serviceProfileViewController.service.serviceProviderType!;
 
   PaymentInfo? get paymentInfo => _paymentInfo.value;
+  bool get cardChecked =>
+      _paymentInfo.value?.stripe != null &&
+      _paymentInfo.value!.acceptCard &&
+      _paymentInfo.value!.stripe!.chargesEnabled;
   // init //
   Future<void> init() async {
     // get payment info //
@@ -66,24 +70,28 @@ class ServicePaymentsViewController {
 
   Future<void> handleCardCheckBoxClick(bool v) async {
     mezDbgPrint("Heeerrererrere =>${_paymentInfo.value}");
-    final Map<PaymentType, bool> newMap = {
-      ...paymentInfo!.acceptedPayments,
-      PaymentType.Card: v
-    };
+    if (cardChecked) {
+      final Map<PaymentType, bool> newMap = {
+        ...paymentInfo!.acceptedPayments,
+        PaymentType.Card: v
+      };
 
-    mezDbgPrint("Heeerrererrere =>$newMap");
-    try {
-      bool res = await update_service_accepted_payments(
-          payments: newMap, detailsId: _detailsId);
-      if (res) {
-        showSavedSnackBar();
-        _paymentInfo.value!.acceptedPayments = newMap;
-        _paymentInfo.refresh();
+      mezDbgPrint("Heeerrererrere =>$newMap");
+      try {
+        bool res = await update_service_accepted_payments(
+            payments: newMap, detailsId: _detailsId);
+        if (res) {
+          showSavedSnackBar();
+          _paymentInfo.value!.acceptedPayments = newMap;
+          _paymentInfo.refresh();
+        }
+      } catch (e, stk) {
+        showErrorSnackBar(errorText: e.toString());
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
       }
-    } catch (e, stk) {
-      showErrorSnackBar(errorText: e.toString());
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
+    } else {
+      await showPaymentSetup();
     }
     mezDbgPrint("PAYMENT CARD ======>${_paymentInfo.value?.acceptedPayments}");
   }
@@ -123,10 +131,8 @@ class ServicePaymentsViewController {
     if (_paymentInfo.value?.stripe != null) {
       setupClicked.value = false;
     }
-    if (_paymentInfo.value?.stripe?.detailsSubmitted == false) {
+    if (_paymentInfo.value?.stripe?.chargesEnabled == false) {
       showSetupStripe.value = true;
-    } else if (_paymentInfo.value?.stripe?.chargesEnabled == false ||
-        _paymentInfo.value?.stripe?.payoutsEnabled == false) {
       showStripeReqs.value = true;
     }
   }
@@ -203,6 +209,7 @@ class ServicePaymentsViewController {
   void closePaymentSetup() {
     stripeUrl = null;
     showStripe.value = false;
+    setupClicked.value = false;
   }
 
   bool get showSetupBtn {
@@ -214,7 +221,7 @@ class ServicePaymentsViewController {
   }
 
   bool getChargeFessOnCustomer() {
-    return _paymentInfo.value?.stripe?.chargeFeesOnCustomer ?? true;
+    return _paymentInfo.value?.stripe?.chargeFeesOnCustomer ?? false;
   }
 
   bool get showFeesOption {

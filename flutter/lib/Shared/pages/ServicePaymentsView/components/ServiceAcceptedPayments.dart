@@ -165,9 +165,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                 Checkbox(
                     shape: CircleBorder(),
                     activeColor: primaryBlueColor,
-                    value: widget.viewController.paymentInfo
-                            ?.acceptedPayments[PaymentType.Card] ==
-                        true,
+                    value: widget.viewController.cardChecked,
                     onChanged: (bool? v) {
                       if (v != null) {
                         widget.viewController.handleCardCheckBoxClick(v);
@@ -220,7 +218,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //     onChanged: (bool? v) {
           //       widget.viewController.handleCardCheckBoxClick(v!);
           //     }),
-          if (widget.viewController.showFeesOption)
+          if (widget.viewController.cardChecked)
             Container(
               margin: const EdgeInsets.all(5),
               child: Row(

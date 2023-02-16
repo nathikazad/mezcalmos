@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpReviewsPageController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpReviewsView"];
 
 //
-class ROpReviewsFilters extends StatelessWidget {
-  const ROpReviewsFilters({
+class ServiceReviewsFilters extends StatelessWidget {
+  const ServiceReviewsFilters({
     Key? key,
     required this.viewController,
   }) : super(key: key);
 
-  final ROpReviewsViewController viewController;
+  final ServiceReviewsViewController viewController;
 
   @override
   Widget build(BuildContext context) {

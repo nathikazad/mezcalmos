@@ -82,7 +82,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
                 orderData.delivery_driver!.current_location!.longitude)
             : null,
         orderTime: DateTime.parse(orderData.order_time),
-        status: orderData.status.toDeliveryOrderStatus(),
+        status: orderData.status.toDeliveryOrderStatus(orderData.package_ready),
         serviceProviderType:
             orderData.service_provider_type.toServiceProviderType(),
         deliveryCost: orderData.delivery_cost,
@@ -172,7 +172,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
       estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
           ? DateTime.parse(orderData.estimated_package_ready_time!)
           : null,
-      status: orderData.status.toDeliveryOrderStatus(),
+      status: orderData.status.toDeliveryOrderStatus(orderData.package_ready),
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
@@ -275,8 +275,9 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status:
-                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+            status: orderData.status
+                .toDeliveryOrderStatus(orderData.package_ready)
+                .toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
       }).toList();
       return orders;
@@ -308,8 +309,9 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          status: orderData.status
+              .toDeliveryOrderStatus(orderData.package_ready)
+              .toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -341,8 +343,9 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          status: orderData.status
+              .toDeliveryOrderStatus(false)
+              .toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -421,8 +424,9 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status:
-                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+            status: orderData.status
+                .toDeliveryOrderStatus(orderData.package_ready)
+                .toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
       }).toList();
       return orders;
@@ -454,8 +458,9 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          status: orderData.status
+              .toDeliveryOrderStatus(orderData.package_ready)
+              .toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -488,8 +493,9 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status:
-              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
+          status: orderData.status
+              .toDeliveryOrderStatus(false)
+              .toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -550,7 +556,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
               name: orderData.delivery_driver!.user.name,
               image: orderData.delivery_driver!.user.image)
           : null,
-      status: orderData.status.toDeliveryOrderStatus(),
+      status: orderData.status.toDeliveryOrderStatus(false),
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,

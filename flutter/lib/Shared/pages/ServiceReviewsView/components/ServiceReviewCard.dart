@@ -5,15 +5,15 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
-class ROpReviewCard extends StatefulWidget {
-  const ROpReviewCard({super.key, required this.review});
+class ServiceReviewCard extends StatefulWidget {
+  const ServiceReviewCard({super.key, required this.review});
   final Review review;
 
   @override
-  State<ROpReviewCard> createState() => _ROpReviewCardState();
+  State<ServiceReviewCard> createState() => _ServiceReviewCardState();
 }
 
-class _ROpReviewCardState extends State<ROpReviewCard> {
+class _ServiceReviewCardState extends State<ServiceReviewCard> {
   @override
   void initState() {
     super.initState();

@@ -8,8 +8,8 @@ dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
     ["pages"]["ROpReviewsView"];
 
 //
-class NoReviewsComponent extends StatelessWidget {
-  const NoReviewsComponent();
+class ServiceNoReviewsComponent extends StatelessWidget {
+  const ServiceNoReviewsComponent();
   @override
   Widget build(BuildContext context) {
     return Container(

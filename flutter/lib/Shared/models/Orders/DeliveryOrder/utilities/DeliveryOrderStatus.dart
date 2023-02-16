@@ -25,8 +25,12 @@ extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
 }
 
 extension ParseStringToDeliveryOrderStatus on String {
-  DeliveryOrderStatus toDeliveryOrderStatus() {
-    return DeliveryOrderStatus.values.firstWhere((DeliveryOrderStatus e) =>
-        e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+  DeliveryOrderStatus toDeliveryOrderStatus(bool packageReady) {
+    if (packageReady) {
+      return DeliveryOrderStatus.PackageReady;
+    } else {
+      return DeliveryOrderStatus.values.firstWhere((DeliveryOrderStatus e) =>
+          e.toFirebaseFormatString().toLowerCase() == toLowerCase());
+    }
   }
 }

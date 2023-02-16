@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpNoReviews.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpReviewCard.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/components/ROpReviewsFilters.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/ROpReviewsPageController.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceNoReviews.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewCard.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -57,7 +57,7 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
                 ),
 
                 // reviews chips //
-                ROpReviewsFilters(viewController: viewController),
+                ServiceReviewsFilters(viewController: viewController),
                 SizedBox(
                   height: 8,
                 ),
@@ -68,14 +68,15 @@ class _ROpReviewsViewState extends State<ROpReviewsView> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: viewController.reviews.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ROpReviewCard(review: viewController.reviews[index]);
+                    return ServiceReviewCard(
+                        review: viewController.reviews[index]);
                   },
                 )
               ],
             ),
           );
         } else {
-          return NoReviewsComponent();
+          return ServiceNoReviewsComponent();
         }
       }),
     );

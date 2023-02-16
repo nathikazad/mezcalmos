@@ -14,6 +14,7 @@ subscription admin_listen_on_dv_orders(
     order_time
     status
     package_cost
+    package_ready
     order_type
     dropoff_address
     dropoff_gps
@@ -38,6 +39,7 @@ query admin_get_dv_orders( $inProccess: Boolean!) {
     order_time
     status
     package_cost
+    package_ready
     dropoff_address
     dropoff_gps
     order_type

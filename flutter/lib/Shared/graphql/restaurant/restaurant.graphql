@@ -296,37 +296,6 @@ query getRestaurantOperators($restaurantId: Int!) {
   }
 }
 
-# get average rating
-query get_restaurant_review_average($restaurantId: Int!) {
-  restaurant_restaurant_by_pk(id: $restaurantId) {
-  details{ id
-      reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
-      aggregate {
-        avg {
-          rating
-        }
-      }
-    }
-  }
-  }
-}
-# get restaurant reviews
-query get_restaurant_reviews($restaurantId: Int!) {
-  restaurant_restaurant_by_pk(id: $restaurantId) {
-    details{ id
-      reviews(where: { from_entity_type: { _eq: "customer" } }) {
-      from_entity_id
-      from_entity_type
-      rating
-      note
-      id
-      to_entity_id
-      to_entity_type
-      created_at
-    }
-    }
-  }
-}
 query getRestaurantDetailsId($restauarntId: Int!) {
   restaurant_restaurant_by_pk(id: $restauarntId) {
     details_id
