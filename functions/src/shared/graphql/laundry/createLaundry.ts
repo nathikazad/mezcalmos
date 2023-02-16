@@ -78,7 +78,8 @@ export async function createLaundryStore(
             }
         }, {
             service_provider_type : true,
-            id: true
+            id: true,
+            details_id: true
         }],
     });
     
@@ -92,6 +93,7 @@ export async function createLaundryStore(
     }
     let laundryStore: ServiceProvider = {
         id: response.insert_laundry_store_one.id,
+        serviceProviderDetailsId: response.insert_laundry_store_one.details_id,
         name: laundryDetails.name,
         image: laundryDetails.image,
         location: laundryDetails.location,

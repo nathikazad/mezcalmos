@@ -55,8 +55,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     if (order.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
         orderId: orderId,
-        orderType: OrderType.Laundry,
-        serviceProviderId: order.storeId,
+        serviceProviderDetailsId: order.spDetailsId,
         orderStripePaymentInfo: order.stripeInfo!
       }
       capturePayment(paymentDetails, 0)

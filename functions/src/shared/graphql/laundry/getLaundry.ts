@@ -12,6 +12,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             id: storeId
         }, {
             id: true,
+            details_id: true,
             delivery_details: {
                 self_delivery: true,
                 delivery_available: true,
@@ -92,6 +93,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
 
     return {
         id: storeId,
+        serviceProviderDetailsId: response.laundry_store_by_pk.details_id,
         name: response.laundry_store_by_pk.details.name,
         image: response.laundry_store_by_pk.details.image,
         location: {

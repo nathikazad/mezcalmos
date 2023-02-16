@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
+import { PaymentType } from '../../shared/models/Generic/Order';
 import { StripeStatus } from './model';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { HttpsError } from 'firebase-functions/v1/auth';
@@ -14,8 +14,8 @@ import { createServiceProviderStripe, updateServiceProviderPayment, updateServic
 let keys: Keys = getKeys();
 
 export interface SetupDetails {
-  serviceProviderId: number,
-  orderType: OrderType,
+  serviceProviderDetailsId: number,
+  // orderType: OrderType,
   // acceptedPayments?: Record<PaymentType, boolean>
 }
 export interface SetupResponse {
@@ -26,7 +26,7 @@ export interface SetupResponse {
 }
 export async function setupServiceProvider(userId: number, setupDetails: SetupDetails): Promise<SetupResponse> {
 
-  let serviceProvider: ServiceProvider = await getServiceProviderDetails(setupDetails.serviceProviderId)
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(setupDetails.serviceProviderDetailsId)
   let operator: Operator;
 
   // switch (setupDetails.orderType) {
@@ -71,7 +71,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
         name: serviceProvider.name,
         support_email: owner?.user?.email ?? operator.user?.email ?? undefined,
         support_phone: owner?.user?.phoneNumber ?? operator.user?.phoneNumber ?? undefined,
-        url: `https://mezcalmos.com/?type=${setupDetails.orderType}&id=${setupDetails.serviceProviderId}`
+        url: `https://mezcalmos.com/?id=${setupDetails.serviceProviderDetailsId}`
       },
       individual: {
         first_name: operator.user?.name ?? undefined,
@@ -81,8 +81,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       country: "mx",
       default_currency: "mxn",
       metadata: {
-        id: setupDetails.serviceProviderId,
-        type: setupDetails.orderType,
+        id: setupDetails.serviceProviderDetailsId,
         user_id: userId
       }
     });
@@ -126,12 +125,12 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 }
 
 export interface UpdateDetails {
-  serviceProviderId: number,
-  orderType: OrderType
+  serviceProviderDetailsId: number,
+  // orderType: OrderType
 }
 
 export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {
-  let serviceProvider = await getServiceProviderDetails(updateDetails.serviceProviderId);
+  let serviceProvider = await getServiceProviderDetails(updateDetails.serviceProviderDetailsId);
   let operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
 
   // switch (updateDetails.orderType) {

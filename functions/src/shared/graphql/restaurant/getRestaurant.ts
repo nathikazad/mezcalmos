@@ -11,6 +11,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
     restaurant_restaurant_by_pk: [{
       id: restaurantId
     },{
+      details_id: true,
       delivery_partners: [{}, {
         delivery_company_id: true,
       }],
@@ -109,6 +110,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
 
   let restaurant: ServiceProvider = {
     id: restaurantId,
+    serviceProviderDetailsId: response.restaurant_restaurant_by_pk.details_id,
     name: response.restaurant_restaurant_by_pk.details.name,
     image: response.restaurant_restaurant_by_pk.details.image,
     phoneNumber: response.restaurant_restaurant_by_pk.details.phone_number,

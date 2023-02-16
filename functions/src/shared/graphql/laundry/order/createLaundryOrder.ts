@@ -131,6 +131,7 @@ export async function createLaundryOrder(
         orderId: response.insert_laundry_order_one.id,
         customerId,
         storeId: laundryRequestDetails.storeId,
+        spDetailsId: laundryStore.serviceProviderDetailsId,
         paymentType: laundryRequestDetails.paymentType,
         deliveryType: laundryRequestDetails.deliveryType,
         customerAppType: laundryRequestDetails.customerAppType,

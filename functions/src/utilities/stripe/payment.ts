@@ -88,13 +88,13 @@ export async function getPaymentIntent(userId: number, paymentIntentDetails: Pay
   }
 }
 export interface PaymentDetails {
-  serviceProviderId: number,
+  serviceProviderDetailsId: number,
   orderId: number,
   orderStripePaymentInfo?: OrderStripeInfo,
 }
 export async function capturePayment(paymentDetails: PaymentDetails, amountToCapture?: number) {
 
-  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderId)
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId)
   if(!(paymentDetails.orderStripePaymentInfo)) {
     throw new HttpsError(
       "internal",
@@ -203,7 +203,7 @@ export async function updateOrderIdAndFetchPaymentInfo(
   stripePaymentId: string, 
   stripeFees: number
 ) {
-  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderId);
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId);
   // if(!(paymentDetails.serviceProviderId)) {
   //   throw new HttpsError(
   //     "internal",
@@ -236,9 +236,8 @@ export async function updateOrderIdAndFetchPaymentInfo(
   await stripe.paymentIntents.update(
     stripePaymentId,
     { metadata: { 
-      orderId: paymentDetails.orderId, 
-      orderType: orderType, 
-      serviceProviderId: paymentDetails.serviceProviderId ?? "unknown" 
+      orderId: paymentDetails.orderId,
+      serviceProviderId: paymentDetails.serviceProviderDetailsId ?? "unknown" 
     } },
     stripeOptions
   );

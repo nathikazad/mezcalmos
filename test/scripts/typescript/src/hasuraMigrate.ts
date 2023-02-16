@@ -503,15 +503,15 @@ async function writeToDBCustomers() {
             //     cardIdsWithServiceProviderObject[id] = idWithServiceProvider.restaurant;
             //   }
             // }
-            let cardObject = {
-              brand: "visa",
-              expMonth: 7,
-              expYear: 2025,
-              id: "pm_1MbbFQDV5wKm9SNKSbkC1sBR",
-              last4: "8620",
-              // idsWithServiceProvider: cardIdsWithServiceProviderObject
-            }
-            cardArray.push(cardObject)
+            // let cardObject = {
+            //   brand: "visa",
+            //   expMonth: 7,
+            //   expYear: 2025,
+            //   id: "pm_1MbbFQDV5wKm9SNKSbkC1sBR",
+            //   last4: "8620",
+            //   idsWithServiceProvider: cardIdsWithServiceProviderObject
+            // }
+            cardArray.push(card)
           }
       }
 
@@ -531,8 +531,8 @@ async function writeToDBCustomers() {
   // }
 }
 
-
-  saveFile()
+// insertDeliveryPartners()
+  // saveFile()
   // writeToDB()  
   // writeToDBUsers()
   // writeToDBRestoOps()
