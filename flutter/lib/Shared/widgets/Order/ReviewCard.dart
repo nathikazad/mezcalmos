@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
+import 'package:sizer/sizer.dart';
 
 class ReviewCard extends StatefulWidget {
   const ReviewCard({super.key, required this.review});
@@ -25,7 +26,7 @@ class _ReviewCardState extends State<ReviewCard> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.3,
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: const EdgeInsets.only(top: 20),
       child: Container(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -35,7 +36,7 @@ class _ReviewCardState extends State<ReviewCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  radius: 28,
+                  radius: 23,
                   backgroundImage:
                       CachedNetworkImageProvider(widget.review.customer!.image),
                 ),
@@ -50,18 +51,21 @@ class _ReviewCardState extends State<ReviewCard> {
                         Text(
                           widget.review.customer?.name ?? "",
                           style: Get.textTheme.bodyText1
-                              ?.copyWith(fontWeight: FontWeight.w700),
+                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 2,
                         ),
                         Text(
                           widget.review.reviewTime.timeAgo().toLowerCase(),
-                          style: Get.textTheme.subtitle2,
+                          style: Get.textTheme.subtitle1?.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: Color(0XFF494949)),
                         ),
                       ],
                     )),
                 RatingBarIndicator(
+                  unratedColor: Color(0XFFF2F2F2),
                   rating: widget.review.rating.toDouble(),
                   itemBuilder: (BuildContext context, int index) => Icon(
                     Icons.star,
@@ -73,12 +77,17 @@ class _ReviewCardState extends State<ReviewCard> {
                 ),
               ],
             ),
-            Divider(
-              color: Colors.grey.shade200,
+            SizedBox(
+              height: 1.h,
             ),
             Text(
               widget.review.comment?.inCaps ?? "",
-              style: Get.textTheme.subtitle2,
+              style: Get.textTheme.subtitle2?.copyWith(
+                fontSize: 11.sp,
+              ),
+            ),
+            SizedBox(
+              height: 0.5.h,
             ),
           ],
         ),

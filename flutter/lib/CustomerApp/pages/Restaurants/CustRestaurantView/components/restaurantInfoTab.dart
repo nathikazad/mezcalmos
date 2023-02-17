@@ -48,7 +48,7 @@ class RestaurantInfoTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 1.h,
+                height: 1.5.h,
               ),
               Container(
                 child: Text(
@@ -70,7 +70,7 @@ class RestaurantInfoTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 20,
+                height: 1.5.h,
               ),
               Row(
                 children: [
@@ -100,8 +100,8 @@ class RestaurantInfoTab extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 1.5.h,
               ),
               ListView.builder(
                   padding: EdgeInsets.zero,

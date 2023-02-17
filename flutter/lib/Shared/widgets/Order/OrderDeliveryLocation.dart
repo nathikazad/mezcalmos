@@ -23,7 +23,8 @@ class OrderDeliveryLocation extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["title"]}',
-            style: titleTextStyle,
+            style:
+                Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 4,

@@ -76,8 +76,8 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       children: [
         Container(
           alignment: Alignment.center,
-          height: 40.h,
-          width: 40.w,
+          height: 30.h,
+          width: 50.w,
           child: Image.asset(
             "assets/images/shared/noNotifs.png",
             fit: BoxFit.cover,
@@ -91,7 +91,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
           style: Get.textTheme.bodyText1,
         ),
         SizedBox(
-          height: 8,
+          height: 2.h,
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 12),

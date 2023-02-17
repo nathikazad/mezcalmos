@@ -57,7 +57,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           ),
           child: Icon(
             Icons.watch_later,
-            size: 20,
+            size: 18,
             color: primaryBlueColor,
           ),
         ),

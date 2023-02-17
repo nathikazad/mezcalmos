@@ -13,6 +13,7 @@ class OrderNoteCard extends StatelessWidget {
     if (note != null && note!.isNotEmpty) {
       return Card(
         child: Container(
+           margin: const EdgeInsets.only(top: 15),
           padding: const EdgeInsets.all(8),
           width: double.infinity,
           child: Column(

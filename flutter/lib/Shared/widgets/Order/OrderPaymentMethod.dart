@@ -22,7 +22,7 @@ class OrderPaymentMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +41,7 @@ class OrderPaymentMethod extends StatelessWidget {
                 children: [
                   Icon(
                     _getIcon() ?? Icons.payments,
-                    color: Color.fromRGBO(73, 73, 73, 1),
+                    color: Colors.black,
                     size: 13.sp,
                   ),
                   const SizedBox(

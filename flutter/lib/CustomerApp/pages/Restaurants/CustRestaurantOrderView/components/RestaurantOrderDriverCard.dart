@@ -37,7 +37,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
               child: Container(

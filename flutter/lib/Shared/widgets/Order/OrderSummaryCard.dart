@@ -25,17 +25,15 @@ class OrderSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: margin ?? const EdgeInsets.only(top: 15),
+      margin: const EdgeInsets.only(top: 15),
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: txt.bodyText1?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              style: Get.textTheme.bodyText1,
             ),
           ),
           Container(
@@ -44,7 +42,7 @@ class OrderSummaryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  //margin: const EdgeInsets.only(bottom: 2),
+                  margin: const EdgeInsets.only(bottom: 4),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

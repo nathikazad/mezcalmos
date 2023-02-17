@@ -141,21 +141,20 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 15)),
+                                margin: const EdgeInsets.only(top: 4)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
                               margin: EdgeInsets.zero,
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(bottom: 15, top: 4),
+                              margin: const EdgeInsets.only(top: 4),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
                               paymentType:
                                   viewController.order.value!.paymentType,
-                              margin: const EdgeInsets.only(bottom: 15),
                             ),
                             if (viewController.order.value!.review != null)
                               ReviewCard(
@@ -199,7 +198,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   List<Widget> get _mapWidget => <Widget>[
         SizedBox(
-          height: 9,
+          height: 10,
         ),
         Container(
           height: 350,

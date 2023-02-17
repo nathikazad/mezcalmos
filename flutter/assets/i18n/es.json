@@ -207,7 +207,7 @@
             "distanceError": "La distancia entre usted y el restaurante es de más de 10 km!",
             "myCart": "Mi carrito",
             "notAvailable": "Su restaurante está cerrado",
-            "orderNow": "ORDENAR AHORA",
+            "orderNow": "Ordenar ahora",
             "scheduleOrder": "programar pedido",
             "errorText": "Lo siento, todavía no apoyamos tu área",
             "notesTitle": "Notas",
@@ -676,7 +676,7 @@
       "StripeHelper": {
         "addCard": "Agregar tarjeta",
         "powered": "Energizado por",
-        "save": "Ahorrar"
+        "save": "Guardar"
       },
       "ImageHelper": {
         "fromCamera": "Toma una foto",
@@ -702,8 +702,8 @@
           "title": "Califica tu experiencia",
           "subtitle": "Nos gustaría escuchar sus comentarios.",
           "hintText": "Di algo sobre tu experiencia.",
-          "send": "Enviar",
-          "close": "Cerca",
+          "send": "Guardar",
+          "close": "Cerrar",
           "successTitle": "Gracias",
           "successSubtitle": "Su revisión ha sido enviada con éxito"
         }
@@ -724,10 +724,10 @@
         "yesterday": "El dia de ayer",
         "hoursAgo": "Horas atras",
         "hourAgo": "Hace una hora",
-        "minutesAgo": "Hace minutos",
-        "minuteAgo": "Hace un minuto",
-        "secondsAgo": "Hace segundos",
-        "now": "En este momento"
+        "minutesAgo": "Hace mínimos",
+        "minuteAgo": "Hace mínimo",
+        "secondsAgo": "Sec hace",
+        "now": "Ahora"
       }
     },
     "pages": {
@@ -890,7 +890,7 @@
           "no": "No",
           "yesterday":"Ayer",
           "noNotifTitle": "¡No hay notificaciones todavía!",
-          "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
+          "noNotifBody": "Actualmente no tienes notificaciones. \nTe notificaremos cuando se llega a algo nuevo."
         }
       },
       "UserWelcomeView": {
@@ -1830,7 +1830,7 @@
       },
       "AdminView": {
         "LaundryOpAdminView": {
-          "save": "Ahorrar",
+          "save": "Guardar",
           "categories": "Categorías"
         },
         "components": {

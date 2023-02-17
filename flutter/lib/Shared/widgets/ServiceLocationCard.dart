@@ -41,7 +41,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 1.h,
+            height: 1.5.h,
           ),
           Container(
             child: Text(

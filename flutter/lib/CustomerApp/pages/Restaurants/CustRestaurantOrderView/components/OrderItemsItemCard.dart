@@ -124,7 +124,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
-                width: 5,
+                width: 8,
               ),
               if (widget.order.showItemsImages)
                 Container(
@@ -158,20 +158,47 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.item.name[userLanguage]! +
-                            " x${widget.item.quantity}",
-                        style: txt.bodyText1?.copyWith(
-                          fontWeight: FontWeight.w700,
-                            color: widget.item.unavailable
-                                ? Colors.black.withOpacity(0.5)
-                                : Colors.black,
-                            decoration: (widget.item.unavailable)
-                                ? TextDecoration.lineThrough
-                                : null),
+                      RichText(
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                          text: widget.item.name[userLanguage]!,
+                          style: txt.bodyText1?.copyWith(
+                              color: widget.item.unavailable
+                                  ? Colors.black.withOpacity(0.5)
+                                  : Colors.black,
+                              decoration: (widget.item.unavailable)
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: " x${widget.item.quantity}",
+                              style: txt.bodyText1?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: widget.item.unavailable
+                                      ? Colors.black.withOpacity(0.5)
+                                      : Colors.black,
+                                  decoration: (widget.item.unavailable)
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),
+                          ],
+                        ),
                       ),
+                      // Text(
+                      //   widget.item.name[userLanguage]! +
+                      //       " x${widget.item.quantity}",
+                      // style: txt.bodyText1?.copyWith(
+                      //     fontWeight: FontWeight.w700,
+                      //     color: widget.item.unavailable
+                      //         ? Colors.black.withOpacity(0.5)
+                      //         : Colors.black,
+                      //     decoration: (widget.item.unavailable)
+                      //         ? TextDecoration.lineThrough
+                      //         : null),
+                      // maxLines: 2,
+                      // overflow: TextOverflow.ellipsis,
+                      // ),
                       const SizedBox(
                         height: 5,
                       ),

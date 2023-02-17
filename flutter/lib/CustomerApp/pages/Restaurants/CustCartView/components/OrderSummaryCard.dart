@@ -28,7 +28,7 @@ class CardSummaryCard extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13),
           color: Colors.white,
@@ -44,13 +44,13 @@ class CardSummaryCard extends StatelessWidget {
               width: Get.width,
               child: Text(
                 "${_i18n()["orderSummary"]}",
-                style: txt.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+                style: txt.bodyText1,
               ),
             ),
-            SizedBox(height: 1.5.h),
+            SizedBox(height: 4),
             //==================Order cost :==================
             Container(
-              padding: const EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.only(bottom: 4),
               width: Get.width,
               child: Row(
                 children: <Widget>[
@@ -73,7 +73,7 @@ class CardSummaryCard extends StatelessWidget {
             //=======================Delivery cost :===============
             Container(
               padding: EdgeInsets.only(
-                bottom: 10,
+                bottom: 4,
               ),
               width: Get.width,
               child: Row(
@@ -116,7 +116,7 @@ class CardSummaryCard extends StatelessWidget {
             if (controller.showFees)
               Container(
                 padding: EdgeInsets.only(
-                  bottom: 10,
+                  bottom: 4,
                 ),
                 width: Get.width,
                 child: Row(
@@ -140,7 +140,7 @@ class CardSummaryCard extends StatelessWidget {
               ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10, top: 3),
+              padding: EdgeInsets.only(bottom: 4, top: 3),
               width: Get.width,
               child: Row(
                 children: <Widget>[

@@ -516,7 +516,7 @@ Future<int?> showReviewDialog(
                   color: Colors.white,
                 )),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 10),
               Text(
                 "${_i18n()["review"]["title"]}",
                 textAlign: TextAlign.center,
@@ -526,17 +526,18 @@ Future<int?> showReviewDialog(
                   fontSize: 16.sp,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 "${_i18n()["review"]["subtitle"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
                 ),
               ),
               RatingBar.builder(
+                unratedColor: Color(0XFFF2F2F2),
                 initialRating: 3,
                 minRating: 1,
                 direction: Axis.horizontal,
@@ -560,15 +561,19 @@ Future<int?> showReviewDialog(
                 controller: controller,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
+                    fillColor: Color(0XFFF2F2F2),
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
                 textStyle: TextStyle(
                   fontSize: 16.99,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w700,
+                  color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
                 height: 45,
@@ -596,7 +601,7 @@ Future<int?> showReviewDialog(
                   MezRouter.popDialog(result: reviewId, closeOverlays: true);
                 },
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 10),
               InkWell(
                 onTap: () {
                   MezRouter.back(closeOverlays: true);
@@ -608,7 +613,7 @@ Future<int?> showReviewDialog(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Color.fromRGBO(120, 120, 120, 1),
+                      color: Color(0XFF494949),
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: 16.99,

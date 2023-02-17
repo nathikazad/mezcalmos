@@ -463,7 +463,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       pad = 60;
     }
     if (controller.showMenuTabs || controller.showSpecialTabs) {
-      pad = pad + 60;
+      pad = pad + 50;
     }
     if (controller.showInfo.isTrue) {
       pad = 12;
