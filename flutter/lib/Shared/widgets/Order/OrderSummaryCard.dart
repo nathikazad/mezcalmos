@@ -33,7 +33,7 @@ class OrderSummaryCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: txt.bodyText1,
+              style: txt.bodyLarge,
             ),
           ),
           Container(
@@ -48,10 +48,10 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["orderCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyMedium,
                       ),
                       Text(_getOrderCost(),
-                          style: txt.bodyText2?.copyWith(
+                          style: txt.bodyMedium?.copyWith(
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&
                                           (order as LaundryOrder)
@@ -72,11 +72,11 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["stripeFees"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                         Text(
                             order.stripePaymentInfo!.stripeFees.toPriceString(),
-                            style: txt.bodyText2),
+                            style: txt.bodyMedium),
                       ],
                     ),
                   ),
@@ -87,7 +87,7 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["deliveryCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyMedium,
                       ),
                       Flexible(
                           child: ShippingCostComponent(
@@ -104,11 +104,11 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["refundAmount"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                         Text(
                           "-" + order.refundAmount!.toPriceString(),
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                       ],
                     ),
@@ -118,11 +118,11 @@ class OrderSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       '${_i18n()["totalCost"]}',
-                      style: txt.bodyText1,
+                      style: txt.bodyLarge,
                     ),
                     Text(
                       order.totalCost?.toPriceString() ?? "_",
-                      style: txt.bodyText1!.copyWith(fontSize: 14.sp),
+                      style: txt.bodyLarge!.copyWith(fontSize: 14.sp),
                     ),
                   ],
                 ),

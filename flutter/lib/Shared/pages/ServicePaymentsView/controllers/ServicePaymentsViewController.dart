@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/stripe_info/hsServiceStripeInfo.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
@@ -139,10 +140,8 @@ class ServicePaymentsViewController {
 
   Future<void> switchChargeFees(bool v) async {
     try {
-      // await update_restaurant_payment_info(
-      //     id: serviceProviderId,
-      //     paymentInfo: paymentInfo!.copyWith(
-      //         stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
+      await update_charge_fees_on_costumer(
+          stripeId: paymentInfo!.stripe!.id, value: v);
       await _fetchPayment(withCache: false);
     } catch (e, stk) {
       mezDbgPrint(e);

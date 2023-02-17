@@ -102,18 +102,18 @@ extension ParseOrderTypeToString on OrderType {
     return str[0].toLowerCase() + str.substring(1);
   }
 
-  cloudFunctionModels.OrderType toCloudFunctionsModel() {
-    switch (this) {
-      case OrderType.Laundry:
-        return cloudFunctionModels.OrderType.Laundry;
-      case OrderType.Restaurant:
-        return cloudFunctionModels.OrderType.Restaurant;
-      case OrderType.Taxi:
-        return cloudFunctionModels.OrderType.Taxi;
-      case OrderType.Water:
-        return cloudFunctionModels.OrderType.Water;
-    }
-  }
+  // cloudFunctionModels.OrderType toCloudFunctionsModel() {
+  //   switch (this) {
+  //     case OrderType.Laundry:
+  //       return cloudFunctionModels.OrderType.Laundry;
+  //     case OrderType.Restaurant:
+  //       return cloudFunctionModels.OrderType.Restaurant;
+  //     case OrderType.Taxi:
+  //       return cloudFunctionModels.OrderType.Taxi;
+  //     case OrderType.Water:
+  //       return cloudFunctionModels.OrderType.Water;
+  //   }
+  // }
 
   String toPlural() {
     switch (this) {

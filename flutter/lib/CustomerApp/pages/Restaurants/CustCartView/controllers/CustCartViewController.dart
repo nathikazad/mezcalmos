@@ -237,7 +237,7 @@ class CustCartViewController {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
-
+    mezDbgPrint("Look here ============>${cart.restaurant!.serviceDetailsId}");
     //viewCartController.getCardChoice
     if (cart.paymentType == PaymentType.Card) {
       switch (choice) {
@@ -269,7 +269,7 @@ class CustCartViewController {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderDetailsId: cart.restaurant!.info.hasuraId,
+              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
               paymentAmount: cart.totalCost,
               card: card.value!);
           break;
