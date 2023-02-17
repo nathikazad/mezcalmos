@@ -8431,12 +8431,24 @@ update_service_provider_service_link_by_pk?: [{	/** increments the numeric colum
 	_set?:ValueTypes["service_provider_service_link_set_input"],	pk_columns:ValueTypes["service_provider_service_link_pk_columns_input"]},ValueTypes["service_provider_service_link"]],
 update_service_provider_service_link_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_provider_service_link_updates"][]},ValueTypes["service_provider_service_link_mutation_response"]],
-update_service_provider_stripe_info?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_service_provider_stripe_info?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_stripe_info_bool_exp"]},ValueTypes["service_provider_stripe_info_mutation_response"]],
-update_service_provider_stripe_info_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_service_provider_stripe_info_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],	pk_columns:ValueTypes["service_provider_stripe_info_pk_columns_input"]},ValueTypes["service_provider_stripe_info"]],
 update_service_provider_stripe_info_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_provider_stripe_info_updates"][]},ValueTypes["service_provider_stripe_info_mutation_response"]],
@@ -16316,7 +16328,8 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	email?:true,
 	id?:true,
 	payouts_enabled?:true,
-	requirements?:true,
+requirements?: [{	/** JSON select path */
+	path?:string},true],
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16342,6 +16355,10 @@ count?: [{	columns?:ValueTypes["service_provider_stripe_info_select_column"][],	
 	variance?:ValueTypes["service_provider_stripe_info_variance_fields"],
 		__typename?: true
 }>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_append_input"]: {
+	requirements?:ValueTypes["jsonb"]
+};
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: AliasType<{
 	id?:true,
@@ -16359,12 +16376,25 @@ All fields are combined with a logical 'AND'. */
 	email?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	payouts_enabled?:ValueTypes["Boolean_comparison_exp"],
-	requirements?:ValueTypes["String_comparison_exp"],
+	requirements?:ValueTypes["jsonb_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_id?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "service_provider.stripe_info" */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_stripe_info_delete_at_path_input"]: {
+	requirements?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_stripe_info_delete_elem_input"]: {
+	requirements?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_stripe_info_delete_key_input"]: {
+	requirements?:string
+};
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
 	id?:number
@@ -16377,7 +16407,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16385,7 +16415,6 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_max_fields"]: AliasType<{
 	email?:true,
 	id?:true,
-	requirements?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16394,7 +16423,6 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_min_fields"]: AliasType<{
 	email?:true,
 	id?:true,
-	requirements?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16435,6 +16463,10 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_pk_columns_input"]: {
 	id:number
 };
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_prepend_input"]: {
+	requirements?:ValueTypes["jsonb"]
+};
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column;
 	/** input type for updating data in table "service_provider.stripe_info" */
@@ -16445,7 +16477,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16479,7 +16511,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16491,8 +16523,19 @@ All fields are combined with a logical 'AND'. */
 	/** update columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_update_column"]:service_provider_stripe_info_update_column;
 	["service_provider_stripe_info_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],
 	/** filter the rows which have to be updated */
@@ -33765,7 +33808,7 @@ the end). throws an error if top level container is not an array */
 			email?:string,
 			id?:number,
 			payouts_enabled?:boolean,
-			requirements?:string,
+			requirements?:PartialObjects["jsonb"],
 			status?:string,
 			stripe_id?:string
 	},
@@ -33790,6 +33833,10 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["service_provider_stripe_info_var_samp_fields"],
 			variance?:PartialObjects["service_provider_stripe_info_variance_fields"]
 	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_append_input"]: {
+	requirements?:PartialObjects["jsonb"]
+},
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: {
 		__typename?: "service_provider_stripe_info_avg_fields";
@@ -33807,12 +33854,25 @@ All fields are combined with a logical 'AND'. */
 	email?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	payouts_enabled?:PartialObjects["Boolean_comparison_exp"],
-	requirements?:PartialObjects["String_comparison_exp"],
+	requirements?:PartialObjects["jsonb_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_id?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "service_provider.stripe_info" */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_stripe_info_delete_at_path_input"]: {
+	requirements?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_stripe_info_delete_elem_input"]: {
+	requirements?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_stripe_info_delete_key_input"]: {
+	requirements?:string
+},
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
 	id?:number
@@ -33825,7 +33885,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33834,7 +33894,6 @@ All fields are combined with a logical 'AND'. */
 		__typename?: "service_provider_stripe_info_max_fields";
 			email?:string,
 			id?:number,
-			requirements?:string,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33843,7 +33902,6 @@ All fields are combined with a logical 'AND'. */
 		__typename?: "service_provider_stripe_info_min_fields";
 			email?:string,
 			id?:number,
-			requirements?:string,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33883,6 +33941,10 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_pk_columns_input"]: {
 	id:number
 },
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_prepend_input"]: {
+	requirements?:PartialObjects["jsonb"]
+},
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column,
 	/** input type for updating data in table "service_provider.stripe_info" */
@@ -33893,7 +33955,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33927,7 +33989,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33939,8 +34001,19 @@ All fields are combined with a logical 'AND'. */
 	/** update columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_update_column"]:service_provider_stripe_info_update_column,
 	["service_provider_stripe_info_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["service_provider_stripe_info_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["service_provider_stripe_info_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["service_provider_stripe_info_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["service_provider_stripe_info_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["service_provider_stripe_info_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_stripe_info_set_input"],
 	/** filter the rows which have to be updated */
@@ -53282,7 +53355,7 @@ export type service_provider_stripe_info = {
 	email?:string,
 	id:number,
 	payouts_enabled:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status:string,
 	stripe_id:string
 }
@@ -53310,6 +53383,11 @@ export type service_provider_stripe_info_aggregate_fields = {
 	variance?:service_provider_stripe_info_variance_fields
 }
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_stripe_info_append_input = {
+		requirements?:jsonb
+}
+
 /** aggregate avg on columns */
 export type service_provider_stripe_info_avg_fields = {
 	__typename?: "service_provider_stripe_info_avg_fields",
@@ -53328,7 +53406,7 @@ export type service_provider_stripe_info_bool_exp = {
 	email?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	payouts_enabled?:Boolean_comparison_exp,
-	requirements?:String_comparison_exp,
+	requirements?:jsonb_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_id?:String_comparison_exp
 }
@@ -53337,6 +53415,22 @@ export type service_provider_stripe_info_bool_exp = {
 export enum service_provider_stripe_info_constraint {
 	stripe_info_pkey = "stripe_info_pkey",
 	stripe_info_stripe_id_key = "stripe_info_stripe_id_key"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type service_provider_stripe_info_delete_at_path_input = {
+		requirements?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type service_provider_stripe_info_delete_elem_input = {
+		requirements?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type service_provider_stripe_info_delete_key_input = {
+		requirements?:string
 }
 
 /** input type for incrementing numeric columns in table "service_provider.stripe_info" */
@@ -53352,7 +53446,7 @@ export type service_provider_stripe_info_insert_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53362,7 +53456,6 @@ export type service_provider_stripe_info_max_fields = {
 	__typename?: "service_provider_stripe_info_max_fields",
 	email?:string,
 	id?:number,
-	requirements?:string,
 	status?:string,
 	stripe_id?:string
 }
@@ -53372,7 +53465,6 @@ export type service_provider_stripe_info_min_fields = {
 	__typename?: "service_provider_stripe_info_min_fields",
 	email?:string,
 	id?:number,
-	requirements?:string,
 	status?:string,
 	stripe_id?:string
 }
@@ -53418,6 +53510,11 @@ export type service_provider_stripe_info_pk_columns_input = {
 		id:number
 }
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_stripe_info_prepend_input = {
+		requirements?:jsonb
+}
+
 /** select columns of table "service_provider.stripe_info" */
 export enum service_provider_stripe_info_select_column {
 	charge_fees_on_customer = "charge_fees_on_customer",
@@ -53439,7 +53536,7 @@ export type service_provider_stripe_info_set_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53478,7 +53575,7 @@ export type service_provider_stripe_info_stream_cursor_value_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53503,8 +53600,19 @@ export enum service_provider_stripe_info_update_column {
 }
 
 export type service_provider_stripe_info_updates = {
-		/** increments the numeric columns with given value of the filtered values */
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:service_provider_stripe_info_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:service_provider_stripe_info_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:service_provider_stripe_info_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:service_provider_stripe_info_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
 	_inc?:service_provider_stripe_info_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:service_provider_stripe_info_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_stripe_info_set_input,
 	/** filter the rows which have to be updated */
@@ -76883,8 +76991,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_service_provider_stripe_info:{
+			_append:{
+				type:"service_provider_stripe_info_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_stripe_info_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_stripe_info_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_stripe_info_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"service_provider_stripe_info_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_stripe_info_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -76903,8 +77041,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_service_provider_stripe_info_by_pk:{
+			_append:{
+				type:"service_provider_stripe_info_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_stripe_info_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_stripe_info_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_stripe_info_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"service_provider_stripe_info_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_stripe_info_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -98162,6 +98330,16 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_stripe_info:{
+		requirements:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
 	service_provider_stripe_info_aggregate_fields:{
 		count:{
 			columns:{
@@ -98176,6 +98354,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	service_provider_stripe_info_append_input:{
+		requirements:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_stripe_info_bool_exp:{
@@ -98234,7 +98420,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String_comparison_exp",
+			type:"jsonb_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98253,6 +98439,30 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_provider_stripe_info_constraint: "enum",
+	service_provider_stripe_info_delete_at_path_input:{
+		requirements:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_stripe_info_delete_elem_input:{
+		requirements:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_stripe_info_delete_key_input:{
+		requirements:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_stripe_info_inc_input:{
 		id:{
 			type:"Int",
@@ -98299,7 +98509,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98415,6 +98625,14 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_stripe_info_prepend_input:{
+		requirements:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_stripe_info_select_column: "enum",
 	service_provider_stripe_info_set_input:{
 		charge_fees_on_customer:{
@@ -98454,7 +98672,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98524,7 +98742,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98544,8 +98762,38 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	service_provider_stripe_info_update_column: "enum",
 	service_provider_stripe_info_updates:{
+		_append:{
+			type:"service_provider_stripe_info_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"service_provider_stripe_info_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"service_provider_stripe_info_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"service_provider_stripe_info_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		_inc:{
 			type:"service_provider_stripe_info_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"service_provider_stripe_info_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -110549,7 +110797,7 @@ export const ReturnTypes: Record<string,any> = {
 		email:"String",
 		id:"Int",
 		payouts_enabled:"Boolean",
-		requirements:"String",
+		requirements:"jsonb",
 		status:"String",
 		stripe_id:"String"
 	},
@@ -110576,14 +110824,12 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_stripe_info_max_fields:{
 		email:"String",
 		id:"Int",
-		requirements:"String",
 		status:"String",
 		stripe_id:"String"
 	},
 	service_provider_stripe_info_min_fields:{
 		email:"String",
 		id:"Int",
-		requirements:"String",
 		status:"String",
 		stripe_id:"String"
 	},

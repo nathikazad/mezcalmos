@@ -2,6 +2,8 @@
 // import { PaymentType } from "./shared/models/Generic/Order";
 // import { Location } from "./shared/models/Generic/Generic";
 // import * as firebase from "firebase-admin";
+// import { assignDriver } from "./delivery/assignDriver";
+// import { ChangeDeliveryStatusDetails, changeDeliveryStatus } from "./delivery/statusChange";
 // // import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
 // // import { AssignCompanyDetails, assignDeliveryCompany } from "./restaurant/assignDeliveryCompany";
 // // import { OperatorType } from "./shared/models/Generic/Generic";
@@ -17,16 +19,21 @@
 // import { getRestaurant } from './shared/graphql/restaurant/getRestaurant';
 
 // import { checkout, CheckoutRequest } from "./restaurant/checkoutCart";
+// import { AssignDriverDetails, assignDriver } from "./delivery/assignDriver";
 import { ParticipantType as _ParticipantType } from "./shared/models/Generic/Chat"
+// import { DeliveryOrderStatus } from "./shared/models/Generic/Delivery";
+// import { OrderType } from "./shared/models/Generic/Order";
 // import { AppType } from "./shared/models/Generic/Generic";
 // import { PaymentType } from "./shared/models/Generic/Order";
 // import { DeliveryType } from "./shared/models/Services/Restaurant/RestaurantOrder";
 import { callUser as _callUser} from "./utilities/agora";
+// import { setupServiceProvider } from "./utilities/stripe/serviceProvider";
+// import { setupServiceProvider } from "./utilities/stripe/serviceProvider";
 
 // firebase.initializeApp({
 //   databaseURL: "http://localhost:9000/?ns=mezcalmos-31f1c-default-rtdb"
 // });
-process.env.FUNCTIONS_EMULATOR = "true"
+// process.env.FUNCTIONS_EMULATOR = "true"
 // const location:Location = {
 //   lat: 23,
 //   lng : 44,
@@ -68,9 +75,9 @@ process.env.FUNCTIONS_EMULATOR = "true"
 // //    console.log(restaurant);
 // // });
 // console.log("Calling make order ====================>>>>>>>>>>>>>>>>>",ch);
-_callUser(2, {chatId: 28, callerParticipantType: _ParticipantType.Customer}).then((resp) => {
-  console.log(resp);
-});
+// _callUser(2, {chatId: 28, callerParticipantType: _ParticipantType.Customer}).then((resp) => {
+//   console.log(resp);
+// });
 
 // checkout(2, ch).then((resp) => {
 //   console.log(resp);
@@ -144,3 +151,29 @@ _callUser(2, {chatId: 28, callerParticipantType: _ParticipantType.Customer}).the
 // //   restaurantOrderId: 1
 // // }
 // // assignDeliveryCompany(1, assignCompanyDetails)
+
+// setupServiceProvider(5, {
+//   serviceProviderId: 40,
+//   orderType: OrderType.Restaurant
+// }).then(() => {
+//   console.log("done")
+// })
+
+// setupServiceProvider(16541, {serviceProviderDetailsId: 16})
+// let c: ChangeDeliveryStatusDetails = {
+//   deliveryId: 328,
+//   newStatus: DeliveryOrderStatus.OnTheWayToPickup
+// }
+
+// changeDeliveryStatus(14, c).then(() => {
+//   console.log("error 500")
+// })
+
+// let a: AssignDriverDetails = {
+//   deliveryOrderId: 331,
+//   deliveryDriverId: 26,
+//   changeDriver: true,
+// }
+
+
+// assignDriver(25, a)

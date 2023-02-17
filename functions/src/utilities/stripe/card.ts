@@ -51,7 +51,7 @@ export async function addCard(userId: number, cardDetails: CardDetails): Promise
 };
 
 export interface ChargeCardDetails {
-  serviceProviderId: number,
+  serviceProviderDetailsId: number,
   cardId: string,
   
   paymentAmount: number
@@ -65,13 +65,13 @@ export interface ChargeCardResponse {
 export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDetails): Promise<ChargeCardResponse> {
 
   
-  let serviceProvider: ServiceProvider = await getServiceProviderDetails(chargeCardDetails.serviceProviderId)
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(chargeCardDetails.serviceProviderDetailsId)
   // switch (chargeCardDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(chargeCardDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(chargeCardDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(chargeCardDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -105,13 +105,13 @@ export async function chargeCard(userId: number, chargeCardDetails: ChargeCardDe
 
   customer = await verifyCustomerIdForServiceAccount(
     customer, 
-    chargeCardDetails.serviceProviderId,
+    chargeCardDetails.serviceProviderDetailsId,
     stripe, 
     stripeOptions
   );
-  let stripeCustomerId: string = customer.stripeInfo!.idsWithServiceProvider[chargeCardDetails.serviceProviderId];
-  let card: CustomerCard = await verifyCardForServiceAccount(customer, chargeCardDetails.cardId, chargeCardDetails.serviceProviderId, stripeCustomerId, stripe, stripeOptions);
-  let stripeCardId: string = card.idsWithServiceProvider[chargeCardDetails.serviceProviderId];
+  let stripeCustomerId: string = customer.stripeInfo!.idsWithServiceProvider[chargeCardDetails.serviceProviderDetailsId];
+  let card: CustomerCard = await verifyCardForServiceAccount(customer, chargeCardDetails.cardId, chargeCardDetails.serviceProviderDetailsId, stripeCustomerId, stripe, stripeOptions);
+  let stripeCardId: string = card.idsWithServiceProvider[chargeCardDetails.serviceProviderDetailsId];
 
   const paymentIntent = await stripe.paymentIntents.create(
     {
@@ -174,15 +174,15 @@ export async function removeCard(userId: number, removeCardDetails: RemoveCardDe
     card.cardId,
     { apiVersion: <any>'2020-08-27' }
   );
-    for (let serviceProviderId in card.idsWithServiceProvider) {
-      let clonedCardId = card.idsWithServiceProvider[serviceProviderId];
-      let serviceProvider: ServiceProvider = await getServiceProviderDetails(parseInt(serviceProviderId))
+    for (let serviceProviderDetailsId in card.idsWithServiceProvider) {
+      let clonedCardId = card.idsWithServiceProvider[serviceProviderDetailsId];
+      let serviceProvider: ServiceProvider = await getServiceProviderDetails(parseInt(serviceProviderDetailsId))
       // switch (orderType) {
       //   case OrderType.Restaurant:
-      //     serviceProvider = await getRestaurant(parseInt(serviceProviderId));
+      //     serviceProvider = await getRestaurant(parseInt(serviceProviderDetailsId));
       //     break;
       //   case OrderType.Laundry:
-      //     serviceProvider = await getLaundryStore(parseInt(serviceProviderId));
+      //     serviceProvider = await getLaundryStore(parseInt(serviceProviderDetailsId));
       //     break;
       //   default:
       //     throw new HttpsError(
@@ -221,7 +221,7 @@ export async function verifyCustomerStripeInfo(customerInfo: CustomerInfo, strip
   return customerInfo;
 }
 
-export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId: string, serviceProviderId: number, stripeCustomerServiceAccountId: string, stripe: Stripe, stripeOptions: any): Promise<CustomerCard> {
+export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId: string, serviceProviderDetailsId: number, stripeCustomerServiceAccountId: string, stripe: Stripe, stripeOptions: any): Promise<CustomerCard> {
 
   if(!(customer.stripeInfo)) {
     throw new HttpsError(
@@ -237,7 +237,7 @@ export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId
   }
   let card: CustomerCard = customer.stripeInfo!.cards[cardId];
 
-  if(card.idsWithServiceProvider[serviceProviderId] == null) {
+  if(card.idsWithServiceProvider[serviceProviderDetailsId] == null) {
     const clonedPaymentMethod = await stripe.paymentMethods.create({
       customer: customer.stripeInfo.id,
       payment_method: card.cardId,
@@ -248,7 +248,7 @@ export async function verifyCardForServiceAccount(customer: CustomerInfo, cardId
       { customer: stripeCustomerServiceAccountId },
       stripeOptions
     );
-    card.idsWithServiceProvider[serviceProviderId] = paymentMethod.id;
+    card.idsWithServiceProvider[serviceProviderDetailsId] = paymentMethod.id;
 
     customer.stripeInfo.cards[cardId] = card;
     updateCustomerStripe(customer);

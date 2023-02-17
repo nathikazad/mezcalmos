@@ -1,4 +1,3 @@
-import { OrderType } from "../shared/models/Generic/Order";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
@@ -21,9 +20,7 @@ import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/
 export interface AssignDriverDetails {
   deliveryOrderId: number,
   deliveryDriverId: number,
-  orderType: OrderType,
   changeDriver?: boolean,
-  deliveryCompanyId: number
 }
 
 export async function assignDriver(userId: number, assignDriverDetails: AssignDriverDetails) {
@@ -57,25 +54,25 @@ export async function assignDriver(userId: number, assignDriverDetails: AssignDr
   
   await assignDeliveryDriver(assignDriverDetails, deliveryDriver.userId);
 
-  setDeliveryChatInfo(deliveryOrder, deliveryDriver, assignDriverDetails.orderType);
+  setDeliveryChatInfo(deliveryOrder, deliveryDriver, deliveryOrder.orderType);
     
-  sendNotificationToDriver(deliveryDriver, assignDriverDetails);
+  sendNotificationToDriver(deliveryDriver, deliveryOrder);
 };
 
-function sendNotificationToDriver(deliveryDriver: DeliveryDriver, assignDriverDetails: AssignDriverDetails) {
+function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder: DeliveryOrder) {
   if (deliveryDriver.notificationInfo) {
 
     let notification: Notification = {
       foreground: <NewDeliveryOrderNotification>{
         time: (new Date()).toISOString(),
         notificationType: NotificationType.NewOrder,
-        orderType: assignDriverDetails.orderType,
+        orderType: deliveryOrder.orderType,
         notificationAction: NotificationAction.ShowPopUp,
-        orderId: assignDriverDetails.deliveryOrderId,
+        orderId: deliveryOrder.deliveryId,
         // deliveryDriverType: assignDriverDetails.deliveryDriverType
       },
       background: deliveryNewOrderMessage,
-      linkUrl: orderUrl(assignDriverDetails.orderType, assignDriverDetails.deliveryOrderId)
+      linkUrl: orderUrl(deliveryOrder.orderType, deliveryOrder.deliveryId)
     };
 
     pushNotification(

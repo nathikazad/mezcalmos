@@ -19,9 +19,6 @@ export interface RestaurantDetails {
   schedule:JSON,
   restaurantOperatorNotificationToken?: string,
   firebaseId?: string,
-  delivery: boolean,
-  customerPickup: boolean,
-  selfDelivery?: boolean,
   deliveryPartnerId?: number,
   deliveryDetails: DeliveryDetails,
   language: Record<Language, boolean>
@@ -29,13 +26,13 @@ export interface RestaurantDetails {
 
 export async function createNewRestaurant(userId: number, restaurantDetails: RestaurantDetails) {
 
-  if(restaurantDetails.delivery) {
-    if(restaurantDetails.selfDelivery && !(restaurantDetails.deliveryDetails)) {
+  if(restaurantDetails.deliveryDetails.deliveryAvailable) {
+    if(restaurantDetails.deliveryDetails.deliveryAvailable && restaurantDetails.deliveryDetails.radius == 0) {
       throw new HttpsError(
         "unknown",
-        "Restaurant delivery details not provided"
+        "Restaurant delivery details not set"
       );
-    } else if(!(restaurantDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
+    } else if(!(restaurantDetails.deliveryDetails.selfDelivery) && !(restaurantDetails.deliveryPartnerId)) {
       throw new HttpsError(
         "unknown",
         "delivery partner not specified"

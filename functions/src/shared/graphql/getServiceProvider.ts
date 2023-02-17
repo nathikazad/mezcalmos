@@ -31,7 +31,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 charges_enabled: true,
                 payouts_enabled: true,
                 details_submitted: true,
-                //requirements
+                requirements: [{}, true],
                 email: true,
             },
             accepted_payments: [{}, true],
@@ -158,7 +158,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     detailsSubmitted: response.service_provider_details_by_pk.stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details_by_pk.stripe_info.payouts_enabled,
                     email: response.service_provider_details_by_pk.stripe_info.email ?? null,
-                    //requirements
+                    requirements: JSON.parse(response.service_provider_details_by_pk.stripe_info.requirements)
                 }: undefined,
                 acceptedPayments: JSON.parse(response.service_provider_details_by_pk.accepted_payments),
                 operators,
@@ -216,7 +216,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     detailsSubmitted: response.service_provider_details_by_pk.stripe_info.details_submitted,
                     payoutsEnabled: response.service_provider_details_by_pk.stripe_info.payouts_enabled,
                     email: response.service_provider_details_by_pk.stripe_info.email ?? null,
-                    //requirements
+                    requirements: JSON.parse(response.service_provider_details_by_pk.stripe_info.requirements)
                 }: undefined,
                 acceptedPayments: JSON.parse(response.service_provider_details_by_pk.accepted_payments),
                 approved: response.service_provider_details_by_pk.approved,

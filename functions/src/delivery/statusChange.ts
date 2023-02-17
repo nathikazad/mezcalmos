@@ -37,7 +37,6 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
 
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
-
   newStatus: DeliveryOrderStatus
 }
 
