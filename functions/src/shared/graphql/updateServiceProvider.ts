@@ -20,7 +20,7 @@ export async function createServiceProviderStripe(serviceProvider: ServiceProvid
                 details_submitted: serviceProvider.stripeInfo.detailsSubmitted,
                 email: serviceProvider.stripeInfo.email ?? undefined,
                 payouts_enabled: serviceProvider.stripeInfo.payoutsEnabled,
-                // requirements: ,
+                requirements: JSON.stringify(serviceProvider.stripeInfo.requirements),
                 stripe_id: serviceProvider.stripeInfo.id,
                 status: serviceProvider.stripeInfo.status,
             },
@@ -75,7 +75,7 @@ export async function updateServiceProviderStripe(serviceProvider: ServiceProvid
                 details_submitted: serviceProvider.stripeInfo.detailsSubmitted,
                 email: serviceProvider.stripeInfo.email ?? undefined,
                 payouts_enabled: serviceProvider.stripeInfo.payoutsEnabled,
-                // requirements: ,
+                requirements: JSON.stringify(serviceProvider.stripeInfo.requirements),
                 stripe_id: serviceProvider.stripeInfo.id,
                 status: serviceProvider.stripeInfo.status,
             }

@@ -15,8 +15,6 @@ let keys: Keys = getKeys();
 
 export interface SetupDetails {
   serviceProviderDetailsId: number,
-  // orderType: OrderType,
-  // acceptedPayments?: Record<PaymentType, boolean>
 }
 export interface SetupResponse {
   object: string,
@@ -126,7 +124,6 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 
 export interface UpdateDetails {
   serviceProviderDetailsId: number,
-  // orderType: OrderType
 }
 
 export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {

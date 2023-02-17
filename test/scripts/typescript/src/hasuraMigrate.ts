@@ -470,7 +470,7 @@ async function writeToDBCustomers() {
   //   array.push(customerObject)
   // }
   // for(let i=0; i<1100; i+=100) {
-    // console.log(i)
+  //   console.log(i)
     let array = []
 
     for (let customerId of Object.keys(customers).slice(1100, 1163)) {
@@ -537,5 +537,5 @@ async function writeToDBCustomers() {
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
-// writeToDBCustomers()
+writeToDBCustomers()
 // writeToDBRestoOrders()
