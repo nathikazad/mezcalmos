@@ -2247,6 +2247,8 @@
         },
         "ROpEditInfoView": {
           "saved": "Guardado",
+          "schedule" :"Horas Laborales",
+
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",

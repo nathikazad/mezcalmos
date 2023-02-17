@@ -206,7 +206,8 @@ Future<Schedule?> update_service_schedule(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
         detailsId: detailsId,
-        data: Input$service_provider_details_set_input(schedule: schedule),
+        data: Input$service_provider_details_set_input(
+            schedule: schedule.toFirebaseFormattedJson()),
       ),
     ),
   );
@@ -246,11 +247,8 @@ Future<bool> update_service_charge_fees_fro_customer(
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
-        detailsId: detailsId,
-        data: Input$service_provider_details_set_input(
-         
-        )
-      ),
+          detailsId: detailsId,
+          data: Input$service_provider_details_set_input()),
     ),
   );
   if (res.parsedData?.update_service_provider_details_by_pk == null) {

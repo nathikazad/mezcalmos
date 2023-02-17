@@ -31,14 +31,11 @@ class ServiceScheduleViewController {
     if (serviceProfileViewController.service.schedule != null) {
       // final Schedule? schedule = await get_restaurant_schedule(
       //     restaurantId: restaurant.value!.restaurantId, withCache: false);
-      mezDbgPrint(
-          "Restaurant schedule ===================> ${serviceProfileViewController.service.schedule!.toFirebaseFormattedJson()}");
-      oldSchedule.value =
-          Schedule.clone(serviceProfileViewController.service.schedule!);
-      newSchedule.value =
-          Schedule.clone(serviceProfileViewController.service.schedule!);
-      schedulePreview.value =
-          Schedule.clone(serviceProfileViewController.service.schedule!);
+      oldSchedule.value = await get_service_schedule(
+          serviceDetailsId: _detailsId, withCache: false);
+
+      newSchedule.value = Schedule.clone(oldSchedule.value!);
+      schedulePreview.value = Schedule.clone(oldSchedule.value!);
     }
   }
 
