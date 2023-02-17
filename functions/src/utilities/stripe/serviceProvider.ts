@@ -88,7 +88,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       status: StripeStatus.InProcess,
       detailsSubmitted: false,
       payoutsEnabled: false,
-      chargeFeesOnCustomer : null,
+      chargeFeesOnCustomer : true,
       email: null,
       chargesEnabled: false,
       requirements: []
@@ -176,7 +176,7 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
     status: isWorking ? StripeStatus.IsWorking : StripeStatus.InProcess,
     detailsSubmitted: account.details_submitted,
     payoutsEnabled: account.payouts_enabled,
-    chargeFeesOnCustomer: null ,
+    chargeFeesOnCustomer: true,
     email: account.email,
     chargesEnabled: account.charges_enabled,
     requirements: account.requirements?.currently_due
