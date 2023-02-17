@@ -22,6 +22,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
         to_location_gps: true,
         order_time: true,
         restaurant: {
+          details_id: true,
           details: {
             location: {
               gps: true
@@ -87,6 +88,7 @@ export async function getRestaurantOrder(orderId: number): Promise<RestaurantOrd
     orderId,
     customerId: response.restaurant_order_by_pk.customer_id,
     restaurantId: response.restaurant_order_by_pk.restaurant_id,
+    spDetailsId: response.restaurant_order_by_pk.restaurant.details_id,
     paymentType: response.restaurant_order_by_pk.payment_type as PaymentType,
     toLocation,
     refundAmount: parseFloat(response.restaurant_order_by_pk.refund_amount.replace("$","")),
@@ -128,6 +130,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
         to_location_gps: true,
         order_time: true,
         restaurant: {
+          details_id: true,
           details: {
             location: {
               gps: true
@@ -192,6 +195,7 @@ export async function getRestaurantOrderFromDelivery(deliveryOrderId: number): P
     orderId: response.restaurant_order[0].id,
     customerId: response.restaurant_order[0].customer_id,
     restaurantId: response.restaurant_order[0].restaurant_id,
+    spDetailsId: response.restaurant_order[0].restaurant.details_id,
     paymentType: response.restaurant_order[0].payment_type as PaymentType,
     toLocation,
     refundAmount: parseFloat(response.restaurant_order[0].refund_amount.replace("$","")),
@@ -229,6 +233,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       order_time: true,
       restaurant: {
         id: true,
+        details_id: true,
         restaurant_operators: [{}, {
           id: true,
           user_id: true,
@@ -317,7 +322,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
     return {
       orderId: o.id,
       
-      
+      spDetailsId: o.restaurant.details_id,
       customerId: o.customer_id,
       restaurantId: o.restaurant_id,
       paymentType: o.payment_type as PaymentType,
@@ -333,6 +338,7 @@ export async function getReceivedRestaurantOrders(): Promise<RestaurantOrder[]> 
       items,
       restaurant: (o.restaurant.details) ? {
         id: o.restaurant.id,
+        serviceProviderDetailsId: o.restaurant.details_id,
         name: o.restaurant.details.name,
         image: o.restaurant.details.image,
         location: o.restaurant.details.location.gps as Location,
@@ -387,6 +393,9 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
           image : true,
         } 
       }],
+      restaurant: {
+        details_id: true,
+      }
     }]
   });
   return response.restaurant_order.map((o): RestaurantOrder => {
@@ -403,6 +412,7 @@ export async function getCustomerRestaurantOrders(customerId: number): Promise<R
       orderId: o.id,
       customerId: o.customer_id,
       restaurantId: o.restaurant_id,
+      spDetailsId: o.restaurant.details_id,
       paymentType: o.payment_type as PaymentType,
       toLocation: {
         lat: o.to_location_gps.coordinates[1],

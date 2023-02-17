@@ -1,5 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
+import { CustomerCard } from "../../../../utilities/stripe/model";
 import { AppType, Language } from "../../../models/Generic/Generic";
 import { CustomerInfo } from "../../../models/Generic/User";
 
@@ -21,7 +22,20 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
                 name : true,
                 image:true
             },
-            stripe_info: [{}, true]
+            stripe_cards: [{}, {
+                brand: true,
+                exp_month: true,
+                card_id: true,
+                exp_year: true,
+                last_4: true,
+                sp_card_ids: [{}, true]
+            }],
+            stripe_sp_ids: [{}, {
+                sp_id: true,
+                stripe_id: true,
+            }],
+            stripe_id: true,
+            // stripe_info: [{}, true]
         }]
     })
 
@@ -31,6 +45,21 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             "Customer not found"
         );
     }
+    let stripeSPIds: Record<number, string> = {};
+    response.customer_customer_by_pk.stripe_sp_ids.forEach((i) => {
+        stripeSPIds[i.sp_id] = i.stripe_id
+    })
+    let cards: Record<string, CustomerCard> = {}
+    response.customer_customer_by_pk.stripe_cards.forEach((c) => {
+        cards[c.card_id] = {
+            cardId: c.card_id,
+            brand: c.brand,
+            expMonth: c.exp_month,
+            expYear: c.exp_year,
+            last4: c.last_4,
+            idsWithServiceProvider: JSON.parse(c.sp_card_ids)
+        }
+    })
     return {
         id: customerId,
         firebaseId: response.customer_customer_by_pk.user.firebase_id,
@@ -43,7 +72,12 @@ export async function getCustomer(customerId: number): Promise<CustomerInfo> {
             turnOffNotifications: response.customer_customer_by_pk.notification_info.turn_off_notifications,
         } : undefined,
         appVersion: response.customer_customer_by_pk.app_version,
-        stripeInfo: JSON.parse(response.customer_customer_by_pk.stripe_info),
+        stripeInfo: (response.customer_customer_by_pk.stripe_id) ? {
+            id: response.customer_customer_by_pk.stripe_id,
+            idsWithServiceProvider: stripeSPIds,
+            cards
+        }: undefined,
+        // JSON.parse(response.customer_customer_by_pk.stripe_info),
         phoneNumber: response.customer_customer_by_pk.user.phone
     }
 }

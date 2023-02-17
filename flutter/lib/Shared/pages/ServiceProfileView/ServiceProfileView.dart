@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProfileView/components/ServiceOpenCloseSwitcher.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProfileView/controllers/ServiceProfileViewController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -22,23 +22,35 @@ class ServiceProfileView extends StatefulWidget {
 }
 
 class _ServiceProfileViewState extends State<ServiceProfileView> {
-  ServiceProfileViewController _viewController = ServiceProfileViewController();
+  ServiceProfileController _viewController =
+      Get.find<ServiceProfileController>();
   int? serviceDetailsId;
   int? serviceId;
   @override
   void initState() {
-    serviceDetailsId = widget.serviceDetailsId ??
-        int.tryParse(Get.parameters["serviceDetailsId"] ?? "");
-    serviceId =
-        widget.serviceId ?? int.tryParse(Get.parameters["serviceId"] ?? "");
+    _assignVars();
     if (serviceDetailsId != null && serviceId != null) {
-      _viewController.init(
+      _viewController.assignVars(
           serviceDetailsId: serviceDetailsId!, serviceId: serviceId!);
+      _viewController.fetchService();
     }
     super.initState();
   }
 
+  void _assignVars() {
+    serviceDetailsId = widget.serviceDetailsId ??
+        int.tryParse(Get.parameters["serviceDetailsId"] ?? "");
+    serviceId =
+        widget.serviceId ?? int.tryParse(Get.parameters["serviceId"] ?? "");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   bool get asTab => widget.serviceDetailsId != null;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -80,6 +92,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   icon: Icons.support_agent,
                                   label: "Operators"),
                               _navigationLink(
+                                  onClick: () async {
+                                    navigateToServicePayments(
+                                        serviceProviderId:
+                                            _viewController.serviceId,
+                                        serviceProviderType: _viewController
+                                            .service.serviceProviderType!);
+                                  },
                                   icon: Icons.calendar_today,
                                   label: "Schedule"),
                               _navigationLink(

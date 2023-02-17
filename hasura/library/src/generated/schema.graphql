@@ -2673,6 +2673,11 @@ unique or primary key constraints on table "customer.stripe_cards"
 """
 enum customer_stripe_cards_constraint {
   """
+  unique or primary key constraint on columns "card_id"
+  """
+  stripe_cards_card_id_key
+
+  """
   unique or primary key constraint on columns "id"
   """
   stripe_cards_pkey
@@ -5499,7 +5504,7 @@ type delivery_order {
   delivery_driver: delivery_driver
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String!
 
   """An object relationship"""
@@ -5554,7 +5559,7 @@ type delivery_order {
   service_provider_review_by_driver: review
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String!
 
   """
@@ -5815,7 +5820,7 @@ input delivery_order_insert_input {
   delivery_driver: delivery_driver_obj_rel_insert_input
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer: review_obj_rel_insert_input
   driver_review_by_customer_id: Int
@@ -5844,7 +5849,7 @@ input delivery_order_insert_input {
   service_provider_review_by_driver: review_obj_rel_insert_input
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -5876,7 +5881,7 @@ type delivery_order_max_fields {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -5894,7 +5899,7 @@ type delivery_order_max_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -5928,7 +5933,7 @@ input delivery_order_max_order_by {
   delivery_cost: order_by
   delivery_driver_id: order_by
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
@@ -5946,7 +5951,7 @@ input delivery_order_max_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: order_by
 
   """
@@ -5978,7 +5983,7 @@ type delivery_order_min_fields {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -5996,7 +6001,7 @@ type delivery_order_min_fields {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -6030,7 +6035,7 @@ input delivery_order_min_order_by {
   delivery_cost: order_by
   delivery_driver_id: order_by
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
@@ -6048,7 +6053,7 @@ input delivery_order_min_order_by {
   service_provider_id: order_by
   service_provider_review_by_driver_id: order_by
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: order_by
 
   """
@@ -6551,7 +6556,7 @@ input delivery_order_set_input {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -6572,7 +6577,7 @@ input delivery_order_set_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -6754,7 +6759,7 @@ input delivery_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_driver_id: Int
 
-  """to_customer, from_customer"""
+  """toCustomer, fromCustomer"""
   direction: String
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
@@ -6775,7 +6780,7 @@ input delivery_order_stream_cursor_value_input {
   service_provider_id: Int
   service_provider_review_by_driver_id: Int
 
-  """restaurant, delivery_company"""
+  """restaurant, deliveryCompany"""
   service_provider_type: String
 
   """
@@ -14667,8 +14672,30 @@ type mutation_root {
   update data of the table: "service_provider.stripe_info"
   """
   update_service_provider_stripe_info(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_stripe_info_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_stripe_info_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_stripe_info_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_stripe_info_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_stripe_info_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_stripe_info_set_input
@@ -14681,8 +14708,30 @@ type mutation_root {
   update single row of the table: "service_provider.stripe_info"
   """
   update_service_provider_stripe_info_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_stripe_info_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_stripe_info_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_stripe_info_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_stripe_info_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_stripe_info_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_stripe_info_set_input
@@ -27797,7 +27846,10 @@ type service_provider_stripe_info {
   email: String
   id: Int!
   payouts_enabled: Boolean!
-  requirements: String
+  requirements(
+    """JSON select path"""
+    path: String
+  ): jsonb
   status: String!
   stripe_id: String!
 }
@@ -27827,6 +27879,11 @@ type service_provider_stripe_info_aggregate_fields {
   variance: service_provider_stripe_info_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_stripe_info_append_input {
+  requirements: jsonb
+}
+
 """aggregate avg on columns"""
 type service_provider_stripe_info_avg_fields {
   id: Float
@@ -27846,7 +27903,7 @@ input service_provider_stripe_info_bool_exp {
   email: String_comparison_exp
   id: Int_comparison_exp
   payouts_enabled: Boolean_comparison_exp
-  requirements: String_comparison_exp
+  requirements: jsonb_comparison_exp
   status: String_comparison_exp
   stripe_id: String_comparison_exp
 }
@@ -27867,6 +27924,28 @@ enum service_provider_stripe_info_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input service_provider_stripe_info_delete_at_path_input {
+  requirements: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input service_provider_stripe_info_delete_elem_input {
+  requirements: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input service_provider_stripe_info_delete_key_input {
+  requirements: String
+}
+
+"""
 input type for incrementing numeric columns in table "service_provider.stripe_info"
 """
 input service_provider_stripe_info_inc_input {
@@ -27883,7 +27962,7 @@ input service_provider_stripe_info_insert_input {
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -27892,7 +27971,6 @@ input service_provider_stripe_info_insert_input {
 type service_provider_stripe_info_max_fields {
   email: String
   id: Int
-  requirements: String
   status: String
   stripe_id: String
 }
@@ -27901,7 +27979,6 @@ type service_provider_stripe_info_max_fields {
 type service_provider_stripe_info_min_fields {
   email: String
   id: Int
-  requirements: String
   status: String
   stripe_id: String
 }
@@ -27956,6 +28033,11 @@ input service_provider_stripe_info_pk_columns_input {
   id: Int!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_stripe_info_prepend_input {
+  requirements: jsonb
+}
+
 """
 select columns of table "service_provider.stripe_info"
 """
@@ -27998,7 +28080,7 @@ input service_provider_stripe_info_set_input {
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -28037,7 +28119,7 @@ input service_provider_stripe_info_stream_cursor_value_input {
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -28080,8 +28162,30 @@ enum service_provider_stripe_info_update_column {
 }
 
 input service_provider_stripe_info_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: service_provider_stripe_info_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: service_provider_stripe_info_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: service_provider_stripe_info_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: service_provider_stripe_info_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: service_provider_stripe_info_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input

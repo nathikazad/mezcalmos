@@ -86,9 +86,8 @@ export async function changeLaundryOrderStatus(
   if (laundryOrder.status == LaundryOrderStatus.Delivered) {
     if (laundryOrder.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
-        orderId: laundryOrder.orderId!,
-        orderType: OrderType.Laundry,
-        serviceProviderId: laundryOrder.storeId,
+        orderId: laundryOrder.orderId,
+        serviceProviderDetailsId: laundryOrder.spDetailsId,
         orderStripePaymentInfo: laundryOrder.stripeInfo!
       }
       capturePayment(paymentDetails, laundryOrder.totalCost)

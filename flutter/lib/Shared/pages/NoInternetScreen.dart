@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/Utils/Themes/AppColors.dart';
 import 'package:mezcalmos/Shared/Utils/Themes/styles.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -51,7 +52,7 @@ class NoInternetScreen extends StatelessWidget {
             borderRadius: 20.0,
             onTap: () {
               if (ConnectivityHelper.instance.hasInternet) {
-                Get.back();
+                MezRouter.back<Null>();
               }
             },
             textAlignement: Alignment.center,

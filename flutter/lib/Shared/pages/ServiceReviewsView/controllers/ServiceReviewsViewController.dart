@@ -1,214 +1,127 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
+import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 
 class ServiceReviewsViewController {
-  // instances //
-  WebViewController webViewController = WebViewController();
+  /// Handles ui logic of the menu view inside the restaurant app
+  /// NB : This class is a normal dart class no extends no inheritance
+//  Contructor
+  ServiceReviewsViewController();
 
-  // state variables //
-  Map<PaymentType, bool> _cloneAcceptedPayments = <PaymentType, bool>{
-    PaymentType.Card: false,
-    PaymentType.BankTransfer: false,
-    PaymentType.Cash: true,
-  };
-  final Rxn<PaymentInfo> _paymentInfo = Rxn();
-  final RxBool showStripeReqs = RxBool(false);
-  final RxBool showSetupStripe = RxBool(false);
-  final RxBool showStripe = RxBool(false);
-  final RxBool setupClicked = RxBool(false);
-  final RxBool showLinarProgress = RxBool(false);
-  RxString currentUrl = RxString("");
-  // text inputs //
-  final TextEditingController bankName = TextEditingController();
-  final TextEditingController bankNumber = TextEditingController();
-  // vars //
-  late int serviceProviderId;
-  String? stripeUrl;
-// getters //
+// instances and streams subscriptions
 
-  PaymentInfo? get paymentInfo => _paymentInfo.value;
-  // init //
-  Future<void> init({required int serviceProviderId}) async {
-    this.serviceProviderId = serviceProviderId;
-    // get payment info //
-    await _fetchPayment(withCache: false);
-  }
+  ServiceProfileController serviceProfileViewController =
+      Get.find<ServiceProfileController>();
+  // state variables
 
-  Future<void> _fetchPayment({bool withCache = true}) async {
-    _paymentInfo.value = await get_restaurant_payment_info(
-        serviceProviderId: serviceProviderId, withCache: withCache);
-    _cloneAcceptedPayments = _paymentInfo.value!.acceptedPayments;
-  }
+  RxList<Review> _reviews = RxList.empty();
+  RxnDouble _rating = RxnDouble();
+  List<ReviewsFilter> filters = [
+    ReviewsFilter.Default,
+    ReviewsFilter.HighestRate,
+    ReviewsFilter.LowestRate,
+  ];
+  Rx<ReviewsFilter> filterBy = Rx(ReviewsFilter.Default);
+  // getters
+  bool get hasReviews => _reviews.isNotEmpty;
+  List<Review> get reviews => _reviews.value;
+  num get rating => _rating.value!;
+  int get detailsId => serviceProfileViewController.detailsId;
+  bool get hasRating => _rating.value != null;
+  RxBool hasLoded = RxBool(false);
 
-  void checkStripe() {
-    if (_paymentInfo.value?.stripe != null &&
-        _paymentInfo.value?.acceptedPayments[PaymentType.Card] == true) {
-      updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-              paymentInfo!.acceptedPayments)
-          .then((ServerResponse value) {
-        _checkStripeDetails();
-      });
-    }
-  }
-
-  Future<void> handleCardCheckBoxClick(bool v) async {
-    mezDbgPrint("Heeerrererrere =>${_paymentInfo.value}");
-    final Map<PaymentType, bool> newMap = {
-      ...paymentInfo!.acceptedPayments,
-      PaymentType.Card: v
-    };
-    _paymentInfo.value!.acceptedPayments = newMap;
-
-    mezDbgPrint("Heeerrererrere =>${_paymentInfo.value!}");
+// IMPORTANT //
+  // This method needs to be called on the initState method of the view
+  Future<void> fetchReviewsAndRating() async {
     try {
-      // _paymentInfo.value = await update_restaurant_payment_info(
-      //     id: serviceProviderId, paymentInfo: paymentInfo!);
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
+      _reviews.value = await get_service_reviews(
+              serviceDetailsId: detailsId, withCache: false) ??
+          [];
+      _rating.value = await get_service_review_average(
+          detailsId: detailsId, withCache: false);
+    } on Exception catch (e, stk) {
+      mezDbgPrint("Errors $e");
+      mezDbgPrint("Errors $stk");
+      // TODO
     }
-    mezDbgPrint("PAYMENT CARD ======>${_paymentInfo.value?.acceptedPayments}");
+    hasLoded.value = true;
   }
 
-  void handleStripeUrlChanges(String url) {
-    if (url == "https://example.com/return") {
-      _returnUrlHandler();
-    } else if (url == "https://example.com/reauth") {
-      _reauthUrlHandler();
-    }
+  // IMPORTANT //
+  // This method needs to be called on the dispose method of the view
+  void dispose() {
+    // _restaurantListener?.cancel();
   }
 
-  void _reauthUrlHandler() {
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
-      }
-    });
-  }
+  void switchFiletrBy(ReviewsFilter v) {
+    filterBy.value = v;
+    switch (v) {
+      case ReviewsFilter.Default:
+        _reviews
+            .sort((Review a, Review b) => b.reviewTime.compareTo(a.reviewTime));
 
-  void _returnUrlHandler() {
-    showStripe.value = false;
-    updateServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
-      _checkStripeDetails();
-      if (value.success) {
-        _fetchPayment(withCache: false);
-      }
-    });
-  }
+        break;
+      case ReviewsFilter.HighestRate:
+        _reviews.sort((Review a, Review b) {
+          return b.rating.compareTo(a.rating);
+        });
 
-  void _checkStripeDetails() {
-    if (_paymentInfo.value?.stripe?.detailsSubmitted == false) {
-      showSetupStripe.value = true;
-    } else if (_paymentInfo.value?.stripe?.chargesEnabled == false ||
-        _paymentInfo.value?.stripe?.payoutsEnabled == false) {
-      showStripeReqs.value = true;
+        break;
+      case ReviewsFilter.LowestRate:
+        _reviews.sort((Review a, Review b) {
+          return a.rating.compareTo(b.rating);
+        });
+
+        break;
+      default:
     }
   }
 
-  Future<void> switchChargeFees(bool v) async {
-    try {
-      // await update_restaurant_payment_info(
-      //     id: serviceProviderId,
-      //     paymentInfo: paymentInfo!.copyWith(
-      //         stripe: paymentInfo!.stripe!.copyWith(chargeFeesOnCustomer: v)));
-      await _fetchPayment(withCache: false);
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
+  String performanceString() {
+    if (rating >= 4) {
+      return "excellent";
+    } else if (rating >= 3) {
+      return "good";
+    } else if (rating > 2) {
+      return "bad";
+    } else {
+      return "poor";
     }
   }
 
-  void initWebView() {
-    webViewController.setJavaScriptMode(JavaScriptMode.unrestricted);
-    webViewController.setBackgroundColor(const Color(0x00000000));
-    webViewController.setNavigationDelegate(
-      NavigationDelegate(
-        onProgress: (int progress) {
-          showLinarProgress.value = true;
-        },
-        onPageStarted: (String url) {
-          showLinarProgress.value = true;
-          currentUrl.value = url;
-          mezDbgPrint("🌍 Started with url ======>$url");
-          handleStripeUrlChanges(url);
-        },
-        onPageFinished: (String url) {
-          showLinarProgress.value = false;
-        },
-        onWebResourceError: (WebResourceError error) {},
-      ),
-    );
-    webViewController.loadRequest(Uri.parse(stripeUrl!));
+  Color performColor() {
+    if (rating <= 2) {
+      return offRedColor;
+    } else if (rating <= 3) {
+      return Colors.amber.shade100;
+    } else {
+      return secondaryLightBlueColor;
+    }
   }
 
-  void showPaymentSetup() {
-    setupClicked.value = true;
-    onboardServiceProvider(serviceProviderId, ServiceProviderType.Restaurant,
-            paymentInfo!.acceptedPayments)
-        .then((ServerResponse value) {
-      if (value.success) {
-        stripeUrl = value.data["url"];
-        showStripe.value = true;
-        initWebView();
-      } else {
-        Get.snackbar("Error", value.errorMessage ?? "Error");
-      }
-    }).whenComplete(() => setupClicked.value = false);
+  Color performTextColor() {
+    if (rating <= 2) {
+      return Colors.redAccent;
+    } else if (rating <= 3) {
+      return Colors.amber.shade700;
+    } else {
+      return primaryBlueColor;
+    }
   }
+}
 
-  void closePaymentSetup() {
-    stripeUrl = null;
-    showStripe.value = false;
+enum ReviewsFilter { HighestRate, LowestRate, Default }
+
+extension pickerHelper on ReviewsFilter {
+  String toNormalString() {
+    final String str = toString().split('.').last.toLowerCase();
+
+    return str.toLowerCase();
   }
-
-  bool get showSetupBtn {
-    return (_paymentInfo.value?.acceptedPayments[PaymentType.Card] == true &&
-            _paymentInfo.value?.stripe == null) ||
-        (_paymentInfo.value?.acceptedPayments[PaymentType.Card] == true &&
-            (_paymentInfo.value?.detailsSubmitted == false ||
-                _paymentInfo.value?.chargesEnabled == false));
-  }
-
-  bool getChargeFessOnCustomer() {
-    return _paymentInfo.value?.stripe?.chargeFeesOnCustomer ?? true;
-  }
-
-  bool get showFeesOption {
-    return (_paymentInfo.value?.acceptedPayments[PaymentType.Card] == true &&
-        _paymentInfo.value?.stripe != null);
-  }
-
-  bool get showStatusIcon {
-    return (_paymentInfo.value?.stripe?.requirements.isNotEmpty == true);
-  }
-
-  bool get isBankTrue {
-    return _paymentInfo.value?.acceptedPayments[PaymentType.BankTransfer] ==
-        true;
-  }
-
-  pushBankInfos({required String bankName, required num bankNumber}) {}
-
-  void removeBank() {
-    final Map<Object, dynamic> newMap = {
-      ...paymentInfo!.acceptedPayments,
-      PaymentType.Card: true
-    };
-    mezDbgPrint(newMap);
-  }
-  // TODO @m66are RFC
-
-  void dspose() {}
 }

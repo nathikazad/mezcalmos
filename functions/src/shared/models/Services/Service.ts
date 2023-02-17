@@ -6,6 +6,7 @@ import { UserInfo } from "../Generic/User";
 
 export interface ServiceProvider {
   id: number;
+  serviceProviderDetailsId: number;
   name: string;
   image: string;
   phoneNumber?: string;
@@ -22,7 +23,8 @@ export interface ServiceProvider {
   schedule?: any;
   deliveryPartnerId?: number;
   deliveryDetails: DeliveryDetails;
-  operators?: Operator[]
+  operators?: Operator[];
+  serviceProviderType?: ServiceProviderType;
 }
 
 export interface Operator {

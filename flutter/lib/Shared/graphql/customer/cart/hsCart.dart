@@ -36,7 +36,7 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
 
   if (getCartResp.parsedData?.restaurant_cart == null) {
     throw Exception(
-        "[🛑] create_customer_cart :: exception ===> ${getCartResp.exception}!");
+        "[🛑] get_customer_cart :: exception ===> ${getCartResp.exception}!");
   }
   mezDbgPrint(
       "[✅] called :: getCustomerCart :: NO Exception CUS_ID ( $customerId )!");
@@ -47,12 +47,12 @@ Future<Cart?> get_customer_cart({required int customerId}) async {
           : null;
 
   PaymentInfo paymentInfo = PaymentInfo();
-  // if (cartData?.restaurant?.details?.stripe_info != null &&
-  //     cartData?.restaurant?.details?.accepted_payments != null) {
-  //   paymentInfo = PaymentInfo.fromData(
-  //       stripeInfo: cartData?.restaurant?.details?.stripe_info!,
-  //       acceptedPayments: cartData?.restaurant?.details?.accepted_payments!);
-  // }
+  if (cartData?.restaurant?.details?.stripe_info != null &&
+      cartData?.restaurant?.details?.accepted_payments != null) {
+    paymentInfo = PaymentInfo.fromData(
+        stripeInfo: cartData?.restaurant?.details?.stripe_info!,
+        acceptedPayments: cartData?.restaurant?.details?.accepted_payments!);
+  }
 
   if (cartData != null) {
     final Cart cart = Cart(
@@ -302,12 +302,12 @@ Stream<Cart?> listen_on_customer_cart({required int customer_id}) {
       Subscription$listen_on_customer_cart$restaurant_cart$restaurant? _res =
           cart.parsedData?.restaurant_cart.first.restaurant;
       PaymentInfo paymentInfo = PaymentInfo();
-      // if (_res?.details?.stripe_info != null &&
-      //     _res?.details?.accepted_payments != null) {
-      //   paymentInfo = PaymentInfo.fromData(
-      //       stripeInfo: _res?.details?.stripe_info!,
-      //       acceptedPayments: _res?.details?.accepted_payments!);
-      // }
+      if (_res?.details?.stripe_info != null &&
+          _res?.details?.accepted_payments != null) {
+        paymentInfo = PaymentInfo.fromData(
+            stripeInfo: _res?.details?.stripe_info!,
+            acceptedPayments: _res?.details?.accepted_payments!);
+      }
       if (cart.parsedData?.restaurant_cart.first.restaurant != null) {
         _cartEvent.restaurant = Restaurant(
           languages: convertToLanguages(_res!.details!.language),

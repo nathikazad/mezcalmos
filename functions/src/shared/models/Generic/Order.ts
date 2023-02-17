@@ -4,6 +4,7 @@ import { UserInfo } from "./User";
 
 export interface Order {
   orderId: number;
+  spDetailsId: number;
   customerId: number;
   paymentType: PaymentType;
   refundAmount?: number;

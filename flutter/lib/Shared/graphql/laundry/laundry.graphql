@@ -13,7 +13,8 @@ query getLaundries {
       minimum_cost
       radius
     }
-    details{ id
+    details {
+      id
       location_id
 
       image
@@ -35,7 +36,17 @@ query getLaundries {
         }
       }
       accepted_payments
-      # stripe_info
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       # self_delivery
       open_status
       schedule
@@ -59,7 +70,8 @@ query getLaundryStoreById($id: Int!) {
       self_delivery
       radius
     }
-    details{ id
+    details {
+      id
       location_id
 
       image
@@ -71,7 +83,17 @@ query getLaundryStoreById($id: Int!) {
       }
 
       accepted_payments
-      # stripe_info
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       name
       description {
         translations {
@@ -87,7 +109,8 @@ query getLaundryStoreById($id: Int!) {
 }
 query getLaundryStatus($id: Int!) {
   laundry_store_by_pk(id: $id) {
-    details{ id
+    details {
+      id
       open_status
     }
   }
@@ -103,7 +126,8 @@ mutation switchLaundryAvailability($restauarntId: Int!, $value: String) {
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-    details{ id
+    details {
+      id
       open_status
     }
   }
@@ -124,7 +148,8 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
       self_delivery
       radius
     }
-    details{ id
+    details {
+      id
       location_id
       image
       language
@@ -133,7 +158,17 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
         address
       }
       accepted_payments
-      # stripe_info
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       name
       schedule
       description {

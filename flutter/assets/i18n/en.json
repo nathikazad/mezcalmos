@@ -190,7 +190,7 @@
                             "deliveryCost": "Delivery cost",
                             "stripeFees": "Card fees",
                             "totalCost": "Total cost",
-                            "deliveryLocation": "Delivery Location",
+                            "deliveryLocation": "Delivery location",
                             "toBeCalc": "Calculating..."
                         },
                         "SaveLocationDailog": {
@@ -305,7 +305,7 @@
                             "helperText-onTheWay": "Your order is on the way",
                             "helperText-readyForPickUp": "Your order is prepared and ready for pickup by the delivery driver",
                             "helperText-delivered": "Your order has been successfully delivered",
-                            "itemNotes": "Note : "
+                            "itemNotes": "Note"
                         },
                         "OrderSummaryCard": {
                             "totalCost": "Total cost",
@@ -439,8 +439,8 @@
                             "failedToAcceptOffer": "Failed to accept the offer!"
                         },
                         "ViewTaxiOrderScreenWidgets": {
-                            "title": "Confirm Cancelation.",
-                            "question": "Are you sure you want to cancel your Order ?",
+                            "title": "Confirm cancelation.",
+                            "question": "Are you sure you want to cancel your order ?",
                             "cancel": "Cancel",
                             "taxiRidePriceTooltip": "Click + - to increase/decrease your price by 5. If you see your order not being accepted try them out.",
                             "serverCommunicationError": "Failed to communicate with the server :("
@@ -1204,61 +1204,259 @@
     },
     "TaxiAdminApp": {
         "pages": {
-            "Driver": {
-                "DriverPage": {
-                    "orderId": "Order Id",
-                    "appVersion": "App Version",
-                    "totalOrders": "Total Orders",
-                    "droppedOff": "Delivered",
-                    "firstOrder": "First Order",
-                    "lastOrder": "Last Order",
-                    "notifications": "Notifications",
-                    "sent": "Sent",
-                    "received": "Received",
-                    "read": "Read",
-                    "orders": "Orders"
-                }
+          "CreateServiceInfoPage": {
+            "name": "Name",
+            "nameError": "Please provide a name",
+            "location": "Name",
+            "locationError": "Please provide a name",
+            "pickLoc": "Pick location",
+            "imageError": "Image is required"
+          }
+        },
+        "info": "Information",
+        "schedule": "Schedule",
+        "delivery": "Delivery",
+        "save": "Save",
+        "next": "Next",
+        "ok": "Ok",
+        "selectCompany": "Select a company",
+        "selectCompanyText": "you need to select a delivery company",
+        "restTitle": "Your restaurant is under review",
+        "restBody": "You can start adding items to your menu and you’ll be notified once your restaurant is approved."
+      },
+      "DeliveryCostSettingView": {
+        "dvCost": "Delivery cost",
+        "km": "Km",
+        "minCost": "Minimum Cost",
+        "costPerKm": "Cost per km",
+        "freeKmRange": "Free delivery range",
+        "freeKmRangeText": "Within this distance, the customer won’t be charged for the delivery.",
+        "numberError": "Please enter a valid number",
+        "preview": "Preview",
+        "custDistance": "Customer distance",
+        "save": "Save",
+        "cost": "Cost"
+      },
+      "DeliverySettingsView": {
+        "DeliverySettingsView": {
+          "delivery": "Delivery",
+          "save": "Save",
+          "title": "How would you like to deliver ?"
+        },
+        "components": {
+          "DeliverySettingsCompaniesList": {
+            "title": "Delivery partner next to you",
+            "notFoundTitle": "No delivery partners found",
+            "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
+            "joinded": "Joined"
+          }
+        }
+      },
+      "ServicePaymentsView": {
+        "payments": "Payments",
+        "components": {
+          "ServiceAcceptedPayments": {
+            "bankName": "Bank name",
+            "bankNumber": "Account number",
+            "bankTitle": "Bank account informations",
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "error": "Error",
+            "bankTransfer": "Bank Transfer",
+            "bankError": "Account number is not valid",
+            "cash": "Cash",
+            "card": "Card",
+            "requirements": "Requirements",
+            "acceptedPayments": "Accepted payments",
+            "setup": "Setup",
+            "fees": "Fees",
+            "chargeCustomer": "charge customer processing fees",
+            "setupHelper": "Thanks for setup , you can now receive payments but you will not be able to withdraw money to your bank account",
+            "reqs": "Requirements",
+            "emailId": "Email ID",
+            "empty": "Empty",
+            "reqsHelper": "Please sign in to your stripe account and make sure you fill in all the requiremnts below"
+          }
+        }
+      },
+      "OperatorsListView": {
+        "operators": "Operators",
+        "addOperator": "Add operator",
+        "title": "Ask your operator to scan this QR code on their phone",
+        "copyLink": "Copy link",
+        "shrWhatsapp": "Share on WhatsApp",
+        "copied": "Copied",
+        "copiedText": "Link copied successfuly"
+      },
+      "ServiceDriversListView": {
+        "drivers": "Drivers",
+        "addDriver": "Add driver",
+        "title": "Ask your operator to scan this QR code on their phone",
+        "copyLink": "Copy link",
+        "shrWhatsapp": "Share on WhatsApp",
+        "copied": "Copied",
+        "copiedText": "Link copied successfuly"
+      },
+      "ServiceInfoEditView": {
+        "name": "Name",
+        "phoneNumber" : "Phone number",
+        "phoneErrorText" : "Please enter a valid phone number",
+        "location": "Location",
+        "description": "Description in",
+        "info": "Info",
+        "save": "Save",
+        "saved": "Saved",
+        "error": "Error",
+        "savedSuccess": "Your information has been successfully saved "
+      },
+      "SomethingWentWrongScreen": {
+        "noRestaurantFoundOnOperator": "No restaurant found on your operator",
+        "pleaseContactAdmin": "Please contact the admin: +5219541184711"
+      },
+      "AuthScreens": {
+        "SMS": {
+          "OtpConfirmationScreen": {
+            "confirmation": "Confirmation",
+            "OtpConfirmation": "OTP Code Confirmation",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "enterOtpCode": "Enter OTP code sent to",
+            "otpDidnReceiveTxt": "You haven't receive the text ?",
+            "resend": "Resend",
+            "resendAfter": "Resend after",
+            "seconds": "seconds",
+            "wrongOTPCode": "The Confirmation code is Wrong, please try again.",
+            "confirm": "Confirm"
+          },
+          "PhoneNumberScreen": {
+            "otpCode": "OTP Code",
+            "twilioNote": "By continuing you will receive a verification code to your phone number by SMS. Message and data rates may apply.",
+            "enterPhoneNumber": "Enter phone number to recieve OTP code",
+            "submit": "SUBMIT"
+          }
+        },
+        "SignInScreen": {
+          "title": "Connect using Facebook or using SMS ! ",
+          "loginWithApple": "SIGN IN WITH APPLE",
+          "loginWithSms": "LOGIN WITH SMS",
+          "fbBtn": "LOGIN WITH FACEBOOK"
+        },
+        "UnauthorizedScreen": {
+          "unauthorized": "Unauthorized",
+          "subTitle1": "You are not authorized, please contact Alejandro ",
+          "subTitle2": " ,to get authorization."
+        }
+      },
+      "Notifications": {
+        "components": {
+          "ClearNotificationButton": {
+            "latest": "Latest",
+            "today": "Today",
+            "alertClearNotificationTitle": "Clear All Notifications"
+          }
+        },
+        "ViewNotifications": {
+          "title": "Notifications",
+          "latest": "Latest",
+          "today": "Today",
+          "alertClearNotificationTitle": "Clear All Notifications",
+          "clear": "Clear",
+          "no": "No",
+          "noNotifTitle": "No notifications yet !",
+          "noNotifBody": "You have currently no notifications. We will notify you when something new arrives."
+        }
+      },
+      "UserWelcomeView": {
+        "title": "Happy to see you made it 👋 ",
+        "subtitle": "Complete your profile by setting your picture and name !",
+        "nameTitle": "What should we call you ?",
+        "save": "Save my information",
+        "hint": "Type your name",
+        "imageHint": "Your face, your profile"
+      },
+      "UserProfileView": {
+        "profile": "Profile",
+        "name": "Name",
+        "save": "Save my information",
+        "edit": "Edit my information",
+        "hint": "Type your name",
+        "imageHint": "Your face, your profile",
+        "mustSetUserNameError": "Please enter your first name.",
+        "mustSetUserImgError": "Please upload an image.",
+        "nameMustBeLettersOnly": "Your first name must only have letters.",
+        "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
+        "deleteAccount": "Delete Account",
+        "deleteTitle": "Confirm account deletion !",
+        "deletePrBtn": "Yes, delete !",
+        "deleteScBtn": "Cancel",
+        "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
+      },
+      "UserProfileScreen": {
+        "UserProfileScreen": {
+          "mustSetUserNameError": "Please enter your first name.",
+          "mustSetUserImgError": "Please upload an image.",
+          "nameMustBeLettersOnly": "Your first name must only have letters.",
+          "nameMustBeFourLettersOrMore": "Your name must have at least 4 letters.",
+          "deleteAccount": "Delete Account",
+          "deleteTitle": "Confirm account deletion !",
+          "deletePrBtn": "Yes, delete !",
+          "deleteScBtn": "Cancel",
+          "deleteHelper": "Clicking yes will permanently delete you account, are you sure?"
+        },
+        "UserProfileWidgets": {
+          "namePlaceHolder": "Enter your first name",
+          "uploadPic": "Upload Image",
+          "title": " User Information",
+          "cancel": "Cancel",
+          "name": "Name",
+          "memberSince": "Member since",
+          "editInfo": "Edit Information",
+          "noChangesToApply": "No Changes to be applied!",
+          "saveBtn": "Save"
+        }
+      },
+      "NoInternetConnectionScreen": {
+        "noInternetConnection": "No internet connection",
+        "reconnecting": "Reconnecting",
+        "tryAgain": "Try again",
+        "noInternetDesc": "There is a connection error, please check your internet and try again"
+      },
+      "MessagingScreen": {
+        "viewOrder": "View order details",
+        "order": "Order",
+        "writeMsgPlaceholder": "Write your message here ..."
+      },
+      "ViewNotifications": {
+        "title": "Notifications",
+        "latest": "Latest",
+        "alertClearNotificationTitle": "Clear All Notifications"
+      },
+      "LocationPermissionScreen": {
+        "permissionBtn": "GIVE PERMISSION",
+        "askForNotif": "The app collects your location Data to match you with the best rides and share your location with customers, even when the app is in background.",
+        "locationPermissionDenied": "Oops, Sadly without location permissions you can not use our application!",
+        "locationPermissionDeniedForever": "Location permissions are denied forever! Please change that.",
+        "locationIsOff": "Location Service Turned Off",
+        "locationPermissionStatus": {
+          "denied": "Access to your location is denied :(",
+          "backgroundAccessDenied": "Access to background location is denied :(",
+          "foreverDenied": "Click the button then go to permissions->location and check `Always`",
+          "serviceOff": "Phone's Location service is disabled / off :("
+        },
+        "locationPermissionText": {
+          "ios": {
+            "foreground": "We need to access your location while using the app. Please Click `Keep Only While Using` .",
+            "background": "We need to access your location even when the app is in background. Please change the location permissions on App's Settings to `Always Allow` ."
+          },
+          "android": {
+            "foreground": {
+              "android9": "We need to access your location while using the app. Please Click `Allow` .",
+              "android10": "We need to access your location while using the app. Please Click `KEEP AND DON'T ASK AGAIN` .",
+              "android11": "We need to access your location while using the app. Please Click `WHILE USING THE APP` ."
             },
-            "Notifications": {
-                "NotifCountOnDayByDriverPage": {
-                    "notifications": "Notifications",
-                    "driver": "Driver"
-                }
-            },
-            "Orders": {
-                "OrdersCumOnDayPage": {
-                    "cumulative": "Cumulative",
-                    "totalOrders": "Total Orders",
-                    "finished": "Finished",
-                    "cancelled": "Cancelled",
-                    "expired": "Expired",
-                    "inProcess": "In Process",
-                    "isLooking": "Is Looking"
-                },
-                "OrdersCumOnMonthPage": {
-                    "orders": "Orders"
-                },
-                "OrdersFulfillmentOnMonthPage": {
-                    "orderFR": "Order Fulfillment Ratio"
-                },
-                "OrdersOnDayPage": {
-                    "orders": "Orders",
-                    "time": "Time",
-                    "driver": "Driver",
-                    "cust": "Cust"
-                },
-                "OrderViewPage": {
-                    "orderId": "Order Id",
-                    "orderT": "Order Time",
-                    "status": "Status",
-                    "price": "Price",
-                    "rideStart": "Ride Start Time",
-                    "rideEnd": "Ride End Time",
-                    "notifications": "Notifications",
-                    "sent": "Sent",
-                    "received": "Received",
-                    "read": "Read"
-                }
+            "background": {
+              "android9": "We need to access your location even when the app is in background. Please Click  `Allow` .",
+              "android10": "We need to access your location even when the app is in background. Please Click `ALLOW ALL THE TIME` .",
+              "android11": "We need to access your location even when the app is in background. Please Click Give Permissions -> Permissions -> Location -> All the time."
             }
         }
     },
@@ -2331,4 +2529,4 @@
         "confirm": "Confirm",
         "cancel": "Cancel"
     }
-}
+      }}

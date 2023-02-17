@@ -5,11 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -125,42 +126,38 @@ extension ParseCaptureMethodToString on CaptureMethod {
   }
 }
 
-Future<ServerResponse> getPaymentIntent(
-    {required String customerId,
-    required String serviceProviderId,
-    required OrderType orderType,
-    required num paymentAmount,
-    CaptureMethod captureMethod = CaptureMethod.Automatic}) async {
-  final HttpsCallable getPaymentIntent =
-      FirebaseFunctions.instance.httpsCallable("stripe-getPaymentIntent");
+Future<cModel.PaymentIntentResponse?> getPaymentIntent({
+  required int serviceProviderDetailsId,
+  required num paymentAmount,
+}) async {
   try {
-    final HttpsCallableResult<dynamic> response =
-        await getPaymentIntent.call(<String, String>{
-      "customerId": customerId,
-      "serviceProviderId": serviceProviderId,
-      "orderType": orderType.toFirebaseFormatString(),
-      "paymentAmount": paymentAmount.toString(),
-      "captureMethod": captureMethod.toFirebaseFormatString()
-    });
-    return ServerResponse.fromJson(response.data);
-  } catch (e) {
-    return ServerResponse(ResponseStatus.Error,
-        errorMessage: "Server Error", errorCode: "serverError");
+    cModel.PaymentIntentResponse res =
+        await CloudFunctions.stripe_getPaymentIntent(
+            paymentAmount: paymentAmount,
+            serviceProviderId: serviceProviderDetailsId);
+    return res;
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message.toString());
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
+  } catch (e, stk) {
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
 }
 
-Future<ServerResponse> addCard({required String paymentMethod}) async {
-  final HttpsCallable addCardFunction =
-      FirebaseFunctions.instance.httpsCallable("stripe-addCard");
+Future<String?> addCard({required String paymentMethod}) async {
   try {
-    final HttpsCallableResult<dynamic> response = await addCardFunction
-        .call(<String, String>{"paymentMethod": paymentMethod});
-    return ServerResponse.fromJson(response.data);
-  } catch (e) {
-    mezDbgPrint("Error ==========>$e");
-    return ServerResponse(ResponseStatus.Error,
-        errorMessage: "Server Error", errorCode: "serverError");
+    cModel.AddCardResponse res =
+        await CloudFunctions.stripe_addCard(paymentMethod: paymentMethod);
+    return res.cardId;
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message ?? "");
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
 }
 
 Future<ServerResponse> removeCard({required String cardId}) async {
@@ -176,35 +173,51 @@ Future<ServerResponse> removeCard({required String cardId}) async {
   }
 }
 
-Future<String> acceptPaymentWithSavedCard(
+Future<String?> acceptPaymentWithSavedCard(
     {required num paymentAmount,
     required CreditCard card,
-    required String serviceProviderId}) async {
+    required int serviceProviderDetailsId}) async {
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
-  final HttpsCallable addCardFunction =
-      FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
+
   try {
-    final HttpsCallableResult<dynamic> response =
-        await addCardFunction.call(<String, dynamic>{
-      "serviceProviderId": serviceProviderId,
-      "cardId": card.id,
-      "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-      "paymentAmount": paymentAmount
-    });
-    final ServerResponse serverResponse =
-        ServerResponse.fromJson(response.data);
-    if (serverResponse.success) {
-      return extractPaymentIdFromIntent(
-          serverResponse.data['paymentIntent'].toString());
-    } else {
-      MezSnackbar(
-          "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
-      throw Exception(serverResponse.errorMessage ?? "Unknown Error");
-    }
-  } catch (e) {
-    MezSnackbar("Add Card Error", "Server side error");
-    throw e;
+    cModel.ChargeCardResponse res = await CloudFunctions.stripe_chargeCard(
+        serviceProviderId: serviceProviderDetailsId,
+        cardId: card.cardId,
+        paymentAmount: paymentAmount);
+    return extractPaymentIdFromIntent(res.paymentIntent.toString());
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message.toString());
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
+  } catch (e, stk) {
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
+  // final HttpsCallable addCardFunction =
+  //     FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
+  // try {
+  //   final HttpsCallableResult<dynamic> response =
+  //       await addCardFunction.call(<String, dynamic>{
+  //     "serviceProviderId": serviceProviderId,
+  //     "cardId": card.cardId,
+  //     "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+  //     "paymentAmount": paymentAmount
+  //   });
+  //   final ServerResponse serverResponse =
+  //       ServerResponse.fromJson(response.data);
+  //   if (serverResponse.success) {
+  //     return extractPaymentIdFromIntent(
+  //         serverResponse.data['paymentIntent'].toString());
+  //   } else {
+  //     MezSnackbar(
+  //         "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
+  //     throw Exception(serverResponse.errorMessage ?? "Unknown Error");
+  //   }
+  // } catch (e) {
+  //   MezSnackbar("Add Card Error", "Server side error");
+  //   throw e;
+  // }
 }
 
 Future<void> acceptPaymentWithSheet(
@@ -238,14 +251,14 @@ Future<bool> isGooglePaySupported() {
 }
 
 Future<void> acceptPaymentWithApplePay(
-    {required paymentIntentData,
+    {required cModel.PaymentIntentResponse paymentIntentData,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.publishableKey = paymentIntentData.publishableKey;
     Stripe.merchantIdentifier = "merchant.mezcalmos";
-    final clientSecret = paymentIntentData['paymentIntent'];
-    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    final String clientSecret = paymentIntentData.paymentIntent!;
+    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
@@ -269,14 +282,14 @@ Future<void> acceptPaymentWithApplePay(
 }
 
 Future<void> acceptPaymentWithGooglePay(
-    {required paymentIntentData,
+    {required cModel.PaymentIntentResponse paymentIntentData,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.publishableKey = paymentIntentData.publishableKey;
     Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
-    final clientSecret = paymentIntentData['paymentIntent'];
-    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    final String clientSecret = paymentIntentData.paymentIntent!;
+    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(
@@ -298,20 +311,29 @@ String extractPaymentIdFromIntent(String a) {
   return a.split('_').sublist(0, 2).join('_');
 }
 
-Future<ServerResponse> onboardServiceProvider(
-    int serviceProviderId,
-    ServiceProviderType orderType,
-    Map<PaymentType, bool> acceptedPayments) async {
-  return serviceProviderFunctions(
-      "setupServiceProvider", serviceProviderId, orderType, acceptedPayments);
+Future<cModel.SetupResponse> onboardServiceProvider(
+  int serviceProviderDetailsId,
+  ServiceProviderType orderType,
+) async {
+  mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
+  mezDbgPrint("Payload ================>>> $orderType");
+  return await CloudFunctions.stripe_setupServiceProvider(
+    serviceProviderDetailsId: serviceProviderDetailsId,
+  );
 }
 
-Future<ServerResponse> updateServiceProvider(
-    int serviceProviderId,
+Future<void> updateServiceProvider(
+    int serviceProviderDetailsId,
     ServiceProviderType orderType,
     Map<PaymentType, bool> acceptedPayments) async {
-  return serviceProviderFunctions(
-      "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
+  mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
+  mezDbgPrint("Payload ================>>> $orderType");
+  await CloudFunctions.stripe_updateServiceProvider(
+    serviceProviderDetailsId: serviceProviderDetailsId,
+  );
+
+  // return serviceProviderFunctions(
+  //     "updateServiceProvider", serviceProviderId, orderType, acceptedPayments);
 }
 
 Future<ServerResponse> serviceProviderFunctions(
@@ -364,7 +386,7 @@ Future<dynamic> addCardSheet() {
                         fit: FlexFit.tight,
                         child: Text(
                           '${_i18n()["addCard"]}',
-                          style: Get.textTheme.headline3
+                          style: Get.textTheme.displaySmall
                               ?.copyWith(fontSize: 17.sp),
                         ),
                       ),
@@ -442,14 +464,10 @@ class _CardFormState extends State<CardForm> {
               params: PaymentMethodParams.card(
                   paymentMethodData: PaymentMethodData()));
       mezDbgPrint("payment method from stripe =========>$paymentMethod");
-      final ServerResponse serverResponse =
-          await addCard(paymentMethod: paymentMethod.id);
-      mezDbgPrint("Response ====> ${serverResponse.data}");
-      if (serverResponse.success) {
-        MezRouter.back(result: serverResponse.data['cardId']);
-      } else {
-        MezSnackbar(
-            "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
+      String? res = await addCard(paymentMethod: paymentMethod.id);
+      mezDbgPrint("Response ====> $res");
+      if (res != null) {
+        MezRouter.back(result: res);
       }
     } on StripeException catch (e) {
       mezDbgPrint("Error add stripe ======>>>>$e");

@@ -2,6 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { LaundryDetails } from "../../../laundry/createNewLaundry";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
+import { PaymentType } from "../../models/Generic/Order";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
 
 export async function createLaundryStore(
@@ -36,6 +37,11 @@ export async function createLaundryStore(
                         firebase_id: laundryDetails.firebaseId ?? undefined,
                         language: JSON.stringify(laundryDetails.language),
                         service_provider_type: ServiceProviderType.Laundry,
+                        accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
+                            [PaymentType.Cash]: true,
+                            [PaymentType.Card]: false,
+                            [PaymentType.BankTransfer]: false,
+                        }),
                         location: {
                             data: {
                                 gps: JSON.stringify({
@@ -72,7 +78,8 @@ export async function createLaundryStore(
             }
         }, {
             service_provider_type : true,
-            id: true
+            id: true,
+            details_id: true
         }],
     });
     
@@ -86,6 +93,7 @@ export async function createLaundryStore(
     }
     let laundryStore: ServiceProvider = {
         id: response.insert_laundry_store_one.id,
+        serviceProviderDetailsId: response.insert_laundry_store_one.details_id,
         name: laundryDetails.name,
         image: laundryDetails.image,
         location: laundryDetails.location,

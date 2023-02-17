@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceAcceptedPayments.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceNoReviews.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewCard.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ['ServicePaymentsView'];
@@ -20,52 +22,121 @@ class ServiceReviewsView extends StatefulWidget {
 }
 
 class _ServiceReviewsViewState extends State<ServiceReviewsView> {
-  ServicePaymentsViewController viewController =
-      ServicePaymentsViewController();
+  ServiceReviewsViewController viewController = ServiceReviewsViewController();
 
   int? serviceProviderId;
   @override
   void initState() {
-    if (Get.parameters["ServiceProviderId"] != null &&
-        int.tryParse(Get.parameters["ServiceProviderId"]!) != null) {
-      serviceProviderId = int.tryParse(Get.parameters["ServiceProviderId"]!);
-      viewController.init(serviceProviderId: serviceProviderId!);
-    }
-
+    viewController.fetchReviewsAndRating();
     super.initState();
   }
 
   @override
   void dispose() {
-    viewController.dspose();
+    //viewController.dspose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (viewController.showStripe.isTrue) {
-        return ServiceStripePaymentSetup(viewController: viewController);
-      } else if (viewController.setupClicked.isTrue) {
-        return Container(
-          alignment: Alignment.center,
-          color: Colors.white,
-          child: CircularProgressIndicator(),
-        );
-      } else
-        return Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "${_i18n()['payments']}"),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    return Scaffold(
+      body: Obx(() {
+        if (viewController.hasReviews && viewController.hasRating) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ServiceAcceptedPayments(viewController: viewController),
+                // top component //
+                _reviewsHeader(),
+                // performance text //
+                _performanceComponent(),
+                const SizedBox(
+                  height: 25,
+                ),
+
+                // reviews chips //
+                ServiceReviewsFilters(viewController: viewController),
+                SizedBox(
+                  height: 8,
+                ),
+
+                // reviews list //
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: viewController.reviews.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ServiceReviewCard(
+                        review: viewController.reviews[index]);
+                  },
+                )
               ],
             ),
+          );
+        } else {
+          return ServiceNoReviewsComponent();
+        }
+      }),
+    );
+  }
+
+  Container _reviewsHeader() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            viewController.rating.toStringAsFixed(1),
+            style: Get.textTheme.bodyLarge
+                ?.copyWith(fontSize: 25.sp, fontWeight: FontWeight.w700),
           ),
-        );
-    });
+          const SizedBox(
+            height: 15,
+          ),
+          RatingBarIndicator(
+            rating: viewController.rating.toDouble(),
+            itemBuilder: (BuildContext context, int index) => Icon(
+              Icons.star_rate_rounded,
+              color: primaryBlueColor,
+            ),
+            itemCount: 5,
+            itemSize: 35.0,
+            direction: Axis.horizontal,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+              "${_i18n()["base"]} ${viewController.reviews.length} ${_i18n()["reviews"].toString().toLowerCase()}")
+        ],
+      ),
+    );
+  }
+
+  Container _performanceComponent() {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+      decoration: BoxDecoration(
+          color: viewController.performColor(),
+          borderRadius: BorderRadius.circular(8)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "${_i18n()["perfomTitle"]}",
+            style: Get.textTheme.bodyLarge,
+          ),
+          Text(
+            " ${_i18n()[viewController.performanceString()]} !",
+            style: Get.textTheme.bodyLarge
+                ?.copyWith(color: viewController.performTextColor()),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -15,9 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Schedule.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _db = Get.find<HasuraDb>();
 
@@ -161,14 +159,10 @@ Future<Restaurant?> get_restaurant_by_id(
         "✅✅✅✅ Hasura querry success, data : ${response.parsedData?.restaurant_restaurant_by_pk?.toJson()} ");
     final Query$getOneRestaurant$restaurant_restaurant_by_pk? data =
         response.parsedData?.restaurant_restaurant_by_pk!;
-    final PaymentInfo paymentInfo = PaymentInfo();
-    if (data?.details?.accepted_payments != null) {
-      paymentInfo.acceptedPayments =
-          parseAcceptedPayments(data!.details!.accepted_payments);
-    }
-    // if (data?.details?.stripe_info != null) {
-    //   paymentInfo.stripe = parseServiceStripeInfo(data!.details!.stripe_info);
-    // }
+    // final PaymentInfo paymentInfo = PaymentInfo.fromData(
+    //     acceptedPayments: data?.details?.accepted_payments,
+    //     stripeInfo: data?.details?.stripe_info);
+
     if (data != null) {
       return Restaurant(
         languages: convertToLanguages(data.details!.language),
@@ -209,7 +203,7 @@ Future<Restaurant?> get_restaurant_by_id(
         schedule: data.details!.schedule != null
             ? Schedule.fromData(data.details!.schedule)
             : null,
-        paymentInfo: paymentInfo,
+        paymentInfo: null,
         selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
@@ -346,62 +340,6 @@ Future<Schedule?> get_restaurant_schedule(
 //   }
 // }
 
-Future<double?> get_restaurant_review_average(
-    {required int restaurantId, bool withCache = true}) async {
-  final QueryResult<Query$get_restaurant_review_average> response =
-      await _db.graphQLClient.query$get_restaurant_review_average(
-    Options$Query$get_restaurant_review_average(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$get_restaurant_review_average(
-          restaurantId: restaurantId),
-    ),
-  );
-  Query$get_restaurant_review_average$restaurant_restaurant_by_pk$details$reviews_aggregate$aggregate$avg
-      data = response.parsedData!.restaurant_restaurant_by_pk!.details!
-          .reviews_aggregate.aggregate!.avg!;
-
-  if (data == null) {
-    throw Exception(
-        "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
-  } else {
-    return data.rating;
-  }
-}
-
-Future<List<Review>?> get_restaurant_reviews(
-    {required int restaurantId, bool withCache = true}) async {
-  final QueryResult<Query$get_restaurant_reviews> response =
-      await _db.graphQLClient.query$get_restaurant_reviews(
-    Options$Query$get_restaurant_reviews(
-      fetchPolicy:
-          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables:
-          Variables$Query$get_restaurant_reviews(restaurantId: restaurantId),
-    ),
-  );
-  List<Query$get_restaurant_reviews$restaurant_restaurant_by_pk$details$reviews>
-      data = response.parsedData!.restaurant_restaurant_by_pk!.details!.reviews;
-
-  if (data == null) {
-    throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
-  } else {
-    return data.map(
-        (Query$get_restaurant_reviews$restaurant_restaurant_by_pk$details$reviews
-            reviewData) {
-      return Review(
-          id: reviewData.id,
-          rating: reviewData.rating,
-          comment: reviewData.note,
-          reviewTime: DateTime.parse(reviewData.created_at),
-          toEntityId: reviewData.to_entity_id,
-          toEntityType: reviewData.to_entity_type.toServiceProviderType(),
-          fromEntityId: reviewData.from_entity_id,
-          fromEntityType: reviewData.from_entity_type.toServiceProviderType());
-    }).toList();
-  }
-}
-
 Future<List<Operator>?> get_restaurant_operators(
     {required int restaurantId, bool withCache = true}) async {
   final QueryResult<Query$getRestaurantOperators> response =
@@ -526,45 +464,10 @@ Future<PaymentInfo?> get_restaurant_payment_info(
       "✅  payment data ====================> ${res.parsedData?.toJson()}");
   final Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk data =
       res.parsedData!.restaurant_restaurant_by_pk!;
-  if (data.details?.accepted_payments != null &&
-      data.details?.accepted_payments != null) {
-    return PaymentInfo(
-      acceptedPayments: parseAcceptedPayments(data.details!.accepted_payments),
-      // stripe: parseServiceStripeInfo(data..details!.stripe_info)
-    );
-  }
-  return PaymentInfo();
-}
-
-// helpers //
-Map<PaymentType, bool> parseAcceptedPayments(data) {
-  final Map<PaymentType, bool> result = {};
-  data.forEach((String key, data) {
-    result[key.toPaymentType()] = data;
-  });
-  return result;
-}
-
-StripeInfo? parseServiceStripeInfo(data) {
-  StripeInfo? stripe;
-
-  if (data != null) {
-    final List<String> requis = [];
-    data["requirements"]?.forEach((req) {
-      requis.add(req.toString());
-    });
-    stripe = StripeInfo(
-        id: data["id"],
-        status: data["status"].toString().toStripeStatus(),
-        payoutsEnabled: data["payoutsEnabled"] ?? false,
-        detailsSubmitted: data["detailsSubmitted"] ?? false,
-        chargesEnabled: data["chargesEnabled"] ?? false,
-        chargeFeesOnCustomer: data["chargeFeesOnCustomer"] ?? true,
-        email: data["email"],
-        requirements: requis);
-    return stripe;
-  }
-  return null;
+  final PaymentInfo paymentInfo = PaymentInfo.fromData(
+      acceptedPayments: data.details?.accepted_payments,
+      stripeInfo: data.details?.stripe_info);
+  return paymentInfo;
 }
 
 // Future<PaymentInfo> update_restaurant_payment_info(

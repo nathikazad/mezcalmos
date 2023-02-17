@@ -664,3 +664,27 @@ export async function insertRestaurants(data: any) {
         //     }
         // }]
         
+// export async function insertDeliveryPartners() {
+//     let chain = getHasura();
+//     let objectsArray = [];
+//     for(let i=1; i<=60; i++) {
+//         objectsArray.push({
+//             delivery_company_id: 1,
+//             service_provider_id: i,
+//             service_provider_type: ServiceProviderType.Restaurant
+//         })
+//     }
+
+//     await chain.mutation({
+//         insert_service_provider_delivery_partner: [{
+//             objects: objectsArray
+//             // [{
+//             //     delivery_company_id: 1,
+//             //     service_provider_id: 1,
+//             //     service_provider_type: ServiceProviderType.Restaurant
+//             // }]
+//         }, {
+//             affected_rows: true
+//         }]
+//     })
+// }

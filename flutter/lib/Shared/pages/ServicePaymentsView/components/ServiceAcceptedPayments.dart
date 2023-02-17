@@ -36,7 +36,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
         children: [
           Text(
             '${_i18n()["acceptedPayments"]}',
-            style: Get.textTheme.bodyText2,
+            style: Get.textTheme.bodyMedium,
           ),
           SizedBox(
             height: 10,
@@ -50,7 +50,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   fit: FlexFit.tight,
                   child: Text(
                     '${_i18n()["cash"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 SizedBox(
@@ -133,7 +133,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                         children: [
                           Text(
                             '${_i18n()["card"]}',
-                            style: Get.textTheme.bodyText1,
+                            style: Get.textTheme.bodyLarge,
                           ),
                           const SizedBox(
                             width: 3,
@@ -165,9 +165,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                 Checkbox(
                     shape: CircleBorder(),
                     activeColor: primaryBlueColor,
-                    value: widget.viewController.paymentInfo
-                            ?.acceptedPayments[PaymentType.Card] ==
-                        true,
+                    value: widget.viewController.cardChecked,
                     onChanged: (bool? v) {
                       if (v != null) {
                         widget.viewController.handleCardCheckBoxClick(v);
@@ -220,7 +218,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
           //     onChanged: (bool? v) {
           //       widget.viewController.handleCardCheckBoxClick(v!);
           //     }),
-          if (widget.viewController.showFeesOption)
+          if (widget.viewController.cardChecked)
             Container(
               margin: const EdgeInsets.all(5),
               child: Row(
@@ -267,7 +265,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     alignment: Alignment.center,
                     child: Text(
                       "Bank account informations",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ),
                   Divider(),
@@ -276,7 +274,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   ),
                   Text(
                     "Bank name",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -294,7 +292,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                   ),
                   Text(
                     "Account number",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
                     height: 5,
@@ -370,7 +368,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
               ),
               Text(
                 '${_i18n()["setup"]}',
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+                style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
               ),
               const SizedBox(
                 width: 3,
@@ -411,7 +409,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
               ),
               Text(
                 '${_i18n()["requirements"]}',
-                style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
               ),
             ]),
           )),
@@ -446,14 +444,14 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     )),
                     TextSpan(
                         text: '${_i18n()["reqsHelper"]}',
-                        style: Get.textTheme.bodyText2),
+                        style: Get.textTheme.bodyMedium),
                   ],
                 ),
               ),
               Divider(),
               Text(
                 "${_i18n()["reqs"]} :",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -477,7 +475,7 @@ class _ServiceAcceptedPaymentsState extends State<ServiceAcceptedPayments> {
                     Divider(),
                     Text(
                       "${_i18n()["emailId"]} : ${widget.viewController.paymentInfo?.stripe?.email}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ],
                 ),

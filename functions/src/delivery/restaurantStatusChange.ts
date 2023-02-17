@@ -80,8 +80,7 @@ export async function changeRestaurantOrderStatus(
     if (restaurantOrder.paymentType == PaymentType.Card) {
       let paymentDetails: PaymentDetails = {
         orderId: restaurantOrder.orderId!,
-        orderType: OrderType.Restaurant,
-        serviceProviderId: restaurantOrder.restaurantId,
+        serviceProviderDetailsId: restaurantOrder.spDetailsId,
         orderStripePaymentInfo: restaurantOrder.stripeInfo!
       }
       capturePayment(paymentDetails, restaurantOrder.totalCost)

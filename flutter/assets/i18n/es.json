@@ -828,7 +828,9 @@
       },
       "ServiceInfoEditView": {
         "name": "Nombre",
+        "phoneNumber" : "Número de teléfono",
         "location": "Localización",
+        "phoneErrorText" : "Por favor ingrese un número de teléfono válido",
         "description": "Descripción",
         "info": "Información",
         "save": "Guardar",

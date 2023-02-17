@@ -2177,6 +2177,84 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'stripe_info'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'stripe_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'status'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'requirements'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'payouts_enabled'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'email'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details_submitted'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'charges_enabled'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'charge_fees_on_customer'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'accepted_payments'),
                     alias: null,
                     arguments: [],
@@ -3645,6 +3723,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$deliver
 
 class Query$getCustomerCart$restaurant_cart$restaurant$details {
   Query$getCustomerCart$restaurant_cart$restaurant$details({
+    this.stripe_info,
     this.accepted_payments,
     this.firebase_id,
     required this.image,
@@ -3661,6 +3740,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
 
   factory Query$getCustomerCart$restaurant_cart$restaurant$details.fromJson(
       Map<String, dynamic> json) {
+    final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
     final l$firebase_id = json['firebase_id'];
     final l$image = json['image'];
@@ -3674,6 +3754,10 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart$restaurant$details(
+      stripe_info: l$stripe_info == null
+          ? null
+          : Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
       firebase_id: (l$firebase_id as String?),
@@ -3694,6 +3778,9 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?
+      stripe_info;
 
   final dynamic? accepted_payments;
 
@@ -3723,6 +3810,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
@@ -3753,6 +3842,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
 
   @override
   int get hashCode {
+    final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
     final l$firebase_id = firebase_id;
     final l$image = image;
@@ -3766,6 +3856,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$stripe_info,
       l$accepted_payments,
       l$firebase_id,
       l$image,
@@ -3788,6 +3879,11 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     }
     if (!(other is Query$getCustomerCart$restaurant_cart$restaurant$details) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -3878,6 +3974,8 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
       _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details;
 
   TRes call({
+    Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?
+        stripe_info,
     dynamic? accepted_payments,
     String? firebase_id,
     String? image,
@@ -3892,6 +3990,8 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+      TRes> get stripe_info;
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$location<
       TRes> get location;
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$description<
@@ -3916,6 +4016,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
   static const _undefined = {};
 
   TRes call({
+    Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
     Object? firebase_id = _undefined,
     Object? image = _undefined,
@@ -3930,6 +4031,10 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCustomerCart$restaurant_cart$restaurant$details(
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?),
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
@@ -3969,6 +4074,16 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
+  }
+
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$location<
       TRes> get location {
     final local$location = _instance.location;
@@ -3998,6 +4113,8 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
   TRes _res;
 
   call({
+    Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?
+        stripe_info,
     dynamic? accepted_payments,
     String? firebase_id,
     String? image,
@@ -4013,6 +4130,11 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+              .stub(_res);
   CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$location<
           TRes>
       get location =>
@@ -4023,6 +4145,310 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
       get description =>
           CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$description
               .stub(_res);
+}
+
+class Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info {
+  Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info({
+    required this.id,
+    required this.stripe_id,
+    required this.status,
+    this.requirements,
+    required this.payouts_enabled,
+    this.email,
+    required this.details_submitted,
+    required this.charges_enabled,
+    this.charge_fees_on_customer,
+    required this.$__typename,
+  });
+
+  factory Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_id = json['stripe_id'];
+    final l$status = json['status'];
+    final l$requirements = json['requirements'];
+    final l$payouts_enabled = json['payouts_enabled'];
+    final l$email = json['email'];
+    final l$details_submitted = json['details_submitted'];
+    final l$charges_enabled = json['charges_enabled'];
+    final l$charge_fees_on_customer = json['charge_fees_on_customer'];
+    final l$$__typename = json['__typename'];
+    return Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+      id: (l$id as int),
+      stripe_id: (l$stripe_id as String),
+      status: (l$status as String),
+      requirements: (l$requirements as String?),
+      payouts_enabled: (l$payouts_enabled as bool),
+      email: (l$email as String?),
+      details_submitted: (l$details_submitted as bool),
+      charges_enabled: (l$charges_enabled as bool),
+      charge_fees_on_customer: (l$charge_fees_on_customer as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String stripe_id;
+
+  final String status;
+
+  final String? requirements;
+
+  final bool payouts_enabled;
+
+  final String? email;
+
+  final bool details_submitted;
+
+  final bool charges_enabled;
+
+  final bool? charge_fees_on_customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_id = stripe_id;
+    _resultData['stripe_id'] = l$stripe_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$requirements = requirements;
+    _resultData['requirements'] = l$requirements;
+    final l$payouts_enabled = payouts_enabled;
+    _resultData['payouts_enabled'] = l$payouts_enabled;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$details_submitted = details_submitted;
+    _resultData['details_submitted'] = l$details_submitted;
+    final l$charges_enabled = charges_enabled;
+    _resultData['charges_enabled'] = l$charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    _resultData['charge_fees_on_customer'] = l$charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_id = stripe_id;
+    final l$status = status;
+    final l$requirements = requirements;
+    final l$payouts_enabled = payouts_enabled;
+    final l$email = email;
+    final l$details_submitted = details_submitted;
+    final l$charges_enabled = charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_id,
+      l$status,
+      l$requirements,
+      l$payouts_enabled,
+      l$email,
+      l$details_submitted,
+      l$charges_enabled,
+      l$charge_fees_on_customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_id = stripe_id;
+    final lOther$stripe_id = other.stripe_id;
+    if (l$stripe_id != lOther$stripe_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$requirements = requirements;
+    final lOther$requirements = other.requirements;
+    if (l$requirements != lOther$requirements) {
+      return false;
+    }
+    final l$payouts_enabled = payouts_enabled;
+    final lOther$payouts_enabled = other.payouts_enabled;
+    if (l$payouts_enabled != lOther$payouts_enabled) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$details_submitted = details_submitted;
+    final lOther$details_submitted = other.details_submitted;
+    if (l$details_submitted != lOther$details_submitted) {
+      return false;
+    }
+    final l$charges_enabled = charges_enabled;
+    final lOther$charges_enabled = other.charges_enabled;
+    if (l$charges_enabled != lOther$charges_enabled) {
+      return false;
+    }
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final lOther$charge_fees_on_customer = other.charge_fees_on_customer;
+    if (l$charge_fees_on_customer != lOther$charge_fees_on_customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+    on Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info {
+  CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+          Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info>
+      get copyWith =>
+          CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+    TRes> {
+  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+    Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+        instance,
+    TRes Function(
+            Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info;
+
+  factory CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info;
+
+  TRes call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
+      _instance;
+
+  final TRes Function(
+          Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? stripe_id = _undefined,
+    Object? status = _undefined,
+    Object? requirements = _undefined,
+    Object? payouts_enabled = _undefined,
+    Object? email = _undefined,
+    Object? details_submitted = _undefined,
+    Object? charges_enabled = _undefined,
+    Object? charge_fees_on_customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_id: stripe_id == _undefined || stripe_id == null
+            ? _instance.stripe_id
+            : (stripe_id as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        requirements: requirements == _undefined
+            ? _instance.requirements
+            : (requirements as String?),
+        payouts_enabled:
+            payouts_enabled == _undefined || payouts_enabled == null
+                ? _instance.payouts_enabled
+                : (payouts_enabled as bool),
+        email: email == _undefined ? _instance.email : (email as String?),
+        details_submitted:
+            details_submitted == _undefined || details_submitted == null
+                ? _instance.details_submitted
+                : (details_submitted as bool),
+        charges_enabled:
+            charges_enabled == _undefined || charges_enabled == null
+                ? _instance.charges_enabled
+                : (charges_enabled as bool),
+        charge_fees_on_customer: charge_fees_on_customer == _undefined
+            ? _instance.charge_fees_on_customer
+            : (charge_fees_on_customer as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getCustomerCart$restaurant_cart$restaurant$details$location {
@@ -8603,6 +9029,84 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'stripe_info'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'stripe_id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'status'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'requirements'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'payouts_enabled'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'email'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'details_submitted'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'charges_enabled'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: 'charge_fees_on_customer'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'accepted_payments'),
                     alias: null,
                     arguments: [],
@@ -10077,6 +10581,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     required this.id,
     this.firebase_id,
     required this.name,
+    this.stripe_info,
     this.accepted_payments,
     required this.image,
     required this.language,
@@ -10094,6 +10599,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$id = json['id'];
     final l$firebase_id = json['firebase_id'];
     final l$name = json['name'];
+    final l$stripe_info = json['stripe_info'];
     final l$accepted_payments = json['accepted_payments'];
     final l$image = json['image'];
     final l$language = json['language'];
@@ -10108,6 +10614,10 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
       id: (l$id as int),
       firebase_id: (l$firebase_id as String?),
       name: (l$name as String),
+      stripe_info: l$stripe_info == null
+          ? null
+          : Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
       image: (l$image as String),
@@ -10132,6 +10642,9 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   final String? firebase_id;
 
   final String name;
+
+  final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
+      stripe_info;
 
   final dynamic? accepted_payments;
 
@@ -10163,6 +10676,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     _resultData['firebase_id'] = l$firebase_id;
     final l$name = name;
     _resultData['name'] = l$name;
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
@@ -10192,6 +10707,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$id = id;
     final l$firebase_id = firebase_id;
     final l$name = name;
+    final l$stripe_info = stripe_info;
     final l$accepted_payments = accepted_payments;
     final l$image = image;
     final l$language = language;
@@ -10206,6 +10722,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
       l$id,
       l$firebase_id,
       l$name,
+      l$stripe_info,
       l$accepted_payments,
       l$image,
       l$language,
@@ -10242,6 +10759,11 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$name = name;
     final lOther$name = other.name;
     if (l$name != lOther$name) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$accepted_payments = accepted_payments;
@@ -10327,6 +10849,8 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     String? firebase_id,
     String? name,
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
+        stripe_info,
     dynamic? accepted_payments,
     String? image,
     dynamic? language,
@@ -10340,6 +10864,8 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     String? open_status,
     String? $__typename,
   });
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+      TRes> get stripe_info;
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$location<
       TRes> get location;
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$description<
@@ -10369,6 +10895,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
     Object? id = _undefined,
     Object? firebase_id = _undefined,
     Object? name = _undefined,
+    Object? stripe_info = _undefined,
     Object? accepted_payments = _undefined,
     Object? image = _undefined,
     Object? language = _undefined,
@@ -10389,6 +10916,10 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?),
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
@@ -10422,6 +10953,16 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
+  }
+
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$location<
       TRes> get location {
     final local$location = _instance.location;
@@ -10454,6 +10995,8 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     String? firebase_id,
     String? name,
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
+        stripe_info,
     dynamic? accepted_payments,
     String? image,
     dynamic? language,
@@ -10468,6 +11011,11 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+              .stub(_res);
   CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$location<
           TRes>
       get location =>
@@ -10478,6 +11026,310 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
       get description =>
           CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$description
               .stub(_res);
+}
+
+class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info {
+  Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info({
+    required this.id,
+    required this.stripe_id,
+    required this.status,
+    this.requirements,
+    required this.payouts_enabled,
+    this.email,
+    required this.details_submitted,
+    required this.charges_enabled,
+    this.charge_fees_on_customer,
+    required this.$__typename,
+  });
+
+  factory Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_id = json['stripe_id'];
+    final l$status = json['status'];
+    final l$requirements = json['requirements'];
+    final l$payouts_enabled = json['payouts_enabled'];
+    final l$email = json['email'];
+    final l$details_submitted = json['details_submitted'];
+    final l$charges_enabled = json['charges_enabled'];
+    final l$charge_fees_on_customer = json['charge_fees_on_customer'];
+    final l$$__typename = json['__typename'];
+    return Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+      id: (l$id as int),
+      stripe_id: (l$stripe_id as String),
+      status: (l$status as String),
+      requirements: (l$requirements as String?),
+      payouts_enabled: (l$payouts_enabled as bool),
+      email: (l$email as String?),
+      details_submitted: (l$details_submitted as bool),
+      charges_enabled: (l$charges_enabled as bool),
+      charge_fees_on_customer: (l$charge_fees_on_customer as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String stripe_id;
+
+  final String status;
+
+  final String? requirements;
+
+  final bool payouts_enabled;
+
+  final String? email;
+
+  final bool details_submitted;
+
+  final bool charges_enabled;
+
+  final bool? charge_fees_on_customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_id = stripe_id;
+    _resultData['stripe_id'] = l$stripe_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$requirements = requirements;
+    _resultData['requirements'] = l$requirements;
+    final l$payouts_enabled = payouts_enabled;
+    _resultData['payouts_enabled'] = l$payouts_enabled;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$details_submitted = details_submitted;
+    _resultData['details_submitted'] = l$details_submitted;
+    final l$charges_enabled = charges_enabled;
+    _resultData['charges_enabled'] = l$charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    _resultData['charge_fees_on_customer'] = l$charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_id = stripe_id;
+    final l$status = status;
+    final l$requirements = requirements;
+    final l$payouts_enabled = payouts_enabled;
+    final l$email = email;
+    final l$details_submitted = details_submitted;
+    final l$charges_enabled = charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_id,
+      l$status,
+      l$requirements,
+      l$payouts_enabled,
+      l$email,
+      l$details_submitted,
+      l$charges_enabled,
+      l$charge_fees_on_customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_id = stripe_id;
+    final lOther$stripe_id = other.stripe_id;
+    if (l$stripe_id != lOther$stripe_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$requirements = requirements;
+    final lOther$requirements = other.requirements;
+    if (l$requirements != lOther$requirements) {
+      return false;
+    }
+    final l$payouts_enabled = payouts_enabled;
+    final lOther$payouts_enabled = other.payouts_enabled;
+    if (l$payouts_enabled != lOther$payouts_enabled) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$details_submitted = details_submitted;
+    final lOther$details_submitted = other.details_submitted;
+    if (l$details_submitted != lOther$details_submitted) {
+      return false;
+    }
+    final l$charges_enabled = charges_enabled;
+    final lOther$charges_enabled = other.charges_enabled;
+    if (l$charges_enabled != lOther$charges_enabled) {
+      return false;
+    }
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final lOther$charge_fees_on_customer = other.charge_fees_on_customer;
+    if (l$charge_fees_on_customer != lOther$charge_fees_on_customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+    on Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info {
+  CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info>
+      get copyWith =>
+          CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+    TRes> {
+  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+    Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+        instance,
+    TRes Function(
+            Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info;
+
+  factory CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info;
+
+  TRes call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
+      _instance;
+
+  final TRes Function(
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? stripe_id = _undefined,
+    Object? status = _undefined,
+    Object? requirements = _undefined,
+    Object? payouts_enabled = _undefined,
+    Object? email = _undefined,
+    Object? details_submitted = _undefined,
+    Object? charges_enabled = _undefined,
+    Object? charge_fees_on_customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_id: stripe_id == _undefined || stripe_id == null
+            ? _instance.stripe_id
+            : (stripe_id as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        requirements: requirements == _undefined
+            ? _instance.requirements
+            : (requirements as String?),
+        payouts_enabled:
+            payouts_enabled == _undefined || payouts_enabled == null
+                ? _instance.payouts_enabled
+                : (payouts_enabled as bool),
+        email: email == _undefined ? _instance.email : (email as String?),
+        details_submitted:
+            details_submitted == _undefined || details_submitted == null
+                ? _instance.details_submitted
+                : (details_submitted as bool),
+        charges_enabled:
+            charges_enabled == _undefined || charges_enabled == null
+                ? _instance.charges_enabled
+                : (charges_enabled as bool),
+        charge_fees_on_customer: charge_fees_on_customer == _undefined
+            ? _instance.charge_fees_on_customer
+            : (charge_fees_on_customer as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$location {

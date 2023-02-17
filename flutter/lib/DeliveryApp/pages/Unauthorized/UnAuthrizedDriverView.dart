@@ -37,6 +37,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
         showNotifications: true,
       ),
       body: Container(
+        alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,18 +51,25 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
               child: Icon(
                 Icons.sentiment_dissatisfied,
                 color: primaryBlueColor,
+                size: 35,
               ),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Container(
               child: Text(
                 "Invitation needed",
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.displaySmall,
               ),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Container(
               child: Text(
                 "You need an invitation to use our delivery app",
-                style: Get.textTheme.bodyText2,
+                style: Get.textTheme.bodyMedium,
               ),
             )
           ],

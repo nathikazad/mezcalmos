@@ -21,26 +21,26 @@ class CustStripeInfo {
     );
   }
 
-  factory CustStripeInfo.fromMap(Map<String, dynamic> map) {
-    final List<CreditCard> cards = [];
-    map["cards"].forEach((key, data) {
-      cards.add(CreditCard.fromData(data: data));
-    });
-    return CustStripeInfo(id: map['id'] as String, cards: cards);
-  }
+  // factory CustStripeInfo.fromMap(Map<String, dynamic> map) {
+  //   final List<CreditCard> cards = [];
+  //   map["cards"].forEach((key, data) {
+  //     cards.add(CreditCard.fromData(data: data));
+  //   });
+  //   return CustStripeInfo(id: map['id'] as String, cards: cards);
+  // }
 
-  factory CustStripeInfo.fromJson(String source) =>
-      CustStripeInfo.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory CustStripeInfo.fromJson(String source) =>
+  //     CustStripeInfo.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  @override
-  String toString() => 'CustStripeInfo(id: $id, cards: $cards)';
+  // @override
+  // String toString() => 'CustStripeInfo(id: $id, cards: $cards)';
 
-  @override
-  bool operator ==(covariant CustStripeInfo other) {
-    if (identical(this, other)) return true;
+  // @override
+  // bool operator ==(covariant CustStripeInfo other) {
+  //   if (identical(this, other)) return true;
 
-    return other.id == id;
-  }
+  //   return other.id == id;
+  // }
 
   @override
   int get hashCode => id.hashCode ^ cards.hashCode;
@@ -48,7 +48,7 @@ class CustStripeInfo {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> mappedCards = {};
     cards.forEach((CreditCard card) {
-      mappedCards[card.id] = card.toMap();
+      mappedCards[card.cardId] = card.toMap();
     });
     return <String, dynamic>{
       'id': id,

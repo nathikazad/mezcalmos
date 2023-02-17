@@ -148,7 +148,7 @@ class CustItemViewController {
     return (itemRestaurantId != null && cart.value?.restaurant == null) ||
         (itemRestaurantId != null &&
             cart.value != null &&
-            (cart.value!.restaurant?.restaurantId != itemRestaurantId ||
+            (cart.value!.restaurant?.restaurantId != itemRestaurantId &&
                 cart.value!.cartItems.isEmpty));
   }
 
@@ -159,7 +159,7 @@ class CustItemViewController {
 
   bool differentRestaurantIds() {
     mezDbgPrint(
-        "different restaurant case =:==========>${cart.value?.restaurant}");
+        "😍😍😍😍😍😍😍😍 different restaurant case =:==========>${cart.value!.restaurant?.restaurantId}=========>$itemRestaurantId");
     return cart.value != null &&
         cart.value!.restaurant?.restaurantId != itemRestaurantId;
   }

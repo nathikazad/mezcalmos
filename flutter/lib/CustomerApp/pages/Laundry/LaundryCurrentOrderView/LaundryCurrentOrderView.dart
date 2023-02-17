@@ -177,7 +177,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               child: Container(
                                 alignment: Alignment.center,
                                 child: LaundryOrderFooterCard(
-                                  order: viewController.order.value!,
+                                  viewController: viewController,
                                 ),
                               ),
                             ),

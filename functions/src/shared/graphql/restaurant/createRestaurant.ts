@@ -5,6 +5,8 @@ import { getHasura } from "../../../utilities/hasura";
 import { generateDeepLink, IDeepLink } from "../../../utilities/links/deeplink";
 import { AppType, AuthorizationStatus } from "../../models/Generic/Generic";
 import { ServiceProvider, ServiceProviderType } from "../../models/Services/Service";
+import { PaymentType } from '../../models/Generic/Order';
+
 
 export async function createRestaurant(
   restaurantDetails: RestaurantDetails,
@@ -35,6 +37,11 @@ export async function createRestaurant(
             firebase_id: restaurantDetails.firebaseId ?? undefined,
             language: JSON.stringify(restaurantDetails.language),
             service_provider_type: ServiceProviderType.Restaurant,
+            accepted_payments: JSON.stringify(<Record<PaymentType, boolean>>{
+              [PaymentType.Cash]: true,
+              [PaymentType.Card]: false,
+              [PaymentType.BankTransfer]: false,
+            }),
             location: {
               data: {
                 gps: JSON.stringify({
@@ -67,6 +74,7 @@ export async function createRestaurant(
       }
     }, {
       id: true,
+      details_id: true,
       restaurant_operators: [{}, {
         id: true
       }]
@@ -150,6 +158,7 @@ export async function createRestaurant(
 
   return {
     id: response.insert_restaurant_restaurant_one.id,
+    serviceProviderDetailsId: response.insert_restaurant_restaurant_one.details_id,
     name: restaurantDetails.name,
     image: restaurantDetails.image,
     location: restaurantDetails.location,

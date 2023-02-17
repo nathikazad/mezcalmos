@@ -405,6 +405,84 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'stripe_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'stripe_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'status'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'requirements'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'payouts_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'email'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details_submitted'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charges_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charge_fees_on_customer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: 'open_status'),
                 alias: null,
                 arguments: [],
@@ -1082,6 +1160,7 @@ class Query$getLaundries$laundry_store$details {
     this.schedule,
     this.description,
     this.accepted_payments,
+    this.stripe_info,
     required this.open_status,
     required this.$__typename,
   });
@@ -1099,6 +1178,7 @@ class Query$getLaundries$laundry_store$details {
     final l$schedule = json['schedule'];
     final l$description = json['description'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$open_status = json['open_status'];
     final l$$__typename = json['__typename'];
     return Query$getLaundries$laundry_store$details(
@@ -1118,6 +1198,10 @@ class Query$getLaundries$laundry_store$details {
               (l$description as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null
+          ? null
+          : Query$getLaundries$laundry_store$details$stripe_info.fromJson(
+              (l$stripe_info as Map<String, dynamic>)),
       open_status: (l$open_status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1144,6 +1228,8 @@ class Query$getLaundries$laundry_store$details {
   final Query$getLaundries$laundry_store$details$description? description;
 
   final dynamic? accepted_payments;
+
+  final Query$getLaundries$laundry_store$details$stripe_info? stripe_info;
 
   final String open_status;
 
@@ -1174,6 +1260,8 @@ class Query$getLaundries$laundry_store$details {
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$$__typename = $__typename;
@@ -1194,6 +1282,7 @@ class Query$getLaundries$laundry_store$details {
     final l$schedule = schedule;
     final l$description = description;
     final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$open_status = open_status;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -1208,6 +1297,7 @@ class Query$getLaundries$laundry_store$details {
       l$schedule,
       l$description,
       l$accepted_payments,
+      l$stripe_info,
       l$open_status,
       l$$__typename,
     ]);
@@ -1277,6 +1367,11 @@ class Query$getLaundries$laundry_store$details {
     if (l$accepted_payments != lOther$accepted_payments) {
       return false;
     }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
+      return false;
+    }
     final l$open_status = open_status;
     final lOther$open_status = other.open_status;
     if (l$open_status != lOther$open_status) {
@@ -1322,12 +1417,15 @@ abstract class CopyWith$Query$getLaundries$laundry_store$details<TRes> {
     dynamic? schedule,
     Query$getLaundries$laundry_store$details$description? description,
     dynamic? accepted_payments,
+    Query$getLaundries$laundry_store$details$stripe_info? stripe_info,
     String? open_status,
     String? $__typename,
   });
   CopyWith$Query$getLaundries$laundry_store$details$location<TRes> get location;
   CopyWith$Query$getLaundries$laundry_store$details$description<TRes>
       get description;
+  CopyWith$Query$getLaundries$laundry_store$details$stripe_info<TRes>
+      get stripe_info;
 }
 
 class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
@@ -1355,6 +1453,7 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
     Object? schedule = _undefined,
     Object? description = _undefined,
     Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? open_status = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -1391,6 +1490,10 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Query$getLaundries$laundry_store$details$stripe_info?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -1414,6 +1517,16 @@ class _CopyWithImpl$Query$getLaundries$laundry_store$details<TRes>
         : CopyWith$Query$getLaundries$laundry_store$details$description(
             local$description, (e) => call(description: e));
   }
+
+  CopyWith$Query$getLaundries$laundry_store$details$stripe_info<TRes>
+      get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Query$getLaundries$laundry_store$details$stripe_info.stub(
+            _then(_instance))
+        : CopyWith$Query$getLaundries$laundry_store$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getLaundries$laundry_store$details<TRes>
@@ -1434,6 +1547,7 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$details<TRes>
     dynamic? schedule,
     Query$getLaundries$laundry_store$details$description? description,
     dynamic? accepted_payments,
+    Query$getLaundries$laundry_store$details$stripe_info? stripe_info,
     String? open_status,
     String? $__typename,
   }) =>
@@ -1444,6 +1558,10 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$details<TRes>
   CopyWith$Query$getLaundries$laundry_store$details$description<TRes>
       get description =>
           CopyWith$Query$getLaundries$laundry_store$details$description.stub(
+              _res);
+  CopyWith$Query$getLaundries$laundry_store$details$stripe_info<TRes>
+      get stripe_info =>
+          CopyWith$Query$getLaundries$laundry_store$details$stripe_info.stub(
               _res);
 }
 
@@ -1932,6 +2050,300 @@ class _CopyWithStubImpl$Query$getLaundries$laundry_store$details$description$tra
       _res;
 }
 
+class Query$getLaundries$laundry_store$details$stripe_info {
+  Query$getLaundries$laundry_store$details$stripe_info({
+    required this.id,
+    required this.stripe_id,
+    required this.status,
+    this.requirements,
+    required this.payouts_enabled,
+    this.email,
+    required this.details_submitted,
+    required this.charges_enabled,
+    this.charge_fees_on_customer,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundries$laundry_store$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_id = json['stripe_id'];
+    final l$status = json['status'];
+    final l$requirements = json['requirements'];
+    final l$payouts_enabled = json['payouts_enabled'];
+    final l$email = json['email'];
+    final l$details_submitted = json['details_submitted'];
+    final l$charges_enabled = json['charges_enabled'];
+    final l$charge_fees_on_customer = json['charge_fees_on_customer'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundries$laundry_store$details$stripe_info(
+      id: (l$id as int),
+      stripe_id: (l$stripe_id as String),
+      status: (l$status as String),
+      requirements: (l$requirements as String?),
+      payouts_enabled: (l$payouts_enabled as bool),
+      email: (l$email as String?),
+      details_submitted: (l$details_submitted as bool),
+      charges_enabled: (l$charges_enabled as bool),
+      charge_fees_on_customer: (l$charge_fees_on_customer as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String stripe_id;
+
+  final String status;
+
+  final String? requirements;
+
+  final bool payouts_enabled;
+
+  final String? email;
+
+  final bool details_submitted;
+
+  final bool charges_enabled;
+
+  final bool? charge_fees_on_customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_id = stripe_id;
+    _resultData['stripe_id'] = l$stripe_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$requirements = requirements;
+    _resultData['requirements'] = l$requirements;
+    final l$payouts_enabled = payouts_enabled;
+    _resultData['payouts_enabled'] = l$payouts_enabled;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$details_submitted = details_submitted;
+    _resultData['details_submitted'] = l$details_submitted;
+    final l$charges_enabled = charges_enabled;
+    _resultData['charges_enabled'] = l$charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    _resultData['charge_fees_on_customer'] = l$charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_id = stripe_id;
+    final l$status = status;
+    final l$requirements = requirements;
+    final l$payouts_enabled = payouts_enabled;
+    final l$email = email;
+    final l$details_submitted = details_submitted;
+    final l$charges_enabled = charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_id,
+      l$status,
+      l$requirements,
+      l$payouts_enabled,
+      l$email,
+      l$details_submitted,
+      l$charges_enabled,
+      l$charge_fees_on_customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$getLaundries$laundry_store$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_id = stripe_id;
+    final lOther$stripe_id = other.stripe_id;
+    if (l$stripe_id != lOther$stripe_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$requirements = requirements;
+    final lOther$requirements = other.requirements;
+    if (l$requirements != lOther$requirements) {
+      return false;
+    }
+    final l$payouts_enabled = payouts_enabled;
+    final lOther$payouts_enabled = other.payouts_enabled;
+    if (l$payouts_enabled != lOther$payouts_enabled) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$details_submitted = details_submitted;
+    final lOther$details_submitted = other.details_submitted;
+    if (l$details_submitted != lOther$details_submitted) {
+      return false;
+    }
+    final l$charges_enabled = charges_enabled;
+    final lOther$charges_enabled = other.charges_enabled;
+    if (l$charges_enabled != lOther$charges_enabled) {
+      return false;
+    }
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final lOther$charge_fees_on_customer = other.charge_fees_on_customer;
+    if (l$charge_fees_on_customer != lOther$charge_fees_on_customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundries$laundry_store$details$stripe_info
+    on Query$getLaundries$laundry_store$details$stripe_info {
+  CopyWith$Query$getLaundries$laundry_store$details$stripe_info<
+          Query$getLaundries$laundry_store$details$stripe_info>
+      get copyWith =>
+          CopyWith$Query$getLaundries$laundry_store$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundries$laundry_store$details$stripe_info<
+    TRes> {
+  factory CopyWith$Query$getLaundries$laundry_store$details$stripe_info(
+    Query$getLaundries$laundry_store$details$stripe_info instance,
+    TRes Function(Query$getLaundries$laundry_store$details$stripe_info) then,
+  ) = _CopyWithImpl$Query$getLaundries$laundry_store$details$stripe_info;
+
+  factory CopyWith$Query$getLaundries$laundry_store$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundries$laundry_store$details$stripe_info;
+
+  TRes call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundries$laundry_store$details$stripe_info<TRes>
+    implements
+        CopyWith$Query$getLaundries$laundry_store$details$stripe_info<TRes> {
+  _CopyWithImpl$Query$getLaundries$laundry_store$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundries$laundry_store$details$stripe_info _instance;
+
+  final TRes Function(Query$getLaundries$laundry_store$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? stripe_id = _undefined,
+    Object? status = _undefined,
+    Object? requirements = _undefined,
+    Object? payouts_enabled = _undefined,
+    Object? email = _undefined,
+    Object? details_submitted = _undefined,
+    Object? charges_enabled = _undefined,
+    Object? charge_fees_on_customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundries$laundry_store$details$stripe_info(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_id: stripe_id == _undefined || stripe_id == null
+            ? _instance.stripe_id
+            : (stripe_id as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        requirements: requirements == _undefined
+            ? _instance.requirements
+            : (requirements as String?),
+        payouts_enabled:
+            payouts_enabled == _undefined || payouts_enabled == null
+                ? _instance.payouts_enabled
+                : (payouts_enabled as bool),
+        email: email == _undefined ? _instance.email : (email as String?),
+        details_submitted:
+            details_submitted == _undefined || details_submitted == null
+                ? _instance.details_submitted
+                : (details_submitted as bool),
+        charges_enabled:
+            charges_enabled == _undefined || charges_enabled == null
+                ? _instance.charges_enabled
+                : (charges_enabled as bool),
+        charge_fees_on_customer: charge_fees_on_customer == _undefined
+            ? _instance.charge_fees_on_customer
+            : (charge_fees_on_customer as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundries$laundry_store$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getLaundries$laundry_store$details$stripe_info<TRes> {
+  _CopyWithStubImpl$Query$getLaundries$laundry_store$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$getLaundryStoreById {
   factory Variables$Query$getLaundryStoreById({required int id}) =>
       Variables$Query$getLaundryStoreById._({
@@ -2361,6 +2773,84 @@ const documentNodeQuerygetLaundryStoreById = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'stripe_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'stripe_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'status'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'requirements'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'payouts_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'email'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details_submitted'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charges_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charge_fees_on_customer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: 'name'),
@@ -3124,6 +3614,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     this.description_id,
     required this.location,
     this.accepted_payments,
+    this.stripe_info,
     required this.name,
     this.description,
     required this.approved,
@@ -3141,6 +3632,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$description_id = json['description_id'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$approved = json['approved'];
@@ -3157,6 +3649,10 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
           .fromJson((l$location as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null
+          ? null
+          : Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
       name: (l$name as String),
       description: l$description == null
           ? null
@@ -3182,6 +3678,9 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
   final Query$getLaundryStoreById$laundry_store_by_pk$details$location location;
 
   final dynamic? accepted_payments;
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info?
+      stripe_info;
 
   final String name;
 
@@ -3213,6 +3712,8 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$description = description;
@@ -3237,6 +3738,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$description_id = description_id;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$name = name;
     final l$description = description;
     final l$approved = approved;
@@ -3251,6 +3753,7 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
       l$description_id,
       l$location,
       l$accepted_payments,
+      l$stripe_info,
       l$name,
       l$description,
       l$approved,
@@ -3302,6 +3805,11 @@ class Query$getLaundryStoreById$laundry_store_by_pk$details {
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$name = name;
@@ -3368,6 +3876,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
     int? description_id,
     Query$getLaundryStoreById$laundry_store_by_pk$details$location? location,
     dynamic? accepted_payments,
+    Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info?
+        stripe_info,
     String? name,
     Query$getLaundryStoreById$laundry_store_by_pk$details$description?
         description,
@@ -3378,6 +3888,8 @@ abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details<
   });
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$location<TRes>
       get location;
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+      TRes> get stripe_info;
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$description<
       TRes> get description;
 }
@@ -3405,6 +3917,7 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
     Object? description_id = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? approved = _undefined,
@@ -3433,6 +3946,10 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -3458,6 +3975,16 @@ class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<TRes>
     final local$location = _instance.location;
     return CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$location(
         local$location, (e) => call(location: e));
+  }
+
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
   }
 
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$description<
@@ -3488,6 +4015,8 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
     int? description_id,
     Query$getLaundryStoreById$laundry_store_by_pk$details$location? location,
     dynamic? accepted_payments,
+    Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info?
+        stripe_info,
     String? name,
     Query$getLaundryStoreById$laundry_store_by_pk$details$description?
         description,
@@ -3500,6 +4029,11 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details<
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$location<TRes>
       get location =>
           CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$location
+              .stub(_res);
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info
               .stub(_res);
   CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$description<
           TRes>
@@ -3665,6 +4199,307 @@ class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$lo
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info {
+  Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info({
+    required this.id,
+    required this.stripe_id,
+    required this.status,
+    this.requirements,
+    required this.payouts_enabled,
+    this.email,
+    required this.details_submitted,
+    required this.charges_enabled,
+    this.charge_fees_on_customer,
+    required this.$__typename,
+  });
+
+  factory Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_id = json['stripe_id'];
+    final l$status = json['status'];
+    final l$requirements = json['requirements'];
+    final l$payouts_enabled = json['payouts_enabled'];
+    final l$email = json['email'];
+    final l$details_submitted = json['details_submitted'];
+    final l$charges_enabled = json['charges_enabled'];
+    final l$charge_fees_on_customer = json['charge_fees_on_customer'];
+    final l$$__typename = json['__typename'];
+    return Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+      id: (l$id as int),
+      stripe_id: (l$stripe_id as String),
+      status: (l$status as String),
+      requirements: (l$requirements as String?),
+      payouts_enabled: (l$payouts_enabled as bool),
+      email: (l$email as String?),
+      details_submitted: (l$details_submitted as bool),
+      charges_enabled: (l$charges_enabled as bool),
+      charge_fees_on_customer: (l$charge_fees_on_customer as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String stripe_id;
+
+  final String status;
+
+  final String? requirements;
+
+  final bool payouts_enabled;
+
+  final String? email;
+
+  final bool details_submitted;
+
+  final bool charges_enabled;
+
+  final bool? charge_fees_on_customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_id = stripe_id;
+    _resultData['stripe_id'] = l$stripe_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$requirements = requirements;
+    _resultData['requirements'] = l$requirements;
+    final l$payouts_enabled = payouts_enabled;
+    _resultData['payouts_enabled'] = l$payouts_enabled;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$details_submitted = details_submitted;
+    _resultData['details_submitted'] = l$details_submitted;
+    final l$charges_enabled = charges_enabled;
+    _resultData['charges_enabled'] = l$charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    _resultData['charge_fees_on_customer'] = l$charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_id = stripe_id;
+    final l$status = status;
+    final l$requirements = requirements;
+    final l$payouts_enabled = payouts_enabled;
+    final l$email = email;
+    final l$details_submitted = details_submitted;
+    final l$charges_enabled = charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_id,
+      l$status,
+      l$requirements,
+      l$payouts_enabled,
+      l$email,
+      l$details_submitted,
+      l$charges_enabled,
+      l$charge_fees_on_customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_id = stripe_id;
+    final lOther$stripe_id = other.stripe_id;
+    if (l$stripe_id != lOther$stripe_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$requirements = requirements;
+    final lOther$requirements = other.requirements;
+    if (l$requirements != lOther$requirements) {
+      return false;
+    }
+    final l$payouts_enabled = payouts_enabled;
+    final lOther$payouts_enabled = other.payouts_enabled;
+    if (l$payouts_enabled != lOther$payouts_enabled) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$details_submitted = details_submitted;
+    final lOther$details_submitted = other.details_submitted;
+    if (l$details_submitted != lOther$details_submitted) {
+      return false;
+    }
+    final l$charges_enabled = charges_enabled;
+    final lOther$charges_enabled = other.charges_enabled;
+    if (l$charges_enabled != lOther$charges_enabled) {
+      return false;
+    }
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final lOther$charge_fees_on_customer = other.charge_fees_on_customer;
+    if (l$charge_fees_on_customer != lOther$charge_fees_on_customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info
+    on Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info {
+  CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+          Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info>
+      get copyWith =>
+          CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+    TRes> {
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+    Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info instance,
+    TRes Function(
+            Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info;
+
+  factory CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info;
+
+  TRes call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info
+      _instance;
+
+  final TRes Function(
+      Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? stripe_id = _undefined,
+    Object? status = _undefined,
+    Object? requirements = _undefined,
+    Object? payouts_enabled = _undefined,
+    Object? email = _undefined,
+    Object? details_submitted = _undefined,
+    Object? charges_enabled = _undefined,
+    Object? charge_fees_on_customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_id: stripe_id == _undefined || stripe_id == null
+            ? _instance.stripe_id
+            : (stripe_id as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        requirements: requirements == _undefined
+            ? _instance.requirements
+            : (requirements as String?),
+        payouts_enabled:
+            payouts_enabled == _undefined || payouts_enabled == null
+                ? _instance.payouts_enabled
+                : (payouts_enabled as bool),
+        email: email == _undefined ? _instance.email : (email as String?),
+        details_submitted:
+            details_submitted == _undefined || details_submitted == null
+                ? _instance.details_submitted
+                : (details_submitted as bool),
+        charges_enabled:
+            charges_enabled == _undefined || charges_enabled == null
+                ? _instance.charges_enabled
+                : (charges_enabled as bool),
+        charge_fees_on_customer: charge_fees_on_customer == _undefined
+            ? _instance.charge_fees_on_customer
+            : (charge_fees_on_customer as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Query$getLaundryStoreById$laundry_store_by_pk$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
     String? $__typename,
   }) =>
       _res;
@@ -6529,6 +7364,84 @@ const documentNodeMutationupdateLaundryInfo = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'stripe_info'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'stripe_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'status'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'requirements'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'payouts_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'email'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'details_submitted'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charges_enabled'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'charge_fees_on_customer'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
                 name: NameNode(value: 'name'),
                 alias: null,
                 arguments: [],
@@ -7290,6 +8203,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     required this.language,
     required this.location,
     this.accepted_payments,
+    this.stripe_info,
     required this.name,
     this.schedule,
     this.description,
@@ -7306,6 +8220,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$language = json['language'];
     final l$location = json['location'];
     final l$accepted_payments = json['accepted_payments'];
+    final l$stripe_info = json['stripe_info'];
     final l$name = json['name'];
     final l$schedule = json['schedule'];
     final l$description = json['description'];
@@ -7322,6 +8237,10 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
               .fromJson((l$location as Map<String, dynamic>)),
       accepted_payments:
           l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      stripe_info: l$stripe_info == null
+          ? null
+          : Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
+              .fromJson((l$stripe_info as Map<String, dynamic>)),
       name: (l$name as String),
       schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       description: l$description == null
@@ -7346,6 +8265,9 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       location;
 
   final dynamic? accepted_payments;
+
+  final Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info?
+      stripe_info;
 
   final String name;
 
@@ -7375,6 +8297,8 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$accepted_payments = accepted_payments;
     _resultData['accepted_payments'] =
         l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    final l$stripe_info = stripe_info;
+    _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$name = name;
     _resultData['name'] = l$name;
     final l$schedule = schedule;
@@ -7398,6 +8322,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$language = language;
     final l$location = location;
     final l$accepted_payments = accepted_payments;
+    final l$stripe_info = stripe_info;
     final l$name = name;
     final l$schedule = schedule;
     final l$description = description;
@@ -7411,6 +8336,7 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
       l$language,
       l$location,
       l$accepted_payments,
+      l$stripe_info,
       l$name,
       l$schedule,
       l$description,
@@ -7458,6 +8384,11 @@ class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details {
     final l$accepted_payments = accepted_payments;
     final lOther$accepted_payments = other.accepted_payments;
     if (l$accepted_payments != lOther$accepted_payments) {
+      return false;
+    }
+    final l$stripe_info = stripe_info;
+    final lOther$stripe_info = other.stripe_info;
+    if (l$stripe_info != lOther$stripe_info) {
       return false;
     }
     final l$name = name;
@@ -7525,6 +8456,8 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?
         location,
     dynamic? accepted_payments,
+    Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info?
+        stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$description?
@@ -7535,6 +8468,8 @@ abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
   });
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location<
       TRes> get location;
+  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+      TRes> get stripe_info;
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$description<
       TRes> get description;
 }
@@ -7563,6 +8498,7 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
     Object? language = _undefined,
     Object? location = _undefined,
     Object? accepted_payments = _undefined,
+    Object? stripe_info = _undefined,
     Object? name = _undefined,
     Object? schedule = _undefined,
     Object? description = _undefined,
@@ -7588,6 +8524,10 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
         accepted_payments: accepted_payments == _undefined
             ? _instance.accepted_payments
             : (accepted_payments as dynamic?),
+        stripe_info: stripe_info == _undefined
+            ? _instance.stripe_info
+            : (stripe_info
+                as Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info?),
         name: name == _undefined || name == null
             ? _instance.name
             : (name as String),
@@ -7613,6 +8553,16 @@ class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$detail
     final local$location = _instance.location;
     return CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location(
         local$location, (e) => call(location: e));
+  }
+
+  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+      TRes> get stripe_info {
+    final local$stripe_info = _instance.stripe_info;
+    return local$stripe_info == null
+        ? CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
+            .stub(_then(_instance))
+        : CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+            local$stripe_info, (e) => call(stripe_info: e));
   }
 
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$description<
@@ -7644,6 +8594,8 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location?
         location,
     dynamic? accepted_payments,
+    Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info?
+        stripe_info,
     String? name,
     dynamic? schedule,
     Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$description?
@@ -7657,6 +8609,11 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
           TRes>
       get location =>
           CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$location
+              .stub(_res);
+  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+          TRes>
+      get stripe_info =>
+          CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
               .stub(_res);
   CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$description<
           TRes>
@@ -7825,6 +8782,310 @@ class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$de
   call({
     Geography? gps,
     String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
+class Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info {
+  Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info({
+    required this.id,
+    required this.stripe_id,
+    required this.status,
+    this.requirements,
+    required this.payouts_enabled,
+    this.email,
+    required this.details_submitted,
+    required this.charges_enabled,
+    this.charge_fees_on_customer,
+    required this.$__typename,
+  });
+
+  factory Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$stripe_id = json['stripe_id'];
+    final l$status = json['status'];
+    final l$requirements = json['requirements'];
+    final l$payouts_enabled = json['payouts_enabled'];
+    final l$email = json['email'];
+    final l$details_submitted = json['details_submitted'];
+    final l$charges_enabled = json['charges_enabled'];
+    final l$charge_fees_on_customer = json['charge_fees_on_customer'];
+    final l$$__typename = json['__typename'];
+    return Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+      id: (l$id as int),
+      stripe_id: (l$stripe_id as String),
+      status: (l$status as String),
+      requirements: (l$requirements as String?),
+      payouts_enabled: (l$payouts_enabled as bool),
+      email: (l$email as String?),
+      details_submitted: (l$details_submitted as bool),
+      charges_enabled: (l$charges_enabled as bool),
+      charge_fees_on_customer: (l$charge_fees_on_customer as bool?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String stripe_id;
+
+  final String status;
+
+  final String? requirements;
+
+  final bool payouts_enabled;
+
+  final String? email;
+
+  final bool details_submitted;
+
+  final bool charges_enabled;
+
+  final bool? charge_fees_on_customer;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$stripe_id = stripe_id;
+    _resultData['stripe_id'] = l$stripe_id;
+    final l$status = status;
+    _resultData['status'] = l$status;
+    final l$requirements = requirements;
+    _resultData['requirements'] = l$requirements;
+    final l$payouts_enabled = payouts_enabled;
+    _resultData['payouts_enabled'] = l$payouts_enabled;
+    final l$email = email;
+    _resultData['email'] = l$email;
+    final l$details_submitted = details_submitted;
+    _resultData['details_submitted'] = l$details_submitted;
+    final l$charges_enabled = charges_enabled;
+    _resultData['charges_enabled'] = l$charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    _resultData['charge_fees_on_customer'] = l$charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$stripe_id = stripe_id;
+    final l$status = status;
+    final l$requirements = requirements;
+    final l$payouts_enabled = payouts_enabled;
+    final l$email = email;
+    final l$details_submitted = details_submitted;
+    final l$charges_enabled = charges_enabled;
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$stripe_id,
+      l$status,
+      l$requirements,
+      l$payouts_enabled,
+      l$email,
+      l$details_submitted,
+      l$charges_enabled,
+      l$charge_fees_on_customer,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$stripe_id = stripe_id;
+    final lOther$stripe_id = other.stripe_id;
+    if (l$stripe_id != lOther$stripe_id) {
+      return false;
+    }
+    final l$status = status;
+    final lOther$status = other.status;
+    if (l$status != lOther$status) {
+      return false;
+    }
+    final l$requirements = requirements;
+    final lOther$requirements = other.requirements;
+    if (l$requirements != lOther$requirements) {
+      return false;
+    }
+    final l$payouts_enabled = payouts_enabled;
+    final lOther$payouts_enabled = other.payouts_enabled;
+    if (l$payouts_enabled != lOther$payouts_enabled) {
+      return false;
+    }
+    final l$email = email;
+    final lOther$email = other.email;
+    if (l$email != lOther$email) {
+      return false;
+    }
+    final l$details_submitted = details_submitted;
+    final lOther$details_submitted = other.details_submitted;
+    if (l$details_submitted != lOther$details_submitted) {
+      return false;
+    }
+    final l$charges_enabled = charges_enabled;
+    final lOther$charges_enabled = other.charges_enabled;
+    if (l$charges_enabled != lOther$charges_enabled) {
+      return false;
+    }
+    final l$charge_fees_on_customer = charge_fees_on_customer;
+    final lOther$charge_fees_on_customer = other.charge_fees_on_customer;
+    if (l$charge_fees_on_customer != lOther$charge_fees_on_customer) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
+    on Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info {
+  CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info>
+      get copyWith =>
+          CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+    TRes> {
+  factory CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+    Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
+        instance,
+    TRes Function(
+            Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info)
+        then,
+  ) = _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info;
+
+  factory CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info.stub(
+          TRes res) =
+      _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info;
+
+  TRes call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+            TRes> {
+  _CopyWithImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+    this._instance,
+    this._then,
+  );
+
+  final Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info
+      _instance;
+
+  final TRes Function(
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? stripe_id = _undefined,
+    Object? status = _undefined,
+    Object? requirements = _undefined,
+    Object? payouts_enabled = _undefined,
+    Object? email = _undefined,
+    Object? details_submitted = _undefined,
+    Object? charges_enabled = _undefined,
+    Object? charge_fees_on_customer = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        stripe_id: stripe_id == _undefined || stripe_id == null
+            ? _instance.stripe_id
+            : (stripe_id as String),
+        status: status == _undefined || status == null
+            ? _instance.status
+            : (status as String),
+        requirements: requirements == _undefined
+            ? _instance.requirements
+            : (requirements as String?),
+        payouts_enabled:
+            payouts_enabled == _undefined || payouts_enabled == null
+                ? _instance.payouts_enabled
+                : (payouts_enabled as bool),
+        email: email == _undefined ? _instance.email : (email as String?),
+        details_submitted:
+            details_submitted == _undefined || details_submitted == null
+                ? _instance.details_submitted
+                : (details_submitted as bool),
+        charges_enabled:
+            charges_enabled == _undefined || charges_enabled == null
+                ? _instance.charges_enabled
+                : (charges_enabled as bool),
+        charge_fees_on_customer: charge_fees_on_customer == _undefined
+            ? _instance.charge_fees_on_customer
+            : (charge_fees_on_customer as bool?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+        TRes>
+    implements
+        CopyWith$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info<
+            TRes> {
+  _CopyWithStubImpl$Mutation$updateLaundryInfo$update_laundry_store_by_pk$details$stripe_info(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? stripe_id,
+    String? status,
+    String? requirements,
+    bool? payouts_enabled,
+    String? email,
+    bool? details_submitted,
+    bool? charges_enabled,
+    bool? charge_fees_on_customer,
     String? $__typename,
   }) =>
       _res;

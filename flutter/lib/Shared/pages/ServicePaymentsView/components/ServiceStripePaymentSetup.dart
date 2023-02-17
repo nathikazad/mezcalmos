@@ -24,6 +24,8 @@ class ServiceStripePaymentSetup extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: MezIconButton(
+                  padding: const EdgeInsets.all(3),
+                  iconSize: 18,
                   onTap: () {
                     viewController.closePaymentSetup();
                   },
@@ -36,7 +38,7 @@ class ServiceStripePaymentSetup extends StatelessWidget {
                   Text("Stripe"),
                   Text(
                     viewController.currentUrl.value,
-                    style: Get.textTheme.subtitle1,
+                    style: Get.textTheme.titleMedium,
                   ),
                   if (viewController.showLinarProgress.isTrue)
                     LinearProgressIndicator(

@@ -20,8 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
-Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
-    {required int orderId}) {
+Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_driver_order(
     Options$Subscription$listen_on_driver_order(
@@ -50,6 +49,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
     }
     return DeliveryOrder(
         id: orderData.id,
+        packageReady: orderData.package_ready,
         orderType: orderData.order_type.toOrderType(),
         stripeOrderPaymentInfo: _paymentInfo,
         serviceOrderId: orderData.restaurant_order?.id,
@@ -135,6 +135,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
   }
   return DeliveryOrder(
       id: orderData.id,
+      packageReady: orderData.package_ready,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
@@ -220,7 +221,7 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
   mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
+      "ORDER TYPE  ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
   mezDbgPrint(
       "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
   switch (orderType) {
@@ -516,6 +517,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
 
   return DeliveryOrder(
       deliveryDirection: DeliveryDirection.FromCustomer,
+      packageReady: false,
       id: orderData.id,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: null,

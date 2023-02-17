@@ -1,24 +1,20 @@
 import Stripe from 'stripe';
 import { getKeys } from '../../shared/keys';
 import { Keys } from '../../shared/models/Generic/Keys';
-import { OrderType, PaymentType } from '../../shared/models/Generic/Order';
+import { PaymentType } from '../../shared/models/Generic/Order';
 import { StripeStatus } from './model';
 import { CustomerInfo } from '../../shared/models/Generic/User';
 import { HttpsError } from 'firebase-functions/v1/auth';
-import { getRestaurant } from '../../shared/graphql/restaurant/getRestaurant';
-import { updateRestaurantStripe } from '../../shared/graphql/restaurant/updateRestaurant';
 import { updateCustomerStripe } from '../../shared/graphql/user/customer/updateCustomer';
 import { Operator, ServiceProvider } from '../../shared/models/Services/Service';
-import { getLaundryStore } from '../../shared/graphql/laundry/getLaundry';
-import { updateLaundryStripe } from '../../shared/graphql/laundry/updateLaundry';
 import { AuthorizationStatus } from "../../shared/models/Generic/Generic"
+import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvider';
+import { createServiceProviderStripe, updateServiceProviderPayment, updateServiceProviderStripe } from '../../shared/graphql/updateServiceProvider';
 
 let keys: Keys = getKeys();
 
 export interface SetupDetails {
-  serviceProviderId: number,
-  orderType: OrderType,
-  acceptedPayments?: Record<PaymentType, boolean>
+  serviceProviderDetailsId: number,
 }
 export interface SetupResponse {
   object: string,
@@ -28,34 +24,34 @@ export interface SetupResponse {
 }
 export async function setupServiceProvider(userId: number, setupDetails: SetupDetails): Promise<SetupResponse> {
 
-  let serviceProvider: ServiceProvider;
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(setupDetails.serviceProviderDetailsId)
   let operator: Operator;
 
-  switch (setupDetails.orderType) {
-    case OrderType.Restaurant:
-      serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
-      break;
-    case OrderType.Laundry:
-      serviceProvider = await getLaundryStore(setupDetails.serviceProviderId);
-      break;
-    default:
-      throw new HttpsError(
-        "internal",
-        "invalid order type"
-      );
-  }
+  // switch (setupDetails.orderType) {
+  //   case OrderType.Restaurant:
+  //     serviceProvider = await getRestaurant(setupDetails.serviceProviderDetailsId);
+  //     break;
+  //   case OrderType.Laundry:
+  //     serviceProvider = await getLaundryStore(setupDetails.serviceProviderDetailsId);
+  //     break;
+  //   default:
+  //     throw new HttpsError(
+  //       "internal",
+  //       "invalid order type"
+  //     );
+  // }
   operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
 
   if(!operator) {
     throw new HttpsError(
       "internal",
-      "No restaurant operator with that user id or restaurant id found"
+      "No operator with that user id or service provider id found"
     );
   }
   if(operator.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
-      "restaurant operator not authorized"
+      "operator not authorized"
     );
   }
   const stripeOptions = { apiVersion: <any>'2020-08-27' };
@@ -73,7 +69,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
         name: serviceProvider.name,
         support_email: owner?.user?.email ?? operator.user?.email ?? undefined,
         support_phone: owner?.user?.phoneNumber ?? operator.user?.phoneNumber ?? undefined,
-        url: `https://mezcalmos.com/?type=${setupDetails.orderType}&id=${setupDetails.serviceProviderId}`
+        url: `https://mezcalmos.com/?id=${setupDetails.serviceProviderDetailsId}`
       },
       individual: {
         first_name: operator.user?.name ?? undefined,
@@ -83,8 +79,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       country: "mx",
       default_currency: "mxn",
       metadata: {
-        id: setupDetails.serviceProviderId,
-        type: setupDetails.orderType,
+        id: setupDetails.serviceProviderDetailsId,
         user_id: userId
       }
     });
@@ -98,21 +93,21 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
       chargesEnabled: false,
       requirements: []
     }
-    serviceProvider.acceptedPayments = setupDetails.acceptedPayments;
+    createServiceProviderStripe(serviceProvider);
 
-    switch (setupDetails.orderType) {
-      case OrderType.Restaurant:
-        updateRestaurantStripe(serviceProvider);
-        break;
-      case OrderType.Laundry:
-        updateLaundryStripe(serviceProvider);
-        break;
-      default:
-        throw new HttpsError(
-          "internal",
-          "invalid order type"
-        );
-    }
+    // switch (setupDetails.orderType) {
+    //   case OrderType.Restaurant:
+    //     updateRestaurantStripe(serviceProvider);
+    //     break;
+    //   case OrderType.Laundry:
+    //     updateLaundryStripe(serviceProvider);
+    //     break;
+    //   default:
+    //     throw new HttpsError(
+    //       "internal",
+    //       "invalid order type"
+    //     );
+    // }
   }
 
   const accountLink = await stripe.accountLinks.create({
@@ -128,39 +123,38 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 }
 
 export interface UpdateDetails {
-  serviceProviderId: number,
-  orderType: OrderType
+  serviceProviderDetailsId: number,
 }
 
 export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {
-  let serviceProvider;
-  let operator;
+  let serviceProvider = await getServiceProviderDetails(updateDetails.serviceProviderDetailsId);
+  let operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
 
-  switch (updateDetails.orderType) {
-    case OrderType.Restaurant:
-      serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
-      break;
-    case OrderType.Laundry:
-      serviceProvider = await getLaundryStore(updateDetails.serviceProviderId);
-      break;
-    default:
-      throw new HttpsError(
-        "internal",
-        "invalid order type"
-      );
-  }
-  operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
+  // switch (updateDetails.orderType) {
+  //   case OrderType.Restaurant:
+  //     serviceProvider = await getRestaurant(updateDetails.serviceProviderDetailsId);
+  //     break;
+  //   case OrderType.Laundry:
+  //     serviceProvider = await getLaundryStore(updateDetails.serviceProviderDetailsId);
+  //     break;
+  //   default:
+  //     throw new HttpsError(
+  //       "internal",
+  //       "invalid order type"
+  //     );
+  // }
+  // operator = serviceProvider.operators!.filter((o) => o.userId == userId)[0];
 
   if(!operator) {
     throw new HttpsError(
       "internal",
-      "No restaurant operator with that user id or restaurant id found"
+      "No operator with that user id or service provider id found"
     );
   }
   if(operator.status != AuthorizationStatus.Authorized) {
     throw new HttpsError(
       "internal",
-      "restaurant operator not authorized"
+      "operator not authorized"
     );
   }
   
@@ -187,25 +181,17 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
     chargesEnabled: account.charges_enabled,
     requirements: account.requirements?.currently_due
   }
-  switch (updateDetails.orderType) {
-    case OrderType.Restaurant:
-      updateRestaurantStripe(serviceProvider);
-      break;
-    case OrderType.Laundry:
-      updateLaundryStripe(serviceProvider);
-      break;
-    default:
-      throw new HttpsError(
-        "internal",
-        "invalid order type"
-      );
+  updateServiceProviderStripe(serviceProvider)
+
+  if(isWorking) {
+    serviceProvider.acceptedPayments![PaymentType.Card] = true
+    updateServiceProviderPayment(serviceProvider);
   }
 }
 
 export async function verifyCustomerIdForServiceAccount(
   customerInfo: CustomerInfo, 
-  serviceProviderId: number, 
-  orderType: OrderType, 
+  serviceProviderDetailsId: number, 
   stripe: Stripe, 
   stripeOptions: any
 ): Promise<CustomerInfo> {
@@ -215,12 +201,12 @@ export async function verifyCustomerIdForServiceAccount(
       "Customer does not have stripe account"
     );
   }
-  if(customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] == null) {
+  if(customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] == null) {
     const customer: Stripe.Customer = await stripe.customers.create({
       name: customerInfo.name,
       metadata: { customerId: customerInfo.id },
     }, stripeOptions)
-    customerInfo.stripeInfo.idsWithServiceProvider[orderType][serviceProviderId] = customer.id;
+    customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] = customer.id;
     updateCustomerStripe(customerInfo);
   }
   return customerInfo;

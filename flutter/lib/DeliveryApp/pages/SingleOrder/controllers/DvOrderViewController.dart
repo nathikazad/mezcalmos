@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/mapInitHelper.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -70,7 +72,7 @@ class DvOrderViewcontroller {
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
+        orderStream = listen_on_driver_order_by_id(orderId: orderId)
             .listen((DeliveryOrder? event) {
           mezDbgPrint(event);
           if (event != null) {
@@ -126,7 +128,7 @@ class DvOrderViewcontroller {
       if (_order.value == null) {
         // ignore: inference_failure_on_function_invocation
         Future<Null>.delayed(Duration.zero, () {
-          Get.back<Null>();
+          MezRouter.back<Null>();
           MezSnackbar("Error", "Order does not exist");
         });
       } else {
@@ -153,24 +155,24 @@ class DvOrderViewcontroller {
     mezDbgPrint(
         " 🛵🛵🛵🛵 Driver location update ====>${order.driverLocation?.toJson()}");
     switch (order.status) {
-      case DeliveryOrderStatus.PackageReady:
-        // only update once upon Ready
-        if (_statusSnapshot != order.status) {
-          // ignoring customer's marker (destination)
-          mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.dropoffLocation.toLatLng(),
-            // fitWithinBounds: false,
-          );
-        }
-        // update position of our delivery Guy
-        mapController.addOrUpdateUserMarker(
-            latLng: order.driverLocation,
-            fitWithinBounds: true,
-            customImgHttpUrl:
-                Get.find<DeliveryAuthController>().driver!.driverInfo.image);
-        mapController.animateAndUpdateBounds();
-        _statusSnapshot = order.status;
-        break;
+      // case DeliveryOrderStatus.PackageReady:
+      //   // only update once upon Ready
+      //   if (_statusSnapshot != order.status) {
+      //     // ignoring customer's marker (destination)
+      //     mapController.addOrUpdatePurpleDestinationMarker(
+      //       latLng: order.dropoffLocation.toLatLng(),
+      //       // fitWithinBounds: false,
+      //     );
+      //   }
+      //   // update position of our delivery Guy
+      //   mapController.addOrUpdateUserMarker(
+      //       latLng: order.driverLocation,
+      //       fitWithinBounds: true,
+      //       customImgHttpUrl:
+      //           Get.find<DeliveryAuthController>().driver!.driverInfo.image);
+      //   mapController.animateAndUpdateBounds();
+      //   _statusSnapshot = order.status;
+      //   break;
 
       case DeliveryOrderStatus.OnTheWayToDropoff:
         // only update once.
@@ -234,16 +236,14 @@ class DvOrderViewcontroller {
 
   Future<void> _callRestaurantCloudFunction(
       cModel.DeliveryOrderStatus status) async {
+    mezDbgPrint("😇 Status called ==========>$status");
     try {
       await CloudFunctions.delivery2_changeStatus(
-          deliveryDriverId: deliveryAuthAuthController.driver!.deliveryDriverId,
-          deliveryDriverType: cModel.ParticipantType.DeliveryDriver,
-          deliveryId: order.id,
-          newStatus: status);
-    } catch (e, stk) {
+          deliveryId: order.id, newStatus: status);
+    } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
-      showErrorSnackBar(errorTitle: e.toString());
+      showErrorSnackBar(errorText: e.message.toString());
     }
   }
 

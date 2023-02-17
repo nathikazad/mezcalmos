@@ -18,7 +18,7 @@ class OrderFooterCard extends StatefulWidget {
       : super(key: key);
 
   final RestaurantOrder order;
-  final Future<ServerResponse> Function() cancelOrderFunction;
+  final Future<bool> Function() cancelOrderFunction;
 
   @override
   State<OrderFooterCard> createState() => _OrderFooterCardState();
@@ -37,9 +37,9 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                 child: TextButton(
                   onPressed: () {
                     showConfirmationDialog(context, onYesClick: () async {
-                      final ServerResponse resp =
+                      final bool resp =
                           await widget.cancelOrderFunction.call();
-                      if (resp.success) {
+                      if (resp) {
                         MezRouter.untill(
                           (Route<dynamic> route) =>
                               route.settings.name == kHomeRoute,
@@ -49,13 +49,7 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                           _i18n()["orderCancelSuccess"],
                           position: SnackPosition.TOP,
                         );
-                      } else {
-                        MezSnackbar(
-                          _i18n()["titleFailed"],
-                          _i18n()["orderCancelFailed"],
-                          position: SnackPosition.TOP,
-                        );
-                      }
+                      } 
                     });
                   },
                   style: TextButton.styleFrom(

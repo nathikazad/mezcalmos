@@ -342,6 +342,8 @@ if __name__ == "__main__":
       extractFunctionNamesGroupAsString(line)
   extractFunctionNamesGroupAsDictionary()
   uniqueTypes["AppType"] = True
+  uniqueTypes["Language"] = True
+
   for key in uniqueTypes:
     print(key)
     if key not in ["string", "number", "boolean", "JSON"] and "Record" not in key:

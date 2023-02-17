@@ -16,8 +16,9 @@ export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: De
       pk_columns: {
         id: deliveryOrder.chatWithCustomerId
       },
+
       _set: {
-        messages: null
+        messages: []
       }
     }, {
       id: true,
@@ -45,7 +46,7 @@ export async function deleteDeliveryChatMessagesAndParticipant(deliveryOrder: De
         id: deliveryOrder.chatWithServiceProviderId
       },
       _set: {
-        messages: null
+        messages: []
       }
     }, {
       id: true,

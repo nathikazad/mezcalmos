@@ -153,6 +153,7 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
   })
   let restaurantOrder: RestaurantOrder = {
     orderId: response.insert_restaurant_order_one.id,
+    spDetailsId: restaurant.serviceProviderDetailsId,
     customerId: customerCart.customerId,
     restaurantId: checkoutReq.restaurantId,
     paymentType: checkoutReq.paymentType,

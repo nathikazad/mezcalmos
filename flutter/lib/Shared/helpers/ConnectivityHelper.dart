@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 class ConnectivityHelper {
@@ -28,7 +31,6 @@ class ConnectivityHelper {
     final Connectivity connectivity = Connectivity();
     final ConnectivityResult result = await connectivity.checkConnectivity();
     _hasInternet = _hasInternetOptions.contains(result);
-
     Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult event) async {
@@ -46,11 +48,11 @@ class ConnectivityHelper {
 
       if (!_hasInternet) {
         if (!isCurrentRoute(kNoInternetRoute)) {
-          MezRouter.toNamed<void>(kNoInternetRoute);
+          unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
         }
       } else {
         if (isCurrentRoute(kNoInternetRoute)) {
-          Get.back();
+          MezRouter.back<Null>();
         }
       }
     });

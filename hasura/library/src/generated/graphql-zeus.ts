@@ -3709,7 +3709,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** An object relationship */
 	delivery_driver?:ValueTypes["delivery_driver"],
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	/** An object relationship */
 	driver_review_by_customer?:ValueTypes["review"],
@@ -3749,7 +3749,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** An object relationship */
 	service_provider_review_by_driver?:ValueTypes["review"],
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -3964,7 +3964,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver?:ValueTypes["delivery_driver_obj_rel_insert_input"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:ValueTypes["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
@@ -3992,7 +3992,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	service_provider_id?:number,
 	service_provider_review_by_driver?:ValueTypes["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4017,7 +4017,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
@@ -4034,7 +4034,7 @@ cancelledByServiceProvider */
 	schedule_time?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4060,7 +4060,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
@@ -4077,7 +4077,7 @@ cancelledByServiceProvider */
 	schedule_time?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:ValueTypes["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4102,7 +4102,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
@@ -4119,7 +4119,7 @@ cancelledByServiceProvider */
 	schedule_time?:true,
 	service_provider_id?:true,
 	service_provider_review_by_driver_id?:true,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:true,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4145,7 +4145,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
@@ -4162,7 +4162,7 @@ cancelledByServiceProvider */
 	schedule_time?:ValueTypes["order_by"],
 	service_provider_id?:ValueTypes["order_by"],
 	service_provider_review_by_driver_id?:ValueTypes["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:ValueTypes["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4467,7 +4467,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	customer_review_by_driver_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -4487,7 +4487,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -4637,7 +4637,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -4657,7 +4657,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -8431,12 +8431,24 @@ update_service_provider_service_link_by_pk?: [{	/** increments the numeric colum
 	_set?:ValueTypes["service_provider_service_link_set_input"],	pk_columns:ValueTypes["service_provider_service_link_pk_columns_input"]},ValueTypes["service_provider_service_link"]],
 update_service_provider_service_link_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_provider_service_link_updates"][]},ValueTypes["service_provider_service_link_mutation_response"]],
-update_service_provider_stripe_info?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_service_provider_stripe_info?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],	/** filter the rows which have to be updated */
 	where:ValueTypes["service_provider_stripe_info_bool_exp"]},ValueTypes["service_provider_stripe_info_mutation_response"]],
-update_service_provider_stripe_info_by_pk?: [{	/** increments the numeric columns with given value of the filtered values */
-	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** sets the columns of the filtered rows to the given values */
+update_service_provider_stripe_info_by_pk?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],	/** increments the numeric columns with given value of the filtered values */
+	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],	pk_columns:ValueTypes["service_provider_stripe_info_pk_columns_input"]},ValueTypes["service_provider_stripe_info"]],
 update_service_provider_stripe_info_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["service_provider_stripe_info_updates"][]},ValueTypes["service_provider_stripe_info_mutation_response"]],
@@ -16316,7 +16328,8 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 	email?:true,
 	id?:true,
 	payouts_enabled?:true,
-	requirements?:true,
+requirements?: [{	/** JSON select path */
+	path?:string},true],
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16342,6 +16355,10 @@ count?: [{	columns?:ValueTypes["service_provider_stripe_info_select_column"][],	
 	variance?:ValueTypes["service_provider_stripe_info_variance_fields"],
 		__typename?: true
 }>;
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_append_input"]: {
+	requirements?:ValueTypes["jsonb"]
+};
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: AliasType<{
 	id?:true,
@@ -16359,12 +16376,25 @@ All fields are combined with a logical 'AND'. */
 	email?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	payouts_enabled?:ValueTypes["Boolean_comparison_exp"],
-	requirements?:ValueTypes["String_comparison_exp"],
+	requirements?:ValueTypes["jsonb_comparison_exp"],
 	status?:ValueTypes["String_comparison_exp"],
 	stripe_id?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "service_provider.stripe_info" */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint;
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_stripe_info_delete_at_path_input"]: {
+	requirements?:string[]
+};
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_stripe_info_delete_elem_input"]: {
+	requirements?:number
+};
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_stripe_info_delete_key_input"]: {
+	requirements?:string
+};
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
 	id?:number
@@ -16377,7 +16407,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16385,7 +16415,6 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_max_fields"]: AliasType<{
 	email?:true,
 	id?:true,
-	requirements?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16394,7 +16423,6 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_min_fields"]: AliasType<{
 	email?:true,
 	id?:true,
-	requirements?:true,
 	status?:true,
 	stripe_id?:true,
 		__typename?: true
@@ -16435,6 +16463,10 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_pk_columns_input"]: {
 	id:number
 };
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_prepend_input"]: {
+	requirements?:ValueTypes["jsonb"]
+};
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column;
 	/** input type for updating data in table "service_provider.stripe_info" */
@@ -16445,7 +16477,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16479,7 +16511,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:ValueTypes["jsonb"],
 	status?:string,
 	stripe_id?:string
 };
@@ -16491,8 +16523,19 @@ All fields are combined with a logical 'AND'. */
 	/** update columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_update_column"]:service_provider_stripe_info_update_column;
 	["service_provider_stripe_info_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:ValueTypes["service_provider_stripe_info_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:ValueTypes["service_provider_stripe_info_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:ValueTypes["service_provider_stripe_info_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:ValueTypes["service_provider_stripe_info_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:ValueTypes["service_provider_stripe_info_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:ValueTypes["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:ValueTypes["service_provider_stripe_info_set_input"],
 	/** filter the rows which have to be updated */
@@ -22044,7 +22087,7 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	delivery_driver?:PartialObjects["delivery_driver"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			/** An object relationship */
 	driver_review_by_customer?:PartialObjects["review"],
@@ -22084,7 +22127,7 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	service_provider_review_by_driver?:PartialObjects["review"],
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22298,7 +22341,7 @@ cancelledByServiceProvider */
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver?:PartialObjects["delivery_driver_obj_rel_insert_input"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:PartialObjects["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
@@ -22326,7 +22369,7 @@ cancelledByServiceProvider */
 	service_provider_id?:number,
 	service_provider_review_by_driver?:PartialObjects["review_obj_rel_insert_input"],
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22352,7 +22395,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
@@ -22369,7 +22412,7 @@ cancelledByServiceProvider */
 			schedule_time?:string,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22394,7 +22437,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
@@ -22411,7 +22454,7 @@ cancelledByServiceProvider */
 	schedule_time?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:PartialObjects["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22437,7 +22480,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_driver_id?:number,
-			/** to_customer, from_customer */
+			/** toCustomer, fromCustomer */
 	direction?:string,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
@@ -22454,7 +22497,7 @@ cancelledByServiceProvider */
 			schedule_time?:string,
 			service_provider_id?:number,
 			service_provider_review_by_driver_id?:number,
-			/** restaurant, delivery_company */
+			/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 			/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22479,7 +22522,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
@@ -22496,7 +22539,7 @@ cancelledByServiceProvider */
 	schedule_time?:PartialObjects["order_by"],
 	service_provider_id?:PartialObjects["order_by"],
 	service_provider_review_by_driver_id?:PartialObjects["order_by"],
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:PartialObjects["order_by"],
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22801,7 +22844,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -22821,7 +22864,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -22971,7 +23014,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -22991,7 +23034,7 @@ cancelledByServiceProvider */
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -33765,7 +33808,7 @@ the end). throws an error if top level container is not an array */
 			email?:string,
 			id?:number,
 			payouts_enabled?:boolean,
-			requirements?:string,
+			requirements?:PartialObjects["jsonb"],
 			status?:string,
 			stripe_id?:string
 	},
@@ -33790,6 +33833,10 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["service_provider_stripe_info_var_samp_fields"],
 			variance?:PartialObjects["service_provider_stripe_info_variance_fields"]
 	},
+	/** append existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_append_input"]: {
+	requirements?:PartialObjects["jsonb"]
+},
 	/** aggregate avg on columns */
 ["service_provider_stripe_info_avg_fields"]: {
 		__typename?: "service_provider_stripe_info_avg_fields";
@@ -33807,12 +33854,25 @@ All fields are combined with a logical 'AND'. */
 	email?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	payouts_enabled?:PartialObjects["Boolean_comparison_exp"],
-	requirements?:PartialObjects["String_comparison_exp"],
+	requirements?:PartialObjects["jsonb_comparison_exp"],
 	status?:PartialObjects["String_comparison_exp"],
 	stripe_id?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "service_provider.stripe_info" */
 ["service_provider_stripe_info_constraint"]:service_provider_stripe_info_constraint,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+["service_provider_stripe_info_delete_at_path_input"]: {
+	requirements?:string[]
+},
+	/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+["service_provider_stripe_info_delete_elem_input"]: {
+	requirements?:number
+},
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+["service_provider_stripe_info_delete_key_input"]: {
+	requirements?:string
+},
 	/** input type for incrementing numeric columns in table "service_provider.stripe_info" */
 ["service_provider_stripe_info_inc_input"]: {
 	id?:number
@@ -33825,7 +33885,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33834,7 +33894,6 @@ All fields are combined with a logical 'AND'. */
 		__typename?: "service_provider_stripe_info_max_fields";
 			email?:string,
 			id?:number,
-			requirements?:string,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33843,7 +33902,6 @@ All fields are combined with a logical 'AND'. */
 		__typename?: "service_provider_stripe_info_min_fields";
 			email?:string,
 			id?:number,
-			requirements?:string,
 			status?:string,
 			stripe_id?:string
 	},
@@ -33883,6 +33941,10 @@ All fields are combined with a logical 'AND'. */
 ["service_provider_stripe_info_pk_columns_input"]: {
 	id:number
 },
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+["service_provider_stripe_info_prepend_input"]: {
+	requirements?:PartialObjects["jsonb"]
+},
 	/** select columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_select_column"]:service_provider_stripe_info_select_column,
 	/** input type for updating data in table "service_provider.stripe_info" */
@@ -33893,7 +33955,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33927,7 +33989,7 @@ All fields are combined with a logical 'AND'. */
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:PartialObjects["jsonb"],
 	status?:string,
 	stripe_id?:string
 },
@@ -33939,8 +34001,19 @@ All fields are combined with a logical 'AND'. */
 	/** update columns of table "service_provider.stripe_info" */
 ["service_provider_stripe_info_update_column"]:service_provider_stripe_info_update_column,
 	["service_provider_stripe_info_updates"]: {
+	/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:PartialObjects["service_provider_stripe_info_append_input"],
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:PartialObjects["service_provider_stripe_info_delete_at_path_input"],
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:PartialObjects["service_provider_stripe_info_delete_elem_input"],
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:PartialObjects["service_provider_stripe_info_delete_key_input"],
 	/** increments the numeric columns with given value of the filtered values */
 	_inc?:PartialObjects["service_provider_stripe_info_inc_input"],
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:PartialObjects["service_provider_stripe_info_prepend_input"],
 	/** sets the columns of the filtered rows to the given values */
 	_set?:PartialObjects["service_provider_stripe_info_set_input"],
 	/** filter the rows which have to be updated */
@@ -37398,6 +37471,7 @@ export type customer_stripe_cards_bool_exp = {
 
 /** unique or primary key constraints on table "customer.stripe_cards" */
 export enum customer_stripe_cards_constraint {
+	stripe_cards_card_id_key = "stripe_cards_card_id_key",
 	stripe_cards_pkey = "stripe_cards_pkey"
 }
 
@@ -39660,7 +39734,7 @@ export type delivery_order = {
 	/** An object relationship */
 	delivery_driver?:delivery_driver,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction:string,
 	/** An object relationship */
 	driver_review_by_customer?:review,
@@ -39700,7 +39774,7 @@ export type delivery_order = {
 	/** An object relationship */
 	service_provider_review_by_driver?:review,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39930,7 +40004,7 @@ export type delivery_order_insert_input = {
 	delivery_cost?:money,
 	delivery_driver?:delivery_driver_obj_rel_insert_input,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer?:review_obj_rel_insert_input,
 	driver_review_by_customer_id?:number,
@@ -39958,7 +40032,7 @@ export type delivery_order_insert_input = {
 	service_provider_id?:number,
 	service_provider_review_by_driver?:review_obj_rel_insert_input,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -39985,7 +40059,7 @@ export type delivery_order_max_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -40002,7 +40076,7 @@ export type delivery_order_max_fields = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -40028,7 +40102,7 @@ export type delivery_order_max_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
@@ -40045,7 +40119,7 @@ export type delivery_order_max_order_by = {
 	schedule_time?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:order_by,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -40072,7 +40146,7 @@ export type delivery_order_min_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -40089,7 +40163,7 @@ export type delivery_order_min_fields = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -40115,7 +40189,7 @@ export type delivery_order_min_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
@@ -40132,7 +40206,7 @@ export type delivery_order_min_order_by = {
 	schedule_time?:order_by,
 	service_provider_id?:order_by,
 	service_provider_review_by_driver_id?:order_by,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:order_by,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -40518,7 +40592,7 @@ export type delivery_order_set_input = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -40538,7 +40612,7 @@ export type delivery_order_set_input = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -40696,7 +40770,7 @@ export type delivery_order_stream_cursor_value_input = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
-	/** to_customer, from_customer */
+	/** toCustomer, fromCustomer */
 	direction?:string,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
@@ -40716,7 +40790,7 @@ export type delivery_order_stream_cursor_value_input = {
 	schedule_time?:string,
 	service_provider_id?:number,
 	service_provider_review_by_driver_id?:number,
-	/** restaurant, delivery_company */
+	/** restaurant, deliveryCompany */
 	service_provider_type?:string,
 	/** orderReceived, packageReady, atPickup, onTheWayToDropoff, atDropoff,
 delivered, cancelledByCustomer, cancelledByDeliverer,
@@ -53281,7 +53355,7 @@ export type service_provider_stripe_info = {
 	email?:string,
 	id:number,
 	payouts_enabled:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status:string,
 	stripe_id:string
 }
@@ -53309,6 +53383,11 @@ export type service_provider_stripe_info_aggregate_fields = {
 	variance?:service_provider_stripe_info_variance_fields
 }
 
+/** append existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_stripe_info_append_input = {
+		requirements?:jsonb
+}
+
 /** aggregate avg on columns */
 export type service_provider_stripe_info_avg_fields = {
 	__typename?: "service_provider_stripe_info_avg_fields",
@@ -53327,7 +53406,7 @@ export type service_provider_stripe_info_bool_exp = {
 	email?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	payouts_enabled?:Boolean_comparison_exp,
-	requirements?:String_comparison_exp,
+	requirements?:jsonb_comparison_exp,
 	status?:String_comparison_exp,
 	stripe_id?:String_comparison_exp
 }
@@ -53336,6 +53415,22 @@ export type service_provider_stripe_info_bool_exp = {
 export enum service_provider_stripe_info_constraint {
 	stripe_info_pkey = "stripe_info_pkey",
 	stripe_info_stripe_id_key = "stripe_info_stripe_id_key"
+}
+
+/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+export type service_provider_stripe_info_delete_at_path_input = {
+		requirements?:string[]
+}
+
+/** delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array */
+export type service_provider_stripe_info_delete_elem_input = {
+		requirements?:number
+}
+
+/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+export type service_provider_stripe_info_delete_key_input = {
+		requirements?:string
 }
 
 /** input type for incrementing numeric columns in table "service_provider.stripe_info" */
@@ -53351,7 +53446,7 @@ export type service_provider_stripe_info_insert_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53361,7 +53456,6 @@ export type service_provider_stripe_info_max_fields = {
 	__typename?: "service_provider_stripe_info_max_fields",
 	email?:string,
 	id?:number,
-	requirements?:string,
 	status?:string,
 	stripe_id?:string
 }
@@ -53371,7 +53465,6 @@ export type service_provider_stripe_info_min_fields = {
 	__typename?: "service_provider_stripe_info_min_fields",
 	email?:string,
 	id?:number,
-	requirements?:string,
 	status?:string,
 	stripe_id?:string
 }
@@ -53417,6 +53510,11 @@ export type service_provider_stripe_info_pk_columns_input = {
 		id:number
 }
 
+/** prepend existing jsonb value of filtered columns with new jsonb value */
+export type service_provider_stripe_info_prepend_input = {
+		requirements?:jsonb
+}
+
 /** select columns of table "service_provider.stripe_info" */
 export enum service_provider_stripe_info_select_column {
 	charge_fees_on_customer = "charge_fees_on_customer",
@@ -53438,7 +53536,7 @@ export type service_provider_stripe_info_set_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53477,7 +53575,7 @@ export type service_provider_stripe_info_stream_cursor_value_input = {
 	email?:string,
 	id?:number,
 	payouts_enabled?:boolean,
-	requirements?:string,
+	requirements?:jsonb,
 	status?:string,
 	stripe_id?:string
 }
@@ -53502,8 +53600,19 @@ export enum service_provider_stripe_info_update_column {
 }
 
 export type service_provider_stripe_info_updates = {
-		/** increments the numeric columns with given value of the filtered values */
+		/** append existing jsonb value of filtered columns with new jsonb value */
+	_append?:service_provider_stripe_info_append_input,
+	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+	_delete_at_path?:service_provider_stripe_info_delete_at_path_input,
+	/** delete the array element with specified index (negative integers count from
+the end). throws an error if top level container is not an array */
+	_delete_elem?:service_provider_stripe_info_delete_elem_input,
+	/** delete key/value pair or string element. key/value pairs are matched based on their key value */
+	_delete_key?:service_provider_stripe_info_delete_key_input,
+	/** increments the numeric columns with given value of the filtered values */
 	_inc?:service_provider_stripe_info_inc_input,
+	/** prepend existing jsonb value of filtered columns with new jsonb value */
+	_prepend?:service_provider_stripe_info_prepend_input,
 	/** sets the columns of the filtered rows to the given values */
 	_set?:service_provider_stripe_info_set_input,
 	/** filter the rows which have to be updated */
@@ -76882,8 +76991,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_service_provider_stripe_info:{
+			_append:{
+				type:"service_provider_stripe_info_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_stripe_info_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_stripe_info_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_stripe_info_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"service_provider_stripe_info_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_stripe_info_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -76902,8 +77041,38 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		},
 		update_service_provider_stripe_info_by_pk:{
+			_append:{
+				type:"service_provider_stripe_info_append_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_at_path:{
+				type:"service_provider_stripe_info_delete_at_path_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_elem:{
+				type:"service_provider_stripe_info_delete_elem_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_delete_key:{
+				type:"service_provider_stripe_info_delete_key_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
 			_inc:{
 				type:"service_provider_stripe_info_inc_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			_prepend:{
+				type:"service_provider_stripe_info_prepend_input",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -98161,6 +98330,16 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_stripe_info:{
+		requirements:{
+			path:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
 	service_provider_stripe_info_aggregate_fields:{
 		count:{
 			columns:{
@@ -98175,6 +98354,14 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		}
+	},
+	service_provider_stripe_info_append_input:{
+		requirements:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
 		}
 	},
 	service_provider_stripe_info_bool_exp:{
@@ -98233,7 +98420,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String_comparison_exp",
+			type:"jsonb_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98252,6 +98439,30 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	service_provider_stripe_info_constraint: "enum",
+	service_provider_stripe_info_delete_at_path_input:{
+		requirements:{
+			type:"String",
+			array:true,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	service_provider_stripe_info_delete_elem_input:{
+		requirements:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	service_provider_stripe_info_delete_key_input:{
+		requirements:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_stripe_info_inc_input:{
 		id:{
 			type:"Int",
@@ -98298,7 +98509,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98414,6 +98625,14 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		}
 	},
+	service_provider_stripe_info_prepend_input:{
+		requirements:{
+			type:"jsonb",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
 	service_provider_stripe_info_select_column: "enum",
 	service_provider_stripe_info_set_input:{
 		charge_fees_on_customer:{
@@ -98453,7 +98672,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98523,7 +98742,7 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		requirements:{
-			type:"String",
+			type:"jsonb",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98543,8 +98762,38 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	service_provider_stripe_info_update_column: "enum",
 	service_provider_stripe_info_updates:{
+		_append:{
+			type:"service_provider_stripe_info_append_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_at_path:{
+			type:"service_provider_stripe_info_delete_at_path_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_elem:{
+			type:"service_provider_stripe_info_delete_elem_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_delete_key:{
+			type:"service_provider_stripe_info_delete_key_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		_inc:{
 			type:"service_provider_stripe_info_inc_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_prepend:{
+			type:"service_provider_stripe_info_prepend_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -110548,7 +110797,7 @@ export const ReturnTypes: Record<string,any> = {
 		email:"String",
 		id:"Int",
 		payouts_enabled:"Boolean",
-		requirements:"String",
+		requirements:"jsonb",
 		status:"String",
 		stripe_id:"String"
 	},
@@ -110575,14 +110824,12 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_stripe_info_max_fields:{
 		email:"String",
 		id:"Int",
-		requirements:"String",
 		status:"String",
 		stripe_id:"String"
 	},
 	service_provider_stripe_info_min_fields:{
 		email:"String",
 		id:"Int",
-		requirements:"String",
 		status:"String",
 		stripe_id:"String"
 	},

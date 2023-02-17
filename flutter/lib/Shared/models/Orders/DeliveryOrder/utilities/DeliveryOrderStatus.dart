@@ -1,7 +1,6 @@
 enum DeliveryOrderStatus {
   OrderReceived,
   OnTheWayToPickup,
-  PackageReady,
   AtPickup,
   OnTheWayToDropoff,
   AtDropoff,

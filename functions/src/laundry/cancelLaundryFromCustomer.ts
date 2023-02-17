@@ -46,8 +46,7 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
 
   let paymentDetails: PaymentDetails = {
     orderId: cancelOrderDetails.orderId,
-    orderType: OrderType.Laundry,
-    serviceProviderId: order.storeId,
+    serviceProviderDetailsId: order.spDetailsId,
     orderStripePaymentInfo: order.stripeInfo
   }
   switch (order.status) {

@@ -273,10 +273,13 @@ class CreateServiceViewController {
             10,
             serviceInput.value.selfDeliveryCost!.freeDeliveryMinimumCost,
             serviceInput.value.selfDeliveryCost!.freeDeliveryKmRange,
+            true,
+            false,
+            serviceInput.value.isSelfDelivery,
           ),
           selfDelivery: serviceInput.value.deliveryType ==
               ServiceDeliveryType.Self_delivery,
-          language: cModel.Language.EN);
+          language: {cModel.Language.EN: true});
       return true;
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message?.toString() ?? "Unknown Error");

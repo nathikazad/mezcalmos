@@ -1,5 +1,5 @@
 import 'package:get/instance_manager.dart';
-import 'package:graphql/src/core/query_result.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/review/__generated/review.graphql.dart';
@@ -28,4 +28,60 @@ Future<int?> insert_review({required Review review}) async {
     throw Exception("🚨 insert review exception 🚨 \n ${res.exception}");
   }
   return res.parsedData!.insert_review_one?.id;
+}
+
+Future<double?> get_service_review_average(
+    {required int detailsId, bool withCache = true}) async {
+  final QueryResult<Query$get_service_review_average> response =
+      await _db.graphQLClient.query$get_service_review_average(
+    Options$Query$get_service_review_average(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+      variables: Variables$Query$get_service_review_average(
+          serviceDetailsId: detailsId),
+    ),
+  );
+  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?
+      data = response.parsedData!.service_provider_details_by_pk
+          ?.reviews_aggregate.aggregate?.avg;
+
+  if (data == null) {
+    throw Exception(
+        "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
+  } else {
+    return data.rating;
+  }
+}
+
+Future<List<Review>?> get_service_reviews(
+    {required int serviceDetailsId, bool withCache = true}) async {
+  final QueryResult<Query$get_service_reviews> response =
+      await _db.graphQLClient.query$get_service_reviews(
+    Options$Query$get_service_reviews(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
+      variables: Variables$Query$get_service_reviews(
+          serviceDetailsId: serviceDetailsId),
+    ),
+  );
+  List<Query$get_service_reviews$service_provider_details_by_pk$reviews>? data =
+      response.parsedData!.service_provider_details_by_pk?.reviews;
+
+  if (data == null) {
+    throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
+  } else {
+    return data.map(
+        (Query$get_service_reviews$service_provider_details_by_pk$reviews
+            reviewData) {
+      return Review(
+          id: reviewData.id,
+          rating: reviewData.rating,
+          comment: reviewData.note,
+          reviewTime: DateTime.parse(reviewData.created_at),
+          toEntityId: reviewData.to_entity_id,
+          toEntityType: reviewData.to_entity_type.toServiceProviderType(),
+          fromEntityId: reviewData.from_entity_id,
+          fromEntityType: reviewData.from_entity_type.toServiceProviderType());
+    }).toList();
+  }
 }

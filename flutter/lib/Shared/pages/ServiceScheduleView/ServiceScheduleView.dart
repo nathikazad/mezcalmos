@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceAcceptedPayments.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/components/ServiceStripePaymentSetup.dart';
-import 'package:mezcalmos/Shared/pages/ServicePaymentsView/controllers/ServicePaymentsViewController.dart';
-import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/pages/ServiceScheduleView/components/ServiceScheduleWidgets.dart';
+import 'package:mezcalmos/Shared/pages/ServiceScheduleView/controllers/ServiceScheduleViewController.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-    ['ServicePaymentsView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpEditInfoView']['ROpEditInfoView'];
 
 class ServiceScheduleView extends StatefulWidget {
   const ServiceScheduleView({
@@ -20,52 +19,78 @@ class ServiceScheduleView extends StatefulWidget {
 }
 
 class _ServiceScheduleViewState extends State<ServiceScheduleView> {
-  ServicePaymentsViewController viewController =
-      ServicePaymentsViewController();
-
+  ServiceScheduleViewController viewController =
+      ServiceScheduleViewController();
+  late ServiceScheduleWidgets _viewWidgets;
   int? serviceProviderId;
   @override
   void initState() {
-    if (Get.parameters["ServiceProviderId"] != null &&
-        int.tryParse(Get.parameters["ServiceProviderId"]!) != null) {
-      serviceProviderId = int.tryParse(Get.parameters["ServiceProviderId"]!);
-      viewController.init(serviceProviderId: serviceProviderId!);
-    }
-
+    _viewWidgets = ServiceScheduleWidgets(
+        viewController: viewController, context: context);
     super.initState();
   }
 
   @override
   void dispose() {
-    viewController.dspose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (viewController.showStripe.isTrue) {
-        return ServiceStripePaymentSetup(viewController: viewController);
-      } else if (viewController.setupClicked.isTrue) {
+      if (viewController.oldSchedule.value != null) {
+        return _buidSchedule();
+      } else {
         return Container(
           alignment: Alignment.center,
-          color: Colors.white,
-          child: CircularProgressIndicator(),
+          child: MezLogoAnimation(
+            centered: true,
+          ),
         );
-      } else
-        return Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-              onClick: MezRouter.back, title: "${_i18n()['payments']}"),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      }
+    });
+  }
+
+  Widget _buidSchedule() {
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ServiceAcceptedPayments(viewController: viewController),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                  child: _viewWidgets.editWorkingHoursComponent(),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
               ],
             ),
           ),
-        );
-    });
+        ),
+        MezButton(
+          label: '${_i18n()["saveInfo"]}',
+          borderRadius: 0,
+          withGradient: false,
+          height: 70,
+          onClick: () async {
+            await viewController.updateSchedule().then((bool value) =>
+                Get.snackbar('${_i18n()["saved"]}', '${_i18n()["savedText"]}',
+                    backgroundColor: Colors.black,
+                    colorText: Colors.white,
+                    shouldIconPulse: false,
+                    icon: Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    )));
+          },
+        )
+      ],
+    );
   }
 }

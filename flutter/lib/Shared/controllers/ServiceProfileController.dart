@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 
-class ServiceProfileViewController {
+class ServiceProfileController extends GetxController {
   // constants //
   late int serviceId;
   late int detailsId;
@@ -15,16 +15,27 @@ class ServiceProfileViewController {
   bool get hasData => _service.value != null;
 
   bool get isAvailable => true;
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
 
   // methods //
   // init //
-  Future<void> init(
-      {required int serviceDetailsId, required int serviceId}) async {
+  void assignVars({required int serviceDetailsId, required int serviceId}) {
     detailsId = serviceDetailsId;
     this.serviceId = serviceId;
+  }
 
+  Future<void> fetchService() async {
     _service.value = await get_service_details_by_id(
-        serviceDetailsId: detailsId, serviceId: this.serviceId);
+        serviceDetailsId: detailsId, serviceId: serviceId, withCache: false);
+    _service.refresh();
   }
 
   void switchOpen(bool bool) {}

@@ -26,6 +26,7 @@ class DeliveryOrder {
   DateTime orderTime;
   num deliveryCost;
   num packageCost;
+  bool packageReady;
   MezLocation pickupLocation;
   MezLocation dropoffLocation;
   LatLng? driverLocation;
@@ -57,9 +58,10 @@ class DeliveryOrder {
     required this.paymentType,
     required this.driverInfo,
     required this.stripeOrderPaymentInfo,
+    required this.packageReady,
     this.estimatedArrivalAtDropoffTime,
     this.serviceOrderId,
-  //  this.driverAssigned = false,
+    //  this.driverAssigned = false,
     this.estimatedArrivalAtPickupTime,
     this.estimatedPackageReadyTime,
   });
@@ -89,6 +91,7 @@ class DeliveryOrder {
   }) {
     return DeliveryOrder(
       id: id ?? this.id,
+      packageReady: packageReady,
       orderType: orderType,
       serviceInfo: serviceInfo ?? this.serviceInfo,
       driverInfo: driverInfo ?? this.driverInfo,
@@ -187,7 +190,6 @@ class DeliveryOrder {
         DeliveryOrderStatus.AtPickup,
         DeliveryOrderStatus.AtDropoff,
         DeliveryOrderStatus.OnTheWayToDropoff,
-        DeliveryOrderStatus.PackageReady,
         DeliveryOrderStatus.OnTheWayToDropoff
       ].contains(status);
   num get totalCost => packageCost + deliveryCost;

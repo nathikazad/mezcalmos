@@ -5,21 +5,19 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
-import 'package:mezcalmos/CustomerApp/models/CustStripeInfo.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/customer/hsCustomer.dart';
+import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // controller class //
@@ -31,8 +29,10 @@ class CustCartViewController {
   CustomerCartController cartController = Get.find<CustomerCartController>();
 
   // Obs variables //
-  Rxn<CustStripeInfo> custStripeInfo = Rxn();
-  List<CreditCard>? get customerCards => custStripeInfo.value?.cards;
+  //Rxn<CustStripeInfo> custStripeInfo = Rxn();
+  Rxn<List<CreditCard>> _cards = Rxn();
+
+  List<CreditCard>? get customerCards => _cards.value;
   RxList<PaymentOption> options = RxList<PaymentOption>();
   Rxn<loc.MezLocation> orderToLocation = Rxn();
 
@@ -70,7 +70,6 @@ class CustCartViewController {
       _cartRxn.value?.toLocation = orderToLocation.value;
 
       // ignore: unawaited_futures
-      updateShippingPrice();
     }
 
     if (customerAuthController.customer?.stripeInfo?.cards.isNotEmpty == true)
@@ -85,6 +84,9 @@ class CustCartViewController {
     await getCustomerCards();
     await _addingValusToOptions();
     pickerChoice.value = options.first;
+    if (_cartRxn.value?.toLocation != null) {
+      await updateShippingPrice();
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) => _cartRxn.refresh());
   }
 
@@ -111,20 +113,17 @@ class CustCartViewController {
 
   Future<void> getCustomerCards() async {
     // TODO: hasura-ch
-    final CustStripeInfo? data = await get_customer_stripe_info(
-        userId: Get.find<AuthController>().hasuraUserId!, withCache: false);
-    mezDbgPrint("Data from controller ==========>>> 😛${data?.toJson()}");
-    if (data != null) {
-      custStripeInfo.value = data;
-      custStripeInfo.value?.cards = data.cards;
-    }
+    final List<CreditCard> data = await get_customer_cards(
+        customerId: Get.find<AuthController>().hasuraUserId!, withCache: false);
+    mezDbgPrint("Data from controller ==========>>> 😛${data.length}");
+    _cards.value = data;
 
-    if (custStripeInfo.value?.cards.isEmpty == true) {
+    if (_cards.value?.isEmpty == true) {
       options.removeWhere((PaymentOption element) =>
           element.entries.first.key == PickerChoice.SavedCard);
     }
     if (pickerChoice.value?.entries.first.key == PickerChoice.SavedCard &&
-        custStripeInfo.value?.cards.isEmpty == true) {
+        _cards.value?.isEmpty == true) {
       pickerChoice.value = options.first;
     }
     //   }
@@ -181,14 +180,14 @@ class CustCartViewController {
           mezDbgPrint(
               "Before first wheeeeereeee =========>${customerCards?.length}");
           final CreditCard? newCard = customerCards
-              ?.firstWhere((CreditCard element) => element.id == newCardId);
+              ?.firstWhere((CreditCard element) => element.cardId == newCardId);
 
           if (newCard != null) {
             card.value = newCard;
             // options
             //     .insert(options.length - 1, {PickerChoice.SavedCard: newCard});
             pickerChoice.value = options.firstWhere((PaymentOption element) =>
-                element.entries.first.value?.id == newCard.id);
+                element.entries.first.value?.cardId == newCard.cardId);
           }
         } else {
           switchPaymentMedthod(paymentType: PaymentType.Cash);
@@ -206,12 +205,18 @@ class CustCartViewController {
 
   Future<void> checkoutActionButton() async {
     cart.notes = noteText.text;
+    num? newOrderId;
     try {
-      final String? stripePaymentId =
-          await acceptPaymentByCardChoice(getCardChoice);
-      mezDbgPrint("✅ Stripe payment id ====================>>>");
-      final num? newOrderId =
-          await cartController.checkout(stripePaymentId: stripePaymentId);
+      if (cart.paymentType == PaymentType.Card) {
+        final String? stripePaymentId =
+            await acceptPaymentByCardChoice(getCardChoice);
+        if (stripePaymentId != null) {
+          newOrderId =
+              await cartController.checkout(stripePaymentId: stripePaymentId);
+        }
+      } else {
+        newOrderId = await cartController.checkout(stripePaymentId: null);
+      }
 
       if (newOrderId != null) {
         popEverythingAndNavigateTo(
@@ -237,37 +242,34 @@ class CustCartViewController {
     if (cart.paymentType == PaymentType.Card) {
       switch (choice) {
         case CardChoice.ApplePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
-              serviceProviderId:
-                  cart.restaurant!.info.hasuraId.toString().toString(),
-              orderType: OrderType.Restaurant,
+          cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
               paymentAmount: cart.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithApplePay(
-              paymentAmount: cart.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName: cart.restaurant!.info.name);
+          if (paymentIntent != null) {
+            stripePaymentId = extractPaymentIdFromIntent(
+                paymentIntent.paymentIntent.toString());
+            await acceptPaymentWithApplePay(
+                paymentAmount: cart.totalCost,
+                paymentIntentData: paymentIntent,
+                merchantName: cart.restaurant!.info.name);
+          }
           break;
         case CardChoice.GooglePay:
-          final ServerResponse paymentIntentResponse = await getPaymentIntent(
-              customerId: Get.find<AuthController>().user!.hasuraId.toString(),
-              serviceProviderId:
-                  cart.restaurant!.info.hasuraId.toString().toString(),
-              orderType: OrderType.Restaurant,
+          cModel.PaymentIntentResponse? paymentIntent = await getPaymentIntent(
+              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
               paymentAmount: cart.totalCost);
-          stripePaymentId = extractPaymentIdFromIntent(
-              paymentIntentResponse.data['paymentIntent'].toString());
-          await acceptPaymentWithGooglePay(
-              paymentAmount: cart.totalCost,
-              paymentIntentData: paymentIntentResponse.data,
-              merchantName: cart.restaurant!.info.name);
+          if (paymentIntent != null) {
+            stripePaymentId = extractPaymentIdFromIntent(
+                paymentIntent.paymentIntent.toString());
+            await acceptPaymentWithGooglePay(
+                paymentAmount: cart.totalCost,
+                paymentIntentData: paymentIntent,
+                merchantName: cart.restaurant!.info.name);
+          }
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderId:
-                  cart.restaurant!.info.hasuraId.toString().toString(),
+              serviceProviderDetailsId: cart.restaurant!.info.hasuraId,
               paymentAmount: cart.totalCost,
               card: card.value!);
           break;
@@ -290,9 +292,8 @@ class CustCartViewController {
     return cart.restaurant?.paymentInfo?.acceptedPayments[PaymentType.Card] ==
             true ||
         cart.restaurant?.paymentInfo
-                    ?.acceptedPayments[PaymentType.BankTransfer] ==
-                true &&
-            custStripeInfo.value != null;
+                ?.acceptedPayments[PaymentType.BankTransfer] ==
+            true;
   }
 
   bool get showFees {
@@ -369,9 +370,9 @@ class CustCartViewController {
         } else {
           cart.shippingCost = null;
           // await saveCart();
-          isShippingSet.value = true;
+          isShippingSet.value = false;
 
-          return true;
+          return false;
         }
       } else {
         cart.shippingCost = null;
@@ -382,9 +383,9 @@ class CustCartViewController {
     } else {
       cart.shippingCost = null;
       //   await saveCart();
-      isShippingSet.value = true;
+      isShippingSet.value = false;
 
-      return true;
+      return false;
     }
   }
 

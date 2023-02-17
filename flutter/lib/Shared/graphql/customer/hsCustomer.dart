@@ -137,37 +137,37 @@ Future set_notification_token(
   }
 }
 
-Future<CustStripeInfo?> get_customer_stripe_info(
-    {required int userId, bool withCache = true}) async {
-  // final QueryResult<Query$get_customer_stripe_info> res = await _graphClient
-  //     .query$get_customer_stripe_info(Options$Query$get_customer_stripe_info(
-  //         fetchPolicy:
-  //             withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-  //         variables:
-  //             Variables$Query$get_customer_stripe_info(customer_id: userId)));
-  // if (res.parsedData?.customer_customer == null) {
-  //   throw Exception("🛑 get customer cards exceptions 🛑  =>${res.exception}");
-  // }
-  // if (res.parsedData?.customer_customer.first.stripe_info != null) {
-  //   final dynamic? dbCards =
-  //       res.parsedData!.customer_customer.first.stripe_info?["cards"];
-  //   mezDbgPrint(
-  //       "✅ getting cards success =====>${res.parsedData?.customer_customer.first.stripe_info} ");
+// Future<CustStripeInfo?> get_customer_stripe_info(
+//     {required int userId, bool withCache = true}) async {
+//   // final QueryResult<Query$get_customer_stripe_info> res = await _graphClient
+//   //     .query$get_customer_stripe_info(Options$Query$get_customer_stripe_info(
+//   //         fetchPolicy:
+//   //             withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+//   //         variables:
+//   //             Variables$Query$get_customer_stripe_info(customer_id: userId)));
+//   // if (res.parsedData?.customer_customer == null) {
+//   //   throw Exception("🛑 get customer cards exceptions 🛑  =>${res.exception}");
+//   // }
+//   // if (res.parsedData?.customer_customer.first.stripe_info != null) {
+//   //   final dynamic? dbCards =
+//   //       res.parsedData!.customer_customer.first.stripe_info?["cards"];
+//   //   mezDbgPrint(
+//   //       "✅ getting cards success =====>${res.parsedData?.customer_customer.first.stripe_info} ");
 
-  //   final List<CreditCard> cards = [];
-  //   if (dbCards != null && dbCards.isNotEmpty) {
-  //     dbCards?.forEach((key, data) {
-  //       mezDbgPrint(" 🤣 data =======>$data");
-  //       cards.add(CreditCard.fromData(data: data));
-  //     });
-  //   }
-  //   final CustStripeInfo stripeInfo = CustStripeInfo(
-  //       id: res.parsedData!.customer_customer.first.stripe_info["id"],
-  //       cards: cards);
-  //   return stripeInfo;
-  // }
-  return null;
-}
+//   //   final List<CreditCard> cards = [];
+//   //   if (dbCards != null && dbCards.isNotEmpty) {
+//   //     dbCards?.forEach((key, data) {
+//   //       mezDbgPrint(" 🤣 data =======>$data");
+//   //       cards.add(CreditCard.fromData(data: data));
+//   //     });
+//   //   }
+//   //   final CustStripeInfo stripeInfo = CustStripeInfo(
+//   //       id: res.parsedData!.customer_customer.first.stripe_info["id"],
+//   //       cards: cards);
+//   //   return stripeInfo;
+//   // }
+//   return null;
+// }
 
 Future<List<MinimalOrder>> get_customer_orders(
     {required int customerId, required bool inProcess}) async {
