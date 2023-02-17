@@ -53,7 +53,7 @@ export async function addCard(userId: number, cardDetails: CardDetails): Promise
 export interface ChargeCardDetails {
   serviceProviderId: number,
   cardId: string,
-  // orderType: OrderType,
+  
   paymentAmount: number
 }
 export interface ChargeCardResponse {

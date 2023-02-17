@@ -10,14 +10,6 @@ factory AuthResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum OrderType { Taxi, Restaurant, Laundry, Water }
-extension ParseOrderTypeToString on OrderType {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
 class PaymentIntentResponse {
   String? paymentIntent;
   String? ephemeralKey;
@@ -133,29 +125,27 @@ Map<String, dynamic> toFirebaseFormattedJson() {
 }
 
 class DeliveryDetails {
-  num minimumCost;
-  num costPerKm;
-  num radius;
+  num? minimumCost;
+  num? costPerKm;
+  num? radius;
   num? freeDeliveryMinimumCost;
   num? freeDeliveryKmRange;
-  DeliveryDetails(this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange);
+  bool deliveryAvailable;
+  bool customerPickup;
+  bool selfDelivery;
+  DeliveryDetails(this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange, this.deliveryAvailable, this.customerPickup, this.selfDelivery);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "minimumCost": minimumCost,
       "costPerKm": costPerKm,
       "radius": radius,
       "freeDeliveryMinimumCost": freeDeliveryMinimumCost,
-      "freeDeliveryKmRange": freeDeliveryKmRange};
+      "freeDeliveryKmRange": freeDeliveryKmRange,
+      "deliveryAvailable": deliveryAvailable,
+      "customerPickup": customerPickup,
+      "selfDelivery": selfDelivery};
   }
 
-}
-
-enum Language { EN, ES }
-extension ParseLanguageToString on Language {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
 }
 
 enum CustomerAppType { Native, Web }
@@ -220,6 +210,14 @@ factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
+enum OrderType { Taxi, Restaurant, Laundry, Water }
+extension ParseOrderTypeToString on OrderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
 enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {
@@ -230,6 +228,14 @@ extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
 
 enum AppType { Customer, RestaurantApp, DeliveryApp, DeliveryAdmin, MezAdmin, LaundryApp }
 extension ParseAppTypeToString on AppType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum Language { EN, ES }
+extension ParseLanguageToString on Language {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);

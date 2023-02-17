@@ -154,6 +154,7 @@ class ServiceInfo extends UserInfo {
   int? locationId;
 
   int? descriptionId;
+  String? phoneNumber;
   LanguageMap? description;
 
   ServiceInfo({
@@ -161,6 +162,7 @@ class ServiceInfo extends UserInfo {
     super.firebaseId,
     this.description,
     this.locationId,
+    this.phoneNumber,
     required super.hasuraId,
     required super.image,
     this.descriptionId,

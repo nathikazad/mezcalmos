@@ -54,27 +54,30 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
         label: "${_i18n()['save']}",
         borderRadius: 0,
         onClick: () async {
-          await viewController.saveInfo().then((bool value) {
-            if (value) {
-              Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedSuccess']}",
-                  backgroundColor: Colors.black,
-                  colorText: Colors.white,
-                  shouldIconPulse: false,
-                  icon: Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                  ));
-            } else {
-              Get.snackbar("${_i18n()['error']}", "${_i18n()['error']}",
-                  backgroundColor: Colors.black,
-                  colorText: Colors.white,
-                  shouldIconPulse: false,
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.red,
-                  ));
-            }
-          });
+          if (viewController.formKey.currentState?.validate() == true) {
+            await viewController.saveInfo().then((bool value) {
+              if (value) {
+                Get.snackbar(
+                    "${_i18n()['saved']}", "${_i18n()['savedSuccess']}",
+                    backgroundColor: Colors.black,
+                    colorText: Colors.white,
+                    shouldIconPulse: false,
+                    icon: Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ));
+              } else {
+                Get.snackbar("${_i18n()['error']}", "${_i18n()['error']}",
+                    backgroundColor: Colors.black,
+                    colorText: Colors.white,
+                    shouldIconPulse: false,
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                    ));
+              }
+            });
+          }
         },
       ),
       body: Obx(
@@ -82,66 +85,87 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
           if (viewController.service.value != null) {
             return SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ServiceImageEditComponent(
-                        editInfoController: viewController),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        viewController.service.value?.name ?? "",
-                        style: Get.textTheme.displaySmall,
+                child: Form(
+                  key: viewController.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ServiceImageEditComponent(
+                          editInfoController: viewController),
+                      SizedBox(
+                        height: 15,
                       ),
-                    )
-                    // Laundry name fiels
-                    ,
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Text("${_i18n()['name']}"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    _restNameTextField(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                        '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}'),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    _prdescTextField(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text(
-                        '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}'),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    _scdescTextField(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text("${_i18n()['location']}"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    ServiceEditLocationCard(
-                      editInfoController: viewController,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                  ],
+                      Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          viewController.service.value?.name ?? "",
+                          style: Get.textTheme.displaySmall,
+                        ),
+                      )
+                      // Laundry name fiels
+                      ,
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text("${_i18n()['name']}"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _restNameTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text("${_i18n()['phoneNumber']}"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        controller: viewController.phoneNumber,
+                        style: Get.textTheme.bodyLarge,
+                        keyboardType: TextInputType.phone,
+                        validator: (String? v) {
+                          if (v.toString().isPhoneNumber == false) {
+                            return "${_i18n()['phoneErrorText']}";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                          '${_i18n()['description']} ${viewController.primaryLang.value.toLanguageName()}'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _prdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                          '${_i18n()['description']} ${viewController.secondaryLang.value.toLanguageName()}'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      _scdescTextField(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text("${_i18n()['location']}"),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      ServiceEditLocationCard(
+                        editInfoController: viewController,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
                 ));
           } else {
             return Container(
@@ -159,6 +183,12 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
     return TextFormField(
       controller: viewController.serviceNameTxt,
       style: Get.textTheme.bodyLarge,
+      validator: (String? v) {
+        if (v == null || v.isEmpty) {
+          return "";
+        }
+        return null;
+      },
     );
   }
 

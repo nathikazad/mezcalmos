@@ -115,8 +115,8 @@ class ServicePaymentsViewController {
 
   Future<void> _updateServiceProvider() async {
     try {
-      await updateServiceProvider(serviceProviderId, serviceProviderType,
-          paymentInfo!.acceptedPayments);
+      await updateServiceProvider(
+          _detailsId, serviceProviderType, paymentInfo!.acceptedPayments);
       await _fetchPayment(withCache: false);
 
       _checkStripeDetails();
@@ -195,7 +195,7 @@ class ServicePaymentsViewController {
   Future<void> _setupService() async {
     try {
       cModel.SetupResponse res =
-          await onboardServiceProvider(serviceProviderId, serviceProviderType);
+          await onboardServiceProvider(_detailsId, serviceProviderType);
       mezDbgPrint("response ============> $res");
       stripeUrl = res.url;
       showStripe.value = true;

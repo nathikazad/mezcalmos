@@ -19,9 +19,10 @@ class ServiceInfoEditViewController {
   imPicker.ImagePicker _imagePicker = imPicker.ImagePicker();
   // TEXT INPUTS //
   TextEditingController serviceNameTxt = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
   TextEditingController primaryServiceDesc = TextEditingController();
   TextEditingController secondayServiceDesc = TextEditingController();
-
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   // OBS //
 
   Rxn<ServiceInfo> service = Rxn<ServiceInfo>();
@@ -68,6 +69,7 @@ class ServiceInfoEditViewController {
   void _setServiceInfo() {
     if (service.value != null) {
       serviceNameTxt.text = service.value?.name ?? '';
+      phoneNumber.text = service.value?.phoneNumber ?? '';
 
       newLocation.value = service.value!.location;
       newImageUrl.value = service.value?.image;
@@ -141,6 +143,7 @@ class ServiceInfoEditViewController {
     return ServiceInfo(
         location: newLocation.value!,
         hasuraId: 1,
+        phoneNumber: phoneNumber.text,
         descriptionId: newDescId,
         image: newImageUrl.value,
         name: serviceNameTxt.text);

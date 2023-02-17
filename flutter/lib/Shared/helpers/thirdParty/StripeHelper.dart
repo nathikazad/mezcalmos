@@ -300,27 +300,24 @@ String extractPaymentIdFromIntent(String a) {
 }
 
 Future<cModel.SetupResponse> onboardServiceProvider(
-  int serviceProviderId,
+  int serviceProviderDetailsId,
   ServiceProviderType orderType,
 ) async {
-  mezDbgPrint("Payload ================>>> $serviceProviderId");
+  mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
   return await CloudFunctions.stripe_setupServiceProvider(
-    serviceProviderId: serviceProviderId,
-    orderType: cModel.OrderType.Restaurant,
-    // acceptedPayments: acceptedPayments!,
+    serviceProviderDetailsId: serviceProviderDetailsId,
   );
 }
 
 Future<void> updateServiceProvider(
-    int serviceProviderId,
+    int serviceProviderDetailsId,
     ServiceProviderType orderType,
     Map<PaymentType, bool> acceptedPayments) async {
-  mezDbgPrint("Payload ================>>> $serviceProviderId");
+  mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
   await CloudFunctions.stripe_updateServiceProvider(
-    serviceProviderId: serviceProviderId,
-    orderType: cModel.OrderType.Restaurant,
+    serviceProviderDetailsId: serviceProviderDetailsId,
   );
 
   // return serviceProviderFunctions(

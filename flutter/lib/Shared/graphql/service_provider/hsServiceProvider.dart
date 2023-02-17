@@ -177,6 +177,7 @@ Future<ServiceInfo> update_service_info(
         data: Input$service_provider_details_set_input(
             name: serviceInfo.name,
             image: serviceInfo.image,
+            phone_number: serviceInfo.phoneNumber,
             description_id: serviceInfo.descriptionId),
       ),
     ),
