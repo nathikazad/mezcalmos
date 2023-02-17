@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -209,21 +211,19 @@ class CustLaundryOrderViewController {
     }
   }
 
-  Future<ServerResponse> cancelOrder() async {
-    final HttpsCallable cancelOrder = FirebaseFunctions.instance
-        .httpsCallable('restaurant2-cancelOrderFromCustomer');
+  Future<bool> cancelOrder() async {
     try {
-      final HttpsCallableResult<dynamic> response = await cancelOrder
-          .call(<String, dynamic>{"orderId": order.value!.orderId});
-      mezDbgPrint(response.toString());
-      print(response.data);
-
-      final ServerResponse res = ServerResponse.fromJson(response.data);
-
-      return res;
+      await CloudFunctions.laundry_cancelFromCustomer(
+          orderId: order.value!.orderId);
+      return true;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(stk);
+      mezDbgPrint(e);
+      return false;
     } catch (e) {
-      return ServerResponse(ResponseStatus.Error,
-          errorMessage: "Server Error", errorCode: "serverError");
+      mezDbgPrint(e);
+      return false;
     }
   }
 

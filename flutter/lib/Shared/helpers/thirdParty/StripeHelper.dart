@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -127,28 +126,25 @@ extension ParseCaptureMethodToString on CaptureMethod {
   }
 }
 
-Future<ServerResponse> getPaymentIntent(
-    {required String customerId,
-    required String serviceProviderId,
-    required OrderType orderType,
-    required num paymentAmount,
-    CaptureMethod captureMethod = CaptureMethod.Automatic}) async {
-  final HttpsCallable getPaymentIntent =
-      FirebaseFunctions.instance.httpsCallable("stripe-getPaymentIntent");
+Future<cModel.PaymentIntentResponse?> getPaymentIntent({
+  required int serviceProviderDetailsId,
+  required num paymentAmount,
+}) async {
   try {
-    final HttpsCallableResult<dynamic> response =
-        await getPaymentIntent.call(<String, String>{
-      "customerId": customerId,
-      "serviceProviderId": serviceProviderId,
-      "orderType": orderType.toFirebaseFormatString(),
-      "paymentAmount": paymentAmount.toString(),
-      "captureMethod": captureMethod.toFirebaseFormatString()
-    });
-    return ServerResponse.fromJson(response.data);
-  } catch (e) {
-    return ServerResponse(ResponseStatus.Error,
-        errorMessage: "Server Error", errorCode: "serverError");
+    cModel.PaymentIntentResponse res =
+        await CloudFunctions.stripe_getPaymentIntent(
+            paymentAmount: paymentAmount,
+            serviceProviderId: serviceProviderDetailsId);
+    return res;
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message.toString());
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
+  } catch (e, stk) {
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
 }
 
 Future<String?> addCard({required String paymentMethod}) async {
@@ -177,35 +173,51 @@ Future<ServerResponse> removeCard({required String cardId}) async {
   }
 }
 
-Future<String> acceptPaymentWithSavedCard(
+Future<String?> acceptPaymentWithSavedCard(
     {required num paymentAmount,
     required CreditCard card,
-    required String serviceProviderId}) async {
+    required int serviceProviderDetailsId}) async {
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
-  final HttpsCallable addCardFunction =
-      FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
+
   try {
-    final HttpsCallableResult<dynamic> response =
-        await addCardFunction.call(<String, dynamic>{
-      "serviceProviderId": serviceProviderId,
-      "cardId": card.cardId,
-      "orderType": OrderType.Restaurant.toFirebaseFormatString(),
-      "paymentAmount": paymentAmount
-    });
-    final ServerResponse serverResponse =
-        ServerResponse.fromJson(response.data);
-    if (serverResponse.success) {
-      return extractPaymentIdFromIntent(
-          serverResponse.data['paymentIntent'].toString());
-    } else {
-      MezSnackbar(
-          "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
-      throw Exception(serverResponse.errorMessage ?? "Unknown Error");
-    }
-  } catch (e) {
-    MezSnackbar("Add Card Error", "Server side error");
-    throw e;
+    cModel.ChargeCardResponse res = await CloudFunctions.stripe_chargeCard(
+        serviceProviderId: serviceProviderDetailsId,
+        cardId: card.cardId,
+        paymentAmount: paymentAmount);
+    return extractPaymentIdFromIntent(res.paymentIntent.toString());
+  } on FirebaseFunctionsException catch (e, stk) {
+    showErrorSnackBar(errorText: e.message.toString());
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
+  } catch (e, stk) {
+    mezDbgPrint(e);
+    mezDbgPrint(stk);
   }
+  return null;
+  // final HttpsCallable addCardFunction =
+  //     FirebaseFunctions.instance.httpsCallable("stripe-chargeCard");
+  // try {
+  //   final HttpsCallableResult<dynamic> response =
+  //       await addCardFunction.call(<String, dynamic>{
+  //     "serviceProviderId": serviceProviderId,
+  //     "cardId": card.cardId,
+  //     "orderType": OrderType.Restaurant.toFirebaseFormatString(),
+  //     "paymentAmount": paymentAmount
+  //   });
+  //   final ServerResponse serverResponse =
+  //       ServerResponse.fromJson(response.data);
+  //   if (serverResponse.success) {
+  //     return extractPaymentIdFromIntent(
+  //         serverResponse.data['paymentIntent'].toString());
+  //   } else {
+  //     MezSnackbar(
+  //         "Add Card Error", serverResponse.errorMessage ?? "Unknown Error");
+  //     throw Exception(serverResponse.errorMessage ?? "Unknown Error");
+  //   }
+  // } catch (e) {
+  //   MezSnackbar("Add Card Error", "Server side error");
+  //   throw e;
+  // }
 }
 
 Future<void> acceptPaymentWithSheet(
@@ -239,14 +251,14 @@ Future<bool> isGooglePaySupported() {
 }
 
 Future<void> acceptPaymentWithApplePay(
-    {required paymentIntentData,
+    {required cModel.PaymentIntentResponse paymentIntentData,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.publishableKey = paymentIntentData.publishableKey;
     Stripe.merchantIdentifier = "merchant.mezcalmos";
-    final clientSecret = paymentIntentData['paymentIntent'];
-    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    final String clientSecret = paymentIntentData.paymentIntent!;
+    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
     await Stripe.instance.applySettings();
     // 1. Present Apple Pay sheet
     await Stripe.instance.presentApplePay(
@@ -270,14 +282,14 @@ Future<void> acceptPaymentWithApplePay(
 }
 
 Future<void> acceptPaymentWithGooglePay(
-    {required paymentIntentData,
+    {required cModel.PaymentIntentResponse paymentIntentData,
     required String merchantName,
     required num paymentAmount}) async {
   try {
-    Stripe.publishableKey = paymentIntentData['publishableKey'];
+    Stripe.publishableKey = paymentIntentData.publishableKey;
     Stripe.merchantIdentifier = "BCR2DN4T4C3I3XDF";
-    final clientSecret = paymentIntentData['paymentIntent'];
-    Stripe.stripeAccountId = paymentIntentData['stripeAccountId'];
+    final String clientSecret = paymentIntentData.paymentIntent!;
+    Stripe.stripeAccountId = paymentIntentData.stripeAccountId;
     await Stripe.instance.applySettings();
 
     await Stripe.instance.initGooglePay(GooglePayInitParams(

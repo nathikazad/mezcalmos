@@ -59,7 +59,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
             child: Center(
               child: Text(
                 "\$${widget.viewController.cartItem.value!.totalCost().toInt()} ",
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.displaySmall,
               ),
             ),
           ),
@@ -72,7 +72,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                textStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -101,7 +101,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       child: Center(
         child: Text(
           "${_i18n()["notAvailable"]}",
-          style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+          style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
         ),
       ),
     );
@@ -110,6 +110,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
   Future<void> _handleAddButton() async {
     mezDbgPrint(
         "YES EDIT CLICKEDDDD =========>>>>>>${widget.viewController.currentMode}");
+    widget.viewController.differentRestaurantIds();
     if (auth.fireAuthUser == null) {
       dialogRequiredSignIn();
     } else {

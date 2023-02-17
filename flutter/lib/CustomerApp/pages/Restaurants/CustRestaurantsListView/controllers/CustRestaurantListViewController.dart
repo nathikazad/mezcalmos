@@ -113,7 +113,8 @@ extension RestaurantFilters on RestaurantList {
       return where((Restaurant restaurant) => restaurant.isOpen() == true)
           .toList();
     } else {
-      return this;
+      return where((Restaurant restaurant) =>
+          restaurant.state.isClosedIndef == false).toList();
     }
   }
 

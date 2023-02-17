@@ -69,6 +69,7 @@ class ServiceState {
   bool get isAuthorized => approved;
   bool get available => approved && status == ServiceStatus.Open;
   bool get isOpen => status == ServiceStatus.Open;
+  bool get isClosedIndef => status == ServiceStatus.Closed_indefinitely;
 }
 
 class MainService extends Service {
