@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -44,8 +45,15 @@ class CustLaundryOrderRequestViewController {
         isShippingSet.isTrue;
   }
 
-  void init({required Laundry laundry}) {
+  Future<void> init({required Laundry laundry}) async {
     this.laundry.value = laundry;
+    List<LaundryCostLineItem> categories =
+        await get_laundry_categories(storeId: laundry.info.hasuraId);
+    this.laundry.value!.laundryCosts.lineItems = categories;
+    mezDbgPrint("Cat lenght =============> ${categories.length}");
+    mezDbgPrint(
+        "Laundry lenght  =============> ${this.laundry.value!.laundryCosts.lineItems}");
+
     customerLoc.value =
         customerAuthController.customer?.defaultLocation?.location;
     if (customerLoc.value != null) {

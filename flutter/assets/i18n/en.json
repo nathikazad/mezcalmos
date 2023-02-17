@@ -583,6 +583,7 @@
         "LaundryRequestView": {
           "LaundryOrderRequestView": {
             "howItWorks": "How it works",
+            "categories" : "Categories",
             "deliveryLocation": "Delivery Location",
             "orderSummary": "Order Summary",
             "orderCost": "Order Cost",

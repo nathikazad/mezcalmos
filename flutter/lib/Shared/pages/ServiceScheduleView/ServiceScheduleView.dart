@@ -27,6 +27,7 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
   void initState() {
     _viewWidgets = ServiceScheduleWidgets(
         viewController: viewController, context: context);
+    viewController.init();
     super.initState();
   }
 

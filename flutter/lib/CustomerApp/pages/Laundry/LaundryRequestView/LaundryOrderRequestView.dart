@@ -8,6 +8,9 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -71,7 +74,7 @@ class _CustLaundryOrderRequestViewState
                             style: Get.textTheme.displaySmall,
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,6 +98,7 @@ class _CustLaundryOrderRequestViewState
                               ))
                             ],
                           ),
+                          _buildCats(),
                           SizedBox(
                             height: 25,
                           ),
@@ -142,6 +146,37 @@ class _CustLaundryOrderRequestViewState
             }
           },
         ));
+  }
+
+  Obx _buildCats() {
+    return Obx(
+      () => (viewController.laundry.value?.laundryCosts.lineItems.isNotEmpty ==
+              true)
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "${_i18n()["categories"]}",
+                  style: Get.textTheme.bodyLarge,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  children: List.generate(
+                      viewController
+                          .laundry.value!.laundryCosts.lineItems.length,
+                      (int index) => _laundryCostCard(
+                          item: viewController
+                              .laundry.value!.laundryCosts.lineItems[index])),
+                ),
+              ],
+            )
+          : SizedBox(),
+    );
   }
 
   Widget _orderNoteComponent() {
@@ -230,6 +265,32 @@ class _CustLaundryOrderRequestViewState
             await MezRouter.toNamed<void>(sharedRoute.kSignInRouteOptional);
           }
         },
+      ),
+    );
+  }
+
+  Widget _laundryCostCard({required LaundryCostLineItem item}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Text(
+              item.name[userLanguage]?.toString().inCaps ?? "",
+              style: Get.textTheme.bodyMedium,
+              maxLines: 1,
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Text(
+            "${item.cost.toPriceString()}/KG",
+            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+          )
+        ],
       ),
     );
   }

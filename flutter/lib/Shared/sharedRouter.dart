@@ -25,6 +25,7 @@ import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceScheduleView/ServiceScheduleView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart';
@@ -64,6 +65,7 @@ const String kdeliverySettingsView = "/deliverySettings/:serviceProviderId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kPickLocationNew = "/pick_location/new";
 const String kserviceInfoEdit = "/service/:serviceProviderId/:serviceDetailsId";
+const String kserviceScheduleEdit = "/schedule";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
     "/costDeliverySettingScreen/:providerId/:providerType";
@@ -262,6 +264,7 @@ class SharedRouter {
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
     GetPage(name: kCreateService, page: () => CreateServiceView()),
     GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
+    GetPage(name: kserviceScheduleEdit, page: () => ServiceScheduleView()),
     GetPage(
       name: kNoInternetRoute,
       page: () => NoInternetScreen(),
