@@ -4,6 +4,7 @@ import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/components/CustomerLaundrySelectCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundriesList/controllers/CustLaundriesListViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Laundry"]["LaundriesListView"];
@@ -37,18 +38,20 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 10,
+              height: 2.h,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.displayMedium,
+                style: Get.textTheme.headline3?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 2.h,
             ),
             Obx(() {
               if (viewController.hasData) {
@@ -71,10 +74,12 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
     if (viewController.laundries.value!.isNotEmpty) {
       return Column(
         children: List.generate(
-            viewController.laundries.value!.length,
-            (int index) => CustomerLaundrySelectCard(
-                laundry: viewController.laundries.value![index],
-                shippingPrice: 50)),
+          viewController.laundries.value!.length,
+          (int index) => CustomerLaundrySelectCard(
+            laundry: viewController.laundries.value![index],
+            shippingPrice: 50,
+          ),
+        ),
       );
     } else {
       return Container(
@@ -83,6 +88,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         child: Text(
           "No laundry found",
           textAlign: TextAlign.center,
+          style: Get.textTheme.subtitle2,
         ),
       );
     }

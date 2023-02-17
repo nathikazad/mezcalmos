@@ -38,7 +38,9 @@ class CustomerAppBar extends GetWidget<AuthController>
               fit: BoxFit.fitWidth,
               child: Text(
                 title!,
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Get.textTheme.headline3?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
                 textAlign: TextAlign.center,
               ),
             )

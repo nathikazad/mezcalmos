@@ -141,10 +141,10 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             if (viewController.order.value!.inDeliveryPhase())
                               Column(
                                 children: [
+                                  const SizedBox(height: 15),
                                   Column(
                                     children: _mapWidget,
                                   ),
-                                  const SizedBox(height: 10),
                                 ],
                               ),
 
@@ -170,17 +170,23 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
 
                             OrderSummaryCard(
                               order: viewController.order.value!,
-                              margin: const EdgeInsets.only(bottom: 20),
+                              margin: const EdgeInsets.only(bottom: 0),
                             ),
-                            Spacer(),
-                            Flexible(
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: LaundryOrderFooterCard(
-                                  viewController: viewController,
-                                ),
-                              ),
+                            SizedBox(
+                              height: 15,
                             ),
+                            LaundryOrderFooterCard(
+                              viewController: viewController,
+                            ),
+                            // Spacer(),
+                            // Flexible(
+                            //   child: Container(
+                            //     alignment: Alignment.center,
+                            //     child: LaundryOrderFooterCard(
+                            //       viewController: viewController,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

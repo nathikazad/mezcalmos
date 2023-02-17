@@ -42,7 +42,7 @@ class OrderSummaryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  margin: const EdgeInsets.only(bottom: 4),
+                  margin: const EdgeInsets.only(bottom: 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -66,7 +66,7 @@ class OrderSummaryCard extends StatelessWidget {
                 if (order.stripePaymentInfo != null &&
                     order.stripePaymentInfo!.chargeFeesOnCustomer == true)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 4),
+                    margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -81,7 +81,7 @@ class OrderSummaryCard extends StatelessWidget {
                     ),
                   ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 4),
+                  margin: const EdgeInsets.only(bottom: 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -98,7 +98,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
                 if (order.refundAmount != null && order.refundAmount! > 0)
                   Container(
-                    margin: const EdgeInsets.only(bottom: 4),
+                    margin: const EdgeInsets.only(bottom: 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -114,7 +114,7 @@ class OrderSummaryCard extends StatelessWidget {
                     ),
                   ),
                 Container(
-                  margin: EdgeInsets.only(top: 4),
+                  margin: EdgeInsets.only(top: 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

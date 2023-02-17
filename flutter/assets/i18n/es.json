@@ -185,7 +185,7 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
-              "orderSummary": "Resumen de la orden",
+              "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
               "stripeFees": "Tarifas de tarjeta",

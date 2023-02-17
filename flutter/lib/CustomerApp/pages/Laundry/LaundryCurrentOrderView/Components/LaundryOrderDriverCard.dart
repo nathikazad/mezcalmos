@@ -25,7 +25,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (_getRightDriver() != null && order.inProcess()) {
       return Card(
-          margin: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(top: 15),
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             child: Row(

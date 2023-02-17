@@ -23,7 +23,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(top: 15),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(12),
@@ -70,23 +70,28 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Icon(
-                      Icons.info_outline_rounded,
-                      color: Colors.grey.shade800,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Icon(
+                        Icons.info_outline_rounded,
+                        color: Color(0xFF494949),
+                        size: 22,
+                      ),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 4),
                     Flexible(
                       child: Text(
                         _i18n()['laundryPricingNote'],
-                        style: TextStyle(
-                          color: Colors.grey.shade800,
-                        ),
+                        style: Get.textTheme.bodyText2,
                         maxLines: 3,
                       ),
                     ),
                   ],
                 ),
               ),
+            SizedBox(
+              height: 4,
+            ),
           ],
         ),
       ),
