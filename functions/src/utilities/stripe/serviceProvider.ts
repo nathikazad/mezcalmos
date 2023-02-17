@@ -29,10 +29,10 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 
   // switch (setupDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(setupDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(setupDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(setupDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(setupDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -132,10 +132,10 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
 
   // switch (updateDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(updateDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(updateDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(updateDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(updateDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -191,7 +191,7 @@ export async function updateServiceProvider(userId: number, updateDetails: Updat
 
 export async function verifyCustomerIdForServiceAccount(
   customerInfo: CustomerInfo, 
-  serviceProviderId: number, 
+  serviceProviderDetailsId: number, 
   stripe: Stripe, 
   stripeOptions: any
 ): Promise<CustomerInfo> {
@@ -201,12 +201,12 @@ export async function verifyCustomerIdForServiceAccount(
       "Customer does not have stripe account"
     );
   }
-  if(customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderId] == null) {
+  if(customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] == null) {
     const customer: Stripe.Customer = await stripe.customers.create({
       name: customerInfo.name,
       metadata: { customerId: customerInfo.id },
     }, stripeOptions)
-    customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderId] = customer.id;
+    customerInfo.stripeInfo.idsWithServiceProvider[serviceProviderDetailsId] = customer.id;
     updateCustomerStripe(customerInfo);
   }
   return customerInfo;

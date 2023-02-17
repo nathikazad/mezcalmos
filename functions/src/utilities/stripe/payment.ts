@@ -16,7 +16,7 @@ import { getServiceProviderDetails } from '../../shared/graphql/getServiceProvid
 let keys: Keys = getKeys();
 
 export interface PaymentIntentDetails {
-  serviceProviderId: number,
+  serviceProviderDetailsId: number,
   paymentAmount: number,
 }
 export interface PaymentIntentResponse {
@@ -28,14 +28,14 @@ export interface PaymentIntentResponse {
 }
 export async function getPaymentIntent(userId: number, paymentIntentDetails: PaymentIntentDetails): Promise<PaymentIntentResponse> {
 
-  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentIntentDetails.serviceProviderId)
+  let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentIntentDetails.serviceProviderDetailsId)
 
   // switch (paymentIntentDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(paymentIntentDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(paymentIntentDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(paymentIntentDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(paymentIntentDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -62,11 +62,11 @@ export async function getPaymentIntent(userId: number, paymentIntentDetails: Pay
   stripe = new Stripe(keys.stripe.secretkey, stripeOptions);
   customer = await verifyCustomerIdForServiceAccount(
     customer, 
-    paymentIntentDetails.serviceProviderId,
+    paymentIntentDetails.serviceProviderDetailsId,
     stripe,
     stripeOptions
   )
-  let stripeCustomerId = customer.stripeInfo?.idsWithServiceProvider[paymentIntentDetails.serviceProviderId];
+  let stripeCustomerId = customer.stripeInfo?.idsWithServiceProvider[paymentIntentDetails.serviceProviderDetailsId];
   const ephemeralKey: Stripe.EphemeralKey = await stripe.ephemeralKeys.create(
     { customer: stripeCustomerId },
     stripeOptions
@@ -103,10 +103,10 @@ export async function capturePayment(paymentDetails: PaymentDetails, amountToCap
   }
   // switch (paymentDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -160,10 +160,10 @@ export async function refundPayment(paymentDetails: PaymentDetails, amountToRefu
   }
   // switch (paymentDetails.orderType) {
   //   case OrderType.Restaurant:
-  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderId);
+  //     serviceProvider = await getRestaurant(paymentDetails.serviceProviderDetailsId);
   //     break;
   //   case OrderType.Laundry:
-  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderId);
+  //     serviceProvider = await getLaundryStore(paymentDetails.serviceProviderDetailsId);
   //     break;
   //   default:
   //     throw new HttpsError(
@@ -204,7 +204,7 @@ export async function updateOrderIdAndFetchPaymentInfo(
   stripeFees: number
 ) {
   let serviceProvider: ServiceProvider = await getServiceProviderDetails(paymentDetails.serviceProviderDetailsId);
-  // if(!(paymentDetails.serviceProviderId)) {
+  // if(!(paymentDetails.serviceProviderDetailsId)) {
   //   throw new HttpsError(
   //     "internal",
   //     "Order service provider id is undefined"
