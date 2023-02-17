@@ -108,7 +108,7 @@ export async function getLaundryOrder(orderId: number): Promise<LaundryOrder> {
       discountValue: response.laundry_order_by_pk.discount_value,
       tax: response.laundry_order_by_pk.tax,
       itemsCost: response.laundry_order_by_pk.items_cost,
-      totalCost: response.laundry_order_by_pk.total_cost
+      totalCost: response.laundry_order_by_pk.total_cost ?? 0
     }
     if(response.laundry_order_by_pk.from_customer_delivery_id != undefined)
         laundryOrder.fromCustomerDeliveryId = response.laundry_order_by_pk.from_customer_delivery_id
