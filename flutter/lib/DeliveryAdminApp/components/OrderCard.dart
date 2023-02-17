@@ -98,7 +98,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["cancelled"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
             ),
           ),
         );
@@ -112,7 +112,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["delivered"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.green),
             ),
           ),
         );
@@ -126,24 +126,24 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["inTransit"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );
-      case DeliveryOrderStatus.PackageReady:
-        return Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.green.shade100,
-            borderRadius: BorderRadius.circular(25),
-          ),
-          child: Center(
-            child: Text(
-              "${_i18n()["ready"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-            ),
-          ),
-        );
+      //   case DeliveryOrderStatus.PackageReady:
+      // return Container(
+      //   padding: const EdgeInsets.all(8),
+      //   decoration: BoxDecoration(
+      //     color: Colors.green.shade100,
+      //     borderRadius: BorderRadius.circular(25),
+      //   ),
+      //   child: Center(
+      //     child: Text(
+      //       "${_i18n()["ready"]}",
+      //       style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
+      //     ),
+      //   ),
+      // );
       case DeliveryOrderStatus.OrderReceived:
         // if ((order).isScheduled()) {
         //   return Container(
@@ -170,7 +170,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["waiting"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );
@@ -185,7 +185,7 @@ class DeliveryOrderCard extends StatelessWidget {
           child: Center(
             child: Text(
               "${_i18n()["waiting"]}",
-              style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
+              style: Get.textTheme.bodyLarge?.copyWith(color: Colors.amber),
             ),
           ),
         );

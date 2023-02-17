@@ -2673,6 +2673,11 @@ unique or primary key constraints on table "customer.stripe_cards"
 """
 enum customer_stripe_cards_constraint {
   """
+  unique or primary key constraint on columns "card_id"
+  """
+  stripe_cards_card_id_key
+
+  """
   unique or primary key constraint on columns "id"
   """
   stripe_cards_pkey

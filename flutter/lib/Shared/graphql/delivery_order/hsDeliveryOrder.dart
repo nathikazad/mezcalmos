@@ -20,8 +20,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
-Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
-    {required int orderId}) {
+Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_driver_order(
     Options$Subscription$listen_on_driver_order(
@@ -50,6 +49,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
     }
     return DeliveryOrder(
         id: orderData.id,
+        packageReady: orderData.package_ready,
         orderType: orderData.order_type.toOrderType(),
         stripeOrderPaymentInfo: _paymentInfo,
         serviceOrderId: orderData.restaurant_order?.id,
@@ -82,7 +82,7 @@ Stream<DeliveryOrder?> listen_on_driver_restaurant_order_by_id(
                 orderData.delivery_driver!.current_location!.longitude)
             : null,
         orderTime: DateTime.parse(orderData.order_time),
-        status: orderData.status.toDeliveryOrderStatus(orderData.package_ready),
+        status: orderData.status.toDeliveryOrderStatus(),
         serviceProviderType:
             orderData.service_provider_type.toServiceProviderType(),
         deliveryCost: orderData.delivery_cost,
@@ -135,6 +135,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
   }
   return DeliveryOrder(
       id: orderData.id,
+      packageReady: orderData.package_ready,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: _paymentInfo,
       serviceOrderId: orderData.restaurant_order?.id,
@@ -172,7 +173,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
       estimatedPackageReadyTime: (orderData.estimated_package_ready_time != null)
           ? DateTime.parse(orderData.estimated_package_ready_time!)
           : null,
-      status: orderData.status.toDeliveryOrderStatus(orderData.package_ready),
+      status: orderData.status.toDeliveryOrderStatus(),
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,
@@ -220,7 +221,7 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
   mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
+      "ORDER TYPE  ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
   mezDbgPrint(
       "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
   switch (orderType) {
@@ -275,9 +276,8 @@ Stream<List<MinimalOrder>?> listen_on_current_driver_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status: orderData.status
-                .toDeliveryOrderStatus(orderData.package_ready)
-                .toMinimalOrderStatus(),
+            status:
+                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
       }).toList();
       return orders;
@@ -309,9 +309,8 @@ Future<List<MinimalOrder>?> get_current_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(orderData.package_ready)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -343,9 +342,8 @@ Future<List<MinimalOrder>?> get_past_driver_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(false)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -424,9 +422,8 @@ Stream<List<MinimalOrder>?> listen_on_current_dvcompany_orders(
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status: orderData.status
-                .toDeliveryOrderStatus(orderData.package_ready)
-                .toMinimalOrderStatus(),
+            status:
+                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
       }).toList();
       return orders;
@@ -458,9 +455,8 @@ Future<List<MinimalOrder>?> get_dvcompany_current_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(orderData.package_ready)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -493,9 +489,8 @@ Future<List<MinimalOrder>?> get_dvcompany_past_orders(
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(false)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -522,6 +517,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
 
   return DeliveryOrder(
       deliveryDirection: DeliveryDirection.FromCustomer,
+      packageReady: false,
       id: orderData.id,
       orderType: orderData.order_type.toOrderType(),
       stripeOrderPaymentInfo: null,
@@ -556,7 +552,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
               name: orderData.delivery_driver!.user.name,
               image: orderData.delivery_driver!.user.image)
           : null,
-      status: orderData.status.toDeliveryOrderStatus(false),
+      status: orderData.status.toDeliveryOrderStatus(),
       serviceProviderType:
           orderData.service_provider_type.toServiceProviderType(),
       deliveryCost: orderData.delivery_cost,

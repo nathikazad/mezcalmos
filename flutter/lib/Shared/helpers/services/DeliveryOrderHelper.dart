@@ -21,8 +21,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
 
       case DeliveryOrderStatus.OrderReceived:
         return "${_i18n()["status"]['received']}";
-      case DeliveryOrderStatus.PackageReady:
-        return "${_i18n()["status"]['ready']}";
+
       case DeliveryOrderStatus.AtPickup:
         return "${_i18n()["status"]['atPickup']}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
@@ -33,7 +32,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
         return "${_i18n()["status"]['delivered']}";
 
       default:
-        return '';
+        return "${_i18n()["status"]['ready']}";
     }
   }
 
@@ -64,14 +63,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
             color: primaryBlueColor,
           ),
         );
-      case DeliveryOrderStatus.PackageReady:
-        return Container(
-          child: Icon(
-            Icons.shopping_basket_rounded,
-            size: 35,
-            color: primaryBlueColor,
-          ),
-        );
+
       case DeliveryOrderStatus.AtPickup:
         return Container(
           height: 50,
@@ -121,6 +113,18 @@ extension DeliveryOrderHelper on DeliveryOrder {
             color: primaryBlueColor,
           ),
         );
+      default:
+        if (packageReady) {
+          return Container(
+            child: Icon(
+              Icons.shopping_basket_rounded,
+              size: 35,
+              color: primaryBlueColor,
+            ),
+          );
+        } else {
+          return SizedBox();
+        }
     }
   }
 }

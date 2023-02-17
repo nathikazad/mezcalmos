@@ -87,24 +87,20 @@ class CloudFunctions {
   }
 
   static Future<SetupResponse> stripe_setupServiceProvider(
-      {required num serviceProviderId,
-      required OrderType orderType}  ) async {
+      {required num serviceProviderDetailsId}  ) async {
     return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-setupServiceProvider",
       parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
-        "orderType":orderType.toFirebaseFormatString(),
+        "serviceProviderDetailsId":serviceProviderDetailsId,
       }));
   }
 
   static Future<void> stripe_updateServiceProvider(
-      {required num serviceProviderId,
-      required OrderType orderType}  ) async {
+      {required num serviceProviderDetailsId}  ) async {
     return await callCloudFunction(
       functionName: "stripe-updateServiceProvider",
       parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
-        "orderType":orderType.toFirebaseFormatString(),
+        "serviceProviderDetailsId":serviceProviderDetailsId,
       });
   }
 

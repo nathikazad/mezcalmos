@@ -96,7 +96,7 @@ class DeliveryAuthController extends GetxController {
   Timer _listenForLocation() {
     final Location location = Location();
     return Timer.periodic(
-        Duration(seconds: _launchMode == AppLaunchMode.prod ? 60 : 10),
+        Duration(seconds: _launchMode == AppLaunchMode.prod ? 120 : 120),
         (Timer? timer) async {
       final LocationData currentLocation = await location.getLocation();
       final DateTime currentTime = DateTime.now();

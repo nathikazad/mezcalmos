@@ -125,7 +125,7 @@ export async function setupServiceProvider(userId: number, setupDetails: SetupDe
 
 export interface UpdateDetails {
   serviceProviderDetailsId: number,
-  // orderType: OrderType
+ 
 }
 
 export async function updateServiceProvider(userId: number, updateDetails: UpdateDetails) {

@@ -60,14 +60,6 @@ factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum OrderType { Taxi, Restaurant, Laundry, Water }
-extension ParseOrderTypeToString on OrderType {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
 class SetupResponse {
   String object;
   num created;
@@ -215,6 +207,14 @@ Map<String, dynamic> toFirebaseFormattedJson() {
   }
 factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
    return ReqLaundryResponse(json["orderId"]);
+  }
+}
+
+enum OrderType { Taxi, Restaurant, Laundry, Water }
+extension ParseOrderTypeToString on OrderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 

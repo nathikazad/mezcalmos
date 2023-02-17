@@ -52,7 +52,7 @@ class DvCompanyOrderViewController {
           "🚨 Can't get order $orderId 🚨 DvRestaurantOrderViewController");
     } else {
       subscriptionId = hasuraDb.createSubscription(start: () {
-        orderStream = listen_on_driver_restaurant_order_by_id(orderId: orderId)
+        orderStream = listen_on_driver_order_by_id(orderId: orderId)
             .listen((DeliveryOrder? event) {
           mezDbgPrint(event);
           if (event != null) {
@@ -111,37 +111,37 @@ class DvCompanyOrderViewController {
 
   void updateMapIfDeliveryPhase(DeliveryOrderStatus status) {
     switch (status) {
-      case DeliveryOrderStatus.PackageReady:
-        mezDbgPrint("+ markers => ${mapController.markers.length}");
-        mezDbgPrint("+ polys => ${mapController.polylines.length}");
+      // case DeliveryOrderStatus.PackageReady:
+      //   mezDbgPrint("+ markers => ${mapController.markers.length}");
+      //   mezDbgPrint("+ polys => ${mapController.polylines.length}");
 
-        // Customer + Restau  + Polyline
+      //   // Customer + Restau  + Polyline
 
-        // PICKUP :  DELIVERY -> restau
-        //
-        if (_statusSnapshot != status) {
-          _statusSnapshot = status;
-          mapController.addOrUpdateUserMarker(
-            latLng: order.value?.serviceInfo.location.toLatLng(),
-            markerId: order.value?.serviceInfo.firebaseId,
-            customImgHttpUrl: order.value?.serviceInfo.image,
-            fitWithinBounds: true,
-          );
-          mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.value?.dropoffLocation.toLatLng(),
-            fitWithinBounds: true,
-          );
-        }
+      //   // PICKUP :  DELIVERY -> restau
+      //   //
+      //   if (_statusSnapshot != status) {
+      //     _statusSnapshot = status;
+      //     mapController.addOrUpdateUserMarker(
+      //       latLng: order.value?.serviceInfo.location.toLatLng(),
+      //       markerId: order.value?.serviceInfo.firebaseId,
+      //       customImgHttpUrl: order.value?.serviceInfo.image,
+      //       fitWithinBounds: true,
+      //     );
+      //     mapController.addOrUpdatePurpleDestinationMarker(
+      //       latLng: order.value?.dropoffLocation.toLatLng(),
+      //       fitWithinBounds: true,
+      //     );
+      //   }
 
-        mapController.addOrUpdateUserMarker(
-          latLng: order.value?.driverLocation,
-          markerId: order.value?.driverInfo?.hasuraId.toString(),
-          customImgHttpUrl: order.value?.driverInfo?.image,
-          fitWithinBounds: true,
-        );
+      //   mapController.addOrUpdateUserMarker(
+      //     latLng: order.value?.driverLocation,
+      //     markerId: order.value?.driverInfo?.hasuraId.toString(),
+      //     customImgHttpUrl: order.value?.driverInfo?.image,
+      //     fitWithinBounds: true,
+      //   );
 
-        mapController.animateAndUpdateBounds();
-        break;
+      //   mapController.animateAndUpdateBounds();
+      //   break;
 
       case DeliveryOrderStatus.OnTheWayToDropoff:
         if (_statusSnapshot != status) {
@@ -193,20 +193,20 @@ class DvCompanyOrderViewController {
     mezDbgPrint(
         " 🛵🛵🛵🛵 Driver location update ====>${order.driverLocation?.toJson()}");
     switch (order.status) {
-      case DeliveryOrderStatus.PackageReady:
-        // only update once upon Ready
-        if (_statusSnapshot != order.status) {
-          // ignoring customer's marker (destination)
-          mapController.addOrUpdatePurpleDestinationMarker(
-            latLng: order.dropoffLocation.toLatLng(),
-            // fitWithinBounds: false,
-          );
-        }
-        // update position of our delivery Guy
+      // case DeliveryOrderStatus.PackageReady:
+      //   // only update once upon Ready
+      //   if (_statusSnapshot != order.status) {
+      //     // ignoring customer's marker (destination)
+      //     mapController.addOrUpdatePurpleDestinationMarker(
+      //       latLng: order.dropoffLocation.toLatLng(),
+      //       // fitWithinBounds: false,
+      //     );
+      //   }
+      //   // update position of our delivery Guy
 
-        mapController.animateAndUpdateBounds();
-        _statusSnapshot = order.status;
-        break;
+      //   mapController.animateAndUpdateBounds();
+      //   _statusSnapshot = order.status;
+      //   break;
 
       case DeliveryOrderStatus.OnTheWayToDropoff:
         // only update once.

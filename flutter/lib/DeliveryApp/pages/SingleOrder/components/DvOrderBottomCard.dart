@@ -129,12 +129,13 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
       case DeliveryOrderStatus.OrderReceived:
         if (widget.viewcontroller.order.isScheduled()) {
           return '${_i18n()["orderStatus"]["scheduled"]}';
-        } else {
+        } else if (!widget.viewcontroller.order.packageReady) {
           return '${_i18n()["orderStatus"]["waiting"]}';
-        }
+        } else
+          return "";
 
-      case DeliveryOrderStatus.PackageReady:
-        return '${_i18n()["orderStatus"]["justReady"]}';
+      // case DeliveryOrderStatus.PackageReady:
+      //   return '${_i18n()["orderStatus"]["justReady"]}';
       case DeliveryOrderStatus.AtPickup:
         return 'At pickup';
       case DeliveryOrderStatus.AtDropoff:
@@ -154,8 +155,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
     return widget.viewcontroller.order.estimatedPackageReadyTime != null &&
         (widget.viewcontroller.order.status ==
                 DeliveryOrderStatus.OrderReceived ||
-            widget.viewcontroller.order.status ==
-                DeliveryOrderStatus.PackageReady);
+            widget.viewcontroller.order.packageReady == true);
   }
 
   Widget _pickUpTimeSetter() {
@@ -163,7 +163,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         ? Row(
             children: [
               Text(DateFormat('EE, hh:mm a')
-                  .format(widget.viewcontroller.pickupTime!)),
+                  .format(widget.viewcontroller.pickupTime!.toLocal())),
               const SizedBox(
                 width: 5,
               ),
@@ -175,7 +175,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                       firstDate: widget
                           .viewcontroller.order.estimatedPackageReadyTime);
                   if (newTime != null) {
-                    await widget.viewcontroller.setPickupTime(newTime);
+                    await widget.viewcontroller
+                        .setPickupTime(newTime.toLocal());
                   }
                 },
                 icon: Icons.edit_rounded,
@@ -192,7 +193,7 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
         ? Row(
             children: [
               Text(DateFormat('EE, hh:mm a')
-                  .format(widget.viewcontroller.dropoffTime!)),
+                  .format(widget.viewcontroller.dropoffTime!.toLocal())),
               const SizedBox(
                 width: 5,
               ),
@@ -206,7 +207,8 @@ class _DvOrderBottomCardState extends State<DvOrderBottomCard> {
                         firstDate: widget
                             .viewcontroller.order.estimatedArrivalAtPickupTime);
                     if (newTime != null) {
-                      await widget.viewcontroller.setDropoffTime(newTime);
+                      await widget.viewcontroller
+                          .setDropoffTime(newTime.toLocal());
                     }
                   } else {
                     showErrorSnackBar(
@@ -302,8 +304,8 @@ Future<DateTime?> _pickDateAndTime({
   // get date
   final DateTime? pickedDate = await getDatePicker(
     context,
-    initialDate: initalDate ?? DateTime.now().toLocal(),
-    firstDate: firstDate ?? DateTime.now().toLocal(),
+    initialDate: initalDate?.toLocal() ?? DateTime.now().toLocal(),
+    firstDate: firstDate?.toLocal() ?? DateTime.now().toLocal(),
     lastDate: DateTime.now().add(
       Duration(days: 3),
     ),
@@ -329,192 +331,3 @@ Future<DateTime?> _pickDateAndTime({
   }
   return null;
 }
-
-// // @here
-//   List<Widget> _dateTimeSetter(
-//       DeliveryDirection deliveryAction, BuildContext context) {
-//     Future<DateTime?> _dateTimePicker({DateTime? initialDate}) async {
-//       final DateTime? pickedDate = await getDatePicker(
-//         context,
-//         initialDate: initialDate ?? DateTime.now(),
-//         firstDate: widget.viewcontroller.order.estimatedPackageReadyTime ?? DateTime.now(),
-//         lastDate: DateTime.now().add(
-//           Duration(days: 3),
-//         ),
-//       );
-
-//       if (pickedDate != null) {
-//         final TimeOfDay? pickedTime = await getTimePicker(
-//           context,
-//           initialTime: TimeOfDay.fromDateTime(
-//             widget.viewcontroller.order.estimatedPackageReadyTime?.toLocal() ?? DateTime.now(),
-//           ),
-//         );
-//         if (pickedTime != null) {
-//           final DateTime _finalDt = pickedDate.copyWithTimeOfDay(pickedTime);
-//           if (_finalDt.isAfter(
-//               widget.viewcontroller.order.estimatedPackageReadyTime?.toLocal() ??
-//                   DateTime.now())) {
-//             return _finalDt;
-//           } else
-//             MezSnackbar('${_i18n()['oops']}', '${_i18n()['wrongTime']}');
-//         }
-//       }
-
-//       return null;
-//     }
-
-//     List<Widget> _getRightContainer(
-//       DateTime? dt, {
-//       required void Function(DateTime) onNewDateTimeSet,
-//       required RxBool isSettingTime,
-//     }) {
-//       if (dt != null) {
-//         return [
-//           Text(DateFormat('EE, hh:mm a').format(dt)),
-//           SizedBox(width: 7),
-//           InkWell(
-//             onTap: isSettingTime.value
-//                 ? null
-//                 : () async {
-//                     isSettingTime.value = true;
-//                     final DateTime? _dt =
-//                         await _dateTimePicker(initialDate: dt);
-//                     if (_dt != null)
-//                       onNewDateTimeSet(_dt);
-//                     else
-//                       isSettingTime.value = false;
-//                   },
-//             child: Container(
-//               padding: const EdgeInsets.all(4),
-//               decoration: isSettingTime.value
-//                   ? null
-//                   : BoxDecoration(
-//                       color: Color.fromRGBO(237, 237, 237, 1),
-//                       shape: BoxShape.circle,
-//                     ),
-//               child: Center(
-//                 child: isSettingTime.value
-//                     ? Container(
-//                         height: 16,
-//                         width: 16,
-//                         decoration: BoxDecoration(shape: BoxShape.circle),
-//                         child: CircularProgressIndicator(
-//                           color: Colors.grey.shade600,
-//                           strokeWidth: 1.8,
-//                         ),
-//                       )
-//                     : Icon(
-//                         Icons.edit,
-//                         size: 15,
-//                         color: Colors.grey.shade600,
-//                       ),
-//               ),
-//             ),
-//           )
-//         ];
-//       } else {
-//         return [
-//           InkWell(
-//             onTap: isSettingTime.value
-//                 ? null
-//                 : () async {
-//                     isSettingTime.value = true;
-//                     final DateTime? _dt = await _dateTimePicker();
-//                     if (_dt != null)
-//                       onNewDateTimeSet(_dt);
-//                     else
-//                       isSettingTime.value = false;
-//                   },
-//             child: Container(
-//               padding: EdgeInsets.all(5),
-//               decoration: isSettingTime.value
-//                   ? null
-//                   : BoxDecoration(
-//                       color: Color.fromRGBO(226, 18, 51, 1),
-//                       borderRadius: BorderRadius.circular(4),
-//                     ),
-//               child: Center(
-//                 child: isSettingTime.value
-//                     ? ThreeDotsLoading(dotsColor: Colors.black)
-//                     : Text(
-//                         '${_i18n()['set']} ${deliveryAction == DeliveryAction.DropOff ? "${_i18n()['dropoff']}" : "${_i18n()['pickup']}"} ${_i18n()['time']}',
-//                         style: TextStyle(
-//                           color: Colors.white,
-//                           fontFamily: 'Montserrat',
-//                           fontWeight: FontWeight.w600,
-//                           fontSize: 13,
-//                         ),
-//                       ),
-//               ),
-//             ),
-//           )
-//         ];
-//       }
-//     }
-
-//     if (widget.viewcontroller.order.inProcess()) {
-//       return _getRightContainer(
-//         deliveryAction == DeliveryDirection.To_customer
-//             ? widget.viewcontroller.order.estimatedArrivalAtPickupTime?.toLocal()
-//             : widget.viewcontroller.order.estimatedArrivalAtDropoffTime?.toLocal(),
-//         isSettingTime: deliveryAction == DeliveryDirection.To_customer
-//             ? isSettingPickUpTime
-//             : isSettingDropoffTime,
-//         onNewDateTimeSet: (DateTime newDt) async {
-//           // DropOff
-//           if (deliveryAction == DeliveryDirection.To_customer) {
-//             if (widget.viewcontroller.order.estimatedArrivalAtPickupTime != null &&
-//                 !widget.viewcontroller.order.estimatedArrivalAtPickupTime!.isBefore(newDt)) {
-//               MezSnackbar(
-//                 "${_i18n()['oops']}",
-//                 "${_i18n()['pickupTimeError']}",
-//               );
-//               return;
-//             }
-//             // PickUp
-//           } else {
-//             if (widget.viewcontroller.order.estimatedArrivalAtDropoffTime != null &&
-//                 !widget.viewcontroller.order.estimatedArrivalAtDropoffTime!.isAfter(newDt)) {
-//               MezSnackbar(
-//                 "${_i18n()['oops']}",
-//                 "${_i18n()['pickupTimeError']}",
-//               );
-
-//               return;
-//             }
-//           }
-
-//           if (deliveryAction == DeliveryDirection.To_customer) {
-//             isSettingPickUpTime.value = true;
-
-//             try {
-//               mezDbgPrint("Setting pickup time ======>>> ⏰⏰⏰⏰⏰⏰  ");
-//               await dv_update_est_pickup_time(
-//                   orderId: widget.viewcontroller.order.id, time: newDt);
-//             } catch (e, stk) {
-//               mezDbgPrint(e);
-//               mezDbgPrint(stk);
-//             } finally {
-//               isSettingPickUpTime.value = false;
-//             }
-//           } else {
-//             isSettingDropoffTime.value = true;
-//             mezDbgPrint("Setting dropOff time ======>>> ⏰⏰⏰⏰⏰⏰  ");
-//             try {
-//               await dv_update_est_dropoff_time(
-//                   orderId: widget.viewcontroller.order.id, time: newDt);
-//             } catch (e, stk) {
-//               mezDbgPrint(e);
-//               mezDbgPrint(stk);
-//             } finally {
-//               isSettingDropoffTime.value = false;
-//             }
-//           }
-//         },
-//       );
-//     }
-
-//     return [];
-//   }
-// }

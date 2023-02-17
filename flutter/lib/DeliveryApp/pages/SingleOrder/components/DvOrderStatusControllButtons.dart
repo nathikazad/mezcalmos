@@ -48,11 +48,13 @@ class _DvOrderStatusControllButtonsState
       case DeliveryOrderStatus.OrderReceived:
         if (widget.viewController.isLaundry) {
           return _handleBtn();
-        } else {
+        } else if (!widget.viewController.order.packageReady) {
           return _waitingDisabledButton(
               header:
                   "${_i18n()["RestaurantControllButtons"]["notReadyTitle"]}",
               body: "${_i18n()["RestaurantControllButtons"]["notReadyBody"]}");
+        } else {
+          return _handleBtn();
         }
 
       case DeliveryOrderStatus.CancelledByDeliverer:
@@ -76,7 +78,6 @@ class _DvOrderStatusControllButtonsState
             await widget.viewController.startPickup();
             break;
           case DeliveryOrderStatus.OnTheWayToPickup:
-          case DeliveryOrderStatus.PackageReady:
             await widget.viewController.atPickup();
 
             break;
@@ -285,8 +286,7 @@ class _DvOrderStatusControllButtonsState
         return "Start pickup";
       case DeliveryOrderStatus.OnTheWayToPickup:
         return "At pickup";
-      case DeliveryOrderStatus.PackageReady:
-        return "Confirm pickup";
+
       case DeliveryOrderStatus.AtPickup:
         return "Start Delivery";
       case DeliveryOrderStatus.OnTheWayToDropoff:

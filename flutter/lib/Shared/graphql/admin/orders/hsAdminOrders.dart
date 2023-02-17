@@ -41,9 +41,8 @@ Future<List<MinimalOrder>?> get_admin_dv_orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(orderData.package_ready)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
@@ -83,9 +82,8 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
             orderTime: DateTime.parse(orderData.order_time),
             title: orderData.customer.user.name!,
             image: orderData.customer.user.image,
-            status: orderData.status
-                .toDeliveryOrderStatus(orderData.package_ready)
-                .toMinimalOrderStatus(),
+            status:
+                orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
             totalCost: orderData.package_cost);
       }).toList();
       return orders;
@@ -206,9 +204,8 @@ Future<List<MinimalOrder>?> get_admin_service__orders({
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
-          status: orderData.status
-              .toDeliveryOrderStatus(orderData.package_ready)
-              .toMinimalOrderStatus(),
+          status:
+              orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.package_cost);
     }).toList();
     return orders;
