@@ -157,8 +157,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             child: Text(
               category.name?[userLanguage] ?? "Undefined Category",
               style: category.name?[userLanguage] != null
-                  ? Get.theme.textTheme.headline3
-                      ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700)
+                  ? Get.theme.textTheme.headline5
                   : Get.textTheme.bodyText2?.copyWith(
                       color: Color(0xFF787878),
                     ),
@@ -196,8 +195,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             child: Text(
               "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
                   .inCaps,
-              style: Get.theme.textTheme.headline3
-                  ?.copyWith(fontSize: 14.sp, fontWeight: FontWeight.w700),
+              style: Get.theme.textTheme.headline5
             ),
           ),
           _buildResturantItems(

@@ -55,8 +55,8 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
             Container(
               child: Text(
                 "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.bodyText2?.copyWith(
-                    fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
+                style: Get.textTheme.headline6?.copyWith(
+                    fontStyle: FontStyle.italic),
               ),
             ),
           Column(

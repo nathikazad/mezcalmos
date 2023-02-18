@@ -53,17 +53,6 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // bottomSheet: Obx(
-        //   () => MezButton(
-        //     enabled: viewController.isInfoSet,
-        //     borderRadius: 0,
-        //     height: 80,
-        //     label: "${_i18n()["save"]}",
-        //     onClick: () async {
-        //       await viewController.setInfo();
-        //     },
-        //   ),
-        // ),
 
         body: Obx(
           () => Container(
@@ -105,8 +94,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                       inputFormatters: <TextInputFormatter>[
                         UpperCaseTextFormatter()
                       ],
-                      style: Get.textTheme.bodyText2?.copyWith(
-                          fontWeight: FontWeight.w500, color: Colors.black),
+                      style: Get.textTheme.bodyText2?.copyWith( color: Colors.black),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,

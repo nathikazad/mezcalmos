@@ -24,7 +24,7 @@ class OrderDeliveryLocation extends StatelessWidget {
           Text(
             '${_i18n()["title"]}',
             style:
-                Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w600),
+                Get.textTheme.headline6,
           ),
           const SizedBox(
             height: 4,
@@ -41,7 +41,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     size: 13.sp,
                   ),
                   const SizedBox(
-                    width: 4,
+                    width: 5,
                   ),
                   Flexible(
                     fit: FlexFit.tight,

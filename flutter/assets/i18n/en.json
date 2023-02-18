@@ -573,7 +573,8 @@
               }
             },
             "laundries": "Laundries",
-            "title": "Find your closest laundries\nor dry cleaners "
+            "title": "Find your closest laundries\nor dry cleaners ",
+            "noLaundaryFound":"No laundry found"
           },
           "SingleLaundryScreen": {
             "startingFrom": "Starting from ",

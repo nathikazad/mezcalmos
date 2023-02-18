@@ -79,8 +79,8 @@ class CustomerAppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        primary: Colors.white,
         backgroundColor: Color(0xFF6779FE),
         padding: EdgeInsets.all(12),
         textStyle: TextStyle(
@@ -164,6 +164,29 @@ class CustomerAppTheme {
           fontFamily: "Nunito",
           fontWeight: FontWeight.w400,
           fontSize: 11.sp,
+          color: Colors.black,
+        ),
+        headline6: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w600,
+          fontSize: 11.sp,
+          color: Color(0xFF494949),
+        ),
+        headlineLarge: TextStyle(
+          fontFamily: 'Nunito',
+          fontWeight: FontWeight.w700,
+          fontSize: 15,
+        ),
+        headline4: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w700,
+          fontSize: 13.sp,
+          color: Colors.black,
+        ),
+        headline5: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w700,
+          fontSize: 14.sp,
           color: Colors.black,
         ),
       ),

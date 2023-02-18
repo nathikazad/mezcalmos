@@ -284,9 +284,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
-                          ? Get.textTheme.bodyText1?.copyWith(
+                          ? Get.textTheme.headline4?.copyWith(
                               color: primaryBlueColor,
-                              fontWeight: FontWeight.w700,
                             )
                           : Get.textTheme.subtitle2,
                     ),
@@ -314,9 +313,8 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
-                          ? Get.textTheme.bodyText1?.copyWith(
+                          ? Get.textTheme.headline4?.copyWith(
                               color: primaryBlueColor,
-                              fontWeight: FontWeight.w700,
                             )
                           : Get.textTheme.subtitle2,
                     ),

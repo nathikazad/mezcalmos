@@ -52,8 +52,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Column(
                   children: [
-                    // _notifsHeader(),
-
                     Obx(() => _buildNotification(
                         controller.notifications.reversed.toList()))
                   ],
@@ -140,7 +138,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                 style: Theme.of(context).textTheme.headline3,
               ),
               indexNotification == 1 ? _deleteButton() : SizedBox()
-              // if(element.) _deleteButton(),
             ],
           ),
         );
@@ -152,45 +149,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         return _notifCard(element);
       },
     );
-    // final DateTime dd = DateTime.now();
-    // final List<Widget> todayNotifsWidgets = [];
-    // final List<Widget> notifsWidgets = [];
-    // return Column(
-    //   children: notifications.fold<List<Widget>>(<Widget>[],
-    //       (List<Widget> children, notifs.Notification notification) {
-    //     if (dd.isSameDate(notification.timestamp)) {
-    //       todayNotifsWidgets.addAll([
-    //         _notifCard(
-    //           notification,
-    //         ),
-    //         SizedBox(
-    //           height: 5,
-    //         )
-    //       ]);
-    //     } else {
-    //       {
-    //         notifsWidgets.addAll([
-    //           _notifCard(
-    //             notification,
-    //           ),
-    //           SizedBox(
-    //             height: 5,
-    //           )
-    //         ]);
-    //       }
-    //     }
-
-    //     children = todayNotifsWidgets +
-    //         [
-    //           if (todayNotifsWidgets.isNotEmpty && notifsWidgets.isNotEmpty)
-    //             SizedBox(
-    //               height: 25,
-    //             ),
-    //         ] +
-    //         notifsWidgets;
-    //     return children;
-    //   }),
-    // );
   }
 
   Widget _notifCard(notifs.Notification notification) {
@@ -264,29 +222,6 @@ class _ViewNotificationsState extends State<ViewNotifications> {
       ),
     );
   }
-
-  // Widget _notifsHeader() {
-  //   return Obx(
-  //     () => (controller.notifications.length <= 0)
-  //         ? Container()
-  //         : Container(
-  //             // padding: const EdgeInsets.symmetric(horizontal: 8),
-  //             child: Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 // Container(
-  //                 //   padding: const EdgeInsets.only(left: 8.0),
-  //                 //   child: Text(
-  //                 //     _isTodayNotifsExist() ? _i18n()["today"] : "",
-  //                 //     style: Theme.of(context).textTheme.headline3,
-  //                 //   ),
-  //                 // ),
-  //                 _deleteButton(),
-  //               ],
-  //             ),
-  //           ),
-  //   );
-  // }
 
   Container _deleteButton() {
     return Container(

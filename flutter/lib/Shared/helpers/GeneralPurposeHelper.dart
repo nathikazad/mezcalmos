@@ -260,15 +260,9 @@ Future<void> showConfirmationDialog(
                       )
                     : SizedBox(),
                 SizedBox(height: 8),
-                Text(
-                  '${_i18n()["subtitle"]}',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
-                ),
+                Text('${_i18n()["subtitle"]}',
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.headlineLarge),
                 SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
@@ -537,7 +531,7 @@ Future<int?> showReviewDialog(
                 ),
               ),
               RatingBar.builder(
-                unratedColor: Color(0XFFF2F2F2),
+                unratedColor: unratedStarColor,
                 initialRating: 3,
                 minRating: 1,
                 direction: Axis.horizontal,
@@ -564,15 +558,12 @@ Future<int?> showReviewDialog(
                   fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
-                    fillColor: Color(0XFFF2F2F2),
+                    fillColor: unratedStarColor,
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
-                textStyle: TextStyle(
-                  fontSize: 16.99,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
+                textStyle: Get.textTheme.headline4?.copyWith(
                   color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
@@ -612,11 +603,8 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0XFF494949),
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.99,
+                    style: Get.textTheme.headline4?.copyWith(
+                      color: offShadeGreyColor,
                     ),
                   ),
                 ),

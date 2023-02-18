@@ -60,9 +60,7 @@ class OrderRestaurantCard extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 5),
                           child: Text(
                             order.restaurant.name,
-                            style: Get.textTheme.bodyText1?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: Get.textTheme.headline4
                           ),
                         ),
                         SizedBox(

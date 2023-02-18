@@ -44,14 +44,12 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.headline3?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: Get.textTheme.headline5,
                 textAlign: TextAlign.start,
               ),
             ),
             SizedBox(
-              height: 2.h,
+              height: 10,
             ),
             Obx(() {
               if (viewController.hasData) {
@@ -86,7 +84,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         alignment: Alignment.center,
         margin: const EdgeInsets.all(15),
         child: Text(
-          "No laundry found",
+          "${_i18n()["noLaundaryFound"]}",
           textAlign: TextAlign.center,
           style: Get.textTheme.subtitle2,
         ),

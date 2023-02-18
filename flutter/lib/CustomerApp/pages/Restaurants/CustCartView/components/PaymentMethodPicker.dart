@@ -39,7 +39,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
     return Builder(
       builder: (BuildContext context) {
         if (widget.viewCartController.showPaymentPicker) {
-          return Container(     
+          return Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -93,7 +93,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 43,
+                                  width: 30,
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: _getIcon(
@@ -104,14 +104,17 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: 4,
                                 ),
                                 Text(
-                                    (value.entries.first.key ==
-                                            PickerChoice.SavedCard)
-                                        ? value.entries.first.value!.brand.name
-                                        : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                    style: Get.textTheme.bodyText2),
+                                  (value.entries.first.key ==
+                                          PickerChoice.SavedCard)
+                                      ? value.entries.first.value!.brand.name
+                                      : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
+                                  style: Get.textTheme.bodyText1?.copyWith(
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
                                 if (value.entries.first.value != null)
                                   Container(
                                     margin: EdgeInsets.only(left: 5),
@@ -119,7 +122,6 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                                       "*" * 12 +
                                           value.entries.first.value!.last4
                                               .toString(),
-                                      //style: Get.textTheme.bodyText2,
                                       style: Get.textTheme.subtitle1,
                                     ),
                                   ),
@@ -157,32 +159,38 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
           return Icon(
             Icons.credit_card,
             color: iconColor,
+            size: 14.sp,
           );
         }
       case PickerChoice.SavedCard:
         return Icon(
           Icons.credit_card,
           color: iconColor,
+          size: 14.sp,
         );
       case PickerChoice.NewCard:
         return Icon(
           Icons.add_card,
           color: iconColor,
+          size: 14.sp,
         );
       case PickerChoice.Cash:
         return Icon(
           Icons.payments,
           color: iconColor,
+          size: 14.sp,
         );
       case PickerChoice.BankTransfer:
         return Icon(
           Icons.account_balance,
           color: iconColor,
+          size: 14.sp,
         );
       case PickerChoice.ApplePay:
         return Icon(
           Icons.apple,
           color: iconColor,
+          size: 14.sp,
         );
       case PickerChoice.GooglePay:
         return Image.asset(

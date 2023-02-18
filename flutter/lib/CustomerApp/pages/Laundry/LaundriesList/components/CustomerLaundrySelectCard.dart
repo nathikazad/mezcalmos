@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
@@ -91,7 +92,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                               shippingCost: shippingPrice,
                               alignment: MainAxisAlignment.start,
                               textStyle: Get.textTheme.bodyText2?.copyWith(
-                                color: Colors.black,
+                                color: blackColor,
                               ),
                             ),
                           ),
@@ -113,30 +114,12 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                               child: Text(
                             ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
                             style: Get.textTheme.bodyText2?.copyWith(
-                              color: Colors.black,
+                              color: blackColor,
                             ),
                           )),
                         ],
                       ),
                     ),
-                    // Flexible(
-                    //   flex: 4,
-                    //   fit: FlexFit.tight,
-                    //   child: Row(
-                    //     crossAxisAlignment: CrossAxisAlignment.center,
-                    //     children: [
-                    //       Icon(
-                    //         Icons.north_east_sharp,
-                    //         size: 18,
-                    //         color: Colors.grey.shade800,
-                    //       ),
-                    //       Flexible(
-                    //           child: Text(
-                    //               '${laundry.getCheapestCategory.toPriceString()}/kg',
-                    //               style: Get.textTheme.bodyText2)),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ],

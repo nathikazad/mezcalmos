@@ -25,8 +25,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
           children: [
             Text(
               '${_i18n()["title"]}',
-              style: Get.textTheme.bodyText2
-                  ?.copyWith(fontWeight: FontWeight.w600),
+              style: Get.textTheme.headline6,
             ),
             const SizedBox(
               height: 4,

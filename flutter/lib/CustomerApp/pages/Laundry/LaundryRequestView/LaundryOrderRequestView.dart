@@ -66,22 +66,18 @@ class _CustLaundryOrderRequestViewState
                               imageUrl:
                                   viewController.laundry.value!.info.image),
                           SizedBox(
-                            height: 2.h,
+                            height: 10,
                           ),
-                          Text(
-                            viewController.laundry.value!.info.name,
-                            style: Get.textTheme.headline3?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
+                          Text(viewController.laundry.value!.info.name,
+                              style: Get.textTheme.headline5),
                           SizedBox(
-                            height: 1.h,
+                            height: 8,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                // margin: const EdgeInsets.only(top: 3),
+                                margin: const EdgeInsets.only(top: 3),
                                 child: Icon(
                                   Icons.place,
                                   size: 18,
@@ -101,7 +97,7 @@ class _CustLaundryOrderRequestViewState
                             ],
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 15,
                           ),
                           Container(
                             child: Text(
@@ -110,7 +106,7 @@ class _CustLaundryOrderRequestViewState
                             ),
                           ),
                           SizedBox(
-                            height: 1.h,
+                            height: 15,
                           ),
                           Obx(
                             () => viewController.authController.user != null
@@ -132,7 +128,7 @@ class _CustLaundryOrderRequestViewState
                                 : pickFromMapComponent(context),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 15,
                           ),
                           _orderNoteComponent(),
                         ],
@@ -164,8 +160,7 @@ class _CustLaundryOrderRequestViewState
           ),
           TextField(
             style: Get.textTheme.subtitle1?.copyWith(
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF787878),
+              color: offLightShadeGreyColor,
             ),
             controller: viewController.orderNote,
             maxLines: 5,
@@ -173,8 +168,7 @@ class _CustLaundryOrderRequestViewState
             decoration: InputDecoration(
               hintText: "${_i18n()["noteHint"]}",
               hintStyle: Get.textTheme.subtitle1?.copyWith(
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF787878),
+                color: offLightShadeGreyColor,
               ),
               filled: true,
               fillColor: Theme.of(context).primaryColor,

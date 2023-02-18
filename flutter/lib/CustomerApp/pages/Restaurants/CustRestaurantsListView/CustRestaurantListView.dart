@@ -113,123 +113,96 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   }
 
   Widget _searchFilter() {
-    return Obx(
-      () {
-        if (viewController.showFilters) {
-          return Container(
-            margin: const EdgeInsets.only(top: 15),
-            child: Row(
-              children: [
-                Flexible(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(18),
-                    onTap: () {
-                      viewController
-                          .switchSearchType(SearchType.searchByRestaurantName);
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
-                      decoration: BoxDecoration(
-                          color: (viewController.byRestaurants)
-                              ? primaryBlueColor
-                              : Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(18)),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.flatware,
+    return Obx(() => Container(
+          margin: const EdgeInsets.only(top: 15),
+          child: Row(
+            children: [
+              Flexible(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () {
+                    viewController
+                        .switchSearchType(SearchType.searchByRestaurantName);
+                  },
+                  child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    decoration: BoxDecoration(
+                        color: (viewController.byRestaurants)
+                            ? primaryBlueColor
+                            : Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(18)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.flatware,
+                          color: !viewController.byRestaurants
+                              ? Colors.grey.shade700
+                              : Colors.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Restaurants",
+                          style: Get.textTheme.bodyText1?.copyWith(
                             color: !viewController.byRestaurants
                                 ? Colors.grey.shade700
                                 : Colors.white,
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: Text(
-                              "Restaurants",
-                              style: Get.textTheme.bodyText1?.copyWith(
-                                color: !viewController.byRestaurants
-                                    ? Colors.grey.shade700
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            viewController.byRestaurants
-                                ? Icons.check_circle
-                                : Icons.circle_outlined,
-                            color: !viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 15,
-                ),
-                Flexible(
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(18),
-                    onTap: () {
-                      viewController
-                          .switchSearchType(SearchType.searchByItemName);
-                    },
-                    child: Ink(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
-                      decoration: BoxDecoration(
-                          color: (!viewController.byRestaurants)
-                              ? primaryBlueColor
-                              : Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(18)),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.fastfood,
+              ),
+              SizedBox(
+                width: 15,
+              ),
+              Flexible(
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(18),
+                  onTap: () {
+                    viewController
+                        .switchSearchType(SearchType.searchByItemName);
+                  },
+                  child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    decoration: BoxDecoration(
+                        color: (!viewController.byRestaurants)
+                            ? primaryBlueColor
+                            : Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(18)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.fastfood,
+                          color: viewController.byRestaurants
+                              ? Colors.grey.shade700
+                              : Colors.white,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${_i18n()["meal"]}',
+                          style: Get.textTheme.bodyText1?.copyWith(
                             color: viewController.byRestaurants
                                 ? Colors.grey.shade700
                                 : Colors.white,
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: Text(
-                              '${_i18n()["meal"]}',
-                              style: Get.textTheme.bodyText1?.copyWith(
-                                color: viewController.byRestaurants
-                                    ? Colors.grey.shade700
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            !viewController.byRestaurants
-                                ? Icons.check_circle
-                                : Icons.circle_outlined,
-                            color: viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
-                          )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          );
-        } else
-          return SizedBox();
-      },
-    );
+              ),
+            ],
+          ),
+        ));
   }
 
   Widget _restaurantList() {
@@ -261,24 +234,18 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         );
       } else {
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //give space when its bigger size.
-
+            SizedBox(
+              height: 20,
+            ),
             Container(
-              margin: MediaQuery.of(context).size.width <= 360
-                  ? EdgeInsets.only(top: 0.w)
-                  : EdgeInsets.only(top: 4.h),
               child: Image.asset(
                 "assets/images/customer/restaurants/noOpenRestaurants.png",
-                height: 40.h,
+                height: 35.h,
                 width: 65.w,
               ),
             ),
-
-            // SizedBox(
-            //   height: 2,
-            // ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
               style: Get.textTheme.bodyText1,

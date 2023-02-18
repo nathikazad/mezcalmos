@@ -19,8 +19,7 @@ class OrderInfosCard extends StatelessWidget {
         child: Material(
           elevation: 1.5,
           borderRadius: BorderRadius.circular(8),
-          child: Container(
-            //  margin: EdgeInsets.only(bottom: 15),
+          child: Container( 
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -38,7 +37,6 @@ class OrderInfosCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // left column
 
                     Flexible(
                       flex: 7,
@@ -48,7 +46,6 @@ class OrderInfosCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // first line - name and price
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -72,7 +69,6 @@ class OrderInfosCard extends StatelessWidget {
                           SizedBox(height: 5),
                           orderCardSubWidgets.primaryBodyContent,
                         orderCardSubWidgets.secondaryBodyContent,
-                          // second line - from
                           SizedBox(height: 5),
                         ],
                       ),
@@ -85,17 +81,6 @@ class OrderInfosCard extends StatelessWidget {
                         orderCardSubWidgets.rightImage,
                       ],
                     ),
-                    // Flexible(
-                    //   flex: 3,
-                    //   child: Column(
-                    //     mainAxisAlignment: MainAxisAlignment.end,
-                    //     crossAxisAlignment: CrossAxisAlignment.end,
-                    //     children: [
-                    //       orderCardSubWidgets.cardTime,
-                    //       orderCardSubWidgets.rightImage,
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
                 Divider(),
@@ -133,7 +118,6 @@ class OrderInfosCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Container(
-                        // height: 30,
                         child: orderCardSubWidgets.cardStatus,
                       ),
                     ],

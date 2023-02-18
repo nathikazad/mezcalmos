@@ -56,9 +56,7 @@ class SavedLocationComponent extends StatelessWidget {
                                 .toString() +
                             ".."
                         : savelocation.name.capitalizeFirst.toString(),
-                    style: Get.textTheme.bodyText1?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: Get.textTheme.headline4
                   ),
                 ),
                 InkWell(
@@ -81,8 +79,10 @@ class SavedLocationComponent extends StatelessWidget {
                             : backgroundShadeColor,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
                     child: Text(
-                      _i18n()["defaultAddressText"],
-                      style: TextStyle(
+                      '${_i18n()["defaultAddressText"]}',
+                      style:
+                      
+                       TextStyle(
                         fontFamily: "Montserrat",
                         color: (savelocation.defaultLocation)
                             ? Colors.white
@@ -159,9 +159,8 @@ class SavedLocationComponent extends StatelessWidget {
               child: Text(
                 savelocation.location.address,
                 style: Get.textTheme.subtitle1?.copyWith(
-                  color: Color(0xFF494949),
+                  color: offShadeGreyColor,
                   fontWeight: FontWeight.w600,
-                  // fontSize: 12.sp,
                 ),
               ),
             ),

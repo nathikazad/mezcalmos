@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]
@@ -103,10 +102,8 @@ class CardSummaryCard extends StatelessWidget {
                                       color: primaryBlueColor,
                                     )),
                                 Text('${_i18n()["toBeCalc"]}',
-                                    style: txt.bodyText2
-                                        ?.copyWith(fontStyle: FontStyle.italic)
-                                    // TextStyle(fontStyle: FontStyle.italic),
-                                    ),
+                                    style: txt.bodyText2?.copyWith(
+                                        fontStyle: FontStyle.italic)),
                               ],
                             )
                 ],
@@ -148,19 +145,15 @@ class CardSummaryCard extends StatelessWidget {
                     child: Container(
                       child: Text(
                         "${_i18n()["totalCost"]} :",
-                        style: txt.bodyText1
-                            ?.copyWith(fontWeight: FontWeight.w700),
+                        style: txt.headline4,
                       ),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        controller.cart.totalCost.toPriceString(),
-                        style: txt.bodyText1?.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 14.sp),
-                      ),
+                      child: Text(controller.cart.totalCost.toPriceString(),
+                          style: txt.headline5),
                     ),
                   ),
                 ],

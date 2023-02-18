@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -74,7 +75,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 4),
                       child: Icon(
                         Icons.info_outline_rounded,
-                        color: Color(0xFF494949),
+                       color: offShadeGreyColor,
                         size: 22,
                       ),
                     ),

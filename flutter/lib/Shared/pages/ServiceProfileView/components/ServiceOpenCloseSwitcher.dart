@@ -50,9 +50,7 @@ class ServiceOpenCloseSwitcher extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: Get.textTheme.bodyText1?.copyWith(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.w600,
+                          style: Get.textTheme.headline6?.copyWith(
                               color: Colors.grey.shade900),
                         ),
                         Text(
@@ -66,7 +64,7 @@ class ServiceOpenCloseSwitcher extends StatelessWidget {
                 )
               : Text(
                   title,
-                  style: Get.textTheme.bodyText1?.copyWith(
+                  style: Get.textTheme.headline6?.copyWith(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.grey.shade900),

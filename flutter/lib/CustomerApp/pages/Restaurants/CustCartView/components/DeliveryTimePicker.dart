@@ -191,8 +191,8 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       await showModalBottomSheet<DateTime>(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(25.0.sp),
-              topRight: Radius.circular(25.0.sp),
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
             ), //for giving border to datePickerSheet
           ),
           context: context,

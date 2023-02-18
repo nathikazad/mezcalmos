@@ -128,15 +128,6 @@ class RestaurantInfoTab extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                // Text(
-                //   _getDollarsSign(),
-                //   style: Get.textTheme.bodyText1?.copyWith(
-                //     color: Colors.grey.shade800,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   width: 15,
-                // ),
                 Icon(
                   Icons.delivery_dining,
                   size: 3.4.h,

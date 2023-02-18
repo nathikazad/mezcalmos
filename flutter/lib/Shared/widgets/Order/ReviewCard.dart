@@ -51,7 +51,6 @@ class _ReviewCardState extends State<ReviewCard> {
                         Text(
                           widget.review.customer?.name ?? "",
                           style: Get.textTheme.bodyText1
-                              ?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 2,
@@ -82,9 +81,7 @@ class _ReviewCardState extends State<ReviewCard> {
             ),
             Text(
               widget.review.comment?.inCaps ?? "",
-              style: Get.textTheme.subtitle2?.copyWith(
-                fontSize: 11.sp,
-              ),
+              style: Get.textTheme.bodyText2,
             ),
             SizedBox(
               height: 0.5.h,

@@ -53,10 +53,7 @@ class RestaurantCard extends StatelessWidget {
                       SizedBox(height: 0.3.h),
                       if (restaurant.info.description?[userLanguage] != null)
                         Text(
-                          // TODO:544D-HASURA
-
-                          // restaurant.description![userLanguage]!,
-                          "restaurant's desc in english",
+                          restaurant.info.description![userLanguage]!,
                           style: txt.bodyText2,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -65,19 +62,10 @@ class RestaurantCard extends StatelessWidget {
                           restaurant.info.description!.length > 1)
                         const Spacer(),
                       Container(
-                        //  alignment: Alignment.bottomLeft,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            // Flexible(
-                            //   flex: 2,
-                            //   fit: FlexFit.tight,
-                            //   child: Text(_getDollarsSign(),
-                            //       style: txt.bodyText1?.copyWith(
-                            //         color: Colors.grey.shade800,
-                            //       )),
-                            // ),
                             Row(
                               children: [
                                 Icon(

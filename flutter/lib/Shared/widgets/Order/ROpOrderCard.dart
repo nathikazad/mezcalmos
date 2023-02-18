@@ -42,8 +42,6 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  //  _orderImageComponent(),
-                  // const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -122,7 +120,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Color(0XFFFDECEF),
+              color: cancelledBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
@@ -135,7 +133,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Color(0xFFEAECFF),
+              color: deliveredBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
@@ -147,7 +145,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Color(0xFFFFF0CB),
+              color: waitingBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',

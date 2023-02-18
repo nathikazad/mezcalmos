@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderSummaryCard"];
@@ -118,19 +117,9 @@ class OrderSummaryCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        '${_i18n()["totalCost"]}',
-                        style: txt.bodyText1?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        order.totalCost?.toPriceString() ?? "_",
-                        style: txt.bodyText1!.copyWith(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                      Text('${_i18n()["totalCost"]}', style: txt.headline4),
+                      Text(order.totalCost?.toPriceString() ?? "_",
+                          style: txt.headline5),
                     ],
                   ),
                 ),
@@ -138,7 +127,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 2.h,
+            height: 10,
           )
         ],
       ),
