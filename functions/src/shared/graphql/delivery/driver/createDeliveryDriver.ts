@@ -39,7 +39,7 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
     if(response.delivery_driver.length) {
         throw new HttpsError(
             "internal",
-            "The driver is already working for this delivery company or restaurant ot laundry"
+            "The driver is already working for this delivery company or restaurant or laundry"
         );
     }
     let mutationResponse = await chain.mutation({

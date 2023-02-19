@@ -7,6 +7,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator } from "../shared/models/Services/Service";
+import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
 
 export interface AddDriverDetails {
     deliveryCompanyId: number,
@@ -58,14 +59,28 @@ async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: Deliv
             });
             break;
         case DeliveryServiceProviderType.Restaurant:
-            let operators: Operator[] = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
-            operators.forEach((o) => {
+            let restaurantOperators: Operator[] = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
+            restaurantOperators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(
                         o.user.firebaseId,
                         notification,
                         o.notificationInfo,
                         ParticipantType.RestaurantOperator,
+                        o.user.language
+                    );
+                }
+            });
+            break;
+            case DeliveryServiceProviderType.Laundry:
+            let laundryOperators: Operator[] = await getLaundryOperators(addDriverDetails.deliveryCompanyId);
+            laundryOperators.forEach((o) => {
+                if (o.owner && o.user) {
+                    pushNotification(
+                        o.user.firebaseId,
+                        notification,
+                        o.notificationInfo,
+                        ParticipantType.LaundryOperator,
                         o.user.language
                     );
                 }

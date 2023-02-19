@@ -1,9 +1,12 @@
 import { getHasura } from "../../../../utilities/hasura";
 import * as fs from 'fs';
+import { DeliveryServiceProviderType } from "../../../models/Generic/Delivery";
 
 interface Restaurant {
     items: Record<string, number>; //en name to hasura id
-    hsId: number
+    hsId: number,
+    gps: any,
+    address: string
 }
 export async function insertRestaurantOrders(data: any, response: any) {
     let chain = getHasura();
@@ -48,9 +51,11 @@ export async function insertRestaurantOrders(data: any, response: any) {
         for(let item of restaurant.items) {
             items[item.name.translations[0].value] = item.id;
         }
-        restaurantFbIdToObject[restaurant.firebase_id!] = {
+        restaurantFbIdToObject[restaurant.details.firebase_id!] = {
             hsId: restaurant.id,
-            items
+            items,
+            gps: restaurant.details.location.gps,
+            address: restaurant.details.location.address
         }
     }
     let userFbIdToHsId: Record<string, number> = {};
@@ -110,6 +115,25 @@ export async function insertRestaurantOrders(data: any, response: any) {
                 items: {
                     data: orderItems
                 },
+                delivery: {
+                    data: {
+                        pickup_gps: JSON.stringify(restaurantFbIdToObject[o.restaurantFirebaseId].gps),
+                        pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
+                        dropoff_address: o.toLocationAddress ?? "",
+                        dropoff_gps: o.toLocationGps ?? JSON.stringify({
+                            "type": "point",
+                            "coordinates": [0, 0]
+                        }),
+                        chat_with_customer_id: 1,
+                        payment_type: o.paymentType,
+                        status: o.status,
+                        customer_id: customerFbIdToHsId[o.customerFirebaseId],
+                        service_provider_id: 1,
+                        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+                        delivery_cost: o.deliveryCost,
+                        package_cost: o.itemsCost,
+                    }
+                },
                 review: (o.review) ? {
                     data: {
                         rating: o.review.rating,
@@ -140,6 +164,25 @@ export async function insertRestaurantOrders(data: any, response: any) {
                 items: {
                     data: orderItems
                 },
+                delivery: {
+                    data: {
+                        pickup_gps: JSON.stringify(restaurantFbIdToObject[o.restaurantFirebaseId].gps),
+                        pickup_address: restaurantFbIdToObject[o.restaurantFirebaseId].address,
+                        dropoff_address: o.toLocationAddress ?? "",
+                        dropoff_gps: o.toLocationGps ?? JSON.stringify({
+                            "type": "point",
+                            "coordinates": [0, 0]
+                        }),
+                        chat_with_customer_id: 1,
+                        payment_type: o.paymentType,
+                        status: o.status,
+                        customer_id: customerFbIdToHsId[o.customerFirebaseId],
+                        service_provider_id: 1,
+                        service_provider_type: DeliveryServiceProviderType.DeliveryCompany,
+                        delivery_cost: o.deliveryCost,
+                        package_cost: o.itemsCost,
+                    }
+                },
                 review: (o.review) ? {
                     data: {
                         rating: o.review.rating,
@@ -155,6 +198,29 @@ export async function insertRestaurantOrders(data: any, response: any) {
         }
 
     }
+    // await chain.mutation({
+    //     insert_restaurant_order: [{
+    //         objects: [{
+    //             delivery: {
+    //                 data: {
+    //                     pickup_gps: ,
+    //                     pickup_address: ,
+    //                     dropoff_address: ,
+    //                     dropoff_gps: ,
+    //                     chat_with_customer_id: 0,
+    //                     payment_type: o.paymentType,
+    //                     status: o.status,
+    //                     customer_id: ,
+    //                     service_provider_id: 1,
+    //                     service_provider_type: "delivery_company",
+    //                     delivery_cost: o.shippingCost,
+    //                     package_cost: o.,
+
+    //                 }
+    //             }
+    //         }]
+    //     }, {}]
+    // })
     // let orders = data.map(async (o: any) => {
         // let response = await chain.query({
         //     restaurant_restaurant: [{
