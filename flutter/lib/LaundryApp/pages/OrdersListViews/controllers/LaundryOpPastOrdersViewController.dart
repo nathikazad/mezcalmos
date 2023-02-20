@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
+import 'package:mezcalmos/Shared/graphql/laundry_order/hsLaundryOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 
@@ -34,7 +34,8 @@ class LaundryOpPastOrdersController {
 
   Future<void> _initOrders() async {
     pastOrders.value =
-        await get_past_restaurant_orders(restaurantId: laundryId) ?? [];
+        await get_laundry_orders(laundryStoreID: laundryId, inProcess: false) ??
+            [];
   }
 
   void dispose() {}

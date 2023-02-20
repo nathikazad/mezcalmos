@@ -15,13 +15,6 @@ object_relationships:
           name: details
           schema: service_provider
 array_relationships:
-  - name: categories
-    using:
-      foreign_key_constraint_on:
-        column: store_id
-        table:
-          name: category
-          schema: laundry
   - name: delivery_partners
     using:
       manual_configuration:

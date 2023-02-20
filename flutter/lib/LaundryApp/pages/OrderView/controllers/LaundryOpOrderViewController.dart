@@ -225,6 +225,8 @@ class LaundryOpOrderViewController {
   }
 
   Future<int?> updateCategory(LaundryOrderCostLineItem newCostLineItem) async {
+    mezDbgPrint("NEW COST LINE ++++++🥰");
+    mezDbgPrint(newCostLineItem.toFirebaseFormat());
     int? res = await update_laundry_order_category(
         cat: newCostLineItem, orderId: order.orderId);
 
