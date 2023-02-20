@@ -220,10 +220,6 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
-  mezDbgPrint(
-      "ORDER TYPE  ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
-  mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
