@@ -3918,7 +3918,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     required this.language,
     this.description_id,
     required this.location,
-    this.accepted_payments,
+    required this.accepted_payments,
     this.stripe_info,
     required this.name,
     this.description,
@@ -3955,8 +3955,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
       location:
           Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location
               .fromJson((l$location as Map<String, dynamic>)),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       stripe_info: l$stripe_info == null
           ? null
           : Query$getOneRestaurant$restaurant_restaurant_by_pk$details$stripe_info
@@ -3988,7 +3987,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
   final Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location
       location;
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final Query$getOneRestaurant$restaurant_restaurant_by_pk$details$stripe_info?
       stripe_info;
@@ -4023,8 +4022,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details {
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$name = name;
@@ -4273,9 +4271,10 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details<
             ? _instance.location
             : (location
                 as Query$getOneRestaurant$restaurant_restaurant_by_pk$details$location),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info
@@ -4570,7 +4569,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details$stripe_info {
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -4586,7 +4585,7 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details$stripe_info {
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -4609,7 +4608,8 @@ class Query$getOneRestaurant$restaurant_restaurant_by_pk$details$stripe_info {
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -4744,7 +4744,7 @@ abstract class CopyWith$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -4796,7 +4796,7 @@ class _CopyWithImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$details$s
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -4833,7 +4833,7 @@ class _CopyWithStubImpl$Query$getOneRestaurant$restaurant_restaurant_by_pk$detai
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -8096,7 +8096,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details {
   Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details({
     required this.id,
     this.stripe_info,
-    this.accepted_payments,
+    required this.accepted_payments,
     required this.$__typename,
   });
 
@@ -8112,8 +8112,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details {
           ? null
           : Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_info
               .fromJson((l$stripe_info as Map<String, dynamic>)),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -8123,7 +8122,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details {
   final Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_info?
       stripe_info;
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final String $__typename;
 
@@ -8134,8 +8133,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details {
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -8254,9 +8252,10 @@ class _CopyWithImpl$Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$d
             ? _instance.stripe_info
             : (stripe_info
                 as Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_info?),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -8327,7 +8326,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -8343,7 +8342,7 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -8366,7 +8365,8 @@ class Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$details$stripe_
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -8501,7 +8501,7 @@ abstract class CopyWith$Query$getRestaurantPaymentInfo$restaurant_restaurant_by_
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -8553,7 +8553,7 @@ class _CopyWithImpl$Query$getRestaurantPaymentInfo$restaurant_restaurant_by_pk$d
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -8590,7 +8590,7 @@ class _CopyWithStubImpl$Query$getRestaurantPaymentInfo$restaurant_restaurant_by_
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -10483,7 +10483,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
     required this.image,
     required this.language,
     required this.location,
-    this.accepted_payments,
+    required this.accepted_payments,
     this.stripe_info,
     required this.name,
     this.schedule,
@@ -10518,8 +10518,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
       location:
           Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$location
               .fromJson((l$location as Map<String, dynamic>)),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       stripe_info: l$stripe_info == null
           ? null
           : Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$stripe_info
@@ -10549,7 +10548,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
   final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$location
       location;
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$stripe_info?
       stripe_info;
@@ -10582,8 +10581,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details {
     final l$location = location;
     _resultData['location'] = l$location.toJson();
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$name = name;
@@ -10825,9 +10823,10 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
             ? _instance.location
             : (location
                 as Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$location),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info
@@ -11122,7 +11121,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$s
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -11138,7 +11137,7 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$s
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -11161,7 +11160,8 @@ class Mutation$updateRestaurantInfo$update_restaurant_restaurant_by_pk$details$s
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -11296,7 +11296,7 @@ abstract class CopyWith$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -11348,7 +11348,7 @@ class _CopyWithImpl$Mutation$updateRestaurantInfo$update_restaurant_restaurant_b
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -11385,7 +11385,7 @@ class _CopyWithStubImpl$Mutation$updateRestaurantInfo$update_restaurant_restaura
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,

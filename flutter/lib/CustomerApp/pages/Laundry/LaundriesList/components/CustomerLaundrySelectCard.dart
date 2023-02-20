@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -26,7 +27,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry);
+            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.hasuraId));
           },
           child: Container(
             child: _laundryInfoHeader(),
@@ -73,7 +74,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       flex: 6,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -99,14 +100,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 12,
-                      fit: FlexFit.loose,
+                      flex: 6,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 18,
+                            size: 20,
                             color: Colors.black,
                           ),
                           Flexible(
@@ -119,6 +120,28 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (laundry.getCheapestCategory != null)
+                      Flexible(
+                        flex: 6,
+                        fit: FlexFit.tight,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.north_east,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                                child: Text(
+                              "${laundry.getCheapestCategory.toPriceString()}/Kg",
+                              style: Get.textTheme.bodyMedium?.copyWith(
+                                color: blackColor,
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ],

@@ -16,7 +16,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Custo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
@@ -49,8 +48,8 @@ String getRestaurantRoute(
       ":restaurantId", restaurantId.toString());
 }
 
-String getSingleLaundryRoute(String laundryId) {
-  return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
+String getSingleLaundryRoute(int laundryId) {
+  return kSingleLaundryRoute.replaceFirst(":laundryId", "$laundryId");
 }
 
 String getItemRoute(int restaurantId, int itemId) {
