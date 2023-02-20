@@ -4,12 +4,10 @@ import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/__generated/restaurant.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/Service.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
-import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
@@ -339,51 +337,6 @@ Future<Schedule?> get_restaurant_schedule(
 //     return true;
 //   }
 // }
-
-Future<List<Operator>?> get_restaurant_operators(
-    {required int restaurantId, bool withCache = true}) async {
-  final QueryResult<Query$getRestaurantOperators> response =
-      await _db.graphQLClient.query$getRestaurantOperators(
-    Options$Query$getRestaurantOperators(
-      fetchPolicy: FetchPolicy.noCache,
-      // fetchPolicy:
-      //     withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables:
-          Variables$Query$getRestaurantOperators(restaurantId: restaurantId),
-    ),
-  );
-  if (!response.hasException &&
-      response.parsedData?.restaurant_restaurant_by_pk?.restaurant_operators !=
-          null) {
-    final List<
-            Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators>
-        data =
-        response.parsedData!.restaurant_restaurant_by_pk!.restaurant_operators;
-    mezDbgPrint(
-        "✅✅ Hasura get operators querry ${response.parsedData?.toJson()} ");
-    final List<Operator> ops = data.map(
-        (Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators
-            opData) {
-      return Operator(
-          state: OperatorState(
-              owner: opData.operator_details.owner,
-              operatorState: opData.operator_details.status.toAgentStatus(),
-              serviceProviderId: restaurantId),
-          info: UserInfo(
-              hasuraId: opData.user.id,
-              firebaseId: opData.user.firebase_id,
-              name: opData.user.name,
-              image: opData.user.image),
-          operatorId: opData.id);
-    }).toList();
-    return ops;
-  } else {
-    mezDbgPrint(
-        "🚨🚨🚨 Hasura get restaurant operators exceptions ${response.exception}");
-  }
-
-  return null;
-}
 
 // restaurant status //
 

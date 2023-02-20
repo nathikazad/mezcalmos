@@ -93,11 +93,8 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "Operators"),
                               _navigationLink(
                                   onClick: () async {
-                                    navigateToServicePayments(
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
+                                    await MezRouter.toNamed(
+                                        kserviceScheduleEdit);
                                   },
                                   icon: Icons.calendar_today,
                                   label: "Schedule"),

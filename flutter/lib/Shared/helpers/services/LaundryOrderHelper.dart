@@ -87,18 +87,43 @@ extension LaundryOrderWidgets on LaundryOrder {
     return Container(height: 50, width: 50, child: icon.value);
   }
 
+  Future<Widget?> getScooterWidget() async {
+    final Rx<Widget> icon = Rx<Widget>(Container());
+    final Rx<RiveAnimation> animation = Rx<RiveAnimation>(aWashingAnimation);
+
+    await Future.delayed(Duration.zero);
+
+    animation.value = aDriverAnimation;
+    icon.value = animation.value;
+
+    return Container(height: 50, width: 50, child: icon.value);
+  }
+
   // getting icons widgets reperesent the current status
   Widget getOrderWidget() {
-    if (isAtLaundry()) {
-      return FutureBuilder<Widget?>(
-          future: geAtLaundrytWidget(),
-          builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
-            return Container(
-              child: snapshot.data,
-            );
-          });
-    } else {
-      return getStaticOrderWidget();
+    switch (status) {
+      case LaundryOrderStatus.AtLaundry:
+        return FutureBuilder<Widget?>(
+            future: geAtLaundrytWidget(),
+            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
+              return Container(
+                child: snapshot.data,
+              );
+            });
+        break;
+      case LaundryOrderStatus.OtwPickupFromCustomer:
+      case LaundryOrderStatus.OtwPickupFromLaundry:
+      case LaundryOrderStatus.PickedUpFromLaundry:
+      case LaundryOrderStatus.PickedUpFromCustomer:
+        return FutureBuilder<Widget?>(
+            future: getScooterWidget(),
+            builder: (BuildContext context, AsyncSnapshot<Widget?> snapshot) {
+              return Container(
+                child: snapshot.data,
+              );
+            });
+      default:
+        return getStaticOrderWidget();
     }
   }
 

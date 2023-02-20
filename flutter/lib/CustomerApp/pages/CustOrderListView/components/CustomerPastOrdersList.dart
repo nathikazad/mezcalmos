@@ -8,7 +8,7 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -68,6 +68,7 @@ class CustomerPastOrdersList extends StatelessWidget {
           itemBuilder: (BuildContext context, MinimalOrder element) {
             return MinimalOrderCard(
               order: element,
+              forCustomer: true,
               onTap: () {
                 if (element.orderType == OrderType.Laundry) {
                   MezRouter.toNamed(getLaundryOrderRoute(element.id));

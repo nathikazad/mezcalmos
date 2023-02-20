@@ -265,8 +265,6 @@ class CreateServiceViewController {
               serviceInput.value.serviceInfo!.location.longitude,
               serviceInput.value.serviceInfo!.location.address),
           schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
-          delivery: true,
-          customerPickup: false,
           deliveryDetails: cModel.DeliveryDetails(
             serviceInput.value.selfDeliveryCost!.minimumCost,
             serviceInput.value.selfDeliveryCost!.costPerKm,
@@ -277,8 +275,6 @@ class CreateServiceViewController {
             false,
             serviceInput.value.isSelfDelivery,
           ),
-          selfDelivery: serviceInput.value.deliveryType ==
-              ServiceDeliveryType.Self_delivery,
           language: {cModel.Language.EN: true});
       return true;
     } on FirebaseFunctionsException catch (e, stk) {

@@ -45,12 +45,12 @@ class CloudFunctions {
   }
 
   static Future<PaymentIntentResponse> stripe_getPaymentIntent(
-      {required num serviceProviderId,
+      {required num serviceProviderDetailsId,
       required num paymentAmount}  ) async {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-getPaymentIntent",
       parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
+        "serviceProviderDetailsId":serviceProviderDetailsId,
         "paymentAmount":paymentAmount,
       }));
   }
@@ -65,13 +65,13 @@ class CloudFunctions {
   }
 
   static Future<ChargeCardResponse> stripe_chargeCard(
-      {required num serviceProviderId,
+      {required num serviceProviderDetailsId,
       required String cardId,
       required num paymentAmount}  ) async {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "stripe-chargeCard",
       parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
+        "serviceProviderDetailsId":serviceProviderDetailsId,
         "cardId":cardId,
         "paymentAmount":paymentAmount,
       }));
@@ -122,9 +122,6 @@ class CloudFunctions {
       required Map<String, dynamic> schedule,
       String? restaurantOperatorNotificationToken,
       String? firebaseId,
-      required bool delivery,
-      required bool customerPickup,
-      bool? selfDelivery,
       num? deliveryPartnerId,
       required DeliveryDetails deliveryDetails,
       required Map<Language,bool> language}  ) async {
@@ -137,9 +134,6 @@ class CloudFunctions {
         "schedule":json.encode(schedule),
         "restaurantOperatorNotificationToken":restaurantOperatorNotificationToken,
         "firebaseId":firebaseId,
-        "delivery":delivery,
-        "customerPickup":customerPickup,
-        "selfDelivery":selfDelivery,
         "deliveryPartnerId":deliveryPartnerId,
         "deliveryDetails":deliveryDetails.toFirebaseFormattedJson(),
         "language":language,
@@ -362,17 +356,13 @@ class CloudFunctions {
   static Future<void> delivery2_assignDriver(
       {required num deliveryOrderId,
       required num deliveryDriverId,
-      required OrderType orderType,
-      bool? changeDriver,
-      required num deliveryCompanyId}  ) async {
+      bool? changeDriver}  ) async {
     return await callCloudFunction(
       functionName: "delivery2-assignDriver",
       parameters: <String, dynamic>{
         "deliveryOrderId":deliveryOrderId,
         "deliveryDriverId":deliveryDriverId,
-        "orderType":orderType.toFirebaseFormatString(),
         "changeDriver":changeDriver,
-        "deliveryCompanyId":deliveryCompanyId,
       });
   }
 

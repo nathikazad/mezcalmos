@@ -3,17 +3,20 @@ import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 
 class OperatorState {
   final int? serviceProviderId;
+  final int? serviceProviderDetailsId;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
       {required this.serviceProviderId,
       required this.operatorState,
+      required this.serviceProviderDetailsId,
       required this.owner});
 
   factory OperatorState.fromSnapshot(data) {
     final int restaurantId = data['restaurantId'] ?? null;
     return OperatorState(
         serviceProviderId: restaurantId,
+        serviceProviderDetailsId: null,
         owner: false,
         operatorState: AgentStatus.Awaiting_approval);
   }

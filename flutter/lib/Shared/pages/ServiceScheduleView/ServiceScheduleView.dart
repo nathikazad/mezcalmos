@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceScheduleView/components/ServiceScheduleWidgets.dart';
 import 'package:mezcalmos/Shared/pages/ServiceScheduleView/controllers/ServiceScheduleViewController.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
@@ -27,6 +29,7 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
   void initState() {
     _viewWidgets = ServiceScheduleWidgets(
         viewController: viewController, context: context);
+    viewController.init();
     super.initState();
   }
 
@@ -37,18 +40,24 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (viewController.oldSchedule.value != null) {
-        return _buidSchedule();
-      } else {
-        return Container(
-          alignment: Alignment.center,
-          child: MezLogoAnimation(
-            centered: true,
-          ),
-        );
-      }
-    });
+    return Scaffold(
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          title: '${_i18n()["schedule"]}',
+          onClick: MezRouter.back,
+          showNotifications: true),
+      body: Obx(() {
+        if (viewController.oldSchedule.value != null) {
+          return _buidSchedule();
+        } else {
+          return Container(
+            alignment: Alignment.center,
+            child: MezLogoAnimation(
+              centered: true,
+            ),
+          );
+        }
+      }),
+    );
   }
 
   Widget _buidSchedule() {

@@ -8,29 +8,30 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]["notesWidget"];
 
 class OrderNoteCard extends StatelessWidget {
-  const OrderNoteCard({super.key, required this.note});
+  const OrderNoteCard({super.key, required this.note, this.margin});
   final String? note;
+  final EdgeInsets? margin;
   @override
   Widget build(BuildContext context) {
     if (note != null && note!.isNotEmpty) {
       return Card(
-        margin: const EdgeInsets.only(top: 15),
+        margin: margin ?? const EdgeInsets.only(top: 15),
         child: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 _i18n()['notes'],
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 8),
               Container(
                 child: Text(
                   note!,
-                  style: Get.textTheme.subtitle2,
+                  style: Get.textTheme.titleSmall,
                 ),
               ),
             ],

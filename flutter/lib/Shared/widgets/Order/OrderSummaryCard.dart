@@ -49,7 +49,7 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["orderCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyMedium,
                       ),
                       Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
                           style: txt.bodyText2?.copyWith(
@@ -73,11 +73,11 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["stripeFees"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                         Text(
                             order.stripePaymentInfo!.stripeFees.toPriceString(),
-                            style: txt.bodyText2),
+                            style: txt.bodyMedium),
                       ],
                     ),
                   ),
@@ -88,7 +88,7 @@ class OrderSummaryCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${_i18n()["deliveryCost"]}',
-                        style: txt.bodyText2,
+                        style: txt.bodyMedium,
                       ),
                       Flexible(
                           child: ShippingCostComponent(
@@ -105,11 +105,11 @@ class OrderSummaryCard extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           '${_i18n()["refundAmount"]}',
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                         Text(
                           "-" + order.refundAmount!.toPriceString(),
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                         ),
                       ],
                     ),

@@ -12,10 +12,8 @@ import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
-//
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
-//
 
 class SetOrderWeightBottomSheet extends StatefulWidget {
   const SetOrderWeightBottomSheet({
@@ -31,27 +29,13 @@ class SetOrderWeightBottomSheet extends StatefulWidget {
 }
 
 class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
-  // LaundryOpAuthController opAuthController =
-  //     Get.find<LaundryOpAuthController>();
-
-  // Rxn<LaundryCostLineItem?> newCategory = Rxn();
-  // RxBool isLoading = RxBool(false);
-
-  // RxBool isClicked = RxBool(false);
-
   @override
   void initState() {
-    // if (widget.editMode && widget.oldItem != null) {
-    //   newCategory.value = widget.oldItem;
-    //   itemsWeightController.text = widget.oldItem!.weight.toString();
-    // }
     super.initState();
   }
 
   @override
   void dispose() {
-    // itemsWeightController.dispose();
-    // newCategory.value = null;
     super.dispose();
   }
 
@@ -89,16 +73,12 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 if (widget.viewController.isEditingCategory)
                   InkWell(
                     onTap: () {
-                      // bool isDeleted = false;
-                      // ignore: unawaited_futures
                       showConfirmationDialog(context,
                           primaryButtonText: "${_i18n()["deleteTitle"]}",
                           helperText: "${_i18n()["deleteBody"]}",
                           title: "${_i18n()["deleteItem"]}",
                           onYesClick: () async {
                         mezDbgPrint("tapped");
-
-                        // ignore: unawaited_futures
 
                         await widget.viewController
                             .deleteCategory()
@@ -134,11 +114,9 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
             SizedBox(
               height: 10,
             ),
-            //    Category selector
             LaundryOrderWeightSelector(
               viewController: widget.viewController,
             ),
-
             SizedBox(
               height: 25,
             ),
@@ -184,39 +162,6 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                 await widget.viewController.saveItemsWeight();
               },
             ),
-            // Obx(
-            //   () => InkWell(
-            //       borderRadius: BorderRadius.circular(10),
-            //       onTap: isClicked.value
-            //           ? null
-            //           : () {
-
-            //             },
-            //       child: Ink(
-            //         height: 50,
-            //         width: double.infinity,
-            //         padding: const EdgeInsets.all(5),
-            //         decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             gradient: bluePurpleGradient),
-            //         child: Center(
-            //           child: (isClicked.value)
-            //               ? SizedBox(
-            //                   height: 30,
-            //                   width: 30,
-            //                   child: CircularProgressIndicator(
-            //                     color: Colors.white,
-            //                   ),
-            //                 )
-            //               : Text(
-            //                   (widget.viewController.isEditingCategory)
-            //                       ? "${_i18n()["editItemsWeight"]} "
-            //                       : "${_i18n()["saveItemsWeight"]}",
-            //                   style: Get.textTheme.bodyLarge
-            //                       ?.copyWith(color: Colors.white)),
-            //         ),
-            //       )),
-            // ),
             SizedBox(
               height: 10,
             ),
@@ -241,28 +186,6 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
       );
     });
   }
-  // delete item
 
-  Future<void> deleteItem(LaundryOrderCostLineItem item) async {
-    // final LaundryOrderCosts? oldCosts = widget.order.costsByType;
-    // if (oldCosts != null) {
-    //   if (oldCosts.lineItems.length > 1) {
-    //     mezDbgPrint("deleted");
-    //     oldCosts.lineItems.removeWhere(
-    //         (LaundryOrderCostLineItem element) => element.id == item.id);
-
-    //     // await orderController.setOrderWeight(
-    //     //     widget.order.orderId.toString(), oldCosts);
-    //     mezDbgPrint("deleted");
-    //   } else {
-    //     Get.snackbar(
-    //       "${_i18n()["error"]}",
-    //       "Every laundry order must have at least one oder items weight",
-    //       padding: EdgeInsets.all(16),
-    //       backgroundColor: Colors.grey.shade800,
-    //       colorText: Colors.white,
-    //     );
-    //   }
-    // }
-  }
+  Future<void> deleteItem(LaundryOrderCostLineItem item) async {}
 }

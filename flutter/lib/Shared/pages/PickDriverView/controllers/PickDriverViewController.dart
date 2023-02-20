@@ -11,7 +11,6 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
-import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 
 class PickDriverViewController {
@@ -51,11 +50,10 @@ class PickDriverViewController {
     try {
       mezDbgPrint("calling assign driver....");
       await CloudFunctions.delivery2_assignDriver(
-          deliveryOrderId: orderId,
-          deliveryDriverId: driver.deliveryDriverId,
-          orderType: order.value!.orderType.toCloudFunctionsModel(),
-          changeDriver: order.value!.isDriverAssigned,
-          deliveryCompanyId: driver.deliveryDriverState.deliveryCompanyId!);
+        deliveryOrderId: orderId,
+        deliveryDriverId: driver.deliveryDriverId,
+        changeDriver: order.value!.isDriverAssigned,
+      );
       MezRouter.back();
       screenLoading.value = false;
     } catch (e, stk) {

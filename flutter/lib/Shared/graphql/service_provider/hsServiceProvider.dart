@@ -206,7 +206,8 @@ Future<Schedule?> update_service_schedule(
     Options$Mutation$updateServiceDetails(
       variables: Variables$Mutation$updateServiceDetails(
         detailsId: detailsId,
-        data: Input$service_provider_details_set_input(schedule: schedule),
+        data: Input$service_provider_details_set_input(
+            schedule: schedule.toFirebaseFormattedJson()),
       ),
     ),
   );
@@ -230,6 +231,24 @@ Future<bool> update_service_accepted_payments(
           return MapEntry(key.toFirebaseFormatString(), value);
         })),
       ),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
+      res.parsedData!.update_service_provider_details_by_pk;
+  return data != null;
+}
+
+Future<bool> update_service_charge_fees_fro_customer(
+    {required bool value, required int detailsId}) async {
+  QueryResult<Mutation$updateServiceDetails> res =
+      await _db.graphQLClient.mutate$updateServiceDetails(
+    Options$Mutation$updateServiceDetails(
+      variables: Variables$Mutation$updateServiceDetails(
+          detailsId: detailsId,
+          data: Input$service_provider_details_set_input()),
     ),
   );
   if (res.parsedData?.update_service_provider_details_by_pk == null) {

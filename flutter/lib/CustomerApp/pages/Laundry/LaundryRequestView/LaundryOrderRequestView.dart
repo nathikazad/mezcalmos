@@ -8,8 +8,10 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -69,7 +71,7 @@ class _CustLaundryOrderRequestViewState
                             height: 10,
                           ),
                           Text(viewController.laundry.value!.info.name,
-                              style: Get.textTheme.headline5),
+                              style: Get.textTheme.headlineSmall),
                           SizedBox(
                             height: 8,
                           ),
@@ -92,7 +94,7 @@ class _CustLaundryOrderRequestViewState
                                   viewController
                                       .laundry.value!.info.location.address,
                                   maxLines: 2,
-                                  style: Get.textTheme.subtitle2,
+                                  style: Get.textTheme.titleSmall,
                                 ),
                               )
                             ],
@@ -103,7 +105,7 @@ class _CustLaundryOrderRequestViewState
                           Container(
                             child: Text(
                               '${_i18n()["deliveryLocation"]}',
-                              style: Theme.of(context).textTheme.bodyText1,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                           SizedBox(
@@ -155,12 +157,12 @@ class _CustLaundryOrderRequestViewState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyText1),
+          Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyLarge),
           SizedBox(
             height: 1.h,
           ),
           TextField(
-            style: Get.textTheme.subtitle1?.copyWith(
+            style: Get.textTheme.titleMedium?.copyWith(
               color: offLightShadeGreyColor,
             ),
             controller: viewController.orderNote,
@@ -168,7 +170,7 @@ class _CustLaundryOrderRequestViewState
             minLines: 3,
             decoration: InputDecoration(
               hintText: "${_i18n()["noteHint"]}",
-              hintStyle: Get.textTheme.subtitle1?.copyWith(
+              hintStyle: Get.textTheme.titleMedium?.copyWith(
                 color: offLightShadeGreyColor,
               ),
               filled: true,
@@ -209,7 +211,7 @@ class _CustLaundryOrderRequestViewState
                   viewController.customerLoc.value?.address ??
                       "${_i18n()['pickLocation']}",
                   maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],
@@ -241,9 +243,35 @@ class _CustLaundryOrderRequestViewState
           } else {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
-            await MezRouter.toNamed<void>(sharedRoute.kSignInRouteOptional);
+            await MezRouter.toNamed<void>(kSignInRouteOptional);
           }
         },
+      ),
+    );
+  }
+
+  Widget _laundryCostCard({required LaundryCostLineItem item}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Text(
+              item.name[userLanguage]?.toString().inCaps ?? "",
+              style: Get.textTheme.bodyMedium,
+              maxLines: 1,
+            ),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Text(
+            "${item.cost.toPriceString()}/KG",
+            style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
+          )
+        ],
       ),
     );
   }

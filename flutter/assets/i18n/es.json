@@ -274,7 +274,7 @@
               "restaurant": "Restaurante"
             },
             "notesWidget": {
-              "notes": "Nota de pedido:"
+              "notes": "Notas"
             },
             "OrderFooterCard": {
               "cancelOrder": "Cancelar el pedido",
@@ -347,13 +347,13 @@
               "reviews": "Reseñas",
               "workingHours": "Horas laborales",
               "weekDays": {
-                "monday": "Lunes",
-                "tuesday": "Martes",
-                "wednesday": "Miércoles",
-                "thursday": "Jueves",
-                "friday": "Viernes",
-                "saturday": "Sábado",
-                "sunday": "Domingo"
+                "monday": "Lun",
+                "tuesday": "Mar",
+                "wednesday": "Mié",
+                "thursday": "Jue",
+                "friday": "Vie",
+                "saturday": "Sáb",
+                "sunday": "Dom"
               }
             },
             "workinHoursCart": {
@@ -589,6 +589,7 @@
         "LaundryRequestView": {
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
+            "categories" : "Categorías",
             "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",
@@ -2252,6 +2253,7 @@
         },
         "ROpEditInfoView": {
           "saved": "Guardado",
+          "schedule" :"Horas Laborales",
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",

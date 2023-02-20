@@ -210,14 +210,6 @@ factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-enum OrderType { Taxi, Restaurant, Laundry, Water }
-extension ParseOrderTypeToString on OrderType {
-  String toFirebaseFormatString() {
-    String str = this.toString().split('.').last;
-    return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
 enum DeliveryOrderStatus { OrderReceived, OnTheWayToPickup, AtPickup, OnTheWayToDropoff, AtDropoff, Delivered, CancelledByCustomer, CancelledByDeliverer, CancelledByServiceProvider }
 extension ParseDeliveryOrderStatusToString on DeliveryOrderStatus {
   String toFirebaseFormatString() {

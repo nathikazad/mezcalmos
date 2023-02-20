@@ -17,6 +17,9 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     id
     notes
      from_customer_delivery {
+       estimated_arrival_at_pickup_time
+      chat_with_customer_id
+      estimated_arrival_at_dropoff_time
       delivery_driver {
         current_location
         id
@@ -29,6 +32,9 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
       chat_with_service_provider_id
     }
     to_customer_delivery {
+        estimated_arrival_at_pickup_time
+      chat_with_customer_id
+      estimated_arrival_at_dropoff_time
       delivery_driver {
         current_location
         id
@@ -129,6 +135,9 @@ query get_laundry_order_by_id($orderId: Int!) {
     scheduled_time
     status
     from_customer_delivery {
+          estimated_arrival_at_pickup_time
+      chat_with_customer_id
+      estimated_arrival_at_dropoff_time
       delivery_driver {
         current_location
         id
@@ -141,6 +150,9 @@ query get_laundry_order_by_id($orderId: Int!) {
       chat_with_service_provider_id
     }
     to_customer_delivery {
+          estimated_arrival_at_pickup_time
+      chat_with_customer_id
+      estimated_arrival_at_dropoff_time
       delivery_driver {
         current_location
         id

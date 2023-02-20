@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -53,7 +56,7 @@ class RestaurantInfoTab extends StatelessWidget {
               Container(
                 child: Text(
                   '${_i18n()["description"]}',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               Text(restaurant.info.description?[userLanguage] ?? ""),
@@ -65,6 +68,13 @@ class RestaurantInfoTab extends StatelessWidget {
           ServiceLocationCard(
             location: restaurant.info.location,
           ),
+        MezButton(
+          label: "Get",
+          onClick: () async {
+            await MezRouter.toNamed(
+                getReviewsListRoute(restaurant.serviceDetailsId));
+          },
+        ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +86,7 @@ class RestaurantInfoTab extends StatelessWidget {
                 children: [
                   Text(
                     '${_i18n()["reviews"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   Spacer(),
                   Icon(
@@ -85,7 +95,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   ),
                   Text(
                     restaurant.rate!.toStringAsFixed(1),
-                    style: Get.textTheme.bodyText1
+                    style: Get.textTheme.bodyLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   const SizedBox(
@@ -95,7 +105,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
                       "(${restaurant.reviews.length.toString()})",
-                      style: Get.textTheme.bodyText2,
+                      style: Get.textTheme.bodyMedium,
                     ),
                   )
                 ],
@@ -112,7 +122,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     return ReviewCard(
                       review: restaurant.reviews[index],
                     );
-                  })
+                  }),
             ],
           )
       ],
@@ -140,7 +150,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   child: ShippingCostComponent(
                       shippingCost: controller.basShippingPrice.value,
                       alignment: MainAxisAlignment.start,
-                      textStyle: Get.textTheme.bodyText1),
+                      textStyle: Get.textTheme.bodyLarge),
                 ),
                 SizedBox(
                   width: 4.w,
@@ -186,7 +196,7 @@ class RestaurantInfoTab extends StatelessWidget {
           ),
           Text(
             restaurant.rate!.toStringAsFixed(1),
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
           ),
           const SizedBox(
             width: 3,
@@ -195,7 +205,7 @@ class RestaurantInfoTab extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 2),
             child: Text(
               "(${restaurant.reviews.length.toString()})",
-              style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+              style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           )
         ],

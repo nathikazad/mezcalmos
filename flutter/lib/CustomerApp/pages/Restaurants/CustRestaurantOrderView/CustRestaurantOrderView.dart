@@ -181,6 +181,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ),
                             ),
                           ],
+                          
                         ),
                       ),
                     ),

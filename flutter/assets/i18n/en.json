@@ -272,7 +272,7 @@
                 "restaurant": "Restaurant"
               },
               "notesWidget": {
-                "notes": "Order note"
+                "notes": "Notes"
               },
               "OrderFooterCard": {
                 "cancelOrder": "Cancel order",
@@ -587,6 +587,7 @@
           "LaundryRequestView": {
             "LaundryOrderRequestView": {
               "howItWorks": "How it works",
+              "categories" : "Categories",
               "deliveryLocation": "Delivery location",
               "orderSummary": "Order summary",
               "orderCost": "Order cost",
@@ -1069,13 +1070,13 @@
         "MezServiceOpenHours": {
           "openHours": "Open hours",
           "weekDays": {
-            "monday": "Monday",
-            "tuesday": "Tuesday",
-            "wednesday": "Wednesday",
-            "thursday": "Thursday",
-            "friday": "Friday",
-            "saturday": "Saturday",
-            "sunday": "Sunday"
+            "monday": "Mon",
+            "tuesday": "Tue",
+            "wednesday": "Wed",
+            "thursday": "Thu",
+            "friday": "Fri",
+            "saturday": "Sat",
+            "sunday": "Sun"
           }
         },
         "MezWorkingHours": {
@@ -2257,6 +2258,7 @@
           },
           "ROpEditInfoView": {
             "saved": "Saved",
+            "schedule" :"Working hours",
             "savedText": "Your informations has been saved",
             "openTitle": "Restaurant Availibility",
             "openSubtitle": "This will close your restaurant indefinitely",

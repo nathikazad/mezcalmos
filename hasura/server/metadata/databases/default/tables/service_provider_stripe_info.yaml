@@ -1,6 +1,14 @@
 table:
   name: stripe_info
   schema: service_provider
+object_relationships:
+  - name: detail
+    using:
+      foreign_key_constraint_on:
+        column: stripe_id
+        table:
+          name: details
+          schema: service_provider
 select_permissions:
   - role: customer
     permission:
@@ -87,3 +95,47 @@ select_permissions:
         - status
         - stripe_id
       filter: {}
+update_permissions:
+  - role: delivery_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        detail:
+          delivery_company:
+            delivery_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+  - role: laundry_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          laundry_store:
+            operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check: null
+  - role: restaurant_operator
+    permission:
+      columns:
+        - charge_fees_on_customer
+      filter:
+        detail:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id
+      check:
+        detail:
+          restaurant:
+            restaurant_operators:
+              user_id:
+                _eq: X-Hasura-User-Id

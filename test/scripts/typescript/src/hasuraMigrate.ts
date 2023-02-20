@@ -8,6 +8,9 @@ import { insertRestaurantOrders } from "../../../../functions/src/shared/graphql
 import { insertRestaurantOperators } from "../../../../functions/src/shared/graphql/restaurant/operators/insertRestaurantOperators"
 import { insertDeliveryDrivers } from "../../../../functions/src/shared/graphql/delivery/driver/insertDeliveryDrivers"
 import { insertCustomers } from "../../../../functions/src/shared/graphql/user/customer/insertCustomers"
+import { insertLaundryStores } from "../../../../functions/src/shared/graphql/laundry/insertLaundry"
+import { insertLaundryOrders } from "../../../../functions/src/shared/graphql/laundry/order/insertLaundryOrders"
+
 
 import { insertUsers } from "../../../../functions/src/shared/graphql/user/insertUsers"
 import { Language } from "../../../../functions/src/shared/models/Generic/Generic";
@@ -27,11 +30,11 @@ console.log("Current working directory: ", process.cwd());
 
 
 async function saveFile() {
-  let db = (await firebase.database().ref(`/customers/info`).once('value')).val();
+  let db = (await firebase.database().ref(`/orders/past/laundry`).once('value')).val();
   console.log("finished downloading, starting write");
 
   let data = JSON.stringify(db, null, "\t");
-  fs.writeFileSync("./data/db-snapshot-customers.json", data);
+  fs.writeFileSync("./data/db-snapshot-laundry-orders.json", data);
   console.log("Finished");
 }
 async function writeToDB() {
@@ -362,7 +365,13 @@ async function writeToDBRestoOrders() {
   let response = await chain.query({
     restaurant_restaurant: [{}, {
         id: true,
-        firebase_id: true,
+        details: {
+          firebase_id: true,
+          location: {
+            gps: true,
+            address: true
+          }
+        },
         items: [{}, {
             id: true,
             name: {
@@ -389,10 +398,10 @@ async function writeToDBRestoOrders() {
         }
     }]
 });
-  // for(let i=600; i<2800; i+=200) {
-    // console.log(i)
+  // for(let i=1400; i<3200; i+=200) {
+  //   console.log(i)
     let array = []
-    for (let orderId of Object.keys(orders).slice(2891, 2981)) {
+    for (let orderId of Object.keys(orders).slice(3200, 3338)) {
       let order = orders[orderId]
       if (!order)
         continue
@@ -438,6 +447,7 @@ async function writeToDBRestoOrders() {
         stripeInfo: order.stripePaymentInfo,
         stripeFees: (order.stripePaymentInfo) ? order.stripePaymentInfo.stripeFees : order.stripeFees,
         items: itemArray,
+        itemsCost: order.itemsCost,
         review: (order.review) ? {
           rating: order.review.rating,
           note: order.review.comment,
@@ -448,10 +458,90 @@ async function writeToDBRestoOrders() {
       array.push(orderObject)
       // break;
     }
-    
+    console.log(array.length)
     await insertRestaurantOrders(array, response)
   // }
  
+}
+
+async function writeToDBLaundry() {
+  let laundries = JSON.parse(
+    fs.readFileSync('./data/db-snapshot-laundry.json').toString()
+  );
+ 
+  insertLaundryStores(laundries)
+}
+
+async function writeToDBLaundryOrders() {
+  let orders = JSON.parse(
+    fs.readFileSync('./data/db-snapshot-laundry-orders.json').toString()
+  );
+  let chain = getHasura();
+
+  let response = await chain.query({
+    laundry_store: [{}, {
+        id: true,
+        details: {
+          firebase_id: true,
+        },
+    }],
+    user: [{}, {
+        id: true,
+        firebase_id: true,
+    }],
+    customer_customer: [{}, {
+        user_id: true,
+        user: {
+            firebase_id: true
+        }
+    }]
+  });
+  // for(let i=0; i<3200; i+=200) {
+  //   console.log(i)
+    let array = []
+    for (let orderId of Object.keys(orders)/*.slice(i, i+200)*/) {
+      let order = orders[orderId]
+      if (!order)
+        continue
+  
+      // let itemArray = [];
+      // let orderItems = order.items
+      // for(let itemFirebaseId in orderItems) {
+      //   let orderItem = orderItems[itemFirebaseId];
+      //   if(!orderItem)
+      //     continue
+  
+      //   let orderItemObject = {
+      //     itemName: orderItem.name.en,
+      //     inJSON: JSON.stringify({
+      //       name: orderItem.name,
+      //       selected_options: orderItem.chosenChoices
+      //     }),
+      //     notes: orderItem.notes,
+      //     unavailable: orderItem.unavailable,
+      //     quantity: orderItem.quantity,
+      //     costPerOne: orderItem.costPerOne
+      //   }
+      //   itemArray.push(orderItemObject)
+      // }
+      if(order.customer && order.laundry) {
+        let orderObject = {
+          customerFirebaseId: order.customer.id,
+          storeFirebaseId: order.laundry.id,
+          status: order.status,
+          orderTime: order.orderTime,
+          deliveryCost: order.shippingCost,
+          firebaseId: orderId,
+          itemsCost: order.cost
+        }
+        array.push(orderObject)
+      }
+      // break;
+    // }
+    
+  }
+  console.log(array.length)
+  await insertLaundryOrders(array, response)
 }
 
 async function writeToDBCustomers() {
@@ -537,5 +627,7 @@ async function writeToDBCustomers() {
   // writeToDBUsers()
   // writeToDBRestoOps()
 // writeToDBDeliDrivers()
-writeToDBCustomers()
+// writeToDBCustomers()
 // writeToDBRestoOrders()
+// writeToDBLaundry()
+writeToDBLaundryOrders()

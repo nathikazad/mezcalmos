@@ -265,10 +265,12 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   });
   StripeOrderPaymentInfo? _paymentInfo;
   if (orderData.stripe_info != null) {
+    
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id!,
+    
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)

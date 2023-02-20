@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
@@ -40,12 +41,19 @@ const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
+const String kserviceReviewsList = "/reviews/:detailsId";
 
 String getRestaurantRoute(
   int restaurantId,
 ) {
   return kRestaurantRoute.replaceFirst(
       ":restaurantId", restaurantId.toString());
+}
+
+String getReviewsListRoute(
+  int detailsId,
+) {
+  return kserviceReviewsList.replaceFirst(":detailsId", detailsId.toString());
 }
 
 String getSingleLaundryRoute(int laundryId) {
@@ -173,6 +181,10 @@ class XRouter {
         GetPage(
           name: kLaundryCurrentOrder,
           page: () => CustLaundryOrderView(),
+        ),
+        GetPage(
+          name: kserviceReviewsList,
+          page: () => CustReviewsListView(),
         ),
       ] +
       SharedRouter.sharedRoutes;

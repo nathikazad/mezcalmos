@@ -134,7 +134,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
     cModel.PaymentIntentResponse res =
         await CloudFunctions.stripe_getPaymentIntent(
             paymentAmount: paymentAmount,
-            serviceProviderId: serviceProviderDetailsId);
+            serviceProviderDetailsId: serviceProviderDetailsId);
     return res;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message.toString());
@@ -181,7 +181,7 @@ Future<String?> acceptPaymentWithSavedCard(
 
   try {
     cModel.ChargeCardResponse res = await CloudFunctions.stripe_chargeCard(
-        serviceProviderId: serviceProviderDetailsId,
+        serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
     return extractPaymentIdFromIntent(res.paymentIntent.toString());

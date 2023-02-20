@@ -237,7 +237,7 @@ class CustCartViewController {
   /// returns stripePaymentId
   Future<String?> acceptPaymentByCardChoice(CardChoice choice) async {
     String? stripePaymentId;
-
+    mezDbgPrint("Look here ============>${cart.restaurant!.serviceDetailsId}");
     //viewCartController.getCardChoice
     if (cart.paymentType == PaymentType.Card) {
       switch (choice) {
@@ -269,7 +269,7 @@ class CustCartViewController {
           break;
         case CardChoice.SavedCard:
           stripePaymentId = await acceptPaymentWithSavedCard(
-              serviceProviderDetailsId: cart.restaurant!.info.hasuraId,
+              serviceProviderDetailsId: cart.restaurant!.serviceDetailsId,
               paymentAmount: cart.totalCost,
               card: card.value!);
           break;
@@ -301,6 +301,10 @@ class CustCartViewController {
         (cart.restaurant?.paymentInfo?.stripe?.chargeFeesOnCustomer ?? true);
   }
 
+  bool get canSchedule {
+    return cart.restaurant?.isOpen() == false && validTime;
+  }
+
   bool get canOrder {
     mezDbgPrint(
         "From can order====================>>>>${cart.toFirebaseFormattedJson()}");
@@ -309,7 +313,7 @@ class CustCartViewController {
         isShippingSet.isTrue &&
         validTime &&
         cart.shippingCost != null &&
-        (cart.restaurant?.isOpen() ?? false);
+        (cart.restaurant?.isOpen() == true || canSchedule);
   }
 
   void checkCartPeriod() {
@@ -405,7 +409,7 @@ class CustCartViewController {
     if (cart.deliveryTime != null) {
       return cart.deliveryTime!.toLocal().isAfter(DateTime.now().toLocal());
     } else {
-      return true;
+      return cart.restaurant?.isOpen() == true;
     }
   }
 
