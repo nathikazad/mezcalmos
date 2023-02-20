@@ -165,6 +165,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               onPressed: (viewController.order.costsByType != null &&
                       viewController.order.costsByType!.lineItems.isNotEmpty)
                   ? () {
+                      viewController.sertOrderReady();
                       // isClicked.value = true;
                       // controller
                       //     .setAsReadyForDelivery(

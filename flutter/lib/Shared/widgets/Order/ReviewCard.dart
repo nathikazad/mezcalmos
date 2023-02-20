@@ -48,10 +48,8 @@ class _ReviewCardState extends State<ReviewCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.review.customer?.name ?? "",
-                          style: Get.textTheme.bodyText1
-                        ),
+                        Text(widget.review.customer?.name ?? "",
+                            style: Get.textTheme.bodyText1),
                         SizedBox(
                           height: 2,
                         ),
@@ -84,7 +82,7 @@ class _ReviewCardState extends State<ReviewCard> {
               style: Get.textTheme.bodyText2,
             ),
             SizedBox(
-              height: 0.5.h,
+              height: 5,
             ),
           ],
         ),

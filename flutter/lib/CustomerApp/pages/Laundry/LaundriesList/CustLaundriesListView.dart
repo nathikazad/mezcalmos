@@ -38,7 +38,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 2.h,
+              height: 10,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),

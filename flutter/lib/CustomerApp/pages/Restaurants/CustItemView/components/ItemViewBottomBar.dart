@@ -10,7 +10,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/widgets/IncrementalComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewItemScreen"]["components"]
@@ -34,7 +33,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 70,
       padding: EdgeInsets.only(bottom: 16, right: 5, left: 5, top: 5),
       color: Colors.white,
       child: Row(
@@ -86,12 +85,13 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
                 textAlign: TextAlign.center,
-                style: Get.textTheme.headlineLarge?.copyWith(color: Colors.white),
+                style:
+                    Get.textTheme.headlineLarge?.copyWith(color: Colors.white),
               ),
             ),
           ),
           SizedBox(
-            width: 1.h,
+            width: 5,
           )
         ],
       ),

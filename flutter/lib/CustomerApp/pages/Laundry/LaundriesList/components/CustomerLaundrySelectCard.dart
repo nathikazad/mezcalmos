@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
@@ -48,7 +47,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
-            width: 3.w,
+            width: 8,
           ),
           Flexible(
             flex: 5,
@@ -58,16 +57,16 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 0.5.h,
+                  height: 5,
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyText1?.copyWith(
+                  style: Get.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 SizedBox(
-                  height: 0.8.h,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,16 +81,16 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             color: Colors.black,
-                            size: 2.5.h,
+                            size: 22,
                           ),
                           SizedBox(
-                            width: 1.w,
+                            width: 3,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
                               shippingCost: shippingPrice,
                               alignment: MainAxisAlignment.start,
-                              textStyle: Get.textTheme.bodyText2?.copyWith(
+                              textStyle: Get.textTheme.bodyMedium?.copyWith(
                                 color: blackColor,
                               ),
                             ),
@@ -107,13 +106,13 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 2.h,
+                            size: 22,
                             color: Colors.black,
                           ),
                           Flexible(
                               child: Text(
                             ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                            style: Get.textTheme.bodyText2?.copyWith(
+                            style: Get.textTheme.bodyMedium?.copyWith(
                               color: blackColor,
                             ),
                           )),
