@@ -109,7 +109,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                     backgroundColor: offRedColor,
                     textColor: Colors.red,
                     onClick: () async {
-                      viewController.cancelOrder();
+                      await viewController.cancelOrder();
                     },
                   )
                 ],
@@ -164,12 +164,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
           child: TextButton(
               onPressed: (viewController.order.costsByType != null &&
                       viewController.order.costsByType!.lineItems.isNotEmpty)
-                  ? () {
-                      // isClicked.value = true;
-                      // controller
-                      //     .setAsReadyForDelivery(
-                      //         viewController.order.orderId.toString())
-                      //     .whenComplete(() => isClicked.value = false);
+                  ? () async {
+                      await viewController.sertOrderReady();
                     }
                   : null,
               style: TextButton.styleFrom(
