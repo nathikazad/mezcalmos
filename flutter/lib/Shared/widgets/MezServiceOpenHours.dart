@@ -17,14 +17,17 @@ class MezServiceOpenHours extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 15,
+        ),
         Container(
           child: Text(
             "${_i18n()["openHours"]}",
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         SizedBox(
-          height: 8,
+          height: 2,
         ),
         Container(
             child: Column(
@@ -49,8 +52,7 @@ class MezServiceOpenHours extends StatelessWidget {
                 ),
                 Text(
                   getDayName(v.key).capitalizeDays,
-                  style: Get.textTheme.bodyText2
-                      ?.copyWith(fontWeight: FontWeight.w600),
+                  style: Get.textTheme.titleLarge,
                 ),
                 Spacer(),
                 Text(

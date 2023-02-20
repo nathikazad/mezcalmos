@@ -44,6 +44,7 @@ class _MezButtonState extends State<MezButton> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Card(
+        elevation: 0,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 10),
@@ -75,11 +76,6 @@ class _MezButtonState extends State<MezButton> {
                           ? widget.backgroundColor
                           : primaryBlueColor
                       : Colors.grey.shade400,
-                  gradient: (widget.withGradient &&
-                          widget.enabled &&
-                          widget.onClick != null)
-                      ? bluePurpleGradient
-                      : null,
                   borderRadius:
                       BorderRadius.circular(widget.borderRadius ?? 10)),
               child: Container(
@@ -105,11 +101,15 @@ class _MezButtonState extends State<MezButton> {
                               ),
                             ),
                           Flexible(
-                            child: Text(
-                              widget.label,
-                              style: widget.textStyle ??
-                                  Get.textTheme.bodyLarge?.copyWith(
-                                      color: widget.textColor ?? Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 5),
+                              child: Text(
+                                widget.label,
+                                style: widget.textStyle ??
+                                    Get.textTheme.bodyLarge?.copyWith(
+                                        color:
+                                            widget.textColor ?? Colors.white),
+                              ),
                             ),
                           ),
                         ],

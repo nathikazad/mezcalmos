@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
@@ -114,15 +115,8 @@ class _AdminTabsViewState extends State<AdminTabsView>
                 tabs: List.generate(
                     viewController.serviceTypes.length,
                     (int index) => Tab(
-                          child: Badge(
-                            backgroundColor: primaryBlueColor,
-                            isLabelVisible: false,
-                            label: Text(viewController.getBadge(
-                                    viewController.serviceTypes[index]) ??
-                                ""),
-                            child: Icon(
-                              viewController.serviceTypes[index].toIcon(),
-                            ),
+                          child: Icon(
+                            viewController.serviceTypes[index].toIcon(),
                           ),
                         )))
             : null,

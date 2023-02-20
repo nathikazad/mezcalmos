@@ -401,6 +401,27 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_with_customer_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'delivery_driver'),
                 alias: null,
                 arguments: [],
@@ -487,6 +508,27 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_with_customer_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
               FieldNode(
                 name: NameNode(value: 'delivery_driver'),
                 alias: null,
@@ -1979,6 +2021,9 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
 
 class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
   Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery({
+    this.estimated_arrival_at_pickup_time,
+    required this.chat_with_customer_id,
+    this.estimated_arrival_at_dropoff_time,
     this.delivery_driver,
     this.chat_with_service_provider_id,
     required this.$__typename,
@@ -1986,11 +2031,21 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_custom
 
   factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
+    final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
     final l$delivery_driver = json['delivery_driver'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery(
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
+      chat_with_customer_id: (l$chat_with_customer_id as int),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver
@@ -1999,6 +2054,12 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_custom
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? estimated_arrival_at_pickup_time;
+
+  final int chat_with_customer_id;
+
+  final String? estimated_arrival_at_dropoff_time;
 
   final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
       delivery_driver;
@@ -2009,6 +2070,15 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_custom
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -2021,10 +2091,17 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_custom
 
   @override
   int get hashCode {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$estimated_arrival_at_pickup_time,
+      l$chat_with_customer_id,
+      l$estimated_arrival_at_dropoff_time,
       l$delivery_driver,
       l$chat_with_service_provider_id,
       l$$__typename,
@@ -2039,6 +2116,26 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_custom
     if (!(other
             is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
+      return false;
+    }
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final lOther$chat_with_customer_id = other.chat_with_customer_id;
+    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
     final l$delivery_driver = delivery_driver;
@@ -2088,6 +2185,9 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
       _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery;
 
   TRes call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -2117,12 +2217,27 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
   static const _undefined = {};
 
   TRes call({
+    Object? estimated_arrival_at_pickup_time = _undefined,
+    Object? chat_with_customer_id = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? delivery_driver = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery(
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
+        chat_with_customer_id:
+            chat_with_customer_id == _undefined || chat_with_customer_id == null
+                ? _instance.chat_with_customer_id
+                : (chat_with_customer_id as int),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -2157,6 +2272,9 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
   TRes _res;
 
   call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -2556,6 +2674,9 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
 
 class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
   Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery({
+    this.estimated_arrival_at_pickup_time,
+    required this.chat_with_customer_id,
+    this.estimated_arrival_at_dropoff_time,
     this.delivery_driver,
     this.chat_with_service_provider_id,
     required this.$__typename,
@@ -2563,11 +2684,21 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
+    final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
     final l$delivery_driver = json['delivery_driver'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery(
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
+      chat_with_customer_id: (l$chat_with_customer_id as int),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver
@@ -2576,6 +2707,12 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? estimated_arrival_at_pickup_time;
+
+  final int chat_with_customer_id;
+
+  final String? estimated_arrival_at_dropoff_time;
 
   final Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
       delivery_driver;
@@ -2586,6 +2723,15 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -2598,10 +2744,17 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   @override
   int get hashCode {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$estimated_arrival_at_pickup_time,
+      l$chat_with_customer_id,
+      l$estimated_arrival_at_dropoff_time,
       l$delivery_driver,
       l$chat_with_service_provider_id,
       l$$__typename,
@@ -2616,6 +2769,26 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
     if (!(other
             is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
+      return false;
+    }
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final lOther$chat_with_customer_id = other.chat_with_customer_id;
+    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
     final l$delivery_driver = delivery_driver;
@@ -2665,6 +2838,9 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
       _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery;
 
   TRes call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -2694,12 +2870,27 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
   static const _undefined = {};
 
   TRes call({
+    Object? estimated_arrival_at_pickup_time = _undefined,
+    Object? chat_with_customer_id = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? delivery_driver = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery(
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
+        chat_with_customer_id:
+            chat_with_customer_id == _undefined || chat_with_customer_id == null
+                ? _instance.chat_with_customer_id
+                : (chat_with_customer_id as int),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -2734,6 +2925,9 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
   TRes _res;
 
   call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -5943,6 +6137,27 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_with_customer_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'delivery_driver'),
                 alias: null,
                 arguments: [],
@@ -6029,6 +6244,27 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'chat_with_customer_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
               FieldNode(
                 name: NameNode(value: 'delivery_driver'),
                 alias: null,
@@ -7502,6 +7738,9 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
   Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery({
+    this.estimated_arrival_at_pickup_time,
+    required this.chat_with_customer_id,
+    this.estimated_arrival_at_dropoff_time,
     this.delivery_driver,
     this.chat_with_service_provider_id,
     required this.$__typename,
@@ -7509,11 +7748,21 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
 
   factory Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
+    final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
     final l$delivery_driver = json['delivery_driver'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery(
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
+      chat_with_customer_id: (l$chat_with_customer_id as int),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver
@@ -7522,6 +7771,12 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? estimated_arrival_at_pickup_time;
+
+  final int chat_with_customer_id;
+
+  final String? estimated_arrival_at_dropoff_time;
 
   final Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
       delivery_driver;
@@ -7532,6 +7787,15 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -7544,10 +7808,17 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
 
   @override
   int get hashCode {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$estimated_arrival_at_pickup_time,
+      l$chat_with_customer_id,
+      l$estimated_arrival_at_dropoff_time,
       l$delivery_driver,
       l$chat_with_service_provider_id,
       l$$__typename,
@@ -7562,6 +7833,26 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery {
     if (!(other
             is Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
+      return false;
+    }
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final lOther$chat_with_customer_id = other.chat_with_customer_id;
+    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
     final l$delivery_driver = delivery_driver;
@@ -7611,6 +7902,9 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
       _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery;
 
   TRes call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -7640,12 +7934,27 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_custo
   static const _undefined = {};
 
   TRes call({
+    Object? estimated_arrival_at_pickup_time = _undefined,
+    Object? chat_with_customer_id = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? delivery_driver = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery(
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
+        chat_with_customer_id:
+            chat_with_customer_id == _undefined || chat_with_customer_id == null
+                ? _instance.chat_with_customer_id
+                : (chat_with_customer_id as int),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -7680,6 +7989,9 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
   TRes _res;
 
   call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -8079,6 +8391,9 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
   Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery({
+    this.estimated_arrival_at_pickup_time,
+    required this.chat_with_customer_id,
+    this.estimated_arrival_at_dropoff_time,
     this.delivery_driver,
     this.chat_with_service_provider_id,
     required this.$__typename,
@@ -8086,11 +8401,21 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
 
   factory Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery.fromJson(
       Map<String, dynamic> json) {
+    final l$estimated_arrival_at_pickup_time =
+        json['estimated_arrival_at_pickup_time'];
+    final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$estimated_arrival_at_dropoff_time =
+        json['estimated_arrival_at_dropoff_time'];
     final l$delivery_driver = json['delivery_driver'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery(
+      estimated_arrival_at_pickup_time:
+          (l$estimated_arrival_at_pickup_time as String?),
+      chat_with_customer_id: (l$chat_with_customer_id as int),
+      estimated_arrival_at_dropoff_time:
+          (l$estimated_arrival_at_dropoff_time as String?),
       delivery_driver: l$delivery_driver == null
           ? null
           : Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver
@@ -8099,6 +8424,12 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final String? estimated_arrival_at_pickup_time;
+
+  final int chat_with_customer_id;
+
+  final String? estimated_arrival_at_dropoff_time;
 
   final Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
       delivery_driver;
@@ -8109,6 +8440,15 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    _resultData['estimated_arrival_at_pickup_time'] =
+        l$estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    _resultData['estimated_arrival_at_dropoff_time'] =
+        l$estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     _resultData['delivery_driver'] = l$delivery_driver?.toJson();
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -8121,10 +8461,17 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
 
   @override
   int get hashCode {
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
     final l$delivery_driver = delivery_driver;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$estimated_arrival_at_pickup_time,
+      l$chat_with_customer_id,
+      l$estimated_arrival_at_dropoff_time,
       l$delivery_driver,
       l$chat_with_service_provider_id,
       l$$__typename,
@@ -8139,6 +8486,26 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery {
     if (!(other
             is Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
+    final lOther$estimated_arrival_at_pickup_time =
+        other.estimated_arrival_at_pickup_time;
+    if (l$estimated_arrival_at_pickup_time !=
+        lOther$estimated_arrival_at_pickup_time) {
+      return false;
+    }
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final lOther$chat_with_customer_id = other.chat_with_customer_id;
+    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$estimated_arrival_at_dropoff_time =
+        estimated_arrival_at_dropoff_time;
+    final lOther$estimated_arrival_at_dropoff_time =
+        other.estimated_arrival_at_dropoff_time;
+    if (l$estimated_arrival_at_dropoff_time !=
+        lOther$estimated_arrival_at_dropoff_time) {
       return false;
     }
     final l$delivery_driver = delivery_driver;
@@ -8188,6 +8555,9 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$to_cus
       _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery;
 
   TRes call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,
@@ -8217,12 +8587,27 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_custome
   static const _undefined = {};
 
   TRes call({
+    Object? estimated_arrival_at_pickup_time = _undefined,
+    Object? chat_with_customer_id = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? delivery_driver = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery(
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
+        chat_with_customer_id:
+            chat_with_customer_id == _undefined || chat_with_customer_id == null
+                ? _instance.chat_with_customer_id
+                : (chat_with_customer_id as int),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
         delivery_driver: delivery_driver == _undefined
             ? _instance.delivery_driver
             : (delivery_driver
@@ -8257,6 +8642,9 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_cus
   TRes _res;
 
   call({
+    String? estimated_arrival_at_pickup_time,
+    int? chat_with_customer_id,
+    String? estimated_arrival_at_dropoff_time,
     Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver?
         delivery_driver,
     int? chat_with_service_provider_id,

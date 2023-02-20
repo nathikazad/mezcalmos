@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
-import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["RestaurantApp"]
@@ -99,8 +98,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                                   element.startsAt!
                                       .toLocal()
                                       .toDayName(withDateNumber: true),
-                                  style: Get.textTheme.headline3
-                                      ?.copyWith(fontSize: 13.sp),
+                                  style: Get.textTheme.bodyText1,
                                 ),
                               );
                             },

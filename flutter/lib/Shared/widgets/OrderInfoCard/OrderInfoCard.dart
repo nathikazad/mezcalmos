@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 
 class OrderInfosCard extends StatelessWidget {
@@ -18,8 +19,7 @@ class OrderInfosCard extends StatelessWidget {
         child: Material(
           elevation: 1.5,
           borderRadius: BorderRadius.circular(8),
-          child: Container(
-            //  margin: EdgeInsets.only(bottom: 15),
+          child: Container( 
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -37,7 +37,6 @@ class OrderInfosCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // left column
 
                     Flexible(
                       flex: 7,
@@ -47,7 +46,6 @@ class OrderInfosCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // first line - name and price
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,6 +60,7 @@ class OrderInfosCard extends StatelessWidget {
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                     fontSize: 17,
+                                    color: blackColor,
                                   ),
                                 ),
                               ),
@@ -69,24 +68,19 @@ class OrderInfosCard extends StatelessWidget {
                           ),
                           SizedBox(height: 5),
                           orderCardSubWidgets.primaryBodyContent,
-                          orderCardSubWidgets.secondaryBodyContent,
-                          // second line - from
+                        orderCardSubWidgets.secondaryBodyContent,
                           SizedBox(height: 5),
                         ],
                       ),
                     ),
-
-                    Flexible(
-                      flex: 4,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          orderCardSubWidgets.cardTime,
-                          orderCardSubWidgets.rightImage,
-                        ],
-                      ),
-                    )
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        orderCardSubWidgets.cardTime,
+                        orderCardSubWidgets.rightImage,
+                      ],
+                    ),
                   ],
                 ),
                 Divider(),
@@ -124,7 +118,6 @@ class OrderInfosCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Container(
-                        // height: 30,
                         child: orderCardSubWidgets.cardStatus,
                       ),
                     ],

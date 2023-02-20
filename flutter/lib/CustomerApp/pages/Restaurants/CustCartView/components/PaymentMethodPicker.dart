@@ -48,7 +48,7 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                   style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 9,
                 ),
                 Obx(
                   () {
@@ -93,39 +93,46 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 43,
+                                  width: 30,
                                   child: Align(
                                     alignment: Alignment.center,
                                     child: _getIcon(
-                                        paymentType: value.entries.first.key,
-                                        card: value.entries.first.value),
+                                      paymentType: value.entries.first.key,
+                                      card: value.entries.first.value,
+                                      iconColor: Colors.black,
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: 4,
                                 ),
                                 Text(
-                                    (value.entries.first.key ==
-                                            PickerChoice.SavedCard)
-                                        ? value.entries.first.value!.brand.name
-                                        : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                    style: Get.textTheme.bodyText2?.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                    )),
+                                  (value.entries.first.key ==
+                                          PickerChoice.SavedCard)
+                                      ? value.entries.first.value!.brand.name
+                                      : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
+                                  style: Get.textTheme.bodyText1?.copyWith(
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
                                 if (value.entries.first.value != null)
                                   Container(
                                     margin: EdgeInsets.only(left: 5),
                                     child: Text(
-                                        "•" * 12 +
-                                            value.entries.first.value!.last4
-                                                .toString(),
-                                        style: Get.textTheme.bodyText2),
+                                      "*" * 12 +
+                                          value.entries.first.value!.last4
+                                              .toString(),
+                                      style: Get.textTheme.subtitle1,
+                                    ),
                                   ),
                               ],
                             ));
                       }).toList(),
                     );
                   },
+                ),
+                SizedBox(
+                  height: 15,
                 ),
               ],
             ),
@@ -136,29 +143,61 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
     );
   }
 
-  Widget _getIcon({required PickerChoice paymentType, CreditCard? card}) {
+  Widget _getIcon({
+    required PickerChoice paymentType,
+    CreditCard? card,
+    required Color iconColor,
+  }) {
     switch (paymentType) {
       case PickerChoice.SavedCard:
         if (card != null) {
-          return Icon(card.brand.toIcon());
+          return Icon(
+            card.brand.toIcon(),
+            color: iconColor,
+          );
         } else {
-          return Icon(Icons.credit_card);
+          return Icon(
+            Icons.credit_card,
+            color: iconColor,
+            size: 14.sp,
+          );
         }
       case PickerChoice.SavedCard:
-        return Icon(Icons.credit_card);
+        return Icon(
+          Icons.credit_card,
+          color: iconColor,
+          size: 14.sp,
+        );
       case PickerChoice.NewCard:
-        return Icon(Icons.add_card);
+        return Icon(
+          Icons.add_card,
+          color: iconColor,
+          size: 14.sp,
+        );
       case PickerChoice.Cash:
-        return Icon(Icons.payments);
+        return Icon(
+          Icons.payments,
+          color: iconColor,
+          size: 14.sp,
+        );
       case PickerChoice.BankTransfer:
-        return Icon(Icons.account_balance);
+        return Icon(
+          Icons.account_balance,
+          color: iconColor,
+          size: 14.sp,
+        );
       case PickerChoice.ApplePay:
-        return Icon(Icons.apple);
+        return Icon(
+          Icons.apple,
+          color: iconColor,
+          size: 14.sp,
+        );
       case PickerChoice.GooglePay:
         return Image.asset(
           aGpay,
           width: 14.w,
           height: 4.h,
+          color: iconColor,
         );
     }
   }

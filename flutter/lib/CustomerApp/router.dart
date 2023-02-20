@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
@@ -16,7 +17,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Custo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
@@ -41,6 +41,7 @@ const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
+const String kserviceReviewsList = "/reviews/:detailsId";
 
 String getRestaurantRoute(
   int restaurantId,
@@ -49,8 +50,14 @@ String getRestaurantRoute(
       ":restaurantId", restaurantId.toString());
 }
 
-String getSingleLaundryRoute(String laundryId) {
-  return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
+String getReviewsListRoute(
+  int detailsId,
+) {
+  return kserviceReviewsList.replaceFirst(":detailsId", detailsId.toString());
+}
+
+String getSingleLaundryRoute(int laundryId) {
+  return kSingleLaundryRoute.replaceFirst(":laundryId", "$laundryId");
 }
 
 String getItemRoute(int restaurantId, int itemId) {
@@ -174,6 +181,10 @@ class XRouter {
         GetPage(
           name: kLaundryCurrentOrder,
           page: () => CustLaundryOrderView(),
+        ),
+        GetPage(
+          name: kserviceReviewsList,
+          page: () => CustReviewsListView(),
         ),
       ] +
       SharedRouter.sharedRoutes;

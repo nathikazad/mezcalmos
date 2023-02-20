@@ -225,6 +225,8 @@ class LaundryOpOrderViewController {
   }
 
   Future<int?> updateCategory(LaundryOrderCostLineItem newCostLineItem) async {
+    mezDbgPrint("NEW COST LINE ++++++🥰");
+    mezDbgPrint(newCostLineItem.toFirebaseFormat());
     int? res = await update_laundry_order_category(
         cat: newCostLineItem, orderId: order.orderId);
 
@@ -406,6 +408,21 @@ class LaundryOpOrderViewController {
           deliveryOrderId: order.deliveryOrderId,
           time: value);
     } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
+
+  Future<void> sertOrderReady() async {
+    try {
+      await CloudFunctions.laundry_readyForDeliveryOrder(
+          orderId: _order.value!.orderId);
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      showErrorSnackBar();
       mezDbgPrint(e);
       mezDbgPrint(stk);
     }

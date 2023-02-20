@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
     as cloudFunctionModels;
 import 'package:mezcalmos/Shared/controllers/LocationPickerController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
-import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
@@ -47,10 +46,7 @@ class CustLaundryOrderRequestViewController {
 
   Future<void> init({required Laundry laundry}) async {
     this.laundry.value = laundry;
-    List<LaundryCostLineItem> categories =
-        await get_laundry_categories(storeId: laundry.info.hasuraId);
-    this.laundry.value!.laundryCosts.lineItems = categories;
-    mezDbgPrint("Cat lenght =============> ${categories.length}");
+
     mezDbgPrint(
         "Laundry lenght  =============> ${this.laundry.value!.laundryCosts.lineItems}");
 
@@ -122,7 +118,7 @@ class CustLaundryOrderRequestViewController {
   Future<num?> createLaundryOrder() async {
     final LaundryRequest _laundryRequest = LaundryRequest(
         laundryId: laundry.value!.info.hasuraId, deliveryCost: 50);
-
+    mezDbgPrint(orderNote.text);
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         laundry.value!.info.location, customerLoc.value!);
 
@@ -136,9 +132,10 @@ class CustLaundryOrderRequestViewController {
       _laundryRequest.laundryId = laundry.value!.info.hasuraId;
       _laundryRequest.from = laundry.value!.info.location;
       _laundryRequest.to = customerLoc.value!;
-      _laundryRequest.notes = "note";
+      _laundryRequest.notes = orderNote.text;
       _laundryRequest.paymentType = PaymentType.Cash;
-      mezDbgPrint("👋👋👋👋 paylod 👋👋👋👋");
+
+      mezDbgPrint("👋👋👋👋 paylod  👋👋👋👋");
       mezDbgPrint(_laundryRequest.toString());
       return await _checkoutOrder(_laundryRequest);
     }

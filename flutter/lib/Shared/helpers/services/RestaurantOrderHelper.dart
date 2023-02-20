@@ -78,11 +78,13 @@ extension RestaurantOrderHelper on RestaurantOrder {
         );
       case RestaurantOrderStatus.Ready:
         return Container(
-          // padding: const EdgeInsets.only(right: 10.0),
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: secondaryLightBlueColor, shape: BoxShape.circle),
           child: Icon(
-            Icons.check_circle,
-            size: 40,
-            color: primaryBlueColor,
+            Icons.check,
+            size: 25,
+            color: Color(0xFF6779FE),
           ),
         );
 
@@ -94,7 +96,7 @@ extension RestaurantOrderHelper on RestaurantOrder {
           child: Icon(
             Icons.check,
             size: 25,
-            color: primaryBlueColor,
+            color: Color(0xFF6779FE),
           ),
         );
     }

@@ -68,7 +68,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                           ? " ${lmd.toShortString()}"
                           : ""),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -123,7 +123,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             children: [
               Text(
                 "${_i18n()["language"]}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -309,7 +309,7 @@ class SideMenuItem extends StatelessWidget {
                       (isI18nPath)
                           ? Get.find<LanguageController>().getLMap(title!)
                           : title!,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     )
                   : titleWidget ?? Container(),
             )

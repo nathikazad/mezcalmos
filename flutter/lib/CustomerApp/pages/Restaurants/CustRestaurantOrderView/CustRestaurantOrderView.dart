@@ -1,6 +1,5 @@
  import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderRestaurantCard.dart';
@@ -9,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutations.dart';
@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
@@ -59,10 +60,12 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomerAppBar(
-        autoBack: true,
-        title: viewController.order.value?.restaurant.name,
-      ),
+      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          autoBack: true,
+          ordersRoute: kOrdersRoute,
+          showNotifications: true,
+          titleWidget: Obx(
+              () => Text(viewController.order.value?.restaurant.name ?? ""))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
           return MezButton(
@@ -105,14 +108,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            SizedBox(
-                              height: 10,
-                            ),
                             OrderStatusCard(
                               order: viewController.order.value!,
                               ordersStates: viewController.order.value!.status,
                             ),
-
                             if (viewController.order.value!.paymentType ==
                                 PaymentType.BankTransfer)
                               RestaurantBankInfoCard(
@@ -130,12 +129,11 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                             OrderRestaurantCard(
                                 order: viewController.order.value!),
-
                             OrderItemsCard(
                               order: viewController.order.value!,
                             ),
                             Container(
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
                                 style: Get.textTheme.bodyText1,
@@ -143,41 +141,24 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 20)),
+                                margin: const EdgeInsets.only(top: 4)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
                               margin: EdgeInsets.zero,
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 20),
+                              margin: const EdgeInsets.only(top: 4),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:
                                   viewController.order.value!.stripePaymentInfo,
                               paymentType:
                                   viewController.order.value!.paymentType,
-                              margin: const EdgeInsets.only(top: 20),
                             ),
                             if (viewController.order.value!.review != null)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    "Review : ",
-                                    style: Get.textTheme.bodyText1,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  ReviewCard(
-                                      review:
-                                          viewController.order.value!.review!),
-                                ],
-                              ),
+                              ReviewCard(
+                                  review: viewController.order.value!.review!),
                             OrderNoteCard(
                                 note: viewController.order.value!.notes),
                             OrderSummaryCard(
@@ -186,17 +167,21 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
                             //===============================>button cancel===========================
                             //  Expanded(child: Container()),
-                            Spacer(),
+                            SizedBox(
+                              height: 9,
+                            ),
                             Flexible(
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  child: OrderFooterCard(
-                                    order: viewController.order.value!,
-                                    cancelOrderFunction:
-                                        viewController.cancelOrder,
-                                  )),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: OrderFooterCard(
+                                  order: viewController.order.value!,
+                                  cancelOrderFunction:
+                                      viewController.cancelOrder,
+                                ),
+                              ),
                             ),
                           ],
+                          
                         ),
                       ),
                     ),
@@ -214,7 +199,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   List<Widget> get _mapWidget => <Widget>[
         SizedBox(
-          height: 20,
+          height: 10,
         ),
         Container(
           height: 350,
