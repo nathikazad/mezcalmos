@@ -90,19 +90,22 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               Row(
                 //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Image.asset(
-                    aMoney,
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.contain,
-                  ),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Text(
-                    widget.order.totalCost!.toPriceString(),
-                    style: Get.textTheme.bodyLarge,
-                  ),
+                  if (widget.order.totalCost != null)
+                    Image.asset(
+                      aMoney,
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.contain,
+                    ),
+                  if (widget.order.totalCost != null)
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                  if (widget.order.totalCost != null)
+                    Text(
+                      widget.order.totalCost?.toPriceString() ?? "_",
+                      style: Get.textTheme.bodyLarge,
+                    ),
                   Spacer(),
                   getOrderWidget()
                 ],

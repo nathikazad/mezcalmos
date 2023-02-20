@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/LaundryApp/components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
@@ -13,6 +12,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["AdminView"]["LaundryOpAdminView"];
@@ -52,7 +52,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
         onClick: (asTab) ? null : MezRouter.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: LaundryAppDrawer(),
+      drawer: MezSideMenu(),
       body: Obx(
         () {
           if (viewController.laundry != null) {

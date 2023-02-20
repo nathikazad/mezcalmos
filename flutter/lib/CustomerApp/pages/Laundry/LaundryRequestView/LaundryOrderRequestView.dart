@@ -99,7 +99,6 @@ class _CustLaundryOrderRequestViewState
                               )
                             ],
                           ),
-                          _buildCats(),
                           SizedBox(
                             height: 15,
                           ),
@@ -150,37 +149,6 @@ class _CustLaundryOrderRequestViewState
             }
           },
         ));
-  }
-
-  Obx _buildCats() {
-    return Obx(
-      () => (viewController.laundry.value?.laundryCosts.lineItems.isNotEmpty ==
-              true)
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 25,
-                ),
-                Text(
-                  "${_i18n()["categories"]}",
-                  style: Get.textTheme.bodyLarge,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  children: List.generate(
-                      viewController
-                          .laundry.value!.laundryCosts.lineItems.length,
-                      (int index) => _laundryCostCard(
-                          item: viewController
-                              .laundry.value!.laundryCosts.lineItems[index])),
-                ),
-              ],
-            )
-          : SizedBox(),
-    );
   }
 
   Widget _orderNoteComponent() {

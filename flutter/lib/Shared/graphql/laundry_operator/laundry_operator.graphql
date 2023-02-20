@@ -15,7 +15,7 @@ query getLaundryOperatorByUserId($userId: Int!) {
    
     }
     store_id
-   
+   store{details_id}
    
   
   }

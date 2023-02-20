@@ -273,28 +273,7 @@ query getRestaurantItems($restaurant_id: Int!) {
   }
 }
 # getting operators
-query getRestaurantOperators($restaurantId: Int!) {
-  restaurant_restaurant_by_pk(id: $restaurantId) {
-    restaurant_operators {
-      id
 
-      restaurant_id
-      operator_details {
-        owner
-        status
-        current_gps
-      }
-      user {
-        phone
-        name
-        image
-        language_id
-        id
-        firebase_id
-      }
-    }
-  }
-}
 
 query getRestaurantDetailsId($restauarntId: Int!) {
   restaurant_restaurant_by_pk(id: $restauarntId) {
