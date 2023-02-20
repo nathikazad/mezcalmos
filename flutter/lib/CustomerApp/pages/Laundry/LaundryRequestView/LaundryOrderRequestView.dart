@@ -61,7 +61,7 @@ class _CustLaundryOrderRequestViewState
                         children: [
                           CachedNetworkImage(
                               width: double.infinity,
-                              height: 20.h,
+                              height: 230,
                               fit: BoxFit.cover,
                               imageUrl:
                                   viewController.laundry.value!.info.image),
@@ -88,12 +88,13 @@ class _CustLaundryOrderRequestViewState
                                 width: 2,
                               ),
                               Flexible(
-                                  child: Text(
-                                viewController
-                                    .laundry.value!.info.location.address,
-                                maxLines: 2,
-                                style: Get.textTheme.subtitle2,
-                              ))
+                                child: Text(
+                                  viewController
+                                      .laundry.value!.info.location.address,
+                                  maxLines: 2,
+                                  style: Get.textTheme.subtitle2,
+                                ),
+                              )
                             ],
                           ),
                           SizedBox(
@@ -199,7 +200,7 @@ class _CustLaundryOrderRequestViewState
             children: <Widget>[
               Icon(
                 Icons.place_rounded,
-                color: Theme.of(context).primaryColorLight,
+                color: primaryBlueColor,
                 //size: 14,
               ),
               const SizedBox(width: 5),

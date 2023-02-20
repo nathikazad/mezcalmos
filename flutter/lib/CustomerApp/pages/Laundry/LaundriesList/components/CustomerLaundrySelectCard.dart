@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
@@ -18,7 +17,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
       {Key? key, required this.laundry, required this.shippingPrice})
       : super(key: key);
   final Laundry laundry;
-  final int shippingPrice;
+  final double shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
-            width: 3.w,
+            width: 8,
           ),
           Flexible(
             flex: 5,
@@ -58,7 +57,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 0.5.h,
+                  height: 4,
                 ),
                 Text(
                   laundry.info.name,
@@ -67,7 +66,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 0.8.h,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,10 +81,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             color: Colors.black,
-                            size: 2.5.h,
+                            size: 24,
                           ),
                           SizedBox(
-                            width: 1.w,
+                            width: 4,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
@@ -100,14 +99,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
+                      flex: 12,
+                      fit: FlexFit.loose,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 2.h,
+                            size: 18,
                             color: Colors.black,
                           ),
                           Flexible(
@@ -120,6 +119,26 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // Flexible(
+                    //   flex: 8,
+                    //   fit: FlexFit.loose,
+                    //   child: Row(
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       Icon(
+                    //         Icons.watch_later,
+                    //         size: 18,
+                    //         color: Colors.black,
+                    //       ),
+                    //       Text(
+                    //         ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
+                    //         style: Get.textTheme.bodyText2?.copyWith(
+                    //           color: blackColor,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
