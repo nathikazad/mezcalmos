@@ -40,6 +40,16 @@ Future<Laundry?> get_laundry_store_by_id(
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
+    LaundryCosts laundryCosts = LaundryCosts();
+    laundryCosts.lineItems = data.categories.map(
+        (Query$getLaundryStoreById$laundry_store_by_pk$categories element) {
+      return LaundryCostLineItem(
+          name: toLanguageMap(translations: element.name.translations),
+          cost: element.cost_by_kilo,
+          id: element.id,
+          nameId: element.name_id,
+          storeId: data.id);
+    }).toList();
     // if (data.details!.stripe_info != null) {
     //   paymentInfo.stripe =
     //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
@@ -85,7 +95,7 @@ Future<Laundry?> get_laundry_store_by_id(
         averageNumberOfDays: data.normal_delivery_time,
         laundryState: ServiceState(data.details!.open_status.toServiceStatus(),
             data.details!.approved),
-        laundryCosts: LaundryCosts());
+        laundryCosts: laundryCosts);
   } else
     return null;
 }

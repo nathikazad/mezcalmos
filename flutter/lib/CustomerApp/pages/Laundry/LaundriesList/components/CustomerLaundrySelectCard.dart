@@ -27,7 +27,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry);
+            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.hasuraId));
           },
           child: Container(
             child: _laundryInfoHeader(),
@@ -74,7 +74,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       flex: 6,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -100,14 +100,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 12,
-                      fit: FlexFit.loose,
+                      flex: 6,
+                      fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 18,
+                            size: 20,
                             color: Colors.black,
                           ),
                           Flexible(
@@ -122,14 +122,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                     ),
                     if (laundry.getCheapestCategory != null)
                       Flexible(
-                        flex: 4,
+                        flex: 6,
                         fit: FlexFit.tight,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.north_east,
-                              size: 22,
+                              size: 20,
                               color: Colors.black,
                             ),
                             Flexible(
