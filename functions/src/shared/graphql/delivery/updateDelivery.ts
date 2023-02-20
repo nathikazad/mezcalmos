@@ -44,3 +44,20 @@ export async function updateDeliveryOrderCompany(deliveryOrderId: number, delive
     }]
   })
 }
+
+export async function updateDeliveryPackageCost(deliveryOrder: DeliveryOrder) {
+  let chain = getHasura();
+
+  await chain.mutation({
+    update_delivery_order_by_pk: [{
+      pk_columns: {
+        id: deliveryOrder.deliveryId
+      }, 
+      _set: {
+        package_cost: deliveryOrder.packageCost
+      }
+    }, { 
+      package_cost: true
+    }]
+  });
+}
