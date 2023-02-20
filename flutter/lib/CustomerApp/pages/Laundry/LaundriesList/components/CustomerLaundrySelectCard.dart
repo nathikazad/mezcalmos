@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -119,6 +120,28 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (laundry.getCheapestCategory != null)
+                      Flexible(
+                        flex: 4,
+                        fit: FlexFit.tight,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.north_east,
+                              size: 22,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                                child: Text(
+                              "${laundry.getCheapestCategory.toPriceString()}/Kg",
+                              style: Get.textTheme.bodyMedium?.copyWith(
+                                color: blackColor,
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ],

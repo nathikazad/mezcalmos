@@ -297,6 +297,16 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
       paymentInfo.acceptedPayments =
           paymentInfo.parseAcceptedPayments(data.details!.accepted_payments);
     }
+    LaundryCosts laundryCosts = LaundryCosts();
+    laundryCosts.lineItems = data.categories
+        .map((Query$getLaundries$laundry_store$categories element) {
+      return LaundryCostLineItem(
+          name: toLanguageMap(translations: element.name.translations),
+          cost: element.cost_by_kilo,
+          id: element.id,
+          nameId: element.name_id,
+          storeId: data.id);
+    }).toList();
     // if (data.details!.stripe_info != null) {
     //   paymentInfo.stripe =
     //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
@@ -345,7 +355,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
         // primaryLanguage: data.details!.language_id.toString().toLanguageType(),
         // secondaryLanguage:
         //     data.data.details!.toString().toLanguageType().toOpLang(),
-        laundryCosts: LaundryCosts());
+        laundryCosts: laundryCosts);
   }).toList();
   return laundries;
 }
