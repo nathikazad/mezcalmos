@@ -26,7 +26,7 @@ class ROpOrderNote extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '${_i18n()["notes"]} : ',
+                '${_i18n()["notes"]} ',
                 style: Get.textTheme.bodyText1,
                 textAlign: TextAlign.left,
               ),

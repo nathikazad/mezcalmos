@@ -242,8 +242,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   bool isAtLaundry() {
-    return true;
-    // return status == LaundryOrderStatus.AtLaundry;
+    return status == LaundryOrderStatus.AtLaundry;
   }
 
   bool get inPickup {

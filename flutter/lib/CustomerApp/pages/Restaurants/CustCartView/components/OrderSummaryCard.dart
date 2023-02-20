@@ -27,7 +27,7 @@ class CardSummaryCard extends StatelessWidget {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13),
           color: Colors.white,
@@ -41,12 +41,15 @@ class CardSummaryCard extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               width: Get.width,
-              child: Text("${_i18n()["orderSummary"]}", style: txt.bodyText1),
+              child: Text(
+                "${_i18n()["orderSummary"]}",
+                style: txt.bodyText1,
+              ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 4),
             //==================Order cost :==================
             Container(
-              padding: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 4),
               width: Get.width,
               child: Row(
                 children: <Widget>[
@@ -59,7 +62,8 @@ class CardSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
-                      child: Text(controller.cart.itemsCost().toPriceString()),
+                      child: Text(controller.cart.itemsCost().toPriceString(),
+                          style: txt.bodyText2),
                     ),
                   )
                 ],
@@ -68,7 +72,7 @@ class CardSummaryCard extends StatelessWidget {
             //=======================Delivery cost :===============
             Container(
               padding: EdgeInsets.only(
-                bottom: 10,
+                bottom: 4,
               ),
               width: Get.width,
               child: Row(
@@ -97,10 +101,9 @@ class CardSummaryCard extends StatelessWidget {
                                     child: CircularProgressIndicator(
                                       color: primaryBlueColor,
                                     )),
-                                Text(
-                                  '${_i18n()["toBeCalc"]}',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                                Text('${_i18n()["toBeCalc"]}',
+                                    style: txt.bodyText2?.copyWith(
+                                        fontStyle: FontStyle.italic)),
                               ],
                             )
                 ],
@@ -110,7 +113,7 @@ class CardSummaryCard extends StatelessWidget {
             if (controller.showFees)
               Container(
                 padding: EdgeInsets.only(
-                  bottom: 10,
+                  bottom: 4,
                 ),
                 width: Get.width,
                 child: Row(
@@ -125,7 +128,8 @@ class CardSummaryCard extends StatelessWidget {
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.stripeFees.toPriceString()),
+                        child: Text(controller.cart.stripeFees.toPriceString(),
+                            style: txt.bodyText2),
                       ),
                     )
                   ],
@@ -133,29 +137,31 @@ class CardSummaryCard extends StatelessWidget {
               ),
             //=======================Total cost : ==================
             Container(
-              padding: EdgeInsets.only(bottom: 10, top: 3),
+              padding: EdgeInsets.only(bottom: 4, top: 3),
               width: Get.width,
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text("${_i18n()["totalCost"]} :",
-                          style: txt.bodyText1),
+                      child: Text(
+                        "${_i18n()["totalCost"]} :",
+                        style: txt.headline4,
+                      ),
                     ),
                   ),
                   Expanded(
                     child: Container(
                       alignment: Alignment.centerRight,
                       child: Text(controller.cart.totalCost.toPriceString(),
-                          style: txt.bodyText1),
+                          style: txt.headline5),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 15,
-            ),
+            // SizedBox(
+            //   height: 8,
+            // ),
           ],
         ),
       ),

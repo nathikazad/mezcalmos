@@ -12,8 +12,8 @@ class OrderNoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (note != null && note!.isNotEmpty) {
       return Card(
-        margin: const EdgeInsets.only(top: 20),
         child: Container(
+           margin: const EdgeInsets.only(top: 15),
           padding: const EdgeInsets.all(8),
           width: double.infinity,
           child: Column(
@@ -24,7 +24,7 @@ class OrderNoteCard extends StatelessWidget {
                 style: Get.textTheme.bodyText1,
                 textAlign: TextAlign.left,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 4),
               Container(
                 child: Text(
                   note!,

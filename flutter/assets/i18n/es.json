@@ -1,14 +1,14 @@
 {
   "CustomerApp": {
     "main": {
-      "savedLocations": "Ubicaciones guardadas",
+      "savedLocations": "Mis ubicaciones",
       "contactUs": "Contáctenos",
-      "savedCards": "Tarjetas guardadas"
+      "savedCards": "Mi tarjeta"
     },
     "components": {
       "Menu": {
         "UserMenuComponent": {
-          "savedLocations": "Ubicaciones guardadas",
+          "savedLocations": "Mis ubicaciones",
           "userInfo": " Información del usuario ",
           "logout": "Cerrar sesión",
           "notifications": "Notificaciones",
@@ -38,9 +38,9 @@
     "pages": {
       "cards": {
         "SavedCardsListView": {
-          "cards": "Tarjetas",
+          "cards": "Mis cartas",
           "card": "Tarjeta",
-          "addNew": "Agregar nueva tarjeta de crédito",
+          "addNew": "Agregar nueva tarjeta",
           "removeTitle": "Eliminar la tarjeta",
           "removeDesc": "¿Estás seguro de que quieres eliminar esta tarjeta?",
           "removeBtn": "Sí, eliminar la tarjeta"
@@ -49,19 +49,19 @@
       "ListOrdersScreen": {
         "components": {
           "RestaurantOngoingOrderCard": {
-            "totalCost": "Costo Total"
+            "totalCost": "Costo total"
           },
           "RestaurantPastOrderCard": {
-            "totalCost": "Costo Total"
+            "totalCost": "Costo total"
           },
           "TaxiOrderOngoingCard": {
             "taxiOrder": "Orden de taxi",
-            "totalCost": "Costo Total",
+            "totalCost": "Costo total",
             "orderStatus": {
               "canceledByTaxi": "Cancelado",
               "canceledByCustomer": "Cancelado",
               "onTheWay": "Taxi en el camino",
-              "lookingForTaxi": "Buscando Taxi",
+              "lookingForTaxi": "Buscando taxi",
               "inTransit": "Taxi en tránsito",
               "droppedOff": "Entregado",
               "expired": "Caducado",
@@ -72,32 +72,32 @@
           },
           "TaxiPastOrderCard": {
             "taxiOrder": "Orden de taxi",
-            "totalCost": "Costo Total"
+            "totalCost": "Costo total"
           },
           "LaundryOngoingOrderCard": {
-            "totalCost": "Costo Total",
+            "totalCost": "Costo total",
             "status": {
               "canceled": "Cancelada",
-              "orderReceived": "Orden Recibida",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "Pedido recogido",
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             }
           },
           "LaundryPastOrderCard": {
-            "totalCost": "Costo Total",
+            "totalCost": "Costo total",
             "status": {
               "canceled": "Cancelada",
-              "orderReceived": "Orden Recibida",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "Pedido recogido",
               "atLaundry": "En la lavandería",
               "readyForDelivery": "Listo para entregar",
               "otwDelivery": "Entrega en el camino",
-              "delivered": "Orden Entregado"
+              "delivered": "Orden entregado"
             }
           }
         },
@@ -138,7 +138,7 @@
             "search": "Búsqueda",
             "showOnlyOpen": "Mostrar solo restaurantes abiertos",
             "emptRestaurantList": "Lo siento, no se encontró ningún restaurante",
-            "noOpenRestaurant": "No hay restaurantes abiertos Funds",
+            "noOpenRestaurant": "No hay restaurantes abiertos funds",
             "meal": "Comida",
             "noItemTitle": "No se han encontrado resultados",
             "noItemDesc": "Lo siento, no pudimos encontrar lo que está buscando, por favor, pruebe una nueva palabra clave."
@@ -176,7 +176,7 @@
               "deleteItem": "Eliminar elemento",
               "deleteItemConfirm": "¿Estás seguro de que te gustaría eliminar?",
               "deleteBtn": "Sí, eliminar el elemento",
-              "itemNotes": "Notas de artículos :"
+              "itemNotes": "Notas de artículos"
             },
             "ChoosenManyOption": {
               "options": "Opciones"
@@ -185,12 +185,12 @@
               "pickLocation": "Elegir del mapa"
             },
             "OrderSummaryCard": {
-              "orderSummary": "Resumen de la orden",
+              "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
               "stripeFees": "Tarifas de tarjeta",
               "totalCost": "Costo Total",
-              "deliveryLocation": "Lugar De Entrega",
+              "deliveryLocation": "Lugar De rntrega",
               "toBeCalc": "Calculando ..."
             },
             "SaveLocationDailog": {
@@ -205,9 +205,9 @@
             "ops": "Oops",
             "restaurantClosed": "El restaurante está cerrado ahora",
             "distanceError": "La distancia entre usted y el restaurante es de más de 10 km!",
-            "myCart": "Mi Carrito",
+            "myCart": "Mi carrito",
             "notAvailable": "Su restaurante está cerrado",
-            "orderNow": "ORDENAR AHORA",
+            "orderNow": "Ordenar ahora",
             "scheduleOrder": "programar pedido",
             "errorText": "Lo siento, todavía no apoyamos tu área",
             "notesTitle": "Notas",
@@ -246,9 +246,10 @@
             "notes": "Notas",
             "special": "Especial",
             "viewRestaurant": "Ver restaurante",
-            "itemNotes": "Notas de artículos :",
+            "itemNotes": "Notas de artículos",
             "itemDescription": "Descripción del Artículo",
-            "availability": "Disponibilidad"
+            "availability": "Disponibilidad",
+            "hintNote":"Escribe tus notas aquí"
           }
         },
         "ViewOrderScreen": {
@@ -308,14 +309,14 @@
               "itemNotes": "Nota :"
             },
             "OrderSummaryCard": {
-              "totalCost": "Costo Total",
+              "totalCost": "Costo total",
               "deliveryCost": "Costo de envío",
               "free": "Gratis",
               "total": "Total",
               "stripeFees": "Tarifas de tarjeta",
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
-              "deliveryLocation": "Lugar De Entrega"
+              "deliveryLocation": "Lugar de entrega"
             },
             "RestaurantBankInfoCard": {
               "title": "Cuenta bancaria de restaurante",
@@ -344,7 +345,7 @@
               "description": "Descripción",
               "location": "Dirección",
               "reviews": "Reseñas",
-              "workingHours": "Horas Laborales",
+              "workingHours": "Horas laborales",
               "weekDays": {
                 "monday": "Lunes",
                 "tuesday": "Martes",
@@ -374,7 +375,8 @@
           },
           "SavedLocationComponent": {
             "editLocation": "Editar ubicación",
-            "deleteLocation": "Eliminar ubicación"
+            "deleteLocation": "Eliminar ubicación",
+            "defaultAddressText":"Por defecto"
           },
           "SavedLocationIsEmpty": {
             "savedLocationsListEmpty": "Tu lista de ubicaciones guardadas está vacía",
@@ -383,7 +385,8 @@
         },
         "SavedLocationView": {
           "title": "Ubicación",
-          "addNewLoc": "Añadir Nueva Ubicación"
+          "addNewLoc": "Añadir nueva ubicación",
+          "location":"Ubicación"
         }
       },
       "Taxi": {
@@ -418,7 +421,7 @@
           "LocationSearchBar": {
             "from": "Desde",
             "to": "Para",
-            "currentLocation": "Ubicación Actual",
+            "currentLocation": "Ubicación actual",
             "pickFromMap": "Elige del mapa"
           },
           "TopBar": {
@@ -467,7 +470,7 @@
           "subtitle": "Haz que tu lavandería más cercana lave tu ropa"
         },
         "comingSoon": "Próximamente...",
-        "supportText": "Necesitas ayuda ? Contacta con nuestro equipo de soporte"
+        "supportText": "Necesitas ayuda ? contacta con nuestro equipo de soporte"
       },
       "Laundry": {
         "Components": {
@@ -500,11 +503,11 @@
               "orderCancelSuccess": "El pedido se canceló correctamente.",
               "titleFailed": "Vaya :(",
               "orderCancelFailed": "No se pudo cancelar el pedido.",
-              "cancelOrderDialogYes": "Si, Estoy seguro!",
+              "cancelOrderDialogYes": "Si, estoy seguro!",
               "cancelOrderDialogNo": "No"
             },
             "LaundryOrderStatusCard": {
-              "orderReceived": "Orden Recibida",
+              "orderReceived": "Orden recibida",
               "otwPickUp": "Recoger en el camino",
               "pickedUp": "Pedido recogido",
               "atLaundry": "En la lavandería",
@@ -545,8 +548,8 @@
               "orderSummary": "Resumen",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
-              "totalCost": "Costo Total",
-              "deliveryLocation": "Lugar De Entrega",
+              "totalCost": "Costo total",
+              "deliveryLocation": "Lugar de entrega",
               "laundryPricing": "Precios de lavandería",
               "fixedRate": "Costo por kilo",
               "orderWeight": "Peso de pedido",
@@ -564,13 +567,14 @@
           "startingFrom": "Empezando ",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
-          "openHours": "Horas Laborales",
+          "openHours": "Horas laborales",
           "sendMyLaundry": "Envía mi ropa",
           "categories": "Categorías"
         },
         "LaundriesListView": {
           "laundries": "Lavanderías",
           "title": "Encuentra tus lavanderías \nmás cercanas o tintorerías ",
+          "noLaundaryFound":"No se encontró lavandería",
           "components": {
             "laundrySelectCard": {
               "available": "Available",
@@ -586,10 +590,10 @@
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
             "categories" : "Categorías",
-            "deliveryLocation": "Lugar De Entrega",
+            "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",
-            "minimumCost": "Costo Minimo",
+            "minimumCost": "Costo minimo",
             "deliveryCost": "Costo de envío",
             "noLocation": "No hay ubicación seleccionada",
             "pickLocation": "Elegir del mapa",
@@ -608,24 +612,24 @@
       }
     },
     "notificationHandler": {
-      "viewOrder": "Ver Pedido",
-      "preparingOrderTitle": "Preparando Orden",
+      "viewOrder": "Ver pedido",
+      "preparingOrderTitle": "Preparando orden",
       "preparingOrderBody": "Se está preparando tu pedido",
-      "readyForPickUpTitle": "Listo Para Recoger",
+      "readyForPickUpTitle": "Listo para recoger",
       "readyForPickUpBody": "Tu pedido está listo para ser recogido",
       "onTheWayRestaurantTitle": "En Camino",
       "onTheWayRestaurantBody": "Tu pedido está en camino",
       "deliveredTitle": "Entregado",
       "deliveredBody": "Tu pedido ha sido entregado",
-      "cancelledTitle": "Orden Cancelada",
+      "cancelledTitle": "Orden cancelada",
       "cancelledBody": "Tu pedido ha sido cancelado",
-      "taxiOnTheWayTitle": "En Camino",
+      "taxiOnTheWayTitle": "En camino",
       "taxiOnTheWayBody": "Tu taxi esta en camino",
-      "taxiInTransitTitle": "En Tránsito",
+      "taxiInTransitTitle": "En tránsito",
       "taxiInTransitBody": "Estas en camino a tu destino",
       "taxiDroppedOffTitle": "Alcanzada",
       "taxiDroppedOffBody": "Ha llegado a su destino",
-      "taxiCancelledTitle": "Orden Cancelada",
+      "taxiCancelledTitle": "Orden cancelada",
       "taxiCancelledBody": "Su pedido ha sido cancelado",
       "taxiExpiredTitle": "No hay taxis disponibles",
       "taxiExpiredBody": "Desafortunadamente, no pudimos encontrar un taxi para ti.Por favor, inténtelo de nuevo más tarde",
@@ -633,11 +637,11 @@
       "taxiFwdToCompanyBody": "Estamos llamando a una compañía local para encontrarte un taxi.",
       "taxiFwdSuccessTitle": "Reenviado con éxito",
       "taxiFwdSuccessBody": "Taxi local encontró ",
-      "taxiFwdCancelTitle": "Reenvío Cancelado ",
+      "taxiFwdCancelTitle": "Reenvío cancelado ",
       "taxiFwdCancelBody": "Tu orden ha sido cancelado ",
       "laundryOtwPickupTitle": "Conductor en el camino",
       "laundryOtwPickupBody": "Conductor en la camina de recoger su pedido.",
-      "laundryPickedTitle": "Pedido Recogido",
+      "laundryPickedTitle": "Pedido recogido",
       "laundryPickedBody": "El orden es recogido con éxito",
       "laundryAtLaundryTitle": "En la lavandería",
       "laundryAtLaundryBody": "Tu orden es recibido por la lavandería.",
@@ -647,9 +651,9 @@
       "laundryOtwDeliveryBody": "Tu orden está en camino",
       "laundryDeliveredTitle": "Entregada",
       "LaundryDeliveredBody": "Su pedido ha sido entregado",
-      "LaundryCancelledTitle": "Orden Cancelada",
+      "LaundryCancelledTitle": "Orden cancelada",
       "LaundryCancelledBody": "Su pedido ha sido cancelado",
-      "counterOfferTitle": "Nueva Contraoferta",
+      "counterOfferTitle": "Nueva contraoferta",
       "counterOfferBody": "New oferta de "
     }
   },
@@ -674,7 +678,7 @@
       "StripeHelper": {
         "addCard": "Agregar tarjeta",
         "powered": "Energizado por",
-        "save": "Ahorrar"
+        "save": "Guardar"
       },
       "ImageHelper": {
         "fromCamera": "Toma una foto",
@@ -683,8 +687,8 @@
         "gallery": "Galería",
         "cameraAccessOffTitle": "La aplicación no puede acceder a la cámara.",
         "cameraAccessOffBody": "Aparentemente, denegó el acceso a la aplicación desde la cámara, vaya a General > Aplicación > ¡Permitir cámara!",
-        "photoAccessOffTitle": "App can't access Photos.",
-        "photoAccessOffBody": "Apparently you denied the app from Photo Library access, go to General > APP > Photos and change None to something else."
+        "photoAccessOffTitle": "App can't access photos.",
+        "photoAccessOffBody": "Apparently you denied the app from photo library access, go to General > APP > Photos and change None to something else."
       },
       "GeneralPurposeHelper": {
         "saved": "Guardado",
@@ -700,8 +704,8 @@
           "title": "Califica tu experiencia",
           "subtitle": "Nos gustaría escuchar sus comentarios.",
           "hintText": "Di algo sobre tu experiencia.",
-          "send": "Enviar",
-          "close": "Cerca",
+          "send": "Guardar",
+          "close": "Cerrar",
           "successTitle": "Gracias",
           "successSubtitle": "Su revisión ha sido enviada con éxito"
         }
@@ -722,10 +726,10 @@
         "yesterday": "El dia de ayer",
         "hoursAgo": "Horas atras",
         "hourAgo": "Hace una hora",
-        "minutesAgo": "Hace minutos",
-        "minuteAgo": "Hace un minuto",
-        "secondsAgo": "Hace segundos",
-        "now": "En este momento"
+        "minutesAgo": "Hace mínimos",
+        "minuteAgo": "Hace mínimo",
+        "secondsAgo": "Sec hace",
+        "now": "Ahora"
       }
     },
     "pages": {
@@ -802,7 +806,7 @@
             "reqs": "Requisitos",
             "emailId": "Identificación de correo",
             "empty": "Vacía",
-            "reqsHelper": "Inicie sesión en su cuenta de Stripe y asegúrese de completar todos los requisitos a continuación"
+            "reqsHelper": "Inicie sesión en su cuenta de stripe y asegúrese de completar todos los requisitos a continuación"
           }
         }
       },
@@ -888,8 +892,9 @@
           "alertClearNotificationTitle": "Borrar todas las notificaciones",
           "clear": "Borra",
           "no": "No",
+          "yesterday":"Ayer",
           "noNotifTitle": "¡No hay notificaciones todavía!",
-          "noNotifBody": "Actualmente no tienes notificaciones. Te notificaremos cuando se llega a algo nuevo."
+          "noNotifBody": "Actualmente no tienes notificaciones. \nTe notificaremos cuando se llega a algo nuevo."
         }
       },
       "UserWelcomeView": {
@@ -1027,7 +1032,7 @@
         "title": "Elige tu tiempo"
       },
       "OrderSummaryCard": {
-        "orderSummary": "Resumen de pedido",
+        "orderSummary": "Resumen",
         "orderCost": "Costo de la orden",
         "deliveryCost": "Coste de envío",
         "stripeFees": "Tarifas de tarjeta",
@@ -1829,7 +1834,7 @@
       },
       "AdminView": {
         "LaundryOpAdminView": {
-          "save": "Ahorrar",
+          "save": "Guardar",
           "categories": "Categorías"
         },
         "components": {
@@ -2248,7 +2253,6 @@
         "ROpEditInfoView": {
           "saved": "Guardado",
           "schedule" :"Horas Laborales",
-
           "savedText": "Su información ha sido guardada",
           "openTitle": "Disponibilidad de restaurantes",
           "openSubtitle": "Esto cerrará su restaurante indefinidamente",

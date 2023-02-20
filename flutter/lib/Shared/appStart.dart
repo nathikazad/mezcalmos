@@ -93,7 +93,7 @@ class _StartingPointState extends State<StartingPoint> {
 
     WidgetsFlutterBinding.ensureInitialized();
     const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
+        String.fromEnvironment('LMODE', defaultValue: "stage");
     _launchMode = _tmpLmode.toLaunchMode();
 
     /// initializeSetup
@@ -241,7 +241,7 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
       await GetStorage().write(getxLmodeKey, _launchMode.toShortString());
       // previewMode
-      const bool _isPreviewMode = bool.hasEnvironment('PREVIEW');
+      const bool _isPreviewMode = true; //bool.hasEnvironment('PREVIEW');
       await GetStorage().write('previewMode', _isPreviewMode);
       mezDbgPrint('previewMode  -> $_isPreviewMode');
       mezDbgPrint(

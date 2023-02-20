@@ -40,23 +40,23 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: Text(
-              '${_i18n()["location"]}',
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
           SizedBox(
             height: 5,
           ),
           Container(
             child: Text(
+              '${_i18n()["location"]}',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+          Container(
+            child: Text(
               widget.location.address,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 5,
           ),
           IgnorePointer(
             ignoring: true,

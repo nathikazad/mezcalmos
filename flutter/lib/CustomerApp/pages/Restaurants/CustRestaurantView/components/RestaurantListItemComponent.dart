@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:sizer/sizer.dart';
@@ -90,8 +90,10 @@ class _RestaurantsListOfItemsComponentState
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text("\$${widget.item.cost}",
-                      style: Get.textTheme.headline3),
+                  child: Text(
+                    widget.item.cost.toPriceString(),
+                    style: Get.textTheme.headline3,
+                  ),
                 ),
                 SizedBox(
                   width: 3,

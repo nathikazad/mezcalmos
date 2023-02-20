@@ -233,12 +233,11 @@ ServiceInfo? _getServiceInfo(orderData) {
     case OrderType.Laundry:
       dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
-      mezDbgPrint(laundryOrder);
       return ServiceInfo(
           location: MezLocation.fromHasura(
               laundryOrder.store.details.location.gps,
               laundryOrder.store.details.location.address),
-          hasuraId: laundryOrder.details.store.id,
+          hasuraId: laundryOrder.store.id,
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
 

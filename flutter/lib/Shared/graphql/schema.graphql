@@ -4451,33 +4451,6 @@ type delivery_driver_aggregate {
   nodes: [delivery_driver!]!
 }
 
-input delivery_driver_aggregate_bool_exp {
-  bool_and: delivery_driver_aggregate_bool_exp_bool_and
-  bool_or: delivery_driver_aggregate_bool_exp_bool_or
-  count: delivery_driver_aggregate_bool_exp_count
-}
-
-input delivery_driver_aggregate_bool_exp_bool_and {
-  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns!
-  distinct: Boolean
-  filter: delivery_driver_bool_exp
-  predicate: Boolean_comparison_exp!
-}
-
-input delivery_driver_aggregate_bool_exp_bool_or {
-  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns!
-  distinct: Boolean
-  filter: delivery_driver_bool_exp
-  predicate: Boolean_comparison_exp!
-}
-
-input delivery_driver_aggregate_bool_exp_count {
-  arguments: [delivery_driver_select_column!]
-  distinct: Boolean
-  filter: delivery_driver_bool_exp
-  predicate: Int_comparison_exp!
-}
-
 """
 aggregate fields of "delivery.driver"
 """
@@ -4495,47 +4468,11 @@ type delivery_driver_aggregate_fields {
   variance: delivery_driver_variance_fields
 }
 
-"""
-order by aggregate values of table "delivery.driver"
-"""
-input delivery_driver_aggregate_order_by {
-  avg: delivery_driver_avg_order_by
-  count: order_by
-  max: delivery_driver_max_order_by
-  min: delivery_driver_min_order_by
-  stddev: delivery_driver_stddev_order_by
-  stddev_pop: delivery_driver_stddev_pop_order_by
-  stddev_samp: delivery_driver_stddev_samp_order_by
-  sum: delivery_driver_sum_order_by
-  var_pop: delivery_driver_var_pop_order_by
-  var_samp: delivery_driver_var_samp_order_by
-  variance: delivery_driver_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "delivery.driver"
-"""
-input delivery_driver_arr_rel_insert_input {
-  data: [delivery_driver_insert_input!]!
-
-  """upsert condition"""
-  on_conflict: delivery_driver_on_conflict
-}
-
 """aggregate avg on columns"""
 type delivery_driver_avg_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
-}
-
-"""
-order by avg() on columns of table "delivery.driver"
-"""
-input delivery_driver_avg_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
 }
 
 """
@@ -4634,26 +4571,6 @@ type delivery_driver_max_fields {
   user_id: Int
 }
 
-"""
-order by max() on columns of table "delivery.driver"
-"""
-input delivery_driver_max_order_by {
-  app_type_id: order_by
-  app_version: order_by
-  delivery_company_id: order_by
-
-  """restaurant,laundry,delivery_company"""
-  delivery_company_type: order_by
-
-  """Just for relationship"""
-  delivery_driver_type: order_by
-  id: order_by
-
-  """awaiting_approval, authorized, banned"""
-  status: order_by
-  user_id: order_by
-}
-
 """aggregate min on columns"""
 type delivery_driver_min_fields {
   app_type_id: String
@@ -4670,26 +4587,6 @@ type delivery_driver_min_fields {
   """awaiting_approval, authorized, banned"""
   status: String
   user_id: Int
-}
-
-"""
-order by min() on columns of table "delivery.driver"
-"""
-input delivery_driver_min_order_by {
-  app_type_id: order_by
-  app_version: order_by
-  delivery_company_id: order_by
-
-  """restaurant,laundry,delivery_company"""
-  delivery_company_type: order_by
-
-  """Just for relationship"""
-  delivery_driver_type: order_by
-  id: order_by
-
-  """awaiting_approval, authorized, banned"""
-  status: order_by
-  user_id: order_by
 }
 
 """
@@ -4783,22 +4680,6 @@ enum delivery_driver_select_column {
 }
 
 """
-select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver"
-"""
-enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
-  """column name"""
-  online
-}
-
-"""
-select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver"
-"""
-enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
-  """column name"""
-  online
-}
-
-"""
 input type for updating data in table "delivery.driver"
 """
 input delivery_driver_set_input {
@@ -4827,15 +4708,6 @@ type delivery_driver_stddev_fields {
   user_id: Float
 }
 
-"""
-order by stddev() on columns of table "delivery.driver"
-"""
-input delivery_driver_stddev_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type delivery_driver_stddev_pop_fields {
   delivery_company_id: Float
@@ -4843,29 +4715,11 @@ type delivery_driver_stddev_pop_fields {
   user_id: Float
 }
 
-"""
-order by stddev_pop() on columns of table "delivery.driver"
-"""
-input delivery_driver_stddev_pop_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
 """aggregate stddev_samp on columns"""
 type delivery_driver_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
-}
-
-"""
-order by stddev_samp() on columns of table "delivery.driver"
-"""
-input delivery_driver_stddev_samp_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
 }
 
 """
@@ -4904,15 +4758,6 @@ type delivery_driver_sum_fields {
   delivery_company_id: Int
   id: Int
   user_id: Int
-}
-
-"""
-order by sum() on columns of table "delivery.driver"
-"""
-input delivery_driver_sum_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
 }
 
 """
@@ -4968,15 +4813,6 @@ type delivery_driver_var_pop_fields {
   user_id: Float
 }
 
-"""
-order by var_pop() on columns of table "delivery.driver"
-"""
-input delivery_driver_var_pop_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
 """aggregate var_samp on columns"""
 type delivery_driver_var_samp_fields {
   delivery_company_id: Float
@@ -4984,29 +4820,11 @@ type delivery_driver_var_samp_fields {
   user_id: Float
 }
 
-"""
-order by var_samp() on columns of table "delivery.driver"
-"""
-input delivery_driver_var_samp_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
-}
-
 """aggregate variance on columns"""
 type delivery_driver_variance_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
-}
-
-"""
-order by variance() on columns of table "delivery.driver"
-"""
-input delivery_driver_variance_order_by {
-  delivery_company_id: order_by
-  id: order_by
-  user_id: order_by
 }
 
 input delivery_get_delivery_companies_args {
@@ -7730,6 +7548,17 @@ type laundry_category_aggregate {
   nodes: [laundry_category!]!
 }
 
+input laundry_category_aggregate_bool_exp {
+  count: laundry_category_aggregate_bool_exp_count
+}
+
+input laundry_category_aggregate_bool_exp_count {
+  arguments: [laundry_category_select_column!]
+  distinct: Boolean
+  filter: laundry_category_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "laundry.category"
 """
@@ -7747,6 +7576,33 @@ type laundry_category_aggregate_fields {
   variance: laundry_category_variance_fields
 }
 
+"""
+order by aggregate values of table "laundry.category"
+"""
+input laundry_category_aggregate_order_by {
+  avg: laundry_category_avg_order_by
+  count: order_by
+  max: laundry_category_max_order_by
+  min: laundry_category_min_order_by
+  stddev: laundry_category_stddev_order_by
+  stddev_pop: laundry_category_stddev_pop_order_by
+  stddev_samp: laundry_category_stddev_samp_order_by
+  sum: laundry_category_sum_order_by
+  var_pop: laundry_category_var_pop_order_by
+  var_samp: laundry_category_var_samp_order_by
+  variance: laundry_category_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "laundry.category"
+"""
+input laundry_category_arr_rel_insert_input {
+  data: [laundry_category_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: laundry_category_on_conflict
+}
+
 """aggregate avg on columns"""
 type laundry_category_avg_fields {
   cost_by_kilo: Float
@@ -7754,6 +7610,17 @@ type laundry_category_avg_fields {
   name_id: Float
   position: Float
   store_id: Float
+}
+
+"""
+order by avg() on columns of table "laundry.category"
+"""
+input laundry_category_avg_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
 }
 
 """
@@ -7815,6 +7682,17 @@ type laundry_category_max_fields {
   store_id: Int
 }
 
+"""
+order by max() on columns of table "laundry.category"
+"""
+input laundry_category_max_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
+}
+
 """aggregate min on columns"""
 type laundry_category_min_fields {
   cost_by_kilo: money
@@ -7822,6 +7700,17 @@ type laundry_category_min_fields {
   name_id: Int
   position: Int
   store_id: Int
+}
+
+"""
+order by min() on columns of table "laundry.category"
+"""
+input laundry_category_min_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
 }
 
 """
@@ -7910,6 +7799,17 @@ type laundry_category_stddev_fields {
   store_id: Float
 }
 
+"""
+order by stddev() on columns of table "laundry.category"
+"""
+input laundry_category_stddev_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type laundry_category_stddev_pop_fields {
   cost_by_kilo: Float
@@ -7919,6 +7819,17 @@ type laundry_category_stddev_pop_fields {
   store_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "laundry.category"
+"""
+input laundry_category_stddev_pop_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type laundry_category_stddev_samp_fields {
   cost_by_kilo: Float
@@ -7926,6 +7837,17 @@ type laundry_category_stddev_samp_fields {
   name_id: Float
   position: Float
   store_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "laundry.category"
+"""
+input laundry_category_stddev_samp_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
 }
 
 """
@@ -7955,6 +7877,17 @@ type laundry_category_sum_fields {
   name_id: Int
   position: Int
   store_id: Int
+}
+
+"""
+order by sum() on columns of table "laundry.category"
+"""
+input laundry_category_sum_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
 }
 
 """
@@ -7997,6 +7930,17 @@ type laundry_category_var_pop_fields {
   store_id: Float
 }
 
+"""
+order by var_pop() on columns of table "laundry.category"
+"""
+input laundry_category_var_pop_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type laundry_category_var_samp_fields {
   cost_by_kilo: Float
@@ -8006,6 +7950,17 @@ type laundry_category_var_samp_fields {
   store_id: Float
 }
 
+"""
+order by var_samp() on columns of table "laundry.category"
+"""
+input laundry_category_var_samp_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
+}
+
 """aggregate variance on columns"""
 type laundry_category_variance_fields {
   cost_by_kilo: Float
@@ -8013,6 +7968,17 @@ type laundry_category_variance_fields {
   name_id: Float
   position: Float
   store_id: Float
+}
+
+"""
+order by variance() on columns of table "laundry.category"
+"""
+input laundry_category_variance_order_by {
+  cost_by_kilo: order_by
+  id: order_by
+  name_id: order_by
+  position: order_by
+  store_id: order_by
 }
 
 """
@@ -9838,6 +9804,42 @@ type laundry_order_variance_fields {
 columns and relationships of "laundry.store"
 """
 type laundry_store {
+  """An array relationship"""
+  categories(
+    """distinct select on columns"""
+    distinct_on: [laundry_category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [laundry_category_order_by!]
+
+    """filter the rows returned"""
+    where: laundry_category_bool_exp
+  ): [laundry_category!]!
+
+  """An aggregate relationship"""
+  categories_aggregate(
+    """distinct select on columns"""
+    distinct_on: [laundry_category_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [laundry_category_order_by!]
+
+    """filter the rows returned"""
+    where: laundry_category_bool_exp
+  ): laundry_category_aggregate!
+
   """An object relationship"""
   delivery_details: delivery_details!
   delivery_details_id: Int!
@@ -9902,6 +9904,7 @@ type laundry_store {
   details: service_provider_details
   details_id: Int!
   id: Int!
+  minimum_cost: money!
 
   """in days"""
   normal_delivery_time: Int!
@@ -9974,6 +9977,7 @@ type laundry_store_avg_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -9986,6 +9990,8 @@ input laundry_store_bool_exp {
   _and: [laundry_store_bool_exp!]
   _not: laundry_store_bool_exp
   _or: [laundry_store_bool_exp!]
+  categories: laundry_category_bool_exp
+  categories_aggregate: laundry_category_aggregate_bool_exp
   delivery_details: delivery_details_bool_exp
   delivery_details_id: Int_comparison_exp
   delivery_details_of_deliverer: delivery_details_bool_exp
@@ -9994,6 +10000,7 @@ input laundry_store_bool_exp {
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
+  minimum_cost: money_comparison_exp
   normal_delivery_time: Int_comparison_exp
   operators: laundry_operator_bool_exp
   operators_aggregate: laundry_operator_aggregate_bool_exp
@@ -10027,6 +10034,7 @@ input laundry_store_inc_input {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10036,12 +10044,14 @@ input laundry_store_inc_input {
 input type for inserting data into table "laundry.store"
 """
 input laundry_store_insert_input {
+  categories: laundry_category_arr_rel_insert_input
   delivery_details: delivery_details_obj_rel_insert_input
   delivery_details_id: Int
   delivery_partners: service_provider_delivery_partner_arr_rel_insert_input
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10054,6 +10064,7 @@ type laundry_store_max_fields {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10065,6 +10076,7 @@ type laundry_store_min_fields {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10103,6 +10115,7 @@ input laundry_store_on_conflict {
 
 """Ordering options when selecting data from "laundry.store"."""
 input laundry_store_order_by {
+  categories_aggregate: laundry_category_aggregate_order_by
   delivery_details: delivery_details_order_by
   delivery_details_id: order_by
   delivery_details_of_deliverer_aggregate: delivery_details_aggregate_order_by
@@ -10110,6 +10123,7 @@ input laundry_store_order_by {
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
+  minimum_cost: order_by
   normal_delivery_time: order_by
   operators_aggregate: laundry_operator_aggregate_order_by
   service_provider_type: order_by
@@ -10134,6 +10148,9 @@ enum laundry_store_select_column {
   id
 
   """column name"""
+  minimum_cost
+
+  """column name"""
   normal_delivery_time
 
   """column name"""
@@ -10147,6 +10164,7 @@ input laundry_store_set_input {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10158,6 +10176,7 @@ type laundry_store_stddev_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -10168,6 +10187,7 @@ type laundry_store_stddev_pop_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -10178,6 +10198,7 @@ type laundry_store_stddev_samp_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -10199,6 +10220,7 @@ input laundry_store_stream_cursor_value_input {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10210,6 +10232,7 @@ type laundry_store_sum_fields {
   delivery_details_id: Int
   details_id: Int
   id: Int
+  minimum_cost: money
 
   """in days"""
   normal_delivery_time: Int
@@ -10227,6 +10250,9 @@ enum laundry_store_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  minimum_cost
 
   """column name"""
   normal_delivery_time
@@ -10251,6 +10277,7 @@ type laundry_store_var_pop_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -10261,6 +10288,7 @@ type laundry_store_var_samp_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -10271,6 +10299,7 @@ type laundry_store_variance_fields {
   delivery_details_id: Float
   details_id: Float
   id: Float
+  minimum_cost: Float
 
   """in days"""
   normal_delivery_time: Float
@@ -14672,8 +14701,30 @@ type mutation_root {
   update data of the table: "service_provider.stripe_info"
   """
   update_service_provider_stripe_info(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_stripe_info_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_stripe_info_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_stripe_info_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_stripe_info_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_stripe_info_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_stripe_info_set_input
@@ -14686,8 +14737,30 @@ type mutation_root {
   update single row of the table: "service_provider.stripe_info"
   """
   update_service_provider_stripe_info_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: service_provider_stripe_info_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: service_provider_stripe_info_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: service_provider_stripe_info_delete_key_input
+
     """increments the numeric columns with given value of the filtered values"""
     _inc: service_provider_stripe_info_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: service_provider_stripe_info_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: service_provider_stripe_info_set_input
@@ -25860,48 +25933,12 @@ type service_provider_details {
   accepted_payments(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
   approved: Boolean!
   creation_time: timestamptz!
 
   """An object relationship"""
   delivery_company: delivery_company
-
-  """An array relationship"""
-  delivery_drivers(
-    """distinct select on columns"""
-    distinct_on: [delivery_driver_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [delivery_driver_order_by!]
-
-    """filter the rows returned"""
-    where: delivery_driver_bool_exp
-  ): [delivery_driver!]!
-
-  """An aggregate relationship"""
-  delivery_drivers_aggregate(
-    """distinct select on columns"""
-    distinct_on: [delivery_driver_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [delivery_driver_order_by!]
-
-    """filter the rows returned"""
-    where: delivery_driver_bool_exp
-  ): delivery_driver_aggregate!
 
   """An object relationship"""
   description: translation
@@ -26033,8 +26070,6 @@ input service_provider_details_bool_exp {
   approved: Boolean_comparison_exp
   creation_time: timestamptz_comparison_exp
   delivery_company: delivery_company_bool_exp
-  delivery_drivers: delivery_driver_bool_exp
-  delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   firebase_id: String_comparison_exp
@@ -26081,6 +26116,11 @@ enum service_provider_details_constraint {
   unique or primary key constraint on columns "service_link_id"
   """
   details_service_link_id_key
+
+  """
+  unique or primary key constraint on columns "stripe_id"
+  """
+  details_stripe_id_key
 }
 
 """
@@ -26136,7 +26176,6 @@ input service_provider_details_insert_input {
   approved: Boolean
   creation_time: timestamptz
   delivery_company: delivery_company_obj_rel_insert_input
-  delivery_drivers: delivery_driver_arr_rel_insert_input
   description: translation_obj_rel_insert_input
   description_id: Int
   firebase_id: String
@@ -26229,7 +26268,6 @@ input service_provider_details_order_by {
   approved: order_by
   creation_time: order_by
   delivery_company: delivery_company_order_by
-  delivery_drivers_aggregate: delivery_driver_aggregate_order_by
   description: translation_order_by
   description_id: order_by
   firebase_id: order_by
@@ -27798,11 +27836,17 @@ columns and relationships of "service_provider.stripe_info"
 type service_provider_stripe_info {
   charge_fees_on_customer: Boolean
   charges_enabled: Boolean!
+
+  """An object relationship"""
+  detail: service_provider_details
   details_submitted: Boolean!
   email: String
   id: Int!
   payouts_enabled: Boolean!
-  requirements: String
+  requirements(
+    """JSON select path"""
+    path: String
+  ): jsonb
   status: String!
   stripe_id: String!
 }
@@ -27832,6 +27876,11 @@ type service_provider_stripe_info_aggregate_fields {
   variance: service_provider_stripe_info_variance_fields
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_stripe_info_append_input {
+  requirements: jsonb
+}
+
 """aggregate avg on columns"""
 type service_provider_stripe_info_avg_fields {
   id: Float
@@ -27847,11 +27896,12 @@ input service_provider_stripe_info_bool_exp {
   _or: [service_provider_stripe_info_bool_exp!]
   charge_fees_on_customer: Boolean_comparison_exp
   charges_enabled: Boolean_comparison_exp
+  detail: service_provider_details_bool_exp
   details_submitted: Boolean_comparison_exp
   email: String_comparison_exp
   id: Int_comparison_exp
   payouts_enabled: Boolean_comparison_exp
-  requirements: String_comparison_exp
+  requirements: jsonb_comparison_exp
   status: String_comparison_exp
   stripe_id: String_comparison_exp
 }
@@ -27872,6 +27922,28 @@ enum service_provider_stripe_info_constraint {
 }
 
 """
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input service_provider_stripe_info_delete_at_path_input {
+  requirements: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input service_provider_stripe_info_delete_elem_input {
+  requirements: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input service_provider_stripe_info_delete_key_input {
+  requirements: String
+}
+
+"""
 input type for incrementing numeric columns in table "service_provider.stripe_info"
 """
 input service_provider_stripe_info_inc_input {
@@ -27884,11 +27956,12 @@ input type for inserting data into table "service_provider.stripe_info"
 input service_provider_stripe_info_insert_input {
   charge_fees_on_customer: Boolean
   charges_enabled: Boolean
+  detail: service_provider_details_obj_rel_insert_input
   details_submitted: Boolean
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -27897,7 +27970,6 @@ input service_provider_stripe_info_insert_input {
 type service_provider_stripe_info_max_fields {
   email: String
   id: Int
-  requirements: String
   status: String
   stripe_id: String
 }
@@ -27906,7 +27978,6 @@ type service_provider_stripe_info_max_fields {
 type service_provider_stripe_info_min_fields {
   email: String
   id: Int
-  requirements: String
   status: String
   stripe_id: String
 }
@@ -27947,6 +28018,7 @@ Ordering options when selecting data from "service_provider.stripe_info".
 input service_provider_stripe_info_order_by {
   charge_fees_on_customer: order_by
   charges_enabled: order_by
+  detail: service_provider_details_order_by
   details_submitted: order_by
   email: order_by
   id: order_by
@@ -27959,6 +28031,11 @@ input service_provider_stripe_info_order_by {
 """primary key columns input for table: service_provider.stripe_info"""
 input service_provider_stripe_info_pk_columns_input {
   id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input service_provider_stripe_info_prepend_input {
+  requirements: jsonb
 }
 
 """
@@ -28003,7 +28080,7 @@ input service_provider_stripe_info_set_input {
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -28042,7 +28119,7 @@ input service_provider_stripe_info_stream_cursor_value_input {
   email: String
   id: Int
   payouts_enabled: Boolean
-  requirements: String
+  requirements: jsonb
   status: String
   stripe_id: String
 }
@@ -28085,8 +28162,30 @@ enum service_provider_stripe_info_update_column {
 }
 
 input service_provider_stripe_info_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: service_provider_stripe_info_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: service_provider_stripe_info_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: service_provider_stripe_info_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: service_provider_stripe_info_delete_key_input
+
   """increments the numeric columns with given value of the filtered values"""
   _inc: service_provider_stripe_info_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: service_provider_stripe_info_prepend_input
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input

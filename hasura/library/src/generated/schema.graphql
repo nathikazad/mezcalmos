@@ -25975,6 +25975,11 @@ enum service_provider_details_constraint {
   unique or primary key constraint on columns "service_link_id"
   """
   details_service_link_id_key
+
+  """
+  unique or primary key constraint on columns "stripe_id"
+  """
+  details_stripe_id_key
 }
 
 """
@@ -27694,6 +27699,9 @@ columns and relationships of "service_provider.stripe_info"
 type service_provider_stripe_info {
   charge_fees_on_customer: Boolean
   charges_enabled: Boolean!
+
+  """An object relationship"""
+  detail: service_provider_details
   details_submitted: Boolean!
   email: String
   id: Int!
@@ -27751,6 +27759,7 @@ input service_provider_stripe_info_bool_exp {
   _or: [service_provider_stripe_info_bool_exp!]
   charge_fees_on_customer: Boolean_comparison_exp
   charges_enabled: Boolean_comparison_exp
+  detail: service_provider_details_bool_exp
   details_submitted: Boolean_comparison_exp
   email: String_comparison_exp
   id: Int_comparison_exp
@@ -27810,6 +27819,7 @@ input type for inserting data into table "service_provider.stripe_info"
 input service_provider_stripe_info_insert_input {
   charge_fees_on_customer: Boolean
   charges_enabled: Boolean
+  detail: service_provider_details_obj_rel_insert_input
   details_submitted: Boolean
   email: String
   id: Int
@@ -27871,6 +27881,7 @@ Ordering options when selecting data from "service_provider.stripe_info".
 input service_provider_stripe_info_order_by {
   charge_fees_on_customer: order_by
   charges_enabled: order_by
+  detail: service_provider_details_order_by
   details_submitted: order_by
   email: order_by
   id: order_by
