@@ -117,7 +117,7 @@
         },
         "PickLocationScreen": {
           "PickLocationView": {
-            "pickLocation": "Pick Location",
+            "pickLocation": "Pick location",
             "pickLabele": "Search for location or move map and pick location"
           }
         },

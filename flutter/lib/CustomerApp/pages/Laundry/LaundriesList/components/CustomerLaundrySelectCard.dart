@@ -18,7 +18,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
       {Key? key, required this.laundry, required this.shippingPrice})
       : super(key: key);
   final Laundry laundry;
-  final int shippingPrice;
+  final double shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 5,
+                  height: 4,
                 ),
                 Text(
                   laundry.info.name,
@@ -82,10 +82,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Icon(
                             Icons.delivery_dining,
                             color: Colors.black,
-                            size: 22,
+                            size: 24,
                           ),
                           SizedBox(
-                            width: 3,
+                            width: 4,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
@@ -100,14 +100,14 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 4,
-                      fit: FlexFit.tight,
+                      flex: 12,
+                      fit: FlexFit.loose,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 22,
+                            size: 18,
                             color: Colors.black,
                           ),
                           Flexible(
