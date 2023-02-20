@@ -23,6 +23,7 @@ import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/LaundryOrderPricingCompenent.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:sizer/sizer.dart';
@@ -124,7 +125,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                         BoxConstraints(minHeight: constraint.maxHeight),
                     child: IntrinsicHeight(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: <Widget>[
                             Obx(
@@ -154,39 +155,33 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
 
                             LaundryOrderPricingComponent(
                                 order: viewController.order.value!),
-
                             OrderNoteCard(
+                                margin: const EdgeInsets.only(top: 25),
                                 note: viewController.order.value!.notes),
-
-                            // OrderDeliveryLocation(
-                            //   order: viewController.order.value!,
-                            //   margin: const EdgeInsets.only(bottom: 20),
-                            //   titleTextStyle: Get.textTheme.bodyText1,
-                            // ),
-                            // OrderPaymentMethod(
-                            //   order: viewController.order.value!,
-                            //   margin: const EdgeInsets.only(bottom: 20),
-                            // ),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.only(top: 25),
+                              child: Text(
+                                "Delivery details ",
+                                style: Get.textTheme.bodyLarge,
+                              ),
+                            ),
+                            OrderDeliveryLocation(
+                              address: viewController.order.value!.to.address,
+                              margin: const EdgeInsets.only(top: 10),
+                            ),
 
                             OrderSummaryCard(
+                              margin: const EdgeInsets.only(top: 25),
                               order: viewController.order.value!,
-                              margin: const EdgeInsets.only(bottom: 0),
                             ),
-                            SizedBox(
-                              height: 15,
+
+                            Spacer(),
+                            Flexible(
+                              child: LaundryOrderFooterCard(
+                                viewController: viewController,
+                              ),
                             ),
-                            LaundryOrderFooterCard(
-                              viewController: viewController,
-                            ),
-                            // Spacer(),
-                            // Flexible(
-                            //   child: Container(
-                            //     alignment: Alignment.center,
-                            //     child: LaundryOrderFooterCard(
-                            //       viewController: viewController,
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),

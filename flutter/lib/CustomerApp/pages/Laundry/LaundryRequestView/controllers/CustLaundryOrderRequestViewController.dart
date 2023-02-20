@@ -122,7 +122,7 @@ class CustLaundryOrderRequestViewController {
   Future<num?> createLaundryOrder() async {
     final LaundryRequest _laundryRequest = LaundryRequest(
         laundryId: laundry.value!.info.hasuraId, deliveryCost: 50);
-
+    mezDbgPrint(orderNote.text);
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         laundry.value!.info.location, customerLoc.value!);
 
@@ -136,9 +136,10 @@ class CustLaundryOrderRequestViewController {
       _laundryRequest.laundryId = laundry.value!.info.hasuraId;
       _laundryRequest.from = laundry.value!.info.location;
       _laundryRequest.to = customerLoc.value!;
-      _laundryRequest.notes = "note";
+      _laundryRequest.notes = orderNote.text;
       _laundryRequest.paymentType = PaymentType.Cash;
-      mezDbgPrint("👋👋👋👋 paylod 👋👋👋👋");
+
+      mezDbgPrint("👋👋👋👋 paylod  👋👋👋👋");
       mezDbgPrint(_laundryRequest.toString());
       return await _checkoutOrder(_laundryRequest);
     }

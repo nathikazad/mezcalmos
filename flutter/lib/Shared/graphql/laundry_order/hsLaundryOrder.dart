@@ -100,6 +100,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
       orderId: orderData.id,
+      notes: orderData.notes,
       estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
           ? DateTime.parse(orderData.estimated_ready_time!)
           : null,
@@ -170,6 +171,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
+          notes: orderData.notes,
           estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
               ? DateTime.parse(orderData.estimated_ready_time!)
               : null,

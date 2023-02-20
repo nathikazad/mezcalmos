@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
+
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["OrderDeliveryLocation"];
@@ -23,8 +24,7 @@ class OrderDeliveryLocation extends StatelessWidget {
         children: [
           Text(
             '${_i18n()["title"]}',
-            style:
-                Get.textTheme.headline6,
+            style: titleTextStyle ?? Get.textTheme.titleLarge,
           ),
           const SizedBox(
             height: 4,
@@ -47,7 +47,7 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                       maxLines: 1,
                     ),
                   ),

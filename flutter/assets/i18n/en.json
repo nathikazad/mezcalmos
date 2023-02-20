@@ -272,7 +272,7 @@
                 "restaurant": "Restaurant"
               },
               "notesWidget": {
-                "notes": "Order note"
+                "notes": "Notes"
               },
               "OrderFooterCard": {
                 "cancelOrder": "Cancel order",

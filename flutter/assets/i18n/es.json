@@ -274,7 +274,7 @@
               "restaurant": "Restaurante"
             },
             "notesWidget": {
-              "notes": "Nota de pedido:"
+              "notes": "Notas"
             },
             "OrderFooterCard": {
               "cancelOrder": "Cancelar el pedido",
