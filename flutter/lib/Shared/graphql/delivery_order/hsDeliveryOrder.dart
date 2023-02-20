@@ -234,7 +234,7 @@ ServiceInfo? _getServiceInfo(orderData) {
     case OrderType.Laundry:
       dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
-   eturn ServiceInfo(
+      return ServiceInfo(
           location: MezLocation.fromHasura(
               laundryOrder.store.details.location.gps,
               laundryOrder.store.details.location.address),
