@@ -220,10 +220,7 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
-  mezDbgPrint(
-      "ORDER TYPE  ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.id}");
-  mezDbgPrint(
-      "ORDER SERVICE INFO ===========>>>>>>>>>${orderData.restaurant_order!.restaurant.details.location.address.toString()}");
+
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
@@ -237,12 +234,11 @@ ServiceInfo? _getServiceInfo(orderData) {
     case OrderType.Laundry:
       dynamic laundryOrder =
           orderData?.laundry_pickup_order ?? orderData?.laundry_delivery_order;
-      mezDbgPrint(laundryOrder);
-      return ServiceInfo(
+   eturn ServiceInfo(
           location: MezLocation.fromHasura(
               laundryOrder.store.details.location.gps,
               laundryOrder.store.details.location.address),
-          hasuraId: laundryOrder.details.store.id,
+          hasuraId: laundryOrder.store.id,
           image: laundryOrder.store.details.image,
           name: laundryOrder.store.details.name);
 
