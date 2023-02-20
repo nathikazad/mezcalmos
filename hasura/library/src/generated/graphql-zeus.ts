@@ -16281,6 +16281,8 @@ count?: [{	columns?:ValueTypes["service_provider_service_link_select_column"][],
 ["service_provider_stripe_info"]: AliasType<{
 	charge_fees_on_customer?:true,
 	charges_enabled?:true,
+	/** An object relationship */
+	detail?:ValueTypes["service_provider_details"],
 	details_submitted?:true,
 	email?:true,
 	id?:true,
@@ -16329,6 +16331,7 @@ All fields are combined with a logical 'AND'. */
 	_or?:ValueTypes["service_provider_stripe_info_bool_exp"][],
 	charge_fees_on_customer?:ValueTypes["Boolean_comparison_exp"],
 	charges_enabled?:ValueTypes["Boolean_comparison_exp"],
+	detail?:ValueTypes["service_provider_details_bool_exp"],
 	details_submitted?:ValueTypes["Boolean_comparison_exp"],
 	email?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
@@ -16360,6 +16363,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_stripe_info_insert_input"]: {
 	charge_fees_on_customer?:boolean,
 	charges_enabled?:boolean,
+	detail?:ValueTypes["service_provider_details_obj_rel_insert_input"],
 	details_submitted?:boolean,
 	email?:string,
 	id?:number,
@@ -16408,6 +16412,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_stripe_info_order_by"]: {
 	charge_fees_on_customer?:ValueTypes["order_by"],
 	charges_enabled?:ValueTypes["order_by"],
+	detail?:ValueTypes["service_provider_details_order_by"],
 	details_submitted?:ValueTypes["order_by"],
 	email?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -33726,6 +33731,8 @@ the end). throws an error if top level container is not an array */
 		__typename?: "service_provider_stripe_info";
 			charge_fees_on_customer?:boolean,
 			charges_enabled?:boolean,
+			/** An object relationship */
+	detail?:PartialObjects["service_provider_details"],
 			details_submitted?:boolean,
 			email?:string,
 			id?:number,
@@ -33772,6 +33779,7 @@ All fields are combined with a logical 'AND'. */
 	_or?:PartialObjects["service_provider_stripe_info_bool_exp"][],
 	charge_fees_on_customer?:PartialObjects["Boolean_comparison_exp"],
 	charges_enabled?:PartialObjects["Boolean_comparison_exp"],
+	detail?:PartialObjects["service_provider_details_bool_exp"],
 	details_submitted?:PartialObjects["Boolean_comparison_exp"],
 	email?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
@@ -33803,6 +33811,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_stripe_info_insert_input"]: {
 	charge_fees_on_customer?:boolean,
 	charges_enabled?:boolean,
+	detail?:PartialObjects["service_provider_details_obj_rel_insert_input"],
 	details_submitted?:boolean,
 	email?:string,
 	id?:number,
@@ -33851,6 +33860,7 @@ end). throws an error if top level container is not an array */
 ["service_provider_stripe_info_order_by"]: {
 	charge_fees_on_customer?:PartialObjects["order_by"],
 	charges_enabled?:PartialObjects["order_by"],
+	detail?:PartialObjects["service_provider_details_order_by"],
 	details_submitted?:PartialObjects["order_by"],
 	email?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -51837,7 +51847,8 @@ export enum service_provider_details_constraint {
 	details_firebase_id_key = "details_firebase_id_key",
 	details_location_id_key = "details_location_id_key",
 	details_pkey = "details_pkey",
-	details_service_link_id_key = "details_service_link_id_key"
+	details_service_link_id_key = "details_service_link_id_key",
+	details_stripe_id_key = "details_stripe_id_key"
 }
 
 /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
@@ -53231,6 +53242,8 @@ export type service_provider_stripe_info = {
 	__typename?: "service_provider_stripe_info",
 	charge_fees_on_customer?:boolean,
 	charges_enabled:boolean,
+	/** An object relationship */
+	detail?:service_provider_details,
 	details_submitted:boolean,
 	email?:string,
 	id:number,
@@ -53282,6 +53295,7 @@ export type service_provider_stripe_info_bool_exp = {
 	_or?:service_provider_stripe_info_bool_exp[],
 	charge_fees_on_customer?:Boolean_comparison_exp,
 	charges_enabled?:Boolean_comparison_exp,
+	detail?:service_provider_details_bool_exp,
 	details_submitted?:Boolean_comparison_exp,
 	email?:String_comparison_exp,
 	id?:Int_comparison_exp,
@@ -53322,6 +53336,7 @@ export type service_provider_stripe_info_inc_input = {
 export type service_provider_stripe_info_insert_input = {
 		charge_fees_on_customer?:boolean,
 	charges_enabled?:boolean,
+	detail?:service_provider_details_obj_rel_insert_input,
 	details_submitted?:boolean,
 	email?:string,
 	id?:number,
@@ -53376,6 +53391,7 @@ export type service_provider_stripe_info_on_conflict = {
 export type service_provider_stripe_info_order_by = {
 		charge_fees_on_customer?:order_by,
 	charges_enabled?:order_by,
+	detail?:service_provider_details_order_by,
 	details_submitted?:order_by,
 	email?:order_by,
 	id?:order_by,
@@ -98294,6 +98310,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		detail:{
+			type:"service_provider_details_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		details_submitted:{
 			type:"Boolean_comparison_exp",
 			array:false,
@@ -98379,6 +98401,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		charges_enabled:{
 			type:"Boolean",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		detail:{
+			type:"service_provider_details_obj_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -98469,6 +98497,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		charges_enabled:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		detail:{
+			type:"service_provider_details_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -110727,6 +110761,7 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_stripe_info:{
 		charge_fees_on_customer:"Boolean",
 		charges_enabled:"Boolean",
+		detail:"service_provider_details",
 		details_submitted:"Boolean",
 		email:"String",
 		id:"Int",

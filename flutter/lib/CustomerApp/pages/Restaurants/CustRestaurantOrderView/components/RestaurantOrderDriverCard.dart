@@ -26,7 +26,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Container(
             alignment: Alignment.centerLeft,
@@ -37,7 +37,7 @@ class RestaurantOrderDriverCard extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
               child: Container(
@@ -54,12 +54,22 @@ class RestaurantOrderDriverCard extends StatelessWidget {
                             order.dropoffDriver!.image)),
                     Positioned(
                       right: -35,
-                      child: CircleAvatar(
-                        radius: 23,
-                        child: Icon(
-                          Icons.delivery_dining,
-                          size: 30,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: CircleAvatar(
+                              radius: 23,
+                              child: Icon(
+                                Icons.delivery_dining,
+                                size: 30,
+                                color: Colors.white,
+                              )),
                         ),
                       ),
                     )

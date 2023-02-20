@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
@@ -41,8 +42,6 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  //  _orderImageComponent(),
-                  // const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -97,8 +96,11 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                     height: 20,
                     fit: BoxFit.contain,
                   ),
+                  SizedBox(
+                    width: 2.w,
+                  ),
                   Text(
-                    " \$${widget.order.totalCost}",
+                    widget.order.totalCost!.toPriceString(),
                     style: Get.textTheme.bodyLarge,
                   ),
                   Spacer(),
@@ -118,7 +120,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.3),
+              color: cancelledBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
@@ -131,24 +133,24 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.3),
+              color: deliveredBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
             style: Get.textTheme.bodyLarge
-                ?.copyWith(color: Colors.green, fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.sp),
           ),
         );
       default:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.3),
+              color: waitingBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
             style: Get.textTheme.bodyLarge
-                ?.copyWith(color: Colors.amber, fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.sp),
           ),
         );
     }

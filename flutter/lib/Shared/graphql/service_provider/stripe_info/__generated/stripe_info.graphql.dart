@@ -2,6 +2,7 @@ import '../../../__generated/schema.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Mutation$addStripePaymentInfo {
   factory Variables$Mutation$addStripePaymentInfo(
@@ -499,7 +500,7 @@ class Mutation$addStripePaymentInfo$insert_service_provider_stripe_info_one {
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -515,7 +516,7 @@ class Mutation$addStripePaymentInfo$insert_service_provider_stripe_info_one {
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -538,7 +539,8 @@ class Mutation$addStripePaymentInfo$insert_service_provider_stripe_info_one {
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -673,7 +675,7 @@ abstract class CopyWith$Mutation$addStripePaymentInfo$insert_service_provider_st
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -725,7 +727,7 @@ class _CopyWithImpl$Mutation$addStripePaymentInfo$insert_service_provider_stripe
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -762,7 +764,7 @@ class _CopyWithStubImpl$Mutation$addStripePaymentInfo$insert_service_provider_st
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -1314,7 +1316,7 @@ class Mutation$updateStripePaymentInfo$update_service_provider_stripe_info_by_pk
       charges_enabled: (l$charges_enabled as bool),
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       id: (l$id as int),
       status: (l$status as String),
       $__typename: ((l$$__typename ?? "none") as String),
@@ -1331,7 +1333,7 @@ class Mutation$updateStripePaymentInfo$update_service_provider_stripe_info_by_pk
 
   final bool payouts_enabled;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final int id;
 
@@ -1352,7 +1354,8 @@ class Mutation$updateStripePaymentInfo$update_service_provider_stripe_info_by_pk
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$status = status;
@@ -1476,7 +1479,7 @@ abstract class CopyWith$Mutation$updateStripePaymentInfo$update_service_provider
     bool? charges_enabled,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? $__typename,
@@ -1533,7 +1536,7 @@ class _CopyWithImpl$Mutation$updateStripePaymentInfo$update_service_provider_str
                 : (payouts_enabled as bool),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
@@ -1560,7 +1563,7 @@ class _CopyWithStubImpl$Mutation$updateStripePaymentInfo$update_service_provider
     bool? charges_enabled,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? $__typename,

@@ -21,7 +21,7 @@ class CustomerLaundryOrderEst extends StatelessWidget {
   Widget build(BuildContext context) {
     if (_getEstimatedText() != null) {
       return Card(
-        margin: const EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(top: 15),
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             child: Row(

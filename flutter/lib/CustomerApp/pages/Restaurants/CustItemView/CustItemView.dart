@@ -54,7 +54,7 @@ class _CustItemViewState extends State<CustItemView> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         bottomSheet: (viewController.hasData)
             ? ItemViewBottomBar(
                 viewController: viewController,
@@ -78,22 +78,27 @@ class _CustItemViewState extends State<CustItemView> {
                             Column(
                               children: List.generate(
                                 viewController.getItem!.options.length,
-                                (int index) => ItemOptionCard(
-                                  cartItem: viewController.cartItem,
-                                  editMode: widget.viewItemScreenMode ==
-                                      ViewItemScreenMode.EditItemMode,
-                                  option:
-                                      viewController.getItem!.options[index],
+                                (int index) => Column(
+                                  children: [
+                                    ItemOptionCard(
+                                      cartItem: viewController.cartItem,
+                                      editMode: widget.viewItemScreenMode ==
+                                          ViewItemScreenMode.EditItemMode,
+                                      option: viewController
+                                          .getItem!.options[index],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                            
                           _itemNotesComponent(),
                           SizedBox(
-                            height: 15,
-                          )
+                            height: 15.h,
+                          ),
                         ],
                       ),
                     ),
@@ -196,20 +201,16 @@ class _CustItemViewState extends State<CustItemView> {
 
   Container _itemDescription(BuildContext context, Item item) {
     return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 10),
+      margin: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 5),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
-            style: Get.textTheme.bodyText2!.copyWith(
-              fontSize: 12.sp,
-            ),
+            style: Get.textTheme.bodyText2,
           ),
         ],
       ),
@@ -226,18 +227,19 @@ class _CustItemViewState extends State<CustItemView> {
             "${_i18n()["itemNotes"]}",
             style: Get.textTheme.bodyText1,
           )),
-          SizedBox(
-            height: 5,
-          ),
+          SizedBox(height: 2),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: TextFormField(
               controller: viewController.notesController,
               minLines: 3,
-              maxLines: 10,
-              style: Get.textTheme.bodyText2,
+              maxLines: 7,
+              style: Get.textTheme.subtitle1?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
               decoration: InputDecoration(
                 alignLabelWithHint: false,
+                hintText: "${_i18n()["hintNote"]}",
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 filled: true,
                 fillColor: Colors.white,

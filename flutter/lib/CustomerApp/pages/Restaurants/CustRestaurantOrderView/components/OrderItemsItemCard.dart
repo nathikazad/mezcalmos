@@ -124,7 +124,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
-                width: 5,
+                width: 8,
               ),
               if (widget.order.showItemsImages)
                 Container(
@@ -158,18 +158,32 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.item.name[userLanguage]! +
-                            " x${widget.item.quantity}",
-                        style: txt.bodyText1?.copyWith(
-                            color: widget.item.unavailable
-                                ? Colors.black.withOpacity(0.5)
-                                : Colors.black,
-                            decoration: (widget.item.unavailable)
-                                ? TextDecoration.lineThrough
-                                : null),
+                      RichText(
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                          text: widget.item.name[userLanguage]!,
+                          style: txt.bodyText1?.copyWith(
+                              color: widget.item.unavailable
+                                  ? Colors.black.withOpacity(0.5)
+                                  : Colors.black,
+                              decoration: (widget.item.unavailable)
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: " x${widget.item.quantity}",
+                              style: txt.bodyText1?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: widget.item.unavailable
+                                      ? Colors.black.withOpacity(0.5)
+                                      : Colors.black,
+                                  decoration: (widget.item.unavailable)
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
@@ -214,9 +228,7 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
         ),
         Text(
           '${_i18n()["itemUnav"]}',
-          style: Get.textTheme.bodyText2?.copyWith(
-              fontWeight: FontWeight.w600,
-              fontSize: 11.sp,
+          style: Get.textTheme.headline6?.copyWith(
               color: widget.item.unavailable ? Colors.red : Colors.white),
         ),
         SizedBox(
@@ -225,83 +237,6 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
       ],
     );
   }
-
-  // Widget _itemHeader(LanguageType userLanguage, TextTheme txt) {
-  //   return Container(
-  //     height: 60,
-  //     alignment: Alignment.center,
-  //     margin: EdgeInsets.symmetric(horizontal: 8),
-  //     child: Row(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: [
-  //         if (widget.order.showItemsImages)
-  //           Container(
-  //             margin: const EdgeInsets.only(right: 8),
-  //             height: 55,
-  //             width: 55,
-  //             decoration: BoxDecoration(
-  //                 borderRadius: BorderRadius.circular(12),
-  //                 image: DecorationImage(
-  //                     fit: BoxFit.cover,
-  //                     image: (imageLoded)
-  //                         ? CachedNetworkImageProvider(widget.item.image ?? '',
-  //                             errorListener: () {
-  //                             setState(() {
-  //                               imageLoded = false;
-  //                             });
-  //                           })
-  //                         : AssetImage(aNoImage) as ImageProvider)),
-  //           ),
-  //         if (widget.item.name[userLanguage] != null)
-  //           Flexible(
-  //             flex: 6,
-  //             fit: FlexFit.tight,
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 Row(
-  //                   children: [
-  //                     Flexible(
-  //                       flex: 3,
-  //                       child: Text(
-  //                         widget.item.name[userLanguage]!.inCaps,
-  //                         style: txt.bodyText1,
-  //                         maxLines: 2,
-  //                         overflow: TextOverflow.ellipsis,
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       width: 5,
-  //                     ),
-  //                     Flexible(
-  //                       child: Text(
-  //                         "x${widget.item.quantity}",
-  //                         style: txt.bodyText1
-  //                             ?.copyWith(fontWeight: FontWeight.w700),
-  //                         maxLines: 2,
-  //                         overflow: TextOverflow.ellipsis,
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 ),
-  //                 SizedBox(
-  //                   height: 3,
-  //                 ),
-  //                 Container(
-  //                   // margin: EdgeInsets.all(5),
-
-  //                   child: Text('\$' + widget.item.totalCost.toInt().toString(),
-  //                       style: txt.bodyText1),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   List<Widget> buildChoices(
       Map<String, List<Choice>> choices, Map<String, LanguageMap> optionNames) {

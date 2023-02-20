@@ -380,8 +380,8 @@ class ROpScheduleWidgets {
               "${convertToAmPm(viewController.schedulePreview.value!.openHours[weekday]!.to[0], viewController.schedulePreview.value!.openHours[weekday]!.to[1])}",
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1
-                  ?.copyWith(fontSize: 11.sp),
+                  .headline6
+                  ?.copyWith(color: Colors.black),
             )),
       ),
     );

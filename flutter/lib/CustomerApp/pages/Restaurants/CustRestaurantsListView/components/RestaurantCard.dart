@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ListRestaurantsScreen"]["components"]
@@ -29,13 +30,13 @@ class RestaurantCard extends StatelessWidget {
         Get.find<LanguageController>().userLanguageKey;
     final TextTheme txt = Theme.of(context).textTheme;
     return Card(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(bottom: 2.h),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
         onTap: onClick,
         child: Container(
           width: double.infinity,
-          height: 160,
+          height: 15.h,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,22 +44,17 @@ class RestaurantCard extends StatelessWidget {
               mezRestuarntCardImage(),
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: EdgeInsets.all(1.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        restaurant.info.name,
-                        style: txt.headline3,
-                      ),
-                      const SizedBox(height: 10),
+                      Text(restaurant.info.name, style: txt.bodyText1),
+                      SizedBox(height: 0.3.h),
                       if (restaurant.info.description?[userLanguage] != null)
                         Text(
-                          // TODO:544D-HASURA
-
-                          // restaurant.description![userLanguage]!,
-                          "restaurant's desc in english",
-                          style: txt.subtitle1,
+                          restaurant.info.description![userLanguage]!,
+                          style: txt.bodyText2,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -66,56 +62,134 @@ class RestaurantCard extends StatelessWidget {
                           restaurant.info.description!.length > 1)
                         const Spacer(),
                       Container(
-                        //  alignment: Alignment.bottomLeft,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            // Flexible(
-                            //   flex: 2,
-                            //   fit: FlexFit.tight,
-                            //   child: Text(_getDollarsSign(),
-                            //       style: txt.bodyText1?.copyWith(
-                            //         color: Colors.grey.shade800,
-                            //       )),
-                            // ),
-                            Flexible(
-                              flex: 7,
-                              // fit: FlexFit.tight,
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.delivery_dining,
+                                  color: Colors.black,
+                                  size: 3.2.h,
+                                ),
+                                SizedBox(
+                                  width: 1.w,
+                                ),
+                                ShippingCostComponent(
+                                  shippingCost: shippingPrice,
+                                  alignment: MainAxisAlignment.start,
+                                  textStyle: txt.bodyText1,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 3.w,
+                            ),
+
+                            Container(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Icon(
-                                    Icons.delivery_dining,
-                                    color: Colors.grey.shade800,
-                                  ),
-                                  Flexible(
-                                    //    flex: 5,
-                                    fit: FlexFit.tight,
-                                    child: ShippingCostComponent(
-                                      shippingCost: shippingPrice,
-                                      alignment: MainAxisAlignment.start,
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 2.w),
+                                    child: Icon(
+                                      Icons.payments_outlined,
+                                      color: Colors.black,
+                                      size: 3.h,
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: 1.h,
+                                  ),
+                                  if (restaurant.paymentInfo?.acceptCard ==
+                                      false)
+                                    Icon(
+                                      Icons.credit_card,
+                                      color: Colors.black,
+                                      size: 3.h,
+                                    ),
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              width: 4.w,
+                            ),
                             Flexible(
-                              flex: 1,
-                              child: Icon(
-                                Icons.payments_sharp,
-                                color: Colors.grey.shade800,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.star,
+                                    size: 3.h,
+                                    color: Color(0xFF6779FE),
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    restaurant.rate != null
+                                        ? restaurant.rate.toString()
+                                        : 0.toString(),
+                                    style: txt.bodyText1,
+                                  )
+                                ],
                               ),
                             ),
-                            if (restaurant.paymentInfo?.acceptCard == true)
-                              Flexible(
-                                flex: 1,
-                                child: Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: Icon(
-                                      Icons.credit_card,
-                                      color: Colors.grey.shade800,
-                                    )),
-                              ),
+                            // Flexible(
+                            //   flex: 7,
+                            //   // fit: FlexFit.tight,
+                            // child: Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Icon(
+                            //       Icons.delivery_dining,
+                            //       color: Colors.grey.shade800,
+                            //     ),
+                            //     Flexible(
+                            //       //    flex: 5,
+                            //       fit: FlexFit.tight,
+                            //       child: ShippingCostComponent(
+                            //         shippingCost: shippingPrice,
+                            //         alignment: MainAxisAlignment.start,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                            // ),
+
+                            // Flexible(
+                            //   flex: 1,
+                            //   child: Icon(
+                            //     Icons.payments_outlined,
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+                            // if (restaurant.paymentInfo?.acceptCard == true)
+                            //   Flexible(
+                            //     flex: 1,
+                            //     child: Padding(
+                            //         padding: const EdgeInsets.only(left: 8),
+                            //         child: Icon(
+                            //           Icons.credit_card,
+                            //           color: Colors.black,
+                            //         )),
+                            //   ),
+
+                            // Flexible(
+                            //   child: Row(
+                            //     children: [
+                            //       Icon(
+                            //         Icons.star,
+                            //         color: Color(0xFF6779FE),
+                            //       ),
+                            //       Text(restaurant.rate != null
+                            //           ? restaurant.rate.toString()
+                            //           : 0.toString())
+                            //     ],
+                            //   ),
+                            // )
                           ],
                         ),
                       )

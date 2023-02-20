@@ -17,7 +17,7 @@ class UserProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-      // validator: (Object? value) {
+         // validator: (Object? value) {
       //   if (viewController.newImageFile.value == null &&
       //       viewController.newImageUrl.value == null) {
       //     return "Image is required";
@@ -87,7 +87,7 @@ class UserProfileImage extends StatelessWidget {
                   ],
                 ),
               ),
-              // if (!state.isValid)
+    // if (!state.isValid)
               //   Container(
               //       margin: const EdgeInsets.only(top: 5),
               //       child: Text(
@@ -95,7 +95,7 @@ class UserProfileImage extends StatelessWidget {
               //         style:
               //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
               //       ))
-            ],
+                          ],
           ),
         );
       },
