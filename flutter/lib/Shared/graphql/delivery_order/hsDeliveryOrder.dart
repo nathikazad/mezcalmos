@@ -220,7 +220,6 @@ UserInfo? _getDeliveryCompany<T>(orderData) {
 
 ServiceInfo? _getServiceInfo(orderData) {
   final OrderType orderType = orderData.order_type.toString().toOrderType();
-
   switch (orderType) {
     case OrderType.Restaurant:
       return ServiceInfo(
