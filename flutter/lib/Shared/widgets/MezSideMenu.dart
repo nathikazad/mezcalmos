@@ -56,30 +56,19 @@ class MezSideMenu extends GetWidget<AuthController> {
                       SizedBox(height: 10),
                       _buildSideMenuItem(),
                       _basicSideMenuItems(context),
-                      if (MediaQuery.of(context).size.width <= 360)
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            version +
-                                (lmd != AppLaunchMode.prod
-                                    ? " ${lmd.toShortString()}"
-                                    : ""),
-                          ),
-                        ),
                     ],
                   ),
                 ),
               ),
-              if (MediaQuery.of(context).size.width > 360)
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    version +
-                        (lmd != AppLaunchMode.prod
-                            ? " ${lmd.toShortString()}"
-                            : ""),
-                  ),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  version +
+                      (lmd != AppLaunchMode.prod
+                          ? " ${lmd.toShortString()}"
+                          : ""),
                 ),
+              ),
             ],
           ),
         ),
@@ -134,7 +123,7 @@ class MezSideMenu extends GetWidget<AuthController> {
             children: [
               Text(
                 "${_i18n()["language"]}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               SizedBox(
                 height: 5,
@@ -320,7 +309,7 @@ class SideMenuItem extends StatelessWidget {
                       (isI18nPath)
                           ? Get.find<LanguageController>().getLMap(title!)
                           : title!,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     )
                   : titleWidget ?? Container(),
             )

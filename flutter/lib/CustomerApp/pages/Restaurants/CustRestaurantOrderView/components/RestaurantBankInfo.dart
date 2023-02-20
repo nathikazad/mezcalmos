@@ -7,11 +7,9 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:sizer/sizer.dart';
 
-//
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewOrderScreen"]["components"]
     ["RestaurantBankInfoCard"];
-//
 
 class RestaurantBankInfoCard extends StatefulWidget {
   const RestaurantBankInfoCard({super.key, required this.restaurantId});
@@ -49,7 +47,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                   alignment: Alignment.center,
                   child: Text(
                     '${_i18n()["title"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 const SizedBox(
@@ -68,7 +66,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('${_i18n()["bankName"]}',
-                                    style: Get.textTheme.bodyText1?.copyWith(
+                                    style: Get.textTheme.bodyLarge?.copyWith(
                                       fontSize: 10.sp,
                                     )),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -89,7 +87,6 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               icon: Icons.copy_rounded),
                         ],
                       ),
-
                       Divider(
                         height: 20,
                       ),
@@ -102,7 +99,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               children: [
                                 Text(
                                   '${_i18n()["accountNumber"]}',
-                                  style: Get.textTheme.bodyText1
+                                  style: Get.textTheme.bodyLarge
                                       ?.copyWith(fontSize: 10.sp),
                                 ),
                                 Text(restaurant.value!.paymentInfo?.bankInfo
@@ -124,28 +121,6 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
                               icon: Icons.copy_rounded),
                         ],
                       ),
-
-                      // Row(
-                      //   children: [
-                      //     Flexible(
-                      //       fit: FlexFit.tight,
-                      //       child: Text(restaurant
-                      //               .value!.paymentInfo.bankInfo?.accountNumber
-                      //               .toString() ??
-                      //           "Error"),
-                      //     ),
-                      //     MezIconButton(
-                      //         onTap: () {
-                      //           Clipboard.setData(ClipboardData(
-                      //                   text: restaurant.value!.paymentInfo
-                      //                       .bankInfo?.accountNumber
-                      //                       .toString()))
-                      //               .then((_) => _copiedSnackBar());
-                      //         },
-                      //         backgroundColor: Colors.transparent,
-                      //         icon: Icons.copy_rounded)
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
@@ -169,7 +144,7 @@ class _RestaurantBankInfoCardState extends State<RestaurantBankInfoCard> {
             const SizedBox(width: 5),
             Text(
               "Copied",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
           ],
         ),

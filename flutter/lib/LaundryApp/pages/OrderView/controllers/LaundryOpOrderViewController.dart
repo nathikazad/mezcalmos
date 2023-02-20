@@ -410,4 +410,19 @@ class LaundryOpOrderViewController {
       mezDbgPrint(stk);
     }
   }
+
+  Future<void> sertOrderReady() async {
+    try {
+      await CloudFunctions.laundry_readyForDeliveryOrder(
+          orderId: _order.value!.orderId);
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    } catch (e, stk) {
+      showErrorSnackBar();
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
+  }
 }

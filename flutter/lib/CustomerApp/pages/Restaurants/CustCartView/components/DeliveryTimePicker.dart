@@ -47,7 +47,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
         children: [
           Text(
             '${_i18n()["dvTime"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
           if (widget.viewCartController.cart.cartPeriod != null)
             Container(
@@ -75,7 +75,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   Flexible(
                     child: Text(
                       '${_i18n()["restClosed"]}',
-                      style: Get.textTheme.bodyText2,
+                      style: Get.textTheme.bodyMedium,
                     ),
                   ),
                 ],
@@ -114,15 +114,14 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                                           false)
                                       ? '${_i18n()["pickTime"]}'
                                       : '${_i18n()["now"]}',
-                                  style: Get.textTheme.bodyText1?.copyWith(
+                                  style: Get.textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             )
                           : Flexible(
                               fit: FlexFit.tight,
-                              child: Text(
-                                  "${DateFormat.MMMEd(userLangCode).format(widget.viewCartController.cart.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewCartController.cart.deliveryTime!.toLocal())}",
-                                  style: Get.textTheme.bodyText1?.copyWith(
+                              child: Text(_formattedTime,
+                                  style: Get.textTheme.bodyLarge?.copyWith(
                                     fontSize: 12.sp,
                                   )),
                             ),
@@ -235,7 +234,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           Flexible(
             child: Text(
               '${_i18n()["timeError"]}',
-              style: Get.textTheme.bodyText1
+              style: Get.textTheme.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),
@@ -243,4 +242,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       ),
     );
   }
+
+  String get _formattedTime =>
+      "${DateFormat.MMMEd(userLangCode).format(widget.viewCartController.cart.deliveryTime!.toLocal()).replaceAll(".", "")}, ${DateFormat("hh:mm a").format(widget.viewCartController.cart.deliveryTime!.toLocal())}";
 }

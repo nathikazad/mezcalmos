@@ -1,7 +1,5 @@
 // ignore_for_file: unawaited_futures
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
@@ -78,7 +76,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                 Container(
                   //alignment: Alignment.centerLeft,
                   child: Text("${_i18n()['notesTitle']}",
-                      style: Get.textTheme.bodyText1),
+                      style: Get.textTheme.bodyLarge),
                 ),
                 SizedBox(
                   height: 15,
@@ -113,7 +111,7 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
           alignment: Alignment.centerLeft,
           child: Text(
             "${_i18n()["deliveryLocation"]}",
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
             textAlign: TextAlign.left,
           ),
         ),
@@ -139,23 +137,19 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget _notesComponent(BuildContext context) {
-    log(MediaQuery.of(context).viewInsets.bottom.toString());
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom * 0.1.sp,
+        bottom: MediaQuery.of(context).viewInsets.bottom / 5,
       ),
       child: TextFormField(
-        // scrollPadding: EdgeInsets.only(
-        //   bottom: MediaQuery.of(context).viewInsets.bottom + 20.h,
-        // ),
-        style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+        style: Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         controller: viewController.noteText,
         maxLines: 7,
         minLines: 2,
         decoration: InputDecoration(
           hintText: "${_i18n()["notes"]}",
           fillColor: Colors.white,
-          hintStyle: Get.textTheme.subtitle1,
+          hintStyle: Get.textTheme.titleMedium,
         ),
       ),
     );

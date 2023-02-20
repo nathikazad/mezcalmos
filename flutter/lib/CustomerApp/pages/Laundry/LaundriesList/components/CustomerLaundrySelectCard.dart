@@ -61,7 +61,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyText1?.copyWith(
+                  style: Get.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -90,7 +90,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             child: ShippingCostComponent(
                               shippingCost: shippingPrice,
                               alignment: MainAxisAlignment.start,
-                              textStyle: Get.textTheme.bodyText2?.copyWith(
+                              textStyle: Get.textTheme.bodyMedium?.copyWith(
                                 color: blackColor,
                               ),
                             ),
@@ -112,33 +112,13 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Flexible(
                               child: Text(
                             ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                            style: Get.textTheme.bodyText2?.copyWith(
+                            style: Get.textTheme.bodyMedium?.copyWith(
                               color: blackColor,
                             ),
                           )),
                         ],
                       ),
                     ),
-                    // Flexible(
-                    //   flex: 8,
-                    //   fit: FlexFit.loose,
-                    //   child: Row(
-                    //     crossAxisAlignment: CrossAxisAlignment.center,
-                    //     children: [
-                    //       Icon(
-                    //         Icons.watch_later,
-                    //         size: 18,
-                    //         color: Colors.black,
-                    //       ),
-                    //       Text(
-                    //         ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                    //         style: Get.textTheme.bodyText2?.copyWith(
-                    //           color: blackColor,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ],
                 ),
               ],
