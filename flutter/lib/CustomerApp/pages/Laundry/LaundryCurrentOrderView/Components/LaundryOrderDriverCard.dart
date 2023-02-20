@@ -40,15 +40,36 @@ class LaundryOrderDriverCard extends StatelessWidget {
                             _getRightDriver()!.image)),
                     Positioned(
                       right: -35,
-                      child: CircleAvatar(
-                        radius: 23,
-                        child: Icon(
-                          Icons.delivery_dining,
-                          size: 30,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: CircleAvatar(
+                              radius: 23,
+                              child: Icon(
+                                Icons.delivery_dining,
+                                size: 30,
+                                color: Colors.white,
+                              )),
                         ),
                       ),
-                    )
+                    ),
+                    // Positioned(
+                    //   right: -35,
+                    //   child: CircleAvatar(
+                    //     radius: 23,
+                    //     child: Icon(
+                    //       Icons.delivery_dining,
+                    //       size: 30,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
                 SizedBox(

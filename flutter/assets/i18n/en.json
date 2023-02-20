@@ -693,7 +693,7 @@
           "yesCancel": "Yes, cancel order",
           "no": "No",
           "cancelOrder": "Cancel Order",
-          "cancelConfirmationText": "Are you sure you would like to cancel ?",
+          "cancelConfirmationText": "Are you sure you’d like to cancel?",
           "subtitle": "This action cannot be undone.",
           "ok": "Ok",
           "viewOrder": "View Order",
@@ -1041,7 +1041,8 @@
           "banktransfer": "Bank Transfer"
         },
         "OrderDeliveryLocation": {
-          "title": "Delivery location"
+          "title": "Delivery location",
+          "deliveryDetails":"Delivery details"
         },
         "OrderScheduledTimeCard": {
           "title": "Scheduled time"
@@ -2035,10 +2036,10 @@
             },
             "ROpOrderSummaryCard": {
               "orderSummary": "Summary",
-              "orderCost": "Order Cost",
-              "deliveryCost": "Delivery Cost",
-              "totalCost": "Total Cost",
-              "deliveryLocation": "Delivery Location"
+              "orderCost": "Order cost",
+              "deliveryCost": "Delivery cost",
+              "totalCost": "Total cost",
+              "deliveryLocation": "Delivery location"
             },
             "ROpOrderNote": {
               "notes": "Notes"
@@ -2110,7 +2111,7 @@
           "components": {
             "ROpOrderCard": {
               "date": "Date : ",
-              "totalCost": "Total Cost : ",
+              "totalCost": "Total cost",
               "waiting": "Waiting",
               "delivered": "Delivered",
               "canceled": "Cancelled"

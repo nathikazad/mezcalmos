@@ -38,15 +38,37 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                     ),
                     Positioned(
                       right: -35,
-                      child: CircleAvatar(
-                        radius: 23,
-                        child: Icon(
-                          _getIcon(),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
                           color: Colors.white,
-                          size: 30,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: CircleAvatar(
+                              radius: 23,
+                              child: Icon(
+                                _getIcon(),
+                                size: 30,
+                                color: Colors.white,
+                              )),
                         ),
                       ),
-                    ),
+                    )
+
+                    // Positioned(
+                    //   right: -35,
+                    //   child: CircleAvatar(
+                    //     radius: 23,
+                    //     child: Icon(
+                    //       _getIcon(),
+                    //       color: Colors.white,
+                    //       size: 30,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(

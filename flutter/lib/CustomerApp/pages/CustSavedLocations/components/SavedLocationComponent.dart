@@ -7,7 +7,6 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
@@ -63,7 +62,7 @@ class SavedLocationComponent extends StatelessWidget {
                     //     ? 20.w
                     //     : 28.w,
                     padding:
-                        EdgeInsets.only(bottom: 2.5, right: 8, left: 8, top: 1),
+                        EdgeInsets.only(bottom: 4, right: 8, left: 8, top: 1),
                     decoration: BoxDecoration(
                         color: (savelocation.defaultLocation)
                             ? primaryBlueColor

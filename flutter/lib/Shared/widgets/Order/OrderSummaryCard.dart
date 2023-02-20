@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -49,7 +51,7 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["orderCost"]}',
                         style: txt.bodyText2,
                       ),
-                      Text(_getOrderCost(),
+                      Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
                           style: txt.bodyText2?.copyWith(
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,8 +14,8 @@ class OrderNoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (note != null && note!.isNotEmpty) {
       return Card(
+        margin: const EdgeInsets.only(top: 15),
         child: Container(
-           margin: const EdgeInsets.only(top: 15),
           padding: const EdgeInsets.all(8),
           width: double.infinity,
           child: Column(

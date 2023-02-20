@@ -105,7 +105,7 @@ class RestaurantCard extends StatelessWidget {
                                     width: 1.h,
                                   ),
                                   if (restaurant.paymentInfo?.acceptCard ==
-                                      false)
+                                      true)
                                     Icon(
                                       Icons.credit_card,
                                       color: Colors.black,
@@ -117,26 +117,26 @@ class RestaurantCard extends StatelessWidget {
                             SizedBox(
                               width: 4.w,
                             ),
-                            Flexible(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 3.h,
-                                    color: Color(0xFF6779FE),
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    restaurant.rate != null
-                                        ? restaurant.rate.toString()
-                                        : 0.toString(),
-                                    style: txt.bodyText1,
+                            restaurant.rate != null
+                                ? Flexible(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          size: 3.h,
+                                          color: Color(0xFF6779FE),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text(
+                                          restaurant.rate.toString(),
+                                          style: txt.bodyText1,
+                                        )
+                                      ],
+                                    ),
                                   )
-                                ],
-                              ),
-                            ),
+                                : SizedBox(),
                             // Flexible(
                             //   flex: 7,
                             //   // fit: FlexFit.tight,

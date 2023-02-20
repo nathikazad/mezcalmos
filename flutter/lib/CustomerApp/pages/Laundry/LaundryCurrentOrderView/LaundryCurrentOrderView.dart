@@ -235,9 +235,6 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
             // rerenderDuration: Duration(seconds: 10),
           ),
         ),
-        SizedBox(
-          height: 10,
-        )
       ];
 
   void initMap() {

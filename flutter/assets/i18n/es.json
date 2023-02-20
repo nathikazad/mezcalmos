@@ -1048,7 +1048,8 @@
         "banktransfer": "Transferencia bancaria"
       },
       "OrderDeliveryLocation": {
-        "title": "Lugar de entrega"
+        "title": "Lugar de entrega",
+        "deliveryDetails":"Delivery details"
       },
       "OrderScheduledTimeCard": {
         "title": "hora Programada"

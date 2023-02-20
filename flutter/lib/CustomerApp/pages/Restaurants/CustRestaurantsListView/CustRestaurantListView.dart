@@ -140,16 +140,19 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                           color: !viewController.byRestaurants
                               ? Colors.grey.shade700
                               : Colors.white,
+                          size: 20,
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 2,
                         ),
-                        Text(
-                          "Restaurants",
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            color: !viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
+                        Flexible(
+                          child: Text(
+                            "${_i18n()["restaurants"]}",
+                            style: Get.textTheme.bodyText1?.copyWith(
+                              color: !viewController.byRestaurants
+                                  ? Colors.grey.shade700
+                                  : Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -158,7 +161,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                 ),
               ),
               SizedBox(
-                width: 15,
+                width: 8,
               ),
               Flexible(
                 child: InkWell(
@@ -183,16 +186,19 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                           color: viewController.byRestaurants
                               ? Colors.grey.shade700
                               : Colors.white,
+                          size: 20,
                         ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          '${_i18n()["meal"]}',
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            color: viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
+                        Flexible(
+                          child: Text(
+                            '${_i18n()["meal"]}',
+                            style: Get.textTheme.bodyText1?.copyWith(
+                              color: viewController.byRestaurants
+                                  ? Colors.grey.shade700
+                                  : Colors.white,
+                            ),
                           ),
                         ),
                       ],

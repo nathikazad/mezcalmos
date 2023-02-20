@@ -251,19 +251,20 @@ Future<void> showConfirmationDialog(
                                 '${_i18n()["cancelConfirmationText"]}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Color(0xFF494949)),
                           ),
                         ],
                       )
                     : SizedBox(),
-                SizedBox(height: 8),
+                SizedBox(height: 2),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineLarge),
-                SizedBox(height: 8),
+                    style: Get.textTheme.headlineLarge
+                        ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 4),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
