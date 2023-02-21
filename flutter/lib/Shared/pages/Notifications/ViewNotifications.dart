@@ -135,7 +135,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                         ? _i18n()['yesterday']
                         : DateFormat('dd MMM, h:mm a')
                             .format(element.timestamp),
-                style: Theme.of(context).textTheme.headline3,
+                style: Get.textTheme.bodyText1,
               ),
               indexNotification == 1 ? _deleteButton() : SizedBox()
             ],
@@ -248,6 +248,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               child: Icon(
                 Icons.delete_outline_rounded,
                 color: Colors.black,
+                size: 20,
               ),
             ),
           )),
