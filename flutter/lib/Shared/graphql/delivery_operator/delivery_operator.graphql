@@ -15,6 +15,7 @@ query getOperatorByUserId($userId: Int!) {
    
     }
     delivery_company_id
+       delivery_company{details_id}
    
    
   
@@ -32,6 +33,7 @@ query getCompanyOerators($companyId: Int!) {
   delivery_operator(where: {delivery_company_id: {_eq: $companyId}}) {
    
     delivery_company_id
+       delivery_company{details_id}
     delivery_driver_type
     id
      operator_details {

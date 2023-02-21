@@ -66,14 +66,6 @@ class ROpCreateRestaurantImage extends StatelessWidget {
               ],
             ),
           ),
-          // if (!state.isValid)
-          //   Container(
-          //       margin: const EdgeInsets.only(top: 5),
-          //       child: Text(
-          //         state.errorText ?? "",
-          //         style:
-          //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
-          //       ))
         ],
       ),
     );

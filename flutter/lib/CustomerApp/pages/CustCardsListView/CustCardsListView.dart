@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezAddButton.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -48,14 +49,15 @@ class _CustCardsListViewState extends State<CustCardsListView> {
             padding: const EdgeInsets.all(12),
             child: Column(
               children: [
-                // cards list
                 if (viewController.hasData)
                   Container(
                     child: Column(
                       children: List.generate(
                           viewController.cards.length,
-                          (int index) =>
-                              _creditCardCard(viewController.cards[index])),
+                          (int index) => Container(
+                              margin: EdgeInsets.only(bottom: 4),
+                              child: _creditCardCard(
+                                  viewController.cards[index]))),
                     ),
                   ),
                 MezAddButton(
@@ -93,38 +95,6 @@ class _CustCardsListViewState extends State<CustCardsListView> {
               fit: FlexFit.tight,
               child: Text("•" * 12 + "${card.last4}"),
             ),
-            // InkWell(
-            //   customBorder: CircleBorder(),
-            //   onTap: () {
-            //     showConfirmationDialog(context,
-            //         title: '${_i18n()["removeTitle"]}',
-            //         helperText: '${_i18n()["removeDesc"]}',
-            //         primaryButtonText: '${_i18n()["removeBtn"]}',
-            //         onYesClick: () async {
-            //       await viewController
-            //           .deleteCard(cardId: card.id)
-            //           .then((bool response) {
-            //         if (!response) {
-            //           MezSnackbar("Error", "error");
-            //         } else {
-            //           MezRouter.popDialog(closeOverlays: true);
-            //         }
-            //       });
-            //     });
-            //   },
-            //   child: Ink(
-            //     padding: const EdgeInsets.all(7),
-            //     decoration:
-            //         BoxDecoration(shape: BoxShape.circle, color: offRedColor),
-            //     child: Center(
-            //       child: Icon(
-            //         FontAwesomeIcons.trashCan,
-            //         size: 14.sp,
-            //         color: Colors.red,
-            //       ),
-            //     ),
-            //   ),
-            // )
           ],
         ),
       ),

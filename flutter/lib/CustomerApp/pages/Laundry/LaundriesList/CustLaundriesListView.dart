@@ -37,18 +37,20 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 10,
+              height: 8,
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.displayMedium,
+                style: Get.textTheme.headline3?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
             Obx(() {
               if (viewController.hasData) {
@@ -71,18 +73,21 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
     if (viewController.laundries.value!.isNotEmpty) {
       return Column(
         children: List.generate(
-            viewController.laundries.value!.length,
-            (int index) => CustomerLaundrySelectCard(
-                laundry: viewController.laundries.value![index],
-                shippingPrice: 50)),
+          viewController.laundries.value!.length,
+          (int index) => CustomerLaundrySelectCard(
+            laundry: viewController.laundries.value![index],
+            shippingPrice: 50,
+          ),
+        ),
       );
     } else {
       return Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.all(15),
         child: Text(
-          "No laundry found",
+          "${_i18n()["noLaundaryFound"]}",
           textAlign: TextAlign.center,
+          style: Get.textTheme.subtitle2,
         ),
       );
     }

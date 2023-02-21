@@ -22,7 +22,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Container(
             alignment: Alignment.centerLeft,
@@ -33,7 +33,7 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
             child: Container(
@@ -41,10 +41,16 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 9,
+                    ),
                     if (_showFoodReadyTime()) _foodReadyTimeWidget(),
                     if (_showFoodReadyTime() && _getDeliveryTime() != null)
                       Divider(),
-                    if (_getDeliveryTime() != null) _deliveryTimeWidget()
+                    if (_getDeliveryTime() != null) _deliveryTimeWidget(),
+                    SizedBox(
+                      height: 9,
+                    ),
                   ],
                 )),
           ),
@@ -73,19 +79,38 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
               ),
               Positioned(
                 right: -35,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 23,
-                  child: CircleAvatar(
-                    radius: 21,
-                    backgroundColor: primaryBlueColor,
-                    child: Icon(
-                      Icons.route,
-                      size: 23,
-                      color: Colors.white,
-                    ),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: CircleAvatar(
+                        radius: 23,
+                        child: Icon(
+                          Icons.route,
+                          size: 30,
+                          color: Colors.white,
+                        )),
                   ),
                 ),
+
+                //  CircleAvatar(
+                //   backgroundColor: Colors.white,
+                //   radius: 23,
+                //   child: CircleAvatar(
+                //     radius: 21,
+                //     backgroundColor: primaryBlueColor,
+                //     child: Icon(
+                //       Icons.route,
+                //       size: 23,
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                //),
               )
             ],
           ),
@@ -143,19 +168,38 @@ class CustomerRestaurantOrderEst extends StatelessWidget {
               ),
               Positioned(
                 right: -35,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 23,
-                  child: CircleAvatar(
-                    radius: 21,
-                    backgroundColor: primaryBlueColor,
-                    child: Icon(
-                      Icons.flatware,
-                      size: 23,
-                      color: Colors.white,
-                    ),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: CircleAvatar(
+                        radius: 23,
+                        child: Icon(
+                          Icons.flatware,
+                          size: 30,
+                          color: Colors.white,
+                        )),
                   ),
                 ),
+
+                //  CircleAvatar(
+                //   backgroundColor: Colors.white,
+                //   radius: 23,
+                //   child: CircleAvatar(
+                //     radius: 21,
+                //     backgroundColor: primaryBlueColor,
+                //     child: Icon(
+                //       Icons.flatware,
+                //       size: 23,
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                // ),
               )
             ],
           ),

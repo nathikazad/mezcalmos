@@ -13,6 +13,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -55,7 +56,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
         onClick: (asTab) ? null : MezRouter.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: LaundryAppDrawer(),
+      drawer: MezSideMenu(),
       body: Obx(() {
         if (viewController.laundry != null) {
           return SingleChildScrollView(

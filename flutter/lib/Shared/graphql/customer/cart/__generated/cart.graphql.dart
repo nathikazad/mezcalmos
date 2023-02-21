@@ -3724,7 +3724,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$deliver
 class Query$getCustomerCart$restaurant_cart$restaurant$details {
   Query$getCustomerCart$restaurant_cart$restaurant$details({
     this.stripe_info,
-    this.accepted_payments,
+    required this.accepted_payments,
     this.firebase_id,
     required this.image,
     required this.language,
@@ -3758,8 +3758,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
           ? null
           : Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info
               .fromJson((l$stripe_info as Map<String, dynamic>)),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       firebase_id: (l$firebase_id as String?),
       image: (l$image as String),
       language: mapFromJson(l$language),
@@ -3782,7 +3781,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
   final Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?
       stripe_info;
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final String? firebase_id;
 
@@ -3813,8 +3812,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details {
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$firebase_id = firebase_id;
     _resultData['firebase_id'] = l$firebase_id;
     final l$image = image;
@@ -4035,9 +4033,10 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details<
             ? _instance.stripe_info
             : (stripe_info
                 as Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info?),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         firebase_id: firebase_id == _undefined
             ? _instance.firebase_id
             : (firebase_id as String?),
@@ -4177,7 +4176,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info {
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -4193,7 +4192,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info {
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -4216,7 +4215,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$details$stripe_info {
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -4351,7 +4351,7 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$details
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -4403,7 +4403,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$details$str
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -4440,7 +4440,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$details
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -10582,7 +10582,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     this.firebase_id,
     required this.name,
     this.stripe_info,
-    this.accepted_payments,
+    required this.accepted_payments,
     required this.image,
     required this.language,
     this.description_id,
@@ -10618,8 +10618,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
           ? null
           : Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info
               .fromJson((l$stripe_info as Map<String, dynamic>)),
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       image: (l$image as String),
       language: mapFromJson(l$language),
       description_id: (l$description_id as int?),
@@ -10646,7 +10645,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
   final Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?
       stripe_info;
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final String image;
 
@@ -10679,8 +10678,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details {
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$image = image;
     _resultData['image'] = l$image;
     final l$language = language;
@@ -10920,9 +10918,10 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
             ? _instance.stripe_info
             : (stripe_info
                 as Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$stripe_info?),
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         image: image == _undefined || image == null
             ? _instance.image
             : (image as String),
@@ -11058,7 +11057,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$st
       id: (l$id as int),
       stripe_id: (l$stripe_id as String),
       status: (l$status as String),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       payouts_enabled: (l$payouts_enabled as bool),
       email: (l$email as String?),
       details_submitted: (l$details_submitted as bool),
@@ -11074,7 +11073,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$st
 
   final String status;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final bool payouts_enabled;
 
@@ -11097,7 +11096,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$details$st
     final l$status = status;
     _resultData['status'] = l$status;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$email = email;
@@ -11232,7 +11232,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,
@@ -11284,7 +11284,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
             : (status as String),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         payouts_enabled:
             payouts_enabled == _undefined || payouts_enabled == null
                 ? _instance.payouts_enabled
@@ -11321,7 +11321,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     int? id,
     String? stripe_id,
     String? status,
-    String? requirements,
+    dynamic? requirements,
     bool? payouts_enabled,
     String? email,
     bool? details_submitted,

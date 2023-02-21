@@ -41,15 +41,15 @@ Future<double?> get_service_review_average(
           serviceDetailsId: detailsId),
     ),
   );
-  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?
-      data = response.parsedData!.service_provider_details_by_pk
-          ?.reviews_aggregate.aggregate?.avg;
+  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate?
+      data =
+      response.parsedData?.service_provider_details_by_pk?.reviews_aggregate;
 
   if (data == null) {
     throw Exception(
         "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
   } else {
-    return data.rating;
+    return data.aggregate?.avg?.rating;
   }
 }
 

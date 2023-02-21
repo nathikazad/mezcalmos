@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
-import 'package:sizer/sizer.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
@@ -25,7 +24,6 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     bool showLoadingEffect = false,
     PreferredSizeWidget? tabBar,
     List<Widget> actionIcons = const <Widget>[]}) {
-  // GET RIGHT LEADING
   Widget? _getRightLeading() {
     switch (leftBtnType) {
       case AppBarLeftButtonType.Back:
@@ -39,7 +37,6 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     return null;
   }
 
-  // INIT ORDERS ICON
   Widget _ordersAppBarIcon() {
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3),
@@ -58,7 +55,7 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           ),
           child: Icon(
             Icons.watch_later,
-            size: 20,
+            size: 18,
             color: primaryBlueColor,
           ),
         ),
@@ -67,7 +64,6 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
   }
 
   return AppBar(
-      // toolbarHeight: 65,
       elevation: 0,
       bottom: tabBar,
       automaticallyImplyLeading: false,
@@ -85,16 +81,10 @@ AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
           width: 8,
         )
       ],
-      // titleSpacing: 20,
       title: (title != null)
           ? Text(
               title,
-              style: TextStyle(
-                fontFamily: "Poppins",
-                fontWeight: FontWeight.w600,
-                fontSize: 15.sp,
-                color: Colors.black,
-              ),
+              style: Get.textTheme.headline3,
               textAlign: TextAlign.center,
             )
           : (titleWidget != null)
@@ -129,9 +119,6 @@ Widget _BackButtonAppBar({required VoidCallback? click}) {
               : LinearGradient(colors: [
                   primaryBlueColor,
                   primaryBlueColor,
-
-                  // Color.fromARGB(255, 97, 127, 255),
-                  // Color.fromARGB(255, 198, 90, 252),
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
         ),
         child: Icon(
@@ -171,7 +158,6 @@ Widget _MenuButtonAppBar() {
     scale: 0.6,
     child: InkWell(
       onTap: () {
-        //  MezRouter.back();
         Get.find<SideMenuDrawerController>().openMenu();
       },
       child: Ink(
@@ -182,7 +168,7 @@ Widget _MenuButtonAppBar() {
               color: Color.fromARGB(255, 216, 225, 249),
               spreadRadius: 0,
               blurRadius: 7,
-              offset: Offset(0, 7), // changes position of shadow
+              offset: Offset(0, 7), 
             ),
           ],
           gradient: LinearGradient(colors: [

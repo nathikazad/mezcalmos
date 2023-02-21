@@ -16,9 +16,33 @@ query getOperatorByUserId($userId: Int!) {
    
     }
     restaurant_id
+    restaurant{details_id}
    
    
   
+  }
+}
+query getRestaurantOperators($restaurantId: Int!) {
+  restaurant_restaurant_by_pk(id: $restaurantId) {
+    restaurant_operators {
+      id
+
+      restaurant_id
+         restaurant{details_id}
+      operator_details {
+        owner
+        status
+        current_gps
+      }
+      user {
+        phone
+        name
+        image
+        language_id
+        id
+        firebase_id
+      }
+    }
   }
 }
 subscription restaurantOperatorStatusStream($userId: Int!) {

@@ -140,7 +140,10 @@ class Launcher:
 
         
         rm_lambda(_project_mipmaps_dir+"mipmap") # -> this Executes : rm -rf android/app/src/main/res/mipmap*
-        os.system(f'cp -r {_androidLauncherPath}/mipmaps/* {_project_mipmaps_dir}') # Copies all the mipmaps to the original android/ folder
+        if os.name == 'nt':
+            os.system(f'copy -r {_androidLauncherPath}/mipmaps/* {_project_mipmaps_dir}') # Copies all the mipmaps to the original android/ folder
+        else:
+            os.system(f'cp -r {_androidLauncherPath}/mipmaps/* {_project_mipmaps_dir}') # Copies all the mipmaps to the original android/ folder
 
         PRINTLN(f"\t- [-] Android:{_userArgsAppName} => Setting up android/app/src/main/res/mipmap* Done.")
 
@@ -151,7 +154,10 @@ class Launcher:
         _project_app_icon_set_dir = '..|ios|Runner|Assets.xcassets|'.replace('|' , self.pathname_separator)
         rm_lambda(_project_app_icon_set_dir+"AppIcon") # -> this Executes : rm -rf flutter/ios/Runner/Assets/xcassets/AppIcon*
         rm_lambda(_project_app_icon_set_dir+"Contents.json")
-        os.system(f'cp -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
+        if os.name=='nt':
+            os.system(f'copy -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
+        else:
+            os.system(f'cp -r {_iosLauncherPath}/AppIcon.appiconset {_project_app_icon_set_dir}') # Copies the app's IconSet to the original ios/ folder
 
         PRINTLN(f"\t- [-] iOS:{_userArgsAppName} => Setting up flutter/ios/Runner/Assets/xcassets/AppIcon.appiconset Done.")
 

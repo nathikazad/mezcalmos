@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/helpers/services/RestaurantOrderHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:sizer/sizer.dart';
 
 // dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
 //     ['OrderView']['Components']['ROpOrderStatusCard']['status'];
@@ -49,8 +48,7 @@ class ROpOrderStatusCard extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           order.getOrderStatus(),
-          style:
-              Theme.of(context).textTheme.headline3?.copyWith(fontSize: 14.sp),
+          style: Theme.of(context).textTheme.bodyText1,
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
