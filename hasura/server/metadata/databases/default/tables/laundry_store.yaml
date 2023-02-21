@@ -46,6 +46,15 @@ computed_fields:
         name: laundry_delivery_details
         schema: public
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+        - normal_delivery_time
+      filter: {}
   - role: customer
     permission:
       columns:
