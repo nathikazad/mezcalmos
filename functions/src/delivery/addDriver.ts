@@ -12,15 +12,16 @@ import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaund
 export interface AddDriverDetails {
     deliveryCompanyId: number,
     notificationInfo?: NotificationInfo,
+    deliveryServiceProviderType: DeliveryServiceProviderType
 }
 
-export async function addDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ) {
+export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
     //first mutation
     //second notify operators of the company
     
-    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, deliveryServiceProviderType);
+    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
 
-    notify(deliveryDriver, deliveryServiceProviderType, addDriverDetails);
+    notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
 }
 
 async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: DeliveryServiceProviderType, addDriverDetails: AddDriverDetails) {

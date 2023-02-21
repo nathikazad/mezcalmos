@@ -29,6 +29,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
             }
         }, {
             id: true,
+            details_id: true,
         }]
     });
     if(mutationResponse.insert_delivery_operator_one == null) {
@@ -40,6 +41,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
     return {
         id: mutationResponse.insert_delivery_operator_one.id,
         userId: operatorUserId,
+        operatorDetailsId: mutationResponse.insert_delivery_operator_one.details_id,
         deliveryCompanyId: addOperatorDetails.serviceProviderId,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addOperatorDetails.notificationInfo,

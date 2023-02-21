@@ -28,6 +28,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
       id: true,
       user_id: true,
       operator_details: {
+        id: true,
         owner: true,
         notification_info: {
           token: true,
@@ -50,6 +51,7 @@ export async function getRestaurantOperators(restaurantId: number): Promise<Oper
   return response.restaurant_operator.map((r): Operator => {
     return {
       id: r.id,
+      detailsId: r.operator_details.id,
       userId: r.user_id,
       serviceProviderId: restaurantId,
       status: AuthorizationStatus.Authorized,
@@ -77,6 +79,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
     }, {
       user_id: true,
       operator_details: {
+        id: true,
         status: true,
         owner: true,
         notification_info: {
@@ -100,6 +103,7 @@ export async function getRestaurantOperator(restaurantOperatorId: number): Promi
   return {
     id: restaurantOperatorId,
     userId: response.restaurant_operator_by_pk.user_id,
+    detailsId: response.restaurant_operator_by_pk.operator_details.id,
     serviceProviderId: response.restaurant_operator_by_pk.restaurant_id,
     status: response.restaurant_operator_by_pk.operator_details.status as AuthorizationStatus,
     owner: response.restaurant_operator_by_pk.operator_details.owner,
@@ -130,6 +134,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
       id: true,
       restaurant_id: true,
       operator_details: {
+        id: true,
         status: true,
         owner: true,
         notification_info: {
@@ -151,6 +156,7 @@ export async function getRestaurantOperatorByUserId(restaurantOperatorUserId: nu
   }
   return {
     id: response.restaurant_operator[0].id,
+    detailsId: response.restaurant_operator[0].operator_details.id,
     userId: restaurantOperatorUserId,
     serviceProviderId: response.restaurant_operator[0].restaurant_id,
     status: response.restaurant_operator[0].operator_details.status as AuthorizationStatus,

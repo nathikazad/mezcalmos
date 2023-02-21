@@ -8,7 +8,7 @@ import { getRestaurantOperators } from "../graphql/restaurant/operators/getResta
 import { getUser } from "../graphql/user/getUser";
 import { ParticipantType } from "../models/Generic/Chat";
 import { DeliveryOperator } from "../models/Generic/Delivery";
-import { AppType, NotificationInfo } from "../models/Generic/Generic";
+import { NotificationInfo } from "../models/Generic/Generic";
 import { UserInfo } from "../models/Generic/User";
 import { AuthorizeOperatorNotification, NotificationType, NotificationAction, Notification } from "../models/Notification";
 import { Operator } from "../models/Services/Service";
@@ -16,21 +16,21 @@ import { Operator } from "../models/Services/Service";
 
 export interface AddOperatorDetails {
     serviceProviderId: number,
-    appType: AppType
+    participantType: ParticipantType
     notificationInfo?: NotificationInfo,
     appVersion?: string
 }
 export async function addOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {
     let operatorUserInfo: UserInfo = await getUser(operatorUserId);
 
-    switch (addOpDetails.appType) {
-        case AppType.RestaurantApp:
+    switch (addOpDetails.participantType) {
+        case ParticipantType.RestaurantOperator:
             await createRestaurantOperator(operatorUserId, addOpDetails);
             break;
-        case AppType.DeliveryAdmin:
+        case ParticipantType.DeliveryOperator:
             await createDeliveryOperator(operatorUserId, addOpDetails)
             break;
-        case AppType.LaundryApp:
+        case ParticipantType.LaundryOperator:
             await createLaundryOperator(operatorUserId, addOpDetails)
             break;
         default:
@@ -64,8 +64,8 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
         linkUrl: `/`
     };
     let operators: Operator[];
-    switch (addOpDetails.appType) {
-        case AppType.RestaurantApp:
+    switch (addOpDetails.participantType) {
+        case ParticipantType.RestaurantOperator:
             operators = await getRestaurantOperators(addOpDetails.serviceProviderId);
             operators.forEach((o) => {
                 if (o.owner && o.user) {
@@ -79,7 +79,7 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
                 }
             });
             break;
-        case AppType.DeliveryAdmin:
+        case ParticipantType.DeliveryOperator:
             let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(addOpDetails.serviceProviderId);
             deliveryOperators.forEach((o) => {
                 if (o.owner && o.user) {
@@ -93,7 +93,7 @@ async function notify(operatorUserInfo: UserInfo, addOpDetails: AddOperatorDetai
                 }
             });
             break;
-        case AppType.LaundryApp:
+        case ParticipantType.LaundryOperator:
             operators = await getLaundryOperators(addOpDetails.serviceProviderId);
             operators.forEach((o) => {
                 if (o.owner && o.user) {

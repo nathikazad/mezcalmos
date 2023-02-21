@@ -59,6 +59,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             },
             operators: [{}, {
                 id: true,
+                details_id: true,
                 store_id: true,
                 user_id: true,
                 operator_details: {
@@ -82,6 +83,7 @@ export async function getLaundryStore(storeId: number): Promise<ServiceProvider>
             id: o.id,
             serviceProviderId: o.store_id,
             userId: o.user_id,
+            detailsId: o.details_id,
             status: o.operator_details.status as AuthorizationStatus,
             user: {
                 id: o.user_id,
