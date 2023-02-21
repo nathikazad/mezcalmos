@@ -5,6 +5,7 @@ import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/components/CustRequestCourierItems.dart';
 import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/controller/CustRequestCourierViewController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustCartView/components/DeliveryTimePicker.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -37,51 +38,68 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: viewController.handleBack, title: "Courier"),
-      body: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: viewController.pageController,
-          children: [
-            _itemsPage(),
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: mezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        ordersRoute: kOrdersRoute,
+        onClick: viewController.handleBack,
+        title: "Courier",
+      ),
+      body: Obx(
+        () {
+          if (viewController.company.value != null) {
+            return PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: viewController.pageController,
                 children: [
-                  Text(
-                    "Delivery company",
-                    style: Get.textTheme.bodyMedium,
+                  _itemsPage(),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Delivery company",
+                          style: Get.textTheme.bodyMedium,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        if (viewController.company.value != null)
+                          MezCard(
+                              firstAvatarBgImage: CachedNetworkImageProvider(
+                                  viewController.company.value!.info.image),
+                              content: Text(
+                                viewController.company.value!.info.name,
+                                style: Get.textTheme.bodyLarge,
+                              )),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        DeliveryTimePicker(
+                          deliveryTime: viewController.deliveryTime.value,
+                          isServiceOpen:
+                              viewController.company.value?.isOpen() ?? true,
+                          numberOfDays: 7,
+                          onValue: (DateTime? value) {
+                            viewController.deliveryTime.value = value;
+                          },
+                          periodOfTime: null,
+                          schedule: viewController.company.value!.schedule,
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  MezCard(
-                      firstAvatarBgImage: CachedNetworkImageProvider(
-                          viewController.company.value!.info.image),
-                      content: Text(
-                        viewController.company.value!.info.name,
-                        style: Get.textTheme.bodyLarge,
-                      )),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  DeliveryTimePicker(
-                    deliveryTime: viewController.deliveryTime.value,
-                    isServiceOpen: viewController.company.value!.isOpen(),
-                    numberOfDays: 7,
-                    onValue: (DateTime? value) {
-                      viewController.deliveryTime.value = value;
-                    },
-                    periodOfTime: null,
-                    schedule: viewController.company.value!.schedule,
-                  ),
-                ],
-              ),
-            ),
-          ]),
+                ]);
+          } else
+            return Container(
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(),
+            );
+        },
+      ),
       bottomSheet: MezButton(
         label: "Next",
+        withGradient: true,
         height: 75,
         onClick: () async {
           viewController.handleNext();

@@ -23,8 +23,9 @@ class CustRequestCourierViewController {
   late int courierId;
   Future<void> init({required int courierId}) async {
     this.courierId = courierId;
-    unawaited(get_delivery_company(companyId: courierId)
-        .then((DeliveryCompany? value) => company.value = value));
+    company.value = await get_delivery_company(companyId: courierId);
+    // unawaited(get_delivery_company(companyId: courierId)
+    //     .then((DeliveryCompany? value) => company.value = value));
 
     addNewEmptyItem();
   }

@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/CustomerRestaurantOrderEst.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/OrderFooterCard.dart';
@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/graphql/order/mutations/hsRestaurantOrderMutati
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -136,7 +135,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               margin: const EdgeInsets.only(top: 15),
                               child: Text(
                                 '${_i18n()["deliveryDet"]}',
-                                style: Get.textTheme.bodyText1,
+                                style: Get.textTheme.bodyLarge,
                               ),
                             ),
                             OrderScheduledTimeCard(
@@ -181,7 +180,6 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               ),
                             ),
                           ],
-                          
                         ),
                       ),
                     ),
@@ -214,7 +212,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
 
   bool showReviewBtn() {
     return viewController.order.value != null &&
-        viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
+        //  viewController.order.value!.status == RestaurantOrderStatus.Delivered &&
         viewController.order.value!.review == null;
   }
 }
