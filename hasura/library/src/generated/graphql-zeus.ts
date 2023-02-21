@@ -2351,6 +2351,18 @@ delivery_operators_aggregate?: [{	/** distinct select on columns */
 	details?:ValueTypes["service_provider_details"],
 	details_id?:true,
 	id?:true,
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 	service_provider_type?:true,
 		__typename?: true
 }>;
@@ -2394,6 +2406,8 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	details?:ValueTypes["service_provider_details_bool_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "delivery.company" */
@@ -2412,6 +2426,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	details?:ValueTypes["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
@@ -2458,6 +2473,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	details?:ValueTypes["service_provider_details_order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: delivery.company */
@@ -6883,6 +6899,18 @@ operators_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["laundry_operator_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["laundry_operator_bool_exp"]},ValueTypes["laundry_operator_aggregate"]],
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 	service_provider_type?:true,
 		__typename?: true
 }>;
@@ -6936,6 +6964,8 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	normal_delivery_time?:ValueTypes["Int_comparison_exp"],
 	operators?:ValueTypes["laundry_operator_bool_exp"],
 	operators_aggregate?:ValueTypes["laundry_operator_aggregate_bool_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"]
 };
 	/** unique or primary key constraints on table "laundry.store" */
@@ -6962,6 +6992,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	/** in days */
 	normal_delivery_time?:number,
 	operators?:ValueTypes["laundry_operator_arr_rel_insert_input"],
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
@@ -7019,6 +7050,7 @@ count?: [{	columns?:ValueTypes["laundry_store_select_column"][],	distinct?:boole
 	minimum_cost?:ValueTypes["order_by"],
 	normal_delivery_time?:ValueTypes["order_by"],
 	operators_aggregate?:ValueTypes["laundry_operator_aggregate_order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"]
 };
 	/** primary key columns input for table: laundry.store */
@@ -14142,6 +14174,18 @@ restaurant_operators_aggregate?: [{	/** distinct select on columns */
 	offset?:number,	/** sort the rows by one or more columns */
 	order_by?:ValueTypes["restaurant_operator_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["restaurant_operator_bool_exp"]},ValueTypes["restaurant_operator_aggregate"]],
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 	service_provider_type?:true,
 specials?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["restaurant_item_select_column"][],	/** limit the number of rows returned */
@@ -14199,6 +14243,8 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_bool_exp"],
 	restaurant_operators?:ValueTypes["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_bool_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	service_provider_type?:ValueTypes["String_comparison_exp"],
 	specials?:ValueTypes["restaurant_item_bool_exp"]
 };
@@ -14222,6 +14268,7 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	items?:ValueTypes["restaurant_item_arr_rel_insert_input"],
 	orders?:ValueTypes["restaurant_order_arr_rel_insert_input"],
 	restaurant_operators?:ValueTypes["restaurant_operator_arr_rel_insert_input"],
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	service_provider_type?:string
 };
 	/** aggregate max on columns */
@@ -14273,6 +14320,7 @@ count?: [{	columns?:ValueTypes["restaurant_restaurant_select_column"][],	distinc
 	items_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"],
 	orders_aggregate?:ValueTypes["restaurant_order_aggregate_order_by"],
 	restaurant_operators_aggregate?:ValueTypes["restaurant_operator_aggregate_order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	service_provider_type?:ValueTypes["order_by"],
 	specials_aggregate?:ValueTypes["restaurant_item_aggregate_order_by"]
 };
@@ -15229,18 +15277,6 @@ language?: [{	/** JSON select path */
 	phone_number?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
-reviews?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
-reviews_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 schedule?: [{	/** JSON select path */
 	path?:string},true],
 	/** An object relationship */
@@ -15313,8 +15349,6 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	open_status?:ValueTypes["String_comparison_exp"],
 	phone_number?:ValueTypes["String_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
-	reviews?:ValueTypes["review_bool_exp"],
-	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	service_link?:ValueTypes["service_provider_service_link_bool_exp"],
 	service_link_id?:ValueTypes["Int_comparison_exp"],
@@ -15375,7 +15409,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
 	service_link?:ValueTypes["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -15455,7 +15488,6 @@ end). throws an error if top level container is not an array */
 	open_status?:ValueTypes["order_by"],
 	phone_number?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
-	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	schedule?:ValueTypes["order_by"],
 	service_link?:ValueTypes["service_provider_service_link_order_by"],
 	service_link_id?:ValueTypes["order_by"],
@@ -20884,6 +20916,10 @@ the end). throws an error if top level container is not an array */
 	details?:PartialObjects["service_provider_details"],
 			details_id?:number,
 			id?:number,
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			service_provider_type?:string
 	},
 	/** aggregated selection of "delivery.company" */
@@ -20926,6 +20962,8 @@ the end). throws an error if top level container is not an array */
 	details?:PartialObjects["service_provider_details_bool_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "delivery.company" */
@@ -20944,6 +20982,7 @@ the end). throws an error if top level container is not an array */
 	details?:PartialObjects["service_provider_details_obj_rel_insert_input"],
 	details_id?:number,
 	id?:number,
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	service_provider_type?:string
 },
 	/** aggregate max on columns */
@@ -20990,6 +21029,7 @@ the end). throws an error if top level container is not an array */
 	details?:PartialObjects["service_provider_details_order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: delivery.company */
@@ -25371,6 +25411,10 @@ the end). throws an error if top level container is not an array */
 	operators?:PartialObjects["laundry_operator"][],
 			/** An aggregate relationship */
 	operators_aggregate?:PartialObjects["laundry_operator_aggregate"],
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			service_provider_type?:string
 	},
 	/** aggregated selection of "laundry.store" */
@@ -25423,6 +25467,8 @@ the end). throws an error if top level container is not an array */
 	normal_delivery_time?:PartialObjects["Int_comparison_exp"],
 	operators?:PartialObjects["laundry_operator_bool_exp"],
 	operators_aggregate?:PartialObjects["laundry_operator_aggregate_bool_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"]
 },
 	/** unique or primary key constraints on table "laundry.store" */
@@ -25449,6 +25495,7 @@ the end). throws an error if top level container is not an array */
 	/** in days */
 	normal_delivery_time?:number,
 	operators?:PartialObjects["laundry_operator_arr_rel_insert_input"],
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	service_provider_type?:string
 },
 	/** aggregate max on columns */
@@ -25506,6 +25553,7 @@ the end). throws an error if top level container is not an array */
 	minimum_cost?:PartialObjects["order_by"],
 	normal_delivery_time?:PartialObjects["order_by"],
 	operators_aggregate?:PartialObjects["laundry_operator_aggregate_order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"]
 },
 	/** primary key columns input for table: laundry.store */
@@ -31783,6 +31831,10 @@ the end). throws an error if top level container is not an array */
 	restaurant_operators?:PartialObjects["restaurant_operator"][],
 			/** An aggregate relationship */
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate"],
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			service_provider_type?:string,
 			/** A computed field, executes function "special_items" */
 	specials?:PartialObjects["restaurant_item"][]
@@ -31835,6 +31887,8 @@ the end). throws an error if top level container is not an array */
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_bool_exp"],
 	restaurant_operators?:PartialObjects["restaurant_operator_bool_exp"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_bool_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	service_provider_type?:PartialObjects["String_comparison_exp"],
 	specials?:PartialObjects["restaurant_item_bool_exp"]
 },
@@ -31858,6 +31912,7 @@ the end). throws an error if top level container is not an array */
 	items?:PartialObjects["restaurant_item_arr_rel_insert_input"],
 	orders?:PartialObjects["restaurant_order_arr_rel_insert_input"],
 	restaurant_operators?:PartialObjects["restaurant_operator_arr_rel_insert_input"],
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	service_provider_type?:string
 },
 	/** aggregate max on columns */
@@ -31909,6 +31964,7 @@ the end). throws an error if top level container is not an array */
 	items_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"],
 	orders_aggregate?:PartialObjects["restaurant_order_aggregate_order_by"],
 	restaurant_operators_aggregate?:PartialObjects["restaurant_operator_aggregate_order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	service_provider_type?:PartialObjects["order_by"],
 	specials_aggregate?:PartialObjects["restaurant_item_aggregate_order_by"]
 },
@@ -32857,10 +32913,6 @@ the end). throws an error if top level container is not an array */
 			phone_number?:string,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
-			/** An array relationship */
-	reviews?:PartialObjects["review"][],
-			/** An aggregate relationship */
-	reviews_aggregate?:PartialObjects["review_aggregate"],
 			schedule?:PartialObjects["jsonb"],
 			/** An object relationship */
 	service_link?:PartialObjects["service_provider_service_link"],
@@ -32931,8 +32983,6 @@ the end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["String_comparison_exp"],
 	phone_number?:PartialObjects["String_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
-	reviews?:PartialObjects["review_bool_exp"],
-	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	service_link?:PartialObjects["service_provider_service_link_bool_exp"],
 	service_link_id?:PartialObjects["Int_comparison_exp"],
@@ -32993,7 +33043,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
 	service_link?:PartialObjects["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -33073,7 +33122,6 @@ end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["order_by"],
 	phone_number?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
-	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	schedule?:PartialObjects["order_by"],
 	service_link?:PartialObjects["service_provider_service_link_order_by"],
 	service_link_id?:PartialObjects["order_by"],
@@ -38433,6 +38481,10 @@ export type delivery_company = {
 	details?:service_provider_details,
 	details_id:number,
 	id:number,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	service_provider_type:string
 }
 
@@ -38479,6 +38531,8 @@ export type delivery_company_bool_exp = {
 	details?:service_provider_details_bool_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp
 }
 
@@ -38504,6 +38558,7 @@ export type delivery_company_insert_input = {
 	details?:service_provider_details_obj_rel_insert_input,
 	details_id?:number,
 	id?:number,
+	reviews?:review_arr_rel_insert_input,
 	service_provider_type?:string
 }
 
@@ -38556,6 +38611,7 @@ export type delivery_company_order_by = {
 	details?:service_provider_details_order_by,
 	details_id?:order_by,
 	id?:order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	service_provider_type?:order_by
 }
 
@@ -43683,6 +43739,10 @@ export type laundry_store = {
 	operators:laundry_operator[],
 	/** An aggregate relationship */
 	operators_aggregate:laundry_operator_aggregate,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	service_provider_type:string
 }
 
@@ -43739,6 +43799,8 @@ export type laundry_store_bool_exp = {
 	normal_delivery_time?:Int_comparison_exp,
 	operators?:laundry_operator_bool_exp,
 	operators_aggregate?:laundry_operator_aggregate_bool_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp
 }
 
@@ -43772,6 +43834,7 @@ export type laundry_store_insert_input = {
 	/** in days */
 	normal_delivery_time?:number,
 	operators?:laundry_operator_arr_rel_insert_input,
+	reviews?:review_arr_rel_insert_input,
 	service_provider_type?:string
 }
 
@@ -43835,6 +43898,7 @@ export type laundry_store_order_by = {
 	minimum_cost?:order_by,
 	normal_delivery_time?:order_by,
 	operators_aggregate?:laundry_operator_aggregate_order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	service_provider_type?:order_by
 }
 
@@ -51031,6 +51095,10 @@ export type restaurant_restaurant = {
 	restaurant_operators:restaurant_operator[],
 	/** An aggregate relationship */
 	restaurant_operators_aggregate:restaurant_operator_aggregate,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	service_provider_type:string,
 	/** A computed field, executes function "special_items" */
 	specials?:restaurant_item[]
@@ -51087,6 +51155,8 @@ export type restaurant_restaurant_bool_exp = {
 	orders_aggregate?:restaurant_order_aggregate_bool_exp,
 	restaurant_operators?:restaurant_operator_bool_exp,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_bool_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	service_provider_type?:String_comparison_exp,
 	specials?:restaurant_item_bool_exp
 }
@@ -51117,6 +51187,7 @@ export type restaurant_restaurant_insert_input = {
 	items?:restaurant_item_arr_rel_insert_input,
 	orders?:restaurant_order_arr_rel_insert_input,
 	restaurant_operators?:restaurant_operator_arr_rel_insert_input,
+	reviews?:review_arr_rel_insert_input,
 	service_provider_type?:string
 }
 
@@ -51174,6 +51245,7 @@ export type restaurant_restaurant_order_by = {
 	items_aggregate?:restaurant_item_aggregate_order_by,
 	orders_aggregate?:restaurant_order_aggregate_order_by,
 	restaurant_operators_aggregate?:restaurant_operator_aggregate_order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	service_provider_type?:order_by,
 	specials_aggregate?:restaurant_item_aggregate_order_by
 }
@@ -52302,10 +52374,6 @@ export type service_provider_details = {
 	phone_number?:string,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
-	/** An array relationship */
-	reviews:review[],
-	/** An aggregate relationship */
-	reviews_aggregate:review_aggregate,
 	schedule?:jsonb,
 	/** An object relationship */
 	service_link?:service_provider_service_link,
@@ -52381,8 +52449,6 @@ export type service_provider_details_bool_exp = {
 	open_status?:String_comparison_exp,
 	phone_number?:String_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
-	reviews?:review_bool_exp,
-	reviews_aggregate?:review_aggregate_bool_exp,
 	schedule?:jsonb_comparison_exp,
 	service_link?:service_provider_service_link_bool_exp,
 	service_link_id?:Int_comparison_exp,
@@ -52455,7 +52521,6 @@ export type service_provider_details_insert_input = {
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
-	reviews?:review_arr_rel_insert_input,
 	schedule?:jsonb,
 	service_link?:service_provider_service_link_obj_rel_insert_input,
 	service_link_id?:number,
@@ -52541,7 +52606,6 @@ export type service_provider_details_order_by = {
 	open_status?:order_by,
 	phone_number?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
-	reviews_aggregate?:review_aggregate_order_by,
 	schedule?:order_by,
 	service_link?:service_provider_service_link_order_by,
 	service_link_id?:order_by,
@@ -60697,6 +60761,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	delivery_company_aggregate_fields:{
@@ -60776,6 +60904,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -60837,6 +60977,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -60915,6 +61061,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		id:{
 			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -71852,6 +72004,70 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	laundry_store_aggregate_fields:{
@@ -71973,6 +72189,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -72070,6 +72298,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		operators:{
 			type:"laundry_operator_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -72178,6 +72412,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		operators_aggregate:{
 			type:"laundry_operator_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -94488,6 +94728,70 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
 		specials:{
 			distinct_on:{
 				type:"restaurant_item_select_column",
@@ -94652,6 +94956,18 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		service_provider_type:{
 			type:"String_comparison_exp",
 			array:false,
@@ -94743,6 +95059,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant_operators:{
 			type:"restaurant_operator_arr_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -94851,6 +95173,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant_operators_aggregate:{
 			type:"restaurant_operator_aggregate_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96792,70 +97120,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		reviews:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		reviews_aggregate:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		schedule:{
 			path:{
 				type:"String",
@@ -97030,18 +97294,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews:{
-			type:"review_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -97285,12 +97537,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		reviews:{
-			type:"review_arr_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		schedule:{
 			type:"jsonb",
 			array:false,
@@ -97467,12 +97713,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -107496,6 +107736,8 @@ export const ReturnTypes: Record<string,any> = {
 		details:"service_provider_details",
 		details_id:"Int",
 		id:"Int",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		service_provider_type:"String"
 	},
 	delivery_company_aggregate:{
@@ -108860,6 +109102,8 @@ export const ReturnTypes: Record<string,any> = {
 		normal_delivery_time:"Int",
 		operators:"laundry_operator",
 		operators_aggregate:"laundry_operator_aggregate",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		service_provider_type:"String"
 	},
 	laundry_store_aggregate:{
@@ -111058,6 +111302,8 @@ export const ReturnTypes: Record<string,any> = {
 		orders_aggregate:"restaurant_order_aggregate",
 		restaurant_operators:"restaurant_operator",
 		restaurant_operators_aggregate:"restaurant_operator_aggregate",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		service_provider_type:"String",
 		specials:"restaurant_item"
 	},
@@ -111417,8 +111663,6 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		restaurant:"restaurant_restaurant",
-		reviews:"review",
-		reviews_aggregate:"review_aggregate",
 		schedule:"jsonb",
 		service_link:"service_provider_service_link",
 		service_link_id:"Int",

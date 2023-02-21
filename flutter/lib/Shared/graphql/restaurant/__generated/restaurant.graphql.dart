@@ -181,6 +181,58 @@ const documentNodeQuerygetRestaurants = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'reviews_aggregate'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'aggregate'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'avg'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                        name: NameNode(value: 'rating'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                      FieldNode(
+                        name: NameNode(value: '__typename'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null,
+                      ),
+                    ]),
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
             name: NameNode(value: 'delivery_details_of_deliverer'),
             alias: null,
             arguments: [],
@@ -512,6 +564,7 @@ extension ClientExtension$Query$getRestaurants on graphql.GraphQLClient {
 class Query$getRestaurants$restaurant_restaurant {
   Query$getRestaurants$restaurant_restaurant({
     required this.id,
+    required this.reviews_aggregate,
     this.delivery_details_of_deliverer,
     this.details,
     required this.$__typename,
@@ -520,12 +573,16 @@ class Query$getRestaurants$restaurant_restaurant {
   factory Query$getRestaurants$restaurant_restaurant.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
+    final l$reviews_aggregate = json['reviews_aggregate'];
     final l$delivery_details_of_deliverer =
         json['delivery_details_of_deliverer'];
     final l$details = json['details'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurants$restaurant_restaurant(
       id: (l$id as int),
+      reviews_aggregate:
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate.fromJson(
+              (l$reviews_aggregate as Map<String, dynamic>)),
       delivery_details_of_deliverer: (l$delivery_details_of_deliverer
               as List<dynamic>?)
           ?.map((e) =>
@@ -542,6 +599,9 @@ class Query$getRestaurants$restaurant_restaurant {
 
   final int id;
 
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+      reviews_aggregate;
+
   final List<
           Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
       delivery_details_of_deliverer;
@@ -554,6 +614,8 @@ class Query$getRestaurants$restaurant_restaurant {
     final _resultData = <String, dynamic>{};
     final l$id = id;
     _resultData['id'] = l$id;
+    final l$reviews_aggregate = reviews_aggregate;
+    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     _resultData['delivery_details_of_deliverer'] =
         l$delivery_details_of_deliverer?.map((e) => e.toJson()).toList();
@@ -567,11 +629,13 @@ class Query$getRestaurants$restaurant_restaurant {
   @override
   int get hashCode {
     final l$id = id;
+    final l$reviews_aggregate = reviews_aggregate;
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
     final l$details = details;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$id,
+      l$reviews_aggregate,
       l$delivery_details_of_deliverer == null
           ? null
           : Object.hashAll(l$delivery_details_of_deliverer.map((v) => v)),
@@ -592,6 +656,11 @@ class Query$getRestaurants$restaurant_restaurant {
     final l$id = id;
     final lOther$id = other.id;
     if (l$id != lOther$id) {
+      return false;
+    }
+    final l$reviews_aggregate = reviews_aggregate;
+    final lOther$reviews_aggregate = other.reviews_aggregate;
+    if (l$reviews_aggregate != lOther$reviews_aggregate) {
       return false;
     }
     final l$delivery_details_of_deliverer = delivery_details_of_deliverer;
@@ -652,11 +721,15 @@ abstract class CopyWith$Query$getRestaurants$restaurant_restaurant<TRes> {
 
   TRes call({
     int? id,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
+        reviews_aggregate,
     List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
     Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   });
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
+      get reviews_aggregate;
   TRes delivery_details_of_deliverer(
       Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
               Iterable<
@@ -681,12 +754,18 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
 
   TRes call({
     Object? id = _undefined,
+    Object? reviews_aggregate = _undefined,
     Object? delivery_details_of_deliverer = _undefined,
     Object? details = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getRestaurants$restaurant_restaurant(
         id: id == _undefined || id == null ? _instance.id : (id as int),
+        reviews_aggregate: reviews_aggregate == _undefined ||
+                reviews_aggregate == null
+            ? _instance.reviews_aggregate
+            : (reviews_aggregate
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate),
         delivery_details_of_deliverer: delivery_details_of_deliverer ==
                 _undefined
             ? _instance.delivery_details_of_deliverer
@@ -699,6 +778,13 @@ class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant<TRes>
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
+      get reviews_aggregate {
+    final local$reviews_aggregate = _instance.reviews_aggregate;
+    return CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
+  }
+
   TRes delivery_details_of_deliverer(
           Iterable<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>? Function(
                   Iterable<
@@ -731,17 +817,497 @@ class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant<TRes>
 
   call({
     int? id,
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate?
+        reviews_aggregate,
     List<Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer>?
         delivery_details_of_deliverer,
     Query$getRestaurants$restaurant_restaurant$details? details,
     String? $__typename,
   }) =>
       _res;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<TRes>
+      get reviews_aggregate =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+              .stub(_res);
   delivery_details_of_deliverer(_fn) => _res;
   CopyWith$Query$getRestaurants$restaurant_restaurant$details<TRes>
       get details =>
           CopyWith$Query$getRestaurants$restaurant_restaurant$details.stub(
               _res);
+}
+
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate({
+    this.aggregate,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$aggregate = json['aggregate'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+      aggregate: l$aggregate == null
+          ? null
+          : Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+              .fromJson((l$aggregate as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+      aggregate;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$aggregate = aggregate;
+    _resultData['aggregate'] = l$aggregate?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$aggregate = aggregate;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$aggregate,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$aggregate = aggregate;
+    final lOther$aggregate = other.aggregate;
+    if (l$aggregate != lOther$aggregate) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate instance,
+    TRes Function(Query$getRestaurants$restaurant_restaurant$reviews_aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate;
+
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate;
+
+  TRes call({
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+      TRes> get aggregate;
+}
+
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate _instance;
+
+  final TRes Function(
+      Query$getRestaurants$restaurant_restaurant$reviews_aggregate) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? aggregate = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+        aggregate: aggregate == _undefined
+            ? _instance.aggregate
+            : (aggregate
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+      TRes> get aggregate {
+    final local$aggregate = _instance.aggregate;
+    return local$aggregate == null
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+            local$aggregate, (e) => call(aggregate: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate?
+        aggregate,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+          TRes>
+      get aggregate =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+              .stub(_res);
+}
+
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate({
+    this.avg,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate.fromJson(
+      Map<String, dynamic> json) {
+    final l$avg = json['avg'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+      avg: l$avg == null
+          ? null
+          : Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+              .fromJson((l$avg as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+      avg;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$avg = avg;
+    _resultData['avg'] = l$avg?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$avg = avg;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$avg,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$avg = avg;
+    final lOther$avg = other.avg;
+    if (l$avg != lOther$avg) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate;
+
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate;
+
+  TRes call({
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  });
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+      TRes> get avg;
+}
+
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate
+      _instance;
+
+  final TRes Function(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? avg = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+        avg: avg == _undefined
+            ? _instance.avg
+            : (avg
+                as Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+      TRes> get avg {
+    final local$avg = _instance.avg;
+    return local$avg == null
+        ? CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+            .stub(_then(_instance))
+        : CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+            local$avg, (e) => call(avg: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg?
+        avg,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+          TRes>
+      get avg =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+              .stub(_res);
+}
+
+class Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg {
+  Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg({
+    this.rating,
+    required this.$__typename,
+  });
+
+  factory Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg.fromJson(
+      Map<String, dynamic> json) {
+    final l$rating = json['rating'];
+    final l$$__typename = json['__typename'];
+    return Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+      rating: (l$rating as num?)?.toDouble(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final double? rating;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$rating = rating;
+    _resultData['rating'] = l$rating;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$rating = rating;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$rating,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$rating = rating;
+    final lOther$rating = other.rating;
+    if (l$rating != lOther$rating) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+    on Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg {
+  CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg>
+      get copyWith =>
+          CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+    TRes> {
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+    Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+        instance,
+    TRes Function(
+            Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg)
+        then,
+  ) = _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg;
+
+  factory CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg;
+
+  TRes call({
+    double? rating,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg
+      _instance;
+
+  final TRes Function(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? rating = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+        rating: rating == _undefined ? _instance.rating : (rating as double?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+        TRes>
+    implements
+        CopyWith$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg<
+            TRes> {
+  _CopyWithStubImpl$Query$getRestaurants$restaurant_restaurant$reviews_aggregate$aggregate$avg(
+      this._res);
+
+  TRes _res;
+
+  call({
+    double? rating,
+    String? $__typename,
+  }) =>
+      _res;
 }
 
 class Query$getRestaurants$restaurant_restaurant$delivery_details_of_deliverer {

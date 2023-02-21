@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:collection/collection.dart';
@@ -5,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
+import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ItemType.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -39,6 +42,18 @@ class CustomerRestaurantController {
       {required Restaurant restaurant, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
     this.restaurant.value = restaurant;
+    unawaited(get_service_reviews(serviceId: restaurant.restaurantId)
+        .then((List<Review>? value) {
+      if (value != null) {
+        this.restaurant.value!.reviews = value;
+      }
+    }));
+    unawaited(get_service_review_average(serviceId: restaurant.restaurantId)
+        .then((double? value) {
+      if (value != null) {
+        this.restaurant.value!.rate = value;
+      }
+    }));
     await _getShippingPrice();
 
     final List<Category>? _cats =

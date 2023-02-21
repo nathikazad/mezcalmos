@@ -41,7 +41,7 @@ const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
-const String kserviceReviewsList = "/reviews/:detailsId";
+const String kserviceReviewsList = "/reviews/:serviceId";
 
 String getRestaurantRoute(
   int restaurantId,
@@ -51,9 +51,9 @@ String getRestaurantRoute(
 }
 
 String getReviewsListRoute(
-  int detailsId,
+  int serviceId,
 ) {
-  return kserviceReviewsList.replaceFirst(":detailsId", detailsId.toString());
+  return kserviceReviewsList.replaceFirst(":serviceId", serviceId.toString());
 }
 
 String getSingleLaundryRoute(int laundryId) {

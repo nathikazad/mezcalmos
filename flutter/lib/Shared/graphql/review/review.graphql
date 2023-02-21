@@ -1,4 +1,4 @@
-mutation insertReview($review :    review_insert_input!) {
+mutation insertReview($review: review_insert_input!) {
   insert_review_one(object: $review) {
     created_at
     id
@@ -6,33 +6,42 @@ mutation insertReview($review :    review_insert_input!) {
 }
 
 # get average rating
-query get_service_review_average($serviceDetailsId: Int!) {
-  service_provider_details_by_pk(id: $serviceDetailsId) {
-  
-      reviews_aggregate(where: { from_entity_type: { _eq: "customer" } }) {
-      aggregate {
-        avg {
-          rating
-        }
+query get_service_review_average($serviceId: Int!) {
+  review_aggregate(
+    where: {
+      from_entity_type: { _eq: "customer" }
+      to_entity_id: { _eq: $serviceId }
+    }
+  ) {
+    aggregate {
+      avg {
+        rating
       }
-    
-  }
+    }
   }
 }
 # get restaurant reviews
-query get_service_reviews($serviceDetailsId: Int!) {
-  service_provider_details_by_pk(id: $serviceDetailsId) {
-  
-      reviews(where: { from_entity_type: { _eq: "customer" } }) {
-      from_entity_id
-      from_entity_type
-      rating
-      note
-      id
-      to_entity_id
-      to_entity_type
-      created_at
+query get_service_reviews($serviceId: Int!) {
+  review(
+    where: {
+      from_entity_type: { _eq: "customer" }
+      to_entity_id: { _eq: $serviceId }
     }
-    }
-  
+  ) {
+    from_entity_id
+    from_entity_type
+    rating
+    note
+    id
+    to_entity_id
+    to_entity_type
+    created_at
+     customer {
+        user {
+          id
+          image
+          name
+        }
+      }
+  }
 }

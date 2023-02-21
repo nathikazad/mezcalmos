@@ -1,6 +1,13 @@
 query getRestaurants {
   restaurant_restaurant {
     id
+    reviews_aggregate {
+      aggregate {
+        avg {
+          rating
+        }
+      }
+    }
     delivery_details_of_deliverer {
       cost_per_km
       free_delivery_km_range
@@ -10,7 +17,8 @@ query getRestaurants {
       radius
       self_delivery
     }
-    details{ id
+    details {
+      id
       image
       language
 
@@ -63,9 +71,10 @@ query getOneRestaurant($id: Int!) {
       self_delivery
     }
     delivery_details_id
-    details{ id
+    details {
+      id
       firebase_id
-      
+
       location_id
       image
       language
@@ -75,15 +84,17 @@ query getOneRestaurant($id: Int!) {
         address
       }
       accepted_payments
-       stripe_info{  id
-    stripe_id
-    status
-    requirements
-    payouts_enabled
-    email
-    details_submitted
-    charges_enabled
-    charge_fees_on_customer}
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       name
       description {
         translations {
@@ -99,37 +110,43 @@ query getOneRestaurant($id: Int!) {
 }
 query getRestaurantStatus($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details{ id
+    details {
+      id
       open_status
     }
   }
 }
 query getRestaurantSchedule($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details{ id
+    details {
+      id
       schedule
     }
   }
 }
 query getRestaurantAprroved($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details{ id
+    details {
+      id
       approved
     }
   }
 }
 query getRestaurantPaymentInfo($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details{ id
-       stripe_info{  id
-    stripe_id
-    status
-    requirements
-    payouts_enabled
-    email
-    details_submitted
-    charges_enabled
-    charge_fees_on_customer}
+    details {
+      id
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       accepted_payments
     }
   }
@@ -151,9 +168,7 @@ mutation switchRestaurantAvailability($restauarntId: Int!, $value: String) {
     pk_columns: { id: $restauarntId }
     _set: { open_status: $value }
   ) {
-
-      open_status
-   
+    open_status
   }
 }
 
@@ -172,7 +187,8 @@ mutation updateRestaurantInfo(
       minimum_cost
       radius
     }
-    details{ id
+    details {
+      id
       firebase_id
       location_id
       image
@@ -182,15 +198,17 @@ mutation updateRestaurantInfo(
         address
       }
       accepted_payments
-       stripe_info{  id
-    stripe_id
-    status
-    requirements
-    payouts_enabled
-    email
-    details_submitted
-    charges_enabled
-    charge_fees_on_customer}
+      stripe_info {
+        id
+        stripe_id
+        status
+        requirements
+        payouts_enabled
+        email
+        details_submitted
+        charges_enabled
+        charge_fees_on_customer
+      }
       name
       schedule
       description {
@@ -207,7 +225,8 @@ mutation updateRestaurantInfo(
 }
 query getRestaurantLang($id: Int!) {
   restaurant_restaurant_by_pk(id: $id) {
-    details{ id
+    details {
+      id
       language
     }
   }
@@ -273,7 +292,6 @@ query getRestaurantItems($restaurant_id: Int!) {
   }
 }
 # getting operators
-
 
 query getRestaurantDetailsId($restauarntId: Int!) {
   restaurant_restaurant_by_pk(id: $restauarntId) {
