@@ -15,12 +15,14 @@ class ShippingCostComponent extends StatelessWidget {
       {Key? key,
       required this.shippingCost,
       this.textStyle,
+      this.showPerKm = false,
       this.defaultShippingCost = 50,
       this.alignment = MainAxisAlignment.end})
       : super(key: key);
   final num shippingCost;
   final num defaultShippingCost;
   final MainAxisAlignment alignment;
+  final bool showPerKm;
   final TextStyle? textStyle;
 
   @override
@@ -32,10 +34,11 @@ class ShippingCostComponent extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    defaultShippingCost.toPriceString(),
+                    defaultShippingCost.toPriceString() +
+                        "${(showPerKm) ? "/km" : ""}",
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyMedium
                         ?.copyWith(decoration: TextDecoration.lineThrough),
                   ),
                 ),
@@ -45,14 +48,14 @@ class ShippingCostComponent extends StatelessWidget {
                 Flexible(
                   child: Text(
                     "${_i18n()["free"]}",
-                    style: Get.textTheme.bodyText1
+                    style: Get.textTheme.bodyLarge
                         ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
                   ),
                 )
               ],
             )
           : Text(
-              shippingCost.toPriceString(),
+              shippingCost.toPriceString() + "${(showPerKm) ? "/km" : ""}",
               style: textStyle,
             ),
     );

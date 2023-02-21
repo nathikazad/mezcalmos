@@ -59,7 +59,14 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                   CartItemsBuilder(
                     viewController: viewController,
                   ),
-                DeliveryTimePicker(viewCartController: viewController),
+                DeliveryTimePicker(
+                  deliveryTime: viewController.cart.deliveryTime,
+                  isServiceOpen: viewController.cart.restaurant!.isOpen(),
+                  numberOfDays: viewController.cart.isSpecial ? 1 : 7,
+                  onValue: (DateTime? value) {},
+                  periodOfTime: viewController.cart.cartPeriod,
+                  schedule: viewController.cart.restaurant!.schedule,
+                ),
 
                 _deliveryLocation(),
                 SizedBox(

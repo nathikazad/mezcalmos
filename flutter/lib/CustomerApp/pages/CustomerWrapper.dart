@@ -205,7 +205,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
         Obx(
           () => ServicesCard(
             title: "${_i18n()['food']["title"]}",
-            url: "assets/images/customer/restaurants/restaurantService.png",
+            url: "assets/images/customer/foodService.png",
             subtitle: "${_i18n()['food']["subtitle"]}",
             onTap: () {
               getServiceRoute(
@@ -232,12 +232,13 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             },
           ),
         ),
-        Obx(
-          () => ServicesCard(
-            title: "${_i18n()['taxi']["title"]}",
-            url: "assets/images/customer/taxi/taxiService.png",
-            subtitle: "${_i18n()["comingSoon"]}",
-          ),
+        ServicesCard(
+          title: "Currier",
+          url: "assets/images/customer/courrierService.png",
+          subtitle: "Obtain delivery of anything you desire to your location.",
+          onTap: () {
+            MezRouter.toNamed(kCouriersRoute);
+          },
         ),
       ],
     );

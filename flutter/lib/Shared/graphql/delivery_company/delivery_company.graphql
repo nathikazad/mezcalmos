@@ -1,15 +1,27 @@
 query getDeliveryCompanyById($id: Int!) {
   delivery_company_by_pk(id: $id) {
     id
-    details{ id
+     delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
       id
+      radius
+      minimum_cost
+      self_delivery
+    }
+    details {
+      id
+      
       approved
       description_id
       image
       location_id
       name
       language
-      
+schedule
       open_status
       creation_time
       service_provider_type
@@ -20,12 +32,52 @@ query getDeliveryCompanyById($id: Int!) {
           value
         }
       }
-       location {
-      gps
-      address
+      location {
+        gps
+        address
+      }
     }
+  }
+}
+query getDeliveryCompanies {
+  delivery_company {
+    id
+     delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      radius
+      minimum_cost
+      self_delivery
     }
-   
+    details {
+      id
+      schedule
+      approved
+      description_id
+      image
+      location_id
+      name
+      language
+
+      open_status
+      creation_time
+      service_provider_type
+      description {
+        id
+        translations {
+          language_id
+          value
+        }
+      }
+      location {
+        gps
+        address
+      }
+    }
   }
 }
 
@@ -53,19 +105,32 @@ query getDeliveryCompanyById($id: Int!) {
 #       address
 #     }
 #     }
-   
+
 #   }
 # }
 query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
   delivery_get_delivery_companies(args: $args) {
     id
-    details{ id
+     delivery_details {
+      cost_per_km
+      customer_pickup
+      delivery_available
+      free_delivery_km_range
+      free_delivery_minimum_cost
+      id
+      radius
+      minimum_cost
+      self_delivery
+    }
+    details {
+      id
       approved
       description_id
       image
       location_id
       name
       language
+      schedule
       open_status
       creation_time
       service_provider_type
@@ -77,10 +142,9 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
         }
       }
       location {
-      gps
-      address
+        gps
+        address
+      }
     }
-    }
-    
   }
 }

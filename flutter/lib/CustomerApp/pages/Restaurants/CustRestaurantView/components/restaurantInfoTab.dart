@@ -68,13 +68,7 @@ class RestaurantInfoTab extends StatelessWidget {
           ServiceLocationCard(
             location: restaurant.info.location,
           ),
-        MezButton(
-          label: "Get",
-          onClick: () async {
-            await MezRouter.toNamed(
-                getReviewsListRoute(restaurant.serviceDetailsId));
-          },
-        ),
+      
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

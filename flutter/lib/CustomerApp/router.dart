@@ -1,6 +1,8 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustCourrierServicesListView/CustCourrierServicesListView.dart';
+import 'package:mezcalmos/CustomerApp/pages/Courrier/CustRequestCourrierView/CustRequestCourierView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustSavedLocations/CustSavedLocationsView.dart';
@@ -25,6 +27,8 @@ import 'package:mezcalmos/Shared/sharedRouter.dart';
 const String kTaxiRequestRoute = '/taxiRequest';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
+const String kCouriersRoute = '/couriers';
+const String kCourierRequestRoute = '/requestCourier/:courierId';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
 const String kViewRestaurantItemRoute =
     '/items/:restaurantId/:itemId/:cartItemId';
@@ -48,6 +52,12 @@ String getRestaurantRoute(
 ) {
   return kRestaurantRoute.replaceFirst(
       ":restaurantId", restaurantId.toString());
+}
+
+String getCourierRoute(
+  int courierId,
+) {
+  return kCourierRequestRoute.replaceFirst(":courierId", courierId.toString());
 }
 
 String getReviewsListRoute(
@@ -185,6 +195,15 @@ class XRouter {
         GetPage(
           name: kserviceReviewsList,
           page: () => CustReviewsListView(),
+        ),
+        // Courier
+        GetPage(
+          name: kCouriersRoute,
+          page: () => CustCourierServicesListView(),
+        ),
+        GetPage(
+          name: kCourierRequestRoute,
+          page: () => CustRequestCourierView(),
         ),
       ] +
       SharedRouter.sharedRoutes;

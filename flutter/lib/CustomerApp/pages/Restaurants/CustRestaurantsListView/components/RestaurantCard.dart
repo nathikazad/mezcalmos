@@ -49,150 +49,19 @@ class RestaurantCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(restaurant.info.name, style: txt.bodyText1),
+                      Text(restaurant.info.name, style: txt.bodyLarge),
                       SizedBox(height: 0.3.h),
                       if (restaurant.info.description?[userLanguage] != null)
                         Text(
                           restaurant.info.description![userLanguage]!,
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       if (restaurant.info.description != null &&
                           restaurant.info.description!.length > 1)
                         const Spacer(),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.delivery_dining,
-                                  color: Colors.black,
-                                  size: 3.2.h,
-                                ),
-                                SizedBox(
-                                  width: 1.w,
-                                ),
-                                ShippingCostComponent(
-                                  shippingCost: shippingPrice,
-                                  alignment: MainAxisAlignment.start,
-                                  textStyle: txt.bodyText1,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 2.w),
-                                    child: Icon(
-                                      Icons.payments_outlined,
-                                      color: Colors.black,
-                                      size: 3.h,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 1.h,
-                                  ),
-                                  if (restaurant.paymentInfo?.acceptCard ==
-                                      false)
-                                    Icon(
-                                      Icons.credit_card,
-                                      color: Colors.black,
-                                      size: 3.h,
-                                    ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 4.w,
-                            ),
-                            Flexible(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    size: 3.h,
-                                    color: Color(0xFF6779FE),
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    restaurant.rate != null
-                                        ? restaurant.rate.toString()
-                                        : 0.toString(),
-                                    style: txt.bodyText1,
-                                  )
-                                ],
-                              ),
-                            ),
-                            // Flexible(
-                            //   flex: 7,
-                            //   // fit: FlexFit.tight,
-                            // child: Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Icon(
-                            //       Icons.delivery_dining,
-                            //       color: Colors.grey.shade800,
-                            //     ),
-                            //     Flexible(
-                            //       //    flex: 5,
-                            //       fit: FlexFit.tight,
-                            //       child: ShippingCostComponent(
-                            //         shippingCost: shippingPrice,
-                            //         alignment: MainAxisAlignment.start,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            // ),
-
-                            // Flexible(
-                            //   flex: 1,
-                            //   child: Icon(
-                            //     Icons.payments_outlined,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            // if (restaurant.paymentInfo?.acceptCard == true)
-                            //   Flexible(
-                            //     flex: 1,
-                            //     child: Padding(
-                            //         padding: const EdgeInsets.only(left: 8),
-                            //         child: Icon(
-                            //           Icons.credit_card,
-                            //           color: Colors.black,
-                            //         )),
-                            //   ),
-
-                            // Flexible(
-                            //   child: Row(
-                            //     children: [
-                            //       Icon(
-                            //         Icons.star,
-                            //         color: Color(0xFF6779FE),
-                            //       ),
-                            //       Text(restaurant.rate != null
-                            //           ? restaurant.rate.toString()
-                            //           : 0.toString())
-                            //     ],
-                            //   ),
-                            // )
-                          ],
-                        ),
-                      )
+                      _detailsRow()
                     ],
                   ),
                 ),
@@ -200,6 +69,139 @@ class RestaurantCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _detailsRow() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Row(
+            children: [
+              Icon(
+                Icons.delivery_dining,
+                color: Colors.black,
+                size: 3.2.h,
+              ),
+              SizedBox(
+                width: 1.w,
+              ),
+              ShippingCostComponent(
+                shippingCost: shippingPrice,
+                alignment: MainAxisAlignment.start,
+                textStyle: Get.textTheme.bodyLarge,
+              ),
+            ],
+          ),
+          SizedBox(
+            width: 3.w,
+          ),
+
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 2.w),
+                  child: Icon(
+                    Icons.payments_outlined,
+                    color: Colors.black,
+                    size: 3.h,
+                  ),
+                ),
+                SizedBox(
+                  width: 1.h,
+                ),
+                if (restaurant.paymentInfo?.acceptCard == false)
+                  Icon(
+                    Icons.credit_card,
+                    color: Colors.black,
+                    size: 3.h,
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 4.w,
+          ),
+          Flexible(
+            child: Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  size: 3.h,
+                  color: Color(0xFF6779FE),
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                Text(
+                  restaurant.rate != null
+                      ? restaurant.rate.toString()
+                      : 0.toString(),
+                  style: Get.textTheme.bodyLarge,
+                )
+              ],
+            ),
+          ),
+          // Flexible(
+          //   flex: 7,
+          //   // fit: FlexFit.tight,
+          // child: Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Icon(
+          //       Icons.delivery_dining,
+          //       color: Colors.grey.shade800,
+          //     ),
+          //     Flexible(
+          //       //    flex: 5,
+          //       fit: FlexFit.tight,
+          //       child: ShippingCostComponent(
+          //         shippingCost: shippingPrice,
+          //         alignment: MainAxisAlignment.start,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // ),
+
+          // Flexible(
+          //   flex: 1,
+          //   child: Icon(
+          //     Icons.payments_outlined,
+          //     color: Colors.black,
+          //   ),
+          // ),
+          // if (restaurant.paymentInfo?.acceptCard == true)
+          //   Flexible(
+          //     flex: 1,
+          //     child: Padding(
+          //         padding: const EdgeInsets.only(left: 8),
+          //         child: Icon(
+          //           Icons.credit_card,
+          //           color: Colors.black,
+          //         )),
+          //   ),
+
+          // Flexible(
+          //   child: Row(
+          //     children: [
+          //       Icon(
+          //         Icons.star,
+          //         color: Color(0xFF6779FE),
+          //       ),
+          //       Text(restaurant.rate != null
+          //           ? restaurant.rate.toString()
+          //           : 0.toString())
+          //     ],
+          //   ),
+          // )
+        ],
       ),
     );
   }
