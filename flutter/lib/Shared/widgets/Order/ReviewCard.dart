@@ -54,7 +54,7 @@ class _ReviewCardState extends State<ReviewCard> {
                           height: 2,
                         ),
                         Text(
-                          widget.review.reviewTime.timeAgo().toLowerCase(),
+                          widget.review.reviewTime.timeAgo().capitalizeFirst!,
                           style: Get.textTheme.subtitle1?.copyWith(
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF494949)),

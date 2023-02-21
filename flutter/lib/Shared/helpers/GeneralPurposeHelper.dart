@@ -492,10 +492,13 @@ Future<int?> showReviewDialog(
       barrierDismissible: false,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          //  color: Colors.transparent,
           scrollable: true,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          contentPadding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 18,
+            bottom: 10,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -559,6 +562,13 @@ Future<int?> showReviewDialog(
                   fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     fillColor: unratedStarColor,
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
