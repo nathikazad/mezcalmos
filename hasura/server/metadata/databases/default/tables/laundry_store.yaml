@@ -15,6 +15,13 @@ object_relationships:
           name: details
           schema: service_provider
 array_relationships:
+  - name: categories
+    using:
+      foreign_key_constraint_on:
+        column: store_id
+        table:
+          name: category
+          schema: laundry
   - name: delivery_partners
     using:
       manual_configuration:
@@ -32,6 +39,16 @@ array_relationships:
         table:
           name: operator
           schema: laundry
+  - name: reviews
+    using:
+      manual_configuration:
+        column_mapping:
+          id: to_entity_id
+          service_provider_type: to_entity_type
+        insertion_order: null
+        remote_table:
+          name: review
+          schema: public
 computed_fields:
   - name: delivery_details_of_deliverer
     definition:
@@ -39,13 +56,23 @@ computed_fields:
         name: laundry_delivery_details
         schema: public
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - service_provider_type
+        - normal_delivery_time
+      filter: {}
   - role: customer
     permission:
       columns:
         - delivery_details_id
+        - details_id
         - id
-        - service_provider_type
         - normal_delivery_time
+        - service_provider_type
       filter: {}
   - role: delivery_driver
     permission:
@@ -58,7 +85,11 @@ select_permissions:
   - role: laundry_operator
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
+        - normal_delivery_time
+        - service_provider_type
       filter:
         operators:
           user_id:
