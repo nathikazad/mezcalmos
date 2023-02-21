@@ -50,9 +50,10 @@ select_permissions:
     permission:
       columns:
         - delivery_details_id
+        - details_id
         - id
-        - service_provider_type
         - normal_delivery_time
+        - service_provider_type
       filter: {}
   - role: delivery_driver
     permission:
