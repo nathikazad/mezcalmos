@@ -194,11 +194,12 @@
               "toBeCalc": "Calculando ..."
             },
             "SaveLocationDailog": {
-              "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
+              "addLocationDialogTitle": "ingrese el nombre de la ubicación",
               "editLocationDialogTitle": "Ingrese el nombre de la ubicación",
-              "addLocationDialogButton": "OK",
+              "pickLocationHintText":"Ingrese su nombre",
+              "addLocationDialogButton": "Ahorrar",
               "editLocationDialogButton": "EDITAR",
-              "addLocationDialogSkip": "Omitir"
+              "addLocationDialogSkip": "Cerca"
             }
           },
           "ViewCartScreen": {
@@ -228,7 +229,8 @@
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
               "rightBtn": "Sobrescribir",
-              "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+              "subtitle": "Ya tienes algunos artículos en tu carrito de",
+              "overwriteText":"\n¿Quieres sobrescribir?",
               "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
               "addToCart": "Añadir artículo",
               "modifyItem": "Modificar"

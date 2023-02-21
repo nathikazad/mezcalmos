@@ -154,10 +154,11 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       btnRightIconBgColor: secondaryLightBlueColor,
       primaryImageUrl: widget.viewController.cart.value?.restaurant?.info.image,
       btnRightIconColor: primaryBlueColor,
-      status: widget.viewController.cart.value?.restaurant?.info.name ?? "",
+      status: "${_i18n()["rightBtn"]}?",
       primaryClickTitle: _i18n()["rightBtn"],
       secondaryClickTitle: _i18n()["leftBtn"],
-      description: _i18n()["subtitle"],
+      description:
+          '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
         MezRouter.popDialog<void>();
         await MezRouter.toNamed<void>(kCartRoute);

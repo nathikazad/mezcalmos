@@ -193,11 +193,12 @@
                 "toBeCalc": "Calculating..."
               },
               "SaveLocationDailog": {
-                "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
+                "addLocationDialogTitle": "Enter location name",
                 "editLocationDialogTitle": "Enter location name",
-                "addLocationDialogButton": "OK",
+                "pickLocationHintText":"Enter name",
+                "addLocationDialogButton": "Save",
                 "editLocationDialogButton": "EDIT",
-                "addLocationDialogSkip": "Skip"
+                "addLocationDialogSkip": "Close"
               }
             },
             "ViewCartScreen": {
@@ -227,7 +228,8 @@
                 "title": "Warning",
                 "leftBtn": "Checkout first",
                 "rightBtn": "Overwrite",
-                "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
+                "subtitle": "You already have items in your cart from",
+                "overwriteText":"\nDo you want to overwrite?",
                 "specialSubtitle": "You already have some special items in your cart with different availibility time, do you want to check them out first or overwrite them?",
                 "addToCart": "Add item",
                 "modifyItem": "Modify item"
@@ -1025,11 +1027,11 @@
         },
         "OrderSummaryCard": {
           "orderSummary": "Summary",
-          "orderCost": "Order Cost",
-          "deliveryCost": "Delivery Cost",
+          "orderCost": "Order cost",
+          "deliveryCost": "Delivery cost",
           "stripeFees": "Card fees",
-          "totalCost": "Total Cost",
-          "deliveryLocation": "Delivery Location",
+          "totalCost": "Total cost",
+          "deliveryLocation": "Delivery location",
           "refundAmount": "Refund amount",
           "toBeCalc": "To be calculated"
         },
