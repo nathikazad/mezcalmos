@@ -84,6 +84,7 @@ export async function createDeliveryDriver(userId: number, addDriverDetails: Add
         userId,
         deliveryCompanyType: deliveryServiceProviderType,
         deliveryCompanyId: addDriverDetails.deliveryCompanyId,
+        status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addDriverDetails.notificationInfo,
         user: {
             firebaseId: mutationResponse.insert_delivery_driver_one!.user.firebase_id,

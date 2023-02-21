@@ -15,7 +15,7 @@ import { capturePayment, PaymentDetails } from "../utilities/stripe/payment";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
-import { updateDeliveryOrderStatus } from "../shared/graphql/delivery/updateDelivery";
+import { updateDeliveryOrderStatus, updateDeliveryPackageCost } from "../shared/graphql/delivery/updateDelivery";
 import { DeliveryOrder, DeliveryOrderStatus } from "../shared/models/Generic/Delivery";
 
 interface ChangeStatusDetails {
@@ -102,6 +102,20 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     let fromCustomerDeliveryOrder: DeliveryOrder = response[0] ;
     let toCustomerDeliveryOrder: DeliveryOrder = response[1];
 
+    switch (newStatus) {
+      case LaundryOrderStatus.CancelledByAdmin:
+        fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+        toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
+
+        updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
+        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+        break;
+      case LaundryOrderStatus.ReadyForDelivery:
+        toCustomerDeliveryOrder.packageCost = order.itemsCost;
+        updateDeliveryPackageCost(toCustomerDeliveryOrder)
+      default:
+        break;
+    }
     if (newStatus == LaundryOrderStatus.CancelledByAdmin) {
       fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
       toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByServiceProvider;
