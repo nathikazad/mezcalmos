@@ -7,7 +7,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator } from "../shared/models/Services/Service";
-import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 
 export interface AddDriverDetails {
     deliveryCompanyId: number,

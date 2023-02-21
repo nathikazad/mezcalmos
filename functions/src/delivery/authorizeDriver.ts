@@ -9,7 +9,7 @@ import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDelivery
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AuthorizationStatus } from "../shared/models/Generic/Generic";
-import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { Operator } from "../shared/models/Services/Service";
 
 export interface AuthorizeDetails {
