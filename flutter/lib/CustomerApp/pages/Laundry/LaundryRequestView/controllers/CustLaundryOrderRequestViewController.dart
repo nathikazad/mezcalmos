@@ -18,8 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 
 class CustLaundryOrderRequestViewController {
   // instances //
-  CustomerAuthController customerAuthController =
-      Get.find<CustomerAuthController>();
+
   TextEditingController orderNote = TextEditingController();
 
   final LocationPickerController locationPickerController =
@@ -50,8 +49,12 @@ class CustLaundryOrderRequestViewController {
     mezDbgPrint(
         "Laundry lenght  =============> ${this.laundry.value!.laundryCosts.lineItems}");
 
-    customerLoc.value =
-        customerAuthController.customer?.defaultLocation?.location;
+    if (authController.isUserSignedIn) {
+      customerLoc.value = Get.find<CustomerAuthController>()
+          .customer
+          ?.defaultLocation
+          ?.location;
+    }
     if (customerLoc.value != null) {
       // ignore: unawaited_futures
       updateShippingPrice();

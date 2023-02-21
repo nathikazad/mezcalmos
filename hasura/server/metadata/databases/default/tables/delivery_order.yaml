@@ -82,11 +82,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: service_provider_review_by_driver_id
 computed_fields:
-  - name: delivery_cost_from_base
-    definition:
-      function:
-        name: deliverycostfrombase
-        schema: delivery
   - name: in_process
     definition:
       function:

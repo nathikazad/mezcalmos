@@ -23,21 +23,18 @@ object_relationships:
         table:
           name: restaurant
           schema: restaurant
-computed_fields:
-  - name: base_location
-    definition:
-      function:
-        name: baselocation
-        schema: delivery
 select_permissions:
   - role: anonymous
     permission:
       columns:
-        - cost_per_km
-        - free_delivery_km_range
-        - free_delivery_minimum_cost
+        - customer_pickup
+        - delivery_available
+        - self_delivery
         - id
+        - cost_per_km
+        - free_delivery_minimum_cost
         - minimum_cost
+        - free_delivery_km_range
         - radius
       filter: {}
   - role: customer
