@@ -1,8 +1,10 @@
 import { ServiceProviderStripeInfo } from "../../../utilities/stripe/model";
+import { ParticipantType } from "../Generic/Chat";
 import { DeliveryDetails } from "../Generic/Delivery";
 import { AuthorizationStatus, Language, Location, NotificationInfo } from "../Generic/Generic";
 import {  PaymentType } from "../Generic/Order";
 import { UserInfo } from "../Generic/User";
+import { ForegroundNotification } from "../Notification";
 
 export interface ServiceProvider {
   id: number;
@@ -29,6 +31,7 @@ export interface ServiceProvider {
 
 export interface Operator {
   id: number;
+  detailsId: number;
   serviceProviderId: number;
   userId: number;
   status: AuthorizationStatus;
@@ -79,4 +82,12 @@ export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
   Taxi = "taxi"
+}
+
+export interface OperatorApprovedNotification extends ForegroundNotification {
+  operatorId: number,
+  approved: boolean,
+  serviceProviderName: string,
+  serviceProviderId: number,
+  participantType: ParticipantType,
 }

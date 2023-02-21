@@ -68,6 +68,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
             }
         }, {
             id: true,
+            details_id: true,
         }]
     });
     if(mutationResponse.insert_laundry_operator_one == null) {
@@ -79,6 +80,7 @@ export async function createLaundryOperator(operatorUserId: number, addOpDetails
     return {
       id: mutationResponse.insert_laundry_operator_one.id,
       userId: operatorUserId,
+      detailsId: mutationResponse.insert_laundry_operator_one.details_id,
       serviceProviderId: addOpDetails.serviceProviderId,
       status: AuthorizationStatus.AwaitingApproval,
       notificationInfo: addOpDetails.notificationInfo,

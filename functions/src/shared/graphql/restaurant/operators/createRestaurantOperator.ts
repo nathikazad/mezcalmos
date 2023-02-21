@@ -64,6 +64,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
       }
     }, {
       id: true,
+      details_id: true,
     }]
   });
   if(mutationResponse.insert_restaurant_operator_one == null) {
@@ -74,6 +75,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
   }
   return {
     id: mutationResponse.insert_restaurant_operator_one.id,
+    detailsId: mutationResponse.insert_restaurant_operator_one.details_id,
     userId: operatorUserId,
     serviceProviderId: addOpDetails.serviceProviderId,
     status: AuthorizationStatus.AwaitingApproval,
