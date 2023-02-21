@@ -8,6 +8,11 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { changeRestaurantOrderStatus } from "./restaurantStatusChange";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 import { changeLaundryOrderStatus } from "./laundryStatusChange";
+import { CourierOrderStatusChangeNotification } from "../shared/models/Services/Courier/Courier";
+import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
+import { ParticipantType } from "../shared/models/Generic/Chat";
+import { pushNotification } from "../utilities/senders/notifyUser";
+import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -36,13 +41,13 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
 }
 
 export interface ChangeDeliveryStatusDetails {
-  deliveryId: number,
+  deliveryOrderId: number,
   newStatus: DeliveryOrderStatus
 }
 
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails) {
 
-  let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
+  let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryOrderId);
 
   errorChecks(deliveryOrder, userId);
 
@@ -60,6 +65,8 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
     case OrderType.Laundry:
       changeLaundryOrderStatus(changeDeliveryStatusDetails, customer, deliveryOrder)
       break;
+    case OrderType.Courier:
+      notifyCourierStatusChange(deliveryOrder, customer);
     default:
       break;
   }
@@ -88,4 +95,29 @@ function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
       "order driver mismatch"
     );
   }
+}
+
+function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: CustomerInfo) {
+  
+  let notification: Notification = {
+    foreground: <CourierOrderStatusChangeNotification>{
+      status: deliveryOrder.status,
+      time: (new Date()).toISOString(),
+      notificationType: NotificationType.OrderStatusChange,
+      orderType: OrderType.Courier,
+      notificationAction: NotificationAction.ShowSnackBarAlways,
+      orderId: deliveryOrder.deliveryId
+    },
+    // todo @SanchitUke fix the background message based on Restaurant Order Status
+    background: deliveryOrderStatusChangeMessages[deliveryOrder.status],
+    linkUrl: '/'
+  };
+
+  pushNotification(
+    customer.firebaseId,
+    notification,
+    customer.notificationInfo,
+    ParticipantType.Customer,
+    customer.language
+  );
 }

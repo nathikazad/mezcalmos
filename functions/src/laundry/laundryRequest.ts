@@ -5,7 +5,7 @@ import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryOrder } from "../shared/graphql/laundry/order/createLaundryOrder";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
-import { notifyDeliveryPartner } from "../shared/helper";
+import { notifyDeliveryCompany } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { CustomerAppType, Language, Location } from "../shared/models/Generic/Generic";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
@@ -33,6 +33,7 @@ export interface LaundryRequestDetails {
     tripDistance: number,
     tripDuration: number,
     tripPolyline: string
+    distanceFromBase?: number
 }
 export interface ReqLaundryResponse {
     orderId: number
@@ -58,7 +59,7 @@ export async function requestLaundry(customerId: number, laundryRequestDetails: 
     if(orderResponse.laundryOrder.deliveryType == DeliveryType.Delivery && laundryStore.deliveryDetails.selfDelivery == false) {
 
         updateDeliveryOrderCompany(orderResponse.laundryOrder.fromCustomerDeliveryId!, laundryStore.deliveryPartnerId!);
-        notifyDeliveryPartner(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
+        notifyDeliveryCompany(orderResponse.fromCustomerDeliveryOrder, laundryStore.deliveryPartnerId!, OrderType.Laundry)
     }
 
     notify(orderResponse.laundryOrder, laundryStore, mezAdmins);

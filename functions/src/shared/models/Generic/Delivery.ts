@@ -10,7 +10,8 @@ import { ParticipantType } from "./Chat";
 
 export interface DeliveryOrder {
     deliveryId: number;
-    pickupLocation: Location;
+    pickupLocation?: Location;
+    pickupLocationText?: string;
     dropoffLocation: Location;
     // deliveryDriverType?: ParticipantType
     deliveryDriverId?: number;
@@ -45,6 +46,7 @@ export interface DeliveryOrder {
     deliveryDriver?: DeliveryDriver;
     orderType: OrderType;
     direction: DeliveryDirection;
+    distanceFromBase?: number;
 }
 export enum DeliveryDirection {
   FromCustomer = "fromCustomer",

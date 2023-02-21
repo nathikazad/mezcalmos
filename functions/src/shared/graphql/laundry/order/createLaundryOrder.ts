@@ -106,6 +106,7 @@ export async function createLaundryOrder(
                         trip_distance: laundryRequestDetails.tripDistance,
                         trip_duration: laundryRequestDetails.tripDuration,
                         trip_polyline: laundryRequestDetails.tripPolyline,
+                        distance_from_base: laundryRequestDetails.distanceFromBase
                     }
                 }: undefined,
             }
@@ -176,6 +177,7 @@ export async function createLaundryOrder(
                 serviceProviderId: laundryStore.id!,
                 direction: DeliveryDirection.FromCustomer,
                 packageReady: true,
+                distanceFromBase: laundryRequestDetails.distanceFromBase
             }
         }
     }

@@ -36,15 +36,6 @@ object_relationships:
     using:
       foreign_key_constraint_on: stripe_id
 array_relationships:
-  - name: delivery_drivers
-    using:
-      manual_configuration:
-        column_mapping:
-          id: delivery_company_id
-        insertion_order: null
-        remote_table:
-          name: driver
-          schema: delivery
   - name: reviews
     using:
       manual_configuration:

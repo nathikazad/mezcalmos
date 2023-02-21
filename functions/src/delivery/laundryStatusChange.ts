@@ -30,8 +30,8 @@ export async function changeLaundryOrderStatus(
   let laundryOrder: LaundryOrder = await getLaundryOrderFromDelivery(deliveryOrder);
   let laundryOperators: Operator[] = await getLaundryOperators(laundryOrder.storeId);
 
-  if ((laundryOrder.fromCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId) 
-    && (laundryOrder.toCustomerDeliveryId != changeDeliveryStatusDetails.deliveryId)
+  if ((laundryOrder.fromCustomerDeliveryId != changeDeliveryStatusDetails.deliveryOrderId) 
+    && (laundryOrder.toCustomerDeliveryId != changeDeliveryStatusDetails.deliveryOrderId)
   ) {
     throw new HttpsError(
       "internal",
