@@ -414,10 +414,10 @@ Future<void> showStatusInfoDialog(
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: offShadeGreyColor),
               ),
               SizedBox(height: 18),
               GestureDetector(
@@ -449,7 +449,7 @@ Future<void> showStatusInfoDialog(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: 4,
                     ),
                     InkWell(
                       onTap: secondaryCallBack,
@@ -461,7 +461,7 @@ Future<void> showStatusInfoDialog(
                             secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color.fromRGBO(120, 120, 120, 1),
+                              color: offShadeGreyColor,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: 16.34,

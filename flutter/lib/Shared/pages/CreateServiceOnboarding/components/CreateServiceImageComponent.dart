@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["CreateServiceView"]["pages"]["CreateServiceInfoPage"];
@@ -35,12 +36,12 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 94,
+                      radius: 9.5.h,
                       backgroundColor: primaryBlueColor,
                       child: CircleAvatar(
                         backgroundColor: secondaryLightBlueColor,
                         backgroundImage: viewController.getRightImage,
-                        radius: 90,
+                        radius: 9.h,
                         child: (viewController.imageLoading.isTrue)
                             ? CircularProgressIndicator(
                                 color: primaryBlueColor,
