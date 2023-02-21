@@ -4451,6 +4451,33 @@ type delivery_driver_aggregate {
   nodes: [delivery_driver!]!
 }
 
+input delivery_driver_aggregate_bool_exp {
+  bool_and: delivery_driver_aggregate_bool_exp_bool_and
+  bool_or: delivery_driver_aggregate_bool_exp_bool_or
+  count: delivery_driver_aggregate_bool_exp_count
+}
+
+input delivery_driver_aggregate_bool_exp_bool_and {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_bool_or {
+  arguments: delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_driver_aggregate_bool_exp_count {
+  arguments: [delivery_driver_select_column!]
+  distinct: Boolean
+  filter: delivery_driver_bool_exp
+  predicate: Int_comparison_exp!
+}
+
 """
 aggregate fields of "delivery.driver"
 """
@@ -4468,11 +4495,47 @@ type delivery_driver_aggregate_fields {
   variance: delivery_driver_variance_fields
 }
 
+"""
+order by aggregate values of table "delivery.driver"
+"""
+input delivery_driver_aggregate_order_by {
+  avg: delivery_driver_avg_order_by
+  count: order_by
+  max: delivery_driver_max_order_by
+  min: delivery_driver_min_order_by
+  stddev: delivery_driver_stddev_order_by
+  stddev_pop: delivery_driver_stddev_pop_order_by
+  stddev_samp: delivery_driver_stddev_samp_order_by
+  sum: delivery_driver_sum_order_by
+  var_pop: delivery_driver_var_pop_order_by
+  var_samp: delivery_driver_var_samp_order_by
+  variance: delivery_driver_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "delivery.driver"
+"""
+input delivery_driver_arr_rel_insert_input {
+  data: [delivery_driver_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: delivery_driver_on_conflict
+}
+
 """aggregate avg on columns"""
 type delivery_driver_avg_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by avg() on columns of table "delivery.driver"
+"""
+input delivery_driver_avg_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -4571,6 +4634,26 @@ type delivery_driver_max_fields {
   user_id: Int
 }
 
+"""
+order by max() on columns of table "delivery.driver"
+"""
+input delivery_driver_max_order_by {
+  app_type_id: order_by
+  app_version: order_by
+  delivery_company_id: order_by
+
+  """restaurant,laundry,delivery_company"""
+  delivery_company_type: order_by
+
+  """Just for relationship"""
+  delivery_driver_type: order_by
+  id: order_by
+
+  """awaiting_approval, authorized, banned"""
+  status: order_by
+  user_id: order_by
+}
+
 """aggregate min on columns"""
 type delivery_driver_min_fields {
   app_type_id: String
@@ -4587,6 +4670,26 @@ type delivery_driver_min_fields {
   """awaiting_approval, authorized, banned"""
   status: String
   user_id: Int
+}
+
+"""
+order by min() on columns of table "delivery.driver"
+"""
+input delivery_driver_min_order_by {
+  app_type_id: order_by
+  app_version: order_by
+  delivery_company_id: order_by
+
+  """restaurant,laundry,delivery_company"""
+  delivery_company_type: order_by
+
+  """Just for relationship"""
+  delivery_driver_type: order_by
+  id: order_by
+
+  """awaiting_approval, authorized, banned"""
+  status: order_by
+  user_id: order_by
 }
 
 """
@@ -4680,6 +4783,22 @@ enum delivery_driver_select_column {
 }
 
 """
+select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
+select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver"
+"""
+enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  online
+}
+
+"""
 input type for updating data in table "delivery.driver"
 """
 input delivery_driver_set_input {
@@ -4708,6 +4827,15 @@ type delivery_driver_stddev_fields {
   user_id: Float
 }
 
+"""
+order by stddev() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type delivery_driver_stddev_pop_fields {
   delivery_company_id: Float
@@ -4715,11 +4843,29 @@ type delivery_driver_stddev_pop_fields {
   user_id: Float
 }
 
+"""
+order by stddev_pop() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate stddev_samp on columns"""
 type delivery_driver_stddev_samp_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "delivery.driver"
+"""
+input delivery_driver_stddev_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -4758,6 +4904,15 @@ type delivery_driver_sum_fields {
   delivery_company_id: Int
   id: Int
   user_id: Int
+}
+
+"""
+order by sum() on columns of table "delivery.driver"
+"""
+input delivery_driver_sum_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 """
@@ -4813,6 +4968,15 @@ type delivery_driver_var_pop_fields {
   user_id: Float
 }
 
+"""
+order by var_pop() on columns of table "delivery.driver"
+"""
+input delivery_driver_var_pop_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate var_samp on columns"""
 type delivery_driver_var_samp_fields {
   delivery_company_id: Float
@@ -4820,11 +4984,29 @@ type delivery_driver_var_samp_fields {
   user_id: Float
 }
 
+"""
+order by var_samp() on columns of table "delivery.driver"
+"""
+input delivery_driver_var_samp_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
 """aggregate variance on columns"""
 type delivery_driver_variance_fields {
   delivery_company_id: Float
   id: Float
   user_id: Float
+}
+
+"""
+order by variance() on columns of table "delivery.driver"
+"""
+input delivery_driver_variance_order_by {
+  delivery_company_id: order_by
+  id: order_by
+  user_id: order_by
 }
 
 input delivery_get_delivery_companies_args {
@@ -25940,6 +26122,42 @@ type service_provider_details {
   """An object relationship"""
   delivery_company: delivery_company
 
+  """An array relationship"""
+  delivery_drivers(
+    """distinct select on columns"""
+    distinct_on: [delivery_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_driver_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_driver_bool_exp
+  ): [delivery_driver!]!
+
+  """An aggregate relationship"""
+  delivery_drivers_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_driver_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_driver_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_driver_bool_exp
+  ): delivery_driver_aggregate!
+
   """An object relationship"""
   description: translation
   description_id: Int
@@ -26070,6 +26288,8 @@ input service_provider_details_bool_exp {
   approved: Boolean_comparison_exp
   creation_time: timestamptz_comparison_exp
   delivery_company: delivery_company_bool_exp
+  delivery_drivers: delivery_driver_bool_exp
+  delivery_drivers_aggregate: delivery_driver_aggregate_bool_exp
   description: translation_bool_exp
   description_id: Int_comparison_exp
   firebase_id: String_comparison_exp
@@ -26176,6 +26396,7 @@ input service_provider_details_insert_input {
   approved: Boolean
   creation_time: timestamptz
   delivery_company: delivery_company_obj_rel_insert_input
+  delivery_drivers: delivery_driver_arr_rel_insert_input
   description: translation_obj_rel_insert_input
   description_id: Int
   firebase_id: String
@@ -26268,6 +26489,7 @@ input service_provider_details_order_by {
   approved: order_by
   creation_time: order_by
   delivery_company: delivery_company_order_by
+  delivery_drivers_aggregate: delivery_driver_aggregate_order_by
   description: translation_order_by
   description_id: order_by
   firebase_id: order_by

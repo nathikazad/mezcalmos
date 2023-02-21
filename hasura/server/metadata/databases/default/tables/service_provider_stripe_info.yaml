@@ -10,6 +10,19 @@ object_relationships:
           name: details
           schema: service_provider
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - charge_fees_on_customer
+        - charges_enabled
+        - details_submitted
+        - email
+        - id
+        - payouts_enabled
+        - requirements
+        - status
+        - stripe_id
+      filter: {}
   - role: customer
     permission:
       columns:

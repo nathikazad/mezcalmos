@@ -1,6 +1,6 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
-import { AppType, Language } from "../../models/Generic/Generic";
+import { AppType, AuthorizationStatus, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
 import { DeliveryDirection, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 import { ParticipantType } from "../../models/Generic/Chat";
@@ -30,6 +30,9 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
       delivery_driver_id: true,
       direction: true,
       order_type: true,
+      trip_distance: true,
+      trip_duration: true,
+      trip_polyline: true,
       delivery_driver: {
         id: true,
         delivery_company_type: true,
@@ -90,11 +93,14 @@ export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrde
     serviceProviderType: response.delivery_order_by_pk.service_provider_type as DeliveryServiceProviderType,
     direction: response.delivery_order_by_pk.direction as DeliveryDirection,
     deliveryDriverId: response.delivery_order_by_pk.delivery_driver_id,
+    tripDistance: response.delivery_order_by_pk.trip_distance,
+    tripDuration: response.delivery_order_by_pk.trip_duration,
+    tripPolyline: response.delivery_order_by_pk.trip_polyline,
     deliveryDriver: (response.delivery_order_by_pk.delivery_driver) ? {
       id: response.delivery_order_by_pk.delivery_driver.id,
       deliveryCompanyType: response.delivery_order_by_pk.delivery_driver.delivery_company_type as DeliveryServiceProviderType,
       deliveryCompanyId: response.delivery_order_by_pk.delivery_driver.delivery_company_id,
-      status: response.delivery_order_by_pk.delivery_driver.status,
+      status: response.delivery_order_by_pk.delivery_driver.status as AuthorizationStatus,
       userId: response.delivery_order_by_pk.delivery_driver.user.id,
       user: {
         id: response.delivery_order_by_pk.delivery_driver.user.id,
@@ -139,6 +145,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       delivery_driver: {
         id: true,
         delivery_driver_type: true,
+        status: true,
         user: {
           firebase_id: true,
           id: true,
@@ -178,6 +185,7 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
         id: d.delivery_driver.id,
         userId: d.delivery_driver.user.id,
         deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,
+        status: d.delivery_driver.status as AuthorizationStatus,
         user: {
           id: d.delivery_driver.user.id,
           firebaseId: d.delivery_driver.user.firebase_id,
