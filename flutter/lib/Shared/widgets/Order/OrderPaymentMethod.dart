@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:sizer/sizer.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
@@ -21,15 +22,16 @@ class OrderPaymentMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: EdgeInsets.only(top: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '${_i18n()["paymentMethod"]}',
+            style: Get.textTheme.bodyText1,
           ),
           const SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
             margin: EdgeInsets.zero,
@@ -39,8 +41,8 @@ class OrderPaymentMethod extends StatelessWidget {
                 children: [
                   Icon(
                     _getIcon() ?? Icons.payments,
-                    color: Color.fromRGBO(73, 73, 73, 1),
-                    size: 18,
+                    color: Colors.black,
+                    size: 13.sp,
                   ),
                   const SizedBox(
                     width: 8,
@@ -58,7 +60,7 @@ class OrderPaymentMethod extends StatelessWidget {
                     child: Text(
                       _getTitle(),
                       style: (stripeOrderPaymentInfo != null)
-                          ? Get.textTheme.bodyText2
+                          ? Get.textTheme.bodyText1
                           : Get.textTheme.bodyText1,
                     ),
                   ),

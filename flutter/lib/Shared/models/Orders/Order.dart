@@ -1,5 +1,4 @@
-import 'package:mezcalmos/Shared/cloudFunctions/model.dart'
-    as cloudFunctionModels;
+import 'package:flutter/material.dart'as mat;
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -101,7 +100,20 @@ extension ParseOrderTypeToString on OrderType {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+  mat.IconData toIcon() {
+    switch (this) {
+      case OrderType.Restaurant:
+        return mat.Icons.flatware;
+      case OrderType.Laundry:
+        return mat.Icons.local_laundry_service;
+      case OrderType.Taxi:
+        return mat.Icons.local_taxi;
 
+        break;
+      default:
+        return mat.Icons.watch_later;
+    }
+    }
   // cloudFunctionModels.OrderType toCloudFunctionsModel() {
   //   switch (this) {
   //     case OrderType.Laundry:

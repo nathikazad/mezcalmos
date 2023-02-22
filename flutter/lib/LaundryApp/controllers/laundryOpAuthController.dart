@@ -12,6 +12,8 @@ class LaundryOpAuthController extends GetxController {
   RxnInt _laundryId = RxnInt();
   int? get laundryId => _laundryId.value;
 
+  int? get detailsId => operator.value?.state.serviceProviderDetailsId;
+
   @override
   void onInit() {
     mezDbgPrint("LaundryOperator: calling handle state change first time");

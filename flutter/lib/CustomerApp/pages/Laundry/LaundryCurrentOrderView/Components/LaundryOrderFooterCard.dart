@@ -30,11 +30,12 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
-        height: 65,
-        margin: const EdgeInsets.only(bottom: 8),
+        height: 55,
+        width: double.infinity,
+        //   margin: const EdgeInsets.only(bottom: 8),
         child: (widget.viewController.order.value!.inProcess())
             ? Container(
-                margin: EdgeInsets.all(8),
+                //margin: EdgeInsets.all(8),
                 child: TextButton(
                   onPressed: () async {
                     await showConfirmationDialog(context, onYesClick: () async {
@@ -55,7 +56,7 @@ class _LaundryOrderFooterCardState extends State<LaundryOrderFooterCard> {
                     });
                   },
                   style: TextButton.styleFrom(
-                      foregroundColor: Colors.red,
+                      foregroundColor: Color(0xFFE21132),
                       backgroundColor: Color(0xFFF9D8D6)),
                   child: Container(
                     alignment: Alignment.center,

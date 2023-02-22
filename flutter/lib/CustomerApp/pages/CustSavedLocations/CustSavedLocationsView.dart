@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["SavedLocationView"];
@@ -70,29 +71,18 @@ class _SavedLocationViewState extends State<SavedLocationView> {
         } else if (viewController.savedLocs.value!.isNotEmpty) {
           return SingleChildScrollView(
               child: Column(children: <Widget>[
-            const SizedBox(height: 20),
+            SizedBox(height: 12),
             Container(
-              margin: const EdgeInsets.only(right: 16, bottom: 10, left: 16),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: Text(_i18n()["title"],
-                        style: txt.headline1!.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 12),
-                        textAlign: TextAlign.center),
-                  ),
-                  const Spacer(),
-                  Container(
-                    child: Text(
-                      "${getLocationNumbers()}",
-                      style: txt.headline4!
-                          .copyWith(fontWeight: FontWeight.w700, fontSize: 12),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
+              margin: EdgeInsets.only(right: 16, bottom: 8.sp, left: 16),
+              child: Text(
+                "${_i18n()["location"] + 's'}",
+                style: txt.displaySmall!.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
+            //   SizedBox(height: 0.1.h),
             Column(
               children: List.generate(
                   viewController.savedLocs.value!.length,
@@ -100,7 +90,6 @@ class _SavedLocationViewState extends State<SavedLocationView> {
                         savelocation: viewController.savedLocs.value![index],
                       )),
             ),
-            const SizedBox(height: 25),
           ]));
         } else {
           return SavedLocationISEmpty();

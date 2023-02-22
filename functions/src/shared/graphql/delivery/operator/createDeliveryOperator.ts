@@ -2,7 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 import { DeliveryOperator } from "../../../models/Generic/Delivery";
-import { AddOperatorDetails } from "../../../../delivery/addDeliveryOperator";
+import { AddOperatorDetails } from "../../../operator/addOperator";
 
 export async function createDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails): Promise<DeliveryOperator> {
     let chain = getHasura();
@@ -11,7 +11,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
         insert_delivery_operator_one: [{
             object: {
                 user_id: operatorUserId,
-                delivery_company_id: addOperatorDetails.deliveryCompanyId,
+                delivery_company_id: addOperatorDetails.serviceProviderId,
                 operator_details: {
                     data: {
                         status: AuthorizationStatus.AwaitingApproval,
@@ -29,6 +29,7 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
             }
         }, {
             id: true,
+            details_id: true,
         }]
     });
     if(mutationResponse.insert_delivery_operator_one == null) {
@@ -40,7 +41,8 @@ export async function createDeliveryOperator(operatorUserId: number, addOperator
     return {
         id: mutationResponse.insert_delivery_operator_one.id,
         userId: operatorUserId,
-        deliveryCompanyId: addOperatorDetails.deliveryCompanyId,
+        operatorDetailsId: mutationResponse.insert_delivery_operator_one.details_id,
+        deliveryCompanyId: addOperatorDetails.serviceProviderId,
         status: AuthorizationStatus.AwaitingApproval,
         notificationInfo: addOperatorDetails.notificationInfo,
         owner: false,

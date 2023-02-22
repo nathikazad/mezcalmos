@@ -27,11 +27,14 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - cost_per_km
-        - free_delivery_km_range
-        - free_delivery_minimum_cost
+        - customer_pickup
+        - delivery_available
+        - self_delivery
         - id
+        - cost_per_km
+        - free_delivery_minimum_cost
         - minimum_cost
+        - free_delivery_km_range
         - radius
       filter: {}
   - role: customer
@@ -60,11 +63,14 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - cost_per_km
-        - free_delivery_km_range
-        - free_delivery_minimum_cost
+        - customer_pickup
+        - delivery_available
+        - self_delivery
         - id
+        - cost_per_km
+        - free_delivery_minimum_cost
         - minimum_cost
+        - free_delivery_km_range
         - radius
       filter: {}
   - role: laundry_operator

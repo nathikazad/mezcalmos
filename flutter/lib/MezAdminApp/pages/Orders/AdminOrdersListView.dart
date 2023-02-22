@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 class AdmiOrdersListView extends StatefulWidget {

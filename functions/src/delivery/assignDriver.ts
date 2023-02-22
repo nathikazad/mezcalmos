@@ -3,7 +3,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { deliveryNewOrderMessage } from "./bgNotificationMessages";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDeliveryDriver";
-import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
+import {  DeliveryDriver, DeliveryOrder, NewDeliveryOrderNotification, DeliveryServiceProviderType, DeliveryOperator } from "../shared/models/Generic/Delivery";
 import { getDeliveryOrder } from "../shared/graphql/delivery/getDelivery";
 import { assignDeliveryDriver } from "../shared/graphql/delivery/driver/assignDeliverer";
 import { setDeliveryChatInfo } from "../shared/graphql/chat/setChatInfo";
@@ -14,7 +14,8 @@ import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/oper
 import { isMezAdmin } from "../shared/helper";
 import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
+import { Operator } from "../shared/models/Services/Service";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
 export interface AssignDriverDetails {
@@ -85,11 +86,10 @@ function sendNotificationToDriver(deliveryDriver: DeliveryDriver, deliveryOrder:
 }
 
 async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: number) {
-  let operator;
   switch (deliveryOrder.serviceProviderType) {
     case DeliveryServiceProviderType.DeliveryCompany:
-      operator = await getDeliveryOperatorByUserId(userId);
-      if (operator.status != AuthorizationStatus.Authorized || operator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
+      let deliveryOperator: DeliveryOperator = await getDeliveryOperatorByUserId(userId);
+      if (deliveryOperator.status != AuthorizationStatus.Authorized || deliveryOperator.deliveryCompanyId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"
@@ -97,8 +97,8 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
       }
       break;
     case DeliveryServiceProviderType.Restaurant:
-      operator = await getRestaurantOperatorByUserId(userId);
-      if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+      let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
+      if (restaurantOperator.status != AuthorizationStatus.Authorized || restaurantOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
         throw new HttpsError(
           "internal",
           "Invalid operator"
@@ -106,8 +106,8 @@ async function checkIfOperatorAuthorized(deliveryOrder: DeliveryOrder, userId: n
       }
       break;
       case DeliveryServiceProviderType.Laundry:
-        operator = await getLaundryOperatorByUserId(userId);
-        if (operator.status != AuthorizationStatus.Authorized || operator.serviceProviderId != deliveryOrder.serviceProviderId) {
+        let laundryOperator: Operator = await getLaundryOperatorByUserId(userId);
+        if (laundryOperator.status != AuthorizationStatus.Authorized || laundryOperator.serviceProviderId != deliveryOrder.serviceProviderId) {
           throw new HttpsError(
             "internal",
             "Invalid operator"

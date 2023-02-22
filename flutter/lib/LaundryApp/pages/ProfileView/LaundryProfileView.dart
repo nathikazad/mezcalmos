@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
-import 'package:mezcalmos/LaundryApp/components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/pages/ProfileView/controllers/LaundryProfileViewController.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -12,6 +11,7 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -55,7 +55,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
         onClick: (asTab) ? null : MezRouter.back,
       ),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
-      drawer: LaundryAppDrawer(),
+      drawer: MezSideMenu(),
       body: Obx(() {
         if (viewController.laundry != null) {
           return SingleChildScrollView(

@@ -143,7 +143,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               viewController.name.value = v;
             },
             style: Get.textTheme.bodyText2
-                ?.copyWith(fontWeight: FontWeight.w500, color: Colors.black),
+                ?.copyWith(color: blackColor),
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,

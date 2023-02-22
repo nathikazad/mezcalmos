@@ -1,4 +1,5 @@
 import 'package:get/get.dart'; // getX
+import 'package:mezcalmos/CustomerApp/pages/Common/CustReviewsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Common/PickLocationView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustCardsListView/CustCardsListView.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersListView.dart';
@@ -17,7 +18,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/
 // import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
-// import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
 // const String kWrapperRoute = '/wrapper';
@@ -40,6 +40,7 @@ const String kSavedLocations = '/savedLocations';
 const String kLaundriesListRoute = '/laundriesList';
 const String kSavedCards = '/savedCards';
 const String kSingleLaundryRoute = '/laundriesList/:laundryId';
+const String kserviceReviewsList = "/reviews/:serviceId";
 
 String getRestaurantRoute(
   int restaurantId,
@@ -48,8 +49,14 @@ String getRestaurantRoute(
       ":restaurantId", restaurantId.toString());
 }
 
-String getSingleLaundryRoute(String laundryId) {
-  return kSingleLaundryRoute.replaceFirst(":laundryId", laundryId);
+String getReviewsListRoute(
+  int serviceId,
+) {
+  return kserviceReviewsList.replaceFirst(":serviceId", serviceId.toString());
+}
+
+String getSingleLaundryRoute(int laundryId) {
+  return kSingleLaundryRoute.replaceFirst(":laundryId", "$laundryId");
 }
 
 String getItemRoute(int restaurantId, int itemId) {
@@ -173,6 +180,10 @@ class CustomerAppRoutes {
         GetPage(
           name: kLaundryCurrentOrder,
           page: () => CustLaundryOrderView(),
+        ),
+        GetPage(
+          name: kserviceReviewsList,
+          page: () => CustReviewsListView(),
         ),
       ] +
       SharedRoutes.routes;

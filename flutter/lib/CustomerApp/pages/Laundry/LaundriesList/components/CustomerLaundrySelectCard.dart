@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -16,7 +18,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
       {Key? key, required this.laundry, required this.shippingPrice})
       : super(key: key);
   final Laundry laundry;
-  final int shippingPrice;
+  final double shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry);
+            MezRouter.toNamed(getSingleLaundryRoute(laundry.info.hasuraId));
           },
           child: Container(
             child: _laundryInfoHeader(),
@@ -46,7 +48,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
-            width: 10,
+            width: 8,
           ),
           Flexible(
             flex: 5,
@@ -56,74 +58,90 @@ class CustomerLaundrySelectCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 5,
+                  height: 4,
                 ),
                 Text(
                   laundry.info.name,
-                  style: Get.textTheme.bodyLarge,
+                  style: Get.textTheme.bodyLarge?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 SizedBox(
-                  height: 7,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
                       flex: 6,
-                      fit: FlexFit.loose,
+                      fit: FlexFit.tight,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.delivery_dining,
-                            color: Colors.grey.shade800,
+                            color: Colors.black,
+                            size: 24,
+                          ),
+                          SizedBox(
+                            width: 4,
                           ),
                           Flexible(
                             child: ShippingCostComponent(
                               shippingCost: shippingPrice,
                               alignment: MainAxisAlignment.start,
+                              textStyle: Get.textTheme.bodyMedium?.copyWith(
+                                color: blackColor,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Flexible(
-                      flex: 4,
+                      flex: 6,
                       fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.watch_later,
-                            size: 18,
-                            color: Colors.grey.shade800,
+                            size: 20,
+                            color: Colors.black,
                           ),
                           Flexible(
                               child: Text(
-                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                                  style: Get.textTheme.bodyMedium)),
+                            ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
+                            style: Get.textTheme.bodyMedium?.copyWith(
+                              color: blackColor,
+                            ),
+                          )),
                         ],
                       ),
                     ),
-                    // Flexible(
-                    //   flex: 4,
-                    //   fit: FlexFit.tight,
-                    //   child: Row(
-                    //     crossAxisAlignment: CrossAxisAlignment.center,
-                    //     children: [
-                    //       Icon(
-                    //         Icons.north_east_sharp,
-                    //         size: 18,
-                    //         color: Colors.grey.shade800,
-                    //       ),
-                    //       Flexible(
-                    //           child: Text(
-                    //               '${laundry.getCheapestCategory.toPriceString()}/kg',
-                    //               style: Get.textTheme.bodyText2)),
-                    //     ],
-                    //   ),
-                    // ),
+                    if (laundry.getCheapestCategory != null)
+                      Flexible(
+                        flex: 6,
+                        fit: FlexFit.tight,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.north_east,
+                              size: 20,
+                              color: Colors.black,
+                            ),
+                            Flexible(
+                                child: Text(
+                              "${laundry.getCheapestCategory.toPriceString()}/Kg",
+                              style: Get.textTheme.bodyMedium?.copyWith(
+                                color: blackColor,
+                              ),
+                            )),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ],

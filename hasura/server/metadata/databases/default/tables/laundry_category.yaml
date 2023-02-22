@@ -22,6 +22,15 @@ insert_permissions:
         - position
         - store_id
 select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - name_id
+        - position
+        - store_id
+        - cost_by_kilo
+      filter: {}
   - role: customer
     permission:
       columns:

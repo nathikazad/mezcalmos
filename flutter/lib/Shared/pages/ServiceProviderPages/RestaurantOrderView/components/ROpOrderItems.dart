@@ -262,9 +262,7 @@ class _ROpOrderItemsState extends State<ROpOrderItems> {
                   (widget.item.unavailable)
                       ? "${_i18n()["itemUnav"]}".capitalizeFirstofEach
                       : '${_i18n()["markitemUnav"]}',
-                  style: Get.textTheme.bodyText2?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11.sp,
+                  style: Get.textTheme.headline6?.copyWith(
                       color:
                           widget.item.unavailable ? Colors.red : Colors.white),
                 ),

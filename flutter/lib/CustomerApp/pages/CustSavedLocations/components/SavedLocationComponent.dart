@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
@@ -27,7 +28,8 @@ class SavedLocationComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(5),
+      elevation: 1.0,
+      margin: const EdgeInsets.all(8),
       child: Container(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -41,39 +43,47 @@ class SavedLocationComponent extends StatelessWidget {
                   size: 18,
                 ),
                 SizedBox(
-                  width: 3,
+                  width: 4,
                 ),
                 Flexible(
-                    fit: FlexFit.tight,
-                    child: Text(
-                      savelocation.name,
-                      style: Get.textTheme.bodyText1,
-                    )),
+                  fit: FlexFit.tight,
+                  child: Text(savelocation.name.capitalizeFirst.toString(),
+                      style: Get.textTheme.headlineMedium),
+                ),
                 InkWell(
                   onTap: () {
                     Get.find<CustomerAuthController>()
                         .setAsDefaultLocation(savelocation);
                   },
-                  borderRadius: BorderRadius.circular(16),
+                  //borderRadius: BorderRadius.circular(16),
                   child: Ink(
+                    // height: 25,
+                    // width: Get.find<LanguageController>().userLanguageKey ==
+                    //         LanguageType.EN
+                    //     ? 20.w
+                    //     : 28.w,
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+                        EdgeInsets.only(bottom: 2.5, right: 8, left: 8, top: 1),
                     decoration: BoxDecoration(
                         color: (savelocation.defaultLocation)
                             ? primaryBlueColor
-                            : Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(16)),
+                            : backgroundShadeColor,
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
                     child: Text(
-                      "Default",
-                      style: Get.textTheme.bodyText2?.copyWith(
-                          color: (savelocation.defaultLocation)
-                              ? Colors.white
-                              : Colors.black),
+                      '${_i18n()["defaultAddressText"]}',
+                      style: TextStyle(
+                        fontFamily: "Montserrat",
+                        color: (savelocation.defaultLocation)
+                            ? Colors.white
+                            : Color(0xFF787878),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 11.sp,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 11,
                 ),
                 InkWell(
                   onTap: () {
@@ -88,21 +98,23 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
+                      // height: 3.h,
+                      // width: 3.h,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
+                        color: backgroundShadeColor,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Icon(
                           Icons.edit_outlined,
-                          color: Colors.black,
-                          size: 17.sp,
+                          color: Color(0xFF787878),
+                          size: 15,
                         ),
                       )),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 11,
                 ),
                 InkWell(
                   onTap: () {
@@ -110,7 +122,9 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      padding: const EdgeInsets.all(5),
+                      // height: 18,
+                      // width: 3.h,
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: offRedColor,
                         shape: BoxShape.circle,
@@ -118,17 +132,30 @@ class SavedLocationComponent extends StatelessWidget {
                       child: Center(
                         child: Icon(
                           Icons.delete_outline,
-                          color: Colors.red,
-                          size: 17.sp,
+                          color: Color(0xFFE21132),
+                          size: 15,
                         ),
                       )),
                 ),
               ],
             ),
+            SizedBox(
+              height: 4,
+            ),
             Container(
-                alignment: Alignment.centerLeft,
-                margin: const EdgeInsets.only(top: 5),
-                child: Text(savelocation.location.address))
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(top: 5),
+              child: Text(
+                savelocation.location.address,
+                style: Get.textTheme.titleMedium?.copyWith(
+                  color: offShadeGreyColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
           ],
         ),
       ),

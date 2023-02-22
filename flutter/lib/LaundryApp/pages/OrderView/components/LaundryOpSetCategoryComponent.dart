@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/SetWeightBottomSheet.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -207,7 +206,7 @@ class _LaundyOpSetCategoryComponentState
             ),
           ),
           Text(
-            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
+            "\$${item.cost} x ${item.weight}KG = \$${item.weighedCost.round()}",
           ),
           if (widget.viewController.order.isAtLaundry())
             Padding(

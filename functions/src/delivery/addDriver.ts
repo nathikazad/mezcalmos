@@ -7,19 +7,21 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator } from "../shared/models/Services/Service";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 
 export interface AddDriverDetails {
     deliveryCompanyId: number,
     notificationInfo?: NotificationInfo,
+    deliveryServiceProviderType: DeliveryServiceProviderType
 }
 
-export async function addDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ) {
+export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
     //first mutation
     //second notify operators of the company
     
-    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, deliveryServiceProviderType);
+    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
 
-    notify(deliveryDriver, deliveryServiceProviderType, addDriverDetails);
+    notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
 }
 
 async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: DeliveryServiceProviderType, addDriverDetails: AddDriverDetails) {
@@ -58,14 +60,28 @@ async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: Deliv
             });
             break;
         case DeliveryServiceProviderType.Restaurant:
-            let operators: Operator[] = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
-            operators.forEach((o) => {
+            let restaurantOperators: Operator[] = await getRestaurantOperators(addDriverDetails.deliveryCompanyId);
+            restaurantOperators.forEach((o) => {
                 if (o.owner && o.user) {
                     pushNotification(
                         o.user.firebaseId,
                         notification,
                         o.notificationInfo,
                         ParticipantType.RestaurantOperator,
+                        o.user.language
+                    );
+                }
+            });
+            break;
+            case DeliveryServiceProviderType.Laundry:
+            let laundryOperators: Operator[] = await getLaundryOperators(addDriverDetails.deliveryCompanyId);
+            laundryOperators.forEach((o) => {
+                if (o.owner && o.user) {
+                    pushNotification(
+                        o.user.firebaseId,
+                        notification,
+                        o.notificationInfo,
+                        ParticipantType.LaundryOperator,
                         o.user.language
                     );
                 }

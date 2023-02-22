@@ -2,16 +2,11 @@ import { createRestaurantOperator } from "../shared/graphql/restaurant/operators
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getUser } from "../shared/graphql/user/getUser"
 import { ParticipantType } from "../shared/models/Generic/Chat"
-import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
+import { AddOperatorDetails } from "../shared/operator/addOperator"
 import { pushNotification } from "../utilities/senders/notifyUser"
 
-export interface AddOperatorDetails {
-    restaurantId: number,
-    notificationInfo?: NotificationInfo,
-    appVersion?: string
-}
 export async function addRestaurantOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {
   let operatorUserInfo: UserInfo = await getUser(operatorUserId);
   
@@ -21,7 +16,7 @@ export async function addRestaurantOperator(operatorUserId: number, addOpDetails
     foreground: <AuthorizeOperatorNotification>{
       newOperatorName: operatorUserInfo.name,
       newOperatorImage: operatorUserInfo.image,
-      serviceProviderId: addOpDetails.restaurantId,
+      serviceProviderId: addOpDetails.serviceProviderId,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.AuthorizeOperator,
       notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
@@ -38,7 +33,7 @@ export async function addRestaurantOperator(operatorUserId: number, addOpDetails
     },
     linkUrl: `/`
   }
-  let operators = await getRestaurantOperators(addOpDetails.restaurantId);
+  let operators = await getRestaurantOperators(addOpDetails.serviceProviderId);
   operators.forEach((o) => {
     if(o.owner && o.user) {
       pushNotification(

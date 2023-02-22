@@ -23,13 +23,14 @@ class CartItemsHeader extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Row(
             children: <Widget>[
               Expanded(
                 child: Container(
                   child: Text(
                     "${_i18n()["inCart"]}",
-                    style: txt.headline2,
+                    style: txt.bodyText1
                   ),
                 ),
               ),
@@ -66,6 +67,7 @@ class CartItemsHeader extends StatelessWidget {
                           child: const Icon(
                             Icons.delete_outline,
                             size: 22,
+                            color: Color(0xFF787878),
                           ),
                         ),
                       )

@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings['CustomerApp']["pages"]
@@ -23,7 +24,7 @@ class OrderRestaurantCard extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 20,
+          height: 15,
         ),
         Container(
           alignment: Alignment.centerLeft,
@@ -34,7 +35,7 @@ class OrderRestaurantCard extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 10,
+          height: 4,
         ),
         Card(
           child: Container(
@@ -55,9 +56,12 @@ class OrderRestaurantCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          order.restaurant.name,
-                          style: Get.textTheme.bodyText1,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: Text(
+                            order.restaurant.name,
+                            style: Get.textTheme.headline4
+                          ),
                         ),
                         SizedBox(
                           height: 5,
@@ -66,11 +70,11 @@ class OrderRestaurantCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.place,
-                              size: 18,
+                              size: 13.sp,
                               color: primaryBlueColor,
                             ),
                             SizedBox(
-                              width: 5,
+                              width: 2,
                             ),
                             Flexible(
                               flex: 8,

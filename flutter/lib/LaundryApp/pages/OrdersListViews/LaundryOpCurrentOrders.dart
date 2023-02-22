@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/controllers/LaundryOpCurrentOrdersController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -13,8 +12,9 @@ import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersOnOff.dart
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -59,7 +59,7 @@ class _LaundryOpCurrentOrdersListViewState
           showNotifications: true,
         ),
         key: Get.find<SideMenuDrawerController>().getNewKey(),
-        drawer: LaundryAppDrawer(),
+        drawer: MezSideMenu(),
         body: Obx(() {
           if (viewController.initalized.isFalse) {
             return MezLogoAnimation(

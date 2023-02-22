@@ -215,8 +215,8 @@ Future<void> showConfirmationDialog(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  height: 66,
-                  width: 66,
+                  height: 55,
+                  width: 55,
                   child: Icon(
                     Icons.close,
                     color: Color.fromRGBO(252, 89, 99, 1),
@@ -227,7 +227,7 @@ Future<void> showConfirmationDialog(
                     shape: BoxShape.circle,
                   ),
                 ),
-                SizedBox(height: 18),
+                SizedBox(height: 4),
                 Text(
                   title ?? "${_i18n()["cancelOrder"]}",
                   textAlign: TextAlign.center,
@@ -237,30 +237,28 @@ Future<void> showConfirmationDialog(
                     fontSize: 24,
                   ),
                 ),
-                SizedBox(height: 11),
-                Column(
-                  children: [
-                    Text(
-                      helperText ?? '${_i18n()["cancelConfirmationText"]}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      '${_i18n()["subtitle"]}',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Nunito',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 18),
+                helperText != ""
+                    ? Column(
+                        children: [
+                          SizedBox(height: 4),
+                          Text(
+                            helperText ??
+                                '${_i18n()["cancelConfirmationText"]}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+                SizedBox(height: 8),
+                Text('${_i18n()["subtitle"]}',
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.headlineLarge),
+                SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
@@ -302,7 +300,7 @@ Future<void> showConfirmationDialog(
                     ),
                   ),
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 8),
                 GestureDetector(
                   onTap: () {
                     onNoClick?.call();
@@ -314,10 +312,10 @@ Future<void> showConfirmationDialog(
                       secondaryButtonText ?? '${_i18n()["no"]}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Color.fromRGBO(120, 120, 120, 1),
+                        color: Color(0XFF787878),
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
-                        fontSize: 16.99,
+                        fontSize: 16.34,
                       ),
                     ),
                   ),
@@ -460,7 +458,7 @@ Future<void> showStatusInfoDialog(
                               color: Color.fromRGBO(120, 120, 120, 1),
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
-                              fontSize: 16.99,
+                              fontSize: 16.34,
                             ),
                           ),
                         ),
@@ -507,7 +505,7 @@ Future<int?> showReviewDialog(
                   color: Colors.white,
                 )),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 10),
               Text(
                 "${_i18n()["review"]["title"]}",
                 textAlign: TextAlign.center,
@@ -517,17 +515,18 @@ Future<int?> showReviewDialog(
                   fontSize: 16.sp,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Text(
                 "${_i18n()["review"]["subtitle"]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
                 ),
               ),
               RatingBar.builder(
+                unratedColor: unratedStarColor,
                 initialRating: 3,
                 minRating: 1,
                 direction: Axis.horizontal,
@@ -551,14 +550,17 @@ Future<int?> showReviewDialog(
                 controller: controller,
                 style: TextStyle(
                   fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
+                    fillColor: unratedStarColor,
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
+                textStyle: Get.textTheme.headline4?.copyWith(
+                  color: primaryBlueColor,
+                ),
                 label: "${_i18n()["review"]["send"]}",
                 height: 45,
                 textColor: primaryBlueColor,
@@ -585,7 +587,7 @@ Future<int?> showReviewDialog(
                   MezRouter.popDialog(result: reviewId, closeOverlays: true);
                 },
               ),
-              SizedBox(height: 12),
+              SizedBox(height: 10),
               InkWell(
                 onTap: () {
                   MezRouter.back(closeOverlays: true);
@@ -596,11 +598,8 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(120, 120, 120, 1),
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16.99,
+                    style: Get.textTheme.headline4?.copyWith(
+                      color: offShadeGreyColor,
                     ),
                   ),
                 ),

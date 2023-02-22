@@ -1356,7 +1356,7 @@ extension ClientExtension$Query$getServiceDetails on graphql.GraphQLClient {
 
 class Query$getServiceDetails$service_provider_details_by_pk {
   Query$getServiceDetails$service_provider_details_by_pk({
-    this.accepted_payments,
+    required this.accepted_payments,
     required this.approved,
     required this.creation_time,
     this.description_id,
@@ -1397,8 +1397,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
     return Query$getServiceDetails$service_provider_details_by_pk(
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       approved: (l$approved as bool),
       creation_time: (l$creation_time as String),
       description_id: (l$description_id as int?),
@@ -1426,7 +1425,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
     );
   }
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final bool approved;
 
@@ -1468,8 +1467,7 @@ class Query$getServiceDetails$service_provider_details_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$creation_time = creation_time;
@@ -1740,9 +1738,10 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk<TRes>
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceDetails$service_provider_details_by_pk(
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -1905,7 +1904,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
       details_submitted: (l$details_submitted as bool),
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
@@ -1923,7 +1922,7 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
 
   final bool payouts_enabled;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final int id;
 
@@ -1946,7 +1945,8 @@ class Query$getServiceDetails$service_provider_details_by_pk$stripe_info {
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$status = status;
@@ -2078,7 +2078,7 @@ abstract class CopyWith$Query$getServiceDetails$service_provider_details_by_pk$s
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,
@@ -2135,7 +2135,7 @@ class _CopyWithImpl$Query$getServiceDetails$service_provider_details_by_pk$strip
                 : (payouts_enabled as bool),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
@@ -2165,7 +2165,7 @@ class _CopyWithStubImpl$Query$getServiceDetails$service_provider_details_by_pk$s
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,
@@ -3438,7 +3438,7 @@ extension ClientExtension$Mutation$updateServiceDetails
 
 class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
   Mutation$updateServiceDetails$update_service_provider_details_by_pk({
-    this.accepted_payments,
+    required this.accepted_payments,
     required this.approved,
     required this.creation_time,
     this.description_id,
@@ -3479,8 +3479,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     final l$description = json['description'];
     final l$$__typename = json['__typename'];
     return Mutation$updateServiceDetails$update_service_provider_details_by_pk(
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       approved: (l$approved as bool),
       creation_time: (l$creation_time as String),
       description_id: (l$description_id as int?),
@@ -3509,7 +3508,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
     );
   }
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final bool approved;
 
@@ -3551,8 +3550,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$approved = approved;
     _resultData['approved'] = l$approved;
     final l$creation_time = creation_time;
@@ -3832,9 +3830,10 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateServiceDetails$update_service_provider_details_by_pk(
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         approved: approved == _undefined || approved == null
             ? _instance.approved
             : (approved as bool),
@@ -4000,7 +3999,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
       details_submitted: (l$details_submitted as bool),
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
@@ -4018,7 +4017,7 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
 
   final bool payouts_enabled;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final int id;
 
@@ -4041,7 +4040,8 @@ class Mutation$updateServiceDetails$update_service_provider_details_by_pk$stripe
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$status = status;
@@ -4174,7 +4174,7 @@ abstract class CopyWith$Mutation$updateServiceDetails$update_service_provider_de
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,
@@ -4233,7 +4233,7 @@ class _CopyWithImpl$Mutation$updateServiceDetails$update_service_provider_detail
                 : (payouts_enabled as bool),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
@@ -4263,7 +4263,7 @@ class _CopyWithStubImpl$Mutation$updateServiceDetails$update_service_provider_de
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,
@@ -7236,7 +7236,7 @@ extension ClientExtension$Query$getServicePaymentInfo on graphql.GraphQLClient {
 
 class Query$getServicePaymentInfo$service_provider_details_by_pk {
   Query$getServicePaymentInfo$service_provider_details_by_pk({
-    this.accepted_payments,
+    required this.accepted_payments,
     this.stripe_info,
     required this.$__typename,
   });
@@ -7247,8 +7247,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk {
     final l$stripe_info = json['stripe_info'];
     final l$$__typename = json['__typename'];
     return Query$getServicePaymentInfo$service_provider_details_by_pk(
-      accepted_payments:
-          l$accepted_payments == null ? null : mapFromJson(l$accepted_payments),
+      accepted_payments: mapFromJson(l$accepted_payments),
       stripe_info: l$stripe_info == null
           ? null
           : Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info
@@ -7257,7 +7256,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk {
     );
   }
 
-  final dynamic? accepted_payments;
+  final dynamic accepted_payments;
 
   final Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info?
       stripe_info;
@@ -7267,8 +7266,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk {
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
     final l$accepted_payments = accepted_payments;
-    _resultData['accepted_payments'] =
-        l$accepted_payments == null ? null : mapToJson(l$accepted_payments);
+    _resultData['accepted_payments'] = mapToJson(l$accepted_payments);
     final l$stripe_info = stripe_info;
     _resultData['stripe_info'] = l$stripe_info?.toJson();
     final l$$__typename = $__typename;
@@ -7373,9 +7371,10 @@ class _CopyWithImpl$Query$getServicePaymentInfo$service_provider_details_by_pk<
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServicePaymentInfo$service_provider_details_by_pk(
-        accepted_payments: accepted_payments == _undefined
-            ? _instance.accepted_payments
-            : (accepted_payments as dynamic?),
+        accepted_payments:
+            accepted_payments == _undefined || accepted_payments == null
+                ? _instance.accepted_payments
+                : (accepted_payments as dynamic),
         stripe_info: stripe_info == _undefined
             ? _instance.stripe_info
             : (stripe_info
@@ -7451,7 +7450,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
       details_submitted: (l$details_submitted as bool),
       email: (l$email as String?),
       payouts_enabled: (l$payouts_enabled as bool),
-      requirements: (l$requirements as String?),
+      requirements: l$requirements == null ? null : mapFromJson(l$requirements),
       id: (l$id as int),
       status: (l$status as String),
       stripe_id: (l$stripe_id as String),
@@ -7469,7 +7468,7 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
 
   final bool payouts_enabled;
 
-  final String? requirements;
+  final dynamic? requirements;
 
   final int id;
 
@@ -7492,7 +7491,8 @@ class Query$getServicePaymentInfo$service_provider_details_by_pk$stripe_info {
     final l$payouts_enabled = payouts_enabled;
     _resultData['payouts_enabled'] = l$payouts_enabled;
     final l$requirements = requirements;
-    _resultData['requirements'] = l$requirements;
+    _resultData['requirements'] =
+        l$requirements == null ? null : mapToJson(l$requirements);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$status = status;
@@ -7625,7 +7625,7 @@ abstract class CopyWith$Query$getServicePaymentInfo$service_provider_details_by_
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,
@@ -7684,7 +7684,7 @@ class _CopyWithImpl$Query$getServicePaymentInfo$service_provider_details_by_pk$s
                 : (payouts_enabled as bool),
         requirements: requirements == _undefined
             ? _instance.requirements
-            : (requirements as String?),
+            : (requirements as dynamic?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         status: status == _undefined || status == null
             ? _instance.status
@@ -7714,7 +7714,7 @@ class _CopyWithStubImpl$Query$getServicePaymentInfo$service_provider_details_by_
     bool? details_submitted,
     String? email,
     bool? payouts_enabled,
-    String? requirements,
+    dynamic? requirements,
     int? id,
     String? status,
     String? stripe_id,

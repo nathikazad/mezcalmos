@@ -25,10 +25,10 @@ class OrderScheduledTimeCard extends StatelessWidget {
           children: [
             Text(
               '${_i18n()["title"]}',
-              style: titleTextStyle,
+              style: Get.textTheme.headline6,
             ),
             const SizedBox(
-              height: 10,
+              height: 4,
             ),
             Card(
               margin: EdgeInsets.zero,
@@ -37,7 +37,7 @@ class OrderScheduledTimeCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      Icons.schedule_rounded,
+                      Icons.watch_later,
                       color: Colors.black,
                       size: 18,
                     ),

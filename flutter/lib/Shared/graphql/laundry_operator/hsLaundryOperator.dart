@@ -24,6 +24,8 @@ Future<Operator?> get_laundry_operator({required int userId}) async {
         res.parsedData!.laundry_operator.first;
     return Operator(
         state: OperatorState(
+                    serviceProviderDetailsId: data.store.details_id,
+
             operatorState: data.operator_details.status.toAgentStatus(),
             owner: data.operator_details.owner,
             serviceProviderId: data.store_id),

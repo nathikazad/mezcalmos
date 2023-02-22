@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/components/AppBar.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/graphql/laundry/hsLaundry.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:sizer/sizer.dart';
@@ -25,18 +26,16 @@ class SingleLaundryScreen extends StatefulWidget {
 }
 
 class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
-  String? laundryId;
+  int? laundryId;
   Rxn<Laundry> laundry = Rxn();
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
   @override
   void initState() {
-    // TODO: implement initState
-    laundryId = Get.parameters["laundryId"];
+    laundryId = int.tryParse(Get.parameters["laundryId"] ?? "");
     if (laundryId != null) {
-      // laundryController
-      //     .getLaundry(laundryId!)
-      //     .then((Laundry value) => laundry.value = value);
+      Future(() async =>
+          laundry.value = await get_laundry_store_by_id(id: laundryId!));
     } else {
       MezRouter.back();
     }
@@ -50,7 +49,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
       () {
         if (laundry.value != null) {
           return Scaffold(
-            appBar: CustomerAppBar(
+            appBar: mezcalmosAppBar(
+              AppBarLeftButtonType.Back,
+              onClick: MezRouter.back,
               title: laundry.value?.info.name,
             ),
             body: SingleChildScrollView(
@@ -128,8 +129,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   Widget _sendMyLaundryButton() {
     return Container(
       height: 60,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [Colors.purple, primaryBlueColor])),
+      decoration: BoxDecoration(color: primaryBlueColor),
       child: TextButton(
         style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(),

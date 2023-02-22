@@ -41,8 +41,9 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
+      //color: Colors.red,
       // width: Get.width * 0.7,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +101,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   "${widget.itemName}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: txt.headline3,
+                  style: Get.textTheme.bodyText1,
                 ),
                 SizedBox(
                   height: 3,

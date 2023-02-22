@@ -100,18 +100,24 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   LaundyOpSetCategoryComponent(
                     viewController: viewController,
                   ),
-
+                  OrderNoteCard(note: viewController.order.notes),
+                  SizedBox(
+                    height: 20,
+                  ),
                   _totalCostcomponent(context),
 
-                  OrderNoteCard(note: viewController.order.notes),
-                  MezButton(
-                    label: "Cancel order",
-                    backgroundColor: offRedColor,
-                    textColor: Colors.red,
-                    onClick: () async {
-                      viewController.cancelOrder();
-                    },
-                  )
+                  SizedBox(
+                    height: 35,
+                  ),
+                  if (viewController.order.inProcess())
+                    MezButton(
+                      label: "Cancel order",
+                      backgroundColor: offRedColor,
+                      textColor: Colors.red,
+                      onClick: () async {
+                        await viewController.cancelOrder();
+                      },
+                    )
                 ],
               ),
             );
@@ -156,38 +162,19 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   }
 
   Widget? _setReadyForDeliveryButton() {
-    final RxBool isClicked = RxBool(false);
     if (viewController.order.isAtLaundry()) {
       return Obx(
         () => Container(
           margin: const EdgeInsets.only(bottom: 20),
-          child: TextButton(
-              onPressed: (viewController.order.costsByType != null &&
-                      viewController.order.costsByType!.lineItems.isNotEmpty)
-                  ? () {
-                      // isClicked.value = true;
-                      // controller
-                      //     .setAsReadyForDelivery(
-                      //         viewController.order.orderId.toString())
-                      //     .whenComplete(() => isClicked.value = false);
-                    }
-                  : null,
-              style: TextButton.styleFrom(
-                  backgroundColor: (viewController.order.costsByType != null &&
-                          viewController
-                              .order.costsByType!.lineItems.isNotEmpty)
-                      ? primaryBlueColor
-                      : Colors.grey),
-              child: Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                child: (isClicked.isTrue)
-                    ? CircularProgressIndicator(
-                        color: Colors.white,
-                      )
-                    : Text("${_i18n()["orderReady"]}"),
-              )),
+          child: MezButton(
+            label: "${_i18n()["orderReady"]}",
+            onClick: (viewController.order.costsByType != null &&
+                    viewController.order.costsByType!.lineItems.isNotEmpty)
+                ? () async {
+                    await viewController.sertOrderReady();
+                  }
+                : null,
+          ),
         ),
       );
     }

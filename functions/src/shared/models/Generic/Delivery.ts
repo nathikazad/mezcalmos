@@ -56,7 +56,7 @@ export interface DeliveryDriver {
   userId: number;
   deliveryCompanyType?: DeliveryServiceProviderType;
   deliveryCompanyId?: number;
-  status?: string;
+  status: AuthorizationStatus;
   appVersion?: string;
   currentLocation?: Location;
   user?: UserInfo;
@@ -68,6 +68,7 @@ export interface DeliveryDriver {
 export interface DeliveryOperator {
     id: number,
     userId: number,
+    operatorDetailsId: number,
     deliveryCompanyId: number,
     status: AuthorizationStatus,
     owner: boolean,

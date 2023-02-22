@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 import 'package:sizer/sizer.dart';
 
 //

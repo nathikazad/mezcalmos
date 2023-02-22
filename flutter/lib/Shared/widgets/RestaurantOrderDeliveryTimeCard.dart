@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-
+import 'package:sizer/sizer.dart';
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["widgets"]
     ["RestaurantOrderDeliveryTimeCard"];
@@ -24,11 +24,11 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 10,
+            height: 15,
           ),
           Text('${_i18n()["dvTime"]} :'),
           SizedBox(
-            height: 10,
+            height: 4,
           ),
           Card(
             margin: margin ?? const EdgeInsets.only(bottom: 20),
@@ -41,7 +41,7 @@ class RestaurantOrderDeliveryTimeCard extends StatelessWidget {
                     Icon(
                       Icons.watch_later,
                       color: Colors.black,
-                      size: 18,
+                      size: 13.sp,
                     ),
                     SizedBox(
                       width: 10,

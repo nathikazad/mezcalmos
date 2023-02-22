@@ -9,8 +9,8 @@ import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/c
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
 import 'package:sizer/sizer.dart';
 
-dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
-    ['ServicePaymentsView'];
+dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
+    ['pages']['ROpReviewsView'];
 
 class ServiceReviewsView extends StatefulWidget {
   const ServiceReviewsView({

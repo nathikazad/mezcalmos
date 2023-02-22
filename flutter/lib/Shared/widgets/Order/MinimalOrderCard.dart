@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrderStatus.dart';
+import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -17,9 +19,11 @@ class MinimalOrderCard extends StatefulWidget {
     Key? key,
     required this.order,
     required this.onTap,
+    this.forCustomer = false,
   }) : super(key: key);
 
   final MinimalOrder order;
+  final bool forCustomer;
   final Function()? onTap;
   @override
   State<MinimalOrderCard> createState() => _MinimalOrderCardState();
@@ -41,8 +45,6 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  //  _orderImageComponent(),
-                  // const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -55,7 +57,16 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                         SizedBox(
                           height: 5,
                         ),
-                        if (widget.order.toAdress != null)
+                        if (widget.forCustomer &&
+                            widget.order.deliveryCost != null)
+                          Row(
+                            children: [
+                              Icon(Icons.delivery_dining),
+                              Text(widget.order.deliveryCost!.toPriceString())
+                            ],
+                          ),
+                        if (widget.order.toAdress != null &&
+                            widget.forCustomer == false)
                           Text(
                             widget.order.toAdress!.inCaps,
                             style: Get.textTheme.bodyMedium,
@@ -72,15 +83,35 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       if (widget.order.image != null &&
                           widget.order.image!.isURL &&
                           showImage)
-                        CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              CachedNetworkImageProvider(widget.order.image!),
-                          onBackgroundImageError: (Object e, StackTrace? stk) {
-                            setState(() {
-                              showImage = false;
-                            });
-                          },
+                        Stack(
+                          alignment: Alignment.center,
+                          clipBehavior: Clip.none,
+                          children: [
+                            CircleAvatar(
+                              radius: 25,
+                              backgroundImage: CachedNetworkImageProvider(
+                                  widget.order.image!),
+                              onBackgroundImageError:
+                                  (Object e, StackTrace? stk) {
+                                setState(() {
+                                  showImage = false;
+                                });
+                              },
+                            ),
+                            if (widget.forCustomer)
+                              Positioned(
+                                left: -35,
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: primaryBlueColor,
+                                  child: Icon(
+                                    widget.order.orderType.toIcon(),
+                                    size: 25,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                     ],
                   )
@@ -91,16 +122,22 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
               Row(
                 //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Image.asset(
-                    aMoney,
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.contain,
-                  ),
-                  Text(
-                    " \$${widget.order.totalCost}",
-                    style: Get.textTheme.bodyLarge,
-                  ),
+                  if (widget.order.totalCost != null)
+                    Image.asset(
+                      aMoney,
+                      width: 20,
+                      height: 20,
+                      fit: BoxFit.contain,
+                    ),
+                  if (widget.order.totalCost != null)
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                  if (widget.order.totalCost != null)
+                    Text(
+                      widget.order.totalCost?.toPriceString() ?? "_",
+                      style: Get.textTheme.bodyLarge,
+                    ),
                   Spacer(),
                   getOrderWidget()
                 ],
@@ -118,7 +155,7 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.3),
+              color: cancelledBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["canceled"]}',
@@ -131,24 +168,24 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.green.withOpacity(0.3),
+              color: deliveredBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["delivered"]}',
             style: Get.textTheme.bodyLarge
-                ?.copyWith(color: Colors.green, fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFF6779FE), fontSize: 10.sp),
           ),
         );
       default:
         return Container(
           padding: const EdgeInsets.all(7),
           decoration: BoxDecoration(
-              color: Colors.amber.withOpacity(0.3),
+              color: waitingBackgroundColor,
               borderRadius: BorderRadius.circular(18)),
           child: Text(
             '${_i18n()["waiting"]}',
             style: Get.textTheme.bodyLarge
-                ?.copyWith(color: Colors.amber, fontSize: 10.sp),
+                ?.copyWith(color: Color(0xFFFF9900), fontSize: 10.sp),
           ),
         );
     }

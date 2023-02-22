@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
+import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -11,6 +13,7 @@ import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
+import 'package:sizer/sizer.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -46,25 +49,20 @@ class RestaurantInfoTab extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 15,
+              ),
               Container(
                 child: Text(
                   '${_i18n()["description"]}',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(
-                  top: 10,
-                ),
-                child: Text(restaurant.info.description?[userLanguage] ?? ""),
-              ),
+              Text(restaurant.info.description?[userLanguage] ?? ""),
             ],
           ),
         if (restaurant.schedule != null)
           MezServiceOpenHours(schedule: restaurant.schedule!),
-        SizedBox(
-          height: 20,
-        ),
         if (restaurant.info.location != null)
           ServiceLocationCard(
             location: restaurant.info.location,
@@ -74,22 +72,21 @@ class RestaurantInfoTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Row(
                 children: [
                   Text(
                     '${_i18n()["reviews"]}',
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
-                  Spacer(),
                   Icon(
                     Icons.star_border_outlined,
                     color: primaryBlueColor,
                   ),
                   Text(
                     restaurant.rate!.toStringAsFixed(1),
-                    style: Get.textTheme.bodyText1
+                    style: Get.textTheme.bodyLarge
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   const SizedBox(
@@ -99,14 +96,30 @@ class RestaurantInfoTab extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
                       "(${restaurant.reviews.length.toString()})",
-                      style: Get.textTheme.bodyText2,
+                      style: Get.textTheme.bodyMedium,
+                    ),
+                  ),
+                  Spacer(),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: () {
+                      MezRouter.toNamed(
+                          getReviewsListRoute(restaurant.restaurantId));
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "View all",
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
                     ),
                   )
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 15,
+              // ),
               ListView.builder(
                   padding: EdgeInsets.zero,
                   physics: NeverScrollableScrollPhysics(),
@@ -116,7 +129,7 @@ class RestaurantInfoTab extends StatelessWidget {
                     return ReviewCard(
                       review: restaurant.reviews[index],
                     );
-                  })
+                  }),
             ],
           )
       ],
@@ -125,7 +138,6 @@ class RestaurantInfoTab extends StatelessWidget {
 
   Widget _topBarInfo() {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -133,42 +145,37 @@ class RestaurantInfoTab extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                Text(
-                  _getDollarsSign(),
-                  style: Get.textTheme.bodyText1?.copyWith(
-                    color: Colors.grey.shade800,
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
                 Icon(
                   Icons.delivery_dining,
-                  color: Colors.grey.shade800,
+                  size: 3.4.h,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  width: 1.w,
                 ),
                 Flexible(
                   child: ShippingCostComponent(
-                    shippingCost: controller.basShippingPrice.value,
-                    alignment: MainAxisAlignment.start,
-                    textStyle: Get.textTheme.bodyText1?.copyWith(
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
+                      shippingCost: controller.basShippingPrice.value,
+                      alignment: MainAxisAlignment.start,
+                      textStyle: Get.textTheme.bodyLarge),
                 ),
-                const SizedBox(
-                  width: 15,
+                SizedBox(
+                  width: 4.w,
                 ),
                 Icon(
                   Icons.payments_sharp,
-                  color: Colors.grey.shade800,
+                  size: 3.4.h,
+                  color: Colors.black,
                 ),
-                if (restaurant.paymentInfo?.acceptCard == true)
-                  Padding(
-                      padding: const EdgeInsets.only(left: 5),
-                      child: Icon(
-                        Icons.credit_card,
-                        color: Colors.grey.shade800,
-                      )),
+                SizedBox(
+                  width: 2.w,
+                ),
+                if (restaurant.paymentInfo?.acceptCard == false)
+                  Icon(
+                    Icons.credit_card,
+                    size: 3.4.h,
+                    color: Colors.black,
+                  )
               ],
             ),
           ),
@@ -196,7 +203,7 @@ class RestaurantInfoTab extends StatelessWidget {
           ),
           Text(
             restaurant.rate!.toStringAsFixed(1),
-            style: Get.textTheme.bodyText1?.copyWith(color: Colors.white),
+            style: Get.textTheme.bodyLarge?.copyWith(color: Colors.white),
           ),
           const SizedBox(
             width: 3,
@@ -205,7 +212,7 @@ class RestaurantInfoTab extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 2),
             child: Text(
               "(${restaurant.reviews.length.toString()})",
-              style: Get.textTheme.bodyText2?.copyWith(color: Colors.white),
+              style: Get.textTheme.bodyMedium?.copyWith(color: Colors.white),
             ),
           )
         ],

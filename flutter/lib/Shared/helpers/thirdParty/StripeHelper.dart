@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-
+import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
 //
@@ -392,18 +392,41 @@ Future<dynamic> addCardSheet() {
                               ?.copyWith(fontSize: 17.sp),
                         ),
                       ),
-                      Text(
-                        '${_i18n()["powered"]}',
-                      ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Image.asset(
-                        "assets/images/shared/stripeLogo.png",
-                        width: 50,
-                        height: 20,
-                        fit: BoxFit.contain,
-                      ),
+                      Get.find<LanguageController>().userLanguageKey ==
+                              LanguageType.EN
+                          ? Row(
+                              children: [
+                                Text(
+                                  '${_i18n()["powered"]}',
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Image.asset(
+                                  "assets/images/shared/stripeLogo.png",
+                                  width: 50,
+                                  height: 20,
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${_i18n()["powered"]}',
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Image.asset(
+                                  "assets/images/shared/stripeLogo.png",
+                                  width: 50,
+                                  height: 20,
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
+                            ),
                       SizedBox(
                         width: 10,
                       )

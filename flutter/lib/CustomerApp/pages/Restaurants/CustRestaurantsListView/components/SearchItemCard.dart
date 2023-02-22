@@ -48,14 +48,14 @@ class SearchItemCard extends StatelessWidget {
                     Text(
                       item.name[userLanguage]!,
                       maxLines: 2,
-                      style: Get.textTheme.headline3?.copyWith(fontSize: 14.sp),
+                      style: Get.textTheme.bodyText1,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
                       item.cost.toPriceString(),
-                      style: Get.textTheme.headline3?.copyWith(fontSize: 14.sp),
+                      style: Get.textTheme.bodyText1,
                     ),
                     Spacer(),
                     Divider(

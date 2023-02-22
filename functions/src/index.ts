@@ -29,16 +29,19 @@ import * as userChanges from './utilities/userChanges'
 import { assignDriver } from "./delivery/assignDriver";
 import { addDriver } from "./delivery/addDriver";
 import { authorizeDriver } from "./delivery/authorizeDriver";
-import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
-import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
-import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
-import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
+// import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+// import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
 import { createLaundry } from "./laundry/createNewLaundry";
 import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
-import { DeliveryServiceProviderType } from "./shared/models/Generic/Delivery";
 import { changeDeliveryStatus } from "./delivery/statusChange";
+import { addOperator } from "./shared/operator/addOperator";
+import { authorizeOperator } from "./shared/operator/authorizeOperator";
+import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
+import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
+import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -72,6 +75,12 @@ export const stripe = {
 export const agora = {
   callChatUser: authenticatedCall((userId, data) => callUser(userId, data))
 }
+export const serviceProvider = {
+  addOperator: authenticatedCall((userId, data) => addOperator(userId, data)),
+  authorizeOperator: authenticatedCall((userId, data) => authorizeOperator(userId, data)),
+  addDriver: authenticatedCall((userId, data) => addDriver(userId, data)),
+  authorizeDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data)),
+}
 
 export const restaurant2 = {
   createRestaurant: authenticatedCall((userId, data) => createNewRestaurant(userId, data)),
@@ -83,8 +92,6 @@ export const restaurant2 = {
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
   addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
   authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
-  addRestaurantDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryServiceProviderType.Restaurant)),
-  authorizeRestaurantDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryServiceProviderType.Restaurant)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
@@ -114,8 +121,6 @@ export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
   addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
-  addDeliveryDriver: authenticatedCall((userId, data) => addDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
-  authorizeDeliveryDriver: authenticatedCall((userId, data) => authorizeDriver(userId, data, DeliveryServiceProviderType.DeliveryCompany)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   
   // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),

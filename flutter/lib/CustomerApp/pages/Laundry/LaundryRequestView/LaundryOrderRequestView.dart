@@ -42,11 +42,13 @@ class _CustLaundryOrderRequestViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: mezcalmosAppBar(
           AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
-          titleWidget:
-              Obx(() => Text(viewController.laundry.value?.info.name ?? "")),
+          titleWidget: Obx(() => Text(
+                viewController.laundry.value?.info.name ?? "",
+              )),
         ),
         body: Obx(
           () {
@@ -61,19 +63,17 @@ class _CustLaundryOrderRequestViewState
                         children: [
                           CachedNetworkImage(
                               width: double.infinity,
-                              height: 20.h,
+                              height: 230,
                               fit: BoxFit.cover,
                               imageUrl:
                                   viewController.laundry.value!.info.image),
                           SizedBox(
-                            height: 25,
+                            height: 10,
                           ),
-                          Text(
-                            viewController.laundry.value!.info.name,
-                            style: Get.textTheme.displaySmall,
-                          ),
+                          Text(viewController.laundry.value!.info.name,
+                              style: Get.textTheme.headlineSmall),
                           SizedBox(
-                            height: 15,
+                            height: 8,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class _CustLaundryOrderRequestViewState
                                 margin: const EdgeInsets.only(top: 3),
                                 child: Icon(
                                   Icons.place,
-                                  size: 20,
+                                  size: 18,
                                   color: primaryBlueColor,
                                 ),
                               ),
@@ -90,16 +90,17 @@ class _CustLaundryOrderRequestViewState
                                 width: 2,
                               ),
                               Flexible(
-                                  child: Text(
-                                viewController
-                                    .laundry.value!.info.location.address,
-                                maxLines: 2,
-                              ))
+                                child: Text(
+                                  viewController
+                                      .laundry.value!.info.location.address,
+                                  maxLines: 2,
+                                  style: Get.textTheme.titleSmall,
+                                ),
+                              )
                             ],
                           ),
-                          _buildCats(),
                           SizedBox(
-                            height: 25,
+                            height: 15,
                           ),
                           Container(
                             child: Text(
@@ -108,7 +109,7 @@ class _CustLaundryOrderRequestViewState
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 15,
                           ),
                           Obx(
                             () => viewController.authController.user != null
@@ -129,6 +130,9 @@ class _CustLaundryOrderRequestViewState
                                   )
                                 : pickFromMapComponent(context),
                           ),
+                          SizedBox(
+                            height: 15,
+                          ),
                           _orderNoteComponent(),
                         ],
                       ),
@@ -147,52 +151,28 @@ class _CustLaundryOrderRequestViewState
         ));
   }
 
-  Obx _buildCats() {
-    return Obx(
-      () => (viewController.laundry.value?.laundryCosts.lineItems.isNotEmpty ==
-              true)
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 25,
-                ),
-                Text(
-                  "${_i18n()["categories"]}",
-                  style: Get.textTheme.bodyLarge,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  children: List.generate(
-                      viewController
-                          .laundry.value!.laundryCosts.lineItems.length,
-                      (int index) => _laundryCostCard(
-                          item: viewController
-                              .laundry.value!.laundryCosts.lineItems[index])),
-                ),
-              ],
-            )
-          : SizedBox(),
-    );
-  }
-
   Widget _orderNoteComponent() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 25),
+      //margin: const EdgeInsets.symmetric(vertical: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 15),
+          SizedBox(
+            height: 1.h,
+          ),
           TextField(
+            style: Get.textTheme.titleMedium?.copyWith(
+              color: offLightShadeGreyColor,
+            ),
             controller: viewController.orderNote,
             maxLines: 5,
             minLines: 3,
             decoration: InputDecoration(
               hintText: "${_i18n()["noteHint"]}",
-              hintStyle: Get.textTheme.bodyMedium,
+              hintStyle: Get.textTheme.titleMedium?.copyWith(
+                color: offLightShadeGreyColor,
+              ),
               filled: true,
               fillColor: Theme.of(context).primaryColor,
             ),
@@ -206,7 +186,7 @@ class _CustLaundryOrderRequestViewState
     return Card(
       child: InkWell(
         onTap: () async {
-          MezLocation? currentLoc =
+          final MezLocation? currentLoc =
               await MezRouter.toNamed(kPickLocationNotAuth) as MezLocation?;
           if (currentLoc != null) {
             viewController.switchLocation(currentLoc);
@@ -222,7 +202,8 @@ class _CustLaundryOrderRequestViewState
             children: <Widget>[
               Icon(
                 Icons.place_rounded,
-                color: Theme.of(context).primaryColorLight,
+                color: primaryBlueColor,
+                //size: 14,
               ),
               const SizedBox(width: 5),
               Flexible(
@@ -230,6 +211,7 @@ class _CustLaundryOrderRequestViewState
                   viewController.customerLoc.value?.address ??
                       "${_i18n()['pickLocation']}",
                   maxLines: 1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ],
@@ -250,7 +232,7 @@ class _CustLaundryOrderRequestViewState
         enabled: viewController.isUserSignedIn ? viewController.canOrder : true,
         onClick: () async {
           if (viewController.isUserSignedIn) {
-            num? res = await viewController.createLaundryOrder();
+            final num? res = await viewController.createLaundryOrder();
             if (res != null) {
               MezRouter.popEverythingAndNavigateTo(
                 getLaundryOrderRoute(

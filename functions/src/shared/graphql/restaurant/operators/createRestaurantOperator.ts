@@ -1,8 +1,8 @@
 import { HttpsError } from "firebase-functions/v1/auth";
-import { AddOperatorDetails } from "../../../../restaurant/addRestaurantOperator";
 import { getHasura } from "../../../../utilities/hasura";
 import { AppType, AuthorizationStatus } from "../../../models/Generic/Generic";
 import { Operator } from "../../../models/Services/Service";
+import { AddOperatorDetails } from "../../../operator/addOperator";
 
 export async function createRestaurantOperator(operatorUserId: number, addOpDetails: AddOperatorDetails): Promise<Operator> {
 
@@ -14,7 +14,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
                 _eq: operatorUserId,
             },
             restaurant_id: {
-                _eq: addOpDetails.restaurantId
+                _eq: addOpDetails.serviceProviderId
             }
         }
     }, {
@@ -44,7 +44,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
     insert_restaurant_operator_one: [{
       object: {
         user_id: operatorUserId,
-        restaurant_id: addOpDetails.restaurantId,
+        restaurant_id: addOpDetails.serviceProviderId,
         operator_details: {
           data: {
             app_type_id: AppType.RestaurantApp,
@@ -64,6 +64,7 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
       }
     }, {
       id: true,
+      details_id: true,
     }]
   });
   if(mutationResponse.insert_restaurant_operator_one == null) {
@@ -74,8 +75,9 @@ export async function createRestaurantOperator(operatorUserId: number, addOpDeta
   }
   return {
     id: mutationResponse.insert_restaurant_operator_one.id,
+    detailsId: mutationResponse.insert_restaurant_operator_one.details_id,
     userId: operatorUserId,
-    serviceProviderId: addOpDetails.restaurantId,
+    serviceProviderId: addOpDetails.serviceProviderId,
     status: AuthorizationStatus.AwaitingApproval,
     notificationInfo: addOpDetails.notificationInfo,
   }

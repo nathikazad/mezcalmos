@@ -6,6 +6,7 @@ import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrder
 import 'package:mezcalmos/LaundryApp/pages/ProfileView/LaundryProfileView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -56,8 +57,9 @@ class _LaundryTabsViewState extends State<LaundryTabsView> {
           laundryId: opAuthController.laundryId!,
         );
       case 3:
-        return LaundryProfileView(
-          laundryId: opAuthController.laundryId!,
+        return ServiceProfileView(
+          serviceId: opAuthController.laundryId!,
+          serviceDetailsId: opAuthController.detailsId,
         );
 
       default:

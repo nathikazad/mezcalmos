@@ -153,7 +153,7 @@ class _PickLocationViewState extends State<PickLocationView> {
               : () async {
                   await onPickButtonClick(context);
                 },
-          label: " ${_i18n()["pickLocation"]},",
+          label: " ${_i18n()["pickLocation"]}",
         ),
       ),
       resizeToAvoidBottomInset: false,

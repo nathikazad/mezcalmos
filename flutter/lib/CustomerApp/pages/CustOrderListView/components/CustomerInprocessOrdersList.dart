@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['ListOrdersScreen']['ListOrdersScreen'];
@@ -23,7 +24,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green.withOpacity(0.3),
+      color: onGoingBackgroundColor,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(
         () => Column(
@@ -45,6 +46,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return MinimalOrderCard(
                     order: viewController.currentOrders[index],
+                    forCustomer: true,
                     onTap: () {
                       if (viewController.currentOrders[index].orderType ==
                           OrderType.Laundry) {

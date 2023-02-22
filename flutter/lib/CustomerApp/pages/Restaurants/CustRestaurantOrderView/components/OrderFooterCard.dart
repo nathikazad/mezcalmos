@@ -30,10 +30,10 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Container(
         height: 65,
-        margin: const EdgeInsets.only(bottom: 8),
+        margin: const EdgeInsets.only(bottom: 9),
         child: (widget.order.inProcess())
             ? Container(
-                margin: EdgeInsets.all(8),
+                margin: EdgeInsets.symmetric(vertical: 5),
                 child: TextButton(
                   onPressed: () {
                     showConfirmationDialog(context, onYesClick: () async {
@@ -58,12 +58,12 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                     alignment: Alignment.center,
                     child: Text(
                       '${_i18n()["cancelOrder"]}',
-                      style:
-                          Get.textTheme.bodyText1?.copyWith(color: Colors.red),
+                      style: Get.textTheme.bodyText1
+                          ?.copyWith(color: Color(0XFFE21132)),
                     ),
                   ),
                 ),
               )
-            : null);
+            : SizedBox());
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-
+import 'package:sizer/sizer.dart';
 class MessageButton extends StatelessWidget {
   const MessageButton({
     Key? key,
@@ -32,7 +32,7 @@ class MessageButton extends StatelessWidget {
               position: badge.BadgePosition(top: 0, end: 0),
               child: Icon(
                 icon,
-                size: 30,
+                size: 24.sp,
                 color: primaryBlueColor,
               ),
             )),
