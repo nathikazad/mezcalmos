@@ -176,7 +176,10 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               order: viewController.order.value!,
                             ),
 
-                            Spacer(),
+                            //Spacer(),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Flexible(
                               child: LaundryOrderFooterCard(
                                 viewController: viewController,

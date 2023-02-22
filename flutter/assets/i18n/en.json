@@ -344,7 +344,10 @@
               "restaurantInfoTab": {
                 "description": "Description",
                 "location": "Location",
+                "codText": "Cash on delivery",
+                "debitCreditText": "Credit/Debit Card",
                 "reviews": "Reviews",
+                "paymentMethod": "Payment Method",
                 "workingHours": "Working hours",
                 "weekDays": {
                   "monday": "Monday",

@@ -68,11 +68,25 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     height: 20,
                   ),
                   Text(
+                    "${_i18n()["description"]}",
+                    style: Get.textTheme.bodyLarge,
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "${laundry.value!.info.description!.values.first}",
+                    style: Get.textTheme.subtitle2,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
                     "${_i18n()["categories"]}",
                     style: Get.textTheme.bodyLarge,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 4,
                   ),
                   Column(
                     children: List.generate(
@@ -82,11 +96,11 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                                 laundry.value!.laundryCosts.lineItems[index])),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   MezServiceOpenHours(schedule: laundry.value!.schedule!),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   ServiceLocationCard(location: laundry.value!.info.location),
                 ],
@@ -110,7 +124,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.bodyMedium,
+              style: Get.textTheme.subtitle2,
               maxLines: 1,
             ),
           ),
@@ -164,24 +178,25 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
               children: [
                 Text(
                   laundry.value!.info.name,
-                  style: Get.textTheme.bodyLarge,
+                  style: Get.textTheme.headline5,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
-                      color: secondaryLightBlueColor),
-                  child: Text(
-                    "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: Get.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w700, color: primaryBlueColor),
+                    borderRadius: BorderRadius.circular(35),
+                    color: laundaryChipContainerColor,
                   ),
+                  child: Text(
+                      "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: Get.textTheme.headline6?.copyWith(
+                        color: primaryBlueColor,
+                      )),
                 ),
               ],
             ),
@@ -193,6 +208,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                 children: [
                   Text(
                     "${_i18n()["startingFrom"]}",
+                    style: Get.textTheme.subtitle2,
                   ),
                   Container(
                     alignment: Alignment.centerRight,

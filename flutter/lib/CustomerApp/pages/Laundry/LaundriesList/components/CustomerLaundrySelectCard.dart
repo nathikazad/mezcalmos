@@ -91,7 +91,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                             child: ShippingCostComponent(
                               shippingCost: shippingPrice,
                               alignment: MainAxisAlignment.start,
-                              textStyle: Get.textTheme.bodyMedium?.copyWith(
+                              textStyle: Get.textTheme.subtitle2?.copyWith(
                                 color: blackColor,
                               ),
                             ),
@@ -113,7 +113,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           Flexible(
                               child: Text(
                             ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                            style: Get.textTheme.bodyMedium?.copyWith(
+                            style: Get.textTheme.subtitle2?.copyWith(
                               color: blackColor,
                             ),
                           )),
@@ -127,18 +127,25 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            SizedBox(
+                              width: 8,
+                            ),
                             Icon(
                               Icons.north_east,
                               size: 20,
                               color: Colors.black,
                             ),
+                            SizedBox(
+                              width: 4,
+                            ),
                             Flexible(
-                                child: Text(
-                              "${laundry.getCheapestCategory.toPriceString()}/Kg",
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                color: blackColor,
+                              child: Text(
+                                "${laundry.getCheapestCategory.toPriceString()}/Kg",
+                                style: Get.textTheme.subtitle2?.copyWith(
+                                  color: blackColor,
+                                ),
                               ),
-                            )),
+                            ),
                           ],
                         ),
                       ),
