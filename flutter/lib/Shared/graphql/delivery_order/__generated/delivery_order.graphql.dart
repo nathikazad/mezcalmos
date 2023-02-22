@@ -334,13 +334,6 @@ const documentNodeQueryget_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'current_gps'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company'),
             alias: null,
             arguments: [],
@@ -1371,7 +1364,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.order_type,
     required this.direction,
     this.chat_with_service_provider_id,
-    this.current_gps,
     this.delivery_company,
     required this.customer_id,
     this.customer_review_by_driver_id,
@@ -1419,7 +1411,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$direction = json['direction'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_company = json['delivery_company'];
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
@@ -1466,8 +1457,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       order_type: (l$order_type as String),
       direction: (l$direction as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_company: l$delivery_company == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$delivery_company
@@ -1544,8 +1533,6 @@ class Query$get_driver_order$delivery_order_by_pk {
   final String direction;
 
   final int? chat_with_service_provider_id;
-
-  final Geography? current_gps;
 
   final Query$get_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
@@ -1637,9 +1624,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$customer_id = customer_id;
@@ -1723,7 +1707,6 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final l$direction = direction;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    final l$current_gps = current_gps;
     final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
@@ -1767,7 +1750,6 @@ class Query$get_driver_order$delivery_order_by_pk {
       l$order_type,
       l$direction,
       l$chat_with_service_provider_id,
-      l$current_gps,
       l$delivery_company,
       l$customer_id,
       l$customer_review_by_driver_id,
@@ -1860,11 +1842,6 @@ class Query$get_driver_order$delivery_order_by_pk {
         other.chat_with_service_provider_id;
     if (l$chat_with_service_provider_id !=
         lOther$chat_with_service_provider_id) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$delivery_company = delivery_company;
@@ -2065,7 +2042,6 @@ abstract class CopyWith$Query$get_driver_order$delivery_order_by_pk<TRes> {
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    Geography? current_gps,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -2144,7 +2120,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     Object? order_type = _undefined,
     Object? direction = _undefined,
     Object? chat_with_service_provider_id = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
@@ -2209,9 +2184,6 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
                 : (chat_with_service_provider_id as int?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_company: delivery_company == _undefined
             ? _instance.delivery_company
             : (delivery_company
@@ -2412,7 +2384,6 @@ class _CopyWithStubImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    Geography? current_gps,
     Query$get_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -7457,13 +7428,6 @@ const documentNodeSubscriptionlisten_on_driver_order =
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'current_gps'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company'),
             alias: null,
             arguments: [],
@@ -8468,7 +8432,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     required this.order_type,
     required this.direction,
     this.chat_with_service_provider_id,
-    this.current_gps,
     this.delivery_company,
     required this.customer_id,
     this.customer_review_by_driver_id,
@@ -8516,7 +8479,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$direction = json['direction'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_company = json['delivery_company'];
     final l$customer_id = json['customer_id'];
     final l$customer_review_by_driver_id = json['customer_review_by_driver_id'];
@@ -8563,8 +8525,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       order_type: (l$order_type as String),
       direction: (l$direction as String),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_company: l$delivery_company == null
           ? null
           : Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company
@@ -8642,8 +8602,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
   final String direction;
 
   final int? chat_with_service_provider_id;
-
-  final Geography? current_gps;
 
   final Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
@@ -8738,9 +8696,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     _resultData['chat_with_service_provider_id'] =
         l$chat_with_service_provider_id;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$customer_id = customer_id;
@@ -8824,7 +8779,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final l$direction = direction;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    final l$current_gps = current_gps;
     final l$delivery_company = delivery_company;
     final l$customer_id = customer_id;
     final l$customer_review_by_driver_id = customer_review_by_driver_id;
@@ -8868,7 +8822,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       l$order_type,
       l$direction,
       l$chat_with_service_provider_id,
-      l$current_gps,
       l$delivery_company,
       l$customer_id,
       l$customer_review_by_driver_id,
@@ -8961,11 +8914,6 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
         other.chat_with_service_provider_id;
     if (l$chat_with_service_provider_id !=
         lOther$chat_with_service_provider_id) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$delivery_company = delivery_company;
@@ -9170,7 +9118,6 @@ abstract class CopyWith$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    Geography? current_gps,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -9254,7 +9201,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
     Object? order_type = _undefined,
     Object? direction = _undefined,
     Object? chat_with_service_provider_id = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_company = _undefined,
     Object? customer_id = _undefined,
     Object? customer_review_by_driver_id = _undefined,
@@ -9319,9 +9265,6 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
                 : (chat_with_service_provider_id as int?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_company: delivery_company == _undefined
             ? _instance.delivery_company
             : (delivery_company
@@ -9527,7 +9470,6 @@ class _CopyWithStubImpl$Subscription$listen_on_driver_order$delivery_order_by_pk
     String? order_type,
     String? direction,
     int? chat_with_service_provider_id,
-    Geography? current_gps,
     Subscription$listen_on_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     int? customer_id,
@@ -28739,13 +28681,6 @@ const documentNodeQueryget_pick_driver_order = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'current_gps'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company'),
             alias: null,
             arguments: [],
@@ -29158,7 +29093,6 @@ extension ClientExtension$Query$get_pick_driver_order on graphql.GraphQLClient {
 class Query$get_pick_driver_order$delivery_order_by_pk {
   Query$get_pick_driver_order$delivery_order_by_pk({
     required this.order_type,
-    this.current_gps,
     this.delivery_company,
     required this.delivery_cost,
     required this.dropoff_address,
@@ -29183,7 +29117,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
   factory Query$get_pick_driver_order$delivery_order_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$order_type = json['order_type'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_company = json['delivery_company'];
     final l$delivery_cost = json['delivery_cost'];
     final l$dropoff_address = json['dropoff_address'];
@@ -29205,8 +29138,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     final l$$__typename = json['__typename'];
     return Query$get_pick_driver_order$delivery_order_by_pk(
       order_type: (l$order_type as String),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_company: l$delivery_company == null
           ? null
           : Query$get_pick_driver_order$delivery_order_by_pk$delivery_company
@@ -29238,8 +29169,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
   }
 
   final String order_type;
-
-  final Geography? current_gps;
 
   final Query$get_pick_driver_order$delivery_order_by_pk$delivery_company?
       delivery_company;
@@ -29285,9 +29214,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     final _resultData = <String, dynamic>{};
     final l$order_type = order_type;
     _resultData['order_type'] = l$order_type;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company?.toJson();
     final l$delivery_cost = delivery_cost;
@@ -29332,7 +29258,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
   @override
   int get hashCode {
     final l$order_type = order_type;
-    final l$current_gps = current_gps;
     final l$delivery_company = delivery_company;
     final l$delivery_cost = delivery_cost;
     final l$dropoff_address = dropoff_address;
@@ -29354,7 +29279,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$order_type,
-      l$current_gps,
       l$delivery_company,
       l$delivery_cost,
       l$dropoff_address,
@@ -29389,11 +29313,6 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     final l$order_type = order_type;
     final lOther$order_type = other.order_type;
     if (l$order_type != lOther$order_type) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$delivery_company = delivery_company;
@@ -29517,7 +29436,6 @@ abstract class CopyWith$Query$get_pick_driver_order$delivery_order_by_pk<TRes> {
 
   TRes call({
     String? order_type,
-    Geography? current_gps,
     Query$get_pick_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     double? delivery_cost,
@@ -29563,7 +29481,6 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
 
   TRes call({
     Object? order_type = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_company = _undefined,
     Object? delivery_cost = _undefined,
     Object? dropoff_address = _undefined,
@@ -29588,9 +29505,6 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
         order_type: order_type == _undefined || order_type == null
             ? _instance.order_type
             : (order_type as String),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_company: delivery_company == _undefined
             ? _instance.delivery_company
             : (delivery_company
@@ -29689,7 +29603,6 @@ class _CopyWithStubImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
 
   call({
     String? order_type,
-    Geography? current_gps,
     Query$get_pick_driver_order$delivery_order_by_pk$delivery_company?
         delivery_company,
     double? delivery_cost,
