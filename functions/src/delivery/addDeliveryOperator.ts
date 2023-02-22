@@ -2,16 +2,11 @@ import { createDeliveryOperator } from "../shared/graphql/delivery/operator/crea
 import { getDeliveryOperators } from "../shared/graphql/delivery/operator/getDeliveryOperator"
 import { getUser } from "../shared/graphql/user/getUser"
 import { ParticipantType } from "../shared/models/Generic/Chat"
-import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
+import { AddOperatorDetails } from "../shared/operator/addOperator"
 import { pushNotification } from "../utilities/senders/notifyUser"
 
-
-export interface AddOperatorDetails {
-    deliveryCompanyId: number,
-    notificationInfo?: NotificationInfo,
-}
 export async function addDeliveryOperator(operatorUserId: number, addOperatorDetails: AddOperatorDetails) {
 
   let operatorUserInfo: UserInfo = await getUser(operatorUserId);
@@ -19,7 +14,7 @@ export async function addDeliveryOperator(operatorUserId: number, addOperatorDet
     foreground: <AuthorizeOperatorNotification>{
       newOperatorName: operatorUserInfo.name,
       newOperatorImage: operatorUserInfo.image,
-      serviceProviderId: addOperatorDetails.deliveryCompanyId,
+      serviceProviderId: addOperatorDetails.serviceProviderId,
       time: (new Date()).toISOString(),
       notificationType: NotificationType.AuthorizeOperator,
       notificationAction: NotificationAction.ShowSnackbarOnlyIfNotOnPage,
@@ -38,7 +33,7 @@ export async function addDeliveryOperator(operatorUserId: number, addOperatorDet
   }
   await createDeliveryOperator(operatorUserId, addOperatorDetails)
 
-  let operators = await getDeliveryOperators(addOperatorDetails.deliveryCompanyId);
+  let operators = await getDeliveryOperators(addOperatorDetails.serviceProviderId);
   operators.forEach((o) => {
     if(o.owner && o.user) {
       pushNotification(

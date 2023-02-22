@@ -59,6 +59,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
       restaurant_operators: [{}, {
         id: true,
         user_id: true,
+        details_id: true,
         operator_details: {
           status: true,
           owner: true,
@@ -89,6 +90,7 @@ export async function getRestaurant(restaurantId: number): Promise<ServiceProvid
     return {
       id: r.id,
       userId: r.user_id,
+      detailsId: r.details_id,
       serviceProviderId: restaurantId,
       status: r.operator_details.status as AuthorizationStatus,
       owner: r.operator_details.owner,

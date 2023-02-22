@@ -68,6 +68,7 @@ export interface DeliveryDriver {
 export interface DeliveryOperator {
     id: number,
     userId: number,
+    operatorDetailsId: number,
     deliveryCompanyId: number,
     status: AuthorizationStatus,
     owner: boolean,

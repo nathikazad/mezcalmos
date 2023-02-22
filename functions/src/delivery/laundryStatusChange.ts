@@ -13,7 +13,7 @@ import { ChangeDeliveryStatusDetails } from "./statusChange";
 import { getLaundryOrderFromDelivery } from "../shared/graphql/laundry/order/getLaundryOrder";
 import { updateLaundryOrderStatus } from "../shared/graphql/laundry/order/updateOrder";
 import { LaundryOrderStatusChangeMessages } from "../laundry/bgNotificationMessages";
-import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { getLaundryStore } from "../shared/graphql/laundry/getLaundry";
 import { createLaundryToCustomerDeliveryOrder } from "../shared/graphql/delivery/createDelivery";
 import { setLaundryToCustomerDeliveryOrderChatInfo } from "../shared/graphql/chat/setChatInfo";

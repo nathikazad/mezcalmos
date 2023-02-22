@@ -1,7 +1,7 @@
 import { orderInProcess, LaundryOrder, LaundryOrderStatus, LaundryOrderStatusChangeNotification } from "../shared/models/Services/Laundry/LaundryOrder";
 import { DeliveryType, OrderType, PaymentType } from "../shared/models/Generic/Order";
 import { getLaundryOrder } from "../shared/graphql/laundry/order/getLaundryOrder";
-import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { getMezAdmins } from "../shared/graphql/user/mezAdmin/getMezAdmin";
 import { MezAdmin } from "../shared/models/Generic/User";
 import { Operator } from "../shared/models/Services/Service";

@@ -9,15 +9,16 @@ import { getDeliveryDriver } from "../shared/graphql/delivery/driver/getDelivery
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { AuthorizationStatus } from "../shared/models/Generic/Generic";
-import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { Operator } from "../shared/models/Services/Service";
 
 export interface AuthorizeDetails {
     deliveryDriverId: number,
-    approved: boolean
+    approved: boolean,
+    deliveryServiceProviderType: DeliveryServiceProviderType
 }
 
-export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails, deliveryServiceProviderType: DeliveryServiceProviderType) {
+export async function authorizeDriver(userId: number, authorizeDetails: AuthorizeDetails) {
   let deliveryDriver = await getDeliveryDriver(authorizeDetails.deliveryDriverId)//, ParticipantType.DeliveryDriver);
 
   await checkAuthorization();
@@ -31,7 +32,7 @@ export async function authorizeDriver(userId: number, authorizeDetails: Authoriz
   sendNotification(authorizeDetails, deliveryDriver);
 
   async function checkAuthorization() {
-    switch (deliveryServiceProviderType) {
+    switch (authorizeDetails.deliveryServiceProviderType) {
       case DeliveryServiceProviderType.Restaurant:
         let restaurantOperator: Operator = await getRestaurantOperatorByUserId(userId);
         if (!restaurantOperator.owner || restaurantOperator.status != AuthorizationStatus.Authorized) {

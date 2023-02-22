@@ -14,7 +14,7 @@ import { getRestaurantOperatorByUserId } from "../shared/graphql/restaurant/oper
 import { isMezAdmin } from "../shared/helper";
 import { AuthorizationStatus } from "../shared/models/Generic/Generic"
 import { ParticipantType } from "../shared/models/Generic/Chat";
-import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperatorByUserId } from "../shared/graphql/laundry/operator/getLaundryOperator";
 import { Operator } from "../shared/models/Services/Service";
 // import { ParticipantType } from "../shared/models/Generic/Chat";
 
