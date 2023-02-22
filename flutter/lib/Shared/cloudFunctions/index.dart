@@ -275,7 +275,7 @@ class CloudFunctions {
       required DeliveryDetails deliveryDetails,
       required Map<Language,bool> language}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-createLaundry",
+      functionName: "laundry2-createLaundry",
       parameters: <String, dynamic>{
         "name":name,
         "image":image,
@@ -306,7 +306,7 @@ class CloudFunctions {
       required num tripDuration,
       required String tripPolyline}  ) async {
     return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry-requestLaundry",
+      functionName: "laundry2-requestLaundry",
       parameters: <String, dynamic>{
         "storeId":storeId,
         "paymentType":paymentType.toFirebaseFormatString(),
@@ -329,7 +329,7 @@ class CloudFunctions {
   static Future<void> laundry_readyForDeliveryOrder(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-readyForDeliveryOrder",
+      functionName: "laundry2-readyForDeliveryOrder",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });
@@ -338,7 +338,7 @@ class CloudFunctions {
   static Future<void> laundry_cancelFromCustomer(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-cancelFromCustomer",
+      functionName: "laundry2-cancelFromCustomer",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });
@@ -347,7 +347,7 @@ class CloudFunctions {
   static Future<void> laundry_cancelFromAdmin(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-cancelFromAdmin",
+      functionName: "laundry2-cancelFromAdmin",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });

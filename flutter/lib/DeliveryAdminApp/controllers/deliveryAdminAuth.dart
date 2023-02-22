@@ -62,7 +62,7 @@ class DeliveryOpAuthController extends GetxController {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo = await get_notif_info(
-        userId: operator.value!.info.hasuraId, appType: "delivery_admin");
+        userId: operator.value!.info.hasuraId, appType: "deliveryAdmin");
     mezDbgPrint("inside save notif token=====>>>😍");
     mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
     try {

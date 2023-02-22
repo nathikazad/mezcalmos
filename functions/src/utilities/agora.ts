@@ -10,7 +10,6 @@ import { getKeys } from "../shared/keys";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getChat } from "../shared/graphql/chat/getChat";
 import { getNotificationInfo } from "../shared/graphql/notification/getNotificationInfo";
-import { NotificationInfo } from "../shared/models/Generic/Generic";
 
 let keys: Keys = getKeys();
 
