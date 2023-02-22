@@ -326,6 +326,13 @@ const documentNodeQueryadmin_get_dv_companies = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'schedule'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'open_status'),
                 alias: null,
                 arguments: [],
@@ -718,6 +725,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     required this.image,
     required this.name,
     required this.language,
+    this.schedule,
     required this.open_status,
     required this.creation_time,
     required this.service_provider_type,
@@ -732,6 +740,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$image = json['image'];
     final l$name = json['name'];
     final l$language = json['language'];
+    final l$schedule = json['schedule'];
     final l$open_status = json['open_status'];
     final l$creation_time = json['creation_time'];
     final l$service_provider_type = json['service_provider_type'];
@@ -743,6 +752,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       image: (l$image as String),
       name: (l$name as String),
       language: mapFromJson(l$language),
+      schedule: l$schedule == null ? null : mapFromJson(l$schedule),
       open_status: (l$open_status as String),
       creation_time: (l$creation_time as String),
       service_provider_type: (l$service_provider_type as String),
@@ -761,6 +771,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
   final String name;
 
   final dynamic language;
+
+  final dynamic? schedule;
 
   final String open_status;
 
@@ -784,6 +796,8 @@ class Query$admin_get_dv_companies$delivery_company$details {
     _resultData['name'] = l$name;
     final l$language = language;
     _resultData['language'] = mapToJson(l$language);
+    final l$schedule = schedule;
+    _resultData['schedule'] = l$schedule == null ? null : mapToJson(l$schedule);
     final l$open_status = open_status;
     _resultData['open_status'] = l$open_status;
     final l$creation_time = creation_time;
@@ -804,6 +818,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$image = image;
     final l$name = name;
     final l$language = language;
+    final l$schedule = schedule;
     final l$open_status = open_status;
     final l$creation_time = creation_time;
     final l$service_provider_type = service_provider_type;
@@ -815,6 +830,7 @@ class Query$admin_get_dv_companies$delivery_company$details {
       l$image,
       l$name,
       l$language,
+      l$schedule,
       l$open_status,
       l$creation_time,
       l$service_provider_type,
@@ -855,6 +871,11 @@ class Query$admin_get_dv_companies$delivery_company$details {
     final l$language = language;
     final lOther$language = other.language;
     if (l$language != lOther$language) {
+      return false;
+    }
+    final l$schedule = schedule;
+    final lOther$schedule = other.schedule;
+    if (l$schedule != lOther$schedule) {
       return false;
     }
     final l$open_status = open_status;
@@ -914,6 +935,7 @@ abstract class CopyWith$Query$admin_get_dv_companies$delivery_company$details<
     String? image,
     String? name,
     dynamic? language,
+    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,
@@ -945,6 +967,7 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
     Object? image = _undefined,
     Object? name = _undefined,
     Object? language = _undefined,
+    Object? schedule = _undefined,
     Object? open_status = _undefined,
     Object? creation_time = _undefined,
     Object? service_provider_type = _undefined,
@@ -965,6 +988,9 @@ class _CopyWithImpl$Query$admin_get_dv_companies$delivery_company$details<TRes>
         language: language == _undefined || language == null
             ? _instance.language
             : (language as dynamic),
+        schedule: schedule == _undefined
+            ? _instance.schedule
+            : (schedule as dynamic?),
         open_status: open_status == _undefined || open_status == null
             ? _instance.open_status
             : (open_status as String),
@@ -1006,6 +1032,7 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details<
     String? image,
     String? name,
     dynamic? language,
+    dynamic? schedule,
     String? open_status,
     String? creation_time,
     String? service_provider_type,

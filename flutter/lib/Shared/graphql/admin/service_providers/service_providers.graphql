@@ -6,6 +6,7 @@ query admin_get_dv_companies($limit: Int!) {
       image
       name
       language
+      schedule
       open_status
       creation_time
       service_provider_type
