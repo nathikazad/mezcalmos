@@ -124,7 +124,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         indexNotification++;
         mezDbgPrint(indexNotification);
         return Container(
-          margin: EdgeInsets.only(top: 10, left: 8, bottom: 10),
+          margin: EdgeInsets.only(top: 10, left: 0, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -225,7 +225,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
   Container _deleteButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      // padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
           customBorder: CircleBorder(),
           onTap: () async {
@@ -248,7 +248,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               child: Icon(
                 Icons.delete_outline_rounded,
                 color: Colors.black,
-                size: 20,
+                size: 22,
               ),
             ),
           )),

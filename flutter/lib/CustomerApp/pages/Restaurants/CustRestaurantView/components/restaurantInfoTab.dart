@@ -62,7 +62,14 @@ class RestaurantInfoTab extends StatelessWidget {
             ],
           ),
         if (restaurant.schedule != null)
-          MezServiceOpenHours(schedule: restaurant.schedule!),
+          Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              MezServiceOpenHours(schedule: restaurant.schedule!),
+            ],
+          ),
         if (restaurant.info.location != null)
           ServiceLocationCard(
             location: restaurant.info.location,

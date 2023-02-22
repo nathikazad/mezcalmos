@@ -189,6 +189,7 @@ const Color waitingBackgroundColor = Color(0xFFFFF0CB);
 const Color onGoingBackgroundColor = Color(0xFFE4F2E5);
 const Color backgroundShadeColor = Color(0xFFEDEDED);
 const Color secondaryLightBlueColor = Color(0xFFE1E4FF);
+const Color laundaryChipContainerColor = Color(0xFFF0F1FF);
 const Color offRedColor = Color(0xffF9D8D6);
 const Color offShadeGreyColor = Color(0xFF494949);
 const Color offLightShadeGreyColor = Color(0xFF787878);
