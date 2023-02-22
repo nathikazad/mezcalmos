@@ -76,6 +76,8 @@ select_permissions:
         - scheduled_time
       computed_fields:
         - in_process
+        - items_cost
+        - total_cost
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
@@ -125,6 +127,8 @@ select_permissions:
         - discount_value
       computed_fields:
         - in_process
+        - items_cost
+        - total_cost
       filter:
         store:
           operators:

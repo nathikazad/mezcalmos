@@ -352,6 +352,22 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
   }
+  }
+
+subscription listen_on_order_driver_location($orderId: Int!) {
+   delivery_order_by_pk(id: $orderId) {
+  
+    delivery_driver {
+      current_location
+
+      user {
+        name
+        image
+        id
+      }
+    }
+   
+}
 }
 
 subscription listen_on_inprocess_driver_orders($driverId: Int!) {

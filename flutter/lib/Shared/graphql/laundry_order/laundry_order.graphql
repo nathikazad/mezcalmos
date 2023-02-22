@@ -10,6 +10,8 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     delivery_cost
     delivery_type
     discount_value
+    total_cost
+    items_cost
     estimated_ready_time
     # firebase_id
     to_customer_delivery_id
@@ -119,6 +121,8 @@ query get_laundry_order_by_id($orderId: Int!) {
     customer_address
     customer_app_type
     customer_id
+     total_cost
+    items_cost
     customer_location_gps
     delivery_cost
     delivery_type

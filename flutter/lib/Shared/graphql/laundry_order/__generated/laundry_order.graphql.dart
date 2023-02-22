@@ -360,6 +360,20 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'items_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'estimated_ready_time'),
             alias: null,
             arguments: [],
@@ -1165,6 +1179,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     required this.delivery_cost,
     required this.delivery_type,
     required this.discount_value,
+    this.total_cost,
+    this.items_cost,
     this.estimated_ready_time,
     this.to_customer_delivery_id,
     this.from_customer_delivery_id,
@@ -1200,6 +1216,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_type = json['delivery_type'];
     final l$discount_value = json['discount_value'];
+    final l$total_cost = json['total_cost'];
+    final l$items_cost = json['items_cost'];
     final l$estimated_ready_time = json['estimated_ready_time'];
     final l$to_customer_delivery_id = json['to_customer_delivery_id'];
     final l$from_customer_delivery_id = json['from_customer_delivery_id'];
@@ -1234,6 +1252,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery_type: (l$delivery_type as String),
       discount_value: moneyFromJson(l$discount_value),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       estimated_ready_time: (l$estimated_ready_time as String?),
       to_customer_delivery_id: (l$to_customer_delivery_id as int?),
       from_customer_delivery_id: (l$from_customer_delivery_id as int?),
@@ -1294,6 +1314,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
   final String delivery_type;
 
   final double discount_value;
+
+  final double? total_cost;
+
+  final double? items_cost;
 
   final String? estimated_ready_time;
 
@@ -1368,6 +1392,12 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     _resultData['delivery_type'] = l$delivery_type;
     final l$discount_value = discount_value;
     _resultData['discount_value'] = moneyToJson(l$discount_value);
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] =
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
+    final l$items_cost = items_cost;
+    _resultData['items_cost'] =
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$estimated_ready_time = estimated_ready_time;
     _resultData['estimated_ready_time'] = l$estimated_ready_time;
     final l$to_customer_delivery_id = to_customer_delivery_id;
@@ -1426,6 +1456,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$delivery_cost = delivery_cost;
     final l$delivery_type = delivery_type;
     final l$discount_value = discount_value;
+    final l$total_cost = total_cost;
+    final l$items_cost = items_cost;
     final l$estimated_ready_time = estimated_ready_time;
     final l$to_customer_delivery_id = to_customer_delivery_id;
     final l$from_customer_delivery_id = from_customer_delivery_id;
@@ -1458,6 +1490,8 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
       l$delivery_cost,
       l$delivery_type,
       l$discount_value,
+      l$total_cost,
+      l$items_cost,
       l$estimated_ready_time,
       l$to_customer_delivery_id,
       l$from_customer_delivery_id,
@@ -1540,6 +1574,16 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk {
     final l$discount_value = discount_value;
     final lOther$discount_value = other.discount_value;
     if (l$discount_value != lOther$discount_value) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
+    final l$items_cost = items_cost;
+    final lOther$items_cost = other.items_cost;
+    if (l$items_cost != lOther$items_cost) {
       return false;
     }
     final l$estimated_ready_time = estimated_ready_time;
@@ -1693,6 +1737,8 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? delivery_cost,
     String? delivery_type,
     double? discount_value,
+    double? total_cost,
+    double? items_cost,
     String? estimated_ready_time,
     int? to_customer_delivery_id,
     int? from_customer_delivery_id,
@@ -1767,6 +1813,8 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
     Object? delivery_cost = _undefined,
     Object? delivery_type = _undefined,
     Object? discount_value = _undefined,
+    Object? total_cost = _undefined,
+    Object? items_cost = _undefined,
     Object? estimated_ready_time = _undefined,
     Object? to_customer_delivery_id = _undefined,
     Object? from_customer_delivery_id = _undefined,
@@ -1819,6 +1867,12 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
         discount_value: discount_value == _undefined || discount_value == null
             ? _instance.discount_value
             : (discount_value as double),
+        total_cost: total_cost == _undefined
+            ? _instance.total_cost
+            : (total_cost as double?),
+        items_cost: items_cost == _undefined
+            ? _instance.items_cost
+            : (items_cost as double?),
         estimated_ready_time: estimated_ready_time == _undefined
             ? _instance.estimated_ready_time
             : (estimated_ready_time as String?),
@@ -1963,6 +2017,8 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
     double? delivery_cost,
     String? delivery_type,
     double? discount_value,
+    double? total_cost,
+    double? items_cost,
     String? estimated_ready_time,
     int? to_customer_delivery_id,
     int? from_customer_delivery_id,
@@ -6033,6 +6089,20 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'items_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'customer_location_gps'),
             alias: null,
             arguments: [],
@@ -6899,6 +6969,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     this.customer_address,
     required this.customer_app_type,
     required this.customer_id,
+    this.total_cost,
+    this.items_cost,
     this.customer_location_gps,
     required this.delivery_cost,
     required this.delivery_type,
@@ -6934,6 +7006,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$customer_address = json['customer_address'];
     final l$customer_app_type = json['customer_app_type'];
     final l$customer_id = json['customer_id'];
+    final l$total_cost = json['total_cost'];
+    final l$items_cost = json['items_cost'];
     final l$customer_location_gps = json['customer_location_gps'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_type = json['delivery_type'];
@@ -6966,6 +7040,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       customer_address: (l$customer_address as String?),
       customer_app_type: (l$customer_app_type as String),
       customer_id: (l$customer_id as int),
+      total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
+      items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       customer_location_gps: l$customer_location_gps == null
           ? null
           : geographyFromJson(l$customer_location_gps),
@@ -7023,6 +7099,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
   final String customer_app_type;
 
   final int customer_id;
+
+  final double? total_cost;
+
+  final double? items_cost;
 
   final Geography? customer_location_gps;
 
@@ -7091,6 +7171,12 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     _resultData['customer_app_type'] = l$customer_app_type;
     final l$customer_id = customer_id;
     _resultData['customer_id'] = l$customer_id;
+    final l$total_cost = total_cost;
+    _resultData['total_cost'] =
+        l$total_cost == null ? null : moneyToJson(l$total_cost);
+    final l$items_cost = items_cost;
+    _resultData['items_cost'] =
+        l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$customer_location_gps = customer_location_gps;
     _resultData['customer_location_gps'] = l$customer_location_gps == null
         ? null
@@ -7155,6 +7241,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$customer_address = customer_address;
     final l$customer_app_type = customer_app_type;
     final l$customer_id = customer_id;
+    final l$total_cost = total_cost;
+    final l$items_cost = items_cost;
     final l$customer_location_gps = customer_location_gps;
     final l$delivery_cost = delivery_cost;
     final l$delivery_type = delivery_type;
@@ -7187,6 +7275,8 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
       l$customer_address,
       l$customer_app_type,
       l$customer_id,
+      l$total_cost,
+      l$items_cost,
       l$customer_location_gps,
       l$delivery_cost,
       l$delivery_type,
@@ -7252,6 +7342,16 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk {
     final l$customer_id = customer_id;
     final lOther$customer_id = other.customer_id;
     if (l$customer_id != lOther$customer_id) {
+      return false;
+    }
+    final l$total_cost = total_cost;
+    final lOther$total_cost = other.total_cost;
+    if (l$total_cost != lOther$total_cost) {
+      return false;
+    }
+    final l$items_cost = items_cost;
+    final lOther$items_cost = other.items_cost;
+    if (l$items_cost != lOther$items_cost) {
       return false;
     }
     final l$customer_location_gps = customer_location_gps;
@@ -7419,6 +7519,8 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk<
     String? customer_address,
     String? customer_app_type,
     int? customer_id,
+    double? total_cost,
+    double? items_cost,
     Geography? customer_location_gps,
     double? delivery_cost,
     String? delivery_type,
@@ -7487,6 +7589,8 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     Object? customer_address = _undefined,
     Object? customer_app_type = _undefined,
     Object? customer_id = _undefined,
+    Object? total_cost = _undefined,
+    Object? items_cost = _undefined,
     Object? customer_location_gps = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery_type = _undefined,
@@ -7531,6 +7635,12 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
         customer_id: customer_id == _undefined || customer_id == null
             ? _instance.customer_id
             : (customer_id as int),
+        total_cost: total_cost == _undefined
+            ? _instance.total_cost
+            : (total_cost as double?),
+        items_cost: items_cost == _undefined
+            ? _instance.items_cost
+            : (items_cost as double?),
         customer_location_gps: customer_location_gps == _undefined
             ? _instance.customer_location_gps
             : (customer_location_gps as Geography?),
@@ -7681,6 +7791,8 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk<TRes>
     String? customer_address,
     String? customer_app_type,
     int? customer_id,
+    double? total_cost,
+    double? items_cost,
     Geography? customer_location_gps,
     double? delivery_cost,
     String? delivery_type,
