@@ -19,7 +19,7 @@ import { ParticipantType } from "../shared/models/Generic/Chat";
 import { PaymentDetails, updateOrderIdAndFetchPaymentInfo } from "../utilities/stripe/payment";
 import { updateDeliveryOrderCompany } from '../shared/graphql/delivery/updateDelivery';
 import { ServiceProvider } from '../shared/models/Services/Service';
-import { notifyDeliveryPartner } from '../shared/helper';
+import { notifyDeliveryCompany } from '../shared/helper';
 
 export interface CheckoutRequest {
   customerAppType: CustomerAppType,
@@ -35,6 +35,7 @@ export interface CheckoutRequest {
   scheduledTime?: string,
   stripePaymentId?: string,
   stripeFees?: number,
+  distanceFromBase?: number
 }
 export interface CheckoutResponse {
   orderId: number,
@@ -73,7 +74,7 @@ export async function checkout(customerId: number, checkoutRequest: CheckoutRequ
   if(orderResponse.restaurantOrder.deliveryType == DeliveryType.Delivery && restaurant.deliveryDetails.selfDelivery == false) {
 
     updateDeliveryOrderCompany(orderResponse.deliveryOrder.deliveryId, restaurant.deliveryPartnerId!);
-    notifyDeliveryPartner(orderResponse.deliveryOrder, restaurant.deliveryPartnerId!, OrderType.Restaurant);
+    notifyDeliveryCompany(orderResponse.deliveryOrder, restaurant.deliveryPartnerId!, OrderType.Restaurant);
   }
   
  

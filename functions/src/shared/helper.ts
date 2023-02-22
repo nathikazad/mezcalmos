@@ -18,7 +18,7 @@ export async function isMezAdmin(userId: number): Promise<boolean> {
     }
 }
 
-export async function notifyDeliveryPartner(deliveryOrder: DeliveryOrder, deliveryPartnerId: number, orderType: OrderType) {
+export async function notifyDeliveryCompany(deliveryOrder: DeliveryOrder, deliveryPartnerId: number, orderType: OrderType) {
     let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(deliveryPartnerId);
     let deliveryDrivers: DeliveryDriver[] = await getDeliveryDrivers(deliveryPartnerId);
   
@@ -51,14 +51,14 @@ export async function notifyDeliveryPartner(deliveryOrder: DeliveryOrder, delive
             continue;
           
           let dist1 = distance(
-            deliveryOrder.pickupLocation.lat, 
-            deliveryOrder.pickupLocation.lng,
+            deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
+            deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
             deliveryDrivers[i].currentLocation!.lat,
             deliveryDrivers[i].currentLocation!.lng
           )
           let dist2 = distance(
-            deliveryOrder.pickupLocation.lat, 
-            deliveryOrder.pickupLocation.lng,
+            deliveryOrder.pickupLocation?.lat ?? deliveryOrder.dropoffLocation.lat, 
+            deliveryOrder.pickupLocation?.lng ?? deliveryOrder.dropoffLocation.lng,
             deliveryDrivers[j].currentLocation!.lat,
             deliveryDrivers[j].currentLocation!.lng
           )

@@ -18,6 +18,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             id: true,
             user_id: true,
             operator_details: {
+                id: true,
                 status: true,
                 owner: true,
                 app_version: true,
@@ -43,6 +44,7 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
         return <DeliveryOperator>{
             id: d.id,
             userId: d.user_id,
+            operatorDetailsId: d.operator_details.id,
             deliveryCompanyId: deliveryCompanyId,
             status: d.operator_details.status as AuthorizationStatus,
             owner: d.operator_details.owner,
@@ -76,6 +78,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
             user_id: true,
             delivery_company_id: true,
             operator_details: {
+                id: true,
                 status: true,
                 owner: true,
                 app_version: true,
@@ -100,6 +103,7 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
 
     return {
         id: response.delivery_operator_by_pk.id,
+        operatorDetailsId: response.delivery_operator_by_pk.operator_details.id,
         userId: response.delivery_operator_by_pk.user_id,
         deliveryCompanyId: response.delivery_operator_by_pk.delivery_company_id,
         status: response.delivery_operator_by_pk.operator_details.status as AuthorizationStatus,
@@ -137,6 +141,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
             user_id: true,
             delivery_company_id: true,
             operator_details: {
+                id: true,
                 status: true,
                 owner: true,
                 app_version: true,
@@ -162,6 +167,7 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
     return {
         id: response.delivery_operator[0].id,
         userId: response.delivery_operator[0].user_id,
+        operatorDetailsId: response.delivery_operator[0].operator_details.id,
         deliveryCompanyId: response.delivery_operator[0].delivery_company_id,
         status: response.delivery_operator[0].operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator[0].operator_details.owner,

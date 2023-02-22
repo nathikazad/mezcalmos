@@ -22,11 +22,11 @@ export async function changeRestaurantOrderStatus(
   deliveryOrder: DeliveryOrder
 ) {
 
-  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(changeDeliveryStatusDetails.deliveryId);
+  let restaurantOrder: RestaurantOrder = await getRestaurantOrderFromDelivery(changeDeliveryStatusDetails.deliveryOrderId);
   let restaurantOperators: Operator[] = await getRestaurantOperators(restaurantOrder.restaurantId);
 
 
-  if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryId) {
+  if (restaurantOrder.deliveryId != changeDeliveryStatusDetails.deliveryOrderId) {
     throw new HttpsError(
       "internal",
       "restaurant order and delivery order do not match"
