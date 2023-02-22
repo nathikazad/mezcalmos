@@ -40,17 +40,17 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
         userInfo: ServiceInfo(
             hasuraId: data.id,
             image: data.details!.image,
-            description: (data.details!.description?.translations != null &&
-                    data.details!.description?.translations.isNotEmpty == true)
-                ? {
-                    data.details!.description!.translations.first.language_id
-                            .toLanguageType():
-                        data.details!.description!.translations.first.value,
-                    data.details!.description!.translations[1].language_id
-                            .toLanguageType():
-                        data.details!.description!.translations[1].value,
-                  }
-                : null,
+            // description: (data.details!.description?.translations != null &&
+            //         data.details!.description?.translations.isNotEmpty == true)
+            //     ? {
+            //         data.details!.description!.translations.first.language_id
+            //                 .toLanguageType():
+            //             data.details!.description!.translations.first.value,
+            //         data.details!.description!.translations[1].language_id
+            //                 .toLanguageType():
+            //             data.details!.description!.translations[1].value,
+            //       }
+            //     : null,
             firebaseId: data.details!.firebase_id,
             name: data.details!.name,
             descriptionId: data.details!.description_id,
