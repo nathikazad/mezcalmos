@@ -102,6 +102,7 @@ export enum DeliveryOrderStatus {
   CancelledByCustomer = "cancelledByCustomer",
   CancelledByDeliverer = "cancelledByDeliverer",
   CancelledByServiceProvider = "cancelledByServiceProvider",
+  CancelledByAdmin = "cancelledByAdmin",
 }
 
 export enum DeliveryServiceProviderType {

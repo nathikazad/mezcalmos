@@ -13,6 +13,7 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { ParticipantType } from "../shared/models/Generic/Chat";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { deliveryOrderStatusChangeMessages } from "./bgNotificationMessages";
+import { isMezAdmin } from "../shared/helper";
 
 let statusArrayInSeq: Array<DeliveryOrderStatus> = [
   DeliveryOrderStatus.OrderReceived,
@@ -41,15 +42,15 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
 }
 
 export interface ChangeDeliveryStatusDetails {
-  deliveryOrderId: number,
+  deliveryId: number,
   newStatus: DeliveryOrderStatus
 }
 
 export async function changeDeliveryStatus(userId: number, changeDeliveryStatusDetails: ChangeDeliveryStatusDetails) {
 
-  let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryOrderId);
+  let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
 
-  errorChecks(deliveryOrder, userId);
+  await errorChecks(deliveryOrder, userId);
 
   let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
 
@@ -72,7 +73,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
   }
 }
 
-function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
+async function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
   if (deliveryOrder.deliveryDriver == null) {
     throw new HttpsError(
       "internal",
@@ -89,11 +90,13 @@ function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
       "delivery order is complete or cancelled"
     );
   }
-  if (userId != deliveryOrder.deliveryDriver.userId) {
-    throw new HttpsError(
-      "internal",
-      "order driver mismatch"
-    );
+  if((await isMezAdmin(userId)) == false) {
+    if (userId != deliveryOrder.deliveryDriver.userId) {
+      throw new HttpsError(
+        "internal",
+        "order driver mismatch"
+      );
+    }
   }
 }
 
@@ -120,4 +123,12 @@ function notifyCourierStatusChange(deliveryOrder: DeliveryOrder, customer: Custo
     ParticipantType.Customer,
     customer.language
   );
+  if(deliveryOrder.status == DeliveryOrderStatus.CancelledByAdmin && deliveryOrder.deliveryDriver) {
+    pushNotification(deliveryOrder.deliveryDriver.user?.firebaseId!,
+      notification,
+      deliveryOrder.deliveryDriver.notificationInfo,
+      ParticipantType.DeliveryDriver,
+      deliveryOrder.deliveryDriver.user?.language
+  );
+  }
 }
