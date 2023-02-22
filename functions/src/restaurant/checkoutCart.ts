@@ -36,6 +36,8 @@ export interface CheckoutRequest {
   stripePaymentId?: string,
   stripeFees?: number,
   distanceFromBase?: number
+  tax?: number,
+  discountValue?: number
 }
 export interface CheckoutResponse {
   orderId: number,

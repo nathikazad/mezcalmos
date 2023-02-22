@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -23,6 +24,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("Calling ======================>>>>>${_getRightDriver()}");
     if (_getRightDriver() != null && order.inProcess()) {
       return Card(
           margin: const EdgeInsets.only(top: 15),
@@ -58,7 +60,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     _getRightDriver()!.name,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 if (_getRightChatId() != null)

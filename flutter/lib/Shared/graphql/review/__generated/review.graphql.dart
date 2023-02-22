@@ -535,9 +535,9 @@ class _CopyWithStubImpl$Mutation$insertReview$insert_review_one<TRes>
 
 class Variables$Query$get_service_review_average {
   factory Variables$Query$get_service_review_average(
-          {required int serviceDetailsId}) =>
+          {required int serviceId}) =>
       Variables$Query$get_service_review_average._({
-        r'serviceDetailsId': serviceDetailsId,
+        r'serviceId': serviceId,
       });
 
   Variables$Query$get_service_review_average._(this._$data);
@@ -545,18 +545,18 @@ class Variables$Query$get_service_review_average {
   factory Variables$Query$get_service_review_average.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$serviceDetailsId = data['serviceDetailsId'];
-    result$data['serviceDetailsId'] = (l$serviceDetailsId as int);
+    final l$serviceId = data['serviceId'];
+    result$data['serviceId'] = (l$serviceId as int);
     return Variables$Query$get_service_review_average._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get serviceDetailsId => (_$data['serviceDetailsId'] as int);
+  int get serviceId => (_$data['serviceId'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$serviceDetailsId = serviceDetailsId;
-    result$data['serviceDetailsId'] = l$serviceDetailsId;
+    final l$serviceId = serviceId;
+    result$data['serviceId'] = l$serviceId;
     return result$data;
   }
 
@@ -575,9 +575,9 @@ class Variables$Query$get_service_review_average {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$serviceDetailsId = serviceDetailsId;
-    final lOther$serviceDetailsId = other.serviceDetailsId;
-    if (l$serviceDetailsId != lOther$serviceDetailsId) {
+    final l$serviceId = serviceId;
+    final lOther$serviceId = other.serviceId;
+    if (l$serviceId != lOther$serviceId) {
       return false;
     }
     return true;
@@ -585,8 +585,8 @@ class Variables$Query$get_service_review_average {
 
   @override
   int get hashCode {
-    final l$serviceDetailsId = serviceDetailsId;
-    return Object.hashAll([l$serviceDetailsId]);
+    final l$serviceId = serviceId;
+    return Object.hashAll([l$serviceId]);
   }
 }
 
@@ -599,7 +599,7 @@ abstract class CopyWith$Variables$Query$get_service_review_average<TRes> {
   factory CopyWith$Variables$Query$get_service_review_average.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$get_service_review_average;
 
-  TRes call({int? serviceDetailsId});
+  TRes call({int? serviceId});
 }
 
 class _CopyWithImpl$Variables$Query$get_service_review_average<TRes>
@@ -615,11 +615,11 @@ class _CopyWithImpl$Variables$Query$get_service_review_average<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? serviceDetailsId = _undefined}) =>
+  TRes call({Object? serviceId = _undefined}) =>
       _then(Variables$Query$get_service_review_average._({
         ..._instance._$data,
-        if (serviceDetailsId != _undefined && serviceDetailsId != null)
-          'serviceDetailsId': (serviceDetailsId as int),
+        if (serviceId != _undefined && serviceId != null)
+          'serviceId': (serviceId as int),
       }));
 }
 
@@ -629,39 +629,34 @@ class _CopyWithStubImpl$Variables$Query$get_service_review_average<TRes>
 
   TRes _res;
 
-  call({int? serviceDetailsId}) => _res;
+  call({int? serviceId}) => _res;
 }
 
 class Query$get_service_review_average {
   Query$get_service_review_average({
-    this.service_provider_details_by_pk,
+    required this.review_aggregate,
     required this.$__typename,
   });
 
   factory Query$get_service_review_average.fromJson(Map<String, dynamic> json) {
-    final l$service_provider_details_by_pk =
-        json['service_provider_details_by_pk'];
+    final l$review_aggregate = json['review_aggregate'];
     final l$$__typename = json['__typename'];
     return Query$get_service_review_average(
-      service_provider_details_by_pk: l$service_provider_details_by_pk == null
-          ? null
-          : Query$get_service_review_average$service_provider_details_by_pk
-              .fromJson(
-                  (l$service_provider_details_by_pk as Map<String, dynamic>)),
+      review_aggregate:
+          Query$get_service_review_average$review_aggregate.fromJson(
+              (l$review_aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_service_review_average$service_provider_details_by_pk?
-      service_provider_details_by_pk;
+  final Query$get_service_review_average$review_aggregate review_aggregate;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
-    _resultData['service_provider_details_by_pk'] =
-        l$service_provider_details_by_pk?.toJson();
+    final l$review_aggregate = review_aggregate;
+    _resultData['review_aggregate'] = l$review_aggregate.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -669,10 +664,10 @@ class Query$get_service_review_average {
 
   @override
   int get hashCode {
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final l$review_aggregate = review_aggregate;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$service_provider_details_by_pk,
+      l$review_aggregate,
       l$$__typename,
     ]);
   }
@@ -686,11 +681,9 @@ class Query$get_service_review_average {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
-    final lOther$service_provider_details_by_pk =
-        other.service_provider_details_by_pk;
-    if (l$service_provider_details_by_pk !=
-        lOther$service_provider_details_by_pk) {
+    final l$review_aggregate = review_aggregate;
+    final lOther$review_aggregate = other.review_aggregate;
+    if (l$review_aggregate != lOther$review_aggregate) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -721,12 +714,11 @@ abstract class CopyWith$Query$get_service_review_average<TRes> {
       _CopyWithStubImpl$Query$get_service_review_average;
 
   TRes call({
-    Query$get_service_review_average$service_provider_details_by_pk?
-        service_provider_details_by_pk,
+    Query$get_service_review_average$review_aggregate? review_aggregate,
     String? $__typename,
   });
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk;
+  CopyWith$Query$get_service_review_average$review_aggregate<TRes>
+      get review_aggregate;
 }
 
 class _CopyWithImpl$Query$get_service_review_average<TRes>
@@ -743,29 +735,24 @@ class _CopyWithImpl$Query$get_service_review_average<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? service_provider_details_by_pk = _undefined,
+    Object? review_aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_review_average(
-        service_provider_details_by_pk: service_provider_details_by_pk ==
-                _undefined
-            ? _instance.service_provider_details_by_pk
-            : (service_provider_details_by_pk
-                as Query$get_service_review_average$service_provider_details_by_pk?),
+        review_aggregate:
+            review_aggregate == _undefined || review_aggregate == null
+                ? _instance.review_aggregate
+                : (review_aggregate
+                    as Query$get_service_review_average$review_aggregate),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk {
-    final local$service_provider_details_by_pk =
-        _instance.service_provider_details_by_pk;
-    return local$service_provider_details_by_pk == null
-        ? CopyWith$Query$get_service_review_average$service_provider_details_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Query$get_service_review_average$service_provider_details_by_pk(
-            local$service_provider_details_by_pk,
-            (e) => call(service_provider_details_by_pk: e));
+  CopyWith$Query$get_service_review_average$review_aggregate<TRes>
+      get review_aggregate {
+    final local$review_aggregate = _instance.review_aggregate;
+    return CopyWith$Query$get_service_review_average$review_aggregate(
+        local$review_aggregate, (e) => call(review_aggregate: e));
   }
 }
 
@@ -776,15 +763,13 @@ class _CopyWithStubImpl$Query$get_service_review_average<TRes>
   TRes _res;
 
   call({
-    Query$get_service_review_average$service_provider_details_by_pk?
-        service_provider_details_by_pk,
+    Query$get_service_review_average$review_aggregate? review_aggregate,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk
-              .stub(_res);
+  CopyWith$Query$get_service_review_average$review_aggregate<TRes>
+      get review_aggregate =>
+          CopyWith$Query$get_service_review_average$review_aggregate.stub(_res);
 }
 
 const documentNodeQueryget_service_review_average = DocumentNode(definitions: [
@@ -793,7 +778,7 @@ const documentNodeQueryget_service_review_average = DocumentNode(definitions: [
     name: NameNode(value: 'get_service_review_average'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+        variable: VariableNode(name: NameNode(value: 'serviceId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -805,67 +790,56 @@ const documentNodeQueryget_service_review_average = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'service_provider_details_by_pk'),
+        name: NameNode(value: 'review_aggregate'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'customer',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'serviceId')),
+                  )
+                ]),
+              ),
+            ]),
           )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'reviews_aggregate'),
+            name: NameNode(value: 'aggregate'),
             alias: null,
-            arguments: [
-              ArgumentNode(
-                name: NameNode(value: 'where'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'from_entity_type'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value: StringValueNode(
-                          value: 'customer',
-                          isBlock: false,
-                        ),
-                      )
-                    ]),
-                  )
-                ]),
-              )
-            ],
+            arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'aggregate'),
+                name: NameNode(value: 'avg'),
                 alias: null,
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-                    name: NameNode(value: 'avg'),
+                    name: NameNode(value: 'rating'),
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: SelectionSetNode(selections: [
-                      FieldNode(
-                        name: NameNode(value: 'rating'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                      FieldNode(
-                        name: NameNode(value: '__typename'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null,
-                      ),
-                    ]),
+                    selectionSet: null,
                   ),
                   FieldNode(
                     name: NameNode(value: '__typename'),
@@ -1012,189 +986,26 @@ extension ClientExtension$Query$get_service_review_average
   }
 }
 
-class Query$get_service_review_average$service_provider_details_by_pk {
-  Query$get_service_review_average$service_provider_details_by_pk({
-    required this.reviews_aggregate,
-    required this.$__typename,
-  });
-
-  factory Query$get_service_review_average$service_provider_details_by_pk.fromJson(
-      Map<String, dynamic> json) {
-    final l$reviews_aggregate = json['reviews_aggregate'];
-    final l$$__typename = json['__typename'];
-    return Query$get_service_review_average$service_provider_details_by_pk(
-      reviews_aggregate:
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-              .fromJson((l$reviews_aggregate as Map<String, dynamic>)),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-      reviews_aggregate;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$reviews_aggregate = reviews_aggregate;
-    _resultData['reviews_aggregate'] = l$reviews_aggregate.toJson();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$reviews_aggregate = reviews_aggregate;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      l$reviews_aggregate,
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Query$get_service_review_average$service_provider_details_by_pk) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$reviews_aggregate = reviews_aggregate;
-    final lOther$reviews_aggregate = other.reviews_aggregate;
-    if (l$reviews_aggregate != lOther$reviews_aggregate) {
-      return false;
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_service_review_average$service_provider_details_by_pk
-    on Query$get_service_review_average$service_provider_details_by_pk {
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk<
-          Query$get_service_review_average$service_provider_details_by_pk>
-      get copyWith =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_service_review_average$service_provider_details_by_pk<
-    TRes> {
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk(
-    Query$get_service_review_average$service_provider_details_by_pk instance,
-    TRes Function(
-            Query$get_service_review_average$service_provider_details_by_pk)
-        then,
-  ) = _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk;
-
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk;
-
-  TRes call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate?
-        reviews_aggregate,
-    String? $__typename,
-  });
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-      TRes> get reviews_aggregate;
-}
-
-class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk<
-        TRes>
-    implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk<
-            TRes> {
-  _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_service_review_average$service_provider_details_by_pk
-      _instance;
-
-  final TRes Function(
-      Query$get_service_review_average$service_provider_details_by_pk) _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? reviews_aggregate = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_service_review_average$service_provider_details_by_pk(
-        reviews_aggregate: reviews_aggregate == _undefined ||
-                reviews_aggregate == null
-            ? _instance.reviews_aggregate
-            : (reviews_aggregate
-                as Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-      TRes> get reviews_aggregate {
-    final local$reviews_aggregate = _instance.reviews_aggregate;
-    return CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
-        local$reviews_aggregate, (e) => call(reviews_aggregate: e));
-  }
-}
-
-class _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk<
-        TRes>
-    implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk(
-      this._res);
-
-  TRes _res;
-
-  call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate?
-        reviews_aggregate,
-    String? $__typename,
-  }) =>
-      _res;
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-          TRes>
-      get reviews_aggregate =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-              .stub(_res);
-}
-
-class Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate {
-  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate({
+class Query$get_service_review_average$review_aggregate {
+  Query$get_service_review_average$review_aggregate({
     this.aggregate,
     required this.$__typename,
   });
 
-  factory Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate.fromJson(
+  factory Query$get_service_review_average$review_aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$aggregate = json['aggregate'];
     final l$$__typename = json['__typename'];
-    return Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
+    return Query$get_service_review_average$review_aggregate(
       aggregate: l$aggregate == null
           ? null
-          : Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
+          : Query$get_service_review_average$review_aggregate$aggregate
               .fromJson((l$aggregate as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate?
-      aggregate;
+  final Query$get_service_review_average$review_aggregate$aggregate? aggregate;
 
   final String $__typename;
 
@@ -1222,8 +1033,7 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate) ||
+    if (!(other is Query$get_service_review_average$review_aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1241,56 +1051,47 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
   }
 }
 
-extension UtilityExtension$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-    on Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate {
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate>
+extension UtilityExtension$Query$get_service_review_average$review_aggregate
+    on Query$get_service_review_average$review_aggregate {
+  CopyWith$Query$get_service_review_average$review_aggregate<
+          Query$get_service_review_average$review_aggregate>
       get copyWith =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
+          CopyWith$Query$get_service_review_average$review_aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
+abstract class CopyWith$Query$get_service_review_average$review_aggregate<
     TRes> {
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-        instance,
-    TRes Function(
-            Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate)
-        then,
-  ) = _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate;
+  factory CopyWith$Query$get_service_review_average$review_aggregate(
+    Query$get_service_review_average$review_aggregate instance,
+    TRes Function(Query$get_service_review_average$review_aggregate) then,
+  ) = _CopyWithImpl$Query$get_service_review_average$review_aggregate;
 
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate.stub(
+  factory CopyWith$Query$get_service_review_average$review_aggregate.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate;
+      _CopyWithStubImpl$Query$get_service_review_average$review_aggregate;
 
   TRes call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate?
-        aggregate,
+    Query$get_service_review_average$review_aggregate$aggregate? aggregate,
     String? $__typename,
   });
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
-      TRes> get aggregate;
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate<TRes>
+      get aggregate;
 }
 
-class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-        TRes>
+class _CopyWithImpl$Query$get_service_review_average$review_aggregate<TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-            TRes> {
-  _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
+        CopyWith$Query$get_service_review_average$review_aggregate<TRes> {
+  _CopyWithImpl$Query$get_service_review_average$review_aggregate(
     this._instance,
     this._then,
   );
 
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate
-      _instance;
+  final Query$get_service_review_average$review_aggregate _instance;
 
-  final TRes Function(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate)
-      _then;
+  final TRes Function(Query$get_service_review_average$review_aggregate) _then;
 
   static const _undefined = {};
 
@@ -1298,71 +1099,65 @@ class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by
     Object? aggregate = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
+      _then(Query$get_service_review_average$review_aggregate(
         aggregate: aggregate == _undefined
             ? _instance.aggregate
             : (aggregate
-                as Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate?),
+                as Query$get_service_review_average$review_aggregate$aggregate?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
-      TRes> get aggregate {
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate<TRes>
+      get aggregate {
     final local$aggregate = _instance.aggregate;
     return local$aggregate == null
-        ? CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
+        ? CopyWith$Query$get_service_review_average$review_aggregate$aggregate
             .stub(_then(_instance))
-        : CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+        : CopyWith$Query$get_service_review_average$review_aggregate$aggregate(
             local$aggregate, (e) => call(aggregate: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-        TRes>
+class _CopyWithStubImpl$Query$get_service_review_average$review_aggregate<TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate<
-            TRes> {
-  _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate(
+        CopyWith$Query$get_service_review_average$review_aggregate<TRes> {
+  _CopyWithStubImpl$Query$get_service_review_average$review_aggregate(
       this._res);
 
   TRes _res;
 
   call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate?
-        aggregate,
+    Query$get_service_review_average$review_aggregate$aggregate? aggregate,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
-          TRes>
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate<TRes>
       get aggregate =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
+          CopyWith$Query$get_service_review_average$review_aggregate$aggregate
               .stub(_res);
 }
 
-class Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate {
-  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate({
+class Query$get_service_review_average$review_aggregate$aggregate {
+  Query$get_service_review_average$review_aggregate$aggregate({
     this.avg,
     required this.$__typename,
   });
 
-  factory Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate.fromJson(
+  factory Query$get_service_review_average$review_aggregate$aggregate.fromJson(
       Map<String, dynamic> json) {
     final l$avg = json['avg'];
     final l$$__typename = json['__typename'];
-    return Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+    return Query$get_service_review_average$review_aggregate$aggregate(
       avg: l$avg == null
           ? null
-          : Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
+          : Query$get_service_review_average$review_aggregate$aggregate$avg
               .fromJson((l$avg as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?
-      avg;
+  final Query$get_service_review_average$review_aggregate$aggregate$avg? avg;
 
   final String $__typename;
 
@@ -1391,7 +1186,7 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
       return true;
     }
     if (!(other
-            is Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate) ||
+            is Query$get_service_review_average$review_aggregate$aggregate) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1409,56 +1204,51 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
   }
 }
 
-extension UtilityExtension$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
-    on Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate {
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate>
+extension UtilityExtension$Query$get_service_review_average$review_aggregate$aggregate
+    on Query$get_service_review_average$review_aggregate$aggregate {
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate<
+          Query$get_service_review_average$review_aggregate$aggregate>
       get copyWith =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+          CopyWith$Query$get_service_review_average$review_aggregate$aggregate(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
+abstract class CopyWith$Query$get_service_review_average$review_aggregate$aggregate<
     TRes> {
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
-        instance,
-    TRes Function(
-            Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate)
+  factory CopyWith$Query$get_service_review_average$review_aggregate$aggregate(
+    Query$get_service_review_average$review_aggregate$aggregate instance,
+    TRes Function(Query$get_service_review_average$review_aggregate$aggregate)
         then,
-  ) = _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate;
+  ) = _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate;
 
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate.stub(
+  factory CopyWith$Query$get_service_review_average$review_aggregate$aggregate.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate;
+      _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate;
 
   TRes call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?
-        avg,
+    Query$get_service_review_average$review_aggregate$aggregate$avg? avg,
     String? $__typename,
   });
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
-      TRes> get avg;
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<TRes>
+      get avg;
 }
 
-class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
+class _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate<
         TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
+        CopyWith$Query$get_service_review_average$review_aggregate$aggregate<
             TRes> {
-  _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+  _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate(
     this._instance,
     this._then,
   );
 
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate
-      _instance;
+  final Query$get_service_review_average$review_aggregate$aggregate _instance;
 
   final TRes Function(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate)
-      _then;
+      Query$get_service_review_average$review_aggregate$aggregate) _then;
 
   static const _undefined = {};
 
@@ -1466,61 +1256,58 @@ class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by
     Object? avg = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+      _then(Query$get_service_review_average$review_aggregate$aggregate(
         avg: avg == _undefined
             ? _instance.avg
             : (avg
-                as Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?),
+                as Query$get_service_review_average$review_aggregate$aggregate$avg?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
-      TRes> get avg {
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<TRes>
+      get avg {
     final local$avg = _instance.avg;
     return local$avg == null
-        ? CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
+        ? CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg
             .stub(_then(_instance))
-        : CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+        : CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg(
             local$avg, (e) => call(avg: e));
   }
 }
 
-class _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
+class _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate<
         TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate<
+        CopyWith$Query$get_service_review_average$review_aggregate$aggregate<
             TRes> {
-  _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate(
+  _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate(
       this._res);
 
   TRes _res;
 
   call({
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg?
-        avg,
+    Query$get_service_review_average$review_aggregate$aggregate$avg? avg,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
-          TRes>
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<TRes>
       get avg =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
+          CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg
               .stub(_res);
 }
 
-class Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg {
-  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg({
+class Query$get_service_review_average$review_aggregate$aggregate$avg {
+  Query$get_service_review_average$review_aggregate$aggregate$avg({
     this.rating,
     required this.$__typename,
   });
 
-  factory Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg.fromJson(
+  factory Query$get_service_review_average$review_aggregate$aggregate$avg.fromJson(
       Map<String, dynamic> json) {
     final l$rating = json['rating'];
     final l$$__typename = json['__typename'];
-    return Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+    return Query$get_service_review_average$review_aggregate$aggregate$avg(
       rating: (l$rating as num?)?.toDouble(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1555,7 +1342,7 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
       return true;
     }
     if (!(other
-            is Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg) ||
+            is Query$get_service_review_average$review_aggregate$aggregate$avg) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1573,30 +1360,29 @@ class Query$get_service_review_average$service_provider_details_by_pk$reviews_ag
   }
 }
 
-extension UtilityExtension$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
-    on Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg {
-  CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg>
+extension UtilityExtension$Query$get_service_review_average$review_aggregate$aggregate$avg
+    on Query$get_service_review_average$review_aggregate$aggregate$avg {
+  CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<
+          Query$get_service_review_average$review_aggregate$aggregate$avg>
       get copyWith =>
-          CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+          CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
+abstract class CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<
     TRes> {
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
-    Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
-        instance,
+  factory CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg(
+    Query$get_service_review_average$review_aggregate$aggregate$avg instance,
     TRes Function(
-            Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg)
+            Query$get_service_review_average$review_aggregate$aggregate$avg)
         then,
-  ) = _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg;
+  ) = _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate$avg;
 
-  factory CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg.stub(
+  factory CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg;
+      _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate$avg;
 
   TRes call({
     double? rating,
@@ -1604,22 +1390,21 @@ abstract class CopyWith$Query$get_service_review_average$service_provider_detail
   });
 }
 
-class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
+class _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate$avg<
         TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
+        CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<
             TRes> {
-  _CopyWithImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+  _CopyWithImpl$Query$get_service_review_average$review_aggregate$aggregate$avg(
     this._instance,
     this._then,
   );
 
-  final Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg
+  final Query$get_service_review_average$review_aggregate$aggregate$avg
       _instance;
 
   final TRes Function(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg)
-      _then;
+      Query$get_service_review_average$review_aggregate$aggregate$avg) _then;
 
   static const _undefined = {};
 
@@ -1627,8 +1412,7 @@ class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by
     Object? rating = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(
-          Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+      _then(Query$get_service_review_average$review_aggregate$aggregate$avg(
         rating: rating == _undefined ? _instance.rating : (rating as double?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
@@ -1636,12 +1420,12 @@ class _CopyWithImpl$Query$get_service_review_average$service_provider_details_by
       ));
 }
 
-class _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
+class _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate$avg<
         TRes>
     implements
-        CopyWith$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg<
+        CopyWith$Query$get_service_review_average$review_aggregate$aggregate$avg<
             TRes> {
-  _CopyWithStubImpl$Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate$aggregate$avg(
+  _CopyWithStubImpl$Query$get_service_review_average$review_aggregate$aggregate$avg(
       this._res);
 
   TRes _res;
@@ -1654,10 +1438,9 @@ class _CopyWithStubImpl$Query$get_service_review_average$service_provider_detail
 }
 
 class Variables$Query$get_service_reviews {
-  factory Variables$Query$get_service_reviews(
-          {required int serviceDetailsId}) =>
+  factory Variables$Query$get_service_reviews({required int serviceId}) =>
       Variables$Query$get_service_reviews._({
-        r'serviceDetailsId': serviceDetailsId,
+        r'serviceId': serviceId,
       });
 
   Variables$Query$get_service_reviews._(this._$data);
@@ -1665,18 +1448,18 @@ class Variables$Query$get_service_reviews {
   factory Variables$Query$get_service_reviews.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$serviceDetailsId = data['serviceDetailsId'];
-    result$data['serviceDetailsId'] = (l$serviceDetailsId as int);
+    final l$serviceId = data['serviceId'];
+    result$data['serviceId'] = (l$serviceId as int);
     return Variables$Query$get_service_reviews._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get serviceDetailsId => (_$data['serviceDetailsId'] as int);
+  int get serviceId => (_$data['serviceId'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$serviceDetailsId = serviceDetailsId;
-    result$data['serviceDetailsId'] = l$serviceDetailsId;
+    final l$serviceId = serviceId;
+    result$data['serviceId'] = l$serviceId;
     return result$data;
   }
 
@@ -1695,9 +1478,9 @@ class Variables$Query$get_service_reviews {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$serviceDetailsId = serviceDetailsId;
-    final lOther$serviceDetailsId = other.serviceDetailsId;
-    if (l$serviceDetailsId != lOther$serviceDetailsId) {
+    final l$serviceId = serviceId;
+    final lOther$serviceId = other.serviceId;
+    if (l$serviceId != lOther$serviceId) {
       return false;
     }
     return true;
@@ -1705,8 +1488,8 @@ class Variables$Query$get_service_reviews {
 
   @override
   int get hashCode {
-    final l$serviceDetailsId = serviceDetailsId;
-    return Object.hashAll([l$serviceDetailsId]);
+    final l$serviceId = serviceId;
+    return Object.hashAll([l$serviceId]);
   }
 }
 
@@ -1719,7 +1502,7 @@ abstract class CopyWith$Variables$Query$get_service_reviews<TRes> {
   factory CopyWith$Variables$Query$get_service_reviews.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$get_service_reviews;
 
-  TRes call({int? serviceDetailsId});
+  TRes call({int? serviceId});
 }
 
 class _CopyWithImpl$Variables$Query$get_service_reviews<TRes>
@@ -1735,11 +1518,11 @@ class _CopyWithImpl$Variables$Query$get_service_reviews<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? serviceDetailsId = _undefined}) =>
+  TRes call({Object? serviceId = _undefined}) =>
       _then(Variables$Query$get_service_reviews._({
         ..._instance._$data,
-        if (serviceDetailsId != _undefined && serviceDetailsId != null)
-          'serviceDetailsId': (serviceDetailsId as int),
+        if (serviceId != _undefined && serviceId != null)
+          'serviceId': (serviceId as int),
       }));
 }
 
@@ -1749,38 +1532,35 @@ class _CopyWithStubImpl$Variables$Query$get_service_reviews<TRes>
 
   TRes _res;
 
-  call({int? serviceDetailsId}) => _res;
+  call({int? serviceId}) => _res;
 }
 
 class Query$get_service_reviews {
   Query$get_service_reviews({
-    this.service_provider_details_by_pk,
+    required this.review,
     required this.$__typename,
   });
 
   factory Query$get_service_reviews.fromJson(Map<String, dynamic> json) {
-    final l$service_provider_details_by_pk =
-        json['service_provider_details_by_pk'];
+    final l$review = json['review'];
     final l$$__typename = json['__typename'];
     return Query$get_service_reviews(
-      service_provider_details_by_pk: l$service_provider_details_by_pk == null
-          ? null
-          : Query$get_service_reviews$service_provider_details_by_pk.fromJson(
-              (l$service_provider_details_by_pk as Map<String, dynamic>)),
+      review: (l$review as List<dynamic>)
+          .map((e) => Query$get_service_reviews$review.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Query$get_service_reviews$service_provider_details_by_pk?
-      service_provider_details_by_pk;
+  final List<Query$get_service_reviews$review> review;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
-    _resultData['service_provider_details_by_pk'] =
-        l$service_provider_details_by_pk?.toJson();
+    final l$review = review;
+    _resultData['review'] = l$review.map((e) => e.toJson()).toList();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1788,10 +1568,10 @@ class Query$get_service_reviews {
 
   @override
   int get hashCode {
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
+    final l$review = review;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$service_provider_details_by_pk,
+      Object.hashAll(l$review.map((v) => v)),
       l$$__typename,
     ]);
   }
@@ -1805,12 +1585,17 @@ class Query$get_service_reviews {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$service_provider_details_by_pk = service_provider_details_by_pk;
-    final lOther$service_provider_details_by_pk =
-        other.service_provider_details_by_pk;
-    if (l$service_provider_details_by_pk !=
-        lOther$service_provider_details_by_pk) {
+    final l$review = review;
+    final lOther$review = other.review;
+    if (l$review.length != lOther$review.length) {
       return false;
+    }
+    for (int i = 0; i < l$review.length; i++) {
+      final l$review$entry = l$review[i];
+      final lOther$review$entry = lOther$review[i];
+      if (l$review$entry != lOther$review$entry) {
+        return false;
+      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -1840,12 +1625,15 @@ abstract class CopyWith$Query$get_service_reviews<TRes> {
       _CopyWithStubImpl$Query$get_service_reviews;
 
   TRes call({
-    Query$get_service_reviews$service_provider_details_by_pk?
-        service_provider_details_by_pk,
+    List<Query$get_service_reviews$review>? review,
     String? $__typename,
   });
-  CopyWith$Query$get_service_reviews$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk;
+  TRes review(
+      Iterable<Query$get_service_reviews$review> Function(
+              Iterable<
+                  CopyWith$Query$get_service_reviews$review<
+                      Query$get_service_reviews$review>>)
+          _fn);
 }
 
 class _CopyWithImpl$Query$get_service_reviews<TRes>
@@ -1862,30 +1650,29 @@ class _CopyWithImpl$Query$get_service_reviews<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? service_provider_details_by_pk = _undefined,
+    Object? review = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$get_service_reviews(
-        service_provider_details_by_pk: service_provider_details_by_pk ==
-                _undefined
-            ? _instance.service_provider_details_by_pk
-            : (service_provider_details_by_pk
-                as Query$get_service_reviews$service_provider_details_by_pk?),
+        review: review == _undefined || review == null
+            ? _instance.review
+            : (review as List<Query$get_service_reviews$review>),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Query$get_service_reviews$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk {
-    final local$service_provider_details_by_pk =
-        _instance.service_provider_details_by_pk;
-    return local$service_provider_details_by_pk == null
-        ? CopyWith$Query$get_service_reviews$service_provider_details_by_pk
-            .stub(_then(_instance))
-        : CopyWith$Query$get_service_reviews$service_provider_details_by_pk(
-            local$service_provider_details_by_pk,
-            (e) => call(service_provider_details_by_pk: e));
-  }
+  TRes review(
+          Iterable<Query$get_service_reviews$review> Function(
+                  Iterable<
+                      CopyWith$Query$get_service_reviews$review<
+                          Query$get_service_reviews$review>>)
+              _fn) =>
+      call(
+          review: _fn(_instance.review
+              .map((e) => CopyWith$Query$get_service_reviews$review(
+                    e,
+                    (i) => i,
+                  ))).toList());
 }
 
 class _CopyWithStubImpl$Query$get_service_reviews<TRes>
@@ -1895,15 +1682,11 @@ class _CopyWithStubImpl$Query$get_service_reviews<TRes>
   TRes _res;
 
   call({
-    Query$get_service_reviews$service_provider_details_by_pk?
-        service_provider_details_by_pk,
+    List<Query$get_service_reviews$review>? review,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Query$get_service_reviews$service_provider_details_by_pk<TRes>
-      get service_provider_details_by_pk =>
-          CopyWith$Query$get_service_reviews$service_provider_details_by_pk
-              .stub(_res);
+  review(_fn) => _res;
 }
 
 const documentNodeQueryget_service_reviews = DocumentNode(definitions: [
@@ -1912,7 +1695,7 @@ const documentNodeQueryget_service_reviews = DocumentNode(definitions: [
     name: NameNode(value: 'get_service_reviews'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+        variable: VariableNode(name: NameNode(value: 'serviceId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -1924,95 +1707,135 @@ const documentNodeQueryget_service_reviews = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'service_provider_details_by_pk'),
+        name: NameNode(value: 'review'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'id'),
-            value: VariableNode(name: NameNode(value: 'serviceDetailsId')),
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'from_entity_type'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: StringValueNode(
+                      value: 'customer',
+                      isBlock: false,
+                    ),
+                  )
+                ]),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'to_entity_id'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: '_eq'),
+                    value: VariableNode(name: NameNode(value: 'serviceId')),
+                  )
+                ]),
+              ),
+            ]),
           )
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'reviews'),
+            name: NameNode(value: 'from_entity_id'),
             alias: null,
-            arguments: [
-              ArgumentNode(
-                name: NameNode(value: 'where'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: 'from_entity_type'),
-                    value: ObjectValueNode(fields: [
-                      ObjectFieldNode(
-                        name: NameNode(value: '_eq'),
-                        value: StringValueNode(
-                          value: 'customer',
-                          isBlock: false,
-                        ),
-                      )
-                    ]),
-                  )
-                ]),
-              )
-            ],
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'from_entity_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'rating'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'note'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_entity_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'to_entity_type'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'created_at'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'customer'),
+            alias: null,
+            arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                name: NameNode(value: 'from_entity_id'),
+                name: NameNode(value: 'user'),
                 alias: null,
                 arguments: [],
                 directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'from_entity_type'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'rating'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'note'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'to_entity_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'to_entity_type'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'created_at'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
               ),
               FieldNode(
                 name: NameNode(value: '__typename'),
@@ -2147,181 +1970,8 @@ extension ClientExtension$Query$get_service_reviews on graphql.GraphQLClient {
   }
 }
 
-class Query$get_service_reviews$service_provider_details_by_pk {
-  Query$get_service_reviews$service_provider_details_by_pk({
-    required this.reviews,
-    required this.$__typename,
-  });
-
-  factory Query$get_service_reviews$service_provider_details_by_pk.fromJson(
-      Map<String, dynamic> json) {
-    final l$reviews = json['reviews'];
-    final l$$__typename = json['__typename'];
-    return Query$get_service_reviews$service_provider_details_by_pk(
-      reviews: (l$reviews as List<dynamic>)
-          .map((e) =>
-              Query$get_service_reviews$service_provider_details_by_pk$reviews
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<Query$get_service_reviews$service_provider_details_by_pk$reviews>
-      reviews;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$reviews = reviews;
-    _resultData['reviews'] = l$reviews.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$reviews = reviews;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$reviews.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other is Query$get_service_reviews$service_provider_details_by_pk) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$reviews = reviews;
-    final lOther$reviews = other.reviews;
-    if (l$reviews.length != lOther$reviews.length) {
-      return false;
-    }
-    for (int i = 0; i < l$reviews.length; i++) {
-      final l$reviews$entry = l$reviews[i];
-      final lOther$reviews$entry = lOther$reviews[i];
-      if (l$reviews$entry != lOther$reviews$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Query$get_service_reviews$service_provider_details_by_pk
-    on Query$get_service_reviews$service_provider_details_by_pk {
-  CopyWith$Query$get_service_reviews$service_provider_details_by_pk<
-          Query$get_service_reviews$service_provider_details_by_pk>
-      get copyWith =>
-          CopyWith$Query$get_service_reviews$service_provider_details_by_pk(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Query$get_service_reviews$service_provider_details_by_pk<
-    TRes> {
-  factory CopyWith$Query$get_service_reviews$service_provider_details_by_pk(
-    Query$get_service_reviews$service_provider_details_by_pk instance,
-    TRes Function(Query$get_service_reviews$service_provider_details_by_pk)
-        then,
-  ) = _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk;
-
-  factory CopyWith$Query$get_service_reviews$service_provider_details_by_pk.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk;
-
-  TRes call({
-    List<Query$get_service_reviews$service_provider_details_by_pk$reviews>?
-        reviews,
-    String? $__typename,
-  });
-  TRes reviews(
-      Iterable<Query$get_service_reviews$service_provider_details_by_pk$reviews> Function(
-              Iterable<
-                  CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-                      Query$get_service_reviews$service_provider_details_by_pk$reviews>>)
-          _fn);
-}
-
-class _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk<
-        TRes>
-    implements
-        CopyWith$Query$get_service_reviews$service_provider_details_by_pk<
-            TRes> {
-  _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk(
-    this._instance,
-    this._then,
-  );
-
-  final Query$get_service_reviews$service_provider_details_by_pk _instance;
-
-  final TRes Function(Query$get_service_reviews$service_provider_details_by_pk)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? reviews = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(Query$get_service_reviews$service_provider_details_by_pk(
-        reviews: reviews == _undefined || reviews == null
-            ? _instance.reviews
-            : (reviews as List<
-                Query$get_service_reviews$service_provider_details_by_pk$reviews>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes reviews(
-          Iterable<Query$get_service_reviews$service_provider_details_by_pk$reviews> Function(
-                  Iterable<
-                      CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-                          Query$get_service_reviews$service_provider_details_by_pk$reviews>>)
-              _fn) =>
-      call(
-          reviews: _fn(_instance.reviews.map((e) =>
-              CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk<
-        TRes>
-    implements
-        CopyWith$Query$get_service_reviews$service_provider_details_by_pk<
-            TRes> {
-  _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Query$get_service_reviews$service_provider_details_by_pk$reviews>?
-        reviews,
-    String? $__typename,
-  }) =>
-      _res;
-  reviews(_fn) => _res;
-}
-
-class Query$get_service_reviews$service_provider_details_by_pk$reviews {
-  Query$get_service_reviews$service_provider_details_by_pk$reviews({
+class Query$get_service_reviews$review {
+  Query$get_service_reviews$review({
     required this.from_entity_id,
     required this.from_entity_type,
     required this.rating,
@@ -2330,11 +1980,11 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     required this.to_entity_id,
     required this.to_entity_type,
     required this.created_at,
+    this.customer,
     required this.$__typename,
   });
 
-  factory Query$get_service_reviews$service_provider_details_by_pk$reviews.fromJson(
-      Map<String, dynamic> json) {
+  factory Query$get_service_reviews$review.fromJson(Map<String, dynamic> json) {
     final l$from_entity_id = json['from_entity_id'];
     final l$from_entity_type = json['from_entity_type'];
     final l$rating = json['rating'];
@@ -2343,8 +1993,9 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     final l$to_entity_id = json['to_entity_id'];
     final l$to_entity_type = json['to_entity_type'];
     final l$created_at = json['created_at'];
+    final l$customer = json['customer'];
     final l$$__typename = json['__typename'];
-    return Query$get_service_reviews$service_provider_details_by_pk$reviews(
+    return Query$get_service_reviews$review(
       from_entity_id: (l$from_entity_id as int),
       from_entity_type: (l$from_entity_type as String),
       rating: (l$rating as int),
@@ -2353,6 +2004,10 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
       to_entity_id: (l$to_entity_id as int),
       to_entity_type: (l$to_entity_type as String),
       created_at: (l$created_at as String),
+      customer: l$customer == null
+          ? null
+          : Query$get_service_reviews$review$customer.fromJson(
+              (l$customer as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2372,6 +2027,8 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
   final String to_entity_type;
 
   final String created_at;
+
+  final Query$get_service_reviews$review$customer? customer;
 
   final String $__typename;
 
@@ -2393,6 +2050,8 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     _resultData['to_entity_type'] = l$to_entity_type;
     final l$created_at = created_at;
     _resultData['created_at'] = l$created_at;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2408,6 +2067,7 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     final l$to_entity_id = to_entity_id;
     final l$to_entity_type = to_entity_type;
     final l$created_at = created_at;
+    final l$customer = customer;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$from_entity_id,
@@ -2418,6 +2078,7 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
       l$to_entity_id,
       l$to_entity_type,
       l$created_at,
+      l$customer,
       l$$__typename,
     ]);
   }
@@ -2427,8 +2088,7 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     if (identical(this, other)) {
       return true;
     }
-    if (!(other
-            is Query$get_service_reviews$service_provider_details_by_pk$reviews) ||
+    if (!(other is Query$get_service_reviews$review) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -2472,6 +2132,11 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
     if (l$created_at != lOther$created_at) {
       return false;
     }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -2481,29 +2146,23 @@ class Query$get_service_reviews$service_provider_details_by_pk$reviews {
   }
 }
 
-extension UtilityExtension$Query$get_service_reviews$service_provider_details_by_pk$reviews
-    on Query$get_service_reviews$service_provider_details_by_pk$reviews {
-  CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-          Query$get_service_reviews$service_provider_details_by_pk$reviews>
-      get copyWith =>
-          CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews(
+extension UtilityExtension$Query$get_service_reviews$review
+    on Query$get_service_reviews$review {
+  CopyWith$Query$get_service_reviews$review<Query$get_service_reviews$review>
+      get copyWith => CopyWith$Query$get_service_reviews$review(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-    TRes> {
-  factory CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews(
-    Query$get_service_reviews$service_provider_details_by_pk$reviews instance,
-    TRes Function(
-            Query$get_service_reviews$service_provider_details_by_pk$reviews)
-        then,
-  ) = _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews;
+abstract class CopyWith$Query$get_service_reviews$review<TRes> {
+  factory CopyWith$Query$get_service_reviews$review(
+    Query$get_service_reviews$review instance,
+    TRes Function(Query$get_service_reviews$review) then,
+  ) = _CopyWithImpl$Query$get_service_reviews$review;
 
-  factory CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews.stub(
-          TRes res) =
-      _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews;
+  factory CopyWith$Query$get_service_reviews$review.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_service_reviews$review;
 
   TRes call({
     int? from_entity_id,
@@ -2514,25 +2173,22 @@ abstract class CopyWith$Query$get_service_reviews$service_provider_details_by_pk
     int? to_entity_id,
     String? to_entity_type,
     String? created_at,
+    Query$get_service_reviews$review$customer? customer,
     String? $__typename,
   });
+  CopyWith$Query$get_service_reviews$review$customer<TRes> get customer;
 }
 
-class _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-        TRes>
-    implements
-        CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-            TRes> {
-  _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews(
+class _CopyWithImpl$Query$get_service_reviews$review<TRes>
+    implements CopyWith$Query$get_service_reviews$review<TRes> {
+  _CopyWithImpl$Query$get_service_reviews$review(
     this._instance,
     this._then,
   );
 
-  final Query$get_service_reviews$service_provider_details_by_pk$reviews
-      _instance;
+  final Query$get_service_reviews$review _instance;
 
-  final TRes Function(
-      Query$get_service_reviews$service_provider_details_by_pk$reviews) _then;
+  final TRes Function(Query$get_service_reviews$review) _then;
 
   static const _undefined = {};
 
@@ -2545,9 +2201,10 @@ class _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk$rev
     Object? to_entity_id = _undefined,
     Object? to_entity_type = _undefined,
     Object? created_at = _undefined,
+    Object? customer = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$get_service_reviews$service_provider_details_by_pk$reviews(
+      _then(Query$get_service_reviews$review(
         from_entity_id: from_entity_id == _undefined || from_entity_id == null
             ? _instance.from_entity_id
             : (from_entity_id as int),
@@ -2569,19 +2226,26 @@ class _CopyWithImpl$Query$get_service_reviews$service_provider_details_by_pk$rev
         created_at: created_at == _undefined || created_at == null
             ? _instance.created_at
             : (created_at as String),
+        customer: customer == _undefined
+            ? _instance.customer
+            : (customer as Query$get_service_reviews$review$customer?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$get_service_reviews$review$customer<TRes> get customer {
+    final local$customer = _instance.customer;
+    return local$customer == null
+        ? CopyWith$Query$get_service_reviews$review$customer.stub(
+            _then(_instance))
+        : CopyWith$Query$get_service_reviews$review$customer(
+            local$customer, (e) => call(customer: e));
+  }
 }
 
-class _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-        TRes>
-    implements
-        CopyWith$Query$get_service_reviews$service_provider_details_by_pk$reviews<
-            TRes> {
-  _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk$reviews(
-      this._res);
+class _CopyWithStubImpl$Query$get_service_reviews$review<TRes>
+    implements CopyWith$Query$get_service_reviews$review<TRes> {
+  _CopyWithStubImpl$Query$get_service_reviews$review(this._res);
 
   TRes _res;
 
@@ -2594,6 +2258,307 @@ class _CopyWithStubImpl$Query$get_service_reviews$service_provider_details_by_pk
     int? to_entity_id,
     String? to_entity_type,
     String? created_at,
+    Query$get_service_reviews$review$customer? customer,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_service_reviews$review$customer<TRes> get customer =>
+      CopyWith$Query$get_service_reviews$review$customer.stub(_res);
+}
+
+class Query$get_service_reviews$review$customer {
+  Query$get_service_reviews$review$customer({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_reviews$review$customer.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_reviews$review$customer(
+      user: Query$get_service_reviews$review$customer$user.fromJson(
+          (l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_service_reviews$review$customer$user user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_reviews$review$customer) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_reviews$review$customer
+    on Query$get_service_reviews$review$customer {
+  CopyWith$Query$get_service_reviews$review$customer<
+          Query$get_service_reviews$review$customer>
+      get copyWith => CopyWith$Query$get_service_reviews$review$customer(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_reviews$review$customer<TRes> {
+  factory CopyWith$Query$get_service_reviews$review$customer(
+    Query$get_service_reviews$review$customer instance,
+    TRes Function(Query$get_service_reviews$review$customer) then,
+  ) = _CopyWithImpl$Query$get_service_reviews$review$customer;
+
+  factory CopyWith$Query$get_service_reviews$review$customer.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_service_reviews$review$customer;
+
+  TRes call({
+    Query$get_service_reviews$review$customer$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$get_service_reviews$review$customer$user<TRes> get user;
+}
+
+class _CopyWithImpl$Query$get_service_reviews$review$customer<TRes>
+    implements CopyWith$Query$get_service_reviews$review$customer<TRes> {
+  _CopyWithImpl$Query$get_service_reviews$review$customer(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_reviews$review$customer _instance;
+
+  final TRes Function(Query$get_service_reviews$review$customer) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_reviews$review$customer(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user as Query$get_service_reviews$review$customer$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_service_reviews$review$customer$user<TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$get_service_reviews$review$customer$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_service_reviews$review$customer<TRes>
+    implements CopyWith$Query$get_service_reviews$review$customer<TRes> {
+  _CopyWithStubImpl$Query$get_service_reviews$review$customer(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_service_reviews$review$customer$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_service_reviews$review$customer$user<TRes> get user =>
+      CopyWith$Query$get_service_reviews$review$customer$user.stub(_res);
+}
+
+class Query$get_service_reviews$review$customer$user {
+  Query$get_service_reviews$review$customer$user({
+    required this.id,
+    this.image,
+    this.name,
+    required this.$__typename,
+  });
+
+  factory Query$get_service_reviews$review$customer$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$$__typename = json['__typename'];
+    return Query$get_service_reviews$review$customer$user(
+      id: (l$id as int),
+      image: (l$image as String?),
+      name: (l$name as String?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final String? image;
+
+  final String? name;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$image = image;
+    final l$name = name;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$image,
+      l$name,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_service_reviews$review$customer$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_service_reviews$review$customer$user
+    on Query$get_service_reviews$review$customer$user {
+  CopyWith$Query$get_service_reviews$review$customer$user<
+          Query$get_service_reviews$review$customer$user>
+      get copyWith => CopyWith$Query$get_service_reviews$review$customer$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_service_reviews$review$customer$user<TRes> {
+  factory CopyWith$Query$get_service_reviews$review$customer$user(
+    Query$get_service_reviews$review$customer$user instance,
+    TRes Function(Query$get_service_reviews$review$customer$user) then,
+  ) = _CopyWithImpl$Query$get_service_reviews$review$customer$user;
+
+  factory CopyWith$Query$get_service_reviews$review$customer$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_service_reviews$review$customer$user;
+
+  TRes call({
+    int? id,
+    String? image,
+    String? name,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_service_reviews$review$customer$user<TRes>
+    implements CopyWith$Query$get_service_reviews$review$customer$user<TRes> {
+  _CopyWithImpl$Query$get_service_reviews$review$customer$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_service_reviews$review$customer$user _instance;
+
+  final TRes Function(Query$get_service_reviews$review$customer$user) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_service_reviews$review$customer$user(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
+        name: name == _undefined ? _instance.name : (name as String?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_service_reviews$review$customer$user<TRes>
+    implements CopyWith$Query$get_service_reviews$review$customer$user<TRes> {
+  _CopyWithStubImpl$Query$get_service_reviews$review$customer$user(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    String? image,
+    String? name,
     String? $__typename,
   }) =>
       _res;

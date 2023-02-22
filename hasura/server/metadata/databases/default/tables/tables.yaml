@@ -17,7 +17,6 @@
 - "!include laundry_order.yaml"
 - "!include laundry_order_category.yaml"
 - "!include laundry_store.yaml"
-- "!include public_app_type.yaml"
 - "!include public_chat.yaml"
 - "!include public_chat_participant.yaml"
 - "!include public_direct_chat.yaml"
@@ -52,3 +51,5 @@
 - "!include service_provider_service_link.yaml"
 - "!include service_provider_stripe_info.yaml"
 - "!include service_provider_subscriber.yaml"
+- "!include valid_types_app_type.yaml"
+- "!include valid_types_service_provider_type.yaml"

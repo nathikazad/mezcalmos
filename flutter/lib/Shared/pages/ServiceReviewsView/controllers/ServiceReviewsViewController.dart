@@ -41,10 +41,11 @@ class ServiceReviewsViewController {
   Future<void> fetchReviewsAndRating() async {
     try {
       _reviews.value = await get_service_reviews(
-              serviceDetailsId: detailsId, withCache: false) ??
+              serviceId: serviceProfileViewController.serviceId,
+              withCache: false) ??
           [];
       _rating.value = await get_service_review_average(
-          detailsId: detailsId, withCache: false);
+          serviceId: serviceProfileViewController.serviceId, withCache: false);
     } on Exception catch (e, stk) {
       mezDbgPrint("Errors $e");
       mezDbgPrint("Errors $stk");

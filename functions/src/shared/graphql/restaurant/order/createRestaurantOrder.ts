@@ -103,6 +103,8 @@ export async function createRestaurantOrder(restaurant: ServiceProvider, checkou
         to_location_address: checkoutReq.customerLocation.address,
         notes: checkoutReq.notes,
         status: RestaurantOrderStatus.OrderReceived,
+        discount_value: checkoutReq.discountValue ?? undefined,
+        tax: checkoutReq.tax ?? undefined,
         items: {
           data: customerCart.items!.map((i) => {
             console.log("+ SelectedOptions of item ", i.itemId , ": ",i.selectedOptions);

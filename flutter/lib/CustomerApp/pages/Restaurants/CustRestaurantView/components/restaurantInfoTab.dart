@@ -9,7 +9,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezServiceOpenHours.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
 import 'package:mezcalmos/Shared/widgets/ServiceLocationCard.dart';
@@ -68,13 +67,6 @@ class RestaurantInfoTab extends StatelessWidget {
           ServiceLocationCard(
             location: restaurant.info.location,
           ),
-        MezButton(
-          label: "Get",
-          onClick: () async {
-            await MezRouter.toNamed(
-                getReviewsListRoute(restaurant.serviceDetailsId));
-          },
-        ),
         if (restaurant.showReviews)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +80,6 @@ class RestaurantInfoTab extends StatelessWidget {
                     '${_i18n()["reviews"]}',
                     style: Get.textTheme.bodyLarge,
                   ),
-                  Spacer(),
                   Icon(
                     Icons.star_border_outlined,
                     color: primaryBlueColor,
@@ -107,12 +98,28 @@ class RestaurantInfoTab extends StatelessWidget {
                       "(${restaurant.reviews.length.toString()})",
                       style: Get.textTheme.bodyMedium,
                     ),
+                  ),
+                  Spacer(),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: () {
+                      MezRouter.toNamed(
+                          getReviewsListRoute(restaurant.restaurantId));
+                    },
+                    child: Ink(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "View all",
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+                    ),
                   )
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
+              // SizedBox(
+              //   height: 15,
+              // ),
               ListView.builder(
                   padding: EdgeInsets.zero,
                   physics: NeverScrollableScrollPhysics(),
