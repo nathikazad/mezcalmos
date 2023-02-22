@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -163,17 +162,16 @@ class _RestaurantCardState extends State<RestaurantCard> {
   }
 
   num _getShippingPrice() {
-    mezDbgPrint(
-        "Distance ======>${calculateDistance(Get.find<CustomerAuthController>().customerCurrentLocation.value!, widget.restaurant.info.location.toLocationData()).round()}");
     return max(
-        widget.restaurant.deliveryCost!.minimumCost,
-        (calculateDistance(
-                    Get.find<CustomerAuthController>()
-                        .customerCurrentLocation
-                        .value!,
-                    widget.restaurant.info.location.toLocationData())
-                .round() *
-            widget.restaurant.deliveryCost!.costPerKm));
+      widget.restaurant.deliveryCost!.minimumCost,
+      (calculateDistance(
+                  Get.find<CustomerAuthController>()
+                      .customerCurrentLocation
+                      .value!,
+                  widget.restaurant.info.location.toLocationData())
+              .round() *
+          widget.restaurant.deliveryCost!.costPerKm),
+    );
   }
 
   Container mezRestuarntCardImage() {
