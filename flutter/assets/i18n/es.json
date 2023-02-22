@@ -565,6 +565,7 @@
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
+          "daysReturn" : "Días de regreso",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",

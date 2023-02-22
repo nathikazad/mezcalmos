@@ -369,6 +369,21 @@ subscription listen_on_order_driver_location($orderId: Int!) {
    
 }
 }
+query get_order_driver_info($orderId: Int!) {
+   delivery_order_by_pk(id: $orderId) {
+  
+    delivery_driver {
+    
+
+      user {
+        name
+        image
+        id
+      }
+    }
+   
+}
+}
 
 subscription listen_on_inprocess_driver_orders($driverId: Int!) {
   delivery_order(

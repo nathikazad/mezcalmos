@@ -13,6 +13,7 @@ class LaundryOpAdminViewController {
   Rxn<List<LaundryCostLineItem>> _categories = Rxn();
   RxBool daysClicked = RxBool(false);
   RxnInt _days = RxnInt();
+  Rxn<num> minCost = Rxn<num>();
 
 // getters //
   Laundry? get laundry => _laundry.value;
@@ -27,6 +28,7 @@ class LaundryOpAdminViewController {
 
     _laundry.value = await get_laundry_store_by_id(id: laundryId);
     _days.value = _laundry.value!.averageNumberOfDays.toInt();
+    minCost.value = _laundry.value?.laundryCosts.minimumCost;
     await fetchCategories();
   }
 
