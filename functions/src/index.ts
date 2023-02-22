@@ -63,7 +63,7 @@ export const otp = {
   getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
 
-export const stripe = {
+export const stripe2 = {
   getPaymentIntent: authenticatedCall((userId, data) => stripePaymentFunctions.getPaymentIntent(userId, data)),
   addCard: authenticatedCall((userId, data) => stripeCardFunctions.addCard(userId, data)),
   chargeCard: authenticatedCall((userId, data) => stripeCardFunctions.chargeCard(userId, data)),
@@ -107,7 +107,7 @@ export const restaurant2 = {
 //   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
 // }
 
-export const laundry = {
+export const laundry2 = {
   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
@@ -123,15 +123,6 @@ export const delivery2 = {
   authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   
-  // restaurantStartDelivery: authenticatedCall((userId, data) => restaurantDelivery.startDelivery(userId, data)),
-  // restaurantFinishDelivery: authenticatedCall((userId, data) => restaurantDelivery.finishDelivery(userId, data)),
-  // laundryStartPickupFromCustomer: authenticatedCall((userId, data) => laundryDelivery.startPickupFromCustomer(userId, data)),
-  // laundryPickedUpFromCustomer: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromCustomer(userId, data)),
-  // laundryAtFacility: authenticatedCall((userId, data) => laundryDelivery.atFacility(userId, data)),
-  // laundryStartPickupFromLaundry: authenticatedCall((userId, data) => laundryDelivery.startPickupFromLaundry(userId, data)),
-  // laundryPickedUpFromLaundry: authenticatedCall((userId, data) => laundryDelivery.pickedUpFromLaundry(userId, data)),
-  // laundryFinishDropoff: authenticatedCall((userId, data) => laundryDelivery.finishDropoff(userId, data)),
-  // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
 
 // function adminOnlyCall(func:AuthenticatedFunction) {

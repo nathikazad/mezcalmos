@@ -296,6 +296,8 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
     )?.then((value) {
       return value;
     });
+    _navigationStack
+        .add(MRoute(name: page, args: arguments, params: parameters));
     printRoutes();
     return globalResult;
   }

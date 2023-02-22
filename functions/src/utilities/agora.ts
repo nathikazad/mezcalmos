@@ -10,7 +10,6 @@ import { getKeys } from "../shared/keys";
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getChat } from "../shared/graphql/chat/getChat";
 import { getNotificationInfo } from "../shared/graphql/notification/getNotificationInfo";
-import { NotificationInfo } from "../shared/models/Generic/Generic";
 
 let keys: Keys = getKeys();
 
@@ -19,13 +18,12 @@ export interface CallUserDetails {
   callerParticipantType: ParticipantType
 }
 export interface CallUserResponse {
-  uid: number,
+  id: number,
   token: string,
   name?: string,
   image?: string,
   expirationTime: string,
   participantType: ParticipantType,
-  notificationInfo: NotificationInfo | null
 }
 export async function callUser(callerUserId: number, callUserDetails: CallUserDetails): Promise<CallUserResponse> {
   let chat = await getChat(callUserDetails.chatId)
