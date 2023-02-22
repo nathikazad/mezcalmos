@@ -70,6 +70,14 @@ class DriverCurrentOrdersController {
             driverId: driverId, online: value) ??
         opAuthController.driverState!.isOnline;
     _isOnline.refresh();
+    if (value) {
+      unawaited(opAuthController
+          .setupDeliveryDriver()
+          .then((value) => opAuthController.startLocationListener()));
+    } else {
+      opAuthController.cancelLocationListener();
+    }
+
     onlineClicked.value = false;
   }
 

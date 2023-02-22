@@ -20,7 +20,7 @@ class LaundryOpMinimumCost extends StatelessWidget {
       children: [
         Text(
           '${_i18n()["minCost"]}',
-          style: Get.textTheme.bodyText1,
+          style: Get.textTheme.bodyLarge,
         ),
         SizedBox(
           height: 10,
@@ -32,7 +32,7 @@ class LaundryOpMinimumCost extends StatelessWidget {
               minCost.value = num.parse(v);
             }
           },
-          style: Get.textTheme.bodyText1,
+          style: Get.textTheme.bodyLarge,
           decoration:
               InputDecoration(prefixIcon: Icon(Icons.attach_money_rounded)),
           keyboardType: TextInputType.numberWithOptions(decimal: true),

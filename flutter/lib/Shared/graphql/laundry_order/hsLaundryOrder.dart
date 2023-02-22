@@ -116,6 +116,7 @@ Future<LaundryOrder?> get_laundry_order_by_id(
           : null,
       orderId: orderData.id,
       notes: orderData.notes,
+      
       customerPickupDriverChatId:
           orderData.from_customer_delivery?.chat_with_customer_id,
       customerDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,

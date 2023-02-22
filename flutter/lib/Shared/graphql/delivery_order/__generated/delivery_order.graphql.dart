@@ -15288,6 +15288,939 @@ class _CopyWithStubImpl$Subscription$listen_on_order_driver_location$delivery_or
       _res;
 }
 
+class Variables$Query$get_order_driver_info {
+  factory Variables$Query$get_order_driver_info({required int orderId}) =>
+      Variables$Query$get_order_driver_info._({
+        r'orderId': orderId,
+      });
+
+  Variables$Query$get_order_driver_info._(this._$data);
+
+  factory Variables$Query$get_order_driver_info.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$orderId = data['orderId'];
+    result$data['orderId'] = (l$orderId as int);
+    return Variables$Query$get_order_driver_info._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get orderId => (_$data['orderId'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$orderId = orderId;
+    result$data['orderId'] = l$orderId;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$get_order_driver_info<
+          Variables$Query$get_order_driver_info>
+      get copyWith => CopyWith$Variables$Query$get_order_driver_info(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$get_order_driver_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$orderId = orderId;
+    final lOther$orderId = other.orderId;
+    if (l$orderId != lOther$orderId) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$orderId = orderId;
+    return Object.hashAll([l$orderId]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$get_order_driver_info<TRes> {
+  factory CopyWith$Variables$Query$get_order_driver_info(
+    Variables$Query$get_order_driver_info instance,
+    TRes Function(Variables$Query$get_order_driver_info) then,
+  ) = _CopyWithImpl$Variables$Query$get_order_driver_info;
+
+  factory CopyWith$Variables$Query$get_order_driver_info.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$get_order_driver_info;
+
+  TRes call({int? orderId});
+}
+
+class _CopyWithImpl$Variables$Query$get_order_driver_info<TRes>
+    implements CopyWith$Variables$Query$get_order_driver_info<TRes> {
+  _CopyWithImpl$Variables$Query$get_order_driver_info(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$get_order_driver_info _instance;
+
+  final TRes Function(Variables$Query$get_order_driver_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? orderId = _undefined}) =>
+      _then(Variables$Query$get_order_driver_info._({
+        ..._instance._$data,
+        if (orderId != _undefined && orderId != null)
+          'orderId': (orderId as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$get_order_driver_info<TRes>
+    implements CopyWith$Variables$Query$get_order_driver_info<TRes> {
+  _CopyWithStubImpl$Variables$Query$get_order_driver_info(this._res);
+
+  TRes _res;
+
+  call({int? orderId}) => _res;
+}
+
+class Query$get_order_driver_info {
+  Query$get_order_driver_info({
+    this.delivery_order_by_pk,
+    required this.$__typename,
+  });
+
+  factory Query$get_order_driver_info.fromJson(Map<String, dynamic> json) {
+    final l$delivery_order_by_pk = json['delivery_order_by_pk'];
+    final l$$__typename = json['__typename'];
+    return Query$get_order_driver_info(
+      delivery_order_by_pk: l$delivery_order_by_pk == null
+          ? null
+          : Query$get_order_driver_info$delivery_order_by_pk.fromJson(
+              (l$delivery_order_by_pk as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_order_driver_info$delivery_order_by_pk? delivery_order_by_pk;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    _resultData['delivery_order_by_pk'] = l$delivery_order_by_pk?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_order_by_pk,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_order_driver_info) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_order_by_pk = delivery_order_by_pk;
+    final lOther$delivery_order_by_pk = other.delivery_order_by_pk;
+    if (l$delivery_order_by_pk != lOther$delivery_order_by_pk) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_order_driver_info
+    on Query$get_order_driver_info {
+  CopyWith$Query$get_order_driver_info<Query$get_order_driver_info>
+      get copyWith => CopyWith$Query$get_order_driver_info(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_order_driver_info<TRes> {
+  factory CopyWith$Query$get_order_driver_info(
+    Query$get_order_driver_info instance,
+    TRes Function(Query$get_order_driver_info) then,
+  ) = _CopyWithImpl$Query$get_order_driver_info;
+
+  factory CopyWith$Query$get_order_driver_info.stub(TRes res) =
+      _CopyWithStubImpl$Query$get_order_driver_info;
+
+  TRes call({
+    Query$get_order_driver_info$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  });
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk;
+}
+
+class _CopyWithImpl$Query$get_order_driver_info<TRes>
+    implements CopyWith$Query$get_order_driver_info<TRes> {
+  _CopyWithImpl$Query$get_order_driver_info(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_order_driver_info _instance;
+
+  final TRes Function(Query$get_order_driver_info) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_order_by_pk = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_order_driver_info(
+        delivery_order_by_pk: delivery_order_by_pk == _undefined
+            ? _instance.delivery_order_by_pk
+            : (delivery_order_by_pk
+                as Query$get_order_driver_info$delivery_order_by_pk?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk {
+    final local$delivery_order_by_pk = _instance.delivery_order_by_pk;
+    return local$delivery_order_by_pk == null
+        ? CopyWith$Query$get_order_driver_info$delivery_order_by_pk.stub(
+            _then(_instance))
+        : CopyWith$Query$get_order_driver_info$delivery_order_by_pk(
+            local$delivery_order_by_pk, (e) => call(delivery_order_by_pk: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_order_driver_info<TRes>
+    implements CopyWith$Query$get_order_driver_info<TRes> {
+  _CopyWithStubImpl$Query$get_order_driver_info(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_order_driver_info$delivery_order_by_pk? delivery_order_by_pk,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes>
+      get delivery_order_by_pk =>
+          CopyWith$Query$get_order_driver_info$delivery_order_by_pk.stub(_res);
+}
+
+const documentNodeQueryget_order_driver_info = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'get_order_driver_info'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'orderId')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'delivery_order_by_pk'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'orderId')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'delivery_driver'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'user'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'name'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$get_order_driver_info _parserFn$Query$get_order_driver_info(
+        Map<String, dynamic> data) =>
+    Query$get_order_driver_info.fromJson(data);
+
+class Options$Query$get_order_driver_info
+    extends graphql.QueryOptions<Query$get_order_driver_info> {
+  Options$Query$get_order_driver_info({
+    String? operationName,
+    required Variables$Query$get_order_driver_info variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryget_order_driver_info,
+          parserFn: _parserFn$Query$get_order_driver_info,
+        );
+}
+
+class WatchOptions$Query$get_order_driver_info
+    extends graphql.WatchQueryOptions<Query$get_order_driver_info> {
+  WatchOptions$Query$get_order_driver_info({
+    String? operationName,
+    required Variables$Query$get_order_driver_info variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryget_order_driver_info,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$get_order_driver_info,
+        );
+}
+
+class FetchMoreOptions$Query$get_order_driver_info
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$get_order_driver_info({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$get_order_driver_info variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryget_order_driver_info,
+        );
+}
+
+extension ClientExtension$Query$get_order_driver_info on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$get_order_driver_info>>
+      query$get_order_driver_info(
+              Options$Query$get_order_driver_info options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$get_order_driver_info>
+      watchQuery$get_order_driver_info(
+              WatchOptions$Query$get_order_driver_info options) =>
+          this.watchQuery(options);
+  void writeQuery$get_order_driver_info({
+    required Query$get_order_driver_info data,
+    required Variables$Query$get_order_driver_info variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation: graphql.Operation(
+              document: documentNodeQueryget_order_driver_info),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$get_order_driver_info? readQuery$get_order_driver_info({
+    required Variables$Query$get_order_driver_info variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryget_order_driver_info),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$get_order_driver_info.fromJson(result);
+  }
+}
+
+class Query$get_order_driver_info$delivery_order_by_pk {
+  Query$get_order_driver_info$delivery_order_by_pk({
+    this.delivery_driver,
+    required this.$__typename,
+  });
+
+  factory Query$get_order_driver_info$delivery_order_by_pk.fromJson(
+      Map<String, dynamic> json) {
+    final l$delivery_driver = json['delivery_driver'];
+    final l$$__typename = json['__typename'];
+    return Query$get_order_driver_info$delivery_order_by_pk(
+      delivery_driver: l$delivery_driver == null
+          ? null
+          : Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+              .fromJson((l$delivery_driver as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_order_driver_info$delivery_order_by_pk$delivery_driver?
+      delivery_driver;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$delivery_driver = delivery_driver;
+    _resultData['delivery_driver'] = l$delivery_driver?.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$delivery_driver = delivery_driver;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$delivery_driver,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$get_order_driver_info$delivery_order_by_pk) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$delivery_driver = delivery_driver;
+    final lOther$delivery_driver = other.delivery_driver;
+    if (l$delivery_driver != lOther$delivery_driver) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_order_driver_info$delivery_order_by_pk
+    on Query$get_order_driver_info$delivery_order_by_pk {
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk<
+          Query$get_order_driver_info$delivery_order_by_pk>
+      get copyWith => CopyWith$Query$get_order_driver_info$delivery_order_by_pk(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes> {
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk(
+    Query$get_order_driver_info$delivery_order_by_pk instance,
+    TRes Function(Query$get_order_driver_info$delivery_order_by_pk) then,
+  ) = _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk;
+
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk;
+
+  TRes call({
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver?
+        delivery_driver,
+    String? $__typename,
+  });
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+      TRes> get delivery_driver;
+}
+
+class _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk<TRes>
+    implements CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes> {
+  _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_order_driver_info$delivery_order_by_pk _instance;
+
+  final TRes Function(Query$get_order_driver_info$delivery_order_by_pk) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? delivery_driver = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_order_driver_info$delivery_order_by_pk(
+        delivery_driver: delivery_driver == _undefined
+            ? _instance.delivery_driver
+            : (delivery_driver
+                as Query$get_order_driver_info$delivery_order_by_pk$delivery_driver?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+      TRes> get delivery_driver {
+    final local$delivery_driver = _instance.delivery_driver;
+    return local$delivery_driver == null
+        ? CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+            .stub(_then(_instance))
+        : CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+            local$delivery_driver, (e) => call(delivery_driver: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk<TRes>
+    implements CopyWith$Query$get_order_driver_info$delivery_order_by_pk<TRes> {
+  _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk(this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver?
+        delivery_driver,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+          TRes>
+      get delivery_driver =>
+          CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+              .stub(_res);
+}
+
+class Query$get_order_driver_info$delivery_order_by_pk$delivery_driver {
+  Query$get_order_driver_info$delivery_order_by_pk$delivery_driver({
+    required this.user,
+    required this.$__typename,
+  });
+
+  factory Query$get_order_driver_info$delivery_order_by_pk$delivery_driver.fromJson(
+      Map<String, dynamic> json) {
+    final l$user = json['user'];
+    final l$$__typename = json['__typename'];
+    return Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+      user:
+          Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+              .fromJson((l$user as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+      user;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$user = user;
+    _resultData['user'] = l$user.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$user = user;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$user,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_order_driver_info$delivery_order_by_pk$delivery_driver) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$user = user;
+    final lOther$user = other.user;
+    if (l$user != lOther$user) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+    on Query$get_order_driver_info$delivery_order_by_pk$delivery_driver {
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+          Query$get_order_driver_info$delivery_order_by_pk$delivery_driver>
+      get copyWith =>
+          CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+    TRes> {
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver instance,
+    TRes Function(
+            Query$get_order_driver_info$delivery_order_by_pk$delivery_driver)
+        then,
+  ) = _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver;
+
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver;
+
+  TRes call({
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user? user,
+    String? $__typename,
+  });
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user;
+}
+
+class _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+            TRes> {
+  _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_order_driver_info$delivery_order_by_pk$delivery_driver
+      _instance;
+
+  final TRes Function(
+      Query$get_order_driver_info$delivery_order_by_pk$delivery_driver) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? user = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+        user: user == _undefined || user == null
+            ? _instance.user
+            : (user
+                as Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+      TRes> get user {
+    final local$user = _instance.user;
+    return CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+        local$user, (e) => call(user: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+        TRes>
+    implements
+        CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver<
+            TRes> {
+  _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user? user,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+          TRes>
+      get user =>
+          CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+              .stub(_res);
+}
+
+class Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user {
+  Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user({
+    this.name,
+    this.image,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user.fromJson(
+      Map<String, dynamic> json) {
+    final l$name = json['name'];
+    final l$image = json['image'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+      name: (l$name as String?),
+      image: (l$image as String?),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final String? name;
+
+  final String? image;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$name = name;
+    final l$image = image;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$name,
+      l$image,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+    on Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user {
+  CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+          Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user>
+      get copyWith =>
+          CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+    TRes> {
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+        instance,
+    TRes Function(
+            Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user)
+        then,
+  ) = _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user;
+
+  factory CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user;
+
+  TRes call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+    this._instance,
+    this._then,
+  );
+
+  final Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user
+      _instance;
+
+  final TRes Function(
+          Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? name = _undefined,
+    Object? image = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+        name: name == _undefined ? _instance.name : (name as String?),
+        image: image == _undefined ? _instance.image : (image as String?),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+        TRes>
+    implements
+        CopyWith$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user<
+            TRes> {
+  _CopyWithStubImpl$Query$get_order_driver_info$delivery_order_by_pk$delivery_driver$user(
+      this._res);
+
+  TRes _res;
+
+  call({
+    String? name,
+    String? image,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Subscription$listen_on_inprocess_driver_orders {
   factory Variables$Subscription$listen_on_inprocess_driver_orders(
           {required int driverId}) =>

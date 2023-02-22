@@ -31,7 +31,6 @@ class DeliveryAuthController extends GetxController {
   Rxn<LocationData> get currentLocationRxn => _currentLocation;
 
   Timer? _locationListener;
-  late AppLaunchMode _launchMode;
 
   @override
   Future<void> onInit() async {
@@ -41,18 +40,24 @@ class DeliveryAuthController extends GetxController {
         "DeliveryAuthController: calling handle state change first time");
     await setupDeliveryDriver();
 
-    const String _tmpLmode =
-        String.fromEnvironment('LMODE', defaultValue: "prod");
-    _launchMode = _tmpLmode.toLaunchMode();
-
     if (driver != null && driver?.driverInfo.hasuraId != null) {
       unawaited(saveNotificationToken());
     }
-    if (driver?.deliveryDriverId != null) {
+    startLocationListener();
+    super.onInit();
+  }
+
+  void startLocationListener() {
+    if (driver?.deliveryDriverId != null &&
+        driver!.deliveryDriverState.isOnline) {
       _locationListener?.cancel();
       _locationListener = _listenForLocation();
     }
-    super.onInit();
+  }
+
+  void cancelLocationListener() {
+    _locationListener?.cancel();
+    _locationListener = null;
   }
 
   Future<void> setupDeliveryDriver() async {
@@ -95,9 +100,7 @@ class DeliveryAuthController extends GetxController {
 
   Timer _listenForLocation() {
     final Location location = Location();
-    return Timer.periodic(
-        Duration(seconds: _launchMode == AppLaunchMode.prod ? 120 : 120),
-        (Timer? timer) async {
+    return Timer.periodic(Duration(seconds: 150), (Timer? timer) async {
       final LocationData currentLocation = await location.getLocation();
       final DateTime currentTime = DateTime.now();
       if (currentLocation.latitude != null &&

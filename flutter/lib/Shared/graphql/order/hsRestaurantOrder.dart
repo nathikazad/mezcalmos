@@ -161,15 +161,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         ),
         dropoffDriver: (orderData.delivery?.delivery_driver != null)
             ? DeliveryDriverUserInfo(
-                location:
-                    (orderData.delivery?.delivery_driver?.current_location !=
-                            null)
-                        ? LatLng(
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.latitude,
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.longitude)
-                        : null,
+                location: null,
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
@@ -265,12 +257,10 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   });
   StripeOrderPaymentInfo? _paymentInfo;
   if (orderData.stripe_info != null) {
-    
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
     chatId: orderData.chat_id!,
-    
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)
