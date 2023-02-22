@@ -209,9 +209,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   int get deliveryOrderId {
-    return getCurrentPhase() == LaundryOrderPhase.Dropoff
-        ? toCustomerDeliveryId!
-        : fromCustomerDeliveryId;
+    return getCurrentPhase() == LaundryOrderPhase.Pickup
+        ? fromCustomerDeliveryId
+        : toCustomerDeliveryId!;
   }
 
   int? getServiceDriverChatId() {
