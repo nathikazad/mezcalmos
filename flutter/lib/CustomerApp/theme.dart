@@ -20,6 +20,8 @@ class CustomerAppTheme {
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       //---------------------------------------------------- WIGGETS ------------------------------------------------------------------------//
       scaffoldBackgroundColor: Color(0XFFFAFAFA),
+      progressIndicatorTheme:
+          ProgressIndicatorThemeData(color: primaryBlueColor),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.white,
         titleTextStyle: TextStyle(
@@ -124,49 +126,49 @@ class CustomerAppTheme {
       //---------------------------------------------------- TYPOGRAPHY ------------------------------------------------------------------------//
       //---------------------------------------------------- Typography ------------------------------------------------------------------------//
       textTheme: TextTheme(
-        headline1: TextStyle(
+        displayLarge: TextStyle(
             fontFamily: "Poppins",
             fontWeight: FontWeight.w700,
             fontSize: 18.sp,
             color: Colors.black),
-        headline2: TextStyle(
+        displayMedium: TextStyle(
           fontFamily: "Poppins",
           fontWeight: FontWeight.w600,
           fontSize: 17.sp,
           color: Colors.black,
         ),
-        headline3: TextStyle(
+        displaySmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 16.sp,
           color: Colors.black,
         ),
-        bodyText1: TextStyle(
+        bodyLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 13.sp,
           color: Colors.black,
         ),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
           height: 1.5,
           fontSize: 11.sp,
           color: Color(0xFF494949),
         ),
-        subtitle2: TextStyle(
+        titleSmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w500,
           fontSize: 12.sp,
           color: Color(0xFF494949),
         ),
-        subtitle1: TextStyle(
+        titleMedium: TextStyle(
           fontFamily: "Nunito",
           fontWeight: FontWeight.w400,
           fontSize: 11.sp,
           color: Colors.black,
         ),
-        headline6: TextStyle(
+        titleLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,
           fontSize: 11.sp,
@@ -177,13 +179,13 @@ class CustomerAppTheme {
           fontWeight: FontWeight.w700,
           fontSize: 15,
         ),
-        headline4: TextStyle(
+        headlineMedium: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w700,
           fontSize: 13.sp,
           color: Colors.black,
         ),
-        headline5: TextStyle(
+        headlineSmall: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w700,
           fontSize: 14.sp,

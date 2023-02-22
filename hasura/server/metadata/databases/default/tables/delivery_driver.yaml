@@ -65,12 +65,7 @@ select_permissions:
         - online
         - status
         - user_id
-      filter:
-        restaurant:
-          orders:
-            customer:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_driver
     permission:
       columns:

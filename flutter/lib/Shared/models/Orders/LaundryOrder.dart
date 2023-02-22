@@ -83,6 +83,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       super.notifiedAdmin,
       super.notifiedOperator})
       : super(
+            totalCost: cost,
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
             serviceProviderId: laundry?.hasuraId,
