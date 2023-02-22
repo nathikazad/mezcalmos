@@ -586,8 +586,7 @@ Future<UserInfo?> get_order_driver_info({required int orderId}) async {
   return null;
 }
 
-Future<Stream<LatLng?>> get_order_driver_location(
-    {required int orderId}) async {
+Stream<LatLng?> listen_order_driver_location({required int orderId}) {
   return _hasuraDb.graphQLClient
       .subscribe$listen_on_order_driver_location(
           Options$Subscription$listen_on_order_driver_location(

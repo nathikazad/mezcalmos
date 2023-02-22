@@ -40,7 +40,8 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
         userInfo: ServiceInfo(
             hasuraId: data.id,
             image: data.details!.image,
-            description: (data.details!.description?.translations != null)
+            description: (data.details!.description?.translations != null &&
+                    data.details!.description?.translations.isNotEmpty == true)
                 ? {
                     data.details!.description!.translations.first.language_id
                             .toLanguageType():
