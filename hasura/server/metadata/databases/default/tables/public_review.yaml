@@ -56,14 +56,16 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
+        - created_at
         - from_entity_id
+        - from_entity_type
         - id
+        - note
         - rating
         - to_entity_id
-        - from_entity_type
-        - note
         - to_entity_type
       filter: {}
+      allow_aggregations: true
   - role: customer
     permission:
       columns:
