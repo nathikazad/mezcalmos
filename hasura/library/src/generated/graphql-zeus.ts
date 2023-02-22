@@ -2,102 +2,7 @@
 /* eslint-disable */
 
 export type ValueTypes = {
-    /** columns and relationships of "app_type" */
-["app_type"]: AliasType<{
-	/** customer, delivery, restaurant, admin */
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregated selection of "app_type" */
-["app_type_aggregate"]: AliasType<{
-	aggregate?:ValueTypes["app_type_aggregate_fields"],
-	nodes?:ValueTypes["app_type"],
-		__typename?: true
-}>;
-	/** aggregate fields of "app_type" */
-["app_type_aggregate_fields"]: AliasType<{
-count?: [{	columns?:ValueTypes["app_type_select_column"][],	distinct?:boolean},true],
-	max?:ValueTypes["app_type_max_fields"],
-	min?:ValueTypes["app_type_min_fields"],
-		__typename?: true
-}>;
-	/** Boolean expression to filter rows from the table "app_type". All fields are combined with a logical 'AND'. */
-["app_type_bool_exp"]: {
-	_and?:ValueTypes["app_type_bool_exp"][],
-	_not?:ValueTypes["app_type_bool_exp"],
-	_or?:ValueTypes["app_type_bool_exp"][],
-	id?:ValueTypes["String_comparison_exp"]
-};
-	/** unique or primary key constraints on table "app_type" */
-["app_type_constraint"]:app_type_constraint;
-	/** input type for inserting data into table "app_type" */
-["app_type_insert_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-};
-	/** aggregate max on columns */
-["app_type_max_fields"]: AliasType<{
-	/** customer, delivery, restaurant, admin */
-	id?:true,
-		__typename?: true
-}>;
-	/** aggregate min on columns */
-["app_type_min_fields"]: AliasType<{
-	/** customer, delivery, restaurant, admin */
-	id?:true,
-		__typename?: true
-}>;
-	/** response of any mutation on the table "app_type" */
-["app_type_mutation_response"]: AliasType<{
-	/** number of rows affected by the mutation */
-	affected_rows?:true,
-	/** data from the rows affected by the mutation */
-	returning?:ValueTypes["app_type"],
-		__typename?: true
-}>;
-	/** on_conflict condition type for table "app_type" */
-["app_type_on_conflict"]: {
-	constraint:ValueTypes["app_type_constraint"],
-	update_columns:ValueTypes["app_type_update_column"][],
-	where?:ValueTypes["app_type_bool_exp"]
-};
-	/** Ordering options when selecting data from "app_type". */
-["app_type_order_by"]: {
-	id?:ValueTypes["order_by"]
-};
-	/** primary key columns input for table: app_type */
-["app_type_pk_columns_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id:string
-};
-	/** select columns of table "app_type" */
-["app_type_select_column"]:app_type_select_column;
-	/** input type for updating data in table "app_type" */
-["app_type_set_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-};
-	/** Streaming cursor of the table "app_type" */
-["app_type_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:ValueTypes["app_type_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:ValueTypes["cursor_ordering"]
-};
-	/** Initial value of the column from where the streaming should start */
-["app_type_stream_cursor_value_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-};
-	/** update columns of table "app_type" */
-["app_type_update_column"]:app_type_update_column;
-	["app_type_updates"]: {
-	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["app_type_set_input"],
-	/** filter the rows which have to be updated */
-	where:ValueTypes["app_type_bool_exp"]
-};
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+    /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 ["Boolean_comparison_exp"]: {
 	_eq?:boolean,
 	_gt?:boolean,
@@ -3002,29 +2907,6 @@ orders_aggregate?: [{	/** distinct select on columns */
 	nodes?:ValueTypes["delivery_driver"],
 		__typename?: true
 }>;
-	["delivery_driver_aggregate_bool_exp"]: {
-	bool_and?:ValueTypes["delivery_driver_aggregate_bool_exp_bool_and"],
-	bool_or?:ValueTypes["delivery_driver_aggregate_bool_exp_bool_or"],
-	count?:ValueTypes["delivery_driver_aggregate_bool_exp_count"]
-};
-	["delivery_driver_aggregate_bool_exp_bool_and"]: {
-	arguments:ValueTypes["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"],
-	distinct?:boolean,
-	filter?:ValueTypes["delivery_driver_bool_exp"],
-	predicate:ValueTypes["Boolean_comparison_exp"]
-};
-	["delivery_driver_aggregate_bool_exp_bool_or"]: {
-	arguments:ValueTypes["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"],
-	distinct?:boolean,
-	filter?:ValueTypes["delivery_driver_bool_exp"],
-	predicate:ValueTypes["Boolean_comparison_exp"]
-};
-	["delivery_driver_aggregate_bool_exp_count"]: {
-	arguments?:ValueTypes["delivery_driver_select_column"][],
-	distinct?:boolean,
-	filter?:ValueTypes["delivery_driver_bool_exp"],
-	predicate:ValueTypes["Int_comparison_exp"]
-};
 	/** aggregate fields of "delivery.driver" */
 ["delivery_driver_aggregate_fields"]: AliasType<{
 	avg?:ValueTypes["delivery_driver_avg_fields"],
@@ -3040,26 +2922,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	variance?:ValueTypes["delivery_driver_variance_fields"],
 		__typename?: true
 }>;
-	/** order by aggregate values of table "delivery.driver" */
-["delivery_driver_aggregate_order_by"]: {
-	avg?:ValueTypes["delivery_driver_avg_order_by"],
-	count?:ValueTypes["order_by"],
-	max?:ValueTypes["delivery_driver_max_order_by"],
-	min?:ValueTypes["delivery_driver_min_order_by"],
-	stddev?:ValueTypes["delivery_driver_stddev_order_by"],
-	stddev_pop?:ValueTypes["delivery_driver_stddev_pop_order_by"],
-	stddev_samp?:ValueTypes["delivery_driver_stddev_samp_order_by"],
-	sum?:ValueTypes["delivery_driver_sum_order_by"],
-	var_pop?:ValueTypes["delivery_driver_var_pop_order_by"],
-	var_samp?:ValueTypes["delivery_driver_var_samp_order_by"],
-	variance?:ValueTypes["delivery_driver_variance_order_by"]
-};
-	/** input type for inserting array relation for remote table "delivery.driver" */
-["delivery_driver_arr_rel_insert_input"]: {
-	data:ValueTypes["delivery_driver_insert_input"][],
-	/** upsert condition */
-	on_conflict?:ValueTypes["delivery_driver_on_conflict"]
-};
 	/** aggregate avg on columns */
 ["delivery_driver_avg_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -3067,12 +2929,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by avg() on columns of table "delivery.driver" */
-["delivery_driver_avg_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** Boolean expression to filter rows from the table "delivery.driver". All fields are combined with a logical 'AND'. */
 ["delivery_driver_bool_exp"]: {
 	_and?:ValueTypes["delivery_driver_bool_exp"][],
@@ -3141,20 +2997,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by max() on columns of table "delivery.driver" */
-["delivery_driver_max_order_by"]: {
-	app_type_id?:ValueTypes["order_by"],
-	app_version?:ValueTypes["order_by"],
-	delivery_company_id?:ValueTypes["order_by"],
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:ValueTypes["order_by"],
-	/** Just for relationship */
-	delivery_driver_type?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	/** awaiting_approval, authorized, banned */
-	status?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** aggregate min on columns */
 ["delivery_driver_min_fields"]: AliasType<{
 	app_type_id?:true,
@@ -3170,20 +3012,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by min() on columns of table "delivery.driver" */
-["delivery_driver_min_order_by"]: {
-	app_type_id?:ValueTypes["order_by"],
-	app_version?:ValueTypes["order_by"],
-	delivery_company_id?:ValueTypes["order_by"],
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:ValueTypes["order_by"],
-	/** Just for relationship */
-	delivery_driver_type?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	/** awaiting_approval, authorized, banned */
-	status?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** response of any mutation on the table "delivery.driver" */
 ["delivery_driver_mutation_response"]: AliasType<{
 	/** number of rows affected by the mutation */
@@ -3229,10 +3057,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 };
 	/** select columns of table "delivery.driver" */
 ["delivery_driver_select_column"]:delivery_driver_select_column;
-	/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver" */
-["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns;
-	/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver" */
-["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns;
 	/** input type for updating data in table "delivery.driver" */
 ["delivery_driver_set_input"]: {
 	app_type_id?:string,
@@ -3256,12 +3080,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by stddev() on columns of table "delivery.driver" */
-["delivery_driver_stddev_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** aggregate stddev_pop on columns */
 ["delivery_driver_stddev_pop_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -3269,12 +3087,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by stddev_pop() on columns of table "delivery.driver" */
-["delivery_driver_stddev_pop_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** aggregate stddev_samp on columns */
 ["delivery_driver_stddev_samp_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -3282,12 +3094,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by stddev_samp() on columns of table "delivery.driver" */
-["delivery_driver_stddev_samp_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** Streaming cursor of the table "delivery_driver" */
 ["delivery_driver_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -3318,12 +3124,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by sum() on columns of table "delivery.driver" */
-["delivery_driver_sum_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** update columns of table "delivery.driver" */
 ["delivery_driver_update_column"]:delivery_driver_update_column;
 	["delivery_driver_updates"]: {
@@ -3341,12 +3141,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by var_pop() on columns of table "delivery.driver" */
-["delivery_driver_var_pop_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** aggregate var_samp on columns */
 ["delivery_driver_var_samp_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -3354,12 +3148,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by var_samp() on columns of table "delivery.driver" */
-["delivery_driver_var_samp_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	/** aggregate variance on columns */
 ["delivery_driver_variance_fields"]: AliasType<{
 	delivery_company_id?:true,
@@ -3367,12 +3155,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	user_id?:true,
 		__typename?: true
 }>;
-	/** order by variance() on columns of table "delivery.driver" */
-["delivery_driver_variance_order_by"]: {
-	delivery_company_id?:ValueTypes["order_by"],
-	id?:ValueTypes["order_by"],
-	user_id?:ValueTypes["order_by"]
-};
 	["delivery_get_delivery_companies_args"]: {
 	location?:ValueTypes["geography"]
 };
@@ -7635,10 +7417,6 @@ the end). throws an error if top level container is not an array */
 };
 	/** mutation root */
 ["mutation_root"]: AliasType<{
-delete_app_type?: [{	/** filter the rows which have to be deleted */
-	where:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type_mutation_response"]],
-delete_app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
-	id:string},ValueTypes["app_type"]],
 delete_chat?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["chat_bool_exp"]},ValueTypes["chat_mutation_response"]],
 delete_chat_by_pk?: [{	id:number},ValueTypes["chat"]],
@@ -7790,12 +7568,13 @@ delete_translation_value_by_pk?: [{	language_id:string,	translation_id:number},V
 delete_user?: [{	/** filter the rows which have to be deleted */
 	where:ValueTypes["user_bool_exp"]},ValueTypes["user_mutation_response"]],
 delete_user_by_pk?: [{	id:number},ValueTypes["user"]],
-insert_app_type?: [{	/** the rows to be inserted */
-	objects:ValueTypes["app_type_insert_input"][],	/** upsert condition */
-	on_conflict?:ValueTypes["app_type_on_conflict"]},ValueTypes["app_type_mutation_response"]],
-insert_app_type_one?: [{	/** the row to be inserted */
-	object:ValueTypes["app_type_insert_input"],	/** upsert condition */
-	on_conflict?:ValueTypes["app_type_on_conflict"]},ValueTypes["app_type"]],
+delete_valid_types_app_type?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type_mutation_response"]],
+delete_valid_types_app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
+	id:string},ValueTypes["valid_types_app_type"]],
+delete_valid_types_service_provider_type?: [{	/** filter the rows which have to be deleted */
+	where:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type_mutation_response"]],
+delete_valid_types_service_provider_type_by_pk?: [{	id:string},ValueTypes["valid_types_service_provider_type"]],
 insert_chat?: [{	/** the rows to be inserted */
 	objects:ValueTypes["chat_insert_input"][],	/** upsert condition */
 	on_conflict?:ValueTypes["chat_on_conflict"]},ValueTypes["chat_mutation_response"]],
@@ -8098,13 +7877,18 @@ insert_user?: [{	/** the rows to be inserted */
 insert_user_one?: [{	/** the row to be inserted */
 	object:ValueTypes["user_insert_input"],	/** upsert condition */
 	on_conflict?:ValueTypes["user_on_conflict"]},ValueTypes["user"]],
-update_app_type?: [{	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["app_type_set_input"],	/** filter the rows which have to be updated */
-	where:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type_mutation_response"]],
-update_app_type_by_pk?: [{	/** sets the columns of the filtered rows to the given values */
-	_set?:ValueTypes["app_type_set_input"],	pk_columns:ValueTypes["app_type_pk_columns_input"]},ValueTypes["app_type"]],
-update_app_type_many?: [{	/** updates to execute, in order */
-	updates:ValueTypes["app_type_updates"][]},ValueTypes["app_type_mutation_response"]],
+insert_valid_types_app_type?: [{	/** the rows to be inserted */
+	objects:ValueTypes["valid_types_app_type_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["valid_types_app_type_on_conflict"]},ValueTypes["valid_types_app_type_mutation_response"]],
+insert_valid_types_app_type_one?: [{	/** the row to be inserted */
+	object:ValueTypes["valid_types_app_type_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["valid_types_app_type_on_conflict"]},ValueTypes["valid_types_app_type"]],
+insert_valid_types_service_provider_type?: [{	/** the rows to be inserted */
+	objects:ValueTypes["valid_types_service_provider_type_insert_input"][],	/** upsert condition */
+	on_conflict?:ValueTypes["valid_types_service_provider_type_on_conflict"]},ValueTypes["valid_types_service_provider_type_mutation_response"]],
+insert_valid_types_service_provider_type_one?: [{	/** the row to be inserted */
+	object:ValueTypes["valid_types_service_provider_type_insert_input"],	/** upsert condition */
+	on_conflict?:ValueTypes["valid_types_service_provider_type_on_conflict"]},ValueTypes["valid_types_service_provider_type"]],
 update_chat?: [{	/** append existing jsonb value of filtered columns with new jsonb value */
 	_append?:ValueTypes["chat_append_input"],	/** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
 	_delete_at_path?:ValueTypes["chat_delete_at_path_input"],	/** delete the array element with specified index (negative integers count from
@@ -8662,6 +8446,20 @@ update_user_by_pk?: [{	/** increments the numeric columns with given value of th
 	_set?:ValueTypes["user_set_input"],	pk_columns:ValueTypes["user_pk_columns_input"]},ValueTypes["user"]],
 update_user_many?: [{	/** updates to execute, in order */
 	updates:ValueTypes["user_updates"][]},ValueTypes["user_mutation_response"]],
+update_valid_types_app_type?: [{	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_app_type_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type_mutation_response"]],
+update_valid_types_app_type_by_pk?: [{	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_app_type_set_input"],	pk_columns:ValueTypes["valid_types_app_type_pk_columns_input"]},ValueTypes["valid_types_app_type"]],
+update_valid_types_app_type_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["valid_types_app_type_updates"][]},ValueTypes["valid_types_app_type_mutation_response"]],
+update_valid_types_service_provider_type?: [{	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_service_provider_type_set_input"],	/** filter the rows which have to be updated */
+	where:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type_mutation_response"]],
+update_valid_types_service_provider_type_by_pk?: [{	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_service_provider_type_set_input"],	pk_columns:ValueTypes["valid_types_service_provider_type_pk_columns_input"]},ValueTypes["valid_types_service_provider_type"]],
+update_valid_types_service_provider_type_many?: [{	/** updates to execute, in order */
+	updates:ValueTypes["valid_types_service_provider_type_updates"][]},ValueTypes["valid_types_service_provider_type_mutation_response"]],
 		__typename?: true
 }>;
 	/** columns and relationships of "notification_info" */
@@ -8854,20 +8652,6 @@ count?: [{	columns?:ValueTypes["notification_info_select_column"][],	distinct?:b
 	/** column ordering options */
 ["order_by"]:order_by;
 	["query_root"]: AliasType<{
-app_type?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["app_type_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["app_type_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type"]],
-app_type_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["app_type_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["app_type_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type_aggregate"]],
-app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
-	id:string},ValueTypes["app_type"]],
 chat?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["chat_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -9599,6 +9383,33 @@ user_aggregate?: [{	/** distinct select on columns */
 	order_by?:ValueTypes["user_order_by"][],	/** filter the rows returned */
 	where?:ValueTypes["user_bool_exp"]},ValueTypes["user_aggregate"]],
 user_by_pk?: [{	id:number},ValueTypes["user"]],
+valid_types_app_type?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_app_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_app_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type"]],
+valid_types_app_type_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_app_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_app_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type_aggregate"]],
+valid_types_app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
+	id:string},ValueTypes["valid_types_app_type"]],
+valid_types_service_provider_type?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_service_provider_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_service_provider_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type"]],
+valid_types_service_provider_type_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_service_provider_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_service_provider_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type_aggregate"]],
+valid_types_service_provider_type_by_pk?: [{	id:string},ValueTypes["valid_types_service_provider_type"]],
 		__typename?: true
 }>;
 	/** columns and relationships of "restaurant.cart" */
@@ -15247,18 +15058,6 @@ accepted_payments?: [{	/** JSON select path */
 	creation_time?:true,
 	/** An object relationship */
 	delivery_company?:ValueTypes["delivery_company"],
-delivery_drivers?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_driver_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver"]],
-delivery_drivers_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["delivery_driver_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["delivery_driver_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["delivery_driver_bool_exp"]},ValueTypes["delivery_driver_aggregate"]],
 	/** An object relationship */
 	description?:ValueTypes["translation"],
 	description_id?:true,
@@ -15277,6 +15076,18 @@ language?: [{	/** JSON select path */
 	phone_number?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
+reviews?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
+reviews_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 schedule?: [{	/** JSON select path */
 	path?:string},true],
 	/** An object relationship */
@@ -15334,8 +15145,6 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	approved?:ValueTypes["Boolean_comparison_exp"],
 	creation_time?:ValueTypes["timestamptz_comparison_exp"],
 	delivery_company?:ValueTypes["delivery_company_bool_exp"],
-	delivery_drivers?:ValueTypes["delivery_driver_bool_exp"],
-	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_bool_exp"],
 	description?:ValueTypes["translation_bool_exp"],
 	description_id?:ValueTypes["Int_comparison_exp"],
 	firebase_id?:ValueTypes["String_comparison_exp"],
@@ -15349,6 +15158,8 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	open_status?:ValueTypes["String_comparison_exp"],
 	phone_number?:ValueTypes["String_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
+	reviews?:ValueTypes["review_bool_exp"],
+	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	service_link?:ValueTypes["service_provider_service_link_bool_exp"],
 	service_link_id?:ValueTypes["Int_comparison_exp"],
@@ -15394,7 +15205,6 @@ end). throws an error if top level container is not an array */
 	approved?:boolean,
 	creation_time?:ValueTypes["timestamptz"],
 	delivery_company?:ValueTypes["delivery_company_obj_rel_insert_input"],
-	delivery_drivers?:ValueTypes["delivery_driver_arr_rel_insert_input"],
 	description?:ValueTypes["translation_obj_rel_insert_input"],
 	description_id?:number,
 	firebase_id?:string,
@@ -15409,6 +15219,7 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
+	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
 	service_link?:ValueTypes["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -15474,7 +15285,6 @@ end). throws an error if top level container is not an array */
 	approved?:ValueTypes["order_by"],
 	creation_time?:ValueTypes["order_by"],
 	delivery_company?:ValueTypes["delivery_company_order_by"],
-	delivery_drivers_aggregate?:ValueTypes["delivery_driver_aggregate_order_by"],
 	description?:ValueTypes["translation_order_by"],
 	description_id?:ValueTypes["order_by"],
 	firebase_id?:ValueTypes["order_by"],
@@ -15488,6 +15298,7 @@ end). throws an error if top level container is not an array */
 	open_status?:ValueTypes["order_by"],
 	phone_number?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
+	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	schedule?:ValueTypes["order_by"],
 	service_link?:ValueTypes["service_provider_service_link_order_by"],
 	service_link_id?:ValueTypes["order_by"],
@@ -16977,24 +16788,6 @@ All fields are combined with a logical 'AND'. */
 	_similar?:string
 };
 	["subscription_root"]: AliasType<{
-app_type?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["app_type_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["app_type_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type"]],
-app_type_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["app_type_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["app_type_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type_aggregate"]],
-app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
-	id:string},ValueTypes["app_type"]],
-app_type_stream?: [{	/** maximum number of rows returned in a single batch */
-	batch_size:number,	/** cursor to stream the results returned by the query */
-	cursor?:ValueTypes["app_type_stream_cursor_input"][],	/** filter the rows returned */
-	where?:ValueTypes["app_type_bool_exp"]},ValueTypes["app_type"]],
 chat?: [{	/** distinct select on columns */
 	distinct_on?:ValueTypes["chat_select_column"][],	/** limit the number of rows returned */
 	limit?:number,	/** skip the first n rows. Use only with order_by */
@@ -17930,6 +17723,41 @@ user_stream?: [{	/** maximum number of rows returned in a single batch */
 	batch_size:number,	/** cursor to stream the results returned by the query */
 	cursor?:ValueTypes["user_stream_cursor_input"][],	/** filter the rows returned */
 	where?:ValueTypes["user_bool_exp"]},ValueTypes["user"]],
+valid_types_app_type?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_app_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_app_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type"]],
+valid_types_app_type_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_app_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_app_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type_aggregate"]],
+valid_types_app_type_by_pk?: [{	/** customer, delivery, restaurant, admin */
+	id:string},ValueTypes["valid_types_app_type"]],
+valid_types_app_type_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["valid_types_app_type_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_app_type_bool_exp"]},ValueTypes["valid_types_app_type"]],
+valid_types_service_provider_type?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_service_provider_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_service_provider_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type"]],
+valid_types_service_provider_type_aggregate?: [{	/** distinct select on columns */
+	distinct_on?:ValueTypes["valid_types_service_provider_type_select_column"][],	/** limit the number of rows returned */
+	limit?:number,	/** skip the first n rows. Use only with order_by */
+	offset?:number,	/** sort the rows by one or more columns */
+	order_by?:ValueTypes["valid_types_service_provider_type_order_by"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type_aggregate"]],
+valid_types_service_provider_type_by_pk?: [{	id:string},ValueTypes["valid_types_service_provider_type"]],
+valid_types_service_provider_type_stream?: [{	/** maximum number of rows returned in a single batch */
+	batch_size:number,	/** cursor to stream the results returned by the query */
+	cursor?:ValueTypes["valid_types_service_provider_type_stream_cursor_input"][],	/** filter the rows returned */
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]},ValueTypes["valid_types_service_provider_type"]],
 		__typename?: true
 }>;
 	["timestamptz"]:unknown;
@@ -18613,106 +18441,195 @@ count?: [{	columns?:ValueTypes["user_select_column"][],	distinct?:boolean},true]
 ["user_variance_fields"]: AliasType<{
 	id?:true,
 		__typename?: true
-}>
+}>;
+	/** columns and relationships of "valid_types.app_type" */
+["valid_types_app_type"]: AliasType<{
+	/** customer, delivery, restaurant, admin */
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "valid_types.app_type" */
+["valid_types_app_type_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["valid_types_app_type_aggregate_fields"],
+	nodes?:ValueTypes["valid_types_app_type"],
+		__typename?: true
+}>;
+	/** aggregate fields of "valid_types.app_type" */
+["valid_types_app_type_aggregate_fields"]: AliasType<{
+count?: [{	columns?:ValueTypes["valid_types_app_type_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["valid_types_app_type_max_fields"],
+	min?:ValueTypes["valid_types_app_type_min_fields"],
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table "valid_types.app_type". All fields are combined with a logical 'AND'. */
+["valid_types_app_type_bool_exp"]: {
+	_and?:ValueTypes["valid_types_app_type_bool_exp"][],
+	_not?:ValueTypes["valid_types_app_type_bool_exp"],
+	_or?:ValueTypes["valid_types_app_type_bool_exp"][],
+	id?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "valid_types.app_type" */
+["valid_types_app_type_constraint"]:valid_types_app_type_constraint;
+	/** input type for inserting data into table "valid_types.app_type" */
+["valid_types_app_type_insert_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+};
+	/** aggregate max on columns */
+["valid_types_app_type_max_fields"]: AliasType<{
+	/** customer, delivery, restaurant, admin */
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["valid_types_app_type_min_fields"]: AliasType<{
+	/** customer, delivery, restaurant, admin */
+	id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "valid_types.app_type" */
+["valid_types_app_type_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["valid_types_app_type"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "valid_types.app_type" */
+["valid_types_app_type_on_conflict"]: {
+	constraint:ValueTypes["valid_types_app_type_constraint"],
+	update_columns:ValueTypes["valid_types_app_type_update_column"][],
+	where?:ValueTypes["valid_types_app_type_bool_exp"]
+};
+	/** Ordering options when selecting data from "valid_types.app_type". */
+["valid_types_app_type_order_by"]: {
+	id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: valid_types.app_type */
+["valid_types_app_type_pk_columns_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id:string
+};
+	/** select columns of table "valid_types.app_type" */
+["valid_types_app_type_select_column"]:valid_types_app_type_select_column;
+	/** input type for updating data in table "valid_types.app_type" */
+["valid_types_app_type_set_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+};
+	/** Streaming cursor of the table "valid_types_app_type" */
+["valid_types_app_type_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["valid_types_app_type_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["valid_types_app_type_stream_cursor_value_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+};
+	/** update columns of table "valid_types.app_type" */
+["valid_types_app_type_update_column"]:valid_types_app_type_update_column;
+	["valid_types_app_type_updates"]: {
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_app_type_set_input"],
+	/** filter the rows which have to be updated */
+	where:ValueTypes["valid_types_app_type_bool_exp"]
+};
+	/** columns and relationships of "valid_types.service_provider_type" */
+["valid_types_service_provider_type"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregated selection of "valid_types.service_provider_type" */
+["valid_types_service_provider_type_aggregate"]: AliasType<{
+	aggregate?:ValueTypes["valid_types_service_provider_type_aggregate_fields"],
+	nodes?:ValueTypes["valid_types_service_provider_type"],
+		__typename?: true
+}>;
+	/** aggregate fields of "valid_types.service_provider_type" */
+["valid_types_service_provider_type_aggregate_fields"]: AliasType<{
+count?: [{	columns?:ValueTypes["valid_types_service_provider_type_select_column"][],	distinct?:boolean},true],
+	max?:ValueTypes["valid_types_service_provider_type_max_fields"],
+	min?:ValueTypes["valid_types_service_provider_type_min_fields"],
+		__typename?: true
+}>;
+	/** Boolean expression to filter rows from the table
+"valid_types.service_provider_type". All fields are combined with a logical 'AND'. */
+["valid_types_service_provider_type_bool_exp"]: {
+	_and?:ValueTypes["valid_types_service_provider_type_bool_exp"][],
+	_not?:ValueTypes["valid_types_service_provider_type_bool_exp"],
+	_or?:ValueTypes["valid_types_service_provider_type_bool_exp"][],
+	id?:ValueTypes["String_comparison_exp"]
+};
+	/** unique or primary key constraints on table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_constraint"]:valid_types_service_provider_type_constraint;
+	/** input type for inserting data into table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_insert_input"]: {
+	id?:string
+};
+	/** aggregate max on columns */
+["valid_types_service_provider_type_max_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** aggregate min on columns */
+["valid_types_service_provider_type_min_fields"]: AliasType<{
+	id?:true,
+		__typename?: true
+}>;
+	/** response of any mutation on the table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_mutation_response"]: AliasType<{
+	/** number of rows affected by the mutation */
+	affected_rows?:true,
+	/** data from the rows affected by the mutation */
+	returning?:ValueTypes["valid_types_service_provider_type"],
+		__typename?: true
+}>;
+	/** on_conflict condition type for table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_on_conflict"]: {
+	constraint:ValueTypes["valid_types_service_provider_type_constraint"],
+	update_columns:ValueTypes["valid_types_service_provider_type_update_column"][],
+	where?:ValueTypes["valid_types_service_provider_type_bool_exp"]
+};
+	/** Ordering options when selecting data from "valid_types.service_provider_type". */
+["valid_types_service_provider_type_order_by"]: {
+	id?:ValueTypes["order_by"]
+};
+	/** primary key columns input for table: valid_types.service_provider_type */
+["valid_types_service_provider_type_pk_columns_input"]: {
+	id:string
+};
+	/** select columns of table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_select_column"]:valid_types_service_provider_type_select_column;
+	/** input type for updating data in table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_set_input"]: {
+	id?:string
+};
+	/** Streaming cursor of the table "valid_types_service_provider_type" */
+["valid_types_service_provider_type_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:ValueTypes["valid_types_service_provider_type_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:ValueTypes["cursor_ordering"]
+};
+	/** Initial value of the column from where the streaming should start */
+["valid_types_service_provider_type_stream_cursor_value_input"]: {
+	id?:string
+};
+	/** update columns of table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_update_column"]:valid_types_service_provider_type_update_column;
+	["valid_types_service_provider_type_updates"]: {
+	/** sets the columns of the filtered rows to the given values */
+	_set?:ValueTypes["valid_types_service_provider_type_set_input"],
+	/** filter the rows which have to be updated */
+	where:ValueTypes["valid_types_service_provider_type_bool_exp"]
+}
   }
 
 export type PartialObjects = {
-    /** columns and relationships of "app_type" */
-["app_type"]: {
-		__typename?: "app_type";
-			/** customer, delivery, restaurant, admin */
-	id?:string
-	},
-	/** aggregated selection of "app_type" */
-["app_type_aggregate"]: {
-		__typename?: "app_type_aggregate";
-			aggregate?:PartialObjects["app_type_aggregate_fields"],
-			nodes?:PartialObjects["app_type"][]
-	},
-	/** aggregate fields of "app_type" */
-["app_type_aggregate_fields"]: {
-		__typename?: "app_type_aggregate_fields";
-			count?:number,
-			max?:PartialObjects["app_type_max_fields"],
-			min?:PartialObjects["app_type_min_fields"]
-	},
-	/** Boolean expression to filter rows from the table "app_type". All fields are combined with a logical 'AND'. */
-["app_type_bool_exp"]: {
-	_and?:PartialObjects["app_type_bool_exp"][],
-	_not?:PartialObjects["app_type_bool_exp"],
-	_or?:PartialObjects["app_type_bool_exp"][],
-	id?:PartialObjects["String_comparison_exp"]
-},
-	/** unique or primary key constraints on table "app_type" */
-["app_type_constraint"]:app_type_constraint,
-	/** input type for inserting data into table "app_type" */
-["app_type_insert_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-},
-	/** aggregate max on columns */
-["app_type_max_fields"]: {
-		__typename?: "app_type_max_fields";
-			/** customer, delivery, restaurant, admin */
-	id?:string
-	},
-	/** aggregate min on columns */
-["app_type_min_fields"]: {
-		__typename?: "app_type_min_fields";
-			/** customer, delivery, restaurant, admin */
-	id?:string
-	},
-	/** response of any mutation on the table "app_type" */
-["app_type_mutation_response"]: {
-		__typename?: "app_type_mutation_response";
-			/** number of rows affected by the mutation */
-	affected_rows?:number,
-			/** data from the rows affected by the mutation */
-	returning?:PartialObjects["app_type"][]
-	},
-	/** on_conflict condition type for table "app_type" */
-["app_type_on_conflict"]: {
-	constraint:PartialObjects["app_type_constraint"],
-	update_columns:PartialObjects["app_type_update_column"][],
-	where?:PartialObjects["app_type_bool_exp"]
-},
-	/** Ordering options when selecting data from "app_type". */
-["app_type_order_by"]: {
-	id?:PartialObjects["order_by"]
-},
-	/** primary key columns input for table: app_type */
-["app_type_pk_columns_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id:string
-},
-	/** select columns of table "app_type" */
-["app_type_select_column"]:app_type_select_column,
-	/** input type for updating data in table "app_type" */
-["app_type_set_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-},
-	/** Streaming cursor of the table "app_type" */
-["app_type_stream_cursor_input"]: {
-	/** Stream column input with initial value */
-	initial_value:PartialObjects["app_type_stream_cursor_value_input"],
-	/** cursor ordering */
-	ordering?:PartialObjects["cursor_ordering"]
-},
-	/** Initial value of the column from where the streaming should start */
-["app_type_stream_cursor_value_input"]: {
-	/** customer, delivery, restaurant, admin */
-	id?:string
-},
-	/** update columns of table "app_type" */
-["app_type_update_column"]:app_type_update_column,
-	["app_type_updates"]: {
-	/** sets the columns of the filtered rows to the given values */
-	_set?:PartialObjects["app_type_set_input"],
-	/** filter the rows which have to be updated */
-	where:PartialObjects["app_type_bool_exp"]
-},
-	/** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
+    /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 ["Boolean_comparison_exp"]: {
 	_eq?:boolean,
 	_gt?:boolean,
@@ -21550,29 +21467,6 @@ the end). throws an error if top level container is not an array */
 			aggregate?:PartialObjects["delivery_driver_aggregate_fields"],
 			nodes?:PartialObjects["delivery_driver"][]
 	},
-	["delivery_driver_aggregate_bool_exp"]: {
-	bool_and?:PartialObjects["delivery_driver_aggregate_bool_exp_bool_and"],
-	bool_or?:PartialObjects["delivery_driver_aggregate_bool_exp_bool_or"],
-	count?:PartialObjects["delivery_driver_aggregate_bool_exp_count"]
-},
-	["delivery_driver_aggregate_bool_exp_bool_and"]: {
-	arguments:PartialObjects["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"],
-	distinct?:boolean,
-	filter?:PartialObjects["delivery_driver_bool_exp"],
-	predicate:PartialObjects["Boolean_comparison_exp"]
-},
-	["delivery_driver_aggregate_bool_exp_bool_or"]: {
-	arguments:PartialObjects["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"],
-	distinct?:boolean,
-	filter?:PartialObjects["delivery_driver_bool_exp"],
-	predicate:PartialObjects["Boolean_comparison_exp"]
-},
-	["delivery_driver_aggregate_bool_exp_count"]: {
-	arguments?:PartialObjects["delivery_driver_select_column"][],
-	distinct?:boolean,
-	filter?:PartialObjects["delivery_driver_bool_exp"],
-	predicate:PartialObjects["Int_comparison_exp"]
-},
 	/** aggregate fields of "delivery.driver" */
 ["delivery_driver_aggregate_fields"]: {
 		__typename?: "delivery_driver_aggregate_fields";
@@ -21588,26 +21482,6 @@ the end). throws an error if top level container is not an array */
 			var_samp?:PartialObjects["delivery_driver_var_samp_fields"],
 			variance?:PartialObjects["delivery_driver_variance_fields"]
 	},
-	/** order by aggregate values of table "delivery.driver" */
-["delivery_driver_aggregate_order_by"]: {
-	avg?:PartialObjects["delivery_driver_avg_order_by"],
-	count?:PartialObjects["order_by"],
-	max?:PartialObjects["delivery_driver_max_order_by"],
-	min?:PartialObjects["delivery_driver_min_order_by"],
-	stddev?:PartialObjects["delivery_driver_stddev_order_by"],
-	stddev_pop?:PartialObjects["delivery_driver_stddev_pop_order_by"],
-	stddev_samp?:PartialObjects["delivery_driver_stddev_samp_order_by"],
-	sum?:PartialObjects["delivery_driver_sum_order_by"],
-	var_pop?:PartialObjects["delivery_driver_var_pop_order_by"],
-	var_samp?:PartialObjects["delivery_driver_var_samp_order_by"],
-	variance?:PartialObjects["delivery_driver_variance_order_by"]
-},
-	/** input type for inserting array relation for remote table "delivery.driver" */
-["delivery_driver_arr_rel_insert_input"]: {
-	data:PartialObjects["delivery_driver_insert_input"][],
-	/** upsert condition */
-	on_conflict?:PartialObjects["delivery_driver_on_conflict"]
-},
 	/** aggregate avg on columns */
 ["delivery_driver_avg_fields"]: {
 		__typename?: "delivery_driver_avg_fields";
@@ -21615,12 +21489,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by avg() on columns of table "delivery.driver" */
-["delivery_driver_avg_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** Boolean expression to filter rows from the table "delivery.driver". All fields are combined with a logical 'AND'. */
 ["delivery_driver_bool_exp"]: {
 	_and?:PartialObjects["delivery_driver_bool_exp"][],
@@ -21689,20 +21557,6 @@ the end). throws an error if top level container is not an array */
 	status?:string,
 			user_id?:number
 	},
-	/** order by max() on columns of table "delivery.driver" */
-["delivery_driver_max_order_by"]: {
-	app_type_id?:PartialObjects["order_by"],
-	app_version?:PartialObjects["order_by"],
-	delivery_company_id?:PartialObjects["order_by"],
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:PartialObjects["order_by"],
-	/** Just for relationship */
-	delivery_driver_type?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	/** awaiting_approval, authorized, banned */
-	status?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** aggregate min on columns */
 ["delivery_driver_min_fields"]: {
 		__typename?: "delivery_driver_min_fields";
@@ -21718,20 +21572,6 @@ the end). throws an error if top level container is not an array */
 	status?:string,
 			user_id?:number
 	},
-	/** order by min() on columns of table "delivery.driver" */
-["delivery_driver_min_order_by"]: {
-	app_type_id?:PartialObjects["order_by"],
-	app_version?:PartialObjects["order_by"],
-	delivery_company_id?:PartialObjects["order_by"],
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:PartialObjects["order_by"],
-	/** Just for relationship */
-	delivery_driver_type?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	/** awaiting_approval, authorized, banned */
-	status?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** response of any mutation on the table "delivery.driver" */
 ["delivery_driver_mutation_response"]: {
 		__typename?: "delivery_driver_mutation_response";
@@ -21777,10 +21617,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** select columns of table "delivery.driver" */
 ["delivery_driver_select_column"]:delivery_driver_select_column,
-	/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver" */
-["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns,
-	/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver" */
-["delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns"]:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns,
 	/** input type for updating data in table "delivery.driver" */
 ["delivery_driver_set_input"]: {
 	app_type_id?:string,
@@ -21804,12 +21640,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by stddev() on columns of table "delivery.driver" */
-["delivery_driver_stddev_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** aggregate stddev_pop on columns */
 ["delivery_driver_stddev_pop_fields"]: {
 		__typename?: "delivery_driver_stddev_pop_fields";
@@ -21817,12 +21647,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by stddev_pop() on columns of table "delivery.driver" */
-["delivery_driver_stddev_pop_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** aggregate stddev_samp on columns */
 ["delivery_driver_stddev_samp_fields"]: {
 		__typename?: "delivery_driver_stddev_samp_fields";
@@ -21830,12 +21654,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by stddev_samp() on columns of table "delivery.driver" */
-["delivery_driver_stddev_samp_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** Streaming cursor of the table "delivery_driver" */
 ["delivery_driver_stream_cursor_input"]: {
 	/** Stream column input with initial value */
@@ -21866,12 +21684,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by sum() on columns of table "delivery.driver" */
-["delivery_driver_sum_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** update columns of table "delivery.driver" */
 ["delivery_driver_update_column"]:delivery_driver_update_column,
 	["delivery_driver_updates"]: {
@@ -21889,12 +21701,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by var_pop() on columns of table "delivery.driver" */
-["delivery_driver_var_pop_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** aggregate var_samp on columns */
 ["delivery_driver_var_samp_fields"]: {
 		__typename?: "delivery_driver_var_samp_fields";
@@ -21902,12 +21708,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by var_samp() on columns of table "delivery.driver" */
-["delivery_driver_var_samp_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	/** aggregate variance on columns */
 ["delivery_driver_variance_fields"]: {
 		__typename?: "delivery_driver_variance_fields";
@@ -21915,12 +21715,6 @@ the end). throws an error if top level container is not an array */
 			id?:number,
 			user_id?:number
 	},
-	/** order by variance() on columns of table "delivery.driver" */
-["delivery_driver_variance_order_by"]: {
-	delivery_company_id?:PartialObjects["order_by"],
-	id?:PartialObjects["order_by"],
-	user_id?:PartialObjects["order_by"]
-},
 	["delivery_get_delivery_companies_args"]: {
 	location?:PartialObjects["geography"]
 },
@@ -26138,10 +25932,6 @@ the end). throws an error if top level container is not an array */
 	/** mutation root */
 ["mutation_root"]: {
 		__typename?: "mutation_root";
-			/** delete data from the table: "app_type" */
-	delete_app_type?:PartialObjects["app_type_mutation_response"],
-			/** delete single row from the table: "app_type" */
-	delete_app_type_by_pk?:PartialObjects["app_type"],
 			/** delete data from the table: "chat" */
 	delete_chat?:PartialObjects["chat_mutation_response"],
 			/** delete single row from the table: "chat" */
@@ -26342,10 +26132,14 @@ the end). throws an error if top level container is not an array */
 	delete_user?:PartialObjects["user_mutation_response"],
 			/** delete single row from the table: "user" */
 	delete_user_by_pk?:PartialObjects["user"],
-			/** insert data into the table: "app_type" */
-	insert_app_type?:PartialObjects["app_type_mutation_response"],
-			/** insert a single row into the table: "app_type" */
-	insert_app_type_one?:PartialObjects["app_type"],
+			/** delete data from the table: "valid_types.app_type" */
+	delete_valid_types_app_type?:PartialObjects["valid_types_app_type_mutation_response"],
+			/** delete single row from the table: "valid_types.app_type" */
+	delete_valid_types_app_type_by_pk?:PartialObjects["valid_types_app_type"],
+			/** delete data from the table: "valid_types.service_provider_type" */
+	delete_valid_types_service_provider_type?:PartialObjects["valid_types_service_provider_type_mutation_response"],
+			/** delete single row from the table: "valid_types.service_provider_type" */
+	delete_valid_types_service_provider_type_by_pk?:PartialObjects["valid_types_service_provider_type"],
 			/** insert data into the table: "chat" */
 	insert_chat?:PartialObjects["chat_mutation_response"],
 			/** insert a single row into the table: "chat" */
@@ -26550,12 +26344,14 @@ the end). throws an error if top level container is not an array */
 	insert_user?:PartialObjects["user_mutation_response"],
 			/** insert a single row into the table: "user" */
 	insert_user_one?:PartialObjects["user"],
-			/** update data of the table: "app_type" */
-	update_app_type?:PartialObjects["app_type_mutation_response"],
-			/** update single row of the table: "app_type" */
-	update_app_type_by_pk?:PartialObjects["app_type"],
-			/** update multiples rows of table: "app_type" */
-	update_app_type_many?:(PartialObjects["app_type_mutation_response"] | undefined)[],
+			/** insert data into the table: "valid_types.app_type" */
+	insert_valid_types_app_type?:PartialObjects["valid_types_app_type_mutation_response"],
+			/** insert a single row into the table: "valid_types.app_type" */
+	insert_valid_types_app_type_one?:PartialObjects["valid_types_app_type"],
+			/** insert data into the table: "valid_types.service_provider_type" */
+	insert_valid_types_service_provider_type?:PartialObjects["valid_types_service_provider_type_mutation_response"],
+			/** insert a single row into the table: "valid_types.service_provider_type" */
+	insert_valid_types_service_provider_type_one?:PartialObjects["valid_types_service_provider_type"],
 			/** update data of the table: "chat" */
 	update_chat?:PartialObjects["chat_mutation_response"],
 			/** update single row of the table: "chat" */
@@ -26857,7 +26653,19 @@ the end). throws an error if top level container is not an array */
 			/** update single row of the table: "user" */
 	update_user_by_pk?:PartialObjects["user"],
 			/** update multiples rows of table: "user" */
-	update_user_many?:(PartialObjects["user_mutation_response"] | undefined)[]
+	update_user_many?:(PartialObjects["user_mutation_response"] | undefined)[],
+			/** update data of the table: "valid_types.app_type" */
+	update_valid_types_app_type?:PartialObjects["valid_types_app_type_mutation_response"],
+			/** update single row of the table: "valid_types.app_type" */
+	update_valid_types_app_type_by_pk?:PartialObjects["valid_types_app_type"],
+			/** update multiples rows of table: "valid_types.app_type" */
+	update_valid_types_app_type_many?:(PartialObjects["valid_types_app_type_mutation_response"] | undefined)[],
+			/** update data of the table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type?:PartialObjects["valid_types_service_provider_type_mutation_response"],
+			/** update single row of the table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type_by_pk?:PartialObjects["valid_types_service_provider_type"],
+			/** update multiples rows of table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type_many?:(PartialObjects["valid_types_service_provider_type_mutation_response"] | undefined)[]
 	},
 	/** columns and relationships of "notification_info" */
 ["notification_info"]: {
@@ -27050,12 +26858,6 @@ the end). throws an error if top level container is not an array */
 ["order_by"]:order_by,
 	["query_root"]: {
 		__typename?: "query_root";
-			/** fetch data from the table: "app_type" */
-	app_type?:PartialObjects["app_type"][],
-			/** fetch aggregated fields from the table: "app_type" */
-	app_type_aggregate?:PartialObjects["app_type_aggregate"],
-			/** fetch data from the table: "app_type" using primary key columns */
-	app_type_by_pk?:PartialObjects["app_type"],
 			/** fetch data from the table: "chat" */
 	chat?:PartialObjects["chat"][],
 			/** fetch aggregated fields from the table: "chat" */
@@ -27377,7 +27179,19 @@ the end). throws an error if top level container is not an array */
 			/** fetch aggregated fields from the table: "user" */
 	user_aggregate?:PartialObjects["user_aggregate"],
 			/** fetch data from the table: "user" using primary key columns */
-	user_by_pk?:PartialObjects["user"]
+	user_by_pk?:PartialObjects["user"],
+			/** fetch data from the table: "valid_types.app_type" */
+	valid_types_app_type?:PartialObjects["valid_types_app_type"][],
+			/** fetch aggregated fields from the table: "valid_types.app_type" */
+	valid_types_app_type_aggregate?:PartialObjects["valid_types_app_type_aggregate"],
+			/** fetch data from the table: "valid_types.app_type" using primary key columns */
+	valid_types_app_type_by_pk?:PartialObjects["valid_types_app_type"],
+			/** fetch data from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type?:PartialObjects["valid_types_service_provider_type"][],
+			/** fetch aggregated fields from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_aggregate?:PartialObjects["valid_types_service_provider_type_aggregate"],
+			/** fetch data from the table: "valid_types.service_provider_type" using primary key columns */
+	valid_types_service_provider_type_by_pk?:PartialObjects["valid_types_service_provider_type"]
 	},
 	/** columns and relationships of "restaurant.cart" */
 ["restaurant_cart"]: {
@@ -32891,10 +32705,6 @@ the end). throws an error if top level container is not an array */
 			creation_time?:PartialObjects["timestamptz"],
 			/** An object relationship */
 	delivery_company?:PartialObjects["delivery_company"],
-			/** An array relationship */
-	delivery_drivers?:PartialObjects["delivery_driver"][],
-			/** An aggregate relationship */
-	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate"],
 			/** An object relationship */
 	description?:PartialObjects["translation"],
 			description_id?:number,
@@ -32913,6 +32723,10 @@ the end). throws an error if top level container is not an array */
 			phone_number?:string,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
+			/** An array relationship */
+	reviews?:PartialObjects["review"][],
+			/** An aggregate relationship */
+	reviews_aggregate?:PartialObjects["review_aggregate"],
 			schedule?:PartialObjects["jsonb"],
 			/** An object relationship */
 	service_link?:PartialObjects["service_provider_service_link"],
@@ -32968,8 +32782,6 @@ the end). throws an error if top level container is not an array */
 	approved?:PartialObjects["Boolean_comparison_exp"],
 	creation_time?:PartialObjects["timestamptz_comparison_exp"],
 	delivery_company?:PartialObjects["delivery_company_bool_exp"],
-	delivery_drivers?:PartialObjects["delivery_driver_bool_exp"],
-	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_bool_exp"],
 	description?:PartialObjects["translation_bool_exp"],
 	description_id?:PartialObjects["Int_comparison_exp"],
 	firebase_id?:PartialObjects["String_comparison_exp"],
@@ -32983,6 +32795,8 @@ the end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["String_comparison_exp"],
 	phone_number?:PartialObjects["String_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
+	reviews?:PartialObjects["review_bool_exp"],
+	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	service_link?:PartialObjects["service_provider_service_link_bool_exp"],
 	service_link_id?:PartialObjects["Int_comparison_exp"],
@@ -33028,7 +32842,6 @@ end). throws an error if top level container is not an array */
 	approved?:boolean,
 	creation_time?:PartialObjects["timestamptz"],
 	delivery_company?:PartialObjects["delivery_company_obj_rel_insert_input"],
-	delivery_drivers?:PartialObjects["delivery_driver_arr_rel_insert_input"],
 	description?:PartialObjects["translation_obj_rel_insert_input"],
 	description_id?:number,
 	firebase_id?:string,
@@ -33043,6 +32856,7 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
+	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
 	service_link?:PartialObjects["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -33108,7 +32922,6 @@ end). throws an error if top level container is not an array */
 	approved?:PartialObjects["order_by"],
 	creation_time?:PartialObjects["order_by"],
 	delivery_company?:PartialObjects["delivery_company_order_by"],
-	delivery_drivers_aggregate?:PartialObjects["delivery_driver_aggregate_order_by"],
 	description?:PartialObjects["translation_order_by"],
 	description_id?:PartialObjects["order_by"],
 	firebase_id?:PartialObjects["order_by"],
@@ -33122,6 +32935,7 @@ end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["order_by"],
 	phone_number?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
+	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	schedule?:PartialObjects["order_by"],
 	service_link?:PartialObjects["service_provider_service_link_order_by"],
 	service_link_id?:PartialObjects["order_by"],
@@ -34611,14 +34425,6 @@ All fields are combined with a logical 'AND'. */
 },
 	["subscription_root"]: {
 		__typename?: "subscription_root";
-			/** fetch data from the table: "app_type" */
-	app_type?:PartialObjects["app_type"][],
-			/** fetch aggregated fields from the table: "app_type" */
-	app_type_aggregate?:PartialObjects["app_type_aggregate"],
-			/** fetch data from the table: "app_type" using primary key columns */
-	app_type_by_pk?:PartialObjects["app_type"],
-			/** fetch data from the table in a streaming manner: "app_type" */
-	app_type_stream?:PartialObjects["app_type"][],
 			/** fetch data from the table: "chat" */
 	chat?:PartialObjects["chat"][],
 			/** fetch aggregated fields from the table: "chat" */
@@ -35042,7 +34848,23 @@ All fields are combined with a logical 'AND'. */
 			/** fetch data from the table: "user" using primary key columns */
 	user_by_pk?:PartialObjects["user"],
 			/** fetch data from the table in a streaming manner: "user" */
-	user_stream?:PartialObjects["user"][]
+	user_stream?:PartialObjects["user"][],
+			/** fetch data from the table: "valid_types.app_type" */
+	valid_types_app_type?:PartialObjects["valid_types_app_type"][],
+			/** fetch aggregated fields from the table: "valid_types.app_type" */
+	valid_types_app_type_aggregate?:PartialObjects["valid_types_app_type_aggregate"],
+			/** fetch data from the table: "valid_types.app_type" using primary key columns */
+	valid_types_app_type_by_pk?:PartialObjects["valid_types_app_type"],
+			/** fetch data from the table in a streaming manner: "valid_types.app_type" */
+	valid_types_app_type_stream?:PartialObjects["valid_types_app_type"][],
+			/** fetch data from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type?:PartialObjects["valid_types_service_provider_type"][],
+			/** fetch aggregated fields from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_aggregate?:PartialObjects["valid_types_service_provider_type_aggregate"],
+			/** fetch data from the table: "valid_types.service_provider_type" using primary key columns */
+	valid_types_service_provider_type_by_pk?:PartialObjects["valid_types_service_provider_type"],
+			/** fetch data from the table in a streaming manner: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_stream?:PartialObjects["valid_types_service_provider_type"][]
 	},
 	["timestamptz"]:any,
 	/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -35717,129 +35539,194 @@ All fields are combined with a logical 'AND'. */
 ["user_variance_fields"]: {
 		__typename?: "user_variance_fields";
 			id?:number
-	}
+	},
+	/** columns and relationships of "valid_types.app_type" */
+["valid_types_app_type"]: {
+		__typename?: "valid_types_app_type";
+			/** customer, delivery, restaurant, admin */
+	id?:string
+	},
+	/** aggregated selection of "valid_types.app_type" */
+["valid_types_app_type_aggregate"]: {
+		__typename?: "valid_types_app_type_aggregate";
+			aggregate?:PartialObjects["valid_types_app_type_aggregate_fields"],
+			nodes?:PartialObjects["valid_types_app_type"][]
+	},
+	/** aggregate fields of "valid_types.app_type" */
+["valid_types_app_type_aggregate_fields"]: {
+		__typename?: "valid_types_app_type_aggregate_fields";
+			count?:number,
+			max?:PartialObjects["valid_types_app_type_max_fields"],
+			min?:PartialObjects["valid_types_app_type_min_fields"]
+	},
+	/** Boolean expression to filter rows from the table "valid_types.app_type". All fields are combined with a logical 'AND'. */
+["valid_types_app_type_bool_exp"]: {
+	_and?:PartialObjects["valid_types_app_type_bool_exp"][],
+	_not?:PartialObjects["valid_types_app_type_bool_exp"],
+	_or?:PartialObjects["valid_types_app_type_bool_exp"][],
+	id?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "valid_types.app_type" */
+["valid_types_app_type_constraint"]:valid_types_app_type_constraint,
+	/** input type for inserting data into table "valid_types.app_type" */
+["valid_types_app_type_insert_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+},
+	/** aggregate max on columns */
+["valid_types_app_type_max_fields"]: {
+		__typename?: "valid_types_app_type_max_fields";
+			/** customer, delivery, restaurant, admin */
+	id?:string
+	},
+	/** aggregate min on columns */
+["valid_types_app_type_min_fields"]: {
+		__typename?: "valid_types_app_type_min_fields";
+			/** customer, delivery, restaurant, admin */
+	id?:string
+	},
+	/** response of any mutation on the table "valid_types.app_type" */
+["valid_types_app_type_mutation_response"]: {
+		__typename?: "valid_types_app_type_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["valid_types_app_type"][]
+	},
+	/** on_conflict condition type for table "valid_types.app_type" */
+["valid_types_app_type_on_conflict"]: {
+	constraint:PartialObjects["valid_types_app_type_constraint"],
+	update_columns:PartialObjects["valid_types_app_type_update_column"][],
+	where?:PartialObjects["valid_types_app_type_bool_exp"]
+},
+	/** Ordering options when selecting data from "valid_types.app_type". */
+["valid_types_app_type_order_by"]: {
+	id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: valid_types.app_type */
+["valid_types_app_type_pk_columns_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id:string
+},
+	/** select columns of table "valid_types.app_type" */
+["valid_types_app_type_select_column"]:valid_types_app_type_select_column,
+	/** input type for updating data in table "valid_types.app_type" */
+["valid_types_app_type_set_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+},
+	/** Streaming cursor of the table "valid_types_app_type" */
+["valid_types_app_type_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["valid_types_app_type_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["valid_types_app_type_stream_cursor_value_input"]: {
+	/** customer, delivery, restaurant, admin */
+	id?:string
+},
+	/** update columns of table "valid_types.app_type" */
+["valid_types_app_type_update_column"]:valid_types_app_type_update_column,
+	["valid_types_app_type_updates"]: {
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["valid_types_app_type_set_input"],
+	/** filter the rows which have to be updated */
+	where:PartialObjects["valid_types_app_type_bool_exp"]
+},
+	/** columns and relationships of "valid_types.service_provider_type" */
+["valid_types_service_provider_type"]: {
+		__typename?: "valid_types_service_provider_type";
+			id?:string
+	},
+	/** aggregated selection of "valid_types.service_provider_type" */
+["valid_types_service_provider_type_aggregate"]: {
+		__typename?: "valid_types_service_provider_type_aggregate";
+			aggregate?:PartialObjects["valid_types_service_provider_type_aggregate_fields"],
+			nodes?:PartialObjects["valid_types_service_provider_type"][]
+	},
+	/** aggregate fields of "valid_types.service_provider_type" */
+["valid_types_service_provider_type_aggregate_fields"]: {
+		__typename?: "valid_types_service_provider_type_aggregate_fields";
+			count?:number,
+			max?:PartialObjects["valid_types_service_provider_type_max_fields"],
+			min?:PartialObjects["valid_types_service_provider_type_min_fields"]
+	},
+	/** Boolean expression to filter rows from the table
+"valid_types.service_provider_type". All fields are combined with a logical 'AND'. */
+["valid_types_service_provider_type_bool_exp"]: {
+	_and?:PartialObjects["valid_types_service_provider_type_bool_exp"][],
+	_not?:PartialObjects["valid_types_service_provider_type_bool_exp"],
+	_or?:PartialObjects["valid_types_service_provider_type_bool_exp"][],
+	id?:PartialObjects["String_comparison_exp"]
+},
+	/** unique or primary key constraints on table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_constraint"]:valid_types_service_provider_type_constraint,
+	/** input type for inserting data into table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_insert_input"]: {
+	id?:string
+},
+	/** aggregate max on columns */
+["valid_types_service_provider_type_max_fields"]: {
+		__typename?: "valid_types_service_provider_type_max_fields";
+			id?:string
+	},
+	/** aggregate min on columns */
+["valid_types_service_provider_type_min_fields"]: {
+		__typename?: "valid_types_service_provider_type_min_fields";
+			id?:string
+	},
+	/** response of any mutation on the table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_mutation_response"]: {
+		__typename?: "valid_types_service_provider_type_mutation_response";
+			/** number of rows affected by the mutation */
+	affected_rows?:number,
+			/** data from the rows affected by the mutation */
+	returning?:PartialObjects["valid_types_service_provider_type"][]
+	},
+	/** on_conflict condition type for table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_on_conflict"]: {
+	constraint:PartialObjects["valid_types_service_provider_type_constraint"],
+	update_columns:PartialObjects["valid_types_service_provider_type_update_column"][],
+	where?:PartialObjects["valid_types_service_provider_type_bool_exp"]
+},
+	/** Ordering options when selecting data from "valid_types.service_provider_type". */
+["valid_types_service_provider_type_order_by"]: {
+	id?:PartialObjects["order_by"]
+},
+	/** primary key columns input for table: valid_types.service_provider_type */
+["valid_types_service_provider_type_pk_columns_input"]: {
+	id:string
+},
+	/** select columns of table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_select_column"]:valid_types_service_provider_type_select_column,
+	/** input type for updating data in table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_set_input"]: {
+	id?:string
+},
+	/** Streaming cursor of the table "valid_types_service_provider_type" */
+["valid_types_service_provider_type_stream_cursor_input"]: {
+	/** Stream column input with initial value */
+	initial_value:PartialObjects["valid_types_service_provider_type_stream_cursor_value_input"],
+	/** cursor ordering */
+	ordering?:PartialObjects["cursor_ordering"]
+},
+	/** Initial value of the column from where the streaming should start */
+["valid_types_service_provider_type_stream_cursor_value_input"]: {
+	id?:string
+},
+	/** update columns of table "valid_types.service_provider_type" */
+["valid_types_service_provider_type_update_column"]:valid_types_service_provider_type_update_column,
+	["valid_types_service_provider_type_updates"]: {
+	/** sets the columns of the filtered rows to the given values */
+	_set?:PartialObjects["valid_types_service_provider_type_set_input"],
+	/** filter the rows which have to be updated */
+	where:PartialObjects["valid_types_service_provider_type_bool_exp"]
+}
   }
 
 
-
-/** columns and relationships of "app_type" */
-export type app_type = {
-	__typename?: "app_type",
-	/** customer, delivery, restaurant, admin */
-	id:string
-}
-
-/** aggregated selection of "app_type" */
-export type app_type_aggregate = {
-	__typename?: "app_type_aggregate",
-	aggregate?:app_type_aggregate_fields,
-	nodes:app_type[]
-}
-
-/** aggregate fields of "app_type" */
-export type app_type_aggregate_fields = {
-	__typename?: "app_type_aggregate_fields",
-	count:number,
-	max?:app_type_max_fields,
-	min?:app_type_min_fields
-}
-
-/** Boolean expression to filter rows from the table "app_type". All fields are combined with a logical 'AND'. */
-export type app_type_bool_exp = {
-		_and?:app_type_bool_exp[],
-	_not?:app_type_bool_exp,
-	_or?:app_type_bool_exp[],
-	id?:String_comparison_exp
-}
-
-/** unique or primary key constraints on table "app_type" */
-export enum app_type_constraint {
-	app_type_pkey = "app_type_pkey"
-}
-
-/** input type for inserting data into table "app_type" */
-export type app_type_insert_input = {
-		/** customer, delivery, restaurant, admin */
-	id?:string
-}
-
-/** aggregate max on columns */
-export type app_type_max_fields = {
-	__typename?: "app_type_max_fields",
-	/** customer, delivery, restaurant, admin */
-	id?:string
-}
-
-/** aggregate min on columns */
-export type app_type_min_fields = {
-	__typename?: "app_type_min_fields",
-	/** customer, delivery, restaurant, admin */
-	id?:string
-}
-
-/** response of any mutation on the table "app_type" */
-export type app_type_mutation_response = {
-	__typename?: "app_type_mutation_response",
-	/** number of rows affected by the mutation */
-	affected_rows:number,
-	/** data from the rows affected by the mutation */
-	returning:app_type[]
-}
-
-/** on_conflict condition type for table "app_type" */
-export type app_type_on_conflict = {
-		constraint:app_type_constraint,
-	update_columns:app_type_update_column[],
-	where?:app_type_bool_exp
-}
-
-/** Ordering options when selecting data from "app_type". */
-export type app_type_order_by = {
-		id?:order_by
-}
-
-/** primary key columns input for table: app_type */
-export type app_type_pk_columns_input = {
-		/** customer, delivery, restaurant, admin */
-	id:string
-}
-
-/** select columns of table "app_type" */
-export enum app_type_select_column {
-	id = "id"
-}
-
-/** input type for updating data in table "app_type" */
-export type app_type_set_input = {
-		/** customer, delivery, restaurant, admin */
-	id?:string
-}
-
-/** Streaming cursor of the table "app_type" */
-export type app_type_stream_cursor_input = {
-		/** Stream column input with initial value */
-	initial_value:app_type_stream_cursor_value_input,
-	/** cursor ordering */
-	ordering?:cursor_ordering
-}
-
-/** Initial value of the column from where the streaming should start */
-export type app_type_stream_cursor_value_input = {
-		/** customer, delivery, restaurant, admin */
-	id?:string
-}
-
-/** update columns of table "app_type" */
-export enum app_type_update_column {
-	id = "id"
-}
-
-export type app_type_updates = {
-		/** sets the columns of the filtered rows to the given values */
-	_set?:app_type_set_input,
-	/** filter the rows which have to be updated */
-	where:app_type_bool_exp
-}
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_comparison_exp = {
@@ -39220,33 +39107,6 @@ export type delivery_driver_aggregate = {
 	nodes:delivery_driver[]
 }
 
-export type delivery_driver_aggregate_bool_exp = {
-		bool_and?:delivery_driver_aggregate_bool_exp_bool_and,
-	bool_or?:delivery_driver_aggregate_bool_exp_bool_or,
-	count?:delivery_driver_aggregate_bool_exp_count
-}
-
-export type delivery_driver_aggregate_bool_exp_bool_and = {
-		arguments:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns,
-	distinct?:boolean,
-	filter?:delivery_driver_bool_exp,
-	predicate:Boolean_comparison_exp
-}
-
-export type delivery_driver_aggregate_bool_exp_bool_or = {
-		arguments:delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns,
-	distinct?:boolean,
-	filter?:delivery_driver_bool_exp,
-	predicate:Boolean_comparison_exp
-}
-
-export type delivery_driver_aggregate_bool_exp_count = {
-		arguments?:delivery_driver_select_column[],
-	distinct?:boolean,
-	filter?:delivery_driver_bool_exp,
-	predicate:Int_comparison_exp
-}
-
 /** aggregate fields of "delivery.driver" */
 export type delivery_driver_aggregate_fields = {
 	__typename?: "delivery_driver_aggregate_fields",
@@ -39263,41 +39123,12 @@ export type delivery_driver_aggregate_fields = {
 	variance?:delivery_driver_variance_fields
 }
 
-/** order by aggregate values of table "delivery.driver" */
-export type delivery_driver_aggregate_order_by = {
-		avg?:delivery_driver_avg_order_by,
-	count?:order_by,
-	max?:delivery_driver_max_order_by,
-	min?:delivery_driver_min_order_by,
-	stddev?:delivery_driver_stddev_order_by,
-	stddev_pop?:delivery_driver_stddev_pop_order_by,
-	stddev_samp?:delivery_driver_stddev_samp_order_by,
-	sum?:delivery_driver_sum_order_by,
-	var_pop?:delivery_driver_var_pop_order_by,
-	var_samp?:delivery_driver_var_samp_order_by,
-	variance?:delivery_driver_variance_order_by
-}
-
-/** input type for inserting array relation for remote table "delivery.driver" */
-export type delivery_driver_arr_rel_insert_input = {
-		data:delivery_driver_insert_input[],
-	/** upsert condition */
-	on_conflict?:delivery_driver_on_conflict
-}
-
 /** aggregate avg on columns */
 export type delivery_driver_avg_fields = {
 	__typename?: "delivery_driver_avg_fields",
 	delivery_company_id?:number,
 	id?:number,
 	user_id?:number
-}
-
-/** order by avg() on columns of table "delivery.driver" */
-export type delivery_driver_avg_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
 }
 
 /** Boolean expression to filter rows from the table "delivery.driver". All fields are combined with a logical 'AND'. */
@@ -39376,21 +39207,6 @@ export type delivery_driver_max_fields = {
 	user_id?:number
 }
 
-/** order by max() on columns of table "delivery.driver" */
-export type delivery_driver_max_order_by = {
-		app_type_id?:order_by,
-	app_version?:order_by,
-	delivery_company_id?:order_by,
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:order_by,
-	/** Just for relationship */
-	delivery_driver_type?:order_by,
-	id?:order_by,
-	/** awaiting_approval, authorized, banned */
-	status?:order_by,
-	user_id?:order_by
-}
-
 /** aggregate min on columns */
 export type delivery_driver_min_fields = {
 	__typename?: "delivery_driver_min_fields",
@@ -39405,21 +39221,6 @@ export type delivery_driver_min_fields = {
 	/** awaiting_approval, authorized, banned */
 	status?:string,
 	user_id?:number
-}
-
-/** order by min() on columns of table "delivery.driver" */
-export type delivery_driver_min_order_by = {
-		app_type_id?:order_by,
-	app_version?:order_by,
-	delivery_company_id?:order_by,
-	/** restaurant,laundry,delivery_company */
-	delivery_company_type?:order_by,
-	/** Just for relationship */
-	delivery_driver_type?:order_by,
-	id?:order_by,
-	/** awaiting_approval, authorized, banned */
-	status?:order_by,
-	user_id?:order_by
 }
 
 /** response of any mutation on the table "delivery.driver" */
@@ -39484,16 +39285,6 @@ export enum delivery_driver_select_column {
 	user_id = "user_id"
 }
 
-/** select "delivery_driver_aggregate_bool_exp_bool_and_arguments_columns" columns of table "delivery.driver" */
-export enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns {
-	online = "online"
-}
-
-/** select "delivery_driver_aggregate_bool_exp_bool_or_arguments_columns" columns of table "delivery.driver" */
-export enum delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns {
-	online = "online"
-}
-
 /** input type for updating data in table "delivery.driver" */
 export type delivery_driver_set_input = {
 		app_type_id?:string,
@@ -39519,13 +39310,6 @@ export type delivery_driver_stddev_fields = {
 	user_id?:number
 }
 
-/** order by stddev() on columns of table "delivery.driver" */
-export type delivery_driver_stddev_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
-}
-
 /** aggregate stddev_pop on columns */
 export type delivery_driver_stddev_pop_fields = {
 	__typename?: "delivery_driver_stddev_pop_fields",
@@ -39534,26 +39318,12 @@ export type delivery_driver_stddev_pop_fields = {
 	user_id?:number
 }
 
-/** order by stddev_pop() on columns of table "delivery.driver" */
-export type delivery_driver_stddev_pop_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
-}
-
 /** aggregate stddev_samp on columns */
 export type delivery_driver_stddev_samp_fields = {
 	__typename?: "delivery_driver_stddev_samp_fields",
 	delivery_company_id?:number,
 	id?:number,
 	user_id?:number
-}
-
-/** order by stddev_samp() on columns of table "delivery.driver" */
-export type delivery_driver_stddev_samp_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
 }
 
 /** Streaming cursor of the table "delivery_driver" */
@@ -39589,13 +39359,6 @@ export type delivery_driver_sum_fields = {
 	user_id?:number
 }
 
-/** order by sum() on columns of table "delivery.driver" */
-export type delivery_driver_sum_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
-}
-
 /** update columns of table "delivery.driver" */
 export enum delivery_driver_update_column {
 	app_type_id = "app_type_id",
@@ -39627,13 +39390,6 @@ export type delivery_driver_var_pop_fields = {
 	user_id?:number
 }
 
-/** order by var_pop() on columns of table "delivery.driver" */
-export type delivery_driver_var_pop_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
-}
-
 /** aggregate var_samp on columns */
 export type delivery_driver_var_samp_fields = {
 	__typename?: "delivery_driver_var_samp_fields",
@@ -39642,26 +39398,12 @@ export type delivery_driver_var_samp_fields = {
 	user_id?:number
 }
 
-/** order by var_samp() on columns of table "delivery.driver" */
-export type delivery_driver_var_samp_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
-}
-
 /** aggregate variance on columns */
 export type delivery_driver_variance_fields = {
 	__typename?: "delivery_driver_variance_fields",
 	delivery_company_id?:number,
 	id?:number,
 	user_id?:number
-}
-
-/** order by variance() on columns of table "delivery.driver" */
-export type delivery_driver_variance_order_by = {
-		delivery_company_id?:order_by,
-	id?:order_by,
-	user_id?:order_by
 }
 
 export type delivery_get_delivery_companies_args = {
@@ -44615,10 +44357,6 @@ export type money_comparison_exp = {
 /** mutation root */
 export type mutation_root = {
 	__typename?: "mutation_root",
-	/** delete data from the table: "app_type" */
-	delete_app_type?:app_type_mutation_response,
-	/** delete single row from the table: "app_type" */
-	delete_app_type_by_pk?:app_type,
 	/** delete data from the table: "chat" */
 	delete_chat?:chat_mutation_response,
 	/** delete single row from the table: "chat" */
@@ -44819,10 +44557,14 @@ export type mutation_root = {
 	delete_user?:user_mutation_response,
 	/** delete single row from the table: "user" */
 	delete_user_by_pk?:user,
-	/** insert data into the table: "app_type" */
-	insert_app_type?:app_type_mutation_response,
-	/** insert a single row into the table: "app_type" */
-	insert_app_type_one?:app_type,
+	/** delete data from the table: "valid_types.app_type" */
+	delete_valid_types_app_type?:valid_types_app_type_mutation_response,
+	/** delete single row from the table: "valid_types.app_type" */
+	delete_valid_types_app_type_by_pk?:valid_types_app_type,
+	/** delete data from the table: "valid_types.service_provider_type" */
+	delete_valid_types_service_provider_type?:valid_types_service_provider_type_mutation_response,
+	/** delete single row from the table: "valid_types.service_provider_type" */
+	delete_valid_types_service_provider_type_by_pk?:valid_types_service_provider_type,
 	/** insert data into the table: "chat" */
 	insert_chat?:chat_mutation_response,
 	/** insert a single row into the table: "chat" */
@@ -45027,12 +44769,14 @@ export type mutation_root = {
 	insert_user?:user_mutation_response,
 	/** insert a single row into the table: "user" */
 	insert_user_one?:user,
-	/** update data of the table: "app_type" */
-	update_app_type?:app_type_mutation_response,
-	/** update single row of the table: "app_type" */
-	update_app_type_by_pk?:app_type,
-	/** update multiples rows of table: "app_type" */
-	update_app_type_many?:(app_type_mutation_response | undefined)[],
+	/** insert data into the table: "valid_types.app_type" */
+	insert_valid_types_app_type?:valid_types_app_type_mutation_response,
+	/** insert a single row into the table: "valid_types.app_type" */
+	insert_valid_types_app_type_one?:valid_types_app_type,
+	/** insert data into the table: "valid_types.service_provider_type" */
+	insert_valid_types_service_provider_type?:valid_types_service_provider_type_mutation_response,
+	/** insert a single row into the table: "valid_types.service_provider_type" */
+	insert_valid_types_service_provider_type_one?:valid_types_service_provider_type,
 	/** update data of the table: "chat" */
 	update_chat?:chat_mutation_response,
 	/** update single row of the table: "chat" */
@@ -45334,7 +45078,19 @@ export type mutation_root = {
 	/** update single row of the table: "user" */
 	update_user_by_pk?:user,
 	/** update multiples rows of table: "user" */
-	update_user_many?:(user_mutation_response | undefined)[]
+	update_user_many?:(user_mutation_response | undefined)[],
+	/** update data of the table: "valid_types.app_type" */
+	update_valid_types_app_type?:valid_types_app_type_mutation_response,
+	/** update single row of the table: "valid_types.app_type" */
+	update_valid_types_app_type_by_pk?:valid_types_app_type,
+	/** update multiples rows of table: "valid_types.app_type" */
+	update_valid_types_app_type_many?:(valid_types_app_type_mutation_response | undefined)[],
+	/** update data of the table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type?:valid_types_service_provider_type_mutation_response,
+	/** update single row of the table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type_by_pk?:valid_types_service_provider_type,
+	/** update multiples rows of table: "valid_types.service_provider_type" */
+	update_valid_types_service_provider_type_many?:(valid_types_service_provider_type_mutation_response | undefined)[]
 }
 
 /** columns and relationships of "notification_info" */
@@ -45579,12 +45335,6 @@ export enum order_by {
 
 export type query_root = {
 	__typename?: "query_root",
-	/** fetch data from the table: "app_type" */
-	app_type:app_type[],
-	/** fetch aggregated fields from the table: "app_type" */
-	app_type_aggregate:app_type_aggregate,
-	/** fetch data from the table: "app_type" using primary key columns */
-	app_type_by_pk?:app_type,
 	/** fetch data from the table: "chat" */
 	chat:chat[],
 	/** fetch aggregated fields from the table: "chat" */
@@ -45906,7 +45656,19 @@ export type query_root = {
 	/** fetch aggregated fields from the table: "user" */
 	user_aggregate:user_aggregate,
 	/** fetch data from the table: "user" using primary key columns */
-	user_by_pk?:user
+	user_by_pk?:user,
+	/** fetch data from the table: "valid_types.app_type" */
+	valid_types_app_type:valid_types_app_type[],
+	/** fetch aggregated fields from the table: "valid_types.app_type" */
+	valid_types_app_type_aggregate:valid_types_app_type_aggregate,
+	/** fetch data from the table: "valid_types.app_type" using primary key columns */
+	valid_types_app_type_by_pk?:valid_types_app_type,
+	/** fetch data from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type:valid_types_service_provider_type[],
+	/** fetch aggregated fields from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_aggregate:valid_types_service_provider_type_aggregate,
+	/** fetch data from the table: "valid_types.service_provider_type" using primary key columns */
+	valid_types_service_provider_type_by_pk?:valid_types_service_provider_type
 }
 
 /** columns and relationships of "restaurant.cart" */
@@ -52352,10 +52114,6 @@ export type service_provider_details = {
 	creation_time:timestamptz,
 	/** An object relationship */
 	delivery_company?:delivery_company,
-	/** An array relationship */
-	delivery_drivers:delivery_driver[],
-	/** An aggregate relationship */
-	delivery_drivers_aggregate:delivery_driver_aggregate,
 	/** An object relationship */
 	description?:translation,
 	description_id?:number,
@@ -52374,6 +52132,10 @@ export type service_provider_details = {
 	phone_number?:string,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
+	/** An array relationship */
+	reviews:review[],
+	/** An aggregate relationship */
+	reviews_aggregate:review_aggregate,
 	schedule?:jsonb,
 	/** An object relationship */
 	service_link?:service_provider_service_link,
@@ -52434,8 +52196,6 @@ export type service_provider_details_bool_exp = {
 	approved?:Boolean_comparison_exp,
 	creation_time?:timestamptz_comparison_exp,
 	delivery_company?:delivery_company_bool_exp,
-	delivery_drivers?:delivery_driver_bool_exp,
-	delivery_drivers_aggregate?:delivery_driver_aggregate_bool_exp,
 	description?:translation_bool_exp,
 	description_id?:Int_comparison_exp,
 	firebase_id?:String_comparison_exp,
@@ -52449,6 +52209,8 @@ export type service_provider_details_bool_exp = {
 	open_status?:String_comparison_exp,
 	phone_number?:String_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
+	reviews?:review_bool_exp,
+	reviews_aggregate?:review_aggregate_bool_exp,
 	schedule?:jsonb_comparison_exp,
 	service_link?:service_provider_service_link_bool_exp,
 	service_link_id?:Int_comparison_exp,
@@ -52506,7 +52268,6 @@ export type service_provider_details_insert_input = {
 	approved?:boolean,
 	creation_time?:timestamptz,
 	delivery_company?:delivery_company_obj_rel_insert_input,
-	delivery_drivers?:delivery_driver_arr_rel_insert_input,
 	description?:translation_obj_rel_insert_input,
 	description_id?:number,
 	firebase_id?:string,
@@ -52521,6 +52282,7 @@ export type service_provider_details_insert_input = {
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
+	reviews?:review_arr_rel_insert_input,
 	schedule?:jsonb,
 	service_link?:service_provider_service_link_obj_rel_insert_input,
 	service_link_id?:number,
@@ -52592,7 +52354,6 @@ export type service_provider_details_order_by = {
 	approved?:order_by,
 	creation_time?:order_by,
 	delivery_company?:delivery_company_order_by,
-	delivery_drivers_aggregate?:delivery_driver_aggregate_order_by,
 	description?:translation_order_by,
 	description_id?:order_by,
 	firebase_id?:order_by,
@@ -52606,6 +52367,7 @@ export type service_provider_details_order_by = {
 	open_status?:order_by,
 	phone_number?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
+	reviews_aggregate?:review_aggregate_order_by,
 	schedule?:order_by,
 	service_link?:service_provider_service_link_order_by,
 	service_link_id?:order_by,
@@ -54429,14 +54191,6 @@ export type String_comparison_exp = {
 
 export type subscription_root = {
 	__typename?: "subscription_root",
-	/** fetch data from the table: "app_type" */
-	app_type:app_type[],
-	/** fetch aggregated fields from the table: "app_type" */
-	app_type_aggregate:app_type_aggregate,
-	/** fetch data from the table: "app_type" using primary key columns */
-	app_type_by_pk?:app_type,
-	/** fetch data from the table in a streaming manner: "app_type" */
-	app_type_stream:app_type[],
 	/** fetch data from the table: "chat" */
 	chat:chat[],
 	/** fetch aggregated fields from the table: "chat" */
@@ -54860,7 +54614,23 @@ export type subscription_root = {
 	/** fetch data from the table: "user" using primary key columns */
 	user_by_pk?:user,
 	/** fetch data from the table in a streaming manner: "user" */
-	user_stream:user[]
+	user_stream:user[],
+	/** fetch data from the table: "valid_types.app_type" */
+	valid_types_app_type:valid_types_app_type[],
+	/** fetch aggregated fields from the table: "valid_types.app_type" */
+	valid_types_app_type_aggregate:valid_types_app_type_aggregate,
+	/** fetch data from the table: "valid_types.app_type" using primary key columns */
+	valid_types_app_type_by_pk?:valid_types_app_type,
+	/** fetch data from the table in a streaming manner: "valid_types.app_type" */
+	valid_types_app_type_stream:valid_types_app_type[],
+	/** fetch data from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type:valid_types_service_provider_type[],
+	/** fetch aggregated fields from the table: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_aggregate:valid_types_service_provider_type_aggregate,
+	/** fetch data from the table: "valid_types.service_provider_type" using primary key columns */
+	valid_types_service_provider_type_by_pk?:valid_types_service_provider_type,
+	/** fetch data from the table in a streaming manner: "valid_types.service_provider_type" */
+	valid_types_service_provider_type_stream:valid_types_service_provider_type[]
 }
 
 export type timestamptz = any
@@ -55680,6 +55450,238 @@ export type user_variance_fields = {
 	id?:number
 }
 
+/** columns and relationships of "valid_types.app_type" */
+export type valid_types_app_type = {
+	__typename?: "valid_types_app_type",
+	/** customer, delivery, restaurant, admin */
+	id:string
+}
+
+/** aggregated selection of "valid_types.app_type" */
+export type valid_types_app_type_aggregate = {
+	__typename?: "valid_types_app_type_aggregate",
+	aggregate?:valid_types_app_type_aggregate_fields,
+	nodes:valid_types_app_type[]
+}
+
+/** aggregate fields of "valid_types.app_type" */
+export type valid_types_app_type_aggregate_fields = {
+	__typename?: "valid_types_app_type_aggregate_fields",
+	count:number,
+	max?:valid_types_app_type_max_fields,
+	min?:valid_types_app_type_min_fields
+}
+
+/** Boolean expression to filter rows from the table "valid_types.app_type". All fields are combined with a logical 'AND'. */
+export type valid_types_app_type_bool_exp = {
+		_and?:valid_types_app_type_bool_exp[],
+	_not?:valid_types_app_type_bool_exp,
+	_or?:valid_types_app_type_bool_exp[],
+	id?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "valid_types.app_type" */
+export enum valid_types_app_type_constraint {
+	app_type_pkey = "app_type_pkey"
+}
+
+/** input type for inserting data into table "valid_types.app_type" */
+export type valid_types_app_type_insert_input = {
+		/** customer, delivery, restaurant, admin */
+	id?:string
+}
+
+/** aggregate max on columns */
+export type valid_types_app_type_max_fields = {
+	__typename?: "valid_types_app_type_max_fields",
+	/** customer, delivery, restaurant, admin */
+	id?:string
+}
+
+/** aggregate min on columns */
+export type valid_types_app_type_min_fields = {
+	__typename?: "valid_types_app_type_min_fields",
+	/** customer, delivery, restaurant, admin */
+	id?:string
+}
+
+/** response of any mutation on the table "valid_types.app_type" */
+export type valid_types_app_type_mutation_response = {
+	__typename?: "valid_types_app_type_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:valid_types_app_type[]
+}
+
+/** on_conflict condition type for table "valid_types.app_type" */
+export type valid_types_app_type_on_conflict = {
+		constraint:valid_types_app_type_constraint,
+	update_columns:valid_types_app_type_update_column[],
+	where?:valid_types_app_type_bool_exp
+}
+
+/** Ordering options when selecting data from "valid_types.app_type". */
+export type valid_types_app_type_order_by = {
+		id?:order_by
+}
+
+/** primary key columns input for table: valid_types.app_type */
+export type valid_types_app_type_pk_columns_input = {
+		/** customer, delivery, restaurant, admin */
+	id:string
+}
+
+/** select columns of table "valid_types.app_type" */
+export enum valid_types_app_type_select_column {
+	id = "id"
+}
+
+/** input type for updating data in table "valid_types.app_type" */
+export type valid_types_app_type_set_input = {
+		/** customer, delivery, restaurant, admin */
+	id?:string
+}
+
+/** Streaming cursor of the table "valid_types_app_type" */
+export type valid_types_app_type_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:valid_types_app_type_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type valid_types_app_type_stream_cursor_value_input = {
+		/** customer, delivery, restaurant, admin */
+	id?:string
+}
+
+/** update columns of table "valid_types.app_type" */
+export enum valid_types_app_type_update_column {
+	id = "id"
+}
+
+export type valid_types_app_type_updates = {
+		/** sets the columns of the filtered rows to the given values */
+	_set?:valid_types_app_type_set_input,
+	/** filter the rows which have to be updated */
+	where:valid_types_app_type_bool_exp
+}
+
+/** columns and relationships of "valid_types.service_provider_type" */
+export type valid_types_service_provider_type = {
+	__typename?: "valid_types_service_provider_type",
+	id:string
+}
+
+/** aggregated selection of "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_aggregate = {
+	__typename?: "valid_types_service_provider_type_aggregate",
+	aggregate?:valid_types_service_provider_type_aggregate_fields,
+	nodes:valid_types_service_provider_type[]
+}
+
+/** aggregate fields of "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_aggregate_fields = {
+	__typename?: "valid_types_service_provider_type_aggregate_fields",
+	count:number,
+	max?:valid_types_service_provider_type_max_fields,
+	min?:valid_types_service_provider_type_min_fields
+}
+
+/** Boolean expression to filter rows from the table
+"valid_types.service_provider_type". All fields are combined with a logical 'AND'. */
+export type valid_types_service_provider_type_bool_exp = {
+		_and?:valid_types_service_provider_type_bool_exp[],
+	_not?:valid_types_service_provider_type_bool_exp,
+	_or?:valid_types_service_provider_type_bool_exp[],
+	id?:String_comparison_exp
+}
+
+/** unique or primary key constraints on table "valid_types.service_provider_type" */
+export enum valid_types_service_provider_type_constraint {
+	service_provider_type_pkey = "service_provider_type_pkey"
+}
+
+/** input type for inserting data into table "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_insert_input = {
+		id?:string
+}
+
+/** aggregate max on columns */
+export type valid_types_service_provider_type_max_fields = {
+	__typename?: "valid_types_service_provider_type_max_fields",
+	id?:string
+}
+
+/** aggregate min on columns */
+export type valid_types_service_provider_type_min_fields = {
+	__typename?: "valid_types_service_provider_type_min_fields",
+	id?:string
+}
+
+/** response of any mutation on the table "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_mutation_response = {
+	__typename?: "valid_types_service_provider_type_mutation_response",
+	/** number of rows affected by the mutation */
+	affected_rows:number,
+	/** data from the rows affected by the mutation */
+	returning:valid_types_service_provider_type[]
+}
+
+/** on_conflict condition type for table "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_on_conflict = {
+		constraint:valid_types_service_provider_type_constraint,
+	update_columns:valid_types_service_provider_type_update_column[],
+	where?:valid_types_service_provider_type_bool_exp
+}
+
+/** Ordering options when selecting data from "valid_types.service_provider_type". */
+export type valid_types_service_provider_type_order_by = {
+		id?:order_by
+}
+
+/** primary key columns input for table: valid_types.service_provider_type */
+export type valid_types_service_provider_type_pk_columns_input = {
+		id:string
+}
+
+/** select columns of table "valid_types.service_provider_type" */
+export enum valid_types_service_provider_type_select_column {
+	id = "id"
+}
+
+/** input type for updating data in table "valid_types.service_provider_type" */
+export type valid_types_service_provider_type_set_input = {
+		id?:string
+}
+
+/** Streaming cursor of the table "valid_types_service_provider_type" */
+export type valid_types_service_provider_type_stream_cursor_input = {
+		/** Stream column input with initial value */
+	initial_value:valid_types_service_provider_type_stream_cursor_value_input,
+	/** cursor ordering */
+	ordering?:cursor_ordering
+}
+
+/** Initial value of the column from where the streaming should start */
+export type valid_types_service_provider_type_stream_cursor_value_input = {
+		id?:string
+}
+
+/** update columns of table "valid_types.service_provider_type" */
+export enum valid_types_service_provider_type_update_column {
+	id = "id"
+}
+
+export type valid_types_service_provider_type_updates = {
+		/** sets the columns of the filtered rows to the given values */
+	_set?:valid_types_service_provider_type_set_input,
+	/** filter the rows which have to be updated */
+	where:valid_types_service_provider_type_bool_exp
+}
+
 export const AllTypesProps: Record<string,any> = {
 	cached:{
 		ttl:{
@@ -55697,139 +55699,6 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
-		}
-	},
-	app_type_aggregate_fields:{
-		count:{
-			columns:{
-				type:"app_type_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			distinct:{
-				type:"Boolean",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		}
-	},
-	app_type_bool_exp:{
-		_and:{
-			type:"app_type_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		_not:{
-			type:"app_type_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		_or:{
-			type:"app_type_bool_exp",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		id:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_constraint: "enum",
-	app_type_insert_input:{
-		id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_on_conflict:{
-		constraint:{
-			type:"app_type_constraint",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		update_columns:{
-			type:"app_type_update_column",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		where:{
-			type:"app_type_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_order_by:{
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_pk_columns_input:{
-		id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	app_type_select_column: "enum",
-	app_type_set_input:{
-		id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_stream_cursor_input:{
-		initial_value:{
-			type:"app_type_stream_cursor_value_input",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		ordering:{
-			type:"cursor_ordering",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_stream_cursor_value_input:{
-		id:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	app_type_update_column: "enum",
-	app_type_updates:{
-		_set:{
-			type:"app_type_set_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		where:{
-			type:"app_type_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
 		}
 	},
 	Boolean_comparison_exp:{
@@ -62173,104 +62042,6 @@ export const AllTypesProps: Record<string,any> = {
 			}
 		}
 	},
-	delivery_driver_aggregate_bool_exp:{
-		bool_and:{
-			type:"delivery_driver_aggregate_bool_exp_bool_and",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		bool_or:{
-			type:"delivery_driver_aggregate_bool_exp_bool_or",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		count:{
-			type:"delivery_driver_aggregate_bool_exp_count",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_aggregate_bool_exp_bool_and:{
-		arguments:{
-			type:"delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		distinct:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		filter:{
-			type:"delivery_driver_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		predicate:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	delivery_driver_aggregate_bool_exp_bool_or:{
-		arguments:{
-			type:"delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns",
-			array:false,
-			arrayRequired:false,
-			required:true
-		},
-		distinct:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		filter:{
-			type:"delivery_driver_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		predicate:{
-			type:"Boolean_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
-	delivery_driver_aggregate_bool_exp_count:{
-		arguments:{
-			type:"delivery_driver_select_column",
-			array:true,
-			arrayRequired:false,
-			required:true
-		},
-		distinct:{
-			type:"Boolean",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		filter:{
-			type:"delivery_driver_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		predicate:{
-			type:"Int_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:true
-		}
-	},
 	delivery_driver_aggregate_fields:{
 		count:{
 			columns:{
@@ -62285,108 +62056,6 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
-		}
-	},
-	delivery_driver_aggregate_order_by:{
-		avg:{
-			type:"delivery_driver_avg_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		count:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		max:{
-			type:"delivery_driver_max_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		min:{
-			type:"delivery_driver_min_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stddev:{
-			type:"delivery_driver_stddev_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stddev_pop:{
-			type:"delivery_driver_stddev_pop_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		stddev_samp:{
-			type:"delivery_driver_stddev_samp_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		sum:{
-			type:"delivery_driver_sum_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		var_pop:{
-			type:"delivery_driver_var_pop_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		var_samp:{
-			type:"delivery_driver_var_samp_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		variance:{
-			type:"delivery_driver_variance_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_arr_rel_insert_input:{
-		data:{
-			type:"delivery_driver_insert_input",
-			array:true,
-			arrayRequired:true,
-			required:true
-		},
-		on_conflict:{
-			type:"delivery_driver_on_conflict",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_avg_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_driver_bool_exp:{
@@ -62630,106 +62299,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_driver_max_order_by:{
-		app_type_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		app_version:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_company_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_min_order_by:{
-		app_type_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		app_version:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_company_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		status:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
 	delivery_driver_obj_rel_insert_input:{
 		data:{
 			type:"delivery_driver_insert_input",
@@ -62871,8 +62440,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	delivery_driver_select_column: "enum",
-	delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_and_arguments_columns: "enum",
-	delivery_driver_select_column_delivery_driver_aggregate_bool_exp_bool_or_arguments_columns: "enum",
 	delivery_driver_set_input:{
 		app_type_id:{
 			type:"String",
@@ -62930,66 +62497,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		user_id:{
 			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_stddev_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_stddev_pop_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_stddev_samp_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -63071,26 +62578,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		}
 	},
-	delivery_driver_sum_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
 	delivery_driver_update_column: "enum",
 	delivery_driver_updates:{
 		_inc:{
@@ -63110,66 +62597,6 @@ export const AllTypesProps: Record<string,any> = {
 			array:false,
 			arrayRequired:false,
 			required:true
-		}
-	},
-	delivery_driver_var_pop_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_var_samp_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		}
-	},
-	delivery_driver_variance_order_by:{
-		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		user_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
 		}
 	},
 	delivery_get_delivery_companies_args:{
@@ -73312,22 +72739,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	mutation_root:{
-		delete_app_type:{
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		delete_app_type_by_pk:{
-			id:{
-				type:"String",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		delete_chat:{
 			where:{
 				type:"chat_bool_exp",
@@ -74140,32 +73551,36 @@ export const AllTypesProps: Record<string,any> = {
 				required:true
 			}
 		},
-		insert_app_type:{
-			objects:{
-				type:"app_type_insert_input",
-				array:true,
-				arrayRequired:true,
-				required:true
-			},
-			on_conflict:{
-				type:"app_type_on_conflict",
+		delete_valid_types_app_type:{
+			where:{
+				type:"valid_types_app_type_bool_exp",
 				array:false,
 				arrayRequired:false,
-				required:false
+				required:true
 			}
 		},
-		insert_app_type_one:{
-			object:{
-				type:"app_type_insert_input",
+		delete_valid_types_app_type_by_pk:{
+			id:{
+				type:"String",
 				array:false,
 				arrayRequired:false,
 				required:true
-			},
-			on_conflict:{
-				type:"app_type_on_conflict",
+			}
+		},
+		delete_valid_types_service_provider_type:{
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
 				array:false,
 				arrayRequired:false,
-				required:false
+				required:true
+			}
+		},
+		delete_valid_types_service_provider_type_by_pk:{
+			id:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
 			}
 		},
 		insert_chat:{
@@ -75572,40 +74987,60 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		update_app_type:{
-			_set:{
-				type:"app_type_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_app_type_by_pk:{
-			_set:{
-				type:"app_type_set_input",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			pk_columns:{
-				type:"app_type_pk_columns_input",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		update_app_type_many:{
-			updates:{
-				type:"app_type_updates",
+		insert_valid_types_app_type:{
+			objects:{
+				type:"valid_types_app_type_insert_input",
 				array:true,
 				arrayRequired:true,
 				required:true
+			},
+			on_conflict:{
+				type:"valid_types_app_type_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_valid_types_app_type_one:{
+			object:{
+				type:"valid_types_app_type_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"valid_types_app_type_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_valid_types_service_provider_type:{
+			objects:{
+				type:"valid_types_service_provider_type_insert_input",
+				array:true,
+				arrayRequired:true,
+				required:true
+			},
+			on_conflict:{
+				type:"valid_types_service_provider_type_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		insert_valid_types_service_provider_type_one:{
+			object:{
+				type:"valid_types_service_provider_type_insert_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			on_conflict:{
+				type:"valid_types_service_provider_type_on_conflict",
+				array:false,
+				arrayRequired:false,
+				required:false
 			}
 		},
 		update_chat:{
@@ -78531,6 +77966,78 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:true,
 				required:true
 			}
+		},
+		update_valid_types_app_type:{
+			_set:{
+				type:"valid_types_app_type_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_valid_types_app_type_by_pk:{
+			_set:{
+				type:"valid_types_app_type_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"valid_types_app_type_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_valid_types_app_type_many:{
+			updates:{
+				type:"valid_types_app_type_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
+		},
+		update_valid_types_service_provider_type:{
+			_set:{
+				type:"valid_types_service_provider_type_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_valid_types_service_provider_type_by_pk:{
+			_set:{
+				type:"valid_types_service_provider_type_set_input",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			pk_columns:{
+				type:"valid_types_service_provider_type_pk_columns_input",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		update_valid_types_service_provider_type_many:{
+			updates:{
+				type:"valid_types_service_provider_type_updates",
+				array:true,
+				arrayRequired:true,
+				required:true
+			}
 		}
 	},
 	notification_info_aggregate_fields:{
@@ -78822,78 +78329,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	order_by: "enum",
 	query_root:{
-		app_type:{
-			distinct_on:{
-				type:"app_type_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"app_type_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		app_type_aggregate:{
-			distinct_on:{
-				type:"app_type_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"app_type_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		app_type_by_pk:{
-			id:{
-				type:"String",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
 		chat:{
 			distinct_on:{
 				type:"chat_select_column",
@@ -82937,6 +82372,150 @@ export const AllTypesProps: Record<string,any> = {
 		user_by_pk:{
 			id:{
 				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		valid_types_app_type:{
+			distinct_on:{
+				type:"valid_types_app_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_app_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_app_type_aggregate:{
+			distinct_on:{
+				type:"valid_types_app_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_app_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_app_type_by_pk:{
+			id:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		valid_types_service_provider_type:{
+			distinct_on:{
+				type:"valid_types_service_provider_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_service_provider_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_service_provider_type_aggregate:{
+			distinct_on:{
+				type:"valid_types_service_provider_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_service_provider_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_service_provider_type_by_pk:{
+			id:{
+				type:"String",
 				array:false,
 				arrayRequired:false,
 				required:true
@@ -97048,73 +96627,73 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		delivery_drivers:{
-			distinct_on:{
-				type:"delivery_driver_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"delivery_driver_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"delivery_driver_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		delivery_drivers_aggregate:{
-			distinct_on:{
-				type:"delivery_driver_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"delivery_driver_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"delivery_driver_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		language:{
 			path:{
 				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		reviews_aggregate:{
+			distinct_on:{
+				type:"review_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"review_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"review_bool_exp",
 				array:false,
 				arrayRequired:false,
 				required:false
@@ -97208,18 +96787,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_drivers:{
-			type:"delivery_driver_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_drivers_aggregate:{
-			type:"delivery_driver_aggregate_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_bool_exp",
 			array:false,
@@ -97294,6 +96861,18 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -97453,12 +97032,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_drivers:{
-			type:"delivery_driver_arr_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_obj_rel_insert_input",
 			array:false,
@@ -97533,6 +97106,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_obj_rel_insert_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews:{
+			type:"review_arr_rel_insert_input",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -97633,12 +97212,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_drivers_aggregate:{
-			type:"delivery_driver_aggregate_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		description:{
 			type:"translation_order_by",
 			array:false,
@@ -97713,6 +97286,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		reviews_aggregate:{
+			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -100525,98 +100104,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	subscription_root:{
-		app_type:{
-			distinct_on:{
-				type:"app_type_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"app_type_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		app_type_aggregate:{
-			distinct_on:{
-				type:"app_type_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"app_type_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		app_type_by_pk:{
-			id:{
-				type:"String",
-				array:false,
-				arrayRequired:false,
-				required:true
-			}
-		},
-		app_type_stream:{
-			batch_size:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:true
-			},
-			cursor:{
-				type:"app_type_stream_cursor_input",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"app_type_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		chat:{
 			distinct_on:{
 				type:"chat_select_column",
@@ -105684,6 +105171,190 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:false
 			}
+		},
+		valid_types_app_type:{
+			distinct_on:{
+				type:"valid_types_app_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_app_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_app_type_aggregate:{
+			distinct_on:{
+				type:"valid_types_app_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_app_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_app_type_by_pk:{
+			id:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		valid_types_app_type_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"valid_types_app_type_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_app_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_service_provider_type:{
+			distinct_on:{
+				type:"valid_types_service_provider_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_service_provider_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_service_provider_type_aggregate:{
+			distinct_on:{
+				type:"valid_types_service_provider_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			limit:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			offset:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:false
+			},
+			order_by:{
+				type:"valid_types_service_provider_type_order_by",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		},
+		valid_types_service_provider_type_by_pk:{
+			id:{
+				type:"String",
+				array:false,
+				arrayRequired:false,
+				required:true
+			}
+		},
+		valid_types_service_provider_type_stream:{
+			batch_size:{
+				type:"Int",
+				array:false,
+				arrayRequired:false,
+				required:true
+			},
+			cursor:{
+				type:"valid_types_service_provider_type_stream_cursor_input",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			where:{
+				type:"valid_types_service_provider_type_bool_exp",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
 		}
 	},
 	timestamptz: "String",
@@ -107031,32 +106702,276 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		}
+	},
+	valid_types_app_type_aggregate_fields:{
+		count:{
+			columns:{
+				type:"valid_types_app_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	valid_types_app_type_bool_exp:{
+		_and:{
+			type:"valid_types_app_type_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"valid_types_app_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"valid_types_app_type_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_constraint: "enum",
+	valid_types_app_type_insert_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_on_conflict:{
+		constraint:{
+			type:"valid_types_app_type_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"valid_types_app_type_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"valid_types_app_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_pk_columns_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	valid_types_app_type_select_column: "enum",
+	valid_types_app_type_set_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_stream_cursor_input:{
+		initial_value:{
+			type:"valid_types_app_type_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_stream_cursor_value_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_app_type_update_column: "enum",
+	valid_types_app_type_updates:{
+		_set:{
+			type:"valid_types_app_type_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"valid_types_app_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	valid_types_service_provider_type_aggregate_fields:{
+		count:{
+			columns:{
+				type:"valid_types_service_provider_type_select_column",
+				array:true,
+				arrayRequired:false,
+				required:true
+			},
+			distinct:{
+				type:"Boolean",
+				array:false,
+				arrayRequired:false,
+				required:false
+			}
+		}
+	},
+	valid_types_service_provider_type_bool_exp:{
+		_and:{
+			type:"valid_types_service_provider_type_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		_not:{
+			type:"valid_types_service_provider_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		_or:{
+			type:"valid_types_service_provider_type_bool_exp",
+			array:true,
+			arrayRequired:false,
+			required:true
+		},
+		id:{
+			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_constraint: "enum",
+	valid_types_service_provider_type_insert_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_on_conflict:{
+		constraint:{
+			type:"valid_types_service_provider_type_constraint",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		update_columns:{
+			type:"valid_types_service_provider_type_update_column",
+			array:true,
+			arrayRequired:true,
+			required:true
+		},
+		where:{
+			type:"valid_types_service_provider_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_order_by:{
+		id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_pk_columns_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
+	},
+	valid_types_service_provider_type_select_column: "enum",
+	valid_types_service_provider_type_set_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_stream_cursor_input:{
+		initial_value:{
+			type:"valid_types_service_provider_type_stream_cursor_value_input",
+			array:false,
+			arrayRequired:false,
+			required:true
+		},
+		ordering:{
+			type:"cursor_ordering",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_stream_cursor_value_input:{
+		id:{
+			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		}
+	},
+	valid_types_service_provider_type_update_column: "enum",
+	valid_types_service_provider_type_updates:{
+		_set:{
+			type:"valid_types_service_provider_type_set_input",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		where:{
+			type:"valid_types_service_provider_type_bool_exp",
+			array:false,
+			arrayRequired:false,
+			required:true
+		}
 	}
 }
 
 export const ReturnTypes: Record<string,any> = {
-	app_type:{
-		id:"String"
-	},
-	app_type_aggregate:{
-		aggregate:"app_type_aggregate_fields",
-		nodes:"app_type"
-	},
-	app_type_aggregate_fields:{
-		count:"Int",
-		max:"app_type_max_fields",
-		min:"app_type_min_fields"
-	},
-	app_type_max_fields:{
-		id:"String"
-	},
-	app_type_min_fields:{
-		id:"String"
-	},
-	app_type_mutation_response:{
-		affected_rows:"Int",
-		returning:"app_type"
-	},
 	chat:{
 		chat_info:"jsonb",
 		chat_participants:"chat_participant",
@@ -109346,8 +109261,6 @@ export const ReturnTypes: Record<string,any> = {
 		returning:"mez_json"
 	},
 	mutation_root:{
-		delete_app_type:"app_type_mutation_response",
-		delete_app_type_by_pk:"app_type",
 		delete_chat:"chat_mutation_response",
 		delete_chat_by_pk:"chat",
 		delete_chat_participant:"chat_participant_mutation_response",
@@ -109448,8 +109361,10 @@ export const ReturnTypes: Record<string,any> = {
 		delete_translation_value_by_pk:"translation_value",
 		delete_user:"user_mutation_response",
 		delete_user_by_pk:"user",
-		insert_app_type:"app_type_mutation_response",
-		insert_app_type_one:"app_type",
+		delete_valid_types_app_type:"valid_types_app_type_mutation_response",
+		delete_valid_types_app_type_by_pk:"valid_types_app_type",
+		delete_valid_types_service_provider_type:"valid_types_service_provider_type_mutation_response",
+		delete_valid_types_service_provider_type_by_pk:"valid_types_service_provider_type",
 		insert_chat:"chat_mutation_response",
 		insert_chat_one:"chat",
 		insert_chat_participant:"chat_participant_mutation_response",
@@ -109552,9 +109467,10 @@ export const ReturnTypes: Record<string,any> = {
 		insert_translation_value_one:"translation_value",
 		insert_user:"user_mutation_response",
 		insert_user_one:"user",
-		update_app_type:"app_type_mutation_response",
-		update_app_type_by_pk:"app_type",
-		update_app_type_many:"app_type_mutation_response",
+		insert_valid_types_app_type:"valid_types_app_type_mutation_response",
+		insert_valid_types_app_type_one:"valid_types_app_type",
+		insert_valid_types_service_provider_type:"valid_types_service_provider_type_mutation_response",
+		insert_valid_types_service_provider_type_one:"valid_types_service_provider_type",
 		update_chat:"chat_mutation_response",
 		update_chat_by_pk:"chat",
 		update_chat_many:"chat_mutation_response",
@@ -109705,7 +109621,13 @@ export const ReturnTypes: Record<string,any> = {
 		update_translation_value_many:"translation_value_mutation_response",
 		update_user:"user_mutation_response",
 		update_user_by_pk:"user",
-		update_user_many:"user_mutation_response"
+		update_user_many:"user_mutation_response",
+		update_valid_types_app_type:"valid_types_app_type_mutation_response",
+		update_valid_types_app_type_by_pk:"valid_types_app_type",
+		update_valid_types_app_type_many:"valid_types_app_type_mutation_response",
+		update_valid_types_service_provider_type:"valid_types_service_provider_type_mutation_response",
+		update_valid_types_service_provider_type_by_pk:"valid_types_service_provider_type",
+		update_valid_types_service_provider_type_many:"valid_types_service_provider_type_mutation_response"
 	},
 	notification_info:{
 		app_type_id:"String",
@@ -109780,9 +109702,6 @@ export const ReturnTypes: Record<string,any> = {
 		user_id:"Float"
 	},
 	query_root:{
-		app_type:"app_type",
-		app_type_aggregate:"app_type_aggregate",
-		app_type_by_pk:"app_type",
 		chat:"chat",
 		chat_aggregate:"chat_aggregate",
 		chat_by_pk:"chat",
@@ -109943,7 +109862,13 @@ export const ReturnTypes: Record<string,any> = {
 		translation_value_by_pk:"translation_value",
 		user:"user",
 		user_aggregate:"user_aggregate",
-		user_by_pk:"user"
+		user_by_pk:"user",
+		valid_types_app_type:"valid_types_app_type",
+		valid_types_app_type_aggregate:"valid_types_app_type_aggregate",
+		valid_types_app_type_by_pk:"valid_types_app_type",
+		valid_types_service_provider_type:"valid_types_service_provider_type",
+		valid_types_service_provider_type_aggregate:"valid_types_service_provider_type_aggregate",
+		valid_types_service_provider_type_by_pk:"valid_types_service_provider_type"
 	},
 	restaurant_cart:{
 		cost:"money",
@@ -111648,8 +111573,6 @@ export const ReturnTypes: Record<string,any> = {
 		approved:"Boolean",
 		creation_time:"timestamptz",
 		delivery_company:"delivery_company",
-		delivery_drivers:"delivery_driver",
-		delivery_drivers_aggregate:"delivery_driver_aggregate",
 		description:"translation",
 		description_id:"Int",
 		firebase_id:"String",
@@ -111663,6 +111586,8 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		restaurant:"restaurant_restaurant",
+		reviews:"review",
+		reviews_aggregate:"review_aggregate",
 		schedule:"jsonb",
 		service_link:"service_provider_service_link",
 		service_link_id:"Int",
@@ -112219,10 +112144,6 @@ export const ReturnTypes: Record<string,any> = {
 		service_provider_id:"Float"
 	},
 	subscription_root:{
-		app_type:"app_type",
-		app_type_aggregate:"app_type_aggregate",
-		app_type_by_pk:"app_type",
-		app_type_stream:"app_type",
 		chat:"chat",
 		chat_aggregate:"chat_aggregate",
 		chat_by_pk:"chat",
@@ -112434,7 +112355,15 @@ export const ReturnTypes: Record<string,any> = {
 		user:"user",
 		user_aggregate:"user_aggregate",
 		user_by_pk:"user",
-		user_stream:"user"
+		user_stream:"user",
+		valid_types_app_type:"valid_types_app_type",
+		valid_types_app_type_aggregate:"valid_types_app_type_aggregate",
+		valid_types_app_type_by_pk:"valid_types_app_type",
+		valid_types_app_type_stream:"valid_types_app_type",
+		valid_types_service_provider_type:"valid_types_service_provider_type",
+		valid_types_service_provider_type_aggregate:"valid_types_service_provider_type_aggregate",
+		valid_types_service_provider_type_by_pk:"valid_types_service_provider_type",
+		valid_types_service_provider_type_stream:"valid_types_service_provider_type"
 	},
 	translation:{
 		delivery_company:"delivery_company",
@@ -112650,6 +112579,50 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	user_variance_fields:{
 		id:"Float"
+	},
+	valid_types_app_type:{
+		id:"String"
+	},
+	valid_types_app_type_aggregate:{
+		aggregate:"valid_types_app_type_aggregate_fields",
+		nodes:"valid_types_app_type"
+	},
+	valid_types_app_type_aggregate_fields:{
+		count:"Int",
+		max:"valid_types_app_type_max_fields",
+		min:"valid_types_app_type_min_fields"
+	},
+	valid_types_app_type_max_fields:{
+		id:"String"
+	},
+	valid_types_app_type_min_fields:{
+		id:"String"
+	},
+	valid_types_app_type_mutation_response:{
+		affected_rows:"Int",
+		returning:"valid_types_app_type"
+	},
+	valid_types_service_provider_type:{
+		id:"String"
+	},
+	valid_types_service_provider_type_aggregate:{
+		aggregate:"valid_types_service_provider_type_aggregate_fields",
+		nodes:"valid_types_service_provider_type"
+	},
+	valid_types_service_provider_type_aggregate_fields:{
+		count:"Int",
+		max:"valid_types_service_provider_type_max_fields",
+		min:"valid_types_service_provider_type_min_fields"
+	},
+	valid_types_service_provider_type_max_fields:{
+		id:"String"
+	},
+	valid_types_service_provider_type_min_fields:{
+		id:"String"
+	},
+	valid_types_service_provider_type_mutation_response:{
+		affected_rows:"Int",
+		returning:"valid_types_service_provider_type"
 	}
 }
 
