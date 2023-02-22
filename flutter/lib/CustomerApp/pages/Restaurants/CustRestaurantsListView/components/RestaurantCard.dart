@@ -49,12 +49,12 @@ class RestaurantCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(restaurant.info.name, style: txt.bodyText1),
+                      Text(restaurant.info.name, style: txt.bodyLarge),
                       SizedBox(height: 0.3.h),
                       if (restaurant.info.description?[userLanguage] != null)
                         Text(
                           restaurant.info.description![userLanguage]!,
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -79,7 +79,7 @@ class RestaurantCard extends StatelessWidget {
                                 ShippingCostComponent(
                                   shippingCost: shippingPrice,
                                   alignment: MainAxisAlignment.start,
-                                  textStyle: txt.bodyText1,
+                                  textStyle: txt.bodyLarge,
                                 ),
                               ],
                             ),
@@ -130,9 +130,9 @@ class RestaurantCard extends StatelessWidget {
                                   ),
                                   Text(
                                     restaurant.rate != null
-                                        ? restaurant.rate.toString()
+                                        ? restaurant.rate!.toStringAsFixed(1)
                                         : 0.toString(),
-                                    style: txt.bodyText1,
+                                    style: txt.bodyLarge,
                                   )
                                 ],
                               ),
