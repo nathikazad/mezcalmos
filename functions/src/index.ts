@@ -63,7 +63,7 @@ export const otp = {
   getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
 
-export const stripe = {
+export const stripe2 = {
   getPaymentIntent: authenticatedCall((userId, data) => stripePaymentFunctions.getPaymentIntent(userId, data)),
   addCard: authenticatedCall((userId, data) => stripeCardFunctions.addCard(userId, data)),
   chargeCard: authenticatedCall((userId, data) => stripeCardFunctions.chargeCard(userId, data)),

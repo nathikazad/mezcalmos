@@ -48,7 +48,7 @@ class CloudFunctions {
       {required num serviceProviderDetailsId,
       required num paymentAmount}  ) async {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-getPaymentIntent",
+      functionName: "stripe2-getPaymentIntent",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
         "paymentAmount":paymentAmount,
@@ -58,7 +58,7 @@ class CloudFunctions {
   static Future<AddCardResponse> stripe_addCard(
       {required String paymentMethod}  ) async {
     return AddCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-addCard",
+      functionName: "stripe2-addCard",
       parameters: <String, dynamic>{
         "paymentMethod":paymentMethod,
       }));
@@ -69,7 +69,7 @@ class CloudFunctions {
       required String cardId,
       required num paymentAmount}  ) async {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-chargeCard",
+      functionName: "stripe2-chargeCard",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
         "cardId":cardId,
@@ -80,7 +80,7 @@ class CloudFunctions {
   static Future<void> stripe_removeCard(
       {required String cardId}  ) async {
     return await callCloudFunction(
-      functionName: "stripe-removeCard",
+      functionName: "stripe2-removeCard",
       parameters: <String, dynamic>{
         "cardId":cardId,
       });
@@ -89,7 +89,7 @@ class CloudFunctions {
   static Future<SetupResponse> stripe_setupServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-setupServiceProvider",
+      functionName: "stripe2-setupServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
       }));
@@ -98,7 +98,7 @@ class CloudFunctions {
   static Future<void> stripe_updateServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return await callCloudFunction(
-      functionName: "stripe-updateServiceProvider",
+      functionName: "stripe2-updateServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
       });
