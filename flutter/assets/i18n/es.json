@@ -308,7 +308,7 @@
               "helperText-onTheWay": "Tu pedido está en camino",
               "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
               "helperText-delivered": "Su pedido ha sido entregado con éxito.",
-              "itemNotes": "Nota :"
+              "itemNotes": "Nota"
             },
             "OrderSummaryCard": {
               "totalCost": "Costo total",
@@ -1425,7 +1425,7 @@
               "orderWeight": "Peso de pedido",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
-              "totalCost": "Costo Total",
+              "totalCost": "Costo total",
               "free": "Gratis"
             }
           },
@@ -1492,7 +1492,7 @@
               "notes": "Notas"
             },
             "OrderTotalCostCard": {
-              "totalCost": "Costo Total",
+              "totalCost": "Costo total",
               "deliveryCost": "Costo de envío",
               "total": "Total",
               "free": "Gratis"
@@ -1802,7 +1802,7 @@
             "components": {
               "LaundryOpOrderCard": {
                 "date": "Fecha :",
-                "totalCost": "Coste total :",
+                "totalCost": "Coste total",
                 "waiting": "Esperando",
                 "delivered": "Entregada",
                 "canceled": "Cancelada"
@@ -2109,7 +2109,7 @@
         "components": {
           "ROpOrderCard": {
             "date": "Fecha :",
-            "totalCost": "Coste total :",
+            "totalCost": "Coste total",
             "waiting": "Esperando",
             "delivered": "Entregada",
             "canceled": "Cancelada"

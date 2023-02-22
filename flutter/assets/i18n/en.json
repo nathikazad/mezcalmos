@@ -1056,8 +1056,8 @@
           "last4": "Last 4 digits"
         },
         "ContactUsPopUp": {
-          "contactEmail": "Contact us with Email",
-          "contactWhatsapp": "Contact us with WhatsApp",
+          "contactEmail": "Contact us with email",
+          "contactWhatsapp": "Contact us with whatsApp",
           "hello": "Hello",
           "team": "Team",
           "help": "Help"
@@ -1427,11 +1427,11 @@
                 "delivered": "Order Delivered"
               },
               "LaundryOrderSummary": {
-                "orderSummary": "Order Summary",
-                "orderWeight": "Order Weight",
-                "orderCost": "Order Cost",
-                "totalCost": "Total Cost",
-                "deliveryCost": "Shipping Cost",
+                "orderSummary": "Summary",
+                "orderWeight": "Order weight",
+                "orderCost": "Order cost",
+                "totalCost": "Total cost",
+                "deliveryCost": "Shipping cost",
                 "free": "Free"
               }
             },
@@ -1534,7 +1534,7 @@
                 "readBy": "Read by : ",
                 "from": "From :",
                 "to": "To :",
-                "distance": "Distance : ",
+                "distance": "Distance",
                 "at": "at : ",
                 "orderExpired": "Order Expired",
                 "orderStatus": {
@@ -1807,7 +1807,7 @@
               "components": {
                 "LaundryOpOrderCard": {
                   "date": "Date : ",
-                  "totalCost": "Total Cost : ",
+                  "totalCost": "Total cost",
                   "waiting": "Waiting",
                   "delivered": "Delivered",
                   "canceled": "Cancelled"
@@ -2113,7 +2113,7 @@
         "ROpPastOrdersList": {
           "components": {
             "ROpOrderCard": {
-              "date": "Date : ",
+              "date": "Date",
               "totalCost": "Total cost",
               "waiting": "Waiting",
               "delivered": "Delivered",

@@ -43,7 +43,7 @@ class CardSummaryCard extends StatelessWidget {
               width: Get.width,
               child: Text(
                 "${_i18n()["orderSummary"]}",
-                style: txt.bodyText1,
+                style: Get.textTheme.bodyText1,
               ),
             ),
             SizedBox(height: 4),
@@ -55,8 +55,8 @@ class CardSummaryCard extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text("${_i18n()["orderCost"]} :",
-                          style: txt.bodyText2),
+                      child:
+                          Text("${_i18n()["orderCost"]}", style: txt.bodyText2),
                     ),
                   ),
                   Expanded(
@@ -80,7 +80,7 @@ class CardSummaryCard extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      child: Text("${_i18n()["deliveryCost"]} :",
+                      child: Text("${_i18n()["deliveryCost"]}",
                           style: txt.bodyText2),
                     ),
                   ),
@@ -121,7 +121,7 @@ class CardSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child: Text("${_i18n()["stripeFees"]} :",
+                        child: Text("${_i18n()["stripeFees"]}",
                             style: txt.bodyText2),
                       ),
                     ),
@@ -144,7 +144,7 @@ class CardSummaryCard extends StatelessWidget {
                   Expanded(
                     child: Container(
                       child: Text(
-                        "${_i18n()["totalCost"]} :",
+                        "${_i18n()["totalCost"]}",
                         style: txt.headline4,
                       ),
                     ),

@@ -116,23 +116,23 @@ class RestaurantCard extends StatelessWidget {
                             SizedBox(
                               width: 4.w,
                             ),
-                            Flexible(
-                                child: Row(children: [
-                              Icon(
-                                Icons.star,
-                                size: 3.h,
-                                color: Color(0xFF6779FE),
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                restaurant.rate != null
-                                    ? restaurant.rate!.toStringAsFixed(1)
-                                    : 0.toString(),
-                                style: txt.bodyLarge,
-                              )
-                            ]))
+                            restaurant.rate != null
+                                ? Flexible(
+                                    child: Row(children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 3.h,
+                                      color: Color(0xFF6779FE),
+                                    ),
+                                    SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      restaurant.rate!.toStringAsFixed(1),
+                                      style: txt.bodyLarge,
+                                    )
+                                  ]))
+                                : SizedBox()
                           ],
                         ),
                       )
