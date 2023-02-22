@@ -23,12 +23,12 @@ class CustReviewsListView extends StatefulWidget {
 class _CustReviewsListViewState extends State<CustReviewsListView> {
   RxnNum rating = RxnNum();
   Rxn<List<Review>> reviews = Rxn();
-  int? detailsId;
+  int? serviceId;
   bool get hasData => rating.value != null && reviews.value != null;
   @override
   void initState() {
-    detailsId = int.tryParse(Get.parameters["detailsId"] ?? "");
-    if (detailsId != null) {
+    serviceId = int.tryParse(Get.parameters["serviceId"] ?? "");
+    if (serviceId != null) {
       fetchReviews();
     } else
       MezRouter.back();
@@ -42,11 +42,11 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   }
 
   Future<void> fetchReviews() async {
-    reviews.value = await get_service_reviews(
-            serviceDetailsId: detailsId!, withCache: false) ??
-        [];
+    reviews.value =
+        await get_service_reviews(serviceId: serviceId!, withCache: false) ??
+            [];
     rating.value = await get_service_review_average(
-            detailsId: detailsId!, withCache: false) ??
+            serviceId: serviceId!, withCache: false) ??
         0;
   }
 

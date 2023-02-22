@@ -72,6 +72,7 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
             ? Schedule.fromData(data.details!.schedule)
             : null,
         paymentInfo: PaymentInfo(),
+        rate: data.reviews_aggregate.aggregate?.avg?.rating,
         restaurantState: ServiceState(
             data.details!.open_status.toServiceStatus(),
             data.details!.approved),

@@ -3529,6 +3529,42 @@ type delivery_company {
   details: service_provider_details
   details_id: Int!
   id: Int!
+
+  """An array relationship"""
+  reviews(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): [review!]!
+
+  """An aggregate relationship"""
+  reviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): review_aggregate!
   service_provider_type: String!
 }
 
@@ -3578,6 +3614,8 @@ input delivery_company_bool_exp {
   details: service_provider_details_bool_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
+  reviews: review_bool_exp
+  reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
 }
 
@@ -3620,6 +3658,7 @@ input delivery_company_insert_input {
   details: service_provider_details_obj_rel_insert_input
   details_id: Int
   id: Int
+  reviews: review_arr_rel_insert_input
   service_provider_type: String
 }
 
@@ -3677,6 +3716,7 @@ input delivery_company_order_by {
   details: service_provider_details_order_by
   details_id: order_by
   id: order_by
+  reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
 }
 
@@ -10126,6 +10166,42 @@ type laundry_store {
     """filter the rows returned"""
     where: laundry_operator_bool_exp
   ): laundry_operator_aggregate!
+
+  """An array relationship"""
+  reviews(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): [review!]!
+
+  """An aggregate relationship"""
+  reviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): review_aggregate!
   service_provider_type: String!
 }
 
@@ -10186,6 +10262,8 @@ input laundry_store_bool_exp {
   normal_delivery_time: Int_comparison_exp
   operators: laundry_operator_bool_exp
   operators_aggregate: laundry_operator_aggregate_bool_exp
+  reviews: review_bool_exp
+  reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
 }
 
@@ -10238,6 +10316,7 @@ input laundry_store_insert_input {
   """in days"""
   normal_delivery_time: Int
   operators: laundry_operator_arr_rel_insert_input
+  reviews: review_arr_rel_insert_input
   service_provider_type: String
 }
 
@@ -10308,6 +10387,7 @@ input laundry_store_order_by {
   minimum_cost: order_by
   normal_delivery_time: order_by
   operators_aggregate: laundry_operator_aggregate_order_by
+  reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
 }
 
@@ -24627,6 +24707,42 @@ type restaurant_restaurant {
     """filter the rows returned"""
     where: restaurant_operator_bool_exp
   ): restaurant_operator_aggregate!
+
+  """An array relationship"""
+  reviews(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): [review!]!
+
+  """An aggregate relationship"""
+  reviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [review_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [review_order_by!]
+
+    """filter the rows returned"""
+    where: review_bool_exp
+  ): review_aggregate!
   service_provider_type: String!
 
   """
@@ -24702,6 +24818,8 @@ input restaurant_restaurant_bool_exp {
   orders_aggregate: restaurant_order_aggregate_bool_exp
   restaurant_operators: restaurant_operator_bool_exp
   restaurant_operators_aggregate: restaurant_operator_aggregate_bool_exp
+  reviews: review_bool_exp
+  reviews_aggregate: review_aggregate_bool_exp
   service_provider_type: String_comparison_exp
   specials: restaurant_item_bool_exp
 }
@@ -24749,6 +24867,7 @@ input restaurant_restaurant_insert_input {
   items: restaurant_item_arr_rel_insert_input
   orders: restaurant_order_arr_rel_insert_input
   restaurant_operators: restaurant_operator_arr_rel_insert_input
+  reviews: review_arr_rel_insert_input
   service_provider_type: String
 }
 
@@ -24811,6 +24930,7 @@ input restaurant_restaurant_order_by {
   items_aggregate: restaurant_item_aggregate_order_by
   orders_aggregate: restaurant_order_aggregate_order_by
   restaurant_operators_aggregate: restaurant_operator_aggregate_order_by
+  reviews_aggregate: review_aggregate_order_by
   service_provider_type: order_by
   specials_aggregate: restaurant_item_aggregate_order_by
 }
@@ -26183,42 +26303,6 @@ type service_provider_details {
 
   """An object relationship"""
   restaurant: restaurant_restaurant
-
-  """An array relationship"""
-  reviews(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): [review!]!
-
-  """An aggregate relationship"""
-  reviews_aggregate(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): review_aggregate!
   schedule(
     """JSON select path"""
     path: String
@@ -26303,8 +26387,6 @@ input service_provider_details_bool_exp {
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
-  reviews: review_bool_exp
-  reviews_aggregate: review_aggregate_bool_exp
   schedule: jsonb_comparison_exp
   service_link: service_provider_service_link_bool_exp
   service_link_id: Int_comparison_exp
@@ -26412,7 +26494,6 @@ input service_provider_details_insert_input {
   open_status: String
   phone_number: String
   restaurant: restaurant_restaurant_obj_rel_insert_input
-  reviews: review_arr_rel_insert_input
   schedule: jsonb
   service_link: service_provider_service_link_obj_rel_insert_input
   service_link_id: Int
@@ -26503,7 +26584,6 @@ input service_provider_details_order_by {
   open_status: order_by
   phone_number: order_by
   restaurant: restaurant_restaurant_order_by
-  reviews_aggregate: review_aggregate_order_by
   schedule: order_by
   service_link: service_provider_service_link_order_by
   service_link_id: order_by

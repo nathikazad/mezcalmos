@@ -49,12 +49,12 @@ class RestaurantCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(restaurant.info.name, style: txt.bodyText1),
+                      Text(restaurant.info.name, style: txt.bodyLarge),
                       SizedBox(height: 0.3.h),
                       if (restaurant.info.description?[userLanguage] != null)
                         Text(
                           restaurant.info.description![userLanguage]!,
-                          style: txt.bodyText2,
+                          style: txt.bodyMedium,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -79,14 +79,13 @@ class RestaurantCard extends StatelessWidget {
                                 ShippingCostComponent(
                                   shippingCost: shippingPrice,
                                   alignment: MainAxisAlignment.start,
-                                  textStyle: txt.bodyText1,
+                                  textStyle: txt.bodyLarge,
                                 ),
                               ],
                             ),
                             SizedBox(
                               width: 3.w,
                             ),
-
                             Container(
                               child: Row(
                                 mainAxisAlignment:
@@ -117,79 +116,23 @@ class RestaurantCard extends StatelessWidget {
                             SizedBox(
                               width: 4.w,
                             ),
-                            restaurant.rate != null
-                                ? Flexible(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          size: 3.h,
-                                          color: Color(0xFF6779FE),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          restaurant.rate.toString(),
-                                          style: txt.bodyText1,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : SizedBox(),
-                            // Flexible(
-                            //   flex: 7,
-                            //   // fit: FlexFit.tight,
-                            // child: Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Icon(
-                            //       Icons.delivery_dining,
-                            //       color: Colors.grey.shade800,
-                            //     ),
-                            //     Flexible(
-                            //       //    flex: 5,
-                            //       fit: FlexFit.tight,
-                            //       child: ShippingCostComponent(
-                            //         shippingCost: shippingPrice,
-                            //         alignment: MainAxisAlignment.start,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            // ),
-
-                            // Flexible(
-                            //   flex: 1,
-                            //   child: Icon(
-                            //     Icons.payments_outlined,
-                            //     color: Colors.black,
-                            //   ),
-                            // ),
-                            // if (restaurant.paymentInfo?.acceptCard == true)
-                            //   Flexible(
-                            //     flex: 1,
-                            //     child: Padding(
-                            //         padding: const EdgeInsets.only(left: 8),
-                            //         child: Icon(
-                            //           Icons.credit_card,
-                            //           color: Colors.black,
-                            //         )),
-                            //   ),
-
-                            // Flexible(
-                            //   child: Row(
-                            //     children: [
-                            //       Icon(
-                            //         Icons.star,
-                            //         color: Color(0xFF6779FE),
-                            //       ),
-                            //       Text(restaurant.rate != null
-                            //           ? restaurant.rate.toString()
-                            //           : 0.toString())
-                            //     ],
-                            //   ),
-                            // )
+                            Flexible(
+                                child: Row(children: [
+                              Icon(
+                                Icons.star,
+                                size: 3.h,
+                                color: Color(0xFF6779FE),
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Text(
+                                restaurant.rate != null
+                                    ? restaurant.rate!.toStringAsFixed(1)
+                                    : 0.toString(),
+                                style: txt.bodyLarge,
+                              )
+                            ]))
                           ],
                         ),
                       )
