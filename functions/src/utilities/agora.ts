@@ -19,13 +19,12 @@ export interface CallUserDetails {
   callerParticipantType: ParticipantType
 }
 export interface CallUserResponse {
-  uid: number,
+  id: number,
   token: string,
   name?: string,
   image?: string,
   expirationTime: string,
   participantType: ParticipantType,
-  notificationInfo: NotificationInfo | null
 }
 export async function callUser(callerUserId: number, callUserDetails: CallUserDetails): Promise<CallUserResponse> {
   let chat = await getChat(callUserDetails.chatId)

@@ -158,8 +158,6 @@ class CustItemViewController {
   }
 
   bool differentRestaurantIds() {
-    mezDbgPrint(
-        "😍😍😍😍😍😍😍😍 different restaurant case =:==========>${cart.value!.restaurant?.restaurantId}=========>$itemRestaurantId");
     return cart.value != null &&
         cart.value!.restaurant?.restaurantId != itemRestaurantId;
   }

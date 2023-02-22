@@ -186,48 +186,43 @@ class _MessagingScreenState extends State<MessagingScreen> {
           },
         ),
         actions: <Widget>[
-          // Obx(
-          //   () =>
-          Obx(
-            () => Container(
-              child: controller.chat.value?.chatInfo.phoneNumber != null
-                  ? InkWell(
-                      // onTap: () async => _onCallPress(),
-                      onTap: () async {
-                        final Uri launchUri = Uri(
-                          scheme: 'tel',
-                          path: controller.chat.value?.chatInfo.phoneNumber,
-                        );
-                        mezDbgPrint(await canLaunchUrl(launchUri));
-                        if (await canLaunchUrl(launchUri)) {
-                          await launchUrl(launchUri);
-                        } else {
-                          unawaited(_onCallPress());
-                          // throw 'Could not launch $launchUri';
-                        }
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: secondaryLightBlueColor,
-                        ),
-                        child: Center(
-                          child: FittedBox(
-                            child: Icon(
-                              Icons.call,
-                              color: primaryBlueColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
+          Container(
+            child: InkWell(
+              // onTap: () async => _onCallPress(),
+              onTap: () async {
+                final Uri launchUri = Uri(
+                  scheme: 'tel',
+                  path: controller.chat.value?.chatInfo.phoneNumber,
+                );
+                mezDbgPrint(await canLaunchUrl(launchUri));
+                if (await canLaunchUrl(launchUri)) {
+                  await launchUrl(launchUri);
+                } else {
+                  unawaited(_onCallPress());
+                  // throw 'Could not launch $launchUri';
+                }
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.only(right: 12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: secondaryLightBlueColor,
+                ),
+                child: Center(
+                  child: FittedBox(
+                    child: Icon(
+                      Icons.call,
+                      color: primaryBlueColor,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
+
           // )
         ],
       ),
@@ -337,14 +332,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
             "[][][] MessageScreen :: sagora.joinChannel :: done ! ==> pushing to AgoraCall Screen !!!!");
 
         sagora!.callStatus.value = CallStatus.calling;
+        mezDbgPrint("🤑");
+        mezDbgPrint(response.image);
         Get.toNamed<void>(kAgoraCallScreen, arguments: {
           "chatId": chatId,
           "talkingTo": Participant(
               id: response.uid.toInt(),
               image: response.image!,
               name: response.name!,
-              participantType:
-                  response.participantType.toString().toParticipantType()),
+              participantType: response.participantType
+                  .toFirebaseFormatString()
+                  .toParticipantType()),
         });
       }).onError((Object? error, StackTrace stackTrace) {
         mezDbgPrint("Error ===> $error | $stackTrace");
