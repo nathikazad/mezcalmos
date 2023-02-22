@@ -5,7 +5,7 @@ import 'package:mezcalmos/DeliveryApp/constants/assets.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/controllers/DriverCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -33,7 +33,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
 
   @override
   void initState() {
-    Get.find<SideMenuDrawerController>().pastOrdersRoute = kPastOrdersView;
+    Get.find<SideMenuDrawerController>().pastOrdersRoute =
+        DeliveryAppRoutes.kPastOrdersView;
 
     viewController.init();
 
@@ -53,7 +54,8 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
-            showNotifications: true, ordersRoute: kPastOrdersView),
+            showNotifications: true,
+            ordersRoute: DeliveryAppRoutes.kPastOrdersView),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -121,8 +123,9 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
                 (int index) => MinimalOrderCard(
                       order: viewController.currentOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.currentOrders[index].id));
+                        MezRouter.toNamed(
+                            DeliveryAppRoutes.getRestaurantOrderRoute(
+                                viewController.currentOrders[index].id));
                       },
                     )).reversed.toList(),
           ),

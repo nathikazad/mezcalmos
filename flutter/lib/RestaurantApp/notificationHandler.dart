@@ -4,7 +4,8 @@ import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['notificationHandler'];
@@ -16,7 +17,8 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.NewOrder:
       return Notification(
           id: key,
-          linkUrl: getROpOrderRoute(value["orderId"].toString()),
+          linkUrl:
+              RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
               'assets/images/shared/notifications/readyOrderNotificationIcon.png', // needs to be changed
@@ -29,7 +31,7 @@ Notification restaurantNotificationHandler(String key, value) {
     case NotificationType.OperatorApproved:
       return Notification(
           id: key,
-          linkUrl: kWrapperRoute,
+          linkUrl: SharedRoutes.kWrapperRoute,
           body: (value["approved"] == true)
               ? 'You have been approved'
               : "You have been rejected",
@@ -73,7 +75,8 @@ Notification _restaurantOpOrderChangesNotifier(String key, value) {
 
   return Notification(
       id: key,
-      linkUrl: getROpOrderRoute(value["orderId"].toString()),
+      linkUrl:
+          RestaurantAppRoutes.getROpOrderRoute(value["orderId"].toString()),
       icon: mat.Icons.flatware,
       secondaryIcon: mat.Icons.close,
       body: dynamicFields?["body"],
@@ -132,9 +135,10 @@ Map<String, dynamic>? _getRestaurantOrderStatusFields(
 Notification newMessageNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
+      linkUrl: SharedRoutes.getMessagesRoute(
           chatId: int.parse(value['chatId']),
-          orderLink: getROpOrderRoute(value['orderId'].toString())),
+          orderLink: RestaurantAppRoutes.getROpOrderRoute(
+              value['orderId'].toString())),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],
@@ -148,7 +152,7 @@ Notification newMessageNotification(String key, value) {
 Notification newDriverNotification(String key, value) {
   return Notification(
       id: key,
-      linkUrl: kDriversList,
+      linkUrl: SharedServiceProviderRoutes.kDriversList,
       body: "${value["newDriverName"]} has request join your drivers",
       imgUrl: value['newDriverImage'],
       title: "New driver request",

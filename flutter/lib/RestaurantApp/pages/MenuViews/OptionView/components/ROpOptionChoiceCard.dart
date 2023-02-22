@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -43,7 +43,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   MezIconButton(
                       onTap: () async {
                         final bool? needToRefetch = await MezRouter.toNamed(
-                            getROpChoiceRoute(
+                            RestaurantAppRoutes.getROpChoiceRoute(
                                 choiceId: choice.id,
                                 optionId: optionId,
                                 restaurantId: restaurantId)) as bool?;

@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/chatNodes.dart';
@@ -17,6 +16,7 @@ import 'package:mezcalmos/Shared/graphql/chat/hsChat.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
+import 'package:mezcalmos/env.dart';
 
 class MessageController extends GetxController {
   Rxn<HasuraChat> chat = Rxn();
@@ -25,7 +25,6 @@ class MessageController extends GetxController {
   String? subscriptionId;
 
   AuthController _authController = Get.find<AuthController>();
-  SettingsController _settingsController = Get.find<SettingsController>();
   StreamSubscription? chatListener;
   late AppType appType;
 
@@ -33,7 +32,6 @@ class MessageController extends GetxController {
   void onInit() {
     super.onInit();
     mezDbgPrint("--------------------> messageController Initialized !");
-    appType = Get.find<SettingsController>().appType;
   }
 
   void loadChat({required int chatId, material.VoidCallback? onValueCallBack}) {
@@ -103,8 +101,7 @@ class MessageController extends GetxController {
           userId: Get.find<AuthController>().hasuraUserId!,
           chatId: chatId.toString(),
           messageId: messageNode.key!,
-          participantType:
-              _settingsController.appType.toParticipantTypefromAppType(),
+          participantType: MezEnv.appType.toParticipantTypefromAppType(),
         ).toFirebaseFormatJson());
   }
 

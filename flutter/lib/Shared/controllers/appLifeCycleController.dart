@@ -20,6 +20,10 @@ class AppLifeCycleController extends GetxController
 
   Rx<AppLifecycleState> _appState = AppLifecycleState.resumed.obs;
   AppLifecycleState get appState => _appState.value;
+  DateTime? _lastTimeAppReturnedFromBackground;
+  DateTime? get lastTimeAppReturnedFromBackground =>
+      _lastTimeAppReturnedFromBackground;
+
   String attachCallback(AppLifecycleState onState, VoidCallback f) {
     final String callbackId = getRandomString(8);
     callbacks[onState]?[callbackId] = f;
@@ -65,6 +69,9 @@ class AppLifeCycleController extends GetxController
     callbacks[state]!.forEach((String callbackId, VoidCallback function) {
       function();
     });
+    if (state == AppLifecycleState.resumed) {
+      _lastTimeAppReturnedFromBackground = DateTime.now();
+    }
 
     mezDbgPrint("[+] AppLifeCycleController :: AppStateChanged :: $state");
   }

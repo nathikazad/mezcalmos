@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/constants/assets.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -63,24 +62,6 @@ class DeliveryOrderCard extends StatelessWidget {
         ),
       ),
     );
-    // } else {
-    //   return Container(
-    //     // padding: const EdgeInsets.all(5),
-    //     height: 30.sp,
-    //     width: 30.sp,
-    //     decoration: BoxDecoration(
-    //       shape: BoxShape.circle,
-    //       color: primaryBlueColor,
-    //     ),
-    //     child: Center(
-    //       child: Icon(
-    //         Icons.local_laundry_service,
-    //         size: 20.sp,
-    //         color: Colors.white,
-    //       ),
-    //     ),
-    //   );
-    // }
   }
 
   Widget _getOrderWidget() {
@@ -130,37 +111,8 @@ class DeliveryOrderCard extends StatelessWidget {
             ),
           ),
         );
-      //   case DeliveryOrderStatus.PackageReady:
-      // return Container(
-      //   padding: const EdgeInsets.all(8),
-      //   decoration: BoxDecoration(
-      //     color: Colors.green.shade100,
-      //     borderRadius: BorderRadius.circular(25),
-      //   ),
-      //   child: Center(
-      //     child: Text(
-      //       "${_i18n()["ready"]}",
-      //       style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-      //     ),
-      //   ),
-      // );
+
       case DeliveryOrderStatus.OrderReceived:
-        // if ((order).isScheduled()) {
-        //   return Container(
-        //     padding: const EdgeInsets.all(8),
-        //     decoration: BoxDecoration(
-        //       color: secondaryLightBlueColor,
-        //       borderRadius: BorderRadius.circular(25),
-        //     ),
-        //     child: Center(
-        //       child: Text(
-        //         "${_i18n()["scheduled"]}",
-        //         style:
-        //             Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
-        //       ),
-        //     ),
-        //   );
-        // } else {
         return Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -190,116 +142,10 @@ class DeliveryOrderCard extends StatelessWidget {
           ),
         );
     }
-    // } else {
-    //   switch ((order as LaundryOrder).status) {
-    //     case LaundryOrderStatus.ReadyForDelivery:
-    //       return Container(
-    //         padding: const EdgeInsets.all(8),
-    //         decoration: BoxDecoration(
-    //           color: Colors.green.shade100,
-    //           borderRadius: BorderRadius.circular(25),
-    //         ),
-    //         child: Text(
-    //           "${_i18n()["ready"]}",
-    //           style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-    //         ),
-    //       );
-    //     case LaundryOrderStatus.OtwPickupFromCustomer:
-    //     case LaundryOrderStatus.OtwPickupFromLaundry:
-    //     case LaundryOrderStatus.PickedUpFromCustomer:
-    //     case LaundryOrderStatus.PickedUpFromLaundry:
-    //       return Container(
-    //         padding: const EdgeInsets.all(8),
-    //         decoration: BoxDecoration(
-    //           color: Colors.amber.shade100,
-    //           borderRadius: BorderRadius.circular(25),
-    //         ),
-    //         child: Text(
-    //           "${_i18n()["inTransit"]}",
-    //           style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-    //         ),
-    //       );
-    //     case LaundryOrderStatus.CancelledByAdmin:
-    //     case LaundryOrderStatus.CancelledByCustomer:
-    //       return Container(
-    //         padding: const EdgeInsets.all(8),
-    //         decoration: BoxDecoration(
-    //           color: Colors.red.shade100,
-    //           borderRadius: BorderRadius.circular(25),
-    //         ),
-    //         child: Text(
-    //           "${_i18n()["cancelled"]}",
-    //           style: Get.textTheme.bodyText1?.copyWith(color: Colors.red),
-    //         ),
-    //       );
-    //     case LaundryOrderStatus.AtLaundry:
-    //       if (isPastOrder == true) {
-    //         return Container(
-    //           padding: const EdgeInsets.all(8),
-    //           decoration: BoxDecoration(
-    //             color: Colors.green.shade100,
-    //             borderRadius: BorderRadius.circular(25),
-    //           ),
-    //           child: Text(
-    //             "${_i18n()["delivered"]}",
-    //             style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-    //           ),
-    //         );
-    //       } else {
-    //         return Container(
-    //           padding: const EdgeInsets.all(8),
-    //           decoration: BoxDecoration(
-    //             color: Colors.amber.shade100,
-    //             borderRadius: BorderRadius.circular(25),
-    //           ),
-    //           child: Text(
-    //             "${_i18n()["waiting"]}",
-    //             style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-    //           ),
-    //         );
-    //       }
-
-    //     case LaundryOrderStatus.Delivered:
-    //       return Container(
-    //         padding: const EdgeInsets.all(8),
-    //         decoration: BoxDecoration(
-    //           color: Colors.green.shade100,
-    //           borderRadius: BorderRadius.circular(25),
-    //         ),
-    //         child: Text(
-    //           "${_i18n()["delivered"]}",
-    //           style: Get.textTheme.bodyText1?.copyWith(color: Colors.green),
-    //         ),
-    //       );
-
-    //     default:
-    //       return Container(
-    //         padding: const EdgeInsets.all(8),
-    //         decoration: BoxDecoration(
-    //           color: Colors.amber.shade100,
-    //           borderRadius: BorderRadius.circular(25),
-    //         ),
-    //         child: Text(
-    //           "${_i18n()["waiting"]}",
-    //           style: Get.textTheme.bodyText1?.copyWith(color: Colors.amber),
-    //         ),
-    //       );
-    //   }
-    // }
   }
 
   String _getOrderTitle() {
     return "Delivery Order";
-    // if (order.orderType == OrderType.Restaurant) {
-    //   return "${_i18n()['orderTitle']['restaurantDelivery']}";
-    // } else if (isPastOrder &&
-    //     (order as LaundryOrder).status == LaundryOrderStatus.AtLaundry) {
-    //   return "${_i18n()['orderTitle']['laundryPickup']}";
-    // } else if ((order as LaundryOrder).getCurrentPhase() ==
-    //     LaundryOrderPhase.Pickup) {
-    //   return "${_i18n()['orderTitle']['laundryPickup']}";
-    // } else
-    //   return "${_i18n()['orderTitle']['laundryDelivery']}";
   }
 }
 

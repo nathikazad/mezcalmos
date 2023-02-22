@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -86,25 +86,31 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             icon: Icons.flatware,
                             label: "${_i18n()['menu']}",
                             ontap: () {
-                              MezRouter.toNamed(getRestaurantMenuRoute(
-                                  restaurantId: restaurant.info.hasuraId));
+                              MezRouter.toNamed(
+                                  MezAdminRoutes.getRestaurantMenuRoute(
+                                      restaurantId: restaurant.info.hasuraId));
                             }),
                         _smallBtn(
                             icon: Icons.history,
                             label: "${_i18n()['orders']}",
                             ontap: () {
-                              getserviceOrdersRoute(
-                                  serviceName: restaurant.info.name,
-                                  serviceProviderId: restaurant.info.hasuraId,
-                                  serviceProviderType:
-                                      ServiceProviderType.Restaurant);
+                              MezRouter.toNamed(
+                                  MezAdminRoutes.getserviceOrdersRoute(
+                                      serviceProviderId:
+                                          restaurant.info.hasuraId),
+                                  arguments: {
+                                    "serviceProviderType":
+                                        ServiceProviderType.Restaurant,
+                                    "serviceName": restaurant.info.name,
+                                  });
                             }),
                         _smallBtn(
                             icon: Icons.food_bank,
                             label: "${_i18n()['profile']}",
                             ontap: () {
-                              MezRouter.toNamed(getROpEditInfoRoute(
-                                  restaurantId: restaurant.info.hasuraId));
+                              MezRouter.toNamed(
+                                  MezAdminRoutes.getROpEditInfoRoute(
+                                      restaurantId: restaurant.info.hasuraId));
                             }),
                       ],
                     ),

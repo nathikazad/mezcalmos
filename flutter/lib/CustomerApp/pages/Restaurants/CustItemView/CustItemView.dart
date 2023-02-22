@@ -5,7 +5,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';

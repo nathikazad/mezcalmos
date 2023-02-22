@@ -4,7 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpReorderIcon.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -139,7 +139,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                       onTap: () async {
                         MezRouter.popDialog(closeOverlays: true);
                         final bool? result = await MezRouter.toNamed(
-                            getCategoryEditRoute(
+                            RestaurantAppRoutes.getCategoryEditRoute(
                                 categoryId: widget.category.id!,
                                 restaurantId: widget.restaurantId)) as bool?;
 
@@ -171,7 +171,7 @@ class _ROpCategoryItemsState extends State<ROpCategoryItems> {
                             if (value) {
                               MezRouter.untill((Route route) =>
                                   route.settings.name ==
-                                  getROpMenuRoute(
+                                  RestaurantAppRoutes.getROpMenuRoute(
                                       restaurantId: widget.restaurantId));
                             }
                           });

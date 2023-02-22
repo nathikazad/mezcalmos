@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -35,11 +35,6 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
 
   LaundryOpAuthController laundryOpAuthController =
       Get.find<LaundryOpAuthController>();
-  // helpers //
-  final AppLaunchMode lmd = getAppLaunchMode();
-
-  // variables //
-  final String version = GetStorage().read<String>(getxAppVersion) as String;
   Rxn<Laundry> laundry = Rxn();
 
   @override
@@ -100,7 +95,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
                       _navigationLink(
                           onClick: () {
                             _drawerController.closeMenu();
-                            launch(GetStorage().read(getxPrivacyPolicyLink));
+                            launchUrlString(MezEnv.appType.getPrivacyLink());
                           },
                           icon: Icons.privacy_tip,
                           titleWidget: Text(
@@ -125,11 +120,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             Container(
                 alignment: Alignment.center,
                 child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ))
+                    "{PlatformOSHelper.getAppVersion} ${MezEnv.appLaunchMode.toShortString()}"))
           ],
         ),
       ),
@@ -187,7 +178,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed(getEditInfoRoute(
+              MezRouter.toNamed(LaundryAppRoutes.getEditInfoRoute(
                   laundryId: laundryOpAuthController.laundryId!));
             },
             icon: Icons.person,
@@ -199,8 +190,8 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             icon: Icons.settings,
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed(
-                  getAdminRoute(laundryId: laundryOpAuthController.laundryId!));
+              MezRouter.toNamed(LaundryAppRoutes.getAdminRoute(
+                  laundryId: laundryOpAuthController.laundryId!));
             },
             titleWidget: Text(
               "${_i18n()["admin"]}",
@@ -208,7 +199,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
             )),
         _navigationLink(
             onClick: () {
-              MezRouter.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(
@@ -218,7 +209,7 @@ class _LaundryAppDrawerState extends State<LaundryAppDrawer> {
         _navigationLink(
             onClick: () {
               _drawerController.closeMenu();
-              MezRouter.toNamed(kPastOrdersListView);
+              MezRouter.toNamed(LaundryAppRoutes.kPastOrdersListView);
             },
             icon: Icons.history,
             titleWidget: Text(

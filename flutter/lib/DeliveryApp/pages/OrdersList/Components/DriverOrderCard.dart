@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
@@ -37,9 +37,11 @@ class DriverOrderCard extends StatelessWidget {
           onCardTap: () {
             // MezRouter.toNamed(getOrderDetailsRoute(order.orderId));
             if (order.orderType == OrderType.Restaurant) {
-              MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
+              MezRouter.toNamed(
+                  DeliveryAppRoutes.getRestaurantOrderRoute(order.orderId));
             } else if (order.orderType == OrderType.Laundry) {
-              MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
+              MezRouter.toNamed(
+                  DeliveryAppRoutes.getLaundryOrderRoute(order.orderId));
             }
           },
           cardTitle: _getOrderTitle(),

@@ -7,7 +7,7 @@ import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -152,7 +152,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                     borderRadius: BorderRadius.circular(10),
                     onTap: () async {
                       bool? shouldRefetch = await MezRouter.toNamed(
-                          getCategoryRoute(
+                          LaundryAppRoutes.getCategoryRoute(
                               laundryId: laundryId!,
                               categoryId: null)) as bool?;
                       if (shouldRefetch == true) {

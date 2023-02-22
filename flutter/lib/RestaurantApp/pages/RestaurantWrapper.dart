@@ -8,7 +8,7 @@ import 'package:mezcalmos/RestaurantApp/ROpDeeplinkHandler.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/notificationHandler.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -19,7 +19,7 @@ import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart'
     as MezNotification;
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
@@ -55,13 +55,13 @@ class _RestaurantWrapperState extends State<RestaurantWrapper> {
         "🫡 Start routing process 🫡 =>${restaurantOpAuthController.operator.value?.toJson()}");
 
     if (restaurantOpAuthController.operator.value == null) {
-      navigateToCreateService(
+      SharedServiceProviderRoutes.navigateToCreateService(
           serviceProviderType: ServiceProviderType.Restaurant);
     } else if (restaurantOpAuthController
         .operator.value!.isWaitingToBeApprovedByOwner) {
-      MezRouter.toNamed(kOpUnauth);
+      MezRouter.toNamed(RestaurantAppRoutes.kOpUnauth);
     } else {
-      MezRouter.toNamed(kTabsView);
+      MezRouter.toNamed(RestaurantAppRoutes.kTabsView);
     }
   }
 

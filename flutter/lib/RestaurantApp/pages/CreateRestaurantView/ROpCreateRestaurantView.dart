@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/components/ROpCreateImagePicker.dart';
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/controllers/ROpCreateRestuarantViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
@@ -43,7 +43,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
                 context,
                 primaryClickTitle: "OK",
                 primaryCallBack: () {
-                  MezRouter.toNamed(kWrapperRoute);
+                  MezRouter.toNamed(SharedRoutes.kWrapperRoute);
                 },
                 status: "Your restaurantis under review",
                 description:
@@ -138,9 +138,8 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
               borderRadius: BorderRadius.circular(10),
               onTap: () async {
                 // ignore: prefer_final_locals
-                MezLocation? currentLoc =
-                    await MezRouter.toNamed(kPickLocationWithoutAuth)
-                        as MezLocation?;
+                MezLocation? currentLoc = await MezRouter.toNamed(
+                    SharedRoutes.kPickLocationWithoutAuth) as MezLocation?;
                 if (currentLoc != null) {
                   viewController.restaurantLocation.value = currentLoc;
                 }

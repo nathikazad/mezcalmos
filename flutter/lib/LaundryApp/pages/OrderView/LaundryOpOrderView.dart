@@ -8,13 +8,13 @@ import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCate
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -54,7 +54,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true,
           showNotifications: true,
-          ordersRoute: kPastOrdersListView),
+          ordersRoute: LaundryAppRoutes.kPastOrdersListView),
       body: Obx(
         () {
           if (viewController.hasData) {
@@ -81,7 +81,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                         chatId: viewController.order.chatId,
                         onTap: () {
                           MezRouter.toNamed(
-                            getMessagesRoute(
+                            SharedRoutes.getMessagesRoute(
                               chatId: viewController.order.chatId,
                               recipientType: ParticipantType.Customer,
                               orderType: OrderType.Laundry,

@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
@@ -11,7 +11,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -156,7 +156,7 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(kSignInRouteOptional);
+          MezRouter.toNamed(SharedRoutes.kSignInRouteOptional);
         },
         child: Ink(
           padding: const EdgeInsets.all(7),
@@ -183,7 +183,7 @@ class ItemSliverAppBar extends StatelessWidget {
           child: InkWell(
             customBorder: CircleBorder(),
             onTap: () {
-              MezRouter.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
             },
             child: badge.Badge(
               badgeColor: Colors.red,

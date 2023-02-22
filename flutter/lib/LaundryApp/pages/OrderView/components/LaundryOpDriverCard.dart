@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 
@@ -73,7 +74,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                     () => MessageButton(
                         chatId: _getCorrectChatId(),
                         onTap: () {
-                          MezRouter.toNamed(getMessagesRoute(
+                          MezRouter.toNamed(SharedRoutes.getMessagesRoute(
                               orderType: OrderType.Laundry,
                               chatId: _getCorrectChatId(),
                               recipientType: ParticipantType.DeliveryDriver));
@@ -116,7 +117,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
                     MezIconButton(
                       icon: Icons.add,
                       onTap: () {
-                        navigateToPickDriver(
+                        SharedServiceProviderRoutes.navigateToPickDriver(
                             deliveryOrderId:
                                 viewController.order.deliveryOrderId,
                             showForwardButton: false);
@@ -174,7 +175,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   }
 
   void _laundryDropOffDriverMessageRoute() {
-    MezRouter.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(SharedRoutes.getMessagesRoute(
         orderId: viewController.order.orderId,
         orderType: OrderType.Laundry,
         chatId: viewController.order.serviceProviderDropOffDriverChatId!,
@@ -182,7 +183,7 @@ class LaundryOpOrderDriverCard extends StatelessWidget {
   }
 
   void _laundryPickupDriverMessageRoute() {
-    MezRouter.toNamed<dynamic>(getMessagesRoute(
+    MezRouter.toNamed<dynamic>(SharedRoutes.getMessagesRoute(
         orderId: viewController.order.orderId,
         orderType: OrderType.Laundry,
         chatId: viewController.order.serviceProviderPickupDriverChatId!,

@@ -9,7 +9,8 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];
@@ -85,24 +86,27 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         icon: Icons.price_check,
                         label: "${_i18n()['costs']}",
                         ontap: () {
-                          navigateToDeliveryCost(
+                          SharedServiceProviderRoutes.navigateToDeliveryCost(
                               deliveryDetailsId: company.deliveryDetailsId!);
                         }),
                     _smallBtn(
                         icon: Icons.history,
                         label: "${_i18n()['orders']}",
                         ontap: () {
-                          getserviceOrdersRoute(
-                              serviceName: company.info.name,
-                              serviceProviderId: company.info.hasuraId,
-                              serviceProviderType:
-                                  ServiceProviderType.DeliveryCompany);
+                          MezRouter.toNamed(
+                              MezAdminRoutes.getserviceOrdersRoute(
+                                  serviceProviderId: company.info.hasuraId),
+                              arguments: {
+                                "serviceProviderType":
+                                    ServiceProviderType.DeliveryCompany,
+                                "serviceName": company.info.name,
+                              });
                         }),
                     _smallBtn(
                         icon: Icons.person,
                         label: "${_i18n()['profile']}",
                         ontap: () {
-                          navigateToServiceInfoEdit(
+                          SharedServiceProviderRoutes.navigateToServiceInfoEdit(
                               serviceDetailsId: company.serviceDetailsId,
                               serviceProviderId: company.info.hasuraId,
                               serviceProviderType:

@@ -8,7 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/compo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';

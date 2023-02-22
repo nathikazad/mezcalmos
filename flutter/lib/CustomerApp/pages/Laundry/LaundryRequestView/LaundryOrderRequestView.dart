@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -12,8 +12,7 @@ import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart' as sharedRoute;
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
@@ -253,7 +252,7 @@ class _CustLaundryOrderRequestViewState
           if (viewController.isUserSignedIn) {
             num? res = await viewController.createLaundryOrder();
             if (res != null) {
-              popEverythingAndNavigateTo(
+              MezRouter.popEverythingAndNavigateTo(
                 getLaundryOrderRoute(
                   res.toInt(),
                 ),
@@ -262,7 +261,7 @@ class _CustLaundryOrderRequestViewState
           } else {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
-            await MezRouter.toNamed<void>(sharedRoute.kSignInRouteOptional);
+            await MezRouter.toNamed<void>(SharedRoutes.kSignInRouteOptional);
           }
         },
       ),

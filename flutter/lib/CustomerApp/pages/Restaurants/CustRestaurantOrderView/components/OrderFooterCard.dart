@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 dynamic _i18n() =>
@@ -37,19 +37,18 @@ class _OrderFooterCardState extends State<OrderFooterCard> {
                 child: TextButton(
                   onPressed: () {
                     showConfirmationDialog(context, onYesClick: () async {
-                      final bool resp =
-                          await widget.cancelOrderFunction.call();
+                      final bool resp = await widget.cancelOrderFunction.call();
                       if (resp) {
                         MezRouter.untill(
                           (Route<dynamic> route) =>
-                              route.settings.name == kHomeRoute,
+                              route.settings.name == SharedRoutes.kHomeRoute,
                         );
                         MezSnackbar(
                           _i18n()["titleSuccess"],
                           _i18n()["orderCancelSuccess"],
                           position: SnackPosition.TOP,
                         );
-                      } 
+                      }
                     });
                   },
                   style: TextButton.styleFrom(

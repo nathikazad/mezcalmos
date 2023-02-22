@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -33,7 +33,7 @@ class ROpSpecialItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         onTap: () async {
           final bool? shouldRefresh = await MezRouter.toNamed(
-              getEditItemRoute(
+              RestaurantAppRoutes.getEditItemRoute(
                   itemId: item.id!, restaurntID: viewController.restaurnatId),
               arguments: {"specials": true}) as bool;
 

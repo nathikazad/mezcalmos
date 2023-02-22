@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 //
@@ -65,7 +65,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                   MessageButton(
                     onTap: () {
                       MezRouter.toNamed(
-                        getMessagesRoute(
+                        SharedRoutes.getMessagesRoute(
                           chatId: _getRightChatId()!,
                           recipientType: ParticipantType.DeliveryDriver,
                           orderType: OrderType.Laundry,

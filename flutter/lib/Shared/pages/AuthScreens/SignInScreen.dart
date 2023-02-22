@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -10,10 +11,11 @@ import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 enum SignInMode {
   OptionalSignIn,
@@ -30,8 +32,6 @@ class SignIn extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLaunchMode lmode = getAppLaunchMode();
-
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -80,7 +80,7 @@ class SignIn extends GetWidget<AuthController> {
                             .headline2
                             ?.copyWith(fontWeight: FontWeight.w600)),
                     Spacer(),
-                    ...buildSignInButtons(lmode),
+                    ...buildSignInButtons(MezEnv.appLaunchMode),
                     Spacer(),
                   ],
                 ),
@@ -112,7 +112,8 @@ class SignIn extends GetWidget<AuthController> {
         SizedBox(
           height: 10,
         ),
-        if (lmode != AppLaunchMode.dev && Platform.isIOS) appleLoginBtn(),
+        if (lmode != AppLaunchMode.dev && !kIsWeb && Platform.isIOS)
+          appleLoginBtn(),
       ];
     }
   }
@@ -152,7 +153,7 @@ class SignIn extends GetWidget<AuthController> {
     return Container(
       width: double.infinity,
       child: TextButton(
-          onPressed: () => MezRouter.toNamed(kOtpRoute),
+          onPressed: () => MezRouter.toNamed(SharedRoutes.kOtpRoute),
           style: TextButton.styleFrom(
               backgroundColor: Colors.blue,
               fixedSize: Size(double.infinity, 50)),

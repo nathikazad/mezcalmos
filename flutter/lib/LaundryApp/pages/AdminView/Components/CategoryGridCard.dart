@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -66,9 +66,10 @@ class _CategoryGridCardState extends State<CategoryGridCard> {
                 InkWell(
                   customBorder: CircleBorder(),
                   onTap: () async {
-                    bool? refetch = await MezRouter.toNamed(getCategoryRoute(
-                        laundryId: widget.laundry.info.hasuraId,
-                        categoryId: widget.item.id)) as bool?;
+                    bool? refetch = await MezRouter.toNamed(
+                        LaundryAppRoutes.getCategoryRoute(
+                            laundryId: widget.laundry.info.hasuraId,
+                            categoryId: widget.item.id)) as bool?;
 
                     mezDbgPrint("RESULT ======>$refetch");
                     if (refetch == true) {

@@ -43,10 +43,10 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   void initState() {
     viewWidgets = LocationPermissionWidgets(viewController: viewController);
     viewController.init(
-      onLocationPermissionsStatusChange: _onLocationPermissionsChange,
-      initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
-      initialIosBodyTextSetter: _updateIosPermissionAskingText,
-    );
+        onLocationPermissionsStatusChange: _onLocationPermissionsChange,
+        initialAndroidBodyTextSetter: _updateAndroidPermissionAskingText,
+        initialIosBodyTextSetter: _updateIosPermissionAskingText,
+        initialWebBodyTextSetter: _updateWebPermissionAskingText);
     super.initState();
   }
 
@@ -82,6 +82,11 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
         setErrorTextByRefrence(null);
         break;
     }
+  }
+
+  void _updateWebPermissionAskingText() {
+    setAskPermissionsTextByRefrence(
+        () => _i18n()['locationPermissionText']['ios']['foreground']);
   }
 
   void _updateIosPermissionAskingText() {

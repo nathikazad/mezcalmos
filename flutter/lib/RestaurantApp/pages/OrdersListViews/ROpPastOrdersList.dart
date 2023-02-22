@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ROpOrderCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpPastOrdersViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 
@@ -61,7 +61,7 @@ class _ROpPastOrdersListState extends State<ROpPastOrdersList> {
                     return MinimalOrderCard(
                       order: viewController.pastOrders[index],
                       onTap: () {
-                        MezRouter.toNamed(getROpOrderRoute(
+                        MezRouter.toNamed(RestaurantAppRoutes.getROpOrderRoute(
                             viewController.pastOrders[index].id.toString()));
                       },
                     );

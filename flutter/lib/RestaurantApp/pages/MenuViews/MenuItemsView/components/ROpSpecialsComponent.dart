@@ -4,7 +4,7 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialItemCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -56,7 +56,7 @@ class _ROpSpecialsComponentState extends State<ROpSpecialsComponent> {
                 MezAddButton(
                   onClick: () async {
                     final bool? newItemAdded = await MezRouter.toNamed(
-                        getROpAddItemRoute(
+                        RestaurantAppRoutes.getROpAddItemRoute(
                             restaurantId: widget.viewController.restaurnatId),
                         arguments: {"specials": true}) as bool?;
                     if (newItemAdded == true) {

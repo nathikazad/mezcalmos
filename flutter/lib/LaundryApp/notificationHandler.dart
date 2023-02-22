@@ -6,7 +6,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Notification.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["LaundryApp"]["notificationHandler"];
@@ -21,7 +21,7 @@ Notification laundryNotificationHandler(String key, value) {
       mezDbgPrint(value);
       return Notification(
           id: key,
-          linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+          linkUrl: LaundryAppRoutes.getLaundryOpOrderRoute(value["orderId"]),
           icon: mat.Icons.local_laundry_service,
           body: '${_i18n()['newOrderBody']}',
           imgUrl:
@@ -51,7 +51,7 @@ Notification _laundryOpOrderChangesNotifier(String key, value) {
       id: key,
       icon: mat.Icons.local_laundry_service,
       secondaryIcon: mat.Icons.close,
-      linkUrl: getLaundryOpOrderRoute(value["orderId"]),
+      linkUrl: LaundryAppRoutes.getLaundryOpOrderRoute(value["orderId"]),
       body: dynamicFields["body"],
       imgUrl: dynamicFields["imgUrl"],
       title: dynamicFields["title"],
@@ -129,9 +129,9 @@ Notification newMessageNotification(String key, value) {
   mezDbgPrint("notification Data =================================> $value");
   return Notification(
       id: key,
-      linkUrl: getMessagesRoute(
+      linkUrl: SharedRoutes.getMessagesRoute(
           chatId: value['chatId'],
-          orderLink: getLaundryOpOrderRoute(value['orderId'])),
+          orderLink: LaundryAppRoutes.getLaundryOpOrderRoute(value['orderId'])),
       body: value['message'],
       imgUrl: value['sender']['image'],
       title: value['sender']['name'],

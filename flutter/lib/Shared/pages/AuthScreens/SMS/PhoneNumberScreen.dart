@@ -5,9 +5,9 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/SignInHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 const mypadding = EdgeInsets.only(left: 15, right: 15);
 
@@ -238,7 +238,8 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
 
                       if (response.success) {
                         MezSnackbar("Notice ~", "OTP Sent code to : $phone");
-                        MezRouter.toNamed(kOtpConfirmRoute, arguments: phone);
+                        MezRouter.toNamed(SharedRoutes.kOtpConfirmRoute,
+                            arguments: phone);
                       } else {
                         MezSnackbar(response.errorCode.toString(),
                             response.errorMessage.toString());

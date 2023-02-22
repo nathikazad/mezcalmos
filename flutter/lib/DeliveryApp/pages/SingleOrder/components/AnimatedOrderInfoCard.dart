@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/components/TwoCirclesAvatars.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/DeliveryOrder/DeliveryOrder.dart';
@@ -338,7 +338,7 @@ class AnimatedOrderInfoCard extends StatelessWidget {
         InkWell(
           onTap: () {
             MezRouter.toNamed<void>(
-              getOrderDetailsRoute(order.id),
+              DeliveryAppRoutes.getOrderDetailsRoute(order.id),
             );
           },
           child: Align(

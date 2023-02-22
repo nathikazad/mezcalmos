@@ -1,20 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundyOpDrawer.dart';
 import 'package:mezcalmos/LaundryApp/pages/ProfileView/controllers/LaundryProfileViewController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
     ['pages']['ROpDashboardPage'];
@@ -156,7 +156,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
                   onClick: () async {
                     // viewController.tabsViewViewController?.showTabs.value =
                     //     true;
-                    navigateToOperators(
+                    SharedServiceProviderRoutes.navigateToOperators(
                         serviceProviderId: viewController.laundryStoreId,
                         serviceProviderType: ServiceProviderType.Laundry);
                   },
@@ -173,7 +173,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
                   onClick: () async {
                     // viewController.tabsViewViewController?.showTabs.value =
                     //     true;
-                    navigateToServicePayments(
+                    SharedServiceProviderRoutes.navigateToServicePayments(
                         serviceProviderId: viewController.laundryStoreId,
                         serviceProviderType: ServiceProviderType.Laundry);
                   },
@@ -209,7 +209,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
                         onClick: () async {
                           // viewController
                           //     .tabsViewViewController?.showTabs.value = true;
-                          navigateToDrivers(
+                          SharedServiceProviderRoutes.navigateToDrivers(
                               serviceProviderId: viewController.laundryStoreId,
                               controllerType: ServiceProviderType.Laundry);
                         },
@@ -269,7 +269,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    navigateToDeliverySettings(
+                    SharedServiceProviderRoutes.navigateToDeliverySettings(
                         serviceProviderId: viewController.laundryStoreId,
                         serviceProviderType: ServiceProviderType.Laundry);
                   },
@@ -289,7 +289,7 @@ class _LaundryProfileViewState extends State<LaundryProfileView> {
               _divider(),
               _navigationLink(
                   onClick: () async {
-                    await launch(GetStorage().read(getxPrivacyPolicyLink));
+                    await launchUrlString(MezEnv.appType.getPrivacyLink());
                   },
                   icon: Icons.privacy_tip,
                   titleWidget: Text(

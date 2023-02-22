@@ -71,16 +71,7 @@ const String sMezcalmos = "MEZCALMOS";
 const String sDefaultUserName = "Unknown";
 const String sDefaultCustomerName = "Unknown";
 
-// ----------------- GetStorage Strings ----------------- //
-const String getxPrivacyPolicyLink = "ppLink";
-const String getxLmodeKey = "lmod";
-const String getxGmapBottomPaddingKey = "gmap_bottom_padding";
-const String getxTaxiDescriptor = "taxi_descriptor";
-const String getxDestinationDescriptor = "destination_descriptor";
-const String getxAppVersion = "version";
-const String getxAppName = "appName";
-const String getxPackageName = "packageName";
-const String getxAppStoreId = "iosAppStoreId";
+// ----------------- Default url Strings ----------------- //
 const String defaultUserImgUrl =
     "https://firebasestorage.googleapis.com/v0/b/mezcalmos-31f1c.appspot.com/o/logo%402x.png?alt=media&token=4a18a710-e267-40fd-8da7-8c12423cc56d";
 const String defaultDriverImgUrl =
@@ -132,6 +123,16 @@ const rive.RiveAnimation aWashingAnimation = rive.RiveAnimation.asset(
   fit: BoxFit.cover,
 );
 
+const String _imgs_path = "assets/images/customer/taxi/";
+const String header_asset = "${_imgs_path}header.png";
+
+const String turnOn_asset = "${_imgs_path}turnOnIllustration.png";
+const String noOrdersFound_asset = "${_imgs_path}noOrderIllustration.png";
+const String usaFlagAsset = "assets/images/shared/usa.png";
+const String mexicoFlagAsset = "assets/images/shared/mexico.png";
+const String money_asset = "assets/images/shared/money.png";
+const String taxi_driver_marker_asset = "${_imgs_path}taxiDriverImg.png";
+
 enum AppType {
   CustomerApp,
   TaxiApp,
@@ -168,6 +169,17 @@ extension ParseOrderTypeToString on AppType {
         return ParticipantType.MezAdmin;
       default:
         return null;
+    }
+  }
+
+  String getPrivacyLink() {
+    switch (this) {
+      case AppType.CustomerApp:
+        return sPrivacyPolicyCustomerApp;
+      case AppType.TaxiApp:
+        return sPrivacyPolicyTaxiApp;
+      default:
+        return sPrivacyPolicyCustomerApp;
     }
   }
 }

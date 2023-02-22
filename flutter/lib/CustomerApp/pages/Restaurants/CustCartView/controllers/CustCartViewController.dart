@@ -18,7 +18,7 @@ import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as loc;
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 // controller class //
 class CustCartViewController {
@@ -219,7 +219,7 @@ class CustCartViewController {
       }
 
       if (newOrderId != null) {
-        popEverythingAndNavigateTo(
+        MezRouter.popEverythingAndNavigateTo(
           getRestaurantOrderRoute(
             newOrderId.toInt(),
           ),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/Orders/controllers/AdmiOrdersListViewController.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
@@ -57,8 +57,10 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       onTap: () {
                         mezDbgPrint(
                             "ID ====>${viewController.restaurantOrders.value![index].id}");
-                        MezRouter.toNamed(getRestaurantOrderRoute(
-                            viewController.restaurantOrders.value![index].id));
+                        MezRouter.toNamed(
+                            MezAdminRoutes.getRestaurantOrderRoute(
+                                viewController
+                                    .restaurantOrders.value![index].id));
                       })),
             )
           : Container(
@@ -77,7 +79,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   (int index) => MinimalOrderCard(
                       order: viewController.deliveryOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(getDvCompanyOrderRoute(
+                        MezRouter.toNamed(MezAdminRoutes.getDvCompanyOrderRoute(
                             viewController.deliveryOrders.value![index].id));
                       })),
             )

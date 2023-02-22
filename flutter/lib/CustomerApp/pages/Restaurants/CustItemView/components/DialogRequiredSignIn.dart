@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 void dialogRequiredSignIn() {
   dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -63,7 +63,8 @@ void dialogRequiredSignIn() {
                       Get.find<AuthController>()
                           .preserveNavigationStackAfterSignIn = true;
                       // ignore: unawaited_futures
-                      MezRouter.toNamed<void>(kSignInRouteOptional);
+                      MezRouter.toNamed<void>(
+                          SharedRoutes.kSignInRouteOptional);
                     },
                     label: "${_i18n()["signBtn"]}",
                     withGradient: true,

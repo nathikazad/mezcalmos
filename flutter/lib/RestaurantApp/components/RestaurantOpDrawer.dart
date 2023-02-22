@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/ContactUsPopUp.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]
     ["components"]["LaundryAppDrawer"];
@@ -33,13 +33,6 @@ class _ROpDrawerState extends State<ROpDrawer> {
   //     Get.find<RestaurantInfoController>();
   RestaurantOpAuthController restaurantOpAuthController =
       Get.find<RestaurantOpAuthController>();
-
-  // helpers //
-  static final AppLaunchMode lmd = getAppLaunchMode();
-
-  // variables //
-  static final String version =
-      GetStorage().read<String>(getxAppVersion) as String;
   Rxn<Restaurant> restaurant = Rxn();
 
   @override
@@ -119,11 +112,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
             Container(
                 alignment: Alignment.center,
                 child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
-                ))
+                    "{PlatformOSHelper.getAppVersion} ${MezEnv.appLaunchMode.toShortString()}"))
           ],
         ),
       ),
@@ -181,7 +170,7 @@ class _ROpDrawerState extends State<ROpDrawer> {
 
         _navigationLink(
             onClick: () {
-              MezRouter.toNamed(kNotificationsRoute);
+              MezRouter.toNamed(SharedRoutes.kNotificationsRoute);
             },
             icon: Icons.notifications,
             titleWidget: Text(

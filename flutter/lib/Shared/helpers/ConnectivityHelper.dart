@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 class ConnectivityHelper {
   ConnectivityHelper._privateConstructor();
@@ -47,11 +47,11 @@ class ConnectivityHelper {
       }
 
       if (!_hasInternet) {
-        if (!isCurrentRoute(kNoInternetRoute)) {
-          unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
+        if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
+          unawaited(MezRouter.toNamed<void>(SharedRoutes.kNoInternetRoute));
         }
       } else {
-        if (isCurrentRoute(kNoInternetRoute)) {
+        if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
           MezRouter.back<Null>();
         }
       }

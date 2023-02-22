@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show NumberFormat;
 import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -63,12 +62,12 @@ enum AppLaunchMode { prod, dev, stage }
 
 extension AppLaunchModeParser on String {
   /// if couldn't parse it returns dev as default
-  AppLaunchMode toLaunchMode({AppLaunchMode defaultLmode = AppLaunchMode.dev}) {
+  AppLaunchMode toLaunchMode() {
     mezDbgPrint("Called [toLaunchMode] on $this ");
     return AppLaunchMode.values.firstWhere(
       (AppLaunchMode v) =>
           v.toString().toLowerCase().split('.').last == toLowerCase(),
-      orElse: () => defaultLmode,
+      orElse: () => AppLaunchMode.dev,
     );
   }
 }
@@ -78,10 +77,6 @@ extension AppLaunchModeConverter on AppLaunchMode {
   String toShortString() {
     return toString().toLowerCase().split('.').last;
   }
-}
-
-AppLaunchMode getAppLaunchMode() {
-  return (GetStorage().read<String>(getxLmodeKey).toString()).toLaunchMode();
 }
 
 extension DateTimeCopy on DateTime {

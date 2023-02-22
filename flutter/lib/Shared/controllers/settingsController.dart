@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -31,14 +30,12 @@ class SettingsController extends GetxController {
 
   final List<SideMenuItem> sideMenuItems;
   final LocationPermissionType locationType;
-  AppType appType;
 
   ThemeController get appTheme => _appTheme;
 
   LanguageController get appLanguage => _appLanguage;
 
-  SettingsController(this.appType, this.locationType,
-      {this.sideMenuItems = const []});
+  SettingsController(this.locationType, {this.sideMenuItems = const []});
 
   @override
   Future<void> onInit() async {

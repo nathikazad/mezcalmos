@@ -41,6 +41,7 @@ font_awesome_flutter/
 .dart_tool/
 .packages
 build/
+lib/env.dart
  
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock

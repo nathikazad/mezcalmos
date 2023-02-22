@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as GeoLoc;
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -13,7 +13,7 @@ import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:sizer/sizer.dart';
 
@@ -159,7 +159,7 @@ class LocationPickerState extends State<LocationPicker> {
               notifier: (_) async {
             Get.find<AuthController>().preserveNavigationStackAfterSignIn =
                 true;
-            await MezRouter.toNamed<void>(kSignInRouteOptional);
+            await MezRouter.toNamed<void>(SharedRoutes.kSignInRouteOptional);
 
             // call back in case User was signedOut and he signedIn before confirming his Order Successfully!
             widget.onSuccessSignIn?.call();

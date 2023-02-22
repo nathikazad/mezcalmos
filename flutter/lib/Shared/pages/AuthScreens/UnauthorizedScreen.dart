@@ -8,7 +8,8 @@ import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:url_launcher/url_launcher_string.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
     ["AuthScreens"]["UnauthorizedScreen"];
@@ -77,10 +78,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
                         scheme: 'tel',
                         path: "+529541184711",
                       );
-                      await launch(launchUri.toString());
-                      // if (!(await launch('tel:+529541184711')))
-                      //   MezSnackbar('Error',
-                      //       "Failed launching https://meztaxi.com on browser , maybe try to browse to it manually ? ");
+                      await launchUrlString(launchUri.toString());
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 12),

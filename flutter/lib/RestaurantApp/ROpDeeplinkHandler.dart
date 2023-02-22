@@ -4,7 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
@@ -57,7 +57,7 @@ class ROpDeeplinkHandler {
     // await Get.find<RestaurantOpAuthController>().setupRestaurantOperator();
     //    if (res.success) {
     // ignore: unawaited_futures
-    MezRouter.toNamed(kOpUnauth);
+    MezRouter.toNamed(RestaurantAppRoutes.kOpUnauth);
     //  }
   }
 

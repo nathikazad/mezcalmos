@@ -6,7 +6,7 @@ import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
 import 'package:mezcalmos/MezAdminApp/models/MezAdmin.dart';
 import 'package:mezcalmos/MezAdminApp/notificationHandler.dart';
 import 'package:mezcalmos/MezAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/foregroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/mezAdminNodes.dart';
@@ -34,11 +34,11 @@ class _MezAdminWrapperState extends State<MezAdminWrapper> {
 
     final MezAdmin? _admin = _adminAuthController.admin;
     if (_admin != null) {
-      MezRouter.toNamed(kTabsView);
+      MezRouter.toNamed(MezAdminRoutes.kTabsView);
     } else {
       _adminAuthController.getMezAdmin().then((value) {
         if (_adminAuthController.admin != null) {
-          MezRouter.toNamed(kTabsView);
+          MezRouter.toNamed(MezAdminRoutes.kTabsView);
         }
       });
     }

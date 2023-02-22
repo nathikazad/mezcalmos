@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/env.dart';
 import 'package:sizer/sizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeFooterButtons extends StatelessWidget {
   const HomeFooterButtons({
@@ -61,7 +61,7 @@ class HomeFooterButtons extends StatelessWidget {
             fit: FlexFit.loose,
             child: InkWell(
               onTap: () async =>
-                  launch(GetStorage().read(getxPrivacyPolicyLink)),
+                  launchUrlString(MezEnv.appType.getPrivacyLink()),
               child: Ink(
                 padding: EdgeInsets.all(12),
                 child: Row(

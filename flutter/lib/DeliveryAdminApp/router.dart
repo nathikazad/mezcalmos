@@ -3,23 +3,24 @@ import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/DeliveryAdminWrapper.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/DvOpTabsView.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 
-// const String kCurrentOrdersList = "/currentDeliveryOrders";
-const String kDeliveryOpHomeScreen = '/home';
+class DeliveryAdminRoutes {
+  static const String kDeliveryOpHomeScreen = '/home';
 
-const String kNotAuthorizedOperator = "/unauthorized";
-const String kOrderView = "/orders/:orderId";
+  static const String kNotAuthorizedOperator = "/unauthorized";
+  static const String kOrderView = "/orders/:orderId";
 
-String getDvCompanyOrderRoute(int orderId) {
-  return kOrderView.replaceFirst(":orderId", "$orderId");
-}
+  static String getDvCompanyOrderRoute(int orderId) {
+    return kOrderView.replaceFirst(":orderId", "$orderId");
+  }
 
-class XRouter {
   static List<GetPage<dynamic>> mainRoutes = [
         GetPage(name: kDeliveryOpHomeScreen, page: () => DvOpTabsView()),
         GetPage(
-          name: kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
           page: () => DeliveryAdminWrapper(),
         ),
         GetPage(
@@ -27,5 +28,7 @@ class XRouter {
           page: () => DvCompanyOrderView(),
         ),
       ] +
-      SharedRouter.sharedRoutes;
+      SharedRoutes.routes +
+      SharedServiceProviderRoutes.routes +
+      NativeOnlyRoutes.routes;
 }

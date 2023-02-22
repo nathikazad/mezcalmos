@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Operators/Operator.dart';
@@ -50,7 +50,7 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
         .operator.value!.isWaitingToBeApprovedByOwner) {
       //  MezRouter.toNamed(kOpUnauth);
     } else {
-      MezRouter.toNamed(kDeliveryOpHomeScreen);
+      MezRouter.toNamed(DeliveryAdminRoutes.kDeliveryOpHomeScreen);
     }
   }
 

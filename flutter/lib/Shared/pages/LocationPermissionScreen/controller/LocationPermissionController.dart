@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 // import 'package:app_settings/app_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
@@ -8,7 +9,7 @@ import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 typedef void OnLocationPermissionChange(LocationPermissionsStatus? status);
 typedef String? LangValueRefGetter();
@@ -22,16 +23,15 @@ class LocationPermissionController {
   // LocationPermissionsStatus? _statusSnapshot;
 
   // inti of our controller.
-  void init({
-    required OnLocationPermissionChange onLocationPermissionsStatusChange,
-    required Function initialAndroidBodyTextSetter,
-    required Function initialIosBodyTextSetter,
-  }) {
+  void init(
+      {required OnLocationPermissionChange onLocationPermissionsStatusChange,
+      required Function initialAndroidBodyTextSetter,
+      required Function initialIosBodyTextSetter,
+      required Function initialWebBodyTextSetter}) {
     // first time execution.
-    _setInitialPermissionsAskingText(
-      initialIosBodyTextSetter,
-      initialAndroidBodyTextSetter,
-    ).then((_) {
+    _setInitialPermissionsAskingText(initialIosBodyTextSetter,
+            initialAndroidBodyTextSetter, initialWebBodyTextSetter)
+        .then((_) {
       onLocationPermissionsStatusChange(
         locationController.statusSnapshot.value,
       );
@@ -51,18 +51,22 @@ class LocationPermissionController {
   /// Checks OS tpye if iOS [_updateIosPermissionAskingText] / Android [_updateAndroidPermissionAskingText].
   ///
   /// Then sets Text Depending on SDK version if android.
-  Future<void> _setInitialPermissionsAskingText(
-      Function iosTextSetter, Function androidTextSetter) async {
-    if (Platform.isAndroid) {
-      // Handling if Android android
-      if (androidSdkVersion == null) {
-        androidSdkVersion = await getAndroidSdkVersion();
-        mezDbgPrint("viewController@adnroidSdkVersion => $androidSdkVersion");
-        androidTextSetter();
+  Future<void> _setInitialPermissionsAskingText(Function iosTextSetter,
+      Function androidTextSetter, Function webTextSetter) async {
+    if (kIsWeb) {
+      webTextSetter();
+    } else {
+      if (Platform.isAndroid) {
+        // Handling if Android android
+        if (androidSdkVersion == null) {
+          androidSdkVersion = await getAndroidSdkVersion();
+          mezDbgPrint("viewController@adnroidSdkVersion => $androidSdkVersion");
+          androidTextSetter();
+        }
+      } else if (Platform.isIOS) {
+        // Handling if Android android
+        iosTextSetter();
       }
-    } else if (Platform.isIOS) {
-      // Handling if Android android
-      iosTextSetter();
     }
   }
 
@@ -109,7 +113,7 @@ class LocationPermissionController {
     // }
 
     // Checking if android
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       if (locationController.locationType ==
               LocationPermissionType.ForegroundAndBackground &&
           _isAndroid11) {

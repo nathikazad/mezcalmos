@@ -8,7 +8,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/ROpS
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/components/RopItemOptionCard.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -324,7 +324,7 @@ class _ROpItemViewState extends State<ROpItemView>
                       title: '${_i18n()["addOption"]}',
                       onClick: () async {
                         final bool? result = await MezRouter.toNamed(
-                            getROpOptionRoute(
+                            RestaurantAppRoutes.getROpOptionRoute(
                                 restaurantId: restuarantID!,
                                 optionId: null,
                                 itemID: viewController.editableItem.value!.id!

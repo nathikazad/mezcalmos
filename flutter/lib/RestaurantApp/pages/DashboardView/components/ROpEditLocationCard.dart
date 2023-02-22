@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/RestaurantApp/pages/DashboardView/controllers/EditInfoController.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 class ROpEditLocationCard extends StatelessWidget {
   ROpEditLocationCard({
@@ -23,7 +23,7 @@ class ROpEditLocationCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           onTap: () async {
             final MezLocation newLoc = await MezRouter.toNamed(
-                kPickLocationEdit,
+                SharedRoutes.kPickLocationEdit,
                 arguments: LatLng(
                     editInfoController.restaurant.value!.info.location.latitude,
                     editInfoController.restaurant.value!.info.location

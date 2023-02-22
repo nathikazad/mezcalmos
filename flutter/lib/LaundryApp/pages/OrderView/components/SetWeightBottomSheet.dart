@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOrderWeightSelector.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -106,7 +106,7 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
                           if (value != null) {
                             MezRouter.untill((Route route) =>
                                 route.settings.name ==
-                                getLaundryOpOrderRoute(
+                                LaundryAppRoutes.getLaundryOpOrderRoute(
                                     widget.viewController.order.orderId));
                           }
                         });

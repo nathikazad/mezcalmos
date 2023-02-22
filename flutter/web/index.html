@@ -10,105 +10,116 @@
 
     For more details:
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="/">
+  <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta flt-viewport="" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="mezcalmos">
+  <meta name="apple-mobile-web-app-title" content="mez_services_web_app">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link href="main.css" rel="stylesheet"/>
+  <link rel="dns-prefetch" href="https://test-website-mezc.web.app/#/" />
+  <!-- <link rel="preload" href="/main.dart.js"/>
+  <link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js"/>
+  <link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/9.9.0/firebase-auth.js"/>
+  <link rel="preload" as="script" href="https://www.gstatic.com/firebasejs/9.9.0/firebase-storage.js"/> -->
+  <link rel="preload" as="script" href="https://maps.googleapis.com/maps-api-v3/api/js/51/3/common.js"/>
+  <link rel="preloads" as="script" href="https://maps.googleapis.com/maps/api/js?key=AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY&libraries=geometry" />
 
-  <title>mezcalmos</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>mez_services_web_app</title>
   <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACS-jr0KWCzCN0WFqbltolpX1dqhB2OjY&libraries=geometry"></script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
-	<script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyAKu4WzLR4iZPk4qnEgYdVh1SWqnRXbS-M",
-        authDomain: "http://localhost:4000/auth",
-        databaseURL: "http://localhost:4000/database",
-        projectId: "mezcalmos-85ff1",
-        storageBucket: "http://localhost:4000/storage"
+
+  <div id="loading"></div>
+  <script type="text/javascript">
+   
+    window.flutterWebRenderer = "html";
+  
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js"></script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+  document.addEventListener("dart_loaded", function (){
+    //Here my_dart_var is defined
+    console.log("dart_loaded event");
+    console.log(`launchMode: ${window.launchMode}`);
+    if (window.launchMode=="stage") {
+      const firebaseConfig = {
+        apiKey: "AIzaSyBRQTIUx_-oMdp5_S5e9F8h4Uc4ViZKM4U",
+        authDomain: "mezcalmos-staging.firebaseapp.com",
+        databaseURL: "https://mezcalmos-staging-default-rtdb.firebaseio.com",
+        projectId: "mezcalmos-staging",
+        storageBucket: "mezcalmos-staging.appspot.com",
+        messagingSenderId: "606383265109",
+        appId: "1:606383265109:web:a2050a8335ee6e37d8cbdc"
       };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-    </script>
-	
-	<script>
-    var serviceWorkerVersion = null;
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
-
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing ?? reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
+      const app = initializeApp(firebaseConfig);
     } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
+      const firebaseConfig = {
+        apiKey: "AIzaSyB9vaAB9ptXhpeRs_JjxODEyuA_eO0tYu0",
+        authDomain: "mezcalmos-31f1c.firebaseapp.com",
+        databaseURL: "https://mezcalmos-31f1c-default-rtdb.firebaseio.com",
+        projectId: "mezcalmos-31f1c",
+        storageBucket: "mezcalmos-31f1c.appspot.com",
+        messagingSenderId: "804036698204",
+        appId: "1:804036698204:web:39b22436cbb4ef633f8699",
+        measurementId: "G-5R20EL7CL9"
+      };
+      const app = initializeApp(firebaseConfig);
     }
+  });
+
+  //// Your web app's Firebase configuration for stage 
+  //// if this commented ,uncomment and run the app
+ 
+//// Your web app's Firebase configuration for prod 
+//// if this commented ,uncomment and run the app
+
+
+  // Initialize Firebase
+
+</script>
+  <script>
+    window.addEventListener('load', function(ev) {
+      var loading = document.querySelector('#loading');
+      loading.innerHTML=`<div  style="width:200px; ">`;
+      loading.innerHTML += `<div style="margin-left: 24%;margin-bottom: 15px;" class="loader"/>`;
+      loading.innerHTML+=`<div class="everythingOnOneLine"><span style="display: inline-block;">Loading, please wait ..</span> </div>`
+  loading.innerHTML+=`</div>`
+  
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function(engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function(appRunner) {
+        return appRunner.runApp();
+      });
+    });
   </script>
 </body>
 </html>

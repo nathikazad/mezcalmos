@@ -17,7 +17,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/widgets/OrderInfoCard/OrderInfoCard.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 class CustomerOrderCard extends StatelessWidget {
   const CustomerOrderCard({Key? key, required this.order}) : super(key: key);
@@ -219,10 +219,10 @@ class CustomerOrderCard extends StatelessWidget {
         MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
 
         break;
-      case OrderType.Taxi:
-        MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
+      // case OrderType.Taxi:
+      //   MezRouter.toNamed(getTaxiOrderRoute(order.orderId));
 
-        break;
+      //   break;
       default:
     }
   }

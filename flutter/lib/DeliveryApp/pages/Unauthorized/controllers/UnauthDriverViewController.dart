@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryApp/controllers/deliveryAuthController.dart';
 import 'package:mezcalmos/DeliveryApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_driver/hsDeliveryDriver.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -54,7 +54,7 @@ class UnautthDriverViewController {
     if (_status.value == AgentStatus.Authorized) {
       await dvAuthController.setupDeliveryDriver();
       // ignore: inference_failure_on_function_invocation, unawaited_futures
-      MezRouter.offAndToNamed(kCurrentOrdersListRoute);
+      MezRouter.offAndToNamed(DeliveryAppRoutes.kCurrentOrdersListRoute);
     }
   }
 

@@ -5,38 +5,39 @@ import 'package:mezcalmos/DeliveryApp/pages/OrdersList/CurrentOrdersListScreen.d
 import 'package:mezcalmos/DeliveryApp/pages/OrdersList/PastOrdersView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/SingleOrder/DvOrderView.dart';
 import 'package:mezcalmos/DeliveryApp/pages/Unauthorized/UnAuthrizedDriverView.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
-const String kCurrentOrdersListRoute = '/orders';
-const String kLaundryOrderView = '/laundryOrders/:orderId';
-const String kRestaurantOrderView = '/restaurantOrders/:orderId';
-const String kOrderDetailsView = "/orderDetails/:orderId";
-const String kPastOrdersView = "/pastOrders";
-const String kDriverUnAuth = "/driverUnauth";
-String getLaundryOrderRoute(int orderId) {
-  return kLaundryOrderView.replaceFirst(":orderId", orderId.toString());
-}
+class DeliveryAppRoutes {
+  static const String kCurrentOrdersListRoute = '/orders';
+  static const String kLaundryOrderView = '/laundryOrders/:orderId';
+  static const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+  static const String kOrderDetailsView = "/orderDetails/:orderId";
+  static const String kPastOrdersView = "/pastOrders";
+  static const String kDriverUnAuth = "/driverUnauth";
+  static String getLaundryOrderRoute(int orderId) {
+    return kLaundryOrderView.replaceFirst(":orderId", orderId.toString());
+  }
 
-String getRestaurantOrderRoute(int orderId) {
-  return kRestaurantOrderView.replaceFirst(":orderId", orderId.toString());
-}
+  static String getRestaurantOrderRoute(int orderId) {
+    return kRestaurantOrderView.replaceFirst(":orderId", orderId.toString());
+  }
 
-String getOrderDetailsRoute(int orderId) {
-  return kOrderDetailsView.replaceFirst(":orderId", "$orderId");
-}
+  static String getOrderDetailsRoute(int orderId) {
+    return kOrderDetailsView.replaceFirst(":orderId", "$orderId");
+  }
 
-// GetX based Router (For navigating)
-class XRouter {
-  static dynamic mainRoutes = [
+  static List<GetPage> routes = [
         GetPage(
             name: kCurrentOrdersListRoute,
             page: () => CurrentOrdersListScreen()),
-        GetPage(name: kHomeRoute, page: () => DeliveryWrapper()),
+        GetPage(name: SharedRoutes.kHomeRoute, page: () => DeliveryWrapper()),
         //  GetPage(name: kLaundryOrderView, page: () => LaundryOrderView()),
         GetPage(name: kRestaurantOrderView, page: () => DvOrderView()),
         GetPage(name: kOrderDetailsView, page: () => OrderDetailsScreen()),
         GetPage(name: kPastOrdersView, page: () => DriverPastOrdersView()),
         GetPage(name: kDriverUnAuth, page: () => UnAuthorizedDriverView()),
       ] +
-      SharedRouter.sharedRoutes;
+      SharedRoutes.routes +
+      NativeOnlyRoutes.routes;
 }

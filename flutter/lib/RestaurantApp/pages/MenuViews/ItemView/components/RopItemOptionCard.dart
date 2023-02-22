@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/controllers/ItemViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
@@ -106,10 +106,11 @@ class _ROpItemOptionCardState extends State<ROpItemOptionCard> {
   Widget _editBtn({required Option option}) {
     return InkWell(
       onTap: () async {
-        final bool? result = await MezRouter.toNamed(getROpOptionRoute(
-            restaurantId: widget.restaurantID,
-            optionId: option.id,
-            itemID: widget.itemId!)) as bool?;
+        final bool? result = await MezRouter.toNamed(
+            RestaurantAppRoutes.getROpOptionRoute(
+                restaurantId: widget.restaurantID,
+                optionId: option.id,
+                itemID: widget.itemId!)) as bool?;
         if (result == true) {
           await widget.viewController.fetchItem();
         }

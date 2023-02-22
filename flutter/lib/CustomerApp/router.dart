@@ -14,15 +14,13 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/CustRestaurantOrderView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
-import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
-import 'package:mezcalmos/Shared/pages/NoInternetScreen.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Taxi/RequestTaxiScreen/RequestTaxiScreen.dart';
+// import 'package:mezcalmos/CustomerApp/pages/Taxi/ViewTaxiOrder/ViewTaxiOrderScreen.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 // import 'package:mezcalmos/CustomerApp/pages/Restaurants/ViewRestaurantScreen/ViewRestaurantScreen.dart';
 
 // Routes Keys.
 // const String kWrapperRoute = '/wrapper';
-const String kTaxiRequestRoute = '/taxiRequest';
 const String kOrdersRoute = '/orders';
 const String kRestaurantsRoute = '/restaurants';
 const String kRestaurantRoute = '/restaurants/:restaurantId';
@@ -31,7 +29,8 @@ const String kViewRestaurantItemRoute =
 const String kRestaurantOrderRoute = '/restaurantOrders/:orderId';
 const String kCartRoute = '/cart';
 const String kCartItemRoute = '/cart/:cartItemId';
-const String kTaxiOrderRoute = '/taxiOrders/:orderId';
+// const String kTaxiRequestRoute = '/taxiRequest';
+// const String kTaxiOrderRoute = '/taxiOrders/:orderId';
 const String kLaundryOrderRequest = '/laundryOrderRequest';
 const String kLaundryCurrentOrder = '/laundryOrders/:orderId';
 const String kPickLocationRoute = '/pickLocationFromMap/addLocation';
@@ -67,19 +66,19 @@ String getRestaurantOrderRoute(int orderId) {
   return kRestaurantOrderRoute.replaceFirst(":orderId", orderId.toString());
 }
 
-String getTaxiOrderRoute(int orderId) {
-  return kTaxiOrderRoute.replaceFirst(":orderId", orderId.toString());
-}
+// String getTaxiOrderRoute(int orderId) {
+//   return kTaxiOrderRoute.replaceFirst(":orderId", orderId.toString());
+// }
 
 String getLaundryOrderRoute(int orderId) {
   return kLaundryCurrentOrder.replaceFirst(":orderId", orderId.toString());
 }
 
 // GetX based Router (For navigating)
-class XRouter {
+class CustomerAppRoutes {
   static dynamic mainRoutes = [
         GetPage(
-          name: kHomeRoute,
+          name: SharedRoutes.kHomeRoute,
           page: () => CustomerWrapper(),
         ),
         // restaurant Routes
@@ -143,18 +142,18 @@ class XRouter {
           page: () => PickLocationView(PickLocationMode.NonLoggedInPick),
         ),
         // Taxis Routes
-        GetPage(
-          name: kTaxiRequestRoute,
-          page: () => RequestTaxiScreen(),
-          transitionDuration: Duration(milliseconds: 500),
-          transition: Transition.rightToLeft,
-        ),
-        GetPage(
-          name: kTaxiOrderRoute,
-          page: () => ViewTaxiOrderScreen(),
-          transitionDuration: Duration(milliseconds: 500),
-          transition: Transition.rightToLeft,
-        ),
+        // GetPage(
+        //   name: kTaxiRequestRoute,
+        //   page: () => RequestTaxiScreen(),
+        //   transitionDuration: Duration(milliseconds: 500),
+        //   transition: Transition.rightToLeft,
+        // ),
+        // GetPage(
+        //   name: kTaxiOrderRoute,
+        //   page: () => ViewTaxiOrderScreen(),
+        //   transitionDuration: Duration(milliseconds: 500),
+        //   transition: Transition.rightToLeft,
+        // ),
         GetPage(
           name: kSavedLocations,
           page: () => SavedLocationView(),
@@ -176,5 +175,5 @@ class XRouter {
           page: () => CustLaundryOrderView(),
         ),
       ] +
-      SharedRouter.sharedRoutes;
+      SharedRoutes.routes;
 }

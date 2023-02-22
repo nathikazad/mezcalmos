@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
 dynamic _i18n() =>
@@ -89,7 +89,7 @@ class OrderRestaurantCard extends StatelessWidget {
                 MessageButton(
                   onTap: () {
                     MezRouter.toNamed(
-                      getMessagesRoute(
+                      SharedRoutes.getMessagesRoute(
                         chatId: order.chatId,
                         recipientType: ParticipantType.RestaurantOperator,
                         orderType: OrderType.Restaurant,

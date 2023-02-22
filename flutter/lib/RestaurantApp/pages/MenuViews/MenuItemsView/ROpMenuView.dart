@@ -6,7 +6,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/components/ROpSpecialsComponent.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/controllers/ROpMenuViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
@@ -131,8 +131,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                     mezDbgPrint("Tapped");
 
                     final bool? newCategoryAdded = await MezRouter.toNamed(
-                            getROpCategoryRoute(restaurantId: restaurantID!))
-                        as bool?;
+                        RestaurantAppRoutes.getROpCategoryRoute(
+                            restaurantId: restaurantID!)) as bool?;
                     if (newCategoryAdded == true) {
                       await viewController.fetchCategories();
                     }
@@ -145,8 +145,8 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 MezAddButton(
                   onClick: () async {
                     final bool? newItemAdded = await MezRouter.toNamed(
-                            getROpAddItemRoute(restaurantId: restaurantID!))
-                        as bool?;
+                        RestaurantAppRoutes.getROpAddItemRoute(
+                            restaurantId: restaurantID!)) as bool?;
                     if (newItemAdded == true) {
                       await viewController.fetchCategories();
                     }

@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:url_launcher/url_launcher_string.dart';
 
 class VersionSplit {
   final String major;
@@ -92,7 +93,7 @@ class AppVersionController {
 
   AppVersionController._internal() {
     // intanciating our NewVersion.
-    final String pkgName = getPackageName();
+    final String pkgName = PlatformOSHelper.getPackageName;
     _newVersion = NewVersion(
       iOSId: pkgName,
       androidId: pkgName, // packageInfo.packageName // 'com.mezcalmos.customer'
@@ -176,7 +177,7 @@ class AppVersionController {
     await openOsStore(openIosStoreFunction: () async {
       await StoreRedirect.redirect(
         iOSAppId: getAppStoreId(),
-        androidAppId: getPackageName(),
+        androidAppId: PlatformOSHelper.getPackageName,
       );
     });
   }
@@ -282,8 +283,8 @@ class NewVersion {
     } else if (Platform.isAndroid) {
       return _getAndroidStoreVersion(packageInfo);
     } else {
-      debugPrint(
-          'The target platform "${Platform.operatingSystem}" is not yet supported by this package.');
+      // debugPrint(
+      //     'The target platform "${Platform.operatingSystem}" is not yet supported by this package.');
     }
   }
 
@@ -468,8 +469,8 @@ class NewVersion {
   /// Launches the Apple App Store or Google Play Store page for the app.
   Future<void> launchAppStore(String appStoreLink) async {
     debugPrint(appStoreLink);
-    if (await canLaunch(appStoreLink)) {
-      await launch(appStoreLink);
+    if (await canLaunchUrlString(appStoreLink)) {
+      await launchUrlString(appStoreLink);
     } else {
       throw 'Could not launch appStoreLink';
     }

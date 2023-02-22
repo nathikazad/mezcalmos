@@ -4,7 +4,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/RO
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/components/ROpOptionTypeSelector.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/controllers/ROpOptionViewController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
@@ -228,8 +228,8 @@ class _ROpOptionViewState extends State<ROpOptionView>
                       ),
                     ),
                     MezAddButton(onClick: () async {
-                      final bool? refetch =
-                          await MezRouter.toNamed(getROpChoiceRoute(
+                      final bool? refetch = await MezRouter.toNamed(
+                          RestaurantAppRoutes.getROpChoiceRoute(
                         choiceId: null,
                         optionId: _viewController.editableOption.value!.id,
                         restaurantId: restaurantId!,

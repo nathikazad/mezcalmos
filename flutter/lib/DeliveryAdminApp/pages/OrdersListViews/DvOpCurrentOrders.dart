@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/controllers/DvOpCurrentOrdersController.dart';
 import 'package:mezcalmos/DeliveryAdminApp/router.dart';
-import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -100,7 +99,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
           MezButton(
             label: "Create",
             onClick: () async {
-              navigateToCreateService(
+              SharedServiceProviderRoutes.navigateToCreateService(
                   serviceProviderType: ServiceProviderType.Restaurant);
             },
           ),
@@ -136,8 +135,9 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
                     return MinimalOrderCard(
                       order: viewController.currentOrders.value![index],
                       onTap: () {
-                        MezRouter.toNamed(getDvCompanyOrderRoute(
-                            viewController.currentOrders.value![index].id));
+                        MezRouter.toNamed(
+                            DeliveryAdminRoutes.getDvCompanyOrderRoute(
+                                viewController.currentOrders.value![index].id));
                       },
                     );
                   }),

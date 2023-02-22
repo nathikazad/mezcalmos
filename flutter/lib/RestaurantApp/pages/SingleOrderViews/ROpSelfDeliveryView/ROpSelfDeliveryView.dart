@@ -13,7 +13,8 @@ import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:url_launcher/url_launcher_string.dart';
 
 //
 // dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -181,9 +182,9 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
                             "https://www.google.com/maps/dir/?api=1&destination=${_destination.latitude},${_destination.longitude}";
 
                         try {
-                          await launch(url);
+                          await launchUrlString(url);
                         } catch (e) {
-                          await launch(url);
+                          await launchUrlString(url);
                         }
                       },
                       child: Container(
