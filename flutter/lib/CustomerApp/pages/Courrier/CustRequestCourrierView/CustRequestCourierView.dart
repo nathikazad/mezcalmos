@@ -102,7 +102,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
         withGradient: true,
         height: 75,
         onClick: () async {
-          viewController.handleNext();
+          await viewController.handleNext();
         },
         borderRadius: 0,
       ),
@@ -137,10 +137,13 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
             ),
             DropDownLocationList(
               onValueChangeCallback: ({MezLocation? location}) {
-                if (location != null && location.isValidLocation()) {}
+                if (location != null && location.isValidLocation()) {
+                  viewController.toLoc.value = location;
+                }
               },
               bgColor: Colors.white,
               checkDistance: true,
+              passedInLocation: viewController.toLoc.value,
               serviceProviderLocation: null,
             ),
             SizedBox(

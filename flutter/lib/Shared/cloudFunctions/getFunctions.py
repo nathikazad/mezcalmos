@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import re
 
 onlyFunctionImports = {}
 fileImports = {}
@@ -12,6 +13,10 @@ models = {}
 types = {"number": "num", "string": "String", "boolean": "bool"}
 
 def searchForModel(search):  
+  matches = re.compile(r'\<(.*?)\>').findall(search)
+
+  if len(matches) >= 1:
+   search = matches[0]
   typeDictionary = {"values":{}}
   found = False
   for folder, dirs, files in os.walk("./"):
@@ -38,6 +43,7 @@ def searchForModel(search):
               return typeDictionary
   print("🚫🚫🚫🚫🚫 model not found")
   print(search)
+  
   print()
   sys.exit()
 

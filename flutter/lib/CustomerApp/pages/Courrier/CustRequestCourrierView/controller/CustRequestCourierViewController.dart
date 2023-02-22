@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/models/CourierItem.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
+import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
@@ -16,6 +21,7 @@ class CustRequestCourierViewController {
   RxList<TextEditingController> itemsNotes = RxList.empty();
   RxList<TextEditingController> itemsEstCosts = RxList.empty();
   Rxn<MezLocation> fromLoc = Rxn();
+  Rxn<MezLocation> toLoc = Rxn();
   Rxn<DateTime> deliveryTime = Rxn();
   Rxn<DeliveryCompany> company = Rxn();
   RxInt currentPage = RxInt(0);
@@ -55,18 +61,41 @@ class CustRequestCourierViewController {
     }
   }
 
-  void handleNext() {
+  Future<num?> handleNext() async {
     if (currentPage == 0) {
       if (fromKey.currentState?.validate() == true) {
-        pageController
+        unawaited(pageController
             .animateToPage(currentPage.value + 1,
                 duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
             .whenComplete(
-                () => currentPage.value = pageController.page!.toInt());
+                () => currentPage.value = pageController.page!.toInt()));
       }
     } else {
       // call cloud func
-      // CloudFunctions.de
+      try {
+        cModel.CreateCourierResponse res =
+            await CloudFunctions.delivery2_createCourierOrder(
+                toLocation: cModel.Location(toLoc.value!.position.latitude!,
+                    toLoc.value!.position.latitude!, toLoc.value!.address),
+                items: items
+                    .map((CourierItem element) => cModel.CourierItem(
+                        name: element.name,
+                        estimatedCost: element.estCost,
+                        notes: element.notes))
+                    .toList(),
+                deliveryCompanyId: company.value!.info.hasuraId,
+                deliveryCost: 50,
+                customerAppType: cModel.CustomerAppType.Native,
+                tripDistance: 0,
+                tripDuration: 0,
+                tripPolyline: "tripPolyline");
+        return res.orderId;
+      } on FirebaseFunctionsException catch (e, stk) {
+        showErrorSnackBar(errorText: e.message.toString());
+        mezDbgPrint(e);
+        mezDbgPrint(stk);
+      }
     }
+    return null;
   }
 }

@@ -141,7 +141,7 @@ class RestaurantCard extends StatelessWidget {
                 ),
                 Text(
                   restaurant.rate != null
-                      ? restaurant.rate.toString()
+                      ? restaurant.rate!.toStringAsFixed(1)
                       : 0.toString(),
                   style: Get.textTheme.bodyLarge,
                 )
