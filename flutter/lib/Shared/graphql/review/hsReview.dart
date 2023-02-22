@@ -3,6 +3,8 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/review/__generated/review.graphql.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
@@ -31,52 +33,55 @@ Future<int?> insert_review({required Review review}) async {
 }
 
 Future<double?> get_service_review_average(
-    {required int detailsId, bool withCache = true}) async {
+    {required int serviceId, bool withCache = true}) async {
   final QueryResult<Query$get_service_review_average> response =
       await _db.graphQLClient.query$get_service_review_average(
     Options$Query$get_service_review_average(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$get_service_review_average(
-          serviceDetailsId: detailsId),
+      variables:
+          Variables$Query$get_service_review_average(serviceId: serviceId),
     ),
   );
-  Query$get_service_review_average$service_provider_details_by_pk$reviews_aggregate?
-      data =
-      response.parsedData?.service_provider_details_by_pk?.reviews_aggregate;
+  Query$get_service_review_average$review_aggregate? data =
+      response.parsedData?.review_aggregate;
 
   if (data == null) {
     throw Exception(
         "🚨🚨🚨 get_restaurant_review_average Hasura querry exception =>${response.exception}");
   } else {
+    mezDbgPrint(" 😍😍😍😍 Getting avg rating =======>>>>>>>>>>>>$data");
     return data.aggregate?.avg?.rating;
   }
 }
 
 Future<List<Review>?> get_service_reviews(
-    {required int serviceDetailsId, bool withCache = true}) async {
+    {required int serviceId, bool withCache = true}) async {
   final QueryResult<Query$get_service_reviews> response =
       await _db.graphQLClient.query$get_service_reviews(
     Options$Query$get_service_reviews(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.networkOnly,
-      variables: Variables$Query$get_service_reviews(
-          serviceDetailsId: serviceDetailsId),
+      variables: Variables$Query$get_service_reviews(serviceId: serviceId),
     ),
   );
-  List<Query$get_service_reviews$service_provider_details_by_pk$reviews>? data =
-      response.parsedData!.service_provider_details_by_pk?.reviews;
+  List<Query$get_service_reviews$review>? data = response.parsedData?.review;
 
   if (data == null) {
     throw Exception("🚨🚨🚨 Hasura query  exception =>${response.exception}");
   } else {
-    return data.map(
-        (Query$get_service_reviews$service_provider_details_by_pk$reviews
-            reviewData) {
+    mezDbgPrint(" 😍😍😍😍 Getting avg rating =======>>>>>>>>>>>>$data");
+    return data.map<Review>((Query$get_service_reviews$review reviewData) {
       return Review(
           id: reviewData.id,
           rating: reviewData.rating,
           comment: reviewData.note,
+          customer: (reviewData.customer != null)
+              ? UserInfo(
+                  hasuraId: reviewData.customer!.user.id,
+                  name: reviewData.customer!.user.name,
+                  image: reviewData.customer!.user.image)
+              : null,
           reviewTime: DateTime.parse(reviewData.created_at),
           toEntityId: reviewData.to_entity_id,
           toEntityType: reviewData.to_entity_type.toServiceProviderType(),
