@@ -11,11 +11,11 @@ HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
 Future<HasuraChat?> get_chat_info({required int chat_id}) async {
   mezDbgPrint("[log] Called :: get_chat_info :: chat_id :: $chat_id ");
-  List<Message> _get_messages(List<Object?> msgs) {
+  List<Message> _get_messages(List<Object?>? msgs) {
     final List<Message> RetMsgs = [];
     mezDbgPrint(
         "[log] Called :: get_chat_info :: chat_id :: type :: ${msgs.runtimeType}");
-
+    if (msgs == null) return [];
     msgs.forEach((Object? jsonString) {
       mezDbgPrint("$jsonString :: type :: ${jsonString.runtimeType}");
       // I use the timestamp as key
@@ -47,6 +47,7 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     throwError(_chat.exception);
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
+    mezDbgPrint(_chat.parsedData!.chat_by_pk?.messages);
 
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(

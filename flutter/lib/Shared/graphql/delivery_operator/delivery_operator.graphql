@@ -33,8 +33,7 @@ query getCompanyOerators($companyId: Int!) {
   delivery_operator(where: {delivery_company_id: {_eq: $companyId}}) {
    
     delivery_company_id
-       delivery_company{details_id}
-   
+    delivery_company{details_id}
     id
      operator_details {
   owner
