@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getOperatorByUserId {
   factory Variables$Query$getOperatorByUserId({required int userId}) =>
@@ -2361,13 +2360,6 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_driver_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
@@ -2389,13 +2381,6 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
               ),
               FieldNode(
                 name: NameNode(value: 'app_version'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'current_gps'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -2595,7 +2580,6 @@ class Query$getCompanyOerators$delivery_operator {
   Query$getCompanyOerators$delivery_operator({
     required this.delivery_company_id,
     required this.delivery_company,
-    required this.delivery_driver_type,
     required this.id,
     required this.operator_details,
     required this.user,
@@ -2606,7 +2590,6 @@ class Query$getCompanyOerators$delivery_operator {
       Map<String, dynamic> json) {
     final l$delivery_company_id = json['delivery_company_id'];
     final l$delivery_company = json['delivery_company'];
-    final l$delivery_driver_type = json['delivery_driver_type'];
     final l$id = json['id'];
     final l$operator_details = json['operator_details'];
     final l$user = json['user'];
@@ -2616,7 +2599,6 @@ class Query$getCompanyOerators$delivery_operator {
       delivery_company:
           Query$getCompanyOerators$delivery_operator$delivery_company.fromJson(
               (l$delivery_company as Map<String, dynamic>)),
-      delivery_driver_type: (l$delivery_driver_type as String),
       id: (l$id as int),
       operator_details:
           Query$getCompanyOerators$delivery_operator$operator_details.fromJson(
@@ -2631,8 +2613,6 @@ class Query$getCompanyOerators$delivery_operator {
 
   final Query$getCompanyOerators$delivery_operator$delivery_company
       delivery_company;
-
-  final String delivery_driver_type;
 
   final int id;
 
@@ -2649,8 +2629,6 @@ class Query$getCompanyOerators$delivery_operator {
     _resultData['delivery_company_id'] = l$delivery_company_id;
     final l$delivery_company = delivery_company;
     _resultData['delivery_company'] = l$delivery_company.toJson();
-    final l$delivery_driver_type = delivery_driver_type;
-    _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$operator_details = operator_details;
@@ -2666,7 +2644,6 @@ class Query$getCompanyOerators$delivery_operator {
   int get hashCode {
     final l$delivery_company_id = delivery_company_id;
     final l$delivery_company = delivery_company;
-    final l$delivery_driver_type = delivery_driver_type;
     final l$id = id;
     final l$operator_details = operator_details;
     final l$user = user;
@@ -2674,7 +2651,6 @@ class Query$getCompanyOerators$delivery_operator {
     return Object.hashAll([
       l$delivery_company_id,
       l$delivery_company,
-      l$delivery_driver_type,
       l$id,
       l$operator_details,
       l$user,
@@ -2699,11 +2675,6 @@ class Query$getCompanyOerators$delivery_operator {
     final l$delivery_company = delivery_company;
     final lOther$delivery_company = other.delivery_company;
     if (l$delivery_company != lOther$delivery_company) {
-      return false;
-    }
-    final l$delivery_driver_type = delivery_driver_type;
-    final lOther$delivery_driver_type = other.delivery_driver_type;
-    if (l$delivery_driver_type != lOther$delivery_driver_type) {
       return false;
     }
     final l$id = id;
@@ -2753,7 +2724,6 @@ abstract class CopyWith$Query$getCompanyOerators$delivery_operator<TRes> {
     int? delivery_company_id,
     Query$getCompanyOerators$delivery_operator$delivery_company?
         delivery_company,
-    String? delivery_driver_type,
     int? id,
     Query$getCompanyOerators$delivery_operator$operator_details?
         operator_details,
@@ -2783,7 +2753,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
   TRes call({
     Object? delivery_company_id = _undefined,
     Object? delivery_company = _undefined,
-    Object? delivery_driver_type = _undefined,
     Object? id = _undefined,
     Object? operator_details = _undefined,
     Object? user = _undefined,
@@ -2799,10 +2768,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator<TRes>
             ? _instance.delivery_company
             : (delivery_company
                 as Query$getCompanyOerators$delivery_operator$delivery_company),
-        delivery_driver_type:
-            delivery_driver_type == _undefined || delivery_driver_type == null
-                ? _instance.delivery_driver_type
-                : (delivery_driver_type as String),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         operator_details: operator_details == _undefined ||
                 operator_details == null
@@ -2847,7 +2812,6 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator<TRes>
     int? delivery_company_id,
     Query$getCompanyOerators$delivery_operator$delivery_company?
         delivery_company,
-    String? delivery_driver_type,
     int? id,
     Query$getCompanyOerators$delivery_operator$operator_details?
         operator_details,
@@ -3011,7 +2975,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
   Query$getCompanyOerators$delivery_operator$operator_details({
     required this.owner,
     this.app_version,
-    this.current_gps,
     required this.status,
     required this.$__typename,
   });
@@ -3020,14 +2983,11 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
       Map<String, dynamic> json) {
     final l$owner = json['owner'];
     final l$app_version = json['app_version'];
-    final l$current_gps = json['current_gps'];
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
     return Query$getCompanyOerators$delivery_operator$operator_details(
       owner: (l$owner as bool),
       app_version: (l$app_version as String?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       status: (l$status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3036,8 +2996,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
   final bool owner;
 
   final String? app_version;
-
-  final Geography? current_gps;
 
   final String status;
 
@@ -3049,9 +3007,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
     _resultData['owner'] = l$owner;
     final l$app_version = app_version;
     _resultData['app_version'] = l$app_version;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$status = status;
     _resultData['status'] = l$status;
     final l$$__typename = $__typename;
@@ -3063,13 +3018,11 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
   int get hashCode {
     final l$owner = owner;
     final l$app_version = app_version;
-    final l$current_gps = current_gps;
     final l$status = status;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$owner,
       l$app_version,
-      l$current_gps,
       l$status,
       l$$__typename,
     ]);
@@ -3093,11 +3046,6 @@ class Query$getCompanyOerators$delivery_operator$operator_details {
     final l$app_version = app_version;
     final lOther$app_version = other.app_version;
     if (l$app_version != lOther$app_version) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$status = status;
@@ -3140,7 +3088,6 @@ abstract class CopyWith$Query$getCompanyOerators$delivery_operator$operator_deta
   TRes call({
     bool? owner,
     String? app_version,
-    Geography? current_gps,
     String? status,
     String? $__typename,
   });
@@ -3166,7 +3113,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details<
   TRes call({
     Object? owner = _undefined,
     Object? app_version = _undefined,
-    Object? current_gps = _undefined,
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3177,9 +3123,6 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$operator_details<
         app_version: app_version == _undefined
             ? _instance.app_version
             : (app_version as String?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -3202,7 +3145,6 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$operator_deta
   call({
     bool? owner,
     String? app_version,
-    Geography? current_gps,
     String? status,
     String? $__typename,
   }) =>
