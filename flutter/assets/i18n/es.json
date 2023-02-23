@@ -560,6 +560,7 @@
           "LaundryCurrentOrderView": {
             "orderStatus": "Estado de la orden",
             "laundry": "Lavandería",
+            "deliveryDetails" : "Detalles de la entrega",
             "estimatedDeliveryTime": "Tiempo de entrega estimado"
           }
         },

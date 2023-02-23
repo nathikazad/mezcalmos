@@ -1020,6 +1020,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'user'),
                     alias: null,
                     arguments: [],
@@ -5301,21 +5308,26 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
 
 class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver {
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver({
+    required this.id,
     required this.user,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
+      id: (l$id as int),
       user:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
               .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
       user;
@@ -5324,6 +5336,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -5333,9 +5347,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$user,
       l$$__typename,
     ]);
@@ -5349,6 +5365,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     if (!(other
             is Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$user = user;
@@ -5391,6 +5412,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
       _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver;
 
   TRes call({
+    int? id,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -5419,11 +5441,13 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined || user == null
             ? _instance.user
             : (user
@@ -5451,6 +5475,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes _res;
 
   call({
+    int? id,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -6689,6 +6714,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
                   FieldNode(
                     name: NameNode(value: 'user'),
                     alias: null,
@@ -10979,21 +11011,26 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver({
+    required this.id,
     required this.user,
     required this.$__typename,
   });
 
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
+    final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
+      id: (l$id as int),
       user:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
               .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
+
+  final int id;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
       user;
@@ -11002,6 +11039,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -11011,9 +11050,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   @override
   int get hashCode {
+    final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
+      l$id,
       l$user,
       l$$__typename,
     ]);
@@ -11027,6 +11068,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     if (!(other
             is Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
       return false;
     }
     final l$user = user;
@@ -11069,6 +11115,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
       _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver;
 
   TRes call({
+    int? id,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -11097,11 +11144,13 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
   static const _undefined = {};
 
   TRes call({
+    Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined || user == null
             ? _instance.user
             : (user
@@ -11129,6 +11178,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
   TRes _res;
 
   call({
+    int? id,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,

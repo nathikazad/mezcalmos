@@ -3,7 +3,6 @@ query getDriversByUserId($userId: Int!) {
   delivery_driver(where: { user_id: { _eq: $userId } }) {
     app_version
     current_location
-    delivery_driver_type
     delivery_company_type
     delivery_company_id
     id
@@ -28,7 +27,7 @@ query getDriversByServiceId($serviceId: Int!) {
   delivery_driver(where: { delivery_company_id: { _eq: $serviceId } }) {
     app_version
     current_location
-    delivery_driver_type
+   
     delivery_company_type
     delivery_company_id
     id

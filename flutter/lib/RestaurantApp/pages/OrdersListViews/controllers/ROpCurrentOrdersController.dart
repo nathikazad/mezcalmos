@@ -17,7 +17,6 @@ class ROpCurrentOrdersController {
 
   // vars
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int restaurantId;
   // Rxn<Restaurant> restaurant = Rxn();
@@ -48,8 +47,7 @@ class ROpCurrentOrdersController {
   Future<void> _initOrders() async {
     currentOrders.value =
         await get_current_restaurant_orders(restaurantId: restaurantId) ?? [];
-    pastOrders.value =
-        await get_past_restaurant_orders(restaurantId: restaurantId) ?? [];
+
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_restaurant_orders(restaurantId: restaurantId)

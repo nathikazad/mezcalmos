@@ -23,7 +23,7 @@ extension DeliveryOrderHelper on DeliveryOrder {
         return "${_i18n()["status"]['received']}";
 
       case DeliveryOrderStatus.AtPickup:
-        return "${_i18n()["status"]['atPickup']}";
+        return "${_i18n()["status"]['atPickUp']}";
       case DeliveryOrderStatus.OnTheWayToDropoff:
         return "${_i18n()["status"]['otwDropOff']}";
       case DeliveryOrderStatus.AtDropoff:

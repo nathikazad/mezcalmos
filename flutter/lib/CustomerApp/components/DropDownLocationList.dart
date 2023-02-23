@@ -6,9 +6,9 @@ import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -79,7 +79,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       });
     }
 
-    if (dropDownListValue?.location != null) {
+    if (dropDownListValue?.location != null && dropDownListValue!.id != -1) {
       validateFirstDistance();
     }
 
@@ -140,7 +140,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
             ),
             hint: Text(
               '${_i18n()["chooseLoc"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             items: listOfSavedLoacations
                 .map<DropdownMenuItem<SavedLocation>>(
@@ -269,7 +269,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               child: Text(
                 e.name.capitalizeFirst.toString(),
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.bodyText1?.copyWith(
+                style: Get.textTheme.bodyLarge?.copyWith(
                   fontSize: 12.sp,
                 ), //for dropdownItems
               ),
@@ -304,7 +304,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                     child: Text(
                       item.name.capitalizeFirst.toString(),
                       overflow: TextOverflow.ellipsis,
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 12.sp,
                       ), //for dropDownShownValue
                     ),
@@ -333,7 +333,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Flexible(
             child: Text(
               '${_i18n()["distanceError"]}',
-              style: Get.textTheme.bodyText1
+              style: Get.textTheme.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),

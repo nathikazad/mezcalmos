@@ -217,7 +217,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.all(5),
                     child: Text(
-                      "\$${laundry.value!.getCheapestCategory}/KG",
+                      "${laundry.value!.getCheapestCategory.toPriceString()}/KG",
                       style: Get.textTheme.bodyLarge
                           ?.copyWith(color: Get.theme.primaryColorLight),
                     ),

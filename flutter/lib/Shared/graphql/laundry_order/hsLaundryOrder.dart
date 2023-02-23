@@ -124,9 +124,10 @@ Future<LaundryOrder?> get_laundry_order_by_id(
       dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
       pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
       toCustomerDeliveryId: orderData.to_customer_delivery_id,
+      
       fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
       costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
-      cost: orderData.total_cost ?? 0,
+      cost: orderData.items_cost ?? 0,
       customerLocation: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
       laundryLocation: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address),
       orderTime: DateTime.parse(orderData.order_time),
@@ -174,7 +175,7 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
         estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
             ? DateTime.parse(orderData.estimated_ready_time!)
             : null,
-        cost: orderData.total_cost ?? 0,
+        cost: orderData.items_cost ?? 0,
         toCustomerDeliveryId: orderData.to_customer_delivery_id,
         customerPickupDriverChatId:
             orderData.from_customer_delivery?.chat_with_customer_id,

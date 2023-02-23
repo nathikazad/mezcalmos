@@ -311,13 +311,6 @@ const documentNodeQuerygetDriversByUserId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_driver_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company_type'),
             alias: null,
             arguments: [],
@@ -530,7 +523,6 @@ class Query$getDriversByUserId$delivery_driver {
   Query$getDriversByUserId$delivery_driver({
     this.app_version,
     this.current_location,
-    required this.delivery_driver_type,
     required this.delivery_company_type,
     required this.delivery_company_id,
     required this.id,
@@ -544,7 +536,6 @@ class Query$getDriversByUserId$delivery_driver {
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
     final l$current_location = json['current_location'];
-    final l$delivery_driver_type = json['delivery_driver_type'];
     final l$delivery_company_type = json['delivery_company_type'];
     final l$delivery_company_id = json['delivery_company_id'];
     final l$id = json['id'];
@@ -557,7 +548,6 @@ class Query$getDriversByUserId$delivery_driver {
       current_location: l$current_location == null
           ? null
           : geographyFromJson(l$current_location),
-      delivery_driver_type: (l$delivery_driver_type as String),
       delivery_company_type: (l$delivery_company_type as String),
       delivery_company_id: (l$delivery_company_id as int),
       id: (l$id as int),
@@ -572,8 +562,6 @@ class Query$getDriversByUserId$delivery_driver {
   final String? app_version;
 
   final Geography? current_location;
-
-  final String delivery_driver_type;
 
   final String delivery_company_type;
 
@@ -596,8 +584,6 @@ class Query$getDriversByUserId$delivery_driver {
     final l$current_location = current_location;
     _resultData['current_location'] =
         l$current_location == null ? null : geographyToJson(l$current_location);
-    final l$delivery_driver_type = delivery_driver_type;
-    _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$delivery_company_type = delivery_company_type;
     _resultData['delivery_company_type'] = l$delivery_company_type;
     final l$delivery_company_id = delivery_company_id;
@@ -619,7 +605,6 @@ class Query$getDriversByUserId$delivery_driver {
   int get hashCode {
     final l$app_version = app_version;
     final l$current_location = current_location;
-    final l$delivery_driver_type = delivery_driver_type;
     final l$delivery_company_type = delivery_company_type;
     final l$delivery_company_id = delivery_company_id;
     final l$id = id;
@@ -630,7 +615,6 @@ class Query$getDriversByUserId$delivery_driver {
     return Object.hashAll([
       l$app_version,
       l$current_location,
-      l$delivery_driver_type,
       l$delivery_company_type,
       l$delivery_company_id,
       l$id,
@@ -658,11 +642,6 @@ class Query$getDriversByUserId$delivery_driver {
     final l$current_location = current_location;
     final lOther$current_location = other.current_location;
     if (l$current_location != lOther$current_location) {
-      return false;
-    }
-    final l$delivery_driver_type = delivery_driver_type;
-    final lOther$delivery_driver_type = other.delivery_driver_type;
-    if (l$delivery_driver_type != lOther$delivery_driver_type) {
       return false;
     }
     final l$delivery_company_type = delivery_company_type;
@@ -726,7 +705,6 @@ abstract class CopyWith$Query$getDriversByUserId$delivery_driver<TRes> {
   TRes call({
     String? app_version,
     Geography? current_location,
-    String? delivery_driver_type,
     String? delivery_company_type,
     int? delivery_company_id,
     int? id,
@@ -754,7 +732,6 @@ class _CopyWithImpl$Query$getDriversByUserId$delivery_driver<TRes>
   TRes call({
     Object? app_version = _undefined,
     Object? current_location = _undefined,
-    Object? delivery_driver_type = _undefined,
     Object? delivery_company_type = _undefined,
     Object? delivery_company_id = _undefined,
     Object? id = _undefined,
@@ -770,10 +747,6 @@ class _CopyWithImpl$Query$getDriversByUserId$delivery_driver<TRes>
         current_location: current_location == _undefined
             ? _instance.current_location
             : (current_location as Geography?),
-        delivery_driver_type:
-            delivery_driver_type == _undefined || delivery_driver_type == null
-                ? _instance.delivery_driver_type
-                : (delivery_driver_type as String),
         delivery_company_type:
             delivery_company_type == _undefined || delivery_company_type == null
                 ? _instance.delivery_company_type
@@ -812,7 +785,6 @@ class _CopyWithStubImpl$Query$getDriversByUserId$delivery_driver<TRes>
   call({
     String? app_version,
     Geography? current_location,
-    String? delivery_driver_type,
     String? delivery_company_type,
     int? delivery_company_id,
     int? id,
@@ -1336,13 +1308,6 @@ const documentNodeQuerygetDriversByServiceId = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
-            name: NameNode(value: 'delivery_driver_type'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_company_type'),
             alias: null,
             arguments: [],
@@ -1555,7 +1520,6 @@ class Query$getDriversByServiceId$delivery_driver {
   Query$getDriversByServiceId$delivery_driver({
     this.app_version,
     this.current_location,
-    required this.delivery_driver_type,
     required this.delivery_company_type,
     required this.delivery_company_id,
     required this.id,
@@ -1569,7 +1533,6 @@ class Query$getDriversByServiceId$delivery_driver {
       Map<String, dynamic> json) {
     final l$app_version = json['app_version'];
     final l$current_location = json['current_location'];
-    final l$delivery_driver_type = json['delivery_driver_type'];
     final l$delivery_company_type = json['delivery_company_type'];
     final l$delivery_company_id = json['delivery_company_id'];
     final l$id = json['id'];
@@ -1582,7 +1545,6 @@ class Query$getDriversByServiceId$delivery_driver {
       current_location: l$current_location == null
           ? null
           : geographyFromJson(l$current_location),
-      delivery_driver_type: (l$delivery_driver_type as String),
       delivery_company_type: (l$delivery_company_type as String),
       delivery_company_id: (l$delivery_company_id as int),
       id: (l$id as int),
@@ -1597,8 +1559,6 @@ class Query$getDriversByServiceId$delivery_driver {
   final String? app_version;
 
   final Geography? current_location;
-
-  final String delivery_driver_type;
 
   final String delivery_company_type;
 
@@ -1621,8 +1581,6 @@ class Query$getDriversByServiceId$delivery_driver {
     final l$current_location = current_location;
     _resultData['current_location'] =
         l$current_location == null ? null : geographyToJson(l$current_location);
-    final l$delivery_driver_type = delivery_driver_type;
-    _resultData['delivery_driver_type'] = l$delivery_driver_type;
     final l$delivery_company_type = delivery_company_type;
     _resultData['delivery_company_type'] = l$delivery_company_type;
     final l$delivery_company_id = delivery_company_id;
@@ -1644,7 +1602,6 @@ class Query$getDriversByServiceId$delivery_driver {
   int get hashCode {
     final l$app_version = app_version;
     final l$current_location = current_location;
-    final l$delivery_driver_type = delivery_driver_type;
     final l$delivery_company_type = delivery_company_type;
     final l$delivery_company_id = delivery_company_id;
     final l$id = id;
@@ -1655,7 +1612,6 @@ class Query$getDriversByServiceId$delivery_driver {
     return Object.hashAll([
       l$app_version,
       l$current_location,
-      l$delivery_driver_type,
       l$delivery_company_type,
       l$delivery_company_id,
       l$id,
@@ -1683,11 +1639,6 @@ class Query$getDriversByServiceId$delivery_driver {
     final l$current_location = current_location;
     final lOther$current_location = other.current_location;
     if (l$current_location != lOther$current_location) {
-      return false;
-    }
-    final l$delivery_driver_type = delivery_driver_type;
-    final lOther$delivery_driver_type = other.delivery_driver_type;
-    if (l$delivery_driver_type != lOther$delivery_driver_type) {
       return false;
     }
     final l$delivery_company_type = delivery_company_type;
@@ -1751,7 +1702,6 @@ abstract class CopyWith$Query$getDriversByServiceId$delivery_driver<TRes> {
   TRes call({
     String? app_version,
     Geography? current_location,
-    String? delivery_driver_type,
     String? delivery_company_type,
     int? delivery_company_id,
     int? id,
@@ -1779,7 +1729,6 @@ class _CopyWithImpl$Query$getDriversByServiceId$delivery_driver<TRes>
   TRes call({
     Object? app_version = _undefined,
     Object? current_location = _undefined,
-    Object? delivery_driver_type = _undefined,
     Object? delivery_company_type = _undefined,
     Object? delivery_company_id = _undefined,
     Object? id = _undefined,
@@ -1795,10 +1744,6 @@ class _CopyWithImpl$Query$getDriversByServiceId$delivery_driver<TRes>
         current_location: current_location == _undefined
             ? _instance.current_location
             : (current_location as Geography?),
-        delivery_driver_type:
-            delivery_driver_type == _undefined || delivery_driver_type == null
-                ? _instance.delivery_driver_type
-                : (delivery_driver_type as String),
         delivery_company_type:
             delivery_company_type == _undefined || delivery_company_type == null
                 ? _instance.delivery_company_type
@@ -1837,7 +1782,6 @@ class _CopyWithStubImpl$Query$getDriversByServiceId$delivery_driver<TRes>
   call({
     String? app_version,
     Geography? current_location,
-    String? delivery_driver_type,
     String? delivery_company_type,
     int? delivery_company_id,
     int? id,
