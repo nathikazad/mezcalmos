@@ -43,7 +43,6 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -58,7 +57,6 @@ select_permissions:
   - role: laundry_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -73,7 +71,6 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -90,7 +87,6 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
