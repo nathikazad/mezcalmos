@@ -120,6 +120,7 @@ class CustomerAuthController extends GetxController {
   Future<LocationData> getCustomerCurrentLocation() async {
     mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
     LocationData res = await Location().getLocation();
+    customerCurrentLocation.value = res;
     mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
     return res;
   }
