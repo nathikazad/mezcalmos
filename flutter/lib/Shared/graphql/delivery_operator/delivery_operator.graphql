@@ -39,7 +39,7 @@ query getCompanyOerators($companyId: Int!) {
      operator_details {
   owner
    app_version
-    current_gps
+    
     status
     }
     user {
