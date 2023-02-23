@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -172,7 +171,6 @@ class _RestaurantCardState extends State<RestaurantCard> {
         ((customerDistance * widget.restaurant.deliveryCost!.costPerKm) / 5)
                 .round() *
             5;
-    mezDbgPrint("Distance ======>$customerDistance $deliveryCost");
     return max(widget.restaurant.deliveryCost!.minimumCost, deliveryCost);
   }
 

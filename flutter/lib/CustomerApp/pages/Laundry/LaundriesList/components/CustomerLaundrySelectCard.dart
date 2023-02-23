@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -14,11 +18,11 @@ dynamic _i18n() =>
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
-  const CustomerLaundrySelectCard(
-      {Key? key, required this.laundry, required this.shippingPrice})
-      : super(key: key);
+  const CustomerLaundrySelectCard({
+    Key? key,
+    required this.laundry,
+  }) : super(key: key);
   final Laundry laundry;
-  final double shippingPrice;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +93,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           ),
                           Flexible(
                             child: ShippingCostComponent(
-                              shippingCost: shippingPrice,
+                              shippingCost: _getShippingPrice(),
                               alignment: MainAxisAlignment.start,
                               textStyle: Get.textTheme.bodyMedium?.copyWith(
                                 color: blackColor,
@@ -149,6 +153,19 @@ class CustomerLaundrySelectCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  num _getShippingPrice() {
+    return max(
+      laundry.deliveryCost.minimumCost,
+      (calculateDistance(
+                  Get.find<CustomerAuthController>()
+                      .customerCurrentLocation
+                      .value!,
+                  laundry.info.location.toLocationData())
+              .round() *
+          laundry.deliveryCost.costPerKm),
     );
   }
 
