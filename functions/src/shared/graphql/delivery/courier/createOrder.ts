@@ -43,11 +43,11 @@ export async function createNewCourierOrder(
                     "coordinates": [courierRequest.toLocation.lng, courierRequest.toLocation.lat ],
                 }),
                 customer_id: customerId,
-                stripe_fees: courierRequest.stripeFees,
-                tax: courierRequest.tax,
+                stripe_fees: courierRequest.stripeFees ?? undefined,
+                tax: courierRequest.tax ?? undefined,
                 customer_app_type: courierRequest.customerAppType,
-                refund_amount: courierRequest.refundAmount,
-                discount_value: courierRequest.discountValue,
+                refund_amount: courierRequest.refundAmount ?? undefined,
+                discount_value: courierRequest.discountValue ?? undefined,
                 items: {
                     data: courierRequest.items.map((i) => {
                         return {

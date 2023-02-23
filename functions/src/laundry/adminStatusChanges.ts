@@ -42,7 +42,7 @@ async function changeStatus(orderId: number, newStatus: LaundryOrderStatus, user
     if (!orderInProcess(order.status)) {
       throw new HttpsError(
         "internal",
-        "Order cannot be cancelled because it is not in process"
+        "Order cannot be completed or cancelled because it is not in process"
       );
     }
   } else if (expectedPreviousStatus(newStatus) != order.status) {

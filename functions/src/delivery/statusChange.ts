@@ -25,9 +25,17 @@ let statusArrayInSeq: Array<DeliveryOrderStatus> = [
 ]
 
 function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: DeliveryOrderStatus) {
+  if(newStatus == DeliveryOrderStatus.CancelledByAdmin) {
+    if(!statusArrayInSeq.slice(0, -1).includes(currentStatus)) {
+      throw new HttpsError(
+        "internal",
+        "order cannot be cancelled since it is not in process"
+      );
+    }
+    return;
+  }
   if ((newStatus == DeliveryOrderStatus.OnTheWayToPickup)
     && (currentStatus != DeliveryOrderStatus.OrderReceived)
-   
   ) {
     throw new HttpsError(
       "internal",
@@ -40,7 +48,7 @@ function checkExpectedStatus(currentStatus: DeliveryOrderStatus, newStatus: Deli
     );
   }
 }
-
+ 
 export interface ChangeDeliveryStatusDetails {
   deliveryId: number,
   newStatus: DeliveryOrderStatus
@@ -50,7 +58,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
 
   let deliveryOrder: DeliveryOrder = await getDeliveryOrder(changeDeliveryStatusDetails.deliveryId);
 
-  await errorChecks(deliveryOrder, userId);
+  await errorChecks(deliveryOrder, userId, changeDeliveryStatusDetails.newStatus);
 
   let customer: CustomerInfo = await getCustomer(deliveryOrder.customerId);
 
@@ -73,7 +81,7 @@ export async function changeDeliveryStatus(userId: number, changeDeliveryStatusD
   }
 }
 
-async function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
+async function errorChecks(deliveryOrder: DeliveryOrder, userId: number, newStatus: DeliveryOrderStatus) {
   if (deliveryOrder.deliveryDriver == null) {
     throw new HttpsError(
       "internal",
@@ -90,13 +98,24 @@ async function errorChecks(deliveryOrder: DeliveryOrder, userId: number) {
       "delivery order is complete or cancelled"
     );
   }
-  if((await isMezAdmin(userId)) == false) {
+  if((await isMezAdmin(userId))) {
+    if(newStatus != DeliveryOrderStatus.CancelledByAdmin)
+      throw new HttpsError(
+        "internal",
+        "Mez admin cannot change delivery status"
+      );
+  } else {
     if (userId != deliveryOrder.deliveryDriver.userId) {
       throw new HttpsError(
         "internal",
         "order driver mismatch"
       );
     }
+    if(newStatus == DeliveryOrderStatus.CancelledByAdmin)
+      throw new HttpsError(
+        "internal",
+        "Delivery driver cannot cancel delivery from admin"
+      );
   }
 }
 
