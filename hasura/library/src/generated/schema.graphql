@@ -80,7 +80,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb!
+  ): jsonb
 }
 
 """
@@ -598,8 +598,6 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -785,8 +783,6 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -936,10 +932,6 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
-  stripe_info(
-    """JSON select path"""
-    path: String
-  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -1007,11 +999,6 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
-"""append existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_append_input {
-  stripe_info: jsonb
-}
-
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -1036,7 +1023,6 @@ input customer_customer_bool_exp {
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
-  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -1059,28 +1045,6 @@ enum customer_customer_constraint {
 }
 
 """
-delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-"""
-input customer_customer_delete_at_path_input {
-  stripe_info: [String!]
-}
-
-"""
-delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array
-"""
-input customer_customer_delete_elem_input {
-  stripe_info: Int
-}
-
-"""
-delete key/value pair or string element. key/value pairs are matched based on their key value
-"""
-input customer_customer_delete_key_input {
-  stripe_info: String
-}
-
-"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -1100,7 +1064,6 @@ input customer_customer_insert_input {
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
-  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -1165,7 +1128,6 @@ input customer_customer_order_by {
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
-  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -1174,11 +1136,6 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
-}
-
-"""prepend existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_prepend_input {
-  stripe_info: jsonb
 }
 
 """
@@ -1198,9 +1155,6 @@ enum customer_customer_select_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
@@ -1212,7 +1166,6 @@ input customer_customer_set_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -1248,7 +1201,6 @@ input customer_customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -1274,42 +1226,15 @@ enum customer_customer_update_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
 input customer_customer_updates {
-  """append existing jsonb value of filtered columns with new jsonb value"""
-  _append: customer_customer_append_input
-
-  """
-  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-  """
-  _delete_at_path: customer_customer_delete_at_path_input
-
-  """
-  delete the array element with specified index (negative integers count from
-  the end). throws an error if top level container is not an array
-  """
-  _delete_elem: customer_customer_delete_elem_input
-
-  """
-  delete key/value pair or string element. key/value pairs are matched based on their key value
-  """
-  _delete_key: customer_customer_delete_key_input
-
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
 
-  """prepend existing jsonb value of filtered columns with new jsonb value"""
-  _prepend: customer_customer_prepend_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -1564,8 +1489,6 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -1940,8 +1863,6 @@ input customer_minimal_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_minimal_order_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_minimal_order_bool_exp!
 }
 
@@ -2349,8 +2270,6 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -2881,8 +2800,6 @@ input customer_stripe_cards_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_cards_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_cards_bool_exp!
 }
 
@@ -3283,8 +3200,6 @@ input customer_stripe_sp_id_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_sp_id_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_sp_id_bool_exp!
 }
 
@@ -3677,8 +3592,6 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -4209,8 +4122,6 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
@@ -4312,9 +4223,6 @@ type delivery_driver {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String!
-
-  """Just for relationship"""
-  delivery_driver_type: String!
   id: Int!
 
   """An object relationship"""
@@ -4416,7 +4324,6 @@ input delivery_driver_bool_exp {
   delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
   delivery_company_type: String_comparison_exp
-  delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
   laundry: laundry_store_bool_exp
   notification_info: notification_info_bool_exp
@@ -4465,9 +4372,6 @@ input delivery_driver_insert_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   laundry: laundry_store_obj_rel_insert_input
   notification_info: notification_info_obj_rel_insert_input
@@ -4489,9 +4393,6 @@ type delivery_driver_max_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
 
   """awaiting_approval, authorized, banned"""
@@ -4507,9 +4408,6 @@ type delivery_driver_min_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
 
   """awaiting_approval, authorized, banned"""
@@ -4555,7 +4453,6 @@ input delivery_driver_order_by {
   delivery_company: delivery_company_order_by
   delivery_company_id: order_by
   delivery_company_type: order_by
-  delivery_driver_type: order_by
   id: order_by
   laundry: laundry_store_order_by
   notification_info: notification_info_order_by
@@ -4592,9 +4489,6 @@ enum delivery_driver_select_column {
   delivery_company_type
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   id
 
   """column name"""
@@ -4618,9 +4512,6 @@ input delivery_driver_set_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   online: Boolean
 
@@ -4670,9 +4561,6 @@ input delivery_driver_stream_cursor_value_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   online: Boolean
 
@@ -4708,9 +4596,6 @@ enum delivery_driver_update_column {
   delivery_company_type
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   id
 
   """column name"""
@@ -4729,8 +4614,6 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -4766,7 +4649,6 @@ type delivery_operator {
   """An object relationship"""
   delivery_company: delivery_company!
   delivery_company_id: Int!
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -4868,7 +4750,6 @@ input delivery_operator_bool_exp {
   _or: [delivery_operator_bool_exp!]
   delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -4912,7 +4793,6 @@ input type for inserting data into table "delivery.operator"
 input delivery_operator_insert_input {
   delivery_company: delivery_company_obj_rel_insert_input
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -4923,7 +4803,6 @@ input delivery_operator_insert_input {
 """aggregate max on columns"""
 type delivery_operator_max_fields {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -4934,7 +4813,6 @@ order by max() on columns of table "delivery.operator"
 """
 input delivery_operator_max_order_by {
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   user_id: order_by
@@ -4943,7 +4821,6 @@ input delivery_operator_max_order_by {
 """aggregate min on columns"""
 type delivery_operator_min_fields {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -4954,7 +4831,6 @@ order by min() on columns of table "delivery.operator"
 """
 input delivery_operator_min_order_by {
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   user_id: order_by
@@ -4994,7 +4870,6 @@ input delivery_operator_on_conflict {
 input delivery_operator_order_by {
   delivery_company: delivery_company_order_by
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -5015,9 +4890,6 @@ enum delivery_operator_select_column {
   delivery_company_id
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -5032,7 +4904,6 @@ input type for updating data in table "delivery.operator"
 """
 input delivery_operator_set_input {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -5106,7 +4977,6 @@ input delivery_operator_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input delivery_operator_stream_cursor_value_input {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -5138,9 +5008,6 @@ enum delivery_operator_update_column {
   delivery_company_id
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -5156,8 +5023,6 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -6141,8 +6006,6 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -6736,8 +6599,6 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -7123,8 +6984,6 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -7479,8 +7338,6 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
-
-  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -7877,8 +7734,6 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -7946,7 +7801,6 @@ input laundry_category_variance_order_by {
 columns and relationships of "laundry.operator"
 """
 type laundry_operator {
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -8050,7 +7904,6 @@ input laundry_operator_bool_exp {
   _and: [laundry_operator_bool_exp!]
   _not: laundry_operator_bool_exp
   _or: [laundry_operator_bool_exp!]
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -8094,7 +7947,6 @@ input laundry_operator_inc_input {
 input type for inserting data into table "laundry.operator"
 """
 input laundry_operator_insert_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -8106,7 +7958,6 @@ input laundry_operator_insert_input {
 
 """aggregate max on columns"""
 type laundry_operator_max_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -8117,7 +7968,6 @@ type laundry_operator_max_fields {
 order by max() on columns of table "laundry.operator"
 """
 input laundry_operator_max_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   store_id: order_by
@@ -8126,7 +7976,6 @@ input laundry_operator_max_order_by {
 
 """aggregate min on columns"""
 type laundry_operator_min_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -8137,7 +7986,6 @@ type laundry_operator_min_fields {
 order by min() on columns of table "laundry.operator"
 """
 input laundry_operator_min_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   store_id: order_by
@@ -8176,7 +8024,6 @@ input laundry_operator_on_conflict {
 
 """Ordering options when selecting data from "laundry.operator"."""
 input laundry_operator_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -8196,9 +8043,6 @@ select columns of table "laundry.operator"
 """
 enum laundry_operator_select_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -8215,7 +8059,6 @@ enum laundry_operator_select_column {
 input type for updating data in table "laundry.operator"
 """
 input laundry_operator_set_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -8289,7 +8132,6 @@ input laundry_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input laundry_operator_stream_cursor_value_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -8319,9 +8161,6 @@ update columns of table "laundry.operator"
 """
 enum laundry_operator_update_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -8340,8 +8179,6 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -9088,8 +8925,6 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -9708,8 +9543,6 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -10268,8 +10101,6 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -10587,8 +10418,6 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -10767,8 +10596,6 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -10965,8 +10792,6 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -12941,30 +12766,8 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -12977,30 +12780,8 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -15227,8 +15008,6 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
-
-  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -17883,6 +17662,7 @@ type restaurant_cart {
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  discount_value: money!
 
   """An array relationship"""
   items(
@@ -17953,6 +17733,7 @@ type restaurant_cart_aggregate_fields {
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -17966,6 +17747,7 @@ input restaurant_cart_bool_exp {
   cost: money_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   items: restaurant_cart_item_bool_exp
   items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -17987,6 +17769,7 @@ input type for incrementing numeric columns in table "restaurant.cart"
 """
 input restaurant_cart_inc_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -17996,6 +17779,7 @@ input type for inserting data into table "restaurant.cart"
 input restaurant_cart_insert_input {
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  discount_value: money
   items: restaurant_cart_item_arr_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -18428,8 +18212,6 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -18496,12 +18278,14 @@ input restaurant_cart_item_variance_order_by {
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -18540,6 +18324,7 @@ input restaurant_cart_order_by {
   cost: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  discount_value: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -18558,6 +18343,9 @@ enum restaurant_cart_select_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   restaurant_id
 }
 
@@ -18566,24 +18354,28 @@ input type for updating data in table "restaurant.cart"
 """
 input restaurant_cart_set_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -18601,12 +18393,14 @@ input restaurant_cart_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input restaurant_cart_stream_cursor_value_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -18618,6 +18412,9 @@ enum restaurant_cart_update_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   restaurant_id
 }
 
@@ -18627,26 +18424,27 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -19115,8 +18913,6 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -19626,8 +19422,6 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -20437,8 +20231,6 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -20786,8 +20578,6 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -20867,7 +20657,6 @@ input restaurant_item_variance_order_by {
 columns and relationships of "restaurant.operator"
 """
 type restaurant_operator {
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -20971,7 +20760,6 @@ input restaurant_operator_bool_exp {
   _and: [restaurant_operator_bool_exp!]
   _not: restaurant_operator_bool_exp
   _or: [restaurant_operator_bool_exp!]
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -21015,7 +20803,6 @@ input restaurant_operator_inc_input {
 input type for inserting data into table "restaurant.operator"
 """
 input restaurant_operator_insert_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -21027,7 +20814,6 @@ input restaurant_operator_insert_input {
 
 """aggregate max on columns"""
 type restaurant_operator_max_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -21038,7 +20824,6 @@ type restaurant_operator_max_fields {
 order by max() on columns of table "restaurant.operator"
 """
 input restaurant_operator_max_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   restaurant_id: order_by
@@ -21047,7 +20832,6 @@ input restaurant_operator_max_order_by {
 
 """aggregate min on columns"""
 type restaurant_operator_min_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -21058,7 +20842,6 @@ type restaurant_operator_min_fields {
 order by min() on columns of table "restaurant.operator"
 """
 input restaurant_operator_min_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   restaurant_id: order_by
@@ -21097,7 +20880,6 @@ input restaurant_operator_on_conflict {
 
 """Ordering options when selecting data from "restaurant.operator"."""
 input restaurant_operator_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -21117,9 +20899,6 @@ select columns of table "restaurant.operator"
 """
 enum restaurant_operator_select_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -21136,7 +20915,6 @@ enum restaurant_operator_select_column {
 input type for updating data in table "restaurant.operator"
 """
 input restaurant_operator_set_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -21210,7 +20988,6 @@ input restaurant_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_operator_stream_cursor_value_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -21240,9 +21017,6 @@ update columns of table "restaurant.operator"
 """
 enum restaurant_operator_update_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -21261,8 +21035,6 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -21923,8 +21695,6 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -22336,8 +22106,6 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -22440,6 +22208,7 @@ type restaurant_order {
   delivery_cost: money!
   delivery_id: Int
   delivery_type: String!
+  discount_value: money!
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int!
@@ -22609,6 +22378,7 @@ type restaurant_order_avg_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -22625,6 +22395,7 @@ input restaurant_order_avg_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -22651,6 +22422,7 @@ input restaurant_order_bool_exp {
   delivery_cost: money_comparison_exp
   delivery_id: Int_comparison_exp
   delivery_type: String_comparison_exp
+  discount_value: money_comparison_exp
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
@@ -22744,6 +22516,7 @@ input restaurant_order_inc_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -22767,6 +22540,7 @@ input restaurant_order_insert_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23282,8 +23056,6 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -23363,6 +23135,7 @@ type restaurant_order_max_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23395,6 +23168,7 @@ input restaurant_order_max_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23425,6 +23199,7 @@ type restaurant_order_min_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23457,6 +23232,7 @@ input restaurant_order_min_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23520,6 +23296,7 @@ input restaurant_order_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23822,8 +23599,6 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -23875,6 +23650,9 @@ enum restaurant_order_select_column {
 
   """column name"""
   delivery_type
+
+  """column name"""
+  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -23937,6 +23715,7 @@ input restaurant_order_set_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23972,6 +23751,7 @@ type restaurant_order_stddev_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -23988,6 +23768,7 @@ input restaurant_order_stddev_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24002,6 +23783,7 @@ type restaurant_order_stddev_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24018,6 +23800,7 @@ input restaurant_order_stddev_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24032,6 +23815,7 @@ type restaurant_order_stddev_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24048,6 +23832,7 @@ input restaurant_order_stddev_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24077,6 +23862,7 @@ input restaurant_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -24112,6 +23898,7 @@ type restaurant_order_sum_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -24128,6 +23915,7 @@ input restaurant_order_sum_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24163,6 +23951,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   delivery_type
+
+  """column name"""
+  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -24241,8 +24032,6 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -24252,6 +24041,7 @@ type restaurant_order_var_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24268,6 +24058,7 @@ input restaurant_order_var_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24282,6 +24073,7 @@ type restaurant_order_var_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24298,6 +24090,7 @@ input restaurant_order_var_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24312,6 +24105,7 @@ type restaurant_order_variance_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24328,6 +24122,7 @@ input restaurant_order_variance_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24886,8 +24681,6 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -25336,8 +25129,6 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
-
-  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -25650,8 +25441,6 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -26024,8 +25813,6 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -26642,8 +26429,6 @@ input service_provider_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_details_bool_exp!
 }
 
@@ -26886,8 +26671,6 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -26912,7 +26695,6 @@ columns and relationships of "service_provider.operator_details"
 type service_provider_operator_details {
   app_type_id: String!
   app_version: String
-  current_gps: geography
 
   """An object relationship"""
   delivery_operator: delivery_operator
@@ -26973,7 +26755,6 @@ input service_provider_operator_details_bool_exp {
   _or: [service_provider_operator_details_bool_exp!]
   app_type_id: String_comparison_exp
   app_version: String_comparison_exp
-  current_gps: geography_comparison_exp
   delivery_operator: delivery_operator_bool_exp
   id: Int_comparison_exp
   laundry_operator: laundry_operator_bool_exp
@@ -26995,9 +26776,9 @@ enum service_provider_operator_details_constraint {
   operator_details_pkey
 
   """
-  unique or primary key constraint on columns "user_id"
+  unique or primary key constraint on columns "app_type_id", "user_id"
   """
-  operator_details_user_id_key
+  operator_details_user_id_app_type_id_key
 }
 
 """
@@ -27014,7 +26795,6 @@ input type for inserting data into table "service_provider.operator_details"
 input service_provider_operator_details_insert_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   delivery_operator: delivery_operator_obj_rel_insert_input
   id: Int
   laundry_operator: laundry_operator_obj_rel_insert_input
@@ -27080,7 +26860,6 @@ Ordering options when selecting data from "service_provider.operator_details".
 input service_provider_operator_details_order_by {
   app_type_id: order_by
   app_version: order_by
-  current_gps: order_by
   delivery_operator: delivery_operator_order_by
   id: order_by
   laundry_operator: laundry_operator_order_by
@@ -27108,9 +26887,6 @@ enum service_provider_operator_details_select_column {
   app_version
 
   """column name"""
-  current_gps
-
-  """column name"""
   id
 
   """column name"""
@@ -27132,7 +26908,6 @@ input type for updating data in table "service_provider.operator_details"
 input service_provider_operator_details_set_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   id: Int
   online: Boolean
   owner: Boolean
@@ -27173,7 +26948,6 @@ input service_provider_operator_details_stream_cursor_input {
 input service_provider_operator_details_stream_cursor_value_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   id: Int
   online: Boolean
   owner: Boolean
@@ -27198,9 +26972,6 @@ enum service_provider_operator_details_update_column {
   app_version
 
   """column name"""
-  current_gps
-
-  """column name"""
   id
 
   """column name"""
@@ -27222,8 +26993,6 @@ input service_provider_operator_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_operator_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_operator_details_bool_exp!
 }
 
@@ -27262,6 +27031,7 @@ type service_provider_post {
     """JSON select path"""
     path: String
   ): jsonb
+  link: String
   message: String!
   posted_on: timestamptz!
 
@@ -27322,6 +27092,7 @@ input service_provider_post_bool_exp {
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
+  link: String_comparison_exp
   message: String_comparison_exp
   posted_on: timestamptz_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -27392,6 +27163,7 @@ input service_provider_post_insert_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -27403,6 +27175,7 @@ input service_provider_post_insert_input {
 type service_provider_post_max_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27413,6 +27186,7 @@ type service_provider_post_max_fields {
 type service_provider_post_min_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27445,6 +27219,7 @@ input service_provider_post_order_by {
   id: order_by
   image: order_by
   likes: order_by
+  link: order_by
   message: order_by
   posted_on: order_by
   restaurant: restaurant_restaurant_order_by
@@ -27483,6 +27258,9 @@ enum service_provider_post_select_column {
   likes
 
   """column name"""
+  link
+
+  """column name"""
   message
 
   """column name"""
@@ -27506,6 +27284,7 @@ input service_provider_post_set_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27550,6 +27329,7 @@ input service_provider_post_stream_cursor_value_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27577,6 +27357,9 @@ enum service_provider_post_update_column {
 
   """column name"""
   likes
+
+  """column name"""
+  link
 
   """column name"""
   message
@@ -27619,8 +27402,6 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -27921,8 +27702,6 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -28300,8 +28079,6 @@ input service_provider_stripe_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_stripe_info_bool_exp!
 }
 
@@ -28575,8 +28352,6 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -32301,8 +32076,6 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -32613,8 +32386,6 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -32988,8 +32759,6 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
-
-  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
@@ -33148,8 +32917,6 @@ enum valid_types_app_type_update_column {
 input valid_types_app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_app_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_app_type_bool_exp!
 }
 
@@ -33289,7 +33056,5 @@ enum valid_types_service_provider_type_update_column {
 input valid_types_service_provider_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_service_provider_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_service_provider_type_bool_exp!
 }

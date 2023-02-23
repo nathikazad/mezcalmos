@@ -79,18 +79,15 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
   updateDeliveryStatus();
 
   async function updateDeliveryStatus() {
-    if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId && order.toCustomerDeliveryId) {
+    if (order.deliveryType == DeliveryType.Delivery && order.fromCustomerDeliveryId) {
 
       let fromCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.fromCustomerDeliveryId);
-      let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
       let deliveryOperators: DeliveryOperator[] = await getDeliveryOperators(fromCustomerDeliveryOrder.serviceProviderId);
 
       // switch (prevStatus) {
       //   case LaundryOrderStatus.OrderReceived:
       fromCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
-      toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
       updateDeliveryOrderStatus(fromCustomerDeliveryOrder);
-      updateDeliveryOrderStatus(toCustomerDeliveryOrder);
       //   break;
       // default:
       //   break;
@@ -112,13 +109,20 @@ export async function cancelLaundryFromCustomer(userId: number, cancelOrderDetai
           fromCustomerDeliveryOrder.deliveryDriver.user?.language
         );
 
-      if(toCustomerDeliveryOrder.deliveryDriver)
-        pushNotification(toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId!,
-          notification,
-          toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
-          ParticipantType.DeliveryDriver,
-          toCustomerDeliveryOrder.deliveryDriver.user?.language
-        );
+      if(order.toCustomerDeliveryId) {
+        let toCustomerDeliveryOrder: DeliveryOrder = await getDeliveryOrder(order.toCustomerDeliveryId);
+
+        toCustomerDeliveryOrder.status = DeliveryOrderStatus.CancelledByCustomer;
+        updateDeliveryOrderStatus(toCustomerDeliveryOrder);
+
+        if(toCustomerDeliveryOrder.deliveryDriver)
+          pushNotification(toCustomerDeliveryOrder.deliveryDriver.user?.firebaseId!,
+            notification,
+            toCustomerDeliveryOrder.deliveryDriver.notificationInfo,
+            ParticipantType.DeliveryDriver,
+            toCustomerDeliveryOrder.deliveryDriver.user?.language
+          );
+      }
     }
   }
 };
