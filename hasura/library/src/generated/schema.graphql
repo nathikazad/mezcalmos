@@ -14,151 +14,6 @@ directive @cached(
 ) on QUERY
 
 """
-columns and relationships of "app_type"
-"""
-type app_type {
-  """customer, delivery, restaurant, admin"""
-  id: String!
-}
-
-"""
-aggregated selection of "app_type"
-"""
-type app_type_aggregate {
-  aggregate: app_type_aggregate_fields
-  nodes: [app_type!]!
-}
-
-"""
-aggregate fields of "app_type"
-"""
-type app_type_aggregate_fields {
-  count(columns: [app_type_select_column!], distinct: Boolean): Int!
-  max: app_type_max_fields
-  min: app_type_min_fields
-}
-
-"""
-Boolean expression to filter rows from the table "app_type". All fields are combined with a logical 'AND'.
-"""
-input app_type_bool_exp {
-  _and: [app_type_bool_exp!]
-  _not: app_type_bool_exp
-  _or: [app_type_bool_exp!]
-  id: String_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "app_type"
-"""
-enum app_type_constraint {
-  """
-  unique or primary key constraint on columns "id"
-  """
-  app_type_pkey
-}
-
-"""
-input type for inserting data into table "app_type"
-"""
-input app_type_insert_input {
-  """customer, delivery, restaurant, admin"""
-  id: String
-}
-
-"""aggregate max on columns"""
-type app_type_max_fields {
-  """customer, delivery, restaurant, admin"""
-  id: String
-}
-
-"""aggregate min on columns"""
-type app_type_min_fields {
-  """customer, delivery, restaurant, admin"""
-  id: String
-}
-
-"""
-response of any mutation on the table "app_type"
-"""
-type app_type_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [app_type!]!
-}
-
-"""
-on_conflict condition type for table "app_type"
-"""
-input app_type_on_conflict {
-  constraint: app_type_constraint!
-  update_columns: [app_type_update_column!]! = []
-  where: app_type_bool_exp
-}
-
-"""Ordering options when selecting data from "app_type"."""
-input app_type_order_by {
-  id: order_by
-}
-
-"""primary key columns input for table: app_type"""
-input app_type_pk_columns_input {
-  """customer, delivery, restaurant, admin"""
-  id: String!
-}
-
-"""
-select columns of table "app_type"
-"""
-enum app_type_select_column {
-  """column name"""
-  id
-}
-
-"""
-input type for updating data in table "app_type"
-"""
-input app_type_set_input {
-  """customer, delivery, restaurant, admin"""
-  id: String
-}
-
-"""
-Streaming cursor of the table "app_type"
-"""
-input app_type_stream_cursor_input {
-  """Stream column input with initial value"""
-  initial_value: app_type_stream_cursor_value_input!
-
-  """cursor ordering"""
-  ordering: cursor_ordering
-}
-
-"""Initial value of the column from where the streaming should start"""
-input app_type_stream_cursor_value_input {
-  """customer, delivery, restaurant, admin"""
-  id: String
-}
-
-"""
-update columns of table "app_type"
-"""
-enum app_type_update_column {
-  """column name"""
-  id
-}
-
-input app_type_updates {
-  """sets the columns of the filtered rows to the given values"""
-  _set: app_type_set_input
-
-  """filter the rows which have to be updated"""
-  where: app_type_bool_exp!
-}
-
-"""
 Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
 """
 input Boolean_comparison_exp {
@@ -225,7 +80,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb!
+  ): jsonb
 }
 
 """
@@ -743,8 +598,6 @@ input chat_participant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_participant_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_participant_bool_exp!
 }
 
@@ -930,8 +783,6 @@ input chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: chat_set_input
-
-  """filter the rows which have to be updated"""
   where: chat_bool_exp!
 }
 
@@ -1081,10 +932,6 @@ type customer_customer {
     where: customer_stripe_cards_bool_exp
   ): customer_stripe_cards_aggregate!
   stripe_id: String
-  stripe_info(
-    """JSON select path"""
-    path: String
-  ): jsonb
 
   """An array relationship"""
   stripe_sp_ids(
@@ -1152,11 +999,6 @@ type customer_customer_aggregate_fields {
   variance: customer_customer_variance_fields
 }
 
-"""append existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_append_input {
-  stripe_info: jsonb
-}
-
 """aggregate avg on columns"""
 type customer_customer_avg_fields {
   user_id: Float
@@ -1181,7 +1023,6 @@ input customer_customer_bool_exp {
   stripe_cards: customer_stripe_cards_bool_exp
   stripe_cards_aggregate: customer_stripe_cards_aggregate_bool_exp
   stripe_id: String_comparison_exp
-  stripe_info: jsonb_comparison_exp
   stripe_sp_ids: customer_stripe_sp_id_bool_exp
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_bool_exp
   user: user_bool_exp
@@ -1204,28 +1045,6 @@ enum customer_customer_constraint {
 }
 
 """
-delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-"""
-input customer_customer_delete_at_path_input {
-  stripe_info: [String!]
-}
-
-"""
-delete the array element with specified index (negative integers count from the
-end). throws an error if top level container is not an array
-"""
-input customer_customer_delete_elem_input {
-  stripe_info: Int
-}
-
-"""
-delete key/value pair or string element. key/value pairs are matched based on their key value
-"""
-input customer_customer_delete_key_input {
-  stripe_info: String
-}
-
-"""
 input type for incrementing numeric columns in table "customer.customer"
 """
 input customer_customer_inc_input {
@@ -1245,7 +1064,6 @@ input customer_customer_insert_input {
   service_provider_type: String
   stripe_cards: customer_stripe_cards_arr_rel_insert_input
   stripe_id: String
-  stripe_info: jsonb
   stripe_sp_ids: customer_stripe_sp_id_arr_rel_insert_input
   user: user_obj_rel_insert_input
   user_id: Int
@@ -1310,7 +1128,6 @@ input customer_customer_order_by {
   service_provider_type: order_by
   stripe_cards_aggregate: customer_stripe_cards_aggregate_order_by
   stripe_id: order_by
-  stripe_info: order_by
   stripe_sp_ids_aggregate: customer_stripe_sp_id_aggregate_order_by
   user: user_order_by
   user_id: order_by
@@ -1319,11 +1136,6 @@ input customer_customer_order_by {
 """primary key columns input for table: customer.customer"""
 input customer_customer_pk_columns_input {
   user_id: Int!
-}
-
-"""prepend existing jsonb value of filtered columns with new jsonb value"""
-input customer_customer_prepend_input {
-  stripe_info: jsonb
 }
 
 """
@@ -1343,9 +1155,6 @@ enum customer_customer_select_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
@@ -1357,7 +1166,6 @@ input customer_customer_set_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -1393,7 +1201,6 @@ input customer_customer_stream_cursor_value_input {
   app_version: String
   service_provider_type: String
   stripe_id: String
-  stripe_info: jsonb
   user_id: Int
 }
 
@@ -1419,42 +1226,15 @@ enum customer_customer_update_column {
   stripe_id
 
   """column name"""
-  stripe_info
-
-  """column name"""
   user_id
 }
 
 input customer_customer_updates {
-  """append existing jsonb value of filtered columns with new jsonb value"""
-  _append: customer_customer_append_input
-
-  """
-  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-  """
-  _delete_at_path: customer_customer_delete_at_path_input
-
-  """
-  delete the array element with specified index (negative integers count from
-  the end). throws an error if top level container is not an array
-  """
-  _delete_elem: customer_customer_delete_elem_input
-
-  """
-  delete key/value pair or string element. key/value pairs are matched based on their key value
-  """
-  _delete_key: customer_customer_delete_key_input
-
   """increments the numeric columns with given value of the filtered values"""
   _inc: customer_customer_inc_input
 
-  """prepend existing jsonb value of filtered columns with new jsonb value"""
-  _prepend: customer_customer_prepend_input
-
   """sets the columns of the filtered rows to the given values"""
   _set: customer_customer_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_customer_bool_exp!
 }
 
@@ -1709,8 +1489,6 @@ input customer_favourited_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_favourited_item_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_favourited_item_bool_exp!
 }
 
@@ -2085,8 +1863,6 @@ input customer_minimal_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_minimal_order_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_minimal_order_bool_exp!
 }
 
@@ -2494,8 +2270,6 @@ input customer_saved_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_saved_location_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_saved_location_bool_exp!
 }
 
@@ -3026,8 +2800,6 @@ input customer_stripe_cards_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_cards_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_cards_bool_exp!
 }
 
@@ -3428,8 +3200,6 @@ input customer_stripe_sp_id_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: customer_stripe_sp_id_set_input
-
-  """filter the rows which have to be updated"""
   where: customer_stripe_sp_id_bool_exp!
 }
 
@@ -3822,8 +3592,6 @@ input delivery_company_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_company_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_company_bool_exp!
 }
 
@@ -3849,10 +3617,1127 @@ type delivery_company_variance_fields {
 }
 
 """
+columns and relationships of "delivery.courier_order"
+"""
+type delivery_courier_order {
+  cancellation_time: timestamptz
+  customer_app_type: String!
+  customer_id: Int!
+
+  """An object relationship"""
+  delivery_order: delivery_order!
+  delivery_order_id: Int!
+  discount_value: money!
+  from_location_gps: geography
+  from_location_text: String
+  id: Int!
+
+  """An array relationship"""
+  items(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): [delivery_courier_order_item!]!
+
+  """An aggregate relationship"""
+  items_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): delivery_courier_order_item_aggregate!
+  order_time: timestamptz!
+  payment_type: String!
+  refund_amount: money
+  stripe_fees: money!
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  tax: money!
+  to_location_adress: String!
+  to_location_gps: geography!
+}
+
+"""
+aggregated selection of "delivery.courier_order"
+"""
+type delivery_courier_order_aggregate {
+  aggregate: delivery_courier_order_aggregate_fields
+  nodes: [delivery_courier_order!]!
+}
+
+"""
+aggregate fields of "delivery.courier_order"
+"""
+type delivery_courier_order_aggregate_fields {
+  avg: delivery_courier_order_avg_fields
+  count(columns: [delivery_courier_order_select_column!], distinct: Boolean): Int!
+  max: delivery_courier_order_max_fields
+  min: delivery_courier_order_min_fields
+  stddev: delivery_courier_order_stddev_fields
+  stddev_pop: delivery_courier_order_stddev_pop_fields
+  stddev_samp: delivery_courier_order_stddev_samp_fields
+  sum: delivery_courier_order_sum_fields
+  var_pop: delivery_courier_order_var_pop_fields
+  var_samp: delivery_courier_order_var_samp_fields
+  variance: delivery_courier_order_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input delivery_courier_order_append_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: jsonb
+}
+
+"""aggregate avg on columns"""
+type delivery_courier_order_avg_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""
+Boolean expression to filter rows from the table "delivery.courier_order". All fields are combined with a logical 'AND'.
+"""
+input delivery_courier_order_bool_exp {
+  _and: [delivery_courier_order_bool_exp!]
+  _not: delivery_courier_order_bool_exp
+  _or: [delivery_courier_order_bool_exp!]
+  cancellation_time: timestamptz_comparison_exp
+  customer_app_type: String_comparison_exp
+  customer_id: Int_comparison_exp
+  delivery_order: delivery_order_bool_exp
+  delivery_order_id: Int_comparison_exp
+  discount_value: money_comparison_exp
+  from_location_gps: geography_comparison_exp
+  from_location_text: String_comparison_exp
+  id: Int_comparison_exp
+  items: delivery_courier_order_item_bool_exp
+  items_aggregate: delivery_courier_order_item_aggregate_bool_exp
+  order_time: timestamptz_comparison_exp
+  payment_type: String_comparison_exp
+  refund_amount: money_comparison_exp
+  stripe_fees: money_comparison_exp
+  stripe_info: jsonb_comparison_exp
+  tax: money_comparison_exp
+  to_location_adress: String_comparison_exp
+  to_location_gps: geography_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "delivery.courier_order"
+"""
+enum delivery_courier_order_constraint {
+  """
+  unique or primary key constraint on columns "delivery_order_id"
+  """
+  courier_order_delivery_order_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  courier_order_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input delivery_courier_order_delete_at_path_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input delivery_courier_order_delete_elem_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input delivery_courier_order_delete_key_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: String
+}
+
+"""
+input type for incrementing numeric columns in table "delivery.courier_order"
+"""
+input delivery_courier_order_inc_input {
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  id: Int
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+}
+
+"""
+input type for inserting data into table "delivery.courier_order"
+"""
+input delivery_courier_order_insert_input {
+  cancellation_time: timestamptz
+  customer_app_type: String
+  customer_id: Int
+  delivery_order: delivery_order_obj_rel_insert_input
+  delivery_order_id: Int
+  discount_value: money
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  items: delivery_courier_order_item_arr_rel_insert_input
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: jsonb
+  tax: money
+  to_location_adress: String
+  to_location_gps: geography
+}
+
+"""
+columns and relationships of "delivery.courier_order_item"
+"""
+type delivery_courier_order_item {
+  actual_cost: money
+  estimated_cost: money
+  id: Int!
+  image: String
+  name: String!
+  notes: String
+  order_id: Int!
+  unavailable: Boolean!
+}
+
+"""
+aggregated selection of "delivery.courier_order_item"
+"""
+type delivery_courier_order_item_aggregate {
+  aggregate: delivery_courier_order_item_aggregate_fields
+  nodes: [delivery_courier_order_item!]!
+}
+
+input delivery_courier_order_item_aggregate_bool_exp {
+  bool_and: delivery_courier_order_item_aggregate_bool_exp_bool_and
+  bool_or: delivery_courier_order_item_aggregate_bool_exp_bool_or
+  count: delivery_courier_order_item_aggregate_bool_exp_count
+}
+
+input delivery_courier_order_item_aggregate_bool_exp_bool_and {
+  arguments: delivery_courier_order_item_select_column_delivery_courier_order_item_aggregate_bool_exp_bool_and_arguments_columns!
+  distinct: Boolean
+  filter: delivery_courier_order_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_courier_order_item_aggregate_bool_exp_bool_or {
+  arguments: delivery_courier_order_item_select_column_delivery_courier_order_item_aggregate_bool_exp_bool_or_arguments_columns!
+  distinct: Boolean
+  filter: delivery_courier_order_item_bool_exp
+  predicate: Boolean_comparison_exp!
+}
+
+input delivery_courier_order_item_aggregate_bool_exp_count {
+  arguments: [delivery_courier_order_item_select_column!]
+  distinct: Boolean
+  filter: delivery_courier_order_item_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "delivery.courier_order_item"
+"""
+type delivery_courier_order_item_aggregate_fields {
+  avg: delivery_courier_order_item_avg_fields
+  count(columns: [delivery_courier_order_item_select_column!], distinct: Boolean): Int!
+  max: delivery_courier_order_item_max_fields
+  min: delivery_courier_order_item_min_fields
+  stddev: delivery_courier_order_item_stddev_fields
+  stddev_pop: delivery_courier_order_item_stddev_pop_fields
+  stddev_samp: delivery_courier_order_item_stddev_samp_fields
+  sum: delivery_courier_order_item_sum_fields
+  var_pop: delivery_courier_order_item_var_pop_fields
+  var_samp: delivery_courier_order_item_var_samp_fields
+  variance: delivery_courier_order_item_variance_fields
+}
+
+"""
+order by aggregate values of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_aggregate_order_by {
+  avg: delivery_courier_order_item_avg_order_by
+  count: order_by
+  max: delivery_courier_order_item_max_order_by
+  min: delivery_courier_order_item_min_order_by
+  stddev: delivery_courier_order_item_stddev_order_by
+  stddev_pop: delivery_courier_order_item_stddev_pop_order_by
+  stddev_samp: delivery_courier_order_item_stddev_samp_order_by
+  sum: delivery_courier_order_item_sum_order_by
+  var_pop: delivery_courier_order_item_var_pop_order_by
+  var_samp: delivery_courier_order_item_var_samp_order_by
+  variance: delivery_courier_order_item_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_arr_rel_insert_input {
+  data: [delivery_courier_order_item_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: delivery_courier_order_item_on_conflict
+}
+
+"""aggregate avg on columns"""
+type delivery_courier_order_item_avg_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by avg() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_avg_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "delivery.courier_order_item".
+All fields are combined with a logical 'AND'.
+"""
+input delivery_courier_order_item_bool_exp {
+  _and: [delivery_courier_order_item_bool_exp!]
+  _not: delivery_courier_order_item_bool_exp
+  _or: [delivery_courier_order_item_bool_exp!]
+  actual_cost: money_comparison_exp
+  estimated_cost: money_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  name: String_comparison_exp
+  notes: String_comparison_exp
+  order_id: Int_comparison_exp
+  unavailable: Boolean_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "delivery.courier_order_item"
+"""
+enum delivery_courier_order_item_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  courier_order_item_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_inc_input {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  order_id: Int
+}
+
+"""
+input type for inserting data into table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_insert_input {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  image: String
+  name: String
+  notes: String
+  order_id: Int
+  unavailable: Boolean
+}
+
+"""aggregate max on columns"""
+type delivery_courier_order_item_max_fields {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  image: String
+  name: String
+  notes: String
+  order_id: Int
+}
+
+"""
+order by max() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_max_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  notes: order_by
+  order_id: order_by
+}
+
+"""aggregate min on columns"""
+type delivery_courier_order_item_min_fields {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  image: String
+  name: String
+  notes: String
+  order_id: Int
+}
+
+"""
+order by min() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_min_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  notes: order_by
+  order_id: order_by
+}
+
+"""
+response of any mutation on the table "delivery.courier_order_item"
+"""
+type delivery_courier_order_item_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [delivery_courier_order_item!]!
+}
+
+"""
+on_conflict condition type for table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_on_conflict {
+  constraint: delivery_courier_order_item_constraint!
+  update_columns: [delivery_courier_order_item_update_column!]! = []
+  where: delivery_courier_order_item_bool_exp
+}
+
+"""
+Ordering options when selecting data from "delivery.courier_order_item".
+"""
+input delivery_courier_order_item_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  image: order_by
+  name: order_by
+  notes: order_by
+  order_id: order_by
+  unavailable: order_by
+}
+
+"""primary key columns input for table: delivery.courier_order_item"""
+input delivery_courier_order_item_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "delivery.courier_order_item"
+"""
+enum delivery_courier_order_item_select_column {
+  """column name"""
+  actual_cost
+
+  """column name"""
+  estimated_cost
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  notes
+
+  """column name"""
+  order_id
+
+  """column name"""
+  unavailable
+}
+
+"""
+select "delivery_courier_order_item_aggregate_bool_exp_bool_and_arguments_columns"
+columns of table "delivery.courier_order_item"
+"""
+enum delivery_courier_order_item_select_column_delivery_courier_order_item_aggregate_bool_exp_bool_and_arguments_columns {
+  """column name"""
+  unavailable
+}
+
+"""
+select "delivery_courier_order_item_aggregate_bool_exp_bool_or_arguments_columns"
+columns of table "delivery.courier_order_item"
+"""
+enum delivery_courier_order_item_select_column_delivery_courier_order_item_aggregate_bool_exp_bool_or_arguments_columns {
+  """column name"""
+  unavailable
+}
+
+"""
+input type for updating data in table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_set_input {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  image: String
+  name: String
+  notes: String
+  order_id: Int
+  unavailable: Boolean
+}
+
+"""aggregate stddev on columns"""
+type delivery_courier_order_item_stddev_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by stddev() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_stddev_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type delivery_courier_order_item_stddev_pop_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_stddev_pop_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type delivery_courier_order_item_stddev_samp_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_stddev_samp_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""
+Streaming cursor of the table "delivery_courier_order_item"
+"""
+input delivery_courier_order_item_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: delivery_courier_order_item_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input delivery_courier_order_item_stream_cursor_value_input {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  image: String
+  name: String
+  notes: String
+  order_id: Int
+  unavailable: Boolean
+}
+
+"""aggregate sum on columns"""
+type delivery_courier_order_item_sum_fields {
+  actual_cost: money
+  estimated_cost: money
+  id: Int
+  order_id: Int
+}
+
+"""
+order by sum() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_sum_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""
+update columns of table "delivery.courier_order_item"
+"""
+enum delivery_courier_order_item_update_column {
+  """column name"""
+  actual_cost
+
+  """column name"""
+  estimated_cost
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name
+
+  """column name"""
+  notes
+
+  """column name"""
+  order_id
+
+  """column name"""
+  unavailable
+}
+
+input delivery_courier_order_item_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: delivery_courier_order_item_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: delivery_courier_order_item_set_input
+  where: delivery_courier_order_item_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type delivery_courier_order_item_var_pop_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by var_pop() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_var_pop_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type delivery_courier_order_item_var_samp_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by var_samp() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_var_samp_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""aggregate variance on columns"""
+type delivery_courier_order_item_variance_fields {
+  actual_cost: Float
+  estimated_cost: Float
+  id: Float
+  order_id: Float
+}
+
+"""
+order by variance() on columns of table "delivery.courier_order_item"
+"""
+input delivery_courier_order_item_variance_order_by {
+  actual_cost: order_by
+  estimated_cost: order_by
+  id: order_by
+  order_id: order_by
+}
+
+"""aggregate max on columns"""
+type delivery_courier_order_max_fields {
+  cancellation_time: timestamptz
+  customer_app_type: String
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+  to_location_adress: String
+}
+
+"""aggregate min on columns"""
+type delivery_courier_order_min_fields {
+  cancellation_time: timestamptz
+  customer_app_type: String
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+  to_location_adress: String
+}
+
+"""
+response of any mutation on the table "delivery.courier_order"
+"""
+type delivery_courier_order_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [delivery_courier_order!]!
+}
+
+"""
+on_conflict condition type for table "delivery.courier_order"
+"""
+input delivery_courier_order_on_conflict {
+  constraint: delivery_courier_order_constraint!
+  update_columns: [delivery_courier_order_update_column!]! = []
+  where: delivery_courier_order_bool_exp
+}
+
+"""Ordering options when selecting data from "delivery.courier_order"."""
+input delivery_courier_order_order_by {
+  cancellation_time: order_by
+  customer_app_type: order_by
+  customer_id: order_by
+  delivery_order: delivery_order_order_by
+  delivery_order_id: order_by
+  discount_value: order_by
+  from_location_gps: order_by
+  from_location_text: order_by
+  id: order_by
+  items_aggregate: delivery_courier_order_item_aggregate_order_by
+  order_time: order_by
+  payment_type: order_by
+  refund_amount: order_by
+  stripe_fees: order_by
+  stripe_info: order_by
+  tax: order_by
+  to_location_adress: order_by
+  to_location_gps: order_by
+}
+
+"""primary key columns input for table: delivery.courier_order"""
+input delivery_courier_order_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input delivery_courier_order_prepend_input {
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: jsonb
+}
+
+"""
+select columns of table "delivery.courier_order"
+"""
+enum delivery_courier_order_select_column {
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  delivery_order_id
+
+  """column name"""
+  discount_value
+
+  """column name"""
+  from_location_gps
+
+  """column name"""
+  from_location_text
+
+  """column name"""
+  id
+
+  """column name"""
+  order_time
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  refund_amount
+
+  """column name"""
+  stripe_fees
+
+  """column name"""
+  stripe_info
+
+  """column name"""
+  tax
+
+  """column name"""
+  to_location_adress
+
+  """column name"""
+  to_location_gps
+}
+
+"""
+input type for updating data in table "delivery.courier_order"
+"""
+input delivery_courier_order_set_input {
+  cancellation_time: timestamptz
+  customer_app_type: String
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: jsonb
+  tax: money
+  to_location_adress: String
+  to_location_gps: geography
+}
+
+"""aggregate stddev on columns"""
+type delivery_courier_order_stddev_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type delivery_courier_order_stddev_pop_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type delivery_courier_order_stddev_samp_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""
+Streaming cursor of the table "delivery_courier_order"
+"""
+input delivery_courier_order_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: delivery_courier_order_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input delivery_courier_order_stream_cursor_value_input {
+  cancellation_time: timestamptz
+  customer_app_type: String
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  from_location_gps: geography
+  from_location_text: String
+  id: Int
+  order_time: timestamptz
+  payment_type: String
+  refund_amount: money
+  stripe_fees: money
+
+  """
+  { id: string, stripeFees: number, amountCharged: number, amountRefunded:
+  number, chargeFeesOnCustomer: boolean |null; brand?: string, expMonth?:
+  number, expYear?: number, last4?: string, status: (authorized, captured,
+  cancelled), serviceProviderAccount: string }
+  """
+  stripe_info: jsonb
+  tax: money
+  to_location_adress: String
+  to_location_gps: geography
+}
+
+"""aggregate sum on columns"""
+type delivery_courier_order_sum_fields {
+  customer_id: Int
+  delivery_order_id: Int
+  discount_value: money
+  id: Int
+  refund_amount: money
+  stripe_fees: money
+  tax: money
+}
+
+"""
+update columns of table "delivery.courier_order"
+"""
+enum delivery_courier_order_update_column {
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  delivery_order_id
+
+  """column name"""
+  discount_value
+
+  """column name"""
+  from_location_gps
+
+  """column name"""
+  from_location_text
+
+  """column name"""
+  id
+
+  """column name"""
+  order_time
+
+  """column name"""
+  payment_type
+
+  """column name"""
+  refund_amount
+
+  """column name"""
+  stripe_fees
+
+  """column name"""
+  stripe_info
+
+  """column name"""
+  tax
+
+  """column name"""
+  to_location_adress
+
+  """column name"""
+  to_location_gps
+}
+
+input delivery_courier_order_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: delivery_courier_order_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: delivery_courier_order_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: delivery_courier_order_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: delivery_courier_order_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: delivery_courier_order_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: delivery_courier_order_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: delivery_courier_order_set_input
+  where: delivery_courier_order_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type delivery_courier_order_var_pop_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""aggregate var_samp on columns"""
+type delivery_courier_order_var_samp_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""aggregate variance on columns"""
+type delivery_courier_order_variance_fields {
+  customer_id: Float
+  delivery_order_id: Float
+  discount_value: Float
+  id: Float
+  refund_amount: Float
+  stripe_fees: Float
+  tax: Float
+}
+
+"""
 columns and relationships of "delivery.details"
 """
 type delivery_details {
   cost_per_km: money!
+  cost_per_km_from_base: money
   customer_pickup: Boolean!
   delivery_available: Boolean!
 
@@ -3919,6 +4804,7 @@ input delivery_details_aggregate_order_by {
 """aggregate avg on columns"""
 type delivery_details_avg_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -3933,6 +4819,7 @@ order by avg() on columns of table "delivery.details"
 """
 input delivery_details_avg_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -3950,6 +4837,7 @@ input delivery_details_bool_exp {
   _not: delivery_details_bool_exp
   _or: [delivery_details_bool_exp!]
   cost_per_km: money_comparison_exp
+  cost_per_km_from_base: money_comparison_exp
   customer_pickup: Boolean_comparison_exp
   delivery_available: Boolean_comparison_exp
   delivery_company: delivery_company_bool_exp
@@ -3978,6 +4866,7 @@ input type for incrementing numeric columns in table "delivery.details"
 """
 input delivery_details_inc_input {
   cost_per_km: money
+  cost_per_km_from_base: money
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
@@ -3992,6 +4881,7 @@ input type for inserting data into table "delivery.details"
 """
 input delivery_details_insert_input {
   cost_per_km: money
+  cost_per_km_from_base: money
   customer_pickup: Boolean
   delivery_available: Boolean
   delivery_company: delivery_company_obj_rel_insert_input
@@ -4010,6 +4900,7 @@ input delivery_details_insert_input {
 """aggregate max on columns"""
 type delivery_details_max_fields {
   cost_per_km: money
+  cost_per_km_from_base: money
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
@@ -4024,6 +4915,7 @@ order by max() on columns of table "delivery.details"
 """
 input delivery_details_max_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4036,6 +4928,7 @@ input delivery_details_max_order_by {
 """aggregate min on columns"""
 type delivery_details_min_fields {
   cost_per_km: money
+  cost_per_km_from_base: money
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
@@ -4050,6 +4943,7 @@ order by min() on columns of table "delivery.details"
 """
 input delivery_details_min_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4092,6 +4986,7 @@ input delivery_details_on_conflict {
 """Ordering options when selecting data from "delivery.details"."""
 input delivery_details_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   customer_pickup: order_by
   delivery_available: order_by
   delivery_company: delivery_company_order_by
@@ -4116,6 +5011,9 @@ select columns of table "delivery.details"
 enum delivery_details_select_column {
   """column name"""
   cost_per_km
+
+  """column name"""
+  cost_per_km_from_base
 
   """column name"""
   customer_pickup
@@ -4147,6 +5045,7 @@ input type for updating data in table "delivery.details"
 """
 input delivery_details_set_input {
   cost_per_km: money
+  cost_per_km_from_base: money
   customer_pickup: Boolean
   delivery_available: Boolean
   free_delivery_km_range: Float
@@ -4162,6 +5061,7 @@ input delivery_details_set_input {
 """aggregate stddev on columns"""
 type delivery_details_stddev_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4176,6 +5076,7 @@ order by stddev() on columns of table "delivery.details"
 """
 input delivery_details_stddev_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4188,6 +5089,7 @@ input delivery_details_stddev_order_by {
 """aggregate stddev_pop on columns"""
 type delivery_details_stddev_pop_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4202,6 +5104,7 @@ order by stddev_pop() on columns of table "delivery.details"
 """
 input delivery_details_stddev_pop_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4214,6 +5117,7 @@ input delivery_details_stddev_pop_order_by {
 """aggregate stddev_samp on columns"""
 type delivery_details_stddev_samp_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4228,6 +5132,7 @@ order by stddev_samp() on columns of table "delivery.details"
 """
 input delivery_details_stddev_samp_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4251,6 +5156,7 @@ input delivery_details_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input delivery_details_stream_cursor_value_input {
   cost_per_km: money
+  cost_per_km_from_base: money
   customer_pickup: Boolean
   delivery_available: Boolean
   free_delivery_km_range: Float
@@ -4266,6 +5172,7 @@ input delivery_details_stream_cursor_value_input {
 """aggregate sum on columns"""
 type delivery_details_sum_fields {
   cost_per_km: money
+  cost_per_km_from_base: money
   free_delivery_km_range: Float
   free_delivery_minimum_cost: money
   id: Int
@@ -4280,6 +5187,7 @@ order by sum() on columns of table "delivery.details"
 """
 input delivery_details_sum_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4295,6 +5203,9 @@ update columns of table "delivery.details"
 enum delivery_details_update_column {
   """column name"""
   cost_per_km
+
+  """column name"""
+  cost_per_km_from_base
 
   """column name"""
   customer_pickup
@@ -4327,14 +5238,13 @@ input delivery_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_details_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_details_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type delivery_details_var_pop_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4349,6 +5259,7 @@ order by var_pop() on columns of table "delivery.details"
 """
 input delivery_details_var_pop_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4361,6 +5272,7 @@ input delivery_details_var_pop_order_by {
 """aggregate var_samp on columns"""
 type delivery_details_var_samp_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4375,6 +5287,7 @@ order by var_samp() on columns of table "delivery.details"
 """
 input delivery_details_var_samp_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4387,6 +5300,7 @@ input delivery_details_var_samp_order_by {
 """aggregate variance on columns"""
 type delivery_details_variance_fields {
   cost_per_km: Float
+  cost_per_km_from_base: Float
   free_delivery_km_range: Float
   free_delivery_minimum_cost: Float
   id: Float
@@ -4401,6 +5315,7 @@ order by variance() on columns of table "delivery.details"
 """
 input delivery_details_variance_order_by {
   cost_per_km: order_by
+  cost_per_km_from_base: order_by
   free_delivery_km_range: order_by
   free_delivery_minimum_cost: order_by
   id: order_by
@@ -4841,8 +5756,6 @@ input delivery_driver_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_driver_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_driver_bool_exp!
 }
 
@@ -5268,8 +6181,6 @@ input delivery_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_operator_bool_exp!
 }
 
@@ -5364,6 +6275,7 @@ type delivery_order {
 
   """toCustomer, fromCustomer"""
   direction: String!
+  distance_from_base: Int
 
   """An object relationship"""
   driver_review_by_customer: review
@@ -5402,8 +6314,8 @@ type delivery_order {
   package_cost: money!
   package_ready: Boolean!
   payment_type: String!
-  pickup_address: String!
-  pickup_gps: geography!
+  pickup_address: String
+  pickup_gps: geography
 
   """An object relationship"""
   restaurant: restaurant_restaurant
@@ -5522,6 +6434,7 @@ type delivery_order_avg_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -5546,6 +6459,7 @@ input delivery_order_avg_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -5586,6 +6500,7 @@ input delivery_order_bool_exp {
   delivery_driver: delivery_driver_bool_exp
   delivery_driver_id: Int_comparison_exp
   direction: String_comparison_exp
+  distance_from_base: Int_comparison_exp
   driver_review_by_customer: review_bool_exp
   driver_review_by_customer_id: Int_comparison_exp
   driver_review_by_service_provider: review_bool_exp
@@ -5641,6 +6556,7 @@ input delivery_order_inc_input {
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   id: Int
@@ -5680,6 +6596,7 @@ input delivery_order_insert_input {
 
   """toCustomer, fromCustomer"""
   direction: String
+  distance_from_base: Int
   driver_review_by_customer: review_obj_rel_insert_input
   driver_review_by_customer_id: Int
   driver_review_by_service_provider: review_obj_rel_insert_input
@@ -5741,6 +6658,7 @@ type delivery_order_max_fields {
 
   """toCustomer, fromCustomer"""
   direction: String
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   dropoff_address: String
@@ -5793,6 +6711,7 @@ input delivery_order_max_order_by {
 
   """toCustomer, fromCustomer"""
   direction: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   dropoff_address: order_by
@@ -5843,6 +6762,7 @@ type delivery_order_min_fields {
 
   """toCustomer, fromCustomer"""
   direction: String
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   dropoff_address: String
@@ -5895,6 +6815,7 @@ input delivery_order_min_order_by {
 
   """toCustomer, fromCustomer"""
   direction: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   dropoff_address: order_by
@@ -5980,6 +6901,7 @@ input delivery_order_order_by {
   delivery_driver: delivery_driver_order_by
   delivery_driver_id: order_by
   direction: order_by
+  distance_from_base: order_by
   driver_review_by_customer: review_order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider: review_order_by
@@ -6242,8 +7164,6 @@ input delivery_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_public_bool_exp!
 }
 
@@ -6310,6 +7230,9 @@ enum delivery_order_select_column {
 
   """column name"""
   direction
+
+  """column name"""
+  distance_from_base
 
   """column name"""
   driver_review_by_customer_id
@@ -6416,6 +7339,7 @@ input delivery_order_set_input {
 
   """toCustomer, fromCustomer"""
   direction: String
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   dropoff_address: String
@@ -6461,6 +7385,7 @@ type delivery_order_stddev_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6485,6 +7410,7 @@ input delivery_order_stddev_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6507,6 +7433,7 @@ type delivery_order_stddev_pop_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6531,6 +7458,7 @@ input delivery_order_stddev_pop_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6553,6 +7481,7 @@ type delivery_order_stddev_samp_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6577,6 +7506,7 @@ input delivery_order_stddev_samp_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6619,6 +7549,7 @@ input delivery_order_stream_cursor_value_input {
 
   """toCustomer, fromCustomer"""
   direction: String
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   dropoff_address: String
@@ -6664,6 +7595,7 @@ type delivery_order_sum_fields {
   customer_review_by_driver_id: Int
   delivery_cost: money
   delivery_driver_id: Int
+  distance_from_base: Int
   driver_review_by_customer_id: Int
   driver_review_by_service_provider_id: Int
   id: Int
@@ -6688,6 +7620,7 @@ input delivery_order_sum_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6744,6 +7677,9 @@ enum delivery_order_update_column {
 
   """column name"""
   direction
+
+  """column name"""
+  distance_from_base
 
   """column name"""
   driver_review_by_customer_id
@@ -6821,8 +7757,6 @@ input delivery_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: delivery_order_set_input
-
-  """filter the rows which have to be updated"""
   where: delivery_order_bool_exp!
 }
 
@@ -6834,6 +7768,7 @@ type delivery_order_var_pop_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6858,6 +7793,7 @@ input delivery_order_var_pop_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6880,6 +7816,7 @@ type delivery_order_var_samp_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6904,6 +7841,7 @@ input delivery_order_var_samp_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -6926,6 +7864,7 @@ type delivery_order_variance_fields {
   customer_review_by_driver_id: Float
   delivery_cost: Float
   delivery_driver_id: Float
+  distance_from_base: Float
   driver_review_by_customer_id: Float
   driver_review_by_service_provider_id: Float
   id: Float
@@ -6950,6 +7889,7 @@ input delivery_order_variance_order_by {
   customer_review_by_driver_id: order_by
   delivery_cost: order_by
   delivery_driver_id: order_by
+  distance_from_base: order_by
   driver_review_by_customer_id: order_by
   driver_review_by_service_provider_id: order_by
   id: order_by
@@ -7202,8 +8142,6 @@ input direct_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: direct_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: direct_chat_bool_exp!
 }
 
@@ -7558,8 +8496,6 @@ enum language_update_column {
 input language_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: language_set_input
-
-  """filter the rows which have to be updated"""
   where: language_bool_exp!
 }
 
@@ -7956,8 +8892,6 @@ input laundry_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_category_bool_exp!
 }
 
@@ -8419,8 +9353,6 @@ input laundry_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_operator_bool_exp!
 }
 
@@ -9167,8 +10099,6 @@ input laundry_order_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_category_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_category_bool_exp!
 }
 
@@ -9787,8 +10717,6 @@ input laundry_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_order_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_order_bool_exp!
 }
 
@@ -10347,8 +11275,6 @@ input laundry_store_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: laundry_store_set_input
-
-  """filter the rows which have to be updated"""
   where: laundry_store_bool_exp!
 }
 
@@ -10666,8 +11592,6 @@ input mez_admin_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_chat_bool_exp!
 }
 
@@ -10846,8 +11770,6 @@ input mez_admin_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_admin_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_admin_bool_exp!
 }
 
@@ -11044,8 +11966,6 @@ input mez_json_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: mez_json_set_input
-
-  """filter the rows which have to be updated"""
   where: mez_json_bool_exp!
 }
 
@@ -11184,6 +12104,32 @@ type mutation_root {
   delete single row from the table: "delivery.company"
   """
   delete_delivery_company_by_pk(id: Int!): delivery_company
+
+  """
+  delete data from the table: "delivery.courier_order"
+  """
+  delete_delivery_courier_order(
+    """filter the rows which have to be deleted"""
+    where: delivery_courier_order_bool_exp!
+  ): delivery_courier_order_mutation_response
+
+  """
+  delete single row from the table: "delivery.courier_order"
+  """
+  delete_delivery_courier_order_by_pk(id: Int!): delivery_courier_order
+
+  """
+  delete data from the table: "delivery.courier_order_item"
+  """
+  delete_delivery_courier_order_item(
+    """filter the rows which have to be deleted"""
+    where: delivery_courier_order_item_bool_exp!
+  ): delivery_courier_order_item_mutation_response
+
+  """
+  delete single row from the table: "delivery.courier_order_item"
+  """
+  delete_delivery_courier_order_item_by_pk(id: Int!): delivery_courier_order_item
 
   """
   delete data from the table: "delivery.details"
@@ -11947,6 +12893,50 @@ type mutation_root {
     """upsert condition"""
     on_conflict: delivery_company_on_conflict
   ): delivery_company
+
+  """
+  insert data into the table: "delivery.courier_order"
+  """
+  insert_delivery_courier_order(
+    """the rows to be inserted"""
+    objects: [delivery_courier_order_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: delivery_courier_order_on_conflict
+  ): delivery_courier_order_mutation_response
+
+  """
+  insert data into the table: "delivery.courier_order_item"
+  """
+  insert_delivery_courier_order_item(
+    """the rows to be inserted"""
+    objects: [delivery_courier_order_item_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: delivery_courier_order_item_on_conflict
+  ): delivery_courier_order_item_mutation_response
+
+  """
+  insert a single row into the table: "delivery.courier_order_item"
+  """
+  insert_delivery_courier_order_item_one(
+    """the row to be inserted"""
+    object: delivery_courier_order_item_insert_input!
+
+    """upsert condition"""
+    on_conflict: delivery_courier_order_item_on_conflict
+  ): delivery_courier_order_item
+
+  """
+  insert a single row into the table: "delivery.courier_order"
+  """
+  insert_delivery_courier_order_one(
+    """the row to be inserted"""
+    object: delivery_courier_order_insert_input!
+
+    """upsert condition"""
+    on_conflict: delivery_courier_order_on_conflict
+  ): delivery_courier_order
 
   """
   insert data into the table: "delivery.details"
@@ -13020,30 +14010,8 @@ type mutation_root {
   update data of the table: "customer.customer"
   """
   update_customer_customer(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -13056,30 +14024,8 @@ type mutation_root {
   update single row of the table: "customer.customer"
   """
   update_customer_customer_by_pk(
-    """append existing jsonb value of filtered columns with new jsonb value"""
-    _append: customer_customer_append_input
-
-    """
-    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
-    """
-    _delete_at_path: customer_customer_delete_at_path_input
-
-    """
-    delete the array element with specified index (negative integers count from
-    the end). throws an error if top level container is not an array
-    """
-    _delete_elem: customer_customer_delete_elem_input
-
-    """
-    delete key/value pair or string element. key/value pairs are matched based on their key value
-    """
-    _delete_key: customer_customer_delete_key_input
-
     """increments the numeric columns with given value of the filtered values"""
     _inc: customer_customer_inc_input
-
-    """prepend existing jsonb value of filtered columns with new jsonb value"""
-    _prepend: customer_customer_prepend_input
 
     """sets the columns of the filtered rows to the given values"""
     _set: customer_customer_set_input
@@ -13341,6 +14287,118 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [delivery_company_updates!]!
   ): [delivery_company_mutation_response]
+
+  """
+  update data of the table: "delivery.courier_order"
+  """
+  update_delivery_courier_order(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_courier_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_courier_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_courier_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_courier_order_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_courier_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_courier_order_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_courier_order_set_input
+
+    """filter the rows which have to be updated"""
+    where: delivery_courier_order_bool_exp!
+  ): delivery_courier_order_mutation_response
+
+  """
+  update single row of the table: "delivery.courier_order"
+  """
+  update_delivery_courier_order_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: delivery_courier_order_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: delivery_courier_order_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: delivery_courier_order_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: delivery_courier_order_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_courier_order_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: delivery_courier_order_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_courier_order_set_input
+    pk_columns: delivery_courier_order_pk_columns_input!
+  ): delivery_courier_order
+
+  """
+  update data of the table: "delivery.courier_order_item"
+  """
+  update_delivery_courier_order_item(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_courier_order_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_courier_order_item_set_input
+
+    """filter the rows which have to be updated"""
+    where: delivery_courier_order_item_bool_exp!
+  ): delivery_courier_order_item_mutation_response
+
+  """
+  update single row of the table: "delivery.courier_order_item"
+  """
+  update_delivery_courier_order_item_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: delivery_courier_order_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: delivery_courier_order_item_set_input
+    pk_columns: delivery_courier_order_item_pk_columns_input!
+  ): delivery_courier_order_item
+
+  """
+  update multiples rows of table: "delivery.courier_order_item"
+  """
+  update_delivery_courier_order_item_many(
+    """updates to execute, in order"""
+    updates: [delivery_courier_order_item_updates!]!
+  ): [delivery_courier_order_item_mutation_response]
+
+  """
+  update multiples rows of table: "delivery.courier_order"
+  """
+  update_delivery_courier_order_many(
+    """updates to execute, in order"""
+    updates: [delivery_courier_order_updates!]!
+  ): [delivery_courier_order_mutation_response]
 
   """
   update data of the table: "delivery.details"
@@ -15306,8 +16364,6 @@ input notification_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: notification_info_set_input
-
-  """filter the rows which have to be updated"""
   where: notification_info_bool_exp!
 }
 
@@ -15803,6 +16859,96 @@ type query_root {
   fetch data from the table: "delivery.company" using primary key columns
   """
   delivery_company_by_pk(id: Int!): delivery_company
+
+  """
+  fetch data from the table: "delivery.courier_order"
+  """
+  delivery_courier_order(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_bool_exp
+  ): [delivery_courier_order!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.courier_order"
+  """
+  delivery_courier_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_bool_exp
+  ): delivery_courier_order_aggregate!
+
+  """
+  fetch data from the table: "delivery.courier_order" using primary key columns
+  """
+  delivery_courier_order_by_pk(id: Int!): delivery_courier_order
+
+  """
+  fetch data from the table: "delivery.courier_order_item"
+  """
+  delivery_courier_order_item(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): [delivery_courier_order_item!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.courier_order_item"
+  """
+  delivery_courier_order_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): delivery_courier_order_item_aggregate!
+
+  """
+  fetch data from the table: "delivery.courier_order_item" using primary key columns
+  """
+  delivery_courier_order_item_by_pk(id: Int!): delivery_courier_order_item
 
   """
   fetch data from the table: "delivery.details"
@@ -17962,6 +19108,7 @@ type restaurant_cart {
   """An object relationship"""
   customer: customer_customer!
   customer_id: Int!
+  discount_value: money!
 
   """An array relationship"""
   items(
@@ -18032,6 +19179,7 @@ type restaurant_cart_aggregate_fields {
 """aggregate avg on columns"""
 type restaurant_cart_avg_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -18045,6 +19193,7 @@ input restaurant_cart_bool_exp {
   cost: money_comparison_exp
   customer: customer_customer_bool_exp
   customer_id: Int_comparison_exp
+  discount_value: money_comparison_exp
   items: restaurant_cart_item_bool_exp
   items_aggregate: restaurant_cart_item_aggregate_bool_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -18066,6 +19215,7 @@ input type for incrementing numeric columns in table "restaurant.cart"
 """
 input restaurant_cart_inc_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -18075,6 +19225,7 @@ input type for inserting data into table "restaurant.cart"
 input restaurant_cart_insert_input {
   customer: customer_customer_obj_rel_insert_input
   customer_id: Int
+  discount_value: money
   items: restaurant_cart_item_arr_rel_insert_input
   restaurant: restaurant_restaurant_obj_rel_insert_input
   restaurant_id: Int
@@ -18507,8 +19658,6 @@ input restaurant_cart_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_item_bool_exp!
 }
 
@@ -18575,12 +19724,14 @@ input restaurant_cart_item_variance_order_by {
 """aggregate max on columns"""
 type restaurant_cart_max_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate min on columns"""
 type restaurant_cart_min_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -18619,6 +19770,7 @@ input restaurant_cart_order_by {
   cost: order_by
   customer: customer_customer_order_by
   customer_id: order_by
+  discount_value: order_by
   items_aggregate: restaurant_cart_item_aggregate_order_by
   restaurant: restaurant_restaurant_order_by
   restaurant_id: order_by
@@ -18637,6 +19789,9 @@ enum restaurant_cart_select_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   restaurant_id
 }
 
@@ -18645,24 +19800,28 @@ input type for updating data in table "restaurant.cart"
 """
 input restaurant_cart_set_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate stddev on columns"""
 type restaurant_cart_stddev_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_pop on columns"""
 type restaurant_cart_stddev_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate stddev_samp on columns"""
 type restaurant_cart_stddev_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -18680,12 +19839,14 @@ input restaurant_cart_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input restaurant_cart_stream_cursor_value_input {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
 """aggregate sum on columns"""
 type restaurant_cart_sum_fields {
   customer_id: Int
+  discount_value: money
   restaurant_id: Int
 }
 
@@ -18697,6 +19858,9 @@ enum restaurant_cart_update_column {
   customer_id
 
   """column name"""
+  discount_value
+
+  """column name"""
   restaurant_id
 }
 
@@ -18706,26 +19870,27 @@ input restaurant_cart_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_cart_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_cart_bool_exp!
 }
 
 """aggregate var_pop on columns"""
 type restaurant_cart_var_pop_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate var_samp on columns"""
 type restaurant_cart_var_samp_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
 """aggregate variance on columns"""
 type restaurant_cart_variance_fields {
   customer_id: Float
+  discount_value: Float
   restaurant_id: Float
 }
 
@@ -19194,8 +20359,6 @@ input restaurant_category_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_category_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_category_bool_exp!
 }
 
@@ -19705,8 +20868,6 @@ input restaurant_choice_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_choice_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_choice_bool_exp!
 }
 
@@ -20516,8 +21677,6 @@ input restaurant_item_option_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_option_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_option_map_bool_exp!
 }
 
@@ -20865,8 +22024,6 @@ input restaurant_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_item_bool_exp!
 }
 
@@ -21340,8 +22497,6 @@ input restaurant_operator_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_operator_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_operator_bool_exp!
 }
 
@@ -22002,8 +23157,6 @@ input restaurant_option_choice_map_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_choice_map_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_choice_map_bool_exp!
 }
 
@@ -22415,8 +23568,6 @@ input restaurant_option_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_option_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_option_bool_exp!
 }
 
@@ -22519,6 +23670,7 @@ type restaurant_order {
   delivery_cost: money!
   delivery_id: Int
   delivery_type: String!
+  discount_value: money!
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int!
@@ -22688,6 +23840,7 @@ type restaurant_order_avg_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -22704,6 +23857,7 @@ input restaurant_order_avg_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -22730,6 +23884,7 @@ input restaurant_order_bool_exp {
   delivery_cost: money_comparison_exp
   delivery_id: Int_comparison_exp
   delivery_type: String_comparison_exp
+  discount_value: money_comparison_exp
   estimated_food_ready_time: timestamptz_comparison_exp
   firebase_id: String_comparison_exp
   id: Int_comparison_exp
@@ -22823,6 +23978,7 @@ input restaurant_order_inc_input {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -22846,6 +24002,7 @@ input restaurant_order_insert_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23361,8 +24518,6 @@ input restaurant_order_item_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_item_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_item_bool_exp!
 }
 
@@ -23442,6 +24597,7 @@ type restaurant_order_max_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23474,6 +24630,7 @@ input restaurant_order_max_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23504,6 +24661,7 @@ type restaurant_order_min_fields {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -23536,6 +24694,7 @@ input restaurant_order_min_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23599,6 +24758,7 @@ input restaurant_order_order_by {
   delivery_cost: order_by
   delivery_id: order_by
   delivery_type: order_by
+  discount_value: order_by
   estimated_food_ready_time: order_by
   firebase_id: order_by
   id: order_by
@@ -23901,8 +25061,6 @@ input restaurant_order_public_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_public_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_public_bool_exp!
 }
 
@@ -23954,6 +25112,9 @@ enum restaurant_order_select_column {
 
   """column name"""
   delivery_type
+
+  """column name"""
+  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -24016,6 +25177,7 @@ input restaurant_order_set_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -24051,6 +25213,7 @@ type restaurant_order_stddev_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24067,6 +25230,7 @@ input restaurant_order_stddev_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24081,6 +25245,7 @@ type restaurant_order_stddev_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24097,6 +25262,7 @@ input restaurant_order_stddev_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24111,6 +25277,7 @@ type restaurant_order_stddev_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24127,6 +25294,7 @@ input restaurant_order_stddev_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24156,6 +25324,7 @@ input restaurant_order_stream_cursor_value_input {
   delivery_cost: money
   delivery_id: Int
   delivery_type: String
+  discount_value: money
   estimated_food_ready_time: timestamptz
   firebase_id: String
   id: Int
@@ -24191,6 +25360,7 @@ type restaurant_order_sum_fields {
   customer_id: Int
   delivery_cost: money
   delivery_id: Int
+  discount_value: money
   id: Int
   refund_amount: money
   restaurant_id: Int
@@ -24207,6 +25377,7 @@ input restaurant_order_sum_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24242,6 +25413,9 @@ enum restaurant_order_update_column {
 
   """column name"""
   delivery_type
+
+  """column name"""
+  discount_value
 
   """column name"""
   estimated_food_ready_time
@@ -24320,8 +25494,6 @@ input restaurant_order_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_order_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_order_bool_exp!
 }
 
@@ -24331,6 +25503,7 @@ type restaurant_order_var_pop_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24347,6 +25520,7 @@ input restaurant_order_var_pop_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24361,6 +25535,7 @@ type restaurant_order_var_samp_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24377,6 +25552,7 @@ input restaurant_order_var_samp_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24391,6 +25567,7 @@ type restaurant_order_variance_fields {
   customer_id: Float
   delivery_cost: Float
   delivery_id: Float
+  discount_value: Float
   id: Float
   refund_amount: Float
   restaurant_id: Float
@@ -24407,6 +25584,7 @@ input restaurant_order_variance_order_by {
   customer_id: order_by
   delivery_cost: order_by
   delivery_id: order_by
+  discount_value: order_by
   id: order_by
   refund_amount: order_by
   restaurant_id: order_by
@@ -24965,8 +26143,6 @@ input restaurant_restaurant_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: restaurant_restaurant_set_input
-
-  """filter the rows which have to be updated"""
   where: restaurant_restaurant_bool_exp!
 }
 
@@ -25415,8 +26591,6 @@ input review_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: review_set_input
-
-  """filter the rows which have to be updated"""
   where: review_bool_exp!
 }
 
@@ -25729,8 +26903,6 @@ input service_provider_customer_chat_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_customer_chat_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_customer_chat_bool_exp!
 }
 
@@ -26103,8 +27275,6 @@ input service_provider_delivery_partner_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_delivery_partner_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_delivery_partner_bool_exp!
 }
 
@@ -26195,42 +27365,6 @@ type service_provider_details {
 
   """An object relationship"""
   restaurant: restaurant_restaurant
-
-  """An array relationship"""
-  reviews(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): [review!]!
-
-  """An aggregate relationship"""
-  reviews_aggregate(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): review_aggregate!
   schedule(
     """JSON select path"""
     path: String
@@ -26313,8 +27447,6 @@ input service_provider_details_bool_exp {
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
-  reviews: review_bool_exp
-  reviews_aggregate: review_aggregate_bool_exp
   schedule: jsonb_comparison_exp
   service_link: service_provider_service_link_bool_exp
   service_link_id: Int_comparison_exp
@@ -26421,7 +27553,6 @@ input service_provider_details_insert_input {
   open_status: String
   phone_number: String
   restaurant: restaurant_restaurant_obj_rel_insert_input
-  reviews: review_arr_rel_insert_input
   schedule: jsonb
   service_link: service_provider_service_link_obj_rel_insert_input
   service_link_id: Int
@@ -26511,7 +27642,6 @@ input service_provider_details_order_by {
   open_status: order_by
   phone_number: order_by
   restaurant: restaurant_restaurant_order_by
-  reviews_aggregate: review_aggregate_order_by
   schedule: order_by
   service_link: service_provider_service_link_order_by
   service_link_id: order_by
@@ -26761,8 +27891,6 @@ input service_provider_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_details_bool_exp!
 }
 
@@ -27005,8 +28133,6 @@ input service_provider_location_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_location_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_location_bool_exp!
 }
 
@@ -27114,9 +28240,9 @@ enum service_provider_operator_details_constraint {
   operator_details_pkey
 
   """
-  unique or primary key constraint on columns "user_id"
+  unique or primary key constraint on columns "app_type_id", "user_id"
   """
-  operator_details_user_id_key
+  operator_details_user_id_app_type_id_key
 }
 
 """
@@ -27341,8 +28467,6 @@ input service_provider_operator_details_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_operator_details_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_operator_details_bool_exp!
 }
 
@@ -27381,6 +28505,7 @@ type service_provider_post {
     """JSON select path"""
     path: String
   ): jsonb
+  link: String
   message: String!
   posted_on: timestamptz!
 
@@ -27441,6 +28566,7 @@ input service_provider_post_bool_exp {
   id: Int_comparison_exp
   image: String_comparison_exp
   likes: jsonb_comparison_exp
+  link: String_comparison_exp
   message: String_comparison_exp
   posted_on: timestamptz_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
@@ -27511,6 +28637,7 @@ input service_provider_post_insert_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   restaurant: restaurant_restaurant_obj_rel_insert_input
@@ -27522,6 +28649,7 @@ input service_provider_post_insert_input {
 type service_provider_post_max_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27532,6 +28660,7 @@ type service_provider_post_max_fields {
 type service_provider_post_min_fields {
   id: Int
   image: String
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27564,6 +28693,7 @@ input service_provider_post_order_by {
   id: order_by
   image: order_by
   likes: order_by
+  link: order_by
   message: order_by
   posted_on: order_by
   restaurant: restaurant_restaurant_order_by
@@ -27602,6 +28732,9 @@ enum service_provider_post_select_column {
   likes
 
   """column name"""
+  link
+
+  """column name"""
   message
 
   """column name"""
@@ -27625,6 +28758,7 @@ input service_provider_post_set_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27669,6 +28803,7 @@ input service_provider_post_stream_cursor_value_input {
 
   """Array of customerIds"""
   likes: jsonb
+  link: String
   message: String
   posted_on: timestamptz
   service_provider_id: Int
@@ -27696,6 +28831,9 @@ enum service_provider_post_update_column {
 
   """column name"""
   likes
+
+  """column name"""
+  link
 
   """column name"""
   message
@@ -27738,8 +28876,6 @@ input service_provider_post_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_post_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_post_bool_exp!
 }
 
@@ -28040,8 +29176,6 @@ input service_provider_service_link_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_service_link_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_service_link_bool_exp!
 }
 
@@ -28419,8 +29553,6 @@ input service_provider_stripe_info_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_stripe_info_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_stripe_info_bool_exp!
 }
 
@@ -28694,8 +29826,6 @@ input service_provider_subscriber_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: service_provider_subscriber_set_input
-
-  """filter the rows which have to be updated"""
   where: service_provider_subscriber_bool_exp!
 }
 
@@ -29363,6 +30493,124 @@ type subscription_root {
     """filter the rows returned"""
     where: delivery_company_bool_exp
   ): [delivery_company!]!
+
+  """
+  fetch data from the table: "delivery.courier_order"
+  """
+  delivery_courier_order(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_bool_exp
+  ): [delivery_courier_order!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.courier_order"
+  """
+  delivery_courier_order_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_bool_exp
+  ): delivery_courier_order_aggregate!
+
+  """
+  fetch data from the table: "delivery.courier_order" using primary key columns
+  """
+  delivery_courier_order_by_pk(id: Int!): delivery_courier_order
+
+  """
+  fetch data from the table: "delivery.courier_order_item"
+  """
+  delivery_courier_order_item(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): [delivery_courier_order_item!]!
+
+  """
+  fetch aggregated fields from the table: "delivery.courier_order_item"
+  """
+  delivery_courier_order_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [delivery_courier_order_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [delivery_courier_order_item_order_by!]
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): delivery_courier_order_item_aggregate!
+
+  """
+  fetch data from the table: "delivery.courier_order_item" using primary key columns
+  """
+  delivery_courier_order_item_by_pk(id: Int!): delivery_courier_order_item
+
+  """
+  fetch data from the table in a streaming manner: "delivery.courier_order_item"
+  """
+  delivery_courier_order_item_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [delivery_courier_order_item_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: delivery_courier_order_item_bool_exp
+  ): [delivery_courier_order_item!]!
+
+  """
+  fetch data from the table in a streaming manner: "delivery.courier_order"
+  """
+  delivery_courier_order_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [delivery_courier_order_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: delivery_courier_order_bool_exp
+  ): [delivery_courier_order!]!
 
   """
   fetch data from the table: "delivery.details"
@@ -32420,8 +33668,6 @@ input translation_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_bool_exp!
 }
 
@@ -32732,8 +33978,6 @@ input translation_value_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: translation_value_set_input
-
-  """filter the rows which have to be updated"""
   where: translation_value_bool_exp!
 }
 
@@ -33107,8 +34351,6 @@ input user_updates {
 
   """sets the columns of the filtered rows to the given values"""
   _set: user_set_input
-
-  """filter the rows which have to be updated"""
   where: user_bool_exp!
 }
 
@@ -33267,8 +34509,6 @@ enum valid_types_app_type_update_column {
 input valid_types_app_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_app_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_app_type_bool_exp!
 }
 
@@ -33408,7 +34648,5 @@ enum valid_types_service_provider_type_update_column {
 input valid_types_service_provider_type_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: valid_types_service_provider_type_set_input
-
-  """filter the rows which have to be updated"""
   where: valid_types_service_provider_type_bool_exp!
 }
