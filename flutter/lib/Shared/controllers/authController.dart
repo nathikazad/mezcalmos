@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
@@ -70,29 +71,36 @@ class AuthController extends GetxController {
         mezDbgPrint('AuthController: User is currently signed out!');
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
+        final bool hasInternet =
+            await ConnectivityHelper.instance.pingServers();
+        if (hasInternet) {
+          fireAuth.IdTokenResult? tokenResult =
+              await user.getIdTokenResult(true);
+          mezDbgPrint(tokenResult.claims);
 
-        fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
-        mezDbgPrint(tokenResult.claims);
+          if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
+              roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
+                  ['x-hasura-allowed-roles'])) {
+            mezDbgPrint("No token, calling addHasuraClaims");
 
-        if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
-            roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
-                ['x-hasura-allowed-roles'])) {
-          mezDbgPrint("No token, calling addHasuraClaims");
+            await FirebaseFunctions.instance
+                .httpsCallable('user2-addHasuraClaim')
+                .call();
 
-          await FirebaseFunctions.instance
-              .httpsCallable('user2-addHasuraClaim')
-              .call();
+            tokenResult = await user.getIdTokenResult(true);
+          }
+          _hasuraUserId.value = int.parse(tokenResult
+              .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
 
-          tokenResult = await user.getIdTokenResult(true);
+          mezDbgPrint(_hasuraUserId.value);
+
+          await hasuraDb.initializeHasura();
+          await fetchUserInfoFromHasura();
+          await _onSignInCallback();
+        } else {
+          unawaited(fireAuth.FirebaseAuth.instance.signOut());
+          user = null;
         }
-        _hasuraUserId.value = int.parse(tokenResult
-            .claims!['https://hasura.io/jwt/claims']['x-hasura-user-id']);
-
-        mezDbgPrint(_hasuraUserId.value);
-
-        await hasuraDb.initializeHasura();
-        await fetchUserInfoFromHasura();
-        await _onSignInCallback();
       }
 
       _authStateStreamController.add(user);

@@ -22,39 +22,60 @@ class ConnectivityHelper {
     ConnectivityResult.ethernet,
   ];
 
-  bool _hasInternet = false;
-  bool _pingedConnection = false;
-
-  bool get hasInternet => _hasInternet;
+  Timer? _internetIsBackTimer;
 
   Future<void> networkCheck() async {
+    mezDbgPrint("NETWORK CHECKER");
+    checkForInternet();
     final Connectivity connectivity = Connectivity();
     final ConnectivityResult result = await connectivity.checkConnectivity();
-    _hasInternet = _hasInternetOptions.contains(result);
-    Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult event) async {
-      _hasInternet = _hasInternetOptions.contains(event);
-      if (_hasInternet) {
-        try {
-          final List<InternetAddress> result =
-              await InternetAddress.lookup(sNetworkCheckUrl);
-          _pingedConnection = result.isNotEmpty;
-        } on SocketException catch (_) {
-          _pingedConnection = false;
-        }
-        _hasInternet = _pingedConnection;
-      }
+    Connectivity().onConnectivityChanged.listen(checkForInternet);
+  }
 
-      if (!_hasInternet) {
-        if (!isCurrentRoute(kNoInternetRoute)) {
-          unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
-        }
-      } else {
-        if (isCurrentRoute(kNoInternetRoute)) {
-          MezRouter.back<Null>();
-        }
+  void checkForInternet([ConnectivityResult? event]) async {
+    bool _hasInternet = await pingServers();
+    mezDbgPrint("Has Internet $_hasInternet");
+
+    if (!_hasInternet) {
+      if (!isCurrentRoute(kNoInternetRoute)) {
+        mezDbgPrint("No internet going so going to no internet page");
+        unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
       }
-    });
+      if (_internetIsBackTimer == null) {
+        mezDbgPrint("Starting timer");
+        _internetIsBackTimer =
+            Timer.periodic(const Duration(seconds: 5), (timer) {
+          checkForInternet();
+        });
+      }
+    } else {
+      if (isCurrentRoute(kNoInternetRoute)) {
+        mezDbgPrint("Internet is back so going to back");
+        MezRouter.back<Null>();
+      }
+      if (_internetIsBackTimer != null) {
+        mezDbgPrint("Cancelling timer");
+        _internetIsBackTimer?.cancel();
+        _internetIsBackTimer = null;
+      }
+    }
+  }
+
+  Future<bool> pingServers() async {
+    List<Future<bool>> futures = <Future<bool>>[];
+    futures.add(_pingServer(sNetworkCheckUrl1));
+    futures.add(_pingServer(sNetworkCheckUrl2));
+    final List<bool> results = await Future.wait(futures);
+    return results.contains(true);
+  }
+
+  Future<bool> _pingServer(String pingUrl) async {
+    try {
+      final List<InternetAddress> result =
+          await InternetAddress.lookup(pingUrl);
+      return result.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
   }
 }
