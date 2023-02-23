@@ -11,7 +11,7 @@ export interface AuthorizeDetails {
     newOperatorId: number,
     approved: boolean
 }
-
+ 
 export async function authorizeDeliveryOperator(ownerUserId: number, authorizeDetails: AuthorizeDetails) {
 
     let deliveryOperator = await getDeliveryOperatorByUserId(ownerUserId);

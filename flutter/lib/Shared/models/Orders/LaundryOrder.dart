@@ -6,6 +6,7 @@ import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 
 enum LaundryOrderStatus {
   OrderReceived,
@@ -46,6 +47,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   ServiceInfo? laundry;
   LaundryOrderStatus status;
   num shippingCost;
+  MezLocation customerLocation;
+  MezLocation laundryLocation;
   LaundryOrderCosts? costsByType;
   DateTime? estimatedLaundryReadyTime;
   RouteInformation? routeInformation;
@@ -55,7 +58,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   LaundryOrder(
       {required super.orderId,
       required super.cost,
-      required super.to,
+      required this.laundryLocation,
+      required this.customerLocation,
       required super.orderTime,
       required super.paymentType,
       required this.status,
@@ -83,6 +87,8 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       super.notifiedAdmin,
       super.notifiedOperator})
       : super(
+            to: customerLocation,
+            totalCost: cost,
             serviceProviderDropOffDriverChatId: laundryDropOffDriverChatId,
             serviceProviderPickupDriverChatId: laundryPickupDriverChatId,
             serviceProviderId: laundry?.hasuraId,
@@ -208,9 +214,9 @@ class LaundryOrder extends TwoWayDeliverableOrder {
   }
 
   int get deliveryOrderId {
-    return getCurrentPhase() == LaundryOrderPhase.Dropoff
-        ? toCustomerDeliveryId!
-        : fromCustomerDeliveryId;
+    return getCurrentPhase() == LaundryOrderPhase.Pickup
+        ? fromCustomerDeliveryId
+        : toCustomerDeliveryId!;
   }
 
   int? getServiceDriverChatId() {

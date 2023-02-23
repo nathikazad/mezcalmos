@@ -1007,13 +1007,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'current_gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'delivery_cost'),
                 alias: null,
                 arguments: [],
@@ -1026,13 +1019,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'current_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'user'),
                     alias: null,
@@ -4954,7 +4940,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.chat_with_service_provider_id,
     required this.chat_with_customer_id,
     this.cancellation_time,
-    this.current_gps,
     required this.delivery_cost,
     this.delivery_driver,
     required this.$__typename,
@@ -4973,7 +4958,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
         json['chat_with_service_provider_id'];
     final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$cancellation_time = json['cancellation_time'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
@@ -4988,8 +4972,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
       cancellation_time: (l$cancellation_time as String?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery_driver: l$delivery_driver == null
           ? null
@@ -5014,8 +4996,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
   final int chat_with_customer_id;
 
   final String? cancellation_time;
-
-  final Geography? current_gps;
 
   final double delivery_cost;
 
@@ -5046,9 +5026,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$cancellation_time = cancellation_time;
     _resultData['cancellation_time'] = l$cancellation_time;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery_driver = delivery_driver;
@@ -5069,7 +5046,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$chat_with_customer_id = chat_with_customer_id;
     final l$cancellation_time = cancellation_time;
-    final l$current_gps = current_gps;
     final l$delivery_cost = delivery_cost;
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
@@ -5082,7 +5058,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       l$chat_with_service_provider_id,
       l$chat_with_customer_id,
       l$cancellation_time,
-      l$current_gps,
       l$delivery_cost,
       l$delivery_driver,
       l$$__typename,
@@ -5146,11 +5121,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     if (l$cancellation_time != lOther$cancellation_time) {
       return false;
     }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
-      return false;
-    }
     final l$delivery_cost = delivery_cost;
     final lOther$delivery_cost = other.delivery_cost;
     if (l$delivery_cost != lOther$delivery_cost) {
@@ -5204,7 +5174,6 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     String? cancellation_time,
-    Geography? current_gps,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?
         delivery_driver,
@@ -5242,7 +5211,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? chat_with_service_provider_id = _undefined,
     Object? chat_with_customer_id = _undefined,
     Object? cancellation_time = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery_driver = _undefined,
     Object? $__typename = _undefined,
@@ -5277,9 +5245,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         cancellation_time: cancellation_time == _undefined
             ? _instance.cancellation_time
             : (cancellation_time as String?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -5321,7 +5286,6 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
     String? cancellation_time,
-    Geography? current_gps,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?
         delivery_driver,
@@ -5337,28 +5301,21 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
 
 class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver {
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver({
-    this.current_location,
     required this.user,
     required this.$__typename,
   });
 
   factory Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       user:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
               .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
       user;
@@ -5367,9 +5324,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -5379,11 +5333,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$user,
       l$$__typename,
     ]);
@@ -5397,11 +5349,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     if (!(other
             is Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$user = user;
@@ -5444,7 +5391,6 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
       _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -5473,15 +5419,11 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user
@@ -5509,7 +5451,6 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes _res;
 
   call({
-    Geography? current_location,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -6736,13 +6677,6 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'current_gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'delivery_cost'),
                 alias: null,
                 arguments: [],
@@ -6755,13 +6689,6 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'current_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'user'),
                     alias: null,
@@ -10677,7 +10604,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     this.estimated_arrival_at_dropoff_time,
     this.estimated_arrival_at_pickup_time,
     this.cancellation_time,
-    this.current_gps,
     required this.delivery_cost,
     this.delivery_driver,
     required this.$__typename,
@@ -10697,7 +10623,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$estimated_arrival_at_pickup_time =
         json['estimated_arrival_at_pickup_time'];
     final l$cancellation_time = json['cancellation_time'];
-    final l$current_gps = json['current_gps'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_driver = json['delivery_driver'];
     final l$$__typename = json['__typename'];
@@ -10713,8 +10638,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       estimated_arrival_at_pickup_time:
           (l$estimated_arrival_at_pickup_time as String?),
       cancellation_time: (l$cancellation_time as String?),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery_driver: l$delivery_driver == null
           ? null
@@ -10741,8 +10664,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   final String? estimated_arrival_at_pickup_time;
 
   final String? cancellation_time;
-
-  final Geography? current_gps;
 
   final double delivery_cost;
 
@@ -10775,9 +10696,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
         l$estimated_arrival_at_pickup_time;
     final l$cancellation_time = cancellation_time;
     _resultData['cancellation_time'] = l$cancellation_time;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery_driver = delivery_driver;
@@ -10799,7 +10717,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
         estimated_arrival_at_dropoff_time;
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     final l$cancellation_time = cancellation_time;
-    final l$current_gps = current_gps;
     final l$delivery_cost = delivery_cost;
     final l$delivery_driver = delivery_driver;
     final l$$__typename = $__typename;
@@ -10813,7 +10730,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
       l$estimated_arrival_at_dropoff_time,
       l$estimated_arrival_at_pickup_time,
       l$cancellation_time,
-      l$current_gps,
       l$delivery_cost,
       l$delivery_driver,
       l$$__typename,
@@ -10882,11 +10798,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     if (l$cancellation_time != lOther$cancellation_time) {
       return false;
     }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
-      return false;
-    }
     final l$delivery_cost = delivery_cost;
     final lOther$delivery_cost = other.delivery_cost;
     if (l$delivery_cost != lOther$delivery_cost) {
@@ -10940,7 +10851,6 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? estimated_arrival_at_dropoff_time,
     String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
-    Geography? current_gps,
     double? delivery_cost,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?
         delivery_driver,
@@ -10978,7 +10888,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
     Object? estimated_arrival_at_dropoff_time = _undefined,
     Object? estimated_arrival_at_pickup_time = _undefined,
     Object? cancellation_time = _undefined,
-    Object? current_gps = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery_driver = _undefined,
     Object? $__typename = _undefined,
@@ -11013,9 +10922,6 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
         cancellation_time: cancellation_time == _undefined
             ? _instance.cancellation_time
             : (cancellation_time as String?),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -11058,7 +10964,6 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
     String? estimated_arrival_at_dropoff_time,
     String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
-    Geography? current_gps,
     double? delivery_cost,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?
         delivery_driver,
@@ -11074,28 +10979,21 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver({
-    this.current_location,
     required this.user,
     required this.$__typename,
   });
 
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       user:
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
               .fromJson((l$user as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user
       user;
@@ -11104,9 +11002,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$user = user;
     _resultData['user'] = l$user.toJson();
     final l$$__typename = $__typename;
@@ -11116,11 +11011,9 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$user,
       l$$__typename,
     ]);
@@ -11134,11 +11027,6 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_
     if (!(other
             is Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$user = user;
@@ -11181,7 +11069,6 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
       _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,
@@ -11210,15 +11097,11 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         user: user == _undefined || user == null
             ? _instance.user
             : (user
@@ -11246,7 +11129,6 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
   TRes _res;
 
   call({
-    Geography? current_location,
     Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver$user?
         user,
     String? $__typename,

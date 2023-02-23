@@ -113,9 +113,6 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
   }
 
   Future<void> _handleAddButton() async {
-    mezDbgPrint(
-        "YES EDIT CLICKEDDDD =========>>>>>>${widget.viewController.currentMode}");
-    widget.viewController.differentRestaurantIds();
     if (auth.fireAuthUser == null) {
       dialogRequiredSignIn();
     } else {

@@ -241,6 +241,7 @@ class RestaurantOrder extends DeliverableOrder {
     return status == RestaurantOrderStatus.OnTheWay;
   }
 
+
   bool inSelfDelivery() {
     return (status == RestaurantOrderStatus.Ready ||
             status == RestaurantOrderStatus.OnTheWay) &&

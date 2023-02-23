@@ -97,7 +97,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noItemTitle"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -224,8 +224,6 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               (int index) {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
-              shippingPrice: viewController
-                  .filteredRestaurants[index].deliveryCost!.minimumCost,
               onClick: () {
                 MezRouter.toNamed<void>(
                     getRestaurantRoute(
@@ -254,7 +252,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             )
           ],
         );
@@ -274,7 +272,8 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
           "${_i18n()["showOnlyOpen"]}",
-          style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+          style:
+              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -283,7 +282,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   Widget _searchInput() {
     return TextFormField(
       textAlignVertical: TextAlignVertical.center,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
         viewController.filter();

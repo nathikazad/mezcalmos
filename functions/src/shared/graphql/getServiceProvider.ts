@@ -53,12 +53,13 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     user_id: true,
                     restaurant_id: true,
                     operator_details: {
-                    status: true,
-                    owner: true,
-                    notification_info: {
-                        token: true,
-                        turn_off_notifications: true
-                    }
+                        id: true,
+                        status: true,
+                        owner: true,
+                        notification_info: {
+                            token: true,
+                            turn_off_notifications: true
+                        }
                     },
                     user: {
                         firebase_id: true,
@@ -81,12 +82,13 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     user_id: true,
                     store_id: true,
                     operator_details: {
-                    status: true,
-                    owner: true,
-                    notification_info: {
-                        token: true,
-                        turn_off_notifications: true
-                    }
+                        id: true,
+                        status: true,
+                        owner: true,
+                        notification_info: {
+                            token: true,
+                            turn_off_notifications: true
+                        }
                     },
                     user: {
                         firebase_id: true,
@@ -111,6 +113,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                 return {
                     id: r.id,
                     userId: r.user_id,
+                    detailsId: r.operator_details.id,
                     serviceProviderId: r.restaurant_id,
                     status: r.operator_details.status as AuthorizationStatus,
                     owner: r.operator_details.owner,
@@ -183,6 +186,7 @@ export async function getServiceProviderDetails(serviceProviderDetailsId: number
                     id: o.id,
                     serviceProviderId: o.store_id,
                     userId: o.user_id,
+                    detailsId: o.operator_details.id,
                     status: o.operator_details.status as AuthorizationStatus,
                     user: {
                         id: o.user_id,

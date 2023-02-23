@@ -9,8 +9,10 @@ import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:sizer/sizer.dart';
 
 class ReviewCard extends StatefulWidget {
-  const ReviewCard({super.key, required this.review});
+  const ReviewCard(
+      {super.key, required this.review, this.showUserImage = true});
   final Review review;
+  final bool showUserImage;
 
   @override
   State<ReviewCard> createState() => _ReviewCardState();
@@ -35,14 +37,15 @@ class _ReviewCardState extends State<ReviewCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 23,
-                  backgroundImage: CachedNetworkImageProvider(
-                      widget.review.customer?.image ?? ""),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
+                if (widget.showUserImage)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: CircleAvatar(
+                      radius: 23,
+                      backgroundImage: CachedNetworkImageProvider(
+                          widget.review.customer?.image ?? ""),
+                    ),
+                  ),
                 Flexible(
                     fit: FlexFit.tight,
                     child: Column(

@@ -381,7 +381,7 @@
           "SavedLocationComponent": {
             "editLocation": "Editar ubicación",
             "deleteLocation": "Eliminar ubicación",
-            "defaultAddressText":"Por defecto"
+            "defaultAddressText":"Defecto"
           },
           "SavedLocationIsEmpty": {
             "savedLocationsListEmpty": "Tu lista de ubicaciones guardadas está vacía",
@@ -570,6 +570,7 @@
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
+          "daysReturn" : "Días de regreso",
           "minimumCost": "Costo mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",

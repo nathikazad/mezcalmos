@@ -201,6 +201,7 @@ class RestaurantInfoTab extends StatelessWidget {
                   itemBuilder: (BuildContext ctx, int index) {
                     return ReviewCard(
                       review: restaurant.reviews[index],
+                      showUserImage: false,
                     );
                   }),
             ],

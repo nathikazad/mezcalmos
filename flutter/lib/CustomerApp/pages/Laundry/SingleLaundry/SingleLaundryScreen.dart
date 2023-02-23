@@ -180,23 +180,41 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   laundry.value!.info.name,
                   style: Get.textTheme.headline5,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35),
-                    color: laundaryChipContainerColor,
-                  ),
-                  child: Text(
-                      "${_i18n()["minimumCost"]} \$${laundry.value!.laundryCosts.minimumCost} ",
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: Get.textTheme.headline6?.copyWith(
-                        color: primaryBlueColor,
-                      )),
+                Wrap(
+                  spacing: 3,
+                  runSpacing: 5,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: secondaryLightBlueColor),
+                      child: Text(
+                        "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: primaryBlueColor),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: secondaryLightBlueColor),
+                      child: Text(
+                        "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: Get.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: primaryBlueColor),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

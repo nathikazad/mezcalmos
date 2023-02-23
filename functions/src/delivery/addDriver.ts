@@ -7,20 +7,21 @@ import { Notification, NotificationAction, NotificationType } from "../shared/mo
 import { AuthorizeDriverNotification, DeliveryDriver, DeliveryOperator, DeliveryServiceProviderType } from "../shared/models/Generic/Delivery";
 import { pushNotification } from "../utilities/senders/notifyUser";
 import { Operator } from "../shared/models/Services/Service";
-import { getLaundryOperators } from "../shared/graphql/laundry/operators/getLaundryOperator";
+import { getLaundryOperators } from "../shared/graphql/laundry/operator/getLaundryOperator";
 
 export interface AddDriverDetails {
     deliveryCompanyId: number,
     notificationInfo?: NotificationInfo,
+    deliveryServiceProviderType: DeliveryServiceProviderType
 }
 
-export async function addDriver(userId: number, addDriverDetails: AddDriverDetails, deliveryServiceProviderType: DeliveryServiceProviderType ) {
+export async function addDriver(userId: number, addDriverDetails: AddDriverDetails) {
     //first mutation
     //second notify operators of the company
     
-    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, deliveryServiceProviderType);
+    let deliveryDriver: DeliveryDriver = await createDeliveryDriver(userId, addDriverDetails, addDriverDetails.deliveryServiceProviderType);
 
-    notify(deliveryDriver, deliveryServiceProviderType, addDriverDetails);
+    notify(deliveryDriver, addDriverDetails.deliveryServiceProviderType, addDriverDetails);
 }
 
 async function notify(deliveryDriver: DeliveryDriver, deliveryCompanyType: DeliveryServiceProviderType, addDriverDetails: AddDriverDetails) {

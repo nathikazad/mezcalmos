@@ -584,6 +584,7 @@
           "SingleLaundryScreen": {
             "startingFrom": "Starting from ",
             "minimumCost": "Minimum cost",
+            "daysReturn" :"days return",
             "description": "Description",
             "openHours": "openHours",
             "sendMyLaundry": "Send my laundry",
@@ -1369,6 +1370,7 @@
           },
           "SingleLaundryScreen": {
             "startingFrom": "Starting from :",
+            "daysReturn" : "days return",
             "minimumCost": "Minimum Cost",
             "description": "Description",
             "openHours": "openHours",
