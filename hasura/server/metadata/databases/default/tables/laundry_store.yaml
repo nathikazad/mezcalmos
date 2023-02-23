@@ -84,6 +84,16 @@ select_permissions:
         - service_provider_type
         - normal_delivery_time
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - minimum_cost
+        - service_provider_type
+        - normal_delivery_time
+      filter: {}
   - role: laundry_operator
     permission:
       columns:
