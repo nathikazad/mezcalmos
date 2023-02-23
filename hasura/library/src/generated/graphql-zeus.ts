@@ -2470,6 +2470,7 @@ count?: [{	columns?:ValueTypes["delivery_company_select_column"][],	distinct?:bo
 	/** columns and relationships of "delivery.details" */
 ["delivery_details"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	customer_pickup?:true,
 	delivery_available?:true,
 	/** An object relationship */
@@ -2525,6 +2526,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate avg on columns */
 ["delivery_details_avg_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2536,6 +2538,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by avg() on columns of table "delivery.details" */
 ["delivery_details_avg_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2549,6 +2552,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	_not?:ValueTypes["delivery_details_bool_exp"],
 	_or?:ValueTypes["delivery_details_bool_exp"][],
 	cost_per_km?:ValueTypes["money_comparison_exp"],
+	cost_per_km_from_base?:ValueTypes["money_comparison_exp"],
 	customer_pickup?:ValueTypes["Boolean_comparison_exp"],
 	delivery_available?:ValueTypes["Boolean_comparison_exp"],
 	delivery_company?:ValueTypes["delivery_company_bool_exp"],
@@ -2566,6 +2570,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** input type for incrementing numeric columns in table "delivery.details" */
 ["delivery_details_inc_input"]: {
 	cost_per_km?:ValueTypes["money"],
+	cost_per_km_from_base?:ValueTypes["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:ValueTypes["money"],
 	id?:number,
@@ -2576,6 +2581,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** input type for inserting data into table "delivery.details" */
 ["delivery_details_insert_input"]: {
 	cost_per_km?:ValueTypes["money"],
+	cost_per_km_from_base?:ValueTypes["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	delivery_company?:ValueTypes["delivery_company_obj_rel_insert_input"],
@@ -2592,6 +2598,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate max on columns */
 ["delivery_details_max_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2603,6 +2610,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by max() on columns of table "delivery.details" */
 ["delivery_details_max_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2613,6 +2621,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate min on columns */
 ["delivery_details_min_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2624,6 +2633,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by min() on columns of table "delivery.details" */
 ["delivery_details_min_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2654,6 +2664,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** Ordering options when selecting data from "delivery.details". */
 ["delivery_details_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	customer_pickup?:ValueTypes["order_by"],
 	delivery_available?:ValueTypes["order_by"],
 	delivery_company?:ValueTypes["delivery_company_order_by"],
@@ -2675,6 +2686,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** input type for updating data in table "delivery.details" */
 ["delivery_details_set_input"]: {
 	cost_per_km?:ValueTypes["money"],
+	cost_per_km_from_base?:ValueTypes["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -2688,6 +2700,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate stddev on columns */
 ["delivery_details_stddev_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2699,6 +2712,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by stddev() on columns of table "delivery.details" */
 ["delivery_details_stddev_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2709,6 +2723,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate stddev_pop on columns */
 ["delivery_details_stddev_pop_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2720,6 +2735,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by stddev_pop() on columns of table "delivery.details" */
 ["delivery_details_stddev_pop_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2730,6 +2746,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate stddev_samp on columns */
 ["delivery_details_stddev_samp_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2741,6 +2758,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by stddev_samp() on columns of table "delivery.details" */
 ["delivery_details_stddev_samp_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2758,6 +2776,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** Initial value of the column from where the streaming should start */
 ["delivery_details_stream_cursor_value_input"]: {
 	cost_per_km?:ValueTypes["money"],
+	cost_per_km_from_base?:ValueTypes["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -2771,6 +2790,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate sum on columns */
 ["delivery_details_sum_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2782,6 +2802,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by sum() on columns of table "delivery.details" */
 ["delivery_details_sum_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2802,6 +2823,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate var_pop on columns */
 ["delivery_details_var_pop_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2813,6 +2835,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by var_pop() on columns of table "delivery.details" */
 ["delivery_details_var_pop_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2823,6 +2846,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate var_samp on columns */
 ["delivery_details_var_samp_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2834,6 +2858,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by var_samp() on columns of table "delivery.details" */
 ["delivery_details_var_samp_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -2844,6 +2869,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** aggregate variance on columns */
 ["delivery_details_variance_fields"]: AliasType<{
 	cost_per_km?:true,
+	cost_per_km_from_base?:true,
 	free_delivery_km_range?:true,
 	free_delivery_minimum_cost?:true,
 	id?:true,
@@ -2855,6 +2881,7 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	/** order by variance() on columns of table "delivery.details" */
 ["delivery_details_variance_order_by"]: {
 	cost_per_km?:ValueTypes["order_by"],
+	cost_per_km_from_base?:ValueTypes["order_by"],
 	free_delivery_km_range?:ValueTypes["order_by"],
 	free_delivery_minimum_cost?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -3509,6 +3536,7 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	delivery_driver_id?:true,
 	/** toCustomer, fromCustomer */
 	direction?:true,
+	distance_from_base?:true,
 	/** An object relationship */
 	driver_review_by_customer?:ValueTypes["review"],
 	driver_review_by_customer_id?:true,
@@ -3632,6 +3660,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -3652,6 +3681,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -3687,6 +3717,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	delivery_driver?:ValueTypes["delivery_driver_bool_exp"],
 	delivery_driver_id?:ValueTypes["Int_comparison_exp"],
 	direction?:ValueTypes["String_comparison_exp"],
+	distance_from_base?:ValueTypes["Int_comparison_exp"],
 	driver_review_by_customer?:ValueTypes["review_bool_exp"],
 	driver_review_by_customer_id?:ValueTypes["Int_comparison_exp"],
 	driver_review_by_service_provider?:ValueTypes["review_bool_exp"],
@@ -3731,6 +3762,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	customer_review_by_driver_id?:number,
 	delivery_cost?:ValueTypes["money"],
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -3764,6 +3796,7 @@ count?: [{	columns?:ValueTypes["delivery_order_select_column"][],	distinct?:bool
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer?:ValueTypes["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider?:ValueTypes["review_obj_rel_insert_input"],
@@ -3817,6 +3850,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:true,
 	/** toCustomer, fromCustomer */
 	direction?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	dropoff_address?:true,
@@ -3860,6 +3894,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:ValueTypes["order_by"],
 	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	dropoff_address?:ValueTypes["order_by"],
@@ -3902,6 +3937,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:true,
 	/** toCustomer, fromCustomer */
 	direction?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	dropoff_address?:true,
@@ -3945,6 +3981,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:ValueTypes["order_by"],
 	/** toCustomer, fromCustomer */
 	direction?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	dropoff_address?:ValueTypes["order_by"],
@@ -4013,6 +4050,7 @@ cancelledByServiceProvider */
 	delivery_driver?:ValueTypes["delivery_driver_order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
 	direction?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer?:ValueTypes["review_order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider?:ValueTypes["review_order_by"],
@@ -4267,6 +4305,7 @@ count?: [{	columns?:ValueTypes["delivery_order_public_select_column"][],	distinc
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -4305,6 +4344,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4325,6 +4365,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4344,6 +4385,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4364,6 +4406,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4383,6 +4426,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4403,6 +4447,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4437,6 +4482,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -4475,6 +4521,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4495,6 +4542,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4524,6 +4572,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4544,6 +4593,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4563,6 +4613,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4583,6 +4634,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -4602,6 +4654,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:true,
 	delivery_cost?:true,
 	delivery_driver_id?:true,
+	distance_from_base?:true,
 	driver_review_by_customer_id?:true,
 	driver_review_by_service_provider_id?:true,
 	id?:true,
@@ -4622,6 +4675,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:ValueTypes["order_by"],
 	delivery_cost?:ValueTypes["order_by"],
 	delivery_driver_id?:ValueTypes["order_by"],
+	distance_from_base?:ValueTypes["order_by"],
 	driver_review_by_customer_id?:ValueTypes["order_by"],
 	driver_review_by_service_provider_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
@@ -15076,18 +15130,6 @@ language?: [{	/** JSON select path */
 	phone_number?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
-reviews?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
-reviews_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 schedule?: [{	/** JSON select path */
 	path?:string},true],
 	/** An object relationship */
@@ -15158,8 +15200,6 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	open_status?:ValueTypes["String_comparison_exp"],
 	phone_number?:ValueTypes["String_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
-	reviews?:ValueTypes["review_bool_exp"],
-	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	service_link?:ValueTypes["service_provider_service_link_bool_exp"],
 	service_link_id?:ValueTypes["Int_comparison_exp"],
@@ -15219,7 +15259,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
 	service_link?:ValueTypes["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -15298,7 +15337,6 @@ end). throws an error if top level container is not an array */
 	open_status?:ValueTypes["order_by"],
 	phone_number?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
-	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	schedule?:ValueTypes["order_by"],
 	service_link?:ValueTypes["service_provider_service_link_order_by"],
 	service_link_id?:ValueTypes["order_by"],
@@ -21039,6 +21077,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details"]: {
 		__typename?: "delivery_details";
 			cost_per_km?:PartialObjects["money"],
+			cost_per_km_from_base?:PartialObjects["money"],
 			customer_pickup?:boolean,
 			delivery_available?:boolean,
 			/** An object relationship */
@@ -21094,6 +21133,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_avg_fields"]: {
 		__typename?: "delivery_details_avg_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21104,6 +21144,7 @@ the end). throws an error if top level container is not an array */
 	/** order by avg() on columns of table "delivery.details" */
 ["delivery_details_avg_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21117,6 +21158,7 @@ the end). throws an error if top level container is not an array */
 	_not?:PartialObjects["delivery_details_bool_exp"],
 	_or?:PartialObjects["delivery_details_bool_exp"][],
 	cost_per_km?:PartialObjects["money_comparison_exp"],
+	cost_per_km_from_base?:PartialObjects["money_comparison_exp"],
 	customer_pickup?:PartialObjects["Boolean_comparison_exp"],
 	delivery_available?:PartialObjects["Boolean_comparison_exp"],
 	delivery_company?:PartialObjects["delivery_company_bool_exp"],
@@ -21134,6 +21176,7 @@ the end). throws an error if top level container is not an array */
 	/** input type for incrementing numeric columns in table "delivery.details" */
 ["delivery_details_inc_input"]: {
 	cost_per_km?:PartialObjects["money"],
+	cost_per_km_from_base?:PartialObjects["money"],
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:PartialObjects["money"],
 	id?:number,
@@ -21144,6 +21187,7 @@ the end). throws an error if top level container is not an array */
 	/** input type for inserting data into table "delivery.details" */
 ["delivery_details_insert_input"]: {
 	cost_per_km?:PartialObjects["money"],
+	cost_per_km_from_base?:PartialObjects["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	delivery_company?:PartialObjects["delivery_company_obj_rel_insert_input"],
@@ -21161,6 +21205,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_max_fields"]: {
 		__typename?: "delivery_details_max_fields";
 			cost_per_km?:PartialObjects["money"],
+			cost_per_km_from_base?:PartialObjects["money"],
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
@@ -21171,6 +21216,7 @@ the end). throws an error if top level container is not an array */
 	/** order by max() on columns of table "delivery.details" */
 ["delivery_details_max_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21182,6 +21228,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_min_fields"]: {
 		__typename?: "delivery_details_min_fields";
 			cost_per_km?:PartialObjects["money"],
+			cost_per_km_from_base?:PartialObjects["money"],
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
@@ -21192,6 +21239,7 @@ the end). throws an error if top level container is not an array */
 	/** order by min() on columns of table "delivery.details" */
 ["delivery_details_min_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21222,6 +21270,7 @@ the end). throws an error if top level container is not an array */
 	/** Ordering options when selecting data from "delivery.details". */
 ["delivery_details_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	customer_pickup?:PartialObjects["order_by"],
 	delivery_available?:PartialObjects["order_by"],
 	delivery_company?:PartialObjects["delivery_company_order_by"],
@@ -21243,6 +21292,7 @@ the end). throws an error if top level container is not an array */
 	/** input type for updating data in table "delivery.details" */
 ["delivery_details_set_input"]: {
 	cost_per_km?:PartialObjects["money"],
+	cost_per_km_from_base?:PartialObjects["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -21257,6 +21307,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_stddev_fields"]: {
 		__typename?: "delivery_details_stddev_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21267,6 +21318,7 @@ the end). throws an error if top level container is not an array */
 	/** order by stddev() on columns of table "delivery.details" */
 ["delivery_details_stddev_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21278,6 +21330,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_stddev_pop_fields"]: {
 		__typename?: "delivery_details_stddev_pop_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21288,6 +21341,7 @@ the end). throws an error if top level container is not an array */
 	/** order by stddev_pop() on columns of table "delivery.details" */
 ["delivery_details_stddev_pop_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21299,6 +21353,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_stddev_samp_fields"]: {
 		__typename?: "delivery_details_stddev_samp_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21309,6 +21364,7 @@ the end). throws an error if top level container is not an array */
 	/** order by stddev_samp() on columns of table "delivery.details" */
 ["delivery_details_stddev_samp_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21326,6 +21382,7 @@ the end). throws an error if top level container is not an array */
 	/** Initial value of the column from where the streaming should start */
 ["delivery_details_stream_cursor_value_input"]: {
 	cost_per_km?:PartialObjects["money"],
+	cost_per_km_from_base?:PartialObjects["money"],
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -21340,6 +21397,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_sum_fields"]: {
 		__typename?: "delivery_details_sum_fields";
 			cost_per_km?:PartialObjects["money"],
+			cost_per_km_from_base?:PartialObjects["money"],
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:PartialObjects["money"],
 			id?:number,
@@ -21350,6 +21408,7 @@ the end). throws an error if top level container is not an array */
 	/** order by sum() on columns of table "delivery.details" */
 ["delivery_details_sum_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21371,6 +21430,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_var_pop_fields"]: {
 		__typename?: "delivery_details_var_pop_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21381,6 +21441,7 @@ the end). throws an error if top level container is not an array */
 	/** order by var_pop() on columns of table "delivery.details" */
 ["delivery_details_var_pop_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21392,6 +21453,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_var_samp_fields"]: {
 		__typename?: "delivery_details_var_samp_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21402,6 +21464,7 @@ the end). throws an error if top level container is not an array */
 	/** order by var_samp() on columns of table "delivery.details" */
 ["delivery_details_var_samp_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -21413,6 +21476,7 @@ the end). throws an error if top level container is not an array */
 ["delivery_details_variance_fields"]: {
 		__typename?: "delivery_details_variance_fields";
 			cost_per_km?:number,
+			cost_per_km_from_base?:number,
 			free_delivery_km_range?:number,
 			free_delivery_minimum_cost?:number,
 			id?:number,
@@ -21423,6 +21487,7 @@ the end). throws an error if top level container is not an array */
 	/** order by variance() on columns of table "delivery.details" */
 ["delivery_details_variance_order_by"]: {
 	cost_per_km?:PartialObjects["order_by"],
+	cost_per_km_from_base?:PartialObjects["order_by"],
 	free_delivery_km_range?:PartialObjects["order_by"],
 	free_delivery_minimum_cost?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -22070,6 +22135,7 @@ the end). throws an error if top level container is not an array */
 			delivery_driver_id?:number,
 			/** toCustomer, fromCustomer */
 	direction?:string,
+			distance_from_base?:number,
 			/** An object relationship */
 	driver_review_by_customer?:PartialObjects["review"],
 			driver_review_by_customer_id?:number,
@@ -22193,6 +22259,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -22212,6 +22279,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -22247,6 +22315,7 @@ cancelledByServiceProvider */
 	delivery_driver?:PartialObjects["delivery_driver_bool_exp"],
 	delivery_driver_id?:PartialObjects["Int_comparison_exp"],
 	direction?:PartialObjects["String_comparison_exp"],
+	distance_from_base?:PartialObjects["Int_comparison_exp"],
 	driver_review_by_customer?:PartialObjects["review_bool_exp"],
 	driver_review_by_customer_id?:PartialObjects["Int_comparison_exp"],
 	driver_review_by_service_provider?:PartialObjects["review_bool_exp"],
@@ -22291,6 +22360,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:number,
 	delivery_cost?:PartialObjects["money"],
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -22324,6 +22394,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer?:PartialObjects["review_obj_rel_insert_input"],
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider?:PartialObjects["review_obj_rel_insert_input"],
@@ -22378,6 +22449,7 @@ cancelledByServiceProvider */
 			delivery_driver_id?:number,
 			/** toCustomer, fromCustomer */
 	direction?:string,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			dropoff_address?:string,
@@ -22420,6 +22492,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:PartialObjects["order_by"],
 	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	dropoff_address?:PartialObjects["order_by"],
@@ -22463,6 +22536,7 @@ cancelledByServiceProvider */
 			delivery_driver_id?:number,
 			/** toCustomer, fromCustomer */
 	direction?:string,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			dropoff_address?:string,
@@ -22505,6 +22579,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:PartialObjects["order_by"],
 	/** toCustomer, fromCustomer */
 	direction?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	dropoff_address?:PartialObjects["order_by"],
@@ -22573,6 +22648,7 @@ cancelledByServiceProvider */
 	delivery_driver?:PartialObjects["delivery_driver_order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
 	direction?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer?:PartialObjects["review_order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider?:PartialObjects["review_order_by"],
@@ -22827,6 +22903,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -22866,6 +22943,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -22885,6 +22963,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -22905,6 +22984,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -22924,6 +23004,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -22944,6 +23025,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -22963,6 +23045,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -22997,6 +23080,7 @@ cancelledByServiceProvider */
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -23036,6 +23120,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:PartialObjects["money"],
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -23055,6 +23140,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -23085,6 +23171,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -23104,6 +23191,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -23124,6 +23212,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -23143,6 +23232,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -23163,6 +23253,7 @@ cancelledByServiceProvider */
 			customer_review_by_driver_id?:number,
 			delivery_cost?:number,
 			delivery_driver_id?:number,
+			distance_from_base?:number,
 			driver_review_by_customer_id?:number,
 			driver_review_by_service_provider_id?:number,
 			id?:number,
@@ -23182,6 +23273,7 @@ cancelledByServiceProvider */
 	customer_review_by_driver_id?:PartialObjects["order_by"],
 	delivery_cost?:PartialObjects["order_by"],
 	delivery_driver_id?:PartialObjects["order_by"],
+	distance_from_base?:PartialObjects["order_by"],
 	driver_review_by_customer_id?:PartialObjects["order_by"],
 	driver_review_by_service_provider_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
@@ -32723,10 +32815,6 @@ the end). throws an error if top level container is not an array */
 			phone_number?:string,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
-			/** An array relationship */
-	reviews?:PartialObjects["review"][],
-			/** An aggregate relationship */
-	reviews_aggregate?:PartialObjects["review_aggregate"],
 			schedule?:PartialObjects["jsonb"],
 			/** An object relationship */
 	service_link?:PartialObjects["service_provider_service_link"],
@@ -32795,8 +32883,6 @@ the end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["String_comparison_exp"],
 	phone_number?:PartialObjects["String_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
-	reviews?:PartialObjects["review_bool_exp"],
-	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	service_link?:PartialObjects["service_provider_service_link_bool_exp"],
 	service_link_id?:PartialObjects["Int_comparison_exp"],
@@ -32856,7 +32942,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
 	service_link?:PartialObjects["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -32935,7 +33020,6 @@ end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["order_by"],
 	phone_number?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
-	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	schedule?:PartialObjects["order_by"],
 	service_link?:PartialObjects["service_provider_service_link_order_by"],
 	service_link_id?:PartialObjects["order_by"],
@@ -38616,6 +38700,7 @@ export type delivery_company_variance_fields = {
 export type delivery_details = {
 	__typename?: "delivery_details",
 	cost_per_km:money,
+	cost_per_km_from_base?:money,
 	customer_pickup:boolean,
 	delivery_available:boolean,
 	/** An object relationship */
@@ -38675,6 +38760,7 @@ export type delivery_details_aggregate_order_by = {
 export type delivery_details_avg_fields = {
 	__typename?: "delivery_details_avg_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -38686,6 +38772,7 @@ export type delivery_details_avg_fields = {
 /** order by avg() on columns of table "delivery.details" */
 export type delivery_details_avg_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38700,6 +38787,7 @@ export type delivery_details_bool_exp = {
 	_not?:delivery_details_bool_exp,
 	_or?:delivery_details_bool_exp[],
 	cost_per_km?:money_comparison_exp,
+	cost_per_km_from_base?:money_comparison_exp,
 	customer_pickup?:Boolean_comparison_exp,
 	delivery_available?:Boolean_comparison_exp,
 	delivery_company?:delivery_company_bool_exp,
@@ -38721,6 +38809,7 @@ export enum delivery_details_constraint {
 /** input type for incrementing numeric columns in table "delivery.details" */
 export type delivery_details_inc_input = {
 		cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
@@ -38732,6 +38821,7 @@ export type delivery_details_inc_input = {
 /** input type for inserting data into table "delivery.details" */
 export type delivery_details_insert_input = {
 		cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	delivery_company?:delivery_company_obj_rel_insert_input,
@@ -38750,6 +38840,7 @@ export type delivery_details_insert_input = {
 export type delivery_details_max_fields = {
 	__typename?: "delivery_details_max_fields",
 	cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
@@ -38761,6 +38852,7 @@ export type delivery_details_max_fields = {
 /** order by max() on columns of table "delivery.details" */
 export type delivery_details_max_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38773,6 +38865,7 @@ export type delivery_details_max_order_by = {
 export type delivery_details_min_fields = {
 	__typename?: "delivery_details_min_fields",
 	cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
@@ -38784,6 +38877,7 @@ export type delivery_details_min_fields = {
 /** order by min() on columns of table "delivery.details" */
 export type delivery_details_min_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38818,6 +38912,7 @@ export type delivery_details_on_conflict = {
 /** Ordering options when selecting data from "delivery.details". */
 export type delivery_details_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	customer_pickup?:order_by,
 	delivery_available?:order_by,
 	delivery_company?:delivery_company_order_by,
@@ -38839,6 +38934,7 @@ export type delivery_details_pk_columns_input = {
 /** select columns of table "delivery.details" */
 export enum delivery_details_select_column {
 	cost_per_km = "cost_per_km",
+	cost_per_km_from_base = "cost_per_km_from_base",
 	customer_pickup = "customer_pickup",
 	delivery_available = "delivery_available",
 	free_delivery_km_range = "free_delivery_km_range",
@@ -38852,6 +38948,7 @@ export enum delivery_details_select_column {
 /** input type for updating data in table "delivery.details" */
 export type delivery_details_set_input = {
 		cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -38867,6 +38964,7 @@ export type delivery_details_set_input = {
 export type delivery_details_stddev_fields = {
 	__typename?: "delivery_details_stddev_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -38878,6 +38976,7 @@ export type delivery_details_stddev_fields = {
 /** order by stddev() on columns of table "delivery.details" */
 export type delivery_details_stddev_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38890,6 +38989,7 @@ export type delivery_details_stddev_order_by = {
 export type delivery_details_stddev_pop_fields = {
 	__typename?: "delivery_details_stddev_pop_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -38901,6 +39001,7 @@ export type delivery_details_stddev_pop_fields = {
 /** order by stddev_pop() on columns of table "delivery.details" */
 export type delivery_details_stddev_pop_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38913,6 +39014,7 @@ export type delivery_details_stddev_pop_order_by = {
 export type delivery_details_stddev_samp_fields = {
 	__typename?: "delivery_details_stddev_samp_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -38924,6 +39026,7 @@ export type delivery_details_stddev_samp_fields = {
 /** order by stddev_samp() on columns of table "delivery.details" */
 export type delivery_details_stddev_samp_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38943,6 +39046,7 @@ export type delivery_details_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type delivery_details_stream_cursor_value_input = {
 		cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	customer_pickup?:boolean,
 	delivery_available?:boolean,
 	free_delivery_km_range?:number,
@@ -38958,6 +39062,7 @@ export type delivery_details_stream_cursor_value_input = {
 export type delivery_details_sum_fields = {
 	__typename?: "delivery_details_sum_fields",
 	cost_per_km?:money,
+	cost_per_km_from_base?:money,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:money,
 	id?:number,
@@ -38969,6 +39074,7 @@ export type delivery_details_sum_fields = {
 /** order by sum() on columns of table "delivery.details" */
 export type delivery_details_sum_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -38980,6 +39086,7 @@ export type delivery_details_sum_order_by = {
 /** update columns of table "delivery.details" */
 export enum delivery_details_update_column {
 	cost_per_km = "cost_per_km",
+	cost_per_km_from_base = "cost_per_km_from_base",
 	customer_pickup = "customer_pickup",
 	delivery_available = "delivery_available",
 	free_delivery_km_range = "free_delivery_km_range",
@@ -39003,6 +39110,7 @@ export type delivery_details_updates = {
 export type delivery_details_var_pop_fields = {
 	__typename?: "delivery_details_var_pop_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -39014,6 +39122,7 @@ export type delivery_details_var_pop_fields = {
 /** order by var_pop() on columns of table "delivery.details" */
 export type delivery_details_var_pop_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -39026,6 +39135,7 @@ export type delivery_details_var_pop_order_by = {
 export type delivery_details_var_samp_fields = {
 	__typename?: "delivery_details_var_samp_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -39037,6 +39147,7 @@ export type delivery_details_var_samp_fields = {
 /** order by var_samp() on columns of table "delivery.details" */
 export type delivery_details_var_samp_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -39049,6 +39160,7 @@ export type delivery_details_var_samp_order_by = {
 export type delivery_details_variance_fields = {
 	__typename?: "delivery_details_variance_fields",
 	cost_per_km?:number,
+	cost_per_km_from_base?:number,
 	free_delivery_km_range?:number,
 	free_delivery_minimum_cost?:number,
 	id?:number,
@@ -39060,6 +39172,7 @@ export type delivery_details_variance_fields = {
 /** order by variance() on columns of table "delivery.details" */
 export type delivery_details_variance_order_by = {
 		cost_per_km?:order_by,
+	cost_per_km_from_base?:order_by,
 	free_delivery_km_range?:order_by,
 	free_delivery_minimum_cost?:order_by,
 	id?:order_by,
@@ -39820,6 +39933,7 @@ export type delivery_order = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction:string,
+	distance_from_base?:number,
 	/** An object relationship */
 	driver_review_by_customer?:review,
 	driver_review_by_customer_id?:number,
@@ -39847,8 +39961,8 @@ export type delivery_order = {
 	package_cost:money,
 	package_ready:boolean,
 	payment_type:string,
-	pickup_address:string,
-	pickup_gps:geography,
+	pickup_address?:string,
+	pickup_gps?:geography,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
 	/** An object relationship */
@@ -39952,6 +40066,7 @@ export type delivery_order_avg_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -39972,6 +40087,7 @@ export type delivery_order_avg_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -40008,6 +40124,7 @@ export type delivery_order_bool_exp = {
 	delivery_driver?:delivery_driver_bool_exp,
 	delivery_driver_id?:Int_comparison_exp,
 	direction?:String_comparison_exp,
+	distance_from_base?:Int_comparison_exp,
 	driver_review_by_customer?:review_bool_exp,
 	driver_review_by_customer_id?:Int_comparison_exp,
 	driver_review_by_service_provider?:review_bool_exp,
@@ -40056,6 +40173,7 @@ export type delivery_order_inc_input = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -40090,6 +40208,7 @@ export type delivery_order_insert_input = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer?:review_obj_rel_insert_input,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider?:review_obj_rel_insert_input,
@@ -40145,6 +40264,7 @@ export type delivery_order_max_fields = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -40188,6 +40308,7 @@ export type delivery_order_max_order_by = {
 	delivery_driver_id?:order_by,
 	/** toCustomer, fromCustomer */
 	direction?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	dropoff_address?:order_by,
@@ -40232,6 +40353,7 @@ export type delivery_order_min_fields = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -40275,6 +40397,7 @@ export type delivery_order_min_order_by = {
 	delivery_driver_id?:order_by,
 	/** toCustomer, fromCustomer */
 	direction?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	dropoff_address?:order_by,
@@ -40347,6 +40470,7 @@ export type delivery_order_order_by = {
 	delivery_driver?:delivery_driver_order_by,
 	delivery_driver_id?:order_by,
 	direction?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer?:review_order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider?:review_order_by,
@@ -40627,6 +40751,7 @@ export enum delivery_order_select_column {
 	delivery_cost = "delivery_cost",
 	delivery_driver_id = "delivery_driver_id",
 	direction = "direction",
+	distance_from_base = "distance_from_base",
 	driver_review_by_customer_id = "driver_review_by_customer_id",
 	driver_review_by_service_provider_id = "driver_review_by_service_provider_id",
 	dropoff_address = "dropoff_address",
@@ -40678,6 +40803,7 @@ export type delivery_order_set_input = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -40718,6 +40844,7 @@ export type delivery_order_stddev_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -40738,6 +40865,7 @@ export type delivery_order_stddev_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -40759,6 +40887,7 @@ export type delivery_order_stddev_pop_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -40779,6 +40908,7 @@ export type delivery_order_stddev_pop_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -40800,6 +40930,7 @@ export type delivery_order_stddev_samp_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -40820,6 +40951,7 @@ export type delivery_order_stddev_samp_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -40856,6 +40988,7 @@ export type delivery_order_stream_cursor_value_input = {
 	delivery_driver_id?:number,
 	/** toCustomer, fromCustomer */
 	direction?:string,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	dropoff_address?:string,
@@ -40896,6 +41029,7 @@ export type delivery_order_sum_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:money,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -40916,6 +41050,7 @@ export type delivery_order_sum_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -40943,6 +41078,7 @@ export enum delivery_order_update_column {
 	delivery_cost = "delivery_cost",
 	delivery_driver_id = "delivery_driver_id",
 	direction = "direction",
+	distance_from_base = "distance_from_base",
 	driver_review_by_customer_id = "driver_review_by_customer_id",
 	driver_review_by_service_provider_id = "driver_review_by_service_provider_id",
 	dropoff_address = "dropoff_address",
@@ -40986,6 +41122,7 @@ export type delivery_order_var_pop_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -41006,6 +41143,7 @@ export type delivery_order_var_pop_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -41027,6 +41165,7 @@ export type delivery_order_var_samp_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -41047,6 +41186,7 @@ export type delivery_order_var_samp_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -41068,6 +41208,7 @@ export type delivery_order_variance_fields = {
 	customer_review_by_driver_id?:number,
 	delivery_cost?:number,
 	delivery_driver_id?:number,
+	distance_from_base?:number,
 	driver_review_by_customer_id?:number,
 	driver_review_by_service_provider_id?:number,
 	id?:number,
@@ -41088,6 +41229,7 @@ export type delivery_order_variance_order_by = {
 	customer_review_by_driver_id?:order_by,
 	delivery_cost?:order_by,
 	delivery_driver_id?:order_by,
+	distance_from_base?:order_by,
 	driver_review_by_customer_id?:order_by,
 	driver_review_by_service_provider_id?:order_by,
 	id?:order_by,
@@ -52132,10 +52274,6 @@ export type service_provider_details = {
 	phone_number?:string,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
-	/** An array relationship */
-	reviews:review[],
-	/** An aggregate relationship */
-	reviews_aggregate:review_aggregate,
 	schedule?:jsonb,
 	/** An object relationship */
 	service_link?:service_provider_service_link,
@@ -52209,8 +52347,6 @@ export type service_provider_details_bool_exp = {
 	open_status?:String_comparison_exp,
 	phone_number?:String_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
-	reviews?:review_bool_exp,
-	reviews_aggregate?:review_aggregate_bool_exp,
 	schedule?:jsonb_comparison_exp,
 	service_link?:service_provider_service_link_bool_exp,
 	service_link_id?:Int_comparison_exp,
@@ -52282,7 +52418,6 @@ export type service_provider_details_insert_input = {
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
-	reviews?:review_arr_rel_insert_input,
 	schedule?:jsonb,
 	service_link?:service_provider_service_link_obj_rel_insert_input,
 	service_link_id?:number,
@@ -52367,7 +52502,6 @@ export type service_provider_details_order_by = {
 	open_status?:order_by,
 	phone_number?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
-	reviews_aggregate?:review_aggregate_order_by,
 	schedule?:order_by,
 	service_link?:service_provider_service_link_order_by,
 	service_link_id?:order_by,
@@ -61134,6 +61268,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61185,6 +61325,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:true
 		},
 		cost_per_km:{
+			type:"money_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"money_comparison_exp",
 			array:false,
 			arrayRequired:false,
@@ -61265,6 +61411,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"Float",
 			array:false,
@@ -61298,6 +61450,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_insert_input:{
 		cost_per_km:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"money",
 			array:false,
 			arrayRequired:false,
@@ -61377,6 +61535,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61410,6 +61574,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_min_order_by:{
 		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -61482,6 +61652,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_order_by:{
 		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -61570,6 +61746,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_pickup:{
 			type:"Boolean",
 			array:false,
@@ -61626,6 +61808,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61664,6 +61852,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61697,6 +61891,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_stddev_samp_order_by:{
 		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -61754,6 +61954,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"money",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		customer_pickup:{
 			type:"Boolean",
 			array:false,
@@ -61805,6 +62011,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_sum_order_by:{
 		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -61869,6 +62081,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61907,6 +62125,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		cost_per_km_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		free_delivery_km_range:{
 			type:"order_by",
 			array:false,
@@ -61940,6 +62164,12 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_details_variance_order_by:{
 		cost_per_km:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		cost_per_km_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -63581,6 +63811,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -63759,6 +63995,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		direction:{
 			type:"String_comparison_exp",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
+			type:"Int_comparison_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64000,6 +64242,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"Int",
 			array:false,
@@ -64160,6 +64408,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		direction:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -64424,6 +64678,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -64613,6 +64873,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		direction:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -64883,6 +65149,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		direction:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -65486,6 +65758,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"Int",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"Int",
 			array:false,
@@ -65662,6 +65940,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -65748,6 +66032,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -65829,6 +66119,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_driver_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -65972,6 +66268,12 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		direction:{
 			type:"String",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
+			type:"Int",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -66152,6 +66454,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -66259,6 +66567,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -66345,6 +66659,12 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
+		distance_from_base:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
 		driver_review_by_customer_id:{
 			type:"order_by",
 			array:false,
@@ -66426,6 +66746,12 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_driver_id:{
+			type:"order_by",
+			array:false,
+			arrayRequired:false,
+			required:false
+		},
+		distance_from_base:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -96635,70 +96961,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		reviews:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		reviews_aggregate:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		schedule:{
 			path:{
 				type:"String",
@@ -96861,18 +97123,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews:{
-			type:"review_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -97110,12 +97360,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		reviews:{
-			type:"review_arr_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		schedule:{
 			type:"jsonb",
 			array:false,
@@ -97286,12 +97530,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -107730,6 +107968,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details:{
 		cost_per_km:"money",
+		cost_per_km_from_base:"money",
 		customer_pickup:"Boolean",
 		delivery_available:"Boolean",
 		delivery_company:"delivery_company",
@@ -107761,6 +108000,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_avg_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107769,6 +108009,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_max_fields:{
 		cost_per_km:"money",
+		cost_per_km_from_base:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
@@ -107777,6 +108018,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_min_fields:{
 		cost_per_km:"money",
+		cost_per_km_from_base:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
@@ -107789,6 +108031,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_stddev_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107797,6 +108040,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_stddev_pop_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107805,6 +108049,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_stddev_samp_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107813,6 +108058,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_sum_fields:{
 		cost_per_km:"money",
+		cost_per_km_from_base:"money",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"money",
 		id:"Int",
@@ -107821,6 +108067,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_var_pop_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107829,6 +108076,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_var_samp_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -107837,6 +108085,7 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_details_variance_fields:{
 		cost_per_km:"Float",
+		cost_per_km_from_base:"Float",
 		free_delivery_km_range:"Float",
 		free_delivery_minimum_cost:"Float",
 		id:"Float",
@@ -108056,6 +108305,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_driver:"delivery_driver",
 		delivery_driver_id:"Int",
 		direction:"String",
+		distance_from_base:"Int",
 		driver_review_by_customer:"review",
 		driver_review_by_customer_id:"Int",
 		driver_review_by_service_provider:"review",
@@ -108114,6 +108364,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108136,6 +108387,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_driver_id:"Int",
 		direction:"String",
+		distance_from_base:"Int",
 		driver_review_by_customer_id:"Int",
 		driver_review_by_service_provider_id:"Int",
 		dropoff_address:"String",
@@ -108170,6 +108422,7 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_cost:"money",
 		delivery_driver_id:"Int",
 		direction:"String",
+		distance_from_base:"Int",
 		driver_review_by_customer_id:"Int",
 		driver_review_by_service_provider_id:"Int",
 		dropoff_address:"String",
@@ -108290,6 +108543,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108306,6 +108560,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108322,6 +108577,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108338,6 +108594,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Int",
 		delivery_cost:"money",
 		delivery_driver_id:"Int",
+		distance_from_base:"Int",
 		driver_review_by_customer_id:"Int",
 		driver_review_by_service_provider_id:"Int",
 		id:"Int",
@@ -108354,6 +108611,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108370,6 +108628,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -108386,6 +108645,7 @@ export const ReturnTypes: Record<string,any> = {
 		customer_review_by_driver_id:"Float",
 		delivery_cost:"Float",
 		delivery_driver_id:"Float",
+		distance_from_base:"Float",
 		driver_review_by_customer_id:"Float",
 		driver_review_by_service_provider_id:"Float",
 		id:"Float",
@@ -111586,8 +111846,6 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		restaurant:"restaurant_restaurant",
-		reviews:"review",
-		reviews_aggregate:"review_aggregate",
 		schedule:"jsonb",
 		service_link:"service_provider_service_link",
 		service_link_id:"Int",

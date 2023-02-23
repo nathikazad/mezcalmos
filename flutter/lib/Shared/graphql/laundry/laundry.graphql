@@ -1,5 +1,5 @@
 query getLaundries {
-  laundry_store {
+  laundry_store(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
     id
     minimum_cost
     delivery_details_id
