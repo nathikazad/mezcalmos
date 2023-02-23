@@ -43,11 +43,11 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           IncrementalComponent(
             btnColors: primaryBlueColor,
             onMinValueBtnColor: Colors.grey.shade300,
-            incrementCallback: () {
+            incrementCallback: () async {
               widget.viewController.cartItem.value!.quantity++;
               widget.viewController.cartItem.refresh();
             },
-            decrementCallback: () {
+            decrementCallback: () async {
               widget.viewController.cartItem.value!.quantity--;
               widget.viewController.cartItem.refresh();
             },
