@@ -74,7 +74,9 @@ class AuthController extends GetxController {
         fireAuth.IdTokenResult? tokenResult = await user.getIdTokenResult(true);
         mezDbgPrint(tokenResult.claims);
 
-        if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null) {
+        if (tokenResult.claims?['https://hasura.io/jwt/claims'] == null ||
+            roleMissing(tokenResult.claims!['https://hasura.io/jwt/claims']
+                ['x-hasura-allowed-roles'])) {
           mezDbgPrint("No token, calling addHasuraClaims");
 
           await FirebaseFunctions.instance
@@ -97,6 +99,24 @@ class AuthController extends GetxController {
     });
 
     super.onInit();
+  }
+
+  bool roleMissing(List<Object?> actualRoles) {
+    List<String> expectedRoles = <String>[
+      'anonymous',
+      'restaurant_operator',
+      'customer',
+      'mez_admin',
+      'deliverer',
+      'delivery_operator',
+      'delivery_driver',
+      'laundry_operator'
+    ];
+
+    final List<String> difference =
+        expectedRoles.toSet().difference(actualRoles.toSet()).toList();
+    // return false;
+    return difference.length > 0;
   }
 
   Future<void> fetchUserInfoFromHasura() async {

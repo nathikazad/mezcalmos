@@ -1,3 +1,5 @@
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+
 class AuthResponse {
   String? token;
   AuthResponse(this.token);
@@ -103,6 +105,13 @@ extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
     String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+extension ParseStringToStripePaymentStatus on String {
+  ParticipantType? toCloudParticipantType() {
+    return ParticipantType.values
+        .firstWhere((ParticipantType e) => e.toFirebaseFormatString() == this);
   }
 }
 

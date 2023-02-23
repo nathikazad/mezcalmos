@@ -39,6 +39,10 @@ import { changeDeliveryStatus } from "./delivery/statusChange";
 import { addOperator } from "./shared/operator/addOperator";
 import { authorizeOperator } from "./shared/operator/authorizeOperator";
 import { createCourierOrder } from "./delivery/createCourierOrder";
+import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
+import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
+import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
+import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -60,7 +64,7 @@ export const otp = {
   getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
 
-export const stripe = {
+export const stripe2 = {
   getPaymentIntent: authenticatedCall((userId, data) => stripePaymentFunctions.getPaymentIntent(userId, data)),
   addCard: authenticatedCall((userId, data) => stripeCardFunctions.addCard(userId, data)),
   chargeCard: authenticatedCall((userId, data) => stripeCardFunctions.chargeCard(userId, data)),
@@ -87,8 +91,8 @@ export const restaurant2 = {
   orderPickedUpByCustomer: authenticatedCall((userId, data) => restaurantStatusChange.orderPickedUpByCustomer(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
-  // addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
-  // authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
+  addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
+  authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
@@ -104,7 +108,7 @@ export const restaurant2 = {
 //   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
 // }
 
-export const laundry = {
+export const laundry2 = {
   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
   requestLaundry: authenticatedCall((userId, data) => requestLaundry(userId, data)),
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
@@ -116,8 +120,8 @@ export const laundry = {
 
 export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
-  // addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
-  // authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
+  addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
+  authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   createCourierOrder: authenticatedCall((userId, data) => createCourierOrder(userId, data)),
 

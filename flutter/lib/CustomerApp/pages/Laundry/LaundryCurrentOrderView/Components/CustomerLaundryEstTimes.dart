@@ -59,12 +59,12 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                       children: [
                         Text(
                           _getRightTitle()!.inCaps,
-                          style: Get.textTheme.bodyText1,
+                          style: Get.textTheme.bodyLarge,
                           maxLines: 1,
                         ),
                         Text(
                           _getEstimatedText()!.inCaps,
-                          style: Get.textTheme.bodyText2,
+                          style: Get.textTheme.bodyMedium,
                           maxLines: 1,
                         ),
                       ],
@@ -85,7 +85,6 @@ class CustomerLaundryOrderEst extends StatelessWidget {
           return "${order.estimatedPickupFromCustomerTime!.getEstimatedTime()}";
         }
         break;
-      case LaundryOrderStatus.PickedUpFromCustomer:
 
       case LaundryOrderStatus.AtLaundry:
         if (order.estimatedLaundryReadyTime != null) {

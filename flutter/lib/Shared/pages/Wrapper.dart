@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/appVersionController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -54,7 +55,8 @@ class _WrapperState extends State<Wrapper> {
         Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
       }
     });
-
+    Future.delayed(
+        Duration.zero, () => ConnectivityHelper.instance.networkCheck());
     super.initState();
   }
 

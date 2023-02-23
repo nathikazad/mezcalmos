@@ -34,3 +34,9 @@ export interface CourierItem {
 export interface CourierOrderStatusChangeNotification extends OrderNotification {
     status: DeliveryOrderStatus
 }
+
+export function orderInProcess(status: DeliveryOrderStatus): boolean {
+    return !(status == DeliveryOrderStatus.CancelledByAdmin ||
+      status == DeliveryOrderStatus.CancelledByCustomer ||
+      status == DeliveryOrderStatus.Delivered)
+}

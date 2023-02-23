@@ -67,9 +67,7 @@ select_permissions:
         - app_version
         - service_provider_type
         - user_id
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+      filter: {}
       limit: 1
   - role: delivery_driver
     permission:
