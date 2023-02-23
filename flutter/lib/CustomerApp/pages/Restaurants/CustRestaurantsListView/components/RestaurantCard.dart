@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -19,12 +20,13 @@ dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
 class RestaurantCard extends StatefulWidget {
   final Restaurant restaurant;
   final GestureTapCallback? onClick;
-
-  const RestaurantCard({
-    Key? key,
-    @required this.onClick,
-    required this.restaurant,
-  }) : super(key: key);
+  final LocationData customerLocation;
+  const RestaurantCard(
+      {Key? key,
+      @required this.onClick,
+      required this.restaurant,
+      required this.customerLocation})
+      : super(key: key);
 
   @override
   State<RestaurantCard> createState() => _RestaurantCardState();
@@ -162,16 +164,14 @@ class _RestaurantCardState extends State<RestaurantCard> {
   }
 
   num _getShippingPrice() {
-    return max(
-      widget.restaurant.deliveryCost!.minimumCost,
-      (calculateDistance(
-                  Get.find<CustomerAuthController>()
-                      .customerCurrentLocation
-                      .value!,
-                  widget.restaurant.info.location.toLocationData())
-              .round() *
-          widget.restaurant.deliveryCost!.costPerKm),
-    );
+    final num customerDistance = calculateDistance(widget.customerLocation,
+            widget.restaurant.info.location.toLocationData()) /
+        1000;
+    final num deliveryCost =
+        ((customerDistance * widget.restaurant.deliveryCost!.costPerKm) / 5)
+                .round() *
+            5;
+    return max(widget.restaurant.deliveryCost!.minimumCost, deliveryCost);
   }
 
   Container mezRestuarntCardImage() {
