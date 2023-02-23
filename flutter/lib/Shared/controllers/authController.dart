@@ -80,7 +80,7 @@ class AuthController extends GetxController {
           mezDbgPrint("No token, calling addHasuraClaims");
 
           await FirebaseFunctions.instance
-              .httpsCallable('user-addHasuraClaim')
+              .httpsCallable('user2-addHasuraClaim')
               .call();
 
           tokenResult = await user.getIdTokenResult(true);

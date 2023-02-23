@@ -18,7 +18,7 @@ class CloudFunctions {
   static Future<void> user_addHasuraClaim(
   ) async {
     return await callCloudFunction(
-      functionName: "user-addHasuraClaim",
+      functionName: "user2-addHasuraClaim",
       parameters: <String, dynamic>{});
   }
 
@@ -26,7 +26,7 @@ class CloudFunctions {
       {required String language,
       required String phoneNumber}  ) async {
     return await callCloudFunction(
-      functionName: "otp-sendOTPForLogin",
+      functionName: "otp2-sendOTPForLogin",
       parameters: <String, dynamic>{
         "language":language,
         "phoneNumber":phoneNumber,
@@ -37,7 +37,7 @@ class CloudFunctions {
       {required String phoneNumber,
       required String OTPCode}  ) async {
     return AuthResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "otp-getAuthUsingOTP",
+      functionName: "otp2-getAuthUsingOTP",
       parameters: <String, dynamic>{
         "phoneNumber":phoneNumber,
         "OTPCode":OTPCode,
