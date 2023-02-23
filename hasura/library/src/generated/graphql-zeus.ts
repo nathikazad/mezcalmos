@@ -3593,8 +3593,6 @@ count?: [{	columns?:ValueTypes["delivery_details_select_column"][],	distinct?:bo
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
-	/** Just for relationship */
-	delivery_driver_type?:true,
 	id?:true,
 	/** An object relationship */
 	laundry?:ValueTypes["laundry_store"],
@@ -3661,7 +3659,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company?:ValueTypes["delivery_company_bool_exp"],
 	delivery_company_id?:ValueTypes["Int_comparison_exp"],
 	delivery_company_type?:ValueTypes["String_comparison_exp"],
-	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	laundry?:ValueTypes["laundry_store_bool_exp"],
 	notification_info?:ValueTypes["notification_info_bool_exp"],
@@ -3690,8 +3687,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	laundry?:ValueTypes["laundry_store_obj_rel_insert_input"],
 	notification_info?:ValueTypes["notification_info_obj_rel_insert_input"],
@@ -3710,8 +3705,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
-	/** Just for relationship */
-	delivery_driver_type?:true,
 	id?:true,
 	/** awaiting_approval, authorized, banned */
 	status?:true,
@@ -3725,8 +3718,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:true,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:true,
-	/** Just for relationship */
-	delivery_driver_type?:true,
 	id?:true,
 	/** awaiting_approval, authorized, banned */
 	status?:true,
@@ -3761,7 +3752,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company?:ValueTypes["delivery_company_order_by"],
 	delivery_company_id?:ValueTypes["order_by"],
 	delivery_company_type?:ValueTypes["order_by"],
-	delivery_driver_type?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	laundry?:ValueTypes["laundry_store_order_by"],
 	notification_info?:ValueTypes["notification_info_order_by"],
@@ -3786,8 +3776,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -3830,8 +3818,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -3883,7 +3869,6 @@ count?: [{	columns?:ValueTypes["delivery_driver_select_column"][],	distinct?:boo
 	/** An object relationship */
 	delivery_company?:ValueTypes["delivery_company"],
 	delivery_company_id?:true,
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	/** An object relationship */
@@ -3965,7 +3950,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	_or?:ValueTypes["delivery_operator_bool_exp"][],
 	delivery_company?:ValueTypes["delivery_company_bool_exp"],
 	delivery_company_id?:ValueTypes["Int_comparison_exp"],
-	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	operator_details?:ValueTypes["service_provider_operator_details_bool_exp"],
@@ -3985,7 +3969,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 ["delivery_operator_insert_input"]: {
 	delivery_company?:ValueTypes["delivery_company_obj_rel_insert_input"],
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:ValueTypes["service_provider_operator_details_obj_rel_insert_input"],
@@ -3995,7 +3978,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** aggregate max on columns */
 ["delivery_operator_max_fields"]: AliasType<{
 	delivery_company_id?:true,
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	user_id?:true,
@@ -4004,7 +3986,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** order by max() on columns of table "delivery.operator" */
 ["delivery_operator_max_order_by"]: {
 	delivery_company_id?:ValueTypes["order_by"],
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	user_id?:ValueTypes["order_by"]
@@ -4012,7 +3993,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** aggregate min on columns */
 ["delivery_operator_min_fields"]: AliasType<{
 	delivery_company_id?:true,
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	user_id?:true,
@@ -4021,7 +4001,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** order by min() on columns of table "delivery.operator" */
 ["delivery_operator_min_order_by"]: {
 	delivery_company_id?:ValueTypes["order_by"],
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	user_id?:ValueTypes["order_by"]
@@ -4050,7 +4029,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 ["delivery_operator_order_by"]: {
 	delivery_company?:ValueTypes["delivery_company_order_by"],
 	delivery_company_id?:ValueTypes["order_by"],
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	operator_details?:ValueTypes["service_provider_operator_details_order_by"],
@@ -4066,7 +4044,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** input type for updating data in table "delivery.operator" */
 ["delivery_operator_set_input"]: {
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -4126,7 +4103,6 @@ count?: [{	columns?:ValueTypes["delivery_operator_select_column"][],	distinct?:b
 	/** Initial value of the column from where the streaming should start */
 ["delivery_operator_stream_cursor_value_input"]: {
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -6131,7 +6107,6 @@ count?: [{	columns?:ValueTypes["laundry_category_select_column"][],	distinct?:bo
 };
 	/** columns and relationships of "laundry.operator" */
 ["laundry_operator"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	/** An object relationship */
@@ -6214,7 +6189,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 	_and?:ValueTypes["laundry_operator_bool_exp"][],
 	_not?:ValueTypes["laundry_operator_bool_exp"],
 	_or?:ValueTypes["laundry_operator_bool_exp"][],
-	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	operator_details?:ValueTypes["service_provider_operator_details_bool_exp"],
@@ -6234,7 +6208,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 };
 	/** input type for inserting data into table "laundry.operator" */
 ["laundry_operator_insert_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:ValueTypes["service_provider_operator_details_obj_rel_insert_input"],
@@ -6245,7 +6218,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 };
 	/** aggregate max on columns */
 ["laundry_operator_max_fields"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	store_id?:true,
@@ -6254,7 +6226,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 }>;
 	/** order by max() on columns of table "laundry.operator" */
 ["laundry_operator_max_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	store_id?:ValueTypes["order_by"],
@@ -6262,7 +6233,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 };
 	/** aggregate min on columns */
 ["laundry_operator_min_fields"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	store_id?:true,
@@ -6271,7 +6241,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 }>;
 	/** order by min() on columns of table "laundry.operator" */
 ["laundry_operator_min_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	store_id?:ValueTypes["order_by"],
@@ -6299,7 +6268,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 };
 	/** Ordering options when selecting data from "laundry.operator". */
 ["laundry_operator_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	operator_details?:ValueTypes["service_provider_operator_details_order_by"],
@@ -6316,7 +6284,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 ["laundry_operator_select_column"]:laundry_operator_select_column;
 	/** input type for updating data in table "laundry.operator" */
 ["laundry_operator_set_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -6376,7 +6343,6 @@ count?: [{	columns?:ValueTypes["laundry_operator_select_column"][],	distinct?:bo
 };
 	/** Initial value of the column from where the streaming should start */
 ["laundry_operator_stream_cursor_value_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -12298,7 +12264,6 @@ count?: [{	columns?:ValueTypes["restaurant_item_option_map_select_column"][],	di
 };
 	/** columns and relationships of "restaurant.operator" */
 ["restaurant_operator"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	/** An object relationship */
@@ -12381,7 +12346,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 	_and?:ValueTypes["restaurant_operator_bool_exp"][],
 	_not?:ValueTypes["restaurant_operator_bool_exp"],
 	_or?:ValueTypes["restaurant_operator_bool_exp"][],
-	delivery_driver_type?:ValueTypes["String_comparison_exp"],
 	details_id?:ValueTypes["Int_comparison_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	operator_details?:ValueTypes["service_provider_operator_details_bool_exp"],
@@ -12401,7 +12365,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** input type for inserting data into table "restaurant.operator" */
 ["restaurant_operator_insert_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:ValueTypes["service_provider_operator_details_obj_rel_insert_input"],
@@ -12412,7 +12375,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** aggregate max on columns */
 ["restaurant_operator_max_fields"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	restaurant_id?:true,
@@ -12421,7 +12383,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 }>;
 	/** order by max() on columns of table "restaurant.operator" */
 ["restaurant_operator_max_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -12429,7 +12390,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** aggregate min on columns */
 ["restaurant_operator_min_fields"]: AliasType<{
-	delivery_driver_type?:true,
 	details_id?:true,
 	id?:true,
 	restaurant_id?:true,
@@ -12438,7 +12398,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 }>;
 	/** order by min() on columns of table "restaurant.operator" */
 ["restaurant_operator_min_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	restaurant_id?:ValueTypes["order_by"],
@@ -12466,7 +12425,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** Ordering options when selecting data from "restaurant.operator". */
 ["restaurant_operator_order_by"]: {
-	delivery_driver_type?:ValueTypes["order_by"],
 	details_id?:ValueTypes["order_by"],
 	id?:ValueTypes["order_by"],
 	operator_details?:ValueTypes["service_provider_operator_details_order_by"],
@@ -12483,7 +12441,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 ["restaurant_operator_select_column"]:restaurant_operator_select_column;
 	/** input type for updating data in table "restaurant.operator" */
 ["restaurant_operator_set_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -12543,7 +12500,6 @@ count?: [{	columns?:ValueTypes["restaurant_operator_select_column"][],	distinct?
 };
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_operator_stream_cursor_value_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -16421,7 +16377,6 @@ count?: [{	columns?:ValueTypes["service_provider_location_select_column"][],	dis
 ["service_provider_operator_details"]: AliasType<{
 	app_type_id?:true,
 	app_version?:true,
-	current_gps?:true,
 	/** An object relationship */
 	delivery_operator?:ValueTypes["delivery_operator"],
 	id?:true,
@@ -16472,7 +16427,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 	_or?:ValueTypes["service_provider_operator_details_bool_exp"][],
 	app_type_id?:ValueTypes["String_comparison_exp"],
 	app_version?:ValueTypes["String_comparison_exp"],
-	current_gps?:ValueTypes["geography_comparison_exp"],
 	delivery_operator?:ValueTypes["delivery_operator_bool_exp"],
 	id?:ValueTypes["Int_comparison_exp"],
 	laundry_operator?:ValueTypes["laundry_operator_bool_exp"],
@@ -16494,7 +16448,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 ["service_provider_operator_details_insert_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:ValueTypes["geography"],
 	delivery_operator?:ValueTypes["delivery_operator_obj_rel_insert_input"],
 	id?:number,
 	laundry_operator?:ValueTypes["laundry_operator_obj_rel_insert_input"],
@@ -16547,7 +16500,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 ["service_provider_operator_details_order_by"]: {
 	app_type_id?:ValueTypes["order_by"],
 	app_version?:ValueTypes["order_by"],
-	current_gps?:ValueTypes["order_by"],
 	delivery_operator?:ValueTypes["delivery_operator_order_by"],
 	id?:ValueTypes["order_by"],
 	laundry_operator?:ValueTypes["laundry_operator_order_by"],
@@ -16568,7 +16520,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 ["service_provider_operator_details_set_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:ValueTypes["geography"],
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -16604,7 +16555,6 @@ count?: [{	columns?:ValueTypes["service_provider_operator_details_select_column"
 ["service_provider_operator_details_stream_cursor_value_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:ValueTypes["geography"],
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -22995,8 +22945,6 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-			/** Just for relationship */
-	delivery_driver_type?:string,
 			id?:number,
 			/** An object relationship */
 	laundry?:PartialObjects["laundry_store"],
@@ -23054,7 +23002,6 @@ the end). throws an error if top level container is not an array */
 	delivery_company?:PartialObjects["delivery_company_bool_exp"],
 	delivery_company_id?:PartialObjects["Int_comparison_exp"],
 	delivery_company_type?:PartialObjects["String_comparison_exp"],
-	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	laundry?:PartialObjects["laundry_store_bool_exp"],
 	notification_info?:PartialObjects["notification_info_bool_exp"],
@@ -23083,8 +23030,6 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	laundry?:PartialObjects["laundry_store_obj_rel_insert_input"],
 	notification_info?:PartialObjects["notification_info_obj_rel_insert_input"],
@@ -23104,8 +23049,6 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-			/** Just for relationship */
-	delivery_driver_type?:string,
 			id?:number,
 			/** awaiting_approval, authorized, banned */
 	status?:string,
@@ -23119,8 +23062,6 @@ the end). throws an error if top level container is not an array */
 			delivery_company_id?:number,
 			/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-			/** Just for relationship */
-	delivery_driver_type?:string,
 			id?:number,
 			/** awaiting_approval, authorized, banned */
 	status?:string,
@@ -23154,7 +23095,6 @@ the end). throws an error if top level container is not an array */
 	delivery_company?:PartialObjects["delivery_company_order_by"],
 	delivery_company_id?:PartialObjects["order_by"],
 	delivery_company_type?:PartialObjects["order_by"],
-	delivery_driver_type?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	laundry?:PartialObjects["laundry_store_order_by"],
 	notification_info?:PartialObjects["notification_info_order_by"],
@@ -23179,8 +23119,6 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -23223,8 +23161,6 @@ the end). throws an error if top level container is not an array */
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -23277,7 +23213,6 @@ the end). throws an error if top level container is not an array */
 			/** An object relationship */
 	delivery_company?:PartialObjects["delivery_company"],
 			delivery_company_id?:number,
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			/** An object relationship */
@@ -23358,7 +23293,6 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["delivery_operator_bool_exp"][],
 	delivery_company?:PartialObjects["delivery_company_bool_exp"],
 	delivery_company_id?:PartialObjects["Int_comparison_exp"],
-	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	operator_details?:PartialObjects["service_provider_operator_details_bool_exp"],
@@ -23378,7 +23312,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_insert_input"]: {
 	delivery_company?:PartialObjects["delivery_company_obj_rel_insert_input"],
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:PartialObjects["service_provider_operator_details_obj_rel_insert_input"],
@@ -23389,7 +23322,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_max_fields"]: {
 		__typename?: "delivery_operator_max_fields";
 			delivery_company_id?:number,
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			user_id?:number
@@ -23397,7 +23329,6 @@ the end). throws an error if top level container is not an array */
 	/** order by max() on columns of table "delivery.operator" */
 ["delivery_operator_max_order_by"]: {
 	delivery_company_id?:PartialObjects["order_by"],
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	user_id?:PartialObjects["order_by"]
@@ -23406,7 +23337,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_min_fields"]: {
 		__typename?: "delivery_operator_min_fields";
 			delivery_company_id?:number,
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			user_id?:number
@@ -23414,7 +23344,6 @@ the end). throws an error if top level container is not an array */
 	/** order by min() on columns of table "delivery.operator" */
 ["delivery_operator_min_order_by"]: {
 	delivery_company_id?:PartialObjects["order_by"],
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	user_id?:PartialObjects["order_by"]
@@ -23443,7 +23372,6 @@ the end). throws an error if top level container is not an array */
 ["delivery_operator_order_by"]: {
 	delivery_company?:PartialObjects["delivery_company_order_by"],
 	delivery_company_id?:PartialObjects["order_by"],
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	operator_details?:PartialObjects["service_provider_operator_details_order_by"],
@@ -23459,7 +23387,6 @@ the end). throws an error if top level container is not an array */
 	/** input type for updating data in table "delivery.operator" */
 ["delivery_operator_set_input"]: {
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -23519,7 +23446,6 @@ the end). throws an error if top level container is not an array */
 	/** Initial value of the column from where the streaming should start */
 ["delivery_operator_stream_cursor_value_input"]: {
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -25525,7 +25451,6 @@ cancelledByServiceProvider */
 	/** columns and relationships of "laundry.operator" */
 ["laundry_operator"]: {
 		__typename?: "laundry_operator";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			/** An object relationship */
@@ -25607,7 +25532,6 @@ cancelledByServiceProvider */
 	_and?:PartialObjects["laundry_operator_bool_exp"][],
 	_not?:PartialObjects["laundry_operator_bool_exp"],
 	_or?:PartialObjects["laundry_operator_bool_exp"][],
-	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	operator_details?:PartialObjects["service_provider_operator_details_bool_exp"],
@@ -25627,7 +25551,6 @@ cancelledByServiceProvider */
 },
 	/** input type for inserting data into table "laundry.operator" */
 ["laundry_operator_insert_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:PartialObjects["service_provider_operator_details_obj_rel_insert_input"],
@@ -25639,7 +25562,6 @@ cancelledByServiceProvider */
 	/** aggregate max on columns */
 ["laundry_operator_max_fields"]: {
 		__typename?: "laundry_operator_max_fields";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			store_id?:number,
@@ -25647,7 +25569,6 @@ cancelledByServiceProvider */
 	},
 	/** order by max() on columns of table "laundry.operator" */
 ["laundry_operator_max_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	store_id?:PartialObjects["order_by"],
@@ -25656,7 +25577,6 @@ cancelledByServiceProvider */
 	/** aggregate min on columns */
 ["laundry_operator_min_fields"]: {
 		__typename?: "laundry_operator_min_fields";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			store_id?:number,
@@ -25664,7 +25584,6 @@ cancelledByServiceProvider */
 	},
 	/** order by min() on columns of table "laundry.operator" */
 ["laundry_operator_min_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	store_id?:PartialObjects["order_by"],
@@ -25692,7 +25611,6 @@ cancelledByServiceProvider */
 },
 	/** Ordering options when selecting data from "laundry.operator". */
 ["laundry_operator_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	operator_details?:PartialObjects["service_provider_operator_details_order_by"],
@@ -25709,7 +25627,6 @@ cancelledByServiceProvider */
 ["laundry_operator_select_column"]:laundry_operator_select_column,
 	/** input type for updating data in table "laundry.operator" */
 ["laundry_operator_set_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -25769,7 +25686,6 @@ cancelledByServiceProvider */
 },
 	/** Initial value of the column from where the streaming should start */
 ["laundry_operator_stream_cursor_value_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -30851,7 +30767,6 @@ the end). throws an error if top level container is not an array */
 	/** columns and relationships of "restaurant.operator" */
 ["restaurant_operator"]: {
 		__typename?: "restaurant_operator";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			/** An object relationship */
@@ -30933,7 +30848,6 @@ the end). throws an error if top level container is not an array */
 	_and?:PartialObjects["restaurant_operator_bool_exp"][],
 	_not?:PartialObjects["restaurant_operator_bool_exp"],
 	_or?:PartialObjects["restaurant_operator_bool_exp"][],
-	delivery_driver_type?:PartialObjects["String_comparison_exp"],
 	details_id?:PartialObjects["Int_comparison_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	operator_details?:PartialObjects["service_provider_operator_details_bool_exp"],
@@ -30953,7 +30867,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** input type for inserting data into table "restaurant.operator" */
 ["restaurant_operator_insert_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:PartialObjects["service_provider_operator_details_obj_rel_insert_input"],
@@ -30965,7 +30878,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate max on columns */
 ["restaurant_operator_max_fields"]: {
 		__typename?: "restaurant_operator_max_fields";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			restaurant_id?:number,
@@ -30973,7 +30885,6 @@ the end). throws an error if top level container is not an array */
 	},
 	/** order by max() on columns of table "restaurant.operator" */
 ["restaurant_operator_max_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -30982,7 +30893,6 @@ the end). throws an error if top level container is not an array */
 	/** aggregate min on columns */
 ["restaurant_operator_min_fields"]: {
 		__typename?: "restaurant_operator_min_fields";
-			delivery_driver_type?:string,
 			details_id?:number,
 			id?:number,
 			restaurant_id?:number,
@@ -30990,7 +30900,6 @@ the end). throws an error if top level container is not an array */
 	},
 	/** order by min() on columns of table "restaurant.operator" */
 ["restaurant_operator_min_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	restaurant_id?:PartialObjects["order_by"],
@@ -31018,7 +30927,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Ordering options when selecting data from "restaurant.operator". */
 ["restaurant_operator_order_by"]: {
-	delivery_driver_type?:PartialObjects["order_by"],
 	details_id?:PartialObjects["order_by"],
 	id?:PartialObjects["order_by"],
 	operator_details?:PartialObjects["service_provider_operator_details_order_by"],
@@ -31035,7 +30943,6 @@ the end). throws an error if top level container is not an array */
 ["restaurant_operator_select_column"]:restaurant_operator_select_column,
 	/** input type for updating data in table "restaurant.operator" */
 ["restaurant_operator_set_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -31095,7 +31002,6 @@ the end). throws an error if top level container is not an array */
 },
 	/** Initial value of the column from where the streaming should start */
 ["restaurant_operator_stream_cursor_value_input"]: {
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -34878,7 +34784,6 @@ the end). throws an error if top level container is not an array */
 		__typename?: "service_provider_operator_details";
 			app_type_id?:string,
 			app_version?:string,
-			current_gps?:PartialObjects["geography"],
 			/** An object relationship */
 	delivery_operator?:PartialObjects["delivery_operator"],
 			id?:number,
@@ -34928,7 +34833,6 @@ the end). throws an error if top level container is not an array */
 	_or?:PartialObjects["service_provider_operator_details_bool_exp"][],
 	app_type_id?:PartialObjects["String_comparison_exp"],
 	app_version?:PartialObjects["String_comparison_exp"],
-	current_gps?:PartialObjects["geography_comparison_exp"],
 	delivery_operator?:PartialObjects["delivery_operator_bool_exp"],
 	id?:PartialObjects["Int_comparison_exp"],
 	laundry_operator?:PartialObjects["laundry_operator_bool_exp"],
@@ -34950,7 +34854,6 @@ the end). throws an error if top level container is not an array */
 ["service_provider_operator_details_insert_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:PartialObjects["geography"],
 	delivery_operator?:PartialObjects["delivery_operator_obj_rel_insert_input"],
 	id?:number,
 	laundry_operator?:PartialObjects["laundry_operator_obj_rel_insert_input"],
@@ -35003,7 +34906,6 @@ the end). throws an error if top level container is not an array */
 ["service_provider_operator_details_order_by"]: {
 	app_type_id?:PartialObjects["order_by"],
 	app_version?:PartialObjects["order_by"],
-	current_gps?:PartialObjects["order_by"],
 	delivery_operator?:PartialObjects["delivery_operator_order_by"],
 	id?:PartialObjects["order_by"],
 	laundry_operator?:PartialObjects["laundry_operator_order_by"],
@@ -35024,7 +34926,6 @@ the end). throws an error if top level container is not an array */
 ["service_provider_operator_details_set_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:PartialObjects["geography"],
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -35060,7 +34961,6 @@ the end). throws an error if top level container is not an array */
 ["service_provider_operator_details_stream_cursor_value_input"]: {
 	app_type_id?:string,
 	app_version?:string,
-	current_gps?:PartialObjects["geography"],
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -41567,8 +41467,6 @@ export type delivery_driver = {
 	delivery_company_id:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type:string,
-	/** Just for relationship */
-	delivery_driver_type:string,
 	id:number,
 	/** An object relationship */
 	laundry?:laundry_store,
@@ -41630,7 +41528,6 @@ export type delivery_driver_bool_exp = {
 	delivery_company?:delivery_company_bool_exp,
 	delivery_company_id?:Int_comparison_exp,
 	delivery_company_type?:String_comparison_exp,
-	delivery_driver_type?:String_comparison_exp,
 	id?:Int_comparison_exp,
 	laundry?:laundry_store_bool_exp,
 	notification_info?:notification_info_bool_exp,
@@ -41665,8 +41562,6 @@ export type delivery_driver_insert_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	laundry?:laundry_store_obj_rel_insert_input,
 	notification_info?:notification_info_obj_rel_insert_input,
@@ -41687,8 +41582,6 @@ export type delivery_driver_max_fields = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	/** awaiting_approval, authorized, banned */
 	status?:string,
@@ -41703,8 +41596,6 @@ export type delivery_driver_min_fields = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	/** awaiting_approval, authorized, banned */
 	status?:string,
@@ -41742,7 +41633,6 @@ export type delivery_driver_order_by = {
 	delivery_company?:delivery_company_order_by,
 	delivery_company_id?:order_by,
 	delivery_company_type?:order_by,
-	delivery_driver_type?:order_by,
 	id?:order_by,
 	laundry?:laundry_store_order_by,
 	notification_info?:notification_info_order_by,
@@ -41766,7 +41656,6 @@ export enum delivery_driver_select_column {
 	current_location = "current_location",
 	delivery_company_id = "delivery_company_id",
 	delivery_company_type = "delivery_company_type",
-	delivery_driver_type = "delivery_driver_type",
 	id = "id",
 	online = "online",
 	status = "status",
@@ -41781,8 +41670,6 @@ export type delivery_driver_set_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -41830,8 +41717,6 @@ export type delivery_driver_stream_cursor_value_input = {
 	delivery_company_id?:number,
 	/** restaurant,laundry,delivery_company */
 	delivery_company_type?:string,
-	/** Just for relationship */
-	delivery_driver_type?:string,
 	id?:number,
 	online?:boolean,
 	/** awaiting_approval, authorized, banned */
@@ -41854,7 +41739,6 @@ export enum delivery_driver_update_column {
 	current_location = "current_location",
 	delivery_company_id = "delivery_company_id",
 	delivery_company_type = "delivery_company_type",
-	delivery_driver_type = "delivery_driver_type",
 	id = "id",
 	online = "online",
 	status = "status",
@@ -41903,7 +41787,6 @@ export type delivery_operator = {
 	/** An object relationship */
 	delivery_company:delivery_company,
 	delivery_company_id:number,
-	delivery_driver_type:string,
 	details_id:number,
 	id:number,
 	/** An object relationship */
@@ -41993,7 +41876,6 @@ export type delivery_operator_bool_exp = {
 	_or?:delivery_operator_bool_exp[],
 	delivery_company?:delivery_company_bool_exp,
 	delivery_company_id?:Int_comparison_exp,
-	delivery_driver_type?:String_comparison_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	operator_details?:service_provider_operator_details_bool_exp,
@@ -42020,7 +41902,6 @@ export type delivery_operator_inc_input = {
 export type delivery_operator_insert_input = {
 		delivery_company?:delivery_company_obj_rel_insert_input,
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	operator_details?:service_provider_operator_details_obj_rel_insert_input,
@@ -42032,7 +41913,6 @@ export type delivery_operator_insert_input = {
 export type delivery_operator_max_fields = {
 	__typename?: "delivery_operator_max_fields",
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -42041,7 +41921,6 @@ export type delivery_operator_max_fields = {
 /** order by max() on columns of table "delivery.operator" */
 export type delivery_operator_max_order_by = {
 		delivery_company_id?:order_by,
-	delivery_driver_type?:order_by,
 	details_id?:order_by,
 	id?:order_by,
 	user_id?:order_by
@@ -42051,7 +41930,6 @@ export type delivery_operator_max_order_by = {
 export type delivery_operator_min_fields = {
 	__typename?: "delivery_operator_min_fields",
 	delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -42060,7 +41938,6 @@ export type delivery_operator_min_fields = {
 /** order by min() on columns of table "delivery.operator" */
 export type delivery_operator_min_order_by = {
 		delivery_company_id?:order_by,
-	delivery_driver_type?:order_by,
 	details_id?:order_by,
 	id?:order_by,
 	user_id?:order_by
@@ -42093,7 +41970,6 @@ export type delivery_operator_on_conflict = {
 export type delivery_operator_order_by = {
 		delivery_company?:delivery_company_order_by,
 	delivery_company_id?:order_by,
-	delivery_driver_type?:order_by,
 	details_id?:order_by,
 	id?:order_by,
 	operator_details?:service_provider_operator_details_order_by,
@@ -42109,7 +41985,6 @@ export type delivery_operator_pk_columns_input = {
 /** select columns of table "delivery.operator" */
 export enum delivery_operator_select_column {
 	delivery_company_id = "delivery_company_id",
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	user_id = "user_id"
@@ -42118,7 +41993,6 @@ export enum delivery_operator_select_column {
 /** input type for updating data in table "delivery.operator" */
 export type delivery_operator_set_input = {
 		delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -42186,7 +42060,6 @@ export type delivery_operator_stream_cursor_input = {
 /** Initial value of the column from where the streaming should start */
 export type delivery_operator_stream_cursor_value_input = {
 		delivery_company_id?:number,
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	user_id?:number
@@ -42212,7 +42085,6 @@ export type delivery_operator_sum_order_by = {
 /** update columns of table "delivery.operator" */
 export enum delivery_operator_update_column {
 	delivery_company_id = "delivery_company_id",
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	user_id = "user_id"
@@ -44502,7 +44374,6 @@ export type laundry_category_variance_order_by = {
 /** columns and relationships of "laundry.operator" */
 export type laundry_operator = {
 	__typename?: "laundry_operator",
-	delivery_driver_type:string,
 	details_id:number,
 	id:number,
 	/** An object relationship */
@@ -44593,7 +44464,6 @@ export type laundry_operator_bool_exp = {
 		_and?:laundry_operator_bool_exp[],
 	_not?:laundry_operator_bool_exp,
 	_or?:laundry_operator_bool_exp[],
-	delivery_driver_type?:String_comparison_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	operator_details?:service_provider_operator_details_bool_exp,
@@ -44620,8 +44490,7 @@ export type laundry_operator_inc_input = {
 
 /** input type for inserting data into table "laundry.operator" */
 export type laundry_operator_insert_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	operator_details?:service_provider_operator_details_obj_rel_insert_input,
 	store?:laundry_store_obj_rel_insert_input,
@@ -44633,7 +44502,6 @@ export type laundry_operator_insert_input = {
 /** aggregate max on columns */
 export type laundry_operator_max_fields = {
 	__typename?: "laundry_operator_max_fields",
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -44642,8 +44510,7 @@ export type laundry_operator_max_fields = {
 
 /** order by max() on columns of table "laundry.operator" */
 export type laundry_operator_max_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	store_id?:order_by,
 	user_id?:order_by
@@ -44652,7 +44519,6 @@ export type laundry_operator_max_order_by = {
 /** aggregate min on columns */
 export type laundry_operator_min_fields = {
 	__typename?: "laundry_operator_min_fields",
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	store_id?:number,
@@ -44661,8 +44527,7 @@ export type laundry_operator_min_fields = {
 
 /** order by min() on columns of table "laundry.operator" */
 export type laundry_operator_min_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	store_id?:order_by,
 	user_id?:order_by
@@ -44693,8 +44558,7 @@ export type laundry_operator_on_conflict = {
 
 /** Ordering options when selecting data from "laundry.operator". */
 export type laundry_operator_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	operator_details?:service_provider_operator_details_order_by,
 	store?:laundry_store_order_by,
@@ -44710,7 +44574,6 @@ export type laundry_operator_pk_columns_input = {
 
 /** select columns of table "laundry.operator" */
 export enum laundry_operator_select_column {
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	store_id = "store_id",
@@ -44719,8 +44582,7 @@ export enum laundry_operator_select_column {
 
 /** input type for updating data in table "laundry.operator" */
 export type laundry_operator_set_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	store_id?:number,
 	user_id?:number
@@ -44787,8 +44649,7 @@ export type laundry_operator_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type laundry_operator_stream_cursor_value_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	store_id?:number,
 	user_id?:number
@@ -44813,7 +44674,6 @@ export type laundry_operator_sum_order_by = {
 
 /** update columns of table "laundry.operator" */
 export enum laundry_operator_update_column {
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	store_id = "store_id",
@@ -50621,7 +50481,6 @@ export type restaurant_item_variance_order_by = {
 /** columns and relationships of "restaurant.operator" */
 export type restaurant_operator = {
 	__typename?: "restaurant_operator",
-	delivery_driver_type:string,
 	details_id:number,
 	id:number,
 	/** An object relationship */
@@ -50712,7 +50571,6 @@ export type restaurant_operator_bool_exp = {
 		_and?:restaurant_operator_bool_exp[],
 	_not?:restaurant_operator_bool_exp,
 	_or?:restaurant_operator_bool_exp[],
-	delivery_driver_type?:String_comparison_exp,
 	details_id?:Int_comparison_exp,
 	id?:Int_comparison_exp,
 	operator_details?:service_provider_operator_details_bool_exp,
@@ -50739,8 +50597,7 @@ export type restaurant_operator_inc_input = {
 
 /** input type for inserting data into table "restaurant.operator" */
 export type restaurant_operator_insert_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	operator_details?:service_provider_operator_details_obj_rel_insert_input,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
@@ -50752,7 +50609,6 @@ export type restaurant_operator_insert_input = {
 /** aggregate max on columns */
 export type restaurant_operator_max_fields = {
 	__typename?: "restaurant_operator_max_fields",
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -50761,8 +50617,7 @@ export type restaurant_operator_max_fields = {
 
 /** order by max() on columns of table "restaurant.operator" */
 export type restaurant_operator_max_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	restaurant_id?:order_by,
 	user_id?:order_by
@@ -50771,7 +50626,6 @@ export type restaurant_operator_max_order_by = {
 /** aggregate min on columns */
 export type restaurant_operator_min_fields = {
 	__typename?: "restaurant_operator_min_fields",
-	delivery_driver_type?:string,
 	details_id?:number,
 	id?:number,
 	restaurant_id?:number,
@@ -50780,8 +50634,7 @@ export type restaurant_operator_min_fields = {
 
 /** order by min() on columns of table "restaurant.operator" */
 export type restaurant_operator_min_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	restaurant_id?:order_by,
 	user_id?:order_by
@@ -50812,8 +50665,7 @@ export type restaurant_operator_on_conflict = {
 
 /** Ordering options when selecting data from "restaurant.operator". */
 export type restaurant_operator_order_by = {
-		delivery_driver_type?:order_by,
-	details_id?:order_by,
+		details_id?:order_by,
 	id?:order_by,
 	operator_details?:service_provider_operator_details_order_by,
 	restaurant?:restaurant_restaurant_order_by,
@@ -50829,7 +50681,6 @@ export type restaurant_operator_pk_columns_input = {
 
 /** select columns of table "restaurant.operator" */
 export enum restaurant_operator_select_column {
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	restaurant_id = "restaurant_id",
@@ -50838,8 +50689,7 @@ export enum restaurant_operator_select_column {
 
 /** input type for updating data in table "restaurant.operator" */
 export type restaurant_operator_set_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	restaurant_id?:number,
 	user_id?:number
@@ -50906,8 +50756,7 @@ export type restaurant_operator_stream_cursor_input = {
 
 /** Initial value of the column from where the streaming should start */
 export type restaurant_operator_stream_cursor_value_input = {
-		delivery_driver_type?:string,
-	details_id?:number,
+		details_id?:number,
 	id?:number,
 	restaurant_id?:number,
 	user_id?:number
@@ -50932,7 +50781,6 @@ export type restaurant_operator_sum_order_by = {
 
 /** update columns of table "restaurant.operator" */
 export enum restaurant_operator_update_column {
-	delivery_driver_type = "delivery_driver_type",
 	details_id = "details_id",
 	id = "id",
 	restaurant_id = "restaurant_id",
@@ -55338,7 +55186,6 @@ export type service_provider_operator_details = {
 	__typename?: "service_provider_operator_details",
 	app_type_id:string,
 	app_version?:string,
-	current_gps?:geography,
 	/** An object relationship */
 	delivery_operator?:delivery_operator,
 	id:number,
@@ -55392,7 +55239,6 @@ export type service_provider_operator_details_bool_exp = {
 	_or?:service_provider_operator_details_bool_exp[],
 	app_type_id?:String_comparison_exp,
 	app_version?:String_comparison_exp,
-	current_gps?:geography_comparison_exp,
 	delivery_operator?:delivery_operator_bool_exp,
 	id?:Int_comparison_exp,
 	laundry_operator?:laundry_operator_bool_exp,
@@ -55420,7 +55266,6 @@ export type service_provider_operator_details_inc_input = {
 export type service_provider_operator_details_insert_input = {
 		app_type_id?:string,
 	app_version?:string,
-	current_gps?:geography,
 	delivery_operator?:delivery_operator_obj_rel_insert_input,
 	id?:number,
 	laundry_operator?:laundry_operator_obj_rel_insert_input,
@@ -55479,7 +55324,6 @@ export type service_provider_operator_details_on_conflict = {
 export type service_provider_operator_details_order_by = {
 		app_type_id?:order_by,
 	app_version?:order_by,
-	current_gps?:order_by,
 	delivery_operator?:delivery_operator_order_by,
 	id?:order_by,
 	laundry_operator?:laundry_operator_order_by,
@@ -55500,7 +55344,6 @@ export type service_provider_operator_details_pk_columns_input = {
 export enum service_provider_operator_details_select_column {
 	app_type_id = "app_type_id",
 	app_version = "app_version",
-	current_gps = "current_gps",
 	id = "id",
 	online = "online",
 	owner = "owner",
@@ -55512,7 +55355,6 @@ export enum service_provider_operator_details_select_column {
 export type service_provider_operator_details_set_input = {
 		app_type_id?:string,
 	app_version?:string,
-	current_gps?:geography,
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -55553,7 +55395,6 @@ export type service_provider_operator_details_stream_cursor_input = {
 export type service_provider_operator_details_stream_cursor_value_input = {
 		app_type_id?:string,
 	app_version?:string,
-	current_gps?:geography,
 	id?:number,
 	online?:boolean,
 	owner?:boolean,
@@ -55572,7 +55413,6 @@ export type service_provider_operator_details_sum_fields = {
 export enum service_provider_operator_details_update_column {
 	app_type_id = "app_type_id",
 	app_version = "app_version",
-	current_gps = "current_gps",
 	id = "id",
 	online = "online",
 	owner = "owner",
@@ -66353,12 +66193,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -66473,12 +66307,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_company_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -66610,12 +66438,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		id:{
 			type:"order_by",
 			array:false,
@@ -66711,12 +66533,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		id:{
 			type:"Int",
 			array:false,
@@ -66782,12 +66598,6 @@ export const AllTypesProps: Record<string,any> = {
 			required:false
 		},
 		delivery_company_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
 			type:"String",
 			array:false,
 			arrayRequired:false,
@@ -67036,12 +66846,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -67113,12 +66917,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -67157,12 +66955,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -67184,12 +66976,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	delivery_operator_min_order_by:{
 		delivery_company_id:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
 			type:"order_by",
 			array:false,
 			arrayRequired:false,
@@ -67261,12 +67047,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -67310,12 +67090,6 @@ export const AllTypesProps: Record<string,any> = {
 	delivery_operator_set_input:{
 		delivery_company_id:{
 			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -67434,12 +67208,6 @@ export const AllTypesProps: Record<string,any> = {
 	delivery_operator_stream_cursor_value_input:{
 		delivery_company_id:{
 			type:"Int",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		delivery_driver_type:{
-			type:"String",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -72731,12 +72499,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
-		delivery_driver_type:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -72808,12 +72570,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_operator_insert_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -72858,12 +72614,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_operator_max_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -72890,12 +72640,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_operator_min_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -72956,12 +72700,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_operator_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -73015,12 +72753,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	laundry_operator_select_column: "enum",
 	laundry_operator_set_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -73139,12 +72871,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	laundry_operator_stream_cursor_value_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -92549,12 +92275,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:true
 		},
-		delivery_driver_type:{
-			type:"String_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int_comparison_exp",
 			array:false,
@@ -92626,12 +92346,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_insert_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -92676,12 +92390,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_max_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -92708,12 +92416,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_min_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -92774,12 +92476,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_order_by:{
-		delivery_driver_type:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"order_by",
 			array:false,
@@ -92833,12 +92529,6 @@ export const AllTypesProps: Record<string,any> = {
 	},
 	restaurant_operator_select_column: "enum",
 	restaurant_operator_set_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -92957,12 +92647,6 @@ export const AllTypesProps: Record<string,any> = {
 		}
 	},
 	restaurant_operator_stream_cursor_value_input:{
-		delivery_driver_type:{
-			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		details_id:{
 			type:"Int",
 			array:false,
@@ -102599,12 +102283,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		current_gps:{
-			type:"geography_comparison_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		delivery_operator:{
 			type:"delivery_operator_bool_exp",
 			array:false,
@@ -102684,12 +102362,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		app_version:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		current_gps:{
-			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -102796,12 +102468,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		current_gps:{
-			type:"order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		delivery_operator:{
 			type:"delivery_operator_order_by",
 			array:false,
@@ -102879,12 +102545,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		current_gps:{
-			type:"geography",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		id:{
 			type:"Int",
 			array:false,
@@ -102939,12 +102599,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		app_version:{
 			type:"String",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		current_gps:{
-			type:"geography",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -113023,7 +112677,6 @@ export const ReturnTypes: Record<string,any> = {
 		delivery_company:"delivery_company",
 		delivery_company_id:"Int",
 		delivery_company_type:"String",
-		delivery_driver_type:"String",
 		id:"Int",
 		laundry:"laundry_store",
 		notification_info:"notification_info",
@@ -113062,7 +112715,6 @@ export const ReturnTypes: Record<string,any> = {
 		app_version:"String",
 		delivery_company_id:"Int",
 		delivery_company_type:"String",
-		delivery_driver_type:"String",
 		id:"Int",
 		status:"String",
 		user_id:"Int"
@@ -113072,7 +112724,6 @@ export const ReturnTypes: Record<string,any> = {
 		app_version:"String",
 		delivery_company_id:"Int",
 		delivery_company_type:"String",
-		delivery_driver_type:"String",
 		id:"Int",
 		status:"String",
 		user_id:"Int"
@@ -113119,7 +112770,6 @@ export const ReturnTypes: Record<string,any> = {
 	delivery_operator:{
 		delivery_company:"delivery_company",
 		delivery_company_id:"Int",
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		operator_details:"service_provider_operator_details",
@@ -113151,14 +112801,12 @@ export const ReturnTypes: Record<string,any> = {
 	},
 	delivery_operator_max_fields:{
 		delivery_company_id:"Int",
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		user_id:"Int"
 	},
 	delivery_operator_min_fields:{
 		delivery_company_id:"Int",
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		user_id:"Int"
@@ -113781,7 +113429,6 @@ export const ReturnTypes: Record<string,any> = {
 		store_id:"Float"
 	},
 	laundry_operator:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		operator_details:"service_provider_operator_details",
@@ -113814,14 +113461,12 @@ export const ReturnTypes: Record<string,any> = {
 		user_id:"Float"
 	},
 	laundry_operator_max_fields:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		store_id:"Int",
 		user_id:"Int"
 	},
 	laundry_operator_min_fields:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		store_id:"Int",
@@ -115696,7 +115341,6 @@ export const ReturnTypes: Record<string,any> = {
 		restaurant_id:"Float"
 	},
 	restaurant_operator:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		operator_details:"service_provider_operator_details",
@@ -115729,14 +115373,12 @@ export const ReturnTypes: Record<string,any> = {
 		user_id:"Float"
 	},
 	restaurant_operator_max_fields:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		restaurant_id:"Int",
 		user_id:"Int"
 	},
 	restaurant_operator_min_fields:{
-		delivery_driver_type:"String",
 		details_id:"Int",
 		id:"Int",
 		restaurant_id:"Int",
@@ -116985,7 +116627,6 @@ export const ReturnTypes: Record<string,any> = {
 	service_provider_operator_details:{
 		app_type_id:"String",
 		app_version:"String",
-		current_gps:"geography",
 		delivery_operator:"delivery_operator",
 		id:"Int",
 		laundry_operator:"laundry_operator",

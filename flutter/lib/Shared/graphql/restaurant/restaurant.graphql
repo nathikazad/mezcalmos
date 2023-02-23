@@ -1,5 +1,5 @@
 query getRestaurants {
-  restaurant_restaurant(where: { open_status: { _neq: "closed_indefinitely" } }) {
+  restaurant_restaurant(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
     id
     reviews_aggregate {
       aggregate {

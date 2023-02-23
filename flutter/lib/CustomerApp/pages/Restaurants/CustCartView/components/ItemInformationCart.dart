@@ -101,7 +101,7 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
                   "${widget.itemName}",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 3,
@@ -123,8 +123,8 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
         btnColors: secondaryLightBlueColor,
         onMinValueBtnColor: secondaryLightBlueColor,
         alignment: MainAxisAlignment.start,
-        incrementCallback: () {
-          widget.viewController.incrementItem(
+        incrementCallback: () async {
+          await widget.viewController.incrementItem(
               itemId: cartItem.idInCart!, quantity: 1, saveToDb: true);
         },
         onChangedToZero: () async {
@@ -144,8 +144,8 @@ class _ItemInformationCartState extends State<ItemInformationCart> {
           });
         },
         value: cartItem.quantity,
-        decrementCallback: () {
-          widget.viewController.incrementItem(
+        decrementCallback: () async {
+          await widget.viewController.incrementItem(
               itemId: cartItem.idInCart!, quantity: -1, saveToDb: true);
         });
   }

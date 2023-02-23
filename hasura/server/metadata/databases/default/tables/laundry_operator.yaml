@@ -18,7 +18,6 @@ select_permissions:
         - id
         - store_id
         - user_id
-        - delivery_driver_type
       filter:
         user_id:
           _eq: X-Hasura-User-Id

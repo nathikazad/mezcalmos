@@ -75,7 +75,6 @@ export interface DeliveryOperator {
     status: AuthorizationStatus,
     owner: boolean,
     appVersion?: string,
-    currentGPS?: Location,
     // deliveryDriverType:,
     notificationInfo?: NotificationInfo,
     user?: UserInfo

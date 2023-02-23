@@ -5339,9 +5339,6 @@ type delivery_driver {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String!
-
-  """Just for relationship"""
-  delivery_driver_type: String!
   id: Int!
 
   """An object relationship"""
@@ -5443,7 +5440,6 @@ input delivery_driver_bool_exp {
   delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
   delivery_company_type: String_comparison_exp
-  delivery_driver_type: String_comparison_exp
   id: Int_comparison_exp
   laundry: laundry_store_bool_exp
   notification_info: notification_info_bool_exp
@@ -5492,9 +5488,6 @@ input delivery_driver_insert_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   laundry: laundry_store_obj_rel_insert_input
   notification_info: notification_info_obj_rel_insert_input
@@ -5516,9 +5509,6 @@ type delivery_driver_max_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
 
   """awaiting_approval, authorized, banned"""
@@ -5534,9 +5524,6 @@ type delivery_driver_min_fields {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
 
   """awaiting_approval, authorized, banned"""
@@ -5582,7 +5569,6 @@ input delivery_driver_order_by {
   delivery_company: delivery_company_order_by
   delivery_company_id: order_by
   delivery_company_type: order_by
-  delivery_driver_type: order_by
   id: order_by
   laundry: laundry_store_order_by
   notification_info: notification_info_order_by
@@ -5619,9 +5605,6 @@ enum delivery_driver_select_column {
   delivery_company_type
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   id
 
   """column name"""
@@ -5645,9 +5628,6 @@ input delivery_driver_set_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   online: Boolean
 
@@ -5697,9 +5677,6 @@ input delivery_driver_stream_cursor_value_input {
 
   """restaurant,laundry,delivery_company"""
   delivery_company_type: String
-
-  """Just for relationship"""
-  delivery_driver_type: String
   id: Int
   online: Boolean
 
@@ -5733,9 +5710,6 @@ enum delivery_driver_update_column {
 
   """column name"""
   delivery_company_type
-
-  """column name"""
-  delivery_driver_type
 
   """column name"""
   id
@@ -5791,7 +5765,6 @@ type delivery_operator {
   """An object relationship"""
   delivery_company: delivery_company!
   delivery_company_id: Int!
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -5893,7 +5866,6 @@ input delivery_operator_bool_exp {
   _or: [delivery_operator_bool_exp!]
   delivery_company: delivery_company_bool_exp
   delivery_company_id: Int_comparison_exp
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -5937,7 +5909,6 @@ input type for inserting data into table "delivery.operator"
 input delivery_operator_insert_input {
   delivery_company: delivery_company_obj_rel_insert_input
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -5948,7 +5919,6 @@ input delivery_operator_insert_input {
 """aggregate max on columns"""
 type delivery_operator_max_fields {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -5959,7 +5929,6 @@ order by max() on columns of table "delivery.operator"
 """
 input delivery_operator_max_order_by {
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   user_id: order_by
@@ -5968,7 +5937,6 @@ input delivery_operator_max_order_by {
 """aggregate min on columns"""
 type delivery_operator_min_fields {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -5979,7 +5947,6 @@ order by min() on columns of table "delivery.operator"
 """
 input delivery_operator_min_order_by {
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   user_id: order_by
@@ -6019,7 +5986,6 @@ input delivery_operator_on_conflict {
 input delivery_operator_order_by {
   delivery_company: delivery_company_order_by
   delivery_company_id: order_by
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -6040,9 +6006,6 @@ enum delivery_operator_select_column {
   delivery_company_id
 
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -6057,7 +6020,6 @@ input type for updating data in table "delivery.operator"
 """
 input delivery_operator_set_input {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -6131,7 +6093,6 @@ input delivery_operator_stream_cursor_input {
 """Initial value of the column from where the streaming should start"""
 input delivery_operator_stream_cursor_value_input {
   delivery_company_id: Int
-  delivery_driver_type: String
   details_id: Int
   id: Int
   user_id: Int
@@ -6161,9 +6122,6 @@ update columns of table "delivery.operator"
 enum delivery_operator_update_column {
   """column name"""
   delivery_company_id
-
-  """column name"""
-  delivery_driver_type
 
   """column name"""
   details_id
@@ -8959,7 +8917,6 @@ input laundry_category_variance_order_by {
 columns and relationships of "laundry.operator"
 """
 type laundry_operator {
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -9063,7 +9020,6 @@ input laundry_operator_bool_exp {
   _and: [laundry_operator_bool_exp!]
   _not: laundry_operator_bool_exp
   _or: [laundry_operator_bool_exp!]
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -9107,7 +9063,6 @@ input laundry_operator_inc_input {
 input type for inserting data into table "laundry.operator"
 """
 input laundry_operator_insert_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -9119,7 +9074,6 @@ input laundry_operator_insert_input {
 
 """aggregate max on columns"""
 type laundry_operator_max_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -9130,7 +9084,6 @@ type laundry_operator_max_fields {
 order by max() on columns of table "laundry.operator"
 """
 input laundry_operator_max_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   store_id: order_by
@@ -9139,7 +9092,6 @@ input laundry_operator_max_order_by {
 
 """aggregate min on columns"""
 type laundry_operator_min_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -9150,7 +9102,6 @@ type laundry_operator_min_fields {
 order by min() on columns of table "laundry.operator"
 """
 input laundry_operator_min_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   store_id: order_by
@@ -9189,7 +9140,6 @@ input laundry_operator_on_conflict {
 
 """Ordering options when selecting data from "laundry.operator"."""
 input laundry_operator_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -9209,9 +9159,6 @@ select columns of table "laundry.operator"
 """
 enum laundry_operator_select_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -9228,7 +9175,6 @@ enum laundry_operator_select_column {
 input type for updating data in table "laundry.operator"
 """
 input laundry_operator_set_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -9302,7 +9248,6 @@ input laundry_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input laundry_operator_stream_cursor_value_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   store_id: Int
@@ -9331,9 +9276,6 @@ input laundry_operator_sum_order_by {
 update columns of table "laundry.operator"
 """
 enum laundry_operator_update_column {
-  """column name"""
-  delivery_driver_type
-
   """column name"""
   details_id
 
@@ -22103,7 +22045,6 @@ input restaurant_item_variance_order_by {
 columns and relationships of "restaurant.operator"
 """
 type restaurant_operator {
-  delivery_driver_type: String!
   details_id: Int!
   id: Int!
 
@@ -22207,7 +22148,6 @@ input restaurant_operator_bool_exp {
   _and: [restaurant_operator_bool_exp!]
   _not: restaurant_operator_bool_exp
   _or: [restaurant_operator_bool_exp!]
-  delivery_driver_type: String_comparison_exp
   details_id: Int_comparison_exp
   id: Int_comparison_exp
   operator_details: service_provider_operator_details_bool_exp
@@ -22251,7 +22191,6 @@ input restaurant_operator_inc_input {
 input type for inserting data into table "restaurant.operator"
 """
 input restaurant_operator_insert_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   operator_details: service_provider_operator_details_obj_rel_insert_input
@@ -22263,7 +22202,6 @@ input restaurant_operator_insert_input {
 
 """aggregate max on columns"""
 type restaurant_operator_max_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -22274,7 +22212,6 @@ type restaurant_operator_max_fields {
 order by max() on columns of table "restaurant.operator"
 """
 input restaurant_operator_max_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   restaurant_id: order_by
@@ -22283,7 +22220,6 @@ input restaurant_operator_max_order_by {
 
 """aggregate min on columns"""
 type restaurant_operator_min_fields {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -22294,7 +22230,6 @@ type restaurant_operator_min_fields {
 order by min() on columns of table "restaurant.operator"
 """
 input restaurant_operator_min_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   restaurant_id: order_by
@@ -22333,7 +22268,6 @@ input restaurant_operator_on_conflict {
 
 """Ordering options when selecting data from "restaurant.operator"."""
 input restaurant_operator_order_by {
-  delivery_driver_type: order_by
   details_id: order_by
   id: order_by
   operator_details: service_provider_operator_details_order_by
@@ -22353,9 +22287,6 @@ select columns of table "restaurant.operator"
 """
 enum restaurant_operator_select_column {
   """column name"""
-  delivery_driver_type
-
-  """column name"""
   details_id
 
   """column name"""
@@ -22372,7 +22303,6 @@ enum restaurant_operator_select_column {
 input type for updating data in table "restaurant.operator"
 """
 input restaurant_operator_set_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -22446,7 +22376,6 @@ input restaurant_operator_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input restaurant_operator_stream_cursor_value_input {
-  delivery_driver_type: String
   details_id: Int
   id: Int
   restaurant_id: Int
@@ -22475,9 +22404,6 @@ input restaurant_operator_sum_order_by {
 update columns of table "restaurant.operator"
 """
 enum restaurant_operator_update_column {
-  """column name"""
-  delivery_driver_type
-
   """column name"""
   details_id
 
@@ -28157,7 +28083,6 @@ columns and relationships of "service_provider.operator_details"
 type service_provider_operator_details {
   app_type_id: String!
   app_version: String
-  current_gps: geography
 
   """An object relationship"""
   delivery_operator: delivery_operator
@@ -28218,7 +28143,6 @@ input service_provider_operator_details_bool_exp {
   _or: [service_provider_operator_details_bool_exp!]
   app_type_id: String_comparison_exp
   app_version: String_comparison_exp
-  current_gps: geography_comparison_exp
   delivery_operator: delivery_operator_bool_exp
   id: Int_comparison_exp
   laundry_operator: laundry_operator_bool_exp
@@ -28259,7 +28183,6 @@ input type for inserting data into table "service_provider.operator_details"
 input service_provider_operator_details_insert_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   delivery_operator: delivery_operator_obj_rel_insert_input
   id: Int
   laundry_operator: laundry_operator_obj_rel_insert_input
@@ -28325,7 +28248,6 @@ Ordering options when selecting data from "service_provider.operator_details".
 input service_provider_operator_details_order_by {
   app_type_id: order_by
   app_version: order_by
-  current_gps: order_by
   delivery_operator: delivery_operator_order_by
   id: order_by
   laundry_operator: laundry_operator_order_by
@@ -28353,9 +28275,6 @@ enum service_provider_operator_details_select_column {
   app_version
 
   """column name"""
-  current_gps
-
-  """column name"""
   id
 
   """column name"""
@@ -28377,7 +28296,6 @@ input type for updating data in table "service_provider.operator_details"
 input service_provider_operator_details_set_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   id: Int
   online: Boolean
   owner: Boolean
@@ -28418,7 +28336,6 @@ input service_provider_operator_details_stream_cursor_input {
 input service_provider_operator_details_stream_cursor_value_input {
   app_type_id: String
   app_version: String
-  current_gps: geography
   id: Int
   online: Boolean
   owner: Boolean
@@ -28441,9 +28358,6 @@ enum service_provider_operator_details_update_column {
 
   """column name"""
   app_version
-
-  """column name"""
-  current_gps
 
   """column name"""
   id

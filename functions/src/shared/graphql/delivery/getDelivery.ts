@@ -2,8 +2,7 @@ import { HttpsError } from "firebase-functions/v1/auth";
 import { getHasura } from "../../../utilities/hasura";
 import { AppType, AuthorizationStatus, Language } from "../../models/Generic/Generic";
 import { OrderType, PaymentType } from "../../models/Generic/Order";
-import { DeliveryDirection, DeliveryDriver, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
-import { ParticipantType } from "../../models/Generic/Chat";
+import { DeliveryDirection, DeliveryOrder, DeliveryOrderStatus, DeliveryServiceProviderType } from "../../models/Generic/Delivery";
 
 export async function getDeliveryOrder(deliveryId: number): Promise<DeliveryOrder> {
   let chain = getHasura();
@@ -144,7 +143,6 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       direction: true,
       delivery_driver: {
         id: true,
-        delivery_driver_type: true,
         status: true,
         user: {
           firebase_id: true,
@@ -181,10 +179,9 @@ export async function getDeliveryCompanyOrders(): Promise<DeliveryOrder[]> {
       serviceProviderId: d.service_provider_id,
       serviceProviderType: DeliveryServiceProviderType.DeliveryCompany,
       direction: d.direction as DeliveryDirection,
-      deliveryDriver: (d.delivery_driver) ? <DeliveryDriver>{
+      deliveryDriver: (d.delivery_driver) ? {
         id: d.delivery_driver.id,
         userId: d.delivery_driver.user.id,
-        deliveryDriverType: d.delivery_driver.delivery_driver_type as ParticipantType,
         status: d.delivery_driver.status as AuthorizationStatus,
         user: {
           id: d.delivery_driver.user.id,
