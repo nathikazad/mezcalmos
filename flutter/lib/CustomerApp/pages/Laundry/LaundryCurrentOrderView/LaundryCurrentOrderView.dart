@@ -130,7 +130,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                               alignment: Alignment.centerLeft,
                               margin: const EdgeInsets.only(top: 25),
                               child: Text(
-                                "Delivery details ",
+                                "${_i18n()['deliveryDetails']}",
                                 style: Get.textTheme.bodyLarge,
                               ),
                             ),

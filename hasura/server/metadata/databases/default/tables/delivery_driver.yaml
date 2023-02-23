@@ -106,11 +106,7 @@ select_permissions:
         - online
         - status
         - user_id
-      filter:
-        laundry:
-          operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -141,11 +137,7 @@ select_permissions:
         - online
         - status
         - user_id
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: delivery_driver
     permission:

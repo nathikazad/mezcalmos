@@ -38,58 +38,50 @@ class MezCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: margin,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: onClick,
-        child: Container(
-          padding: contentPadding,
-          child: Row(
-            children: [
-              // leading //
-              leading != null
-                  ? leading!
-                  :
-                  // first avatars//
-                  Stack(
-                      alignment: Alignment.center,
-                      clipBehavior: Clip.none,
-                      children: [
-                        CircleAvatar(
-                          radius: raidus,
-                          backgroundColor: firstAvatarBgColor,
-                          backgroundImage: firstAvatarBgImage,
+      child: Container(
+        padding: contentPadding,
+        child: Row(
+          children: [
+            // leading //
+            if (leading != null) leading!,
+
+            // first avatars//
+            if (firstAvatarBgImage != null || firstAvatarIcon != null)
+              Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: firstAvatarBgColor,
+                    backgroundImage: firstAvatarBgImage,
+                    child: Icon(
+                      firstAvatarIcon,
+                      color: firstAvatarIconColor,
+                      size: 25,
+                    ),
+                  ),
+                  if (secondAvatarBgImage != null || secondAvatarIcon != null)
+                    Positioned(
+                      right: -35,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 22,
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: secondAvatarBgColor,
+                          backgroundImage: secondAvatarBgImage,
                           child: Icon(
-                            firstAvatarIcon,
-                            color: firstAvatarIconColor,
-                            size: raidus + 5,
+                            secondAvatarIcon,
+                            size: 25,
+                            color: secondAvatarIconColor,
                           ),
                         ),
-                        if (secondAvatarBgImage != null ||
-                            secondAvatarIcon != null)
-                          Positioned(
-                            right: -(raidus + 10),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: raidus + 2,
-                              child: CircleAvatar(
-                                radius: raidus,
-                                backgroundColor: secondAvatarBgColor,
-                                backgroundImage: secondAvatarBgImage,
-                                child: Icon(
-                                  secondAvatarIcon,
-                                  size: raidus + 5,
-                                  color: secondAvatarIconColor,
-                                ),
-                              ),
-                            ),
-                          )
-                      ],
-                    ),
-              if (secondAvatarBgImage != null || secondAvatarIcon != null)
-                SizedBox(
-                  width: 37,
-                ),
-              // content //
+                      ),
+                    )
+                ],
+              ),
+            if (secondAvatarBgImage != null || secondAvatarIcon != null)
               SizedBox(
                 width: 8,
               ),

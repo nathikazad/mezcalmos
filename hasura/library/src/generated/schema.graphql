@@ -80,7 +80,7 @@ type chat {
   messages(
     """JSON select path"""
     path: String
-  ): jsonb
+  ): jsonb!
 }
 
 """

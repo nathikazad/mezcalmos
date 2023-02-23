@@ -37291,7 +37291,7 @@ export type chat = {
 	chat_type:string,
 	creation_time:timestamptz,
 	id:number,
-	messages?:jsonb
+	messages:jsonb
 }
 
 /** aggregated selection of "chat" */

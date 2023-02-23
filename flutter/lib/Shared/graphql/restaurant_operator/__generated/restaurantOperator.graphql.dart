@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
-import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getOperatorByUserId {
   factory Variables$Query$getOperatorByUserId({required int userId}) =>
@@ -1639,13 +1638,6 @@ const documentNodeQuerygetRestaurantOperators = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
-                    name: NameNode(value: 'current_gps'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: '__typename'),
                     alias: null,
                     arguments: [],
@@ -2459,7 +2451,6 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
   Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators$operator_details({
     required this.owner,
     required this.status,
-    this.current_gps,
     required this.$__typename,
   });
 
@@ -2467,13 +2458,10 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
       Map<String, dynamic> json) {
     final l$owner = json['owner'];
     final l$status = json['status'];
-    final l$current_gps = json['current_gps'];
     final l$$__typename = json['__typename'];
     return Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operators$operator_details(
       owner: (l$owner as bool),
       status: (l$status as String),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -2481,8 +2469,6 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
   final bool owner;
 
   final String status;
-
-  final Geography? current_gps;
 
   final String $__typename;
 
@@ -2492,9 +2478,6 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
     _resultData['owner'] = l$owner;
     final l$status = status;
     _resultData['status'] = l$status;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2504,12 +2487,10 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
   int get hashCode {
     final l$owner = owner;
     final l$status = status;
-    final l$current_gps = current_gps;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$owner,
       l$status,
-      l$current_gps,
       l$$__typename,
     ]);
   }
@@ -2532,11 +2513,6 @@ class Query$getRestaurantOperators$restaurant_restaurant_by_pk$restaurant_operat
     final l$status = status;
     final lOther$status = other.status;
     if (l$status != lOther$status) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2576,7 +2552,6 @@ abstract class CopyWith$Query$getRestaurantOperators$restaurant_restaurant_by_pk
   TRes call({
     bool? owner,
     String? status,
-    Geography? current_gps,
     String? $__typename,
   });
 }
@@ -2603,7 +2578,6 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_restaurant_by_pk$res
   TRes call({
     Object? owner = _undefined,
     Object? status = _undefined,
-    Object? current_gps = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
@@ -2614,9 +2588,6 @@ class _CopyWithImpl$Query$getRestaurantOperators$restaurant_restaurant_by_pk$res
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -2636,7 +2607,6 @@ class _CopyWithStubImpl$Query$getRestaurantOperators$restaurant_restaurant_by_pk
   call({
     bool? owner,
     String? status,
-    Geography? current_gps,
     String? $__typename,
   }) =>
       _res;

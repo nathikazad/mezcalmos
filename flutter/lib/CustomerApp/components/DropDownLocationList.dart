@@ -79,7 +79,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       });
     }
 
-    if (dropDownListValue?.location != null) {
+    if (dropDownListValue?.location != null && dropDownListValue!.id != -1) {
       validateFirstDistance();
     }
 

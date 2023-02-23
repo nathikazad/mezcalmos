@@ -501,6 +501,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
   final QueryResult<Query$get_pick_driver_order> response =
       await _hasuraDb.graphQLClient.query$get_pick_driver_order(
     Options$Query$get_pick_driver_order(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_pick_driver_order(orderId: orderId),
     ),
   );
