@@ -35,27 +35,6 @@ object_relationships:
   - name: stripe_info
     using:
       foreign_key_constraint_on: stripe_id
-array_relationships:
-  - name: reviews
-    using:
-      manual_configuration:
-        column_mapping:
-          id: to_entity_id
-          service_provider_type: to_entity_type
-        insertion_order: null
-        remote_table:
-          name: review
-          schema: public
-  - name: delivery_drivers
-    using:
-      manual_configuration:
-        column_mapping:
-          id: to_entity_id
-          service_provider_type: to_entity_type
-        insertion_order: null
-        remote_table:
-          name: review
-          schema: public
 select_permissions:
   - role: anonymous
     permission:
