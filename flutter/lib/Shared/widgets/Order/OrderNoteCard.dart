@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -34,6 +32,7 @@ class OrderNoteCard extends StatelessWidget {
                   style: Get.textTheme.titleSmall,
                 ),
               ),
+              const SizedBox(height: 4),
             ],
           ),
         ),

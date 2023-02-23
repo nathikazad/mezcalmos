@@ -5,7 +5,6 @@
 
 // chat: {deliveryAdminDropOffDriver: 'dsfdsf', deliveryAdminPickupDriver: 'dsfs'}
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -179,9 +178,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 ? ThreeDotsLoading()
                 : Text(
                     controller.chat.value!.chatInfo.chatTite,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                    style: Get.textTheme.headline3,
                   );
           },
         ),
@@ -307,7 +304,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
       // we get the one We're trying to call first.
       final SettingsController _settingsController =
           Get.find<SettingsController>();
-      CloudFunctionsModels.CallUserResponse response =
+      final CloudFunctionsModels.CallUserResponse response =
           await CloudFunctions.agora_callChatUser(
               chatId: chatId,
               callerParticipantType:
@@ -547,14 +544,11 @@ class SendMessageBox extends StatelessWidget {
                     color:
                         secondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
                     ),
-                child: Transform.rotate(
-                  angle: -math.pi / 5.0,
-                  child: Center(
-                    child: Icon(
-                      Icons.send,
-                      size: 28,
-                      color: Color.fromRGBO(103, 121, 254, 1),
-                    ),
+                child: Center(
+                  child: Icon(
+                    Icons.near_me,
+                    size: 28,
+                    color: Color.fromRGBO(103, 121, 254, 1),
                   ),
                 ),
               ),

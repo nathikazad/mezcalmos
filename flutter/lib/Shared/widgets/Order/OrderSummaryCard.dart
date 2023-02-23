@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -30,7 +28,8 @@ class OrderSummaryCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.only(left: 10, top: 8),
+            //  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',

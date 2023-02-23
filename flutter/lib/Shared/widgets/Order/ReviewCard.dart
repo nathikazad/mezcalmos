@@ -27,9 +27,10 @@ class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0.3,
+      elevation: widget.showUserImage ? 1 : 0,
       margin: const EdgeInsets.only(bottom: 15),
       child: Container(
+        color: Get.theme.scaffoldBackgroundColor,
         padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -55,7 +55,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                   padding: EdgeInsets.all(1.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(widget.restaurant.info.name, style: txt.bodyLarge),
                       SizedBox(height: 5),
@@ -82,7 +82,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                 Icon(
                                   Icons.delivery_dining,
                                   color: Colors.black,
-                                  size: 18,
+                                  //   size: 24,
                                 ),
                                 SizedBox(width: 3),
                                 Flexible(
@@ -109,7 +109,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                 Icon(
                                   Icons.payments_outlined,
                                   color: Colors.black,
-                                  size: 18,
+                                  //  size: 18,
                                 ),
                                 SizedBox(
                                   width: 5,
@@ -119,7 +119,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                   Icon(
                                     Icons.credit_card,
                                     color: Colors.black,
-                                    size: 18,
+                                    // size: 18,
                                   ),
                               ],
                             ),
@@ -134,7 +134,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                 children: [
                                   Icon(
                                     Icons.star,
-                                    size: 18,
+                                    //size: 18,
                                     color: Color(0xFF6779FE),
                                   ),
                                   SizedBox(

@@ -67,7 +67,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           showNotifications: true,
           titleWidget: Obx(() => Text(
                 viewController.order.value?.restaurant.name ?? "",
-                style: Get.textTheme.headline5,
+                style: Get.textTheme.headline3,
               ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {

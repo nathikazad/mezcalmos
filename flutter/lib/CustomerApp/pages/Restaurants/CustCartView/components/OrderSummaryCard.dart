@@ -26,91 +26,51 @@ class CardSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
-      () => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(13),
-          color: Colors.white,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //=======================Order summary================
-            Container(
-              alignment: Alignment.centerLeft,
-              width: Get.width,
-              child: Text(
-                "${_i18n()["orderSummary"]}",
-                style: Get.textTheme.bodyText1,
+      () => Card(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              //=======================Order summary================
+              Container(
+                alignment: Alignment.centerLeft,
+                width: Get.width,
+                child: Text(
+                  "${_i18n()["orderSummary"]}",
+                  style: Get.textTheme.bodyText1,
+                ),
               ),
-            ),
-            SizedBox(height: 4),
-            //==================Order cost :==================
-            Container(
-              padding: const EdgeInsets.only(bottom: 4),
-              width: Get.width,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child:
-                          Text("${_i18n()["orderCost"]}", style: txt.bodyText2),
+              SizedBox(height: 4),
+              //==================Order cost :==================
+              Container(
+                padding: const EdgeInsets.only(bottom: 4),
+                width: Get.width,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child:
+                            Text("${_i18n()["orderCost"]}", style: txt.bodyText2),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(controller.cart.itemsCost().toPriceString(),
-                          style: txt.bodyText2),
-                    ),
-                  )
-                ],
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(controller.cart.itemsCost().toPriceString(),
+                            style: txt.bodyText2),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            //=======================Delivery cost :===============
-            Container(
-              padding: EdgeInsets.only(
-                bottom: 4,
-              ),
-              width: Get.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Text("${_i18n()["deliveryCost"]}",
-                          style: txt.bodyText2),
-                    ),
-                  ),
-                  (controller.cart.shippingCost != null &&
-                          controller.isShippingSet.isTrue)
-                      ? Flexible(
-                          child: ShippingCostComponent(
-                          alignment: MainAxisAlignment.end,
-                          shippingCost: controller.cart.shippingCost!,
-                        ))
-                      : (controller.getOrderDistance > 10 ||
-                              controller.cart.shippingCost == null)
-                          ? Text("_")
-                          : Row(
-                              children: [
-                                Transform.scale(
-                                    scale: 0.4,
-                                    child: CircularProgressIndicator(
-                                      color: primaryBlueColor,
-                                    )),
-                                Text('${_i18n()["toBeCalc"]}',
-                                    style: txt.bodyText2?.copyWith(
-                                        fontStyle: FontStyle.italic)),
-                              ],
-                            )
-                ],
-              ),
-            ),
-            //=======================Stripe fees :=============== //
-            if (controller.showFees)
+              //=======================Delivery cost :===============
               Container(
                 padding: EdgeInsets.only(
                   bottom: 4,
@@ -121,48 +81,90 @@ class CardSummaryCard extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Container(
-                        child: Text("${_i18n()["stripeFees"]}",
+                        child: Text("${_i18n()["deliveryCost"]}",
                             style: txt.bodyText2),
+                      ),
+                    ),
+                    (controller.cart.shippingCost != null &&
+                            controller.isShippingSet.isTrue)
+                        ? Flexible(
+                            child: ShippingCostComponent(
+                            alignment: MainAxisAlignment.end,
+                            shippingCost: controller.cart.shippingCost!,
+                          ))
+                        : (controller.getOrderDistance > 10 ||
+                                controller.cart.shippingCost == null)
+                            ? Text("_")
+                            : Row(
+                                children: [
+                                  Transform.scale(
+                                      scale: 0.4,
+                                      child: CircularProgressIndicator(
+                                        color: primaryBlueColor,
+                                      )),
+                                  Text('${_i18n()["toBeCalc"]}',
+                                      style: txt.bodyText2?.copyWith(
+                                          fontStyle: FontStyle.italic)),
+                                ],
+                              )
+                  ],
+                ),
+              ),
+              //=======================Stripe fees :=============== //
+              if (controller.showFees)
+                Container(
+                  padding: EdgeInsets.only(
+                    bottom: 4,
+                  ),
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(
+                          child: Text("${_i18n()["stripeFees"]}",
+                              style: txt.bodyText2),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Text(controller.cart.stripeFees.toPriceString(),
+                              style: txt.bodyText2),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              //=======================Total cost : ==================
+              Container(
+                padding: EdgeInsets.only(bottom: 4, top: 3),
+                width: Get.width,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        child: Text(
+                          "${_i18n()["totalCost"]}",
+                          style: txt.headline4,
+                        ),
                       ),
                     ),
                     Expanded(
                       child: Container(
                         alignment: Alignment.centerRight,
-                        child: Text(controller.cart.stripeFees.toPriceString(),
-                            style: txt.bodyText2),
+                        child: Text(controller.cart.totalCost.toPriceString(),
+                            style: txt.headline5),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            //=======================Total cost : ==================
-            Container(
-              padding: EdgeInsets.only(bottom: 4, top: 3),
-              width: Get.width,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      child: Text(
-                        "${_i18n()["totalCost"]}",
-                        style: txt.headline4,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(controller.cart.totalCost.toPriceString(),
-                          style: txt.headline5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // SizedBox(
-            //   height: 8,
-            // ),
-          ],
+              // SizedBox(
+              //   height: 8,
+              // ),
+            ],
+          ),
         ),
       ),
     );

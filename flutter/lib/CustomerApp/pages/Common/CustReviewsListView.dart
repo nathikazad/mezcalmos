@@ -73,6 +73,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
                       itemCount: reviews.value!.length,
                       itemBuilder: (BuildContext ctx, int index) {
                         return ReviewCard(
+                          showUserImage: false,
                           review: reviews.value![index],
                         );
                       }),
@@ -93,7 +94,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
 
   Container _reviewsHeader() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(vertical: 2),
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +105,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
                 ?.copyWith(fontSize: 25.sp, fontWeight: FontWeight.w700),
           ),
           const SizedBox(
-            height: 15,
+            height: 2,
           ),
           RatingBarIndicator(
             rating: rating.value!.toDouble(),
@@ -117,7 +118,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
             direction: Axis.horizontal,
           ),
           const SizedBox(
-            height: 10,
+            height: 4,
           ),
           Text(
               "${_i18n()["base"]} ${reviews.value?.length} ${_i18n()["reviews"].toString().toLowerCase()}")

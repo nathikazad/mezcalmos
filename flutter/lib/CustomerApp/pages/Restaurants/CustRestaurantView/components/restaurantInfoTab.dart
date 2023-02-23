@@ -86,7 +86,7 @@ class RestaurantInfoTab extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
-                height: 5,
+                height: 8,
               ),
               Row(
                 children: [
@@ -109,7 +109,7 @@ class RestaurantInfoTab extends StatelessWidget {
                 Column(
                   children: [
                     SizedBox(
-                      height: 4,
+                      height: 8,
                     ),
                     Row(
                       children: [

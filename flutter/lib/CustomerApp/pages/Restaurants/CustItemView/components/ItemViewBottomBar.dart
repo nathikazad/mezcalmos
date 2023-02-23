@@ -85,8 +85,8 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
                 textAlign: TextAlign.center,
-                style:
-                    Get.textTheme.headlineLarge?.copyWith(color: Colors.white),
+                style: Get.textTheme.headlineLarge
+                    ?.copyWith(color: Colors.white, fontSize: 18),
               ),
             ),
           ),

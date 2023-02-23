@@ -57,7 +57,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               Obx(() {
                 if (viewController.byRestaurants)
                   return Padding(
-                    padding: EdgeInsets.only(top: 2.h),
+                    padding: EdgeInsets.only(top: 4),
                     child: _restaurantList(),
                   );
                 else
