@@ -1382,8 +1382,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     required this.package_cost,
     required this.package_ready,
     required this.payment_type,
-    required this.pickup_address,
-    required this.pickup_gps,
+    this.pickup_address,
+    this.pickup_gps,
     this.restaurant,
     required this.service_provider_id,
     this.delivery_driver,
@@ -1492,8 +1492,8 @@ class Query$get_driver_order$delivery_order_by_pk {
       package_cost: moneyFromJson(l$package_cost),
       package_ready: (l$package_ready as bool),
       payment_type: (l$payment_type as String),
-      pickup_address: (l$pickup_address as String),
-      pickup_gps: geographyFromJson(l$pickup_gps),
+      pickup_address: (l$pickup_address as String?),
+      pickup_gps: l$pickup_gps == null ? null : geographyFromJson(l$pickup_gps),
       restaurant: l$restaurant == null
           ? null
           : Query$get_driver_order$delivery_order_by_pk$restaurant.fromJson(
@@ -1574,9 +1574,9 @@ class Query$get_driver_order$delivery_order_by_pk {
 
   final String payment_type;
 
-  final String pickup_address;
+  final String? pickup_address;
 
-  final Geography pickup_gps;
+  final Geography? pickup_gps;
 
   final Query$get_driver_order$delivery_order_by_pk$restaurant? restaurant;
 
@@ -1668,7 +1668,8 @@ class Query$get_driver_order$delivery_order_by_pk {
     final l$pickup_address = pickup_address;
     _resultData['pickup_address'] = l$pickup_address;
     final l$pickup_gps = pickup_gps;
-    _resultData['pickup_gps'] = geographyToJson(l$pickup_gps);
+    _resultData['pickup_gps'] =
+        l$pickup_gps == null ? null : geographyToJson(l$pickup_gps);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$service_provider_id = service_provider_id;
@@ -2243,12 +2244,12 @@ class _CopyWithImpl$Query$get_driver_order$delivery_order_by_pk<TRes>
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
-        pickup_address: pickup_address == _undefined || pickup_address == null
+        pickup_address: pickup_address == _undefined
             ? _instance.pickup_address
-            : (pickup_address as String),
-        pickup_gps: pickup_gps == _undefined || pickup_gps == null
+            : (pickup_address as String?),
+        pickup_gps: pickup_gps == _undefined
             ? _instance.pickup_gps
-            : (pickup_gps as Geography),
+            : (pickup_gps as Geography?),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant
@@ -8450,8 +8451,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     required this.package_cost,
     required this.package_ready,
     required this.payment_type,
-    required this.pickup_address,
-    required this.pickup_gps,
+    this.pickup_address,
+    this.pickup_gps,
     this.restaurant,
     required this.service_provider_id,
     this.delivery_driver,
@@ -8560,8 +8561,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
       package_cost: moneyFromJson(l$package_cost),
       package_ready: (l$package_ready as bool),
       payment_type: (l$payment_type as String),
-      pickup_address: (l$pickup_address as String),
-      pickup_gps: geographyFromJson(l$pickup_gps),
+      pickup_address: (l$pickup_address as String?),
+      pickup_gps: l$pickup_gps == null ? null : geographyFromJson(l$pickup_gps),
       restaurant: l$restaurant == null
           ? null
           : Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant
@@ -8644,9 +8645,9 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
 
   final String payment_type;
 
-  final String pickup_address;
+  final String? pickup_address;
 
-  final Geography pickup_gps;
+  final Geography? pickup_gps;
 
   final Subscription$listen_on_driver_order$delivery_order_by_pk$restaurant?
       restaurant;
@@ -8740,7 +8741,8 @@ class Subscription$listen_on_driver_order$delivery_order_by_pk {
     final l$pickup_address = pickup_address;
     _resultData['pickup_address'] = l$pickup_address;
     final l$pickup_gps = pickup_gps;
-    _resultData['pickup_gps'] = geographyToJson(l$pickup_gps);
+    _resultData['pickup_gps'] =
+        l$pickup_gps == null ? null : geographyToJson(l$pickup_gps);
     final l$restaurant = restaurant;
     _resultData['restaurant'] = l$restaurant?.toJson();
     final l$service_provider_id = service_provider_id;
@@ -9325,12 +9327,12 @@ class _CopyWithImpl$Subscription$listen_on_driver_order$delivery_order_by_pk<
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
-        pickup_address: pickup_address == _undefined || pickup_address == null
+        pickup_address: pickup_address == _undefined
             ? _instance.pickup_address
-            : (pickup_address as String),
-        pickup_gps: pickup_gps == _undefined || pickup_gps == null
+            : (pickup_address as String?),
+        pickup_gps: pickup_gps == _undefined
             ? _instance.pickup_gps
-            : (pickup_gps as Geography),
+            : (pickup_gps as Geography?),
         restaurant: restaurant == _undefined
             ? _instance.restaurant
             : (restaurant
@@ -29101,8 +29103,8 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     required this.order_time,
     required this.package_cost,
     required this.payment_type,
-    required this.pickup_address,
-    required this.pickup_gps,
+    this.pickup_address,
+    this.pickup_gps,
     required this.service_provider_id,
     this.delivery_driver,
     required this.service_provider_type,
@@ -29149,8 +29151,8 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
       order_time: (l$order_time as String),
       package_cost: moneyFromJson(l$package_cost),
       payment_type: (l$payment_type as String),
-      pickup_address: (l$pickup_address as String),
-      pickup_gps: geographyFromJson(l$pickup_gps),
+      pickup_address: (l$pickup_address as String?),
+      pickup_gps: l$pickup_gps == null ? null : geographyFromJson(l$pickup_gps),
       service_provider_id: (l$service_provider_id as int),
       delivery_driver: l$delivery_driver == null
           ? null
@@ -29187,9 +29189,9 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
 
   final String payment_type;
 
-  final String pickup_address;
+  final String? pickup_address;
 
-  final Geography pickup_gps;
+  final Geography? pickup_gps;
 
   final int service_provider_id;
 
@@ -29233,7 +29235,8 @@ class Query$get_pick_driver_order$delivery_order_by_pk {
     final l$pickup_address = pickup_address;
     _resultData['pickup_address'] = l$pickup_address;
     final l$pickup_gps = pickup_gps;
-    _resultData['pickup_gps'] = geographyToJson(l$pickup_gps);
+    _resultData['pickup_gps'] =
+        l$pickup_gps == null ? null : geographyToJson(l$pickup_gps);
     final l$service_provider_id = service_provider_id;
     _resultData['service_provider_id'] = l$service_provider_id;
     final l$delivery_driver = delivery_driver;
@@ -29529,12 +29532,12 @@ class _CopyWithImpl$Query$get_pick_driver_order$delivery_order_by_pk<TRes>
         payment_type: payment_type == _undefined || payment_type == null
             ? _instance.payment_type
             : (payment_type as String),
-        pickup_address: pickup_address == _undefined || pickup_address == null
+        pickup_address: pickup_address == _undefined
             ? _instance.pickup_address
-            : (pickup_address as String),
-        pickup_gps: pickup_gps == _undefined || pickup_gps == null
+            : (pickup_address as String?),
+        pickup_gps: pickup_gps == _undefined
             ? _instance.pickup_gps
-            : (pickup_gps as Geography),
+            : (pickup_gps as Geography?),
         service_provider_id:
             service_provider_id == _undefined || service_provider_id == null
                 ? _instance.service_provider_id

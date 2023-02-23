@@ -24,12 +24,11 @@ class CustomerAuthController extends GetxController {
       Get.find<BackgroundNotificationsController>();
 
   Customer? get customer => _customer.value;
-  Rxn<LocationData> customerCurrentLocation = Rxn();
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    customerCurrentLocation.value = await getCustomerCurrentLocation();
+   
 
     if (_authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
@@ -117,13 +116,7 @@ class CustomerAuthController extends GetxController {
     update_saved_location(savedLocation: savedLocation);
   }
 
-  Future<LocationData> getCustomerCurrentLocation() async {
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
-    LocationData res = await Location().getLocation();
-    customerCurrentLocation.value = res;
-    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
-    return res;
-  }
+
 
   Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {
     await set_default_location(

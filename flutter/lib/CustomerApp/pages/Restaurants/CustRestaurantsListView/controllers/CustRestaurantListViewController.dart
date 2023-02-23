@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -38,15 +37,17 @@ class CustRestaurantListViewController {
       _assignServiceIds();
       filter();
     }).whenComplete(() {
-      Get.find<CustomerAuthController>()
-          .getCustomerCurrentLocation()
-          .then((value) {
-        customerLocation = value;
-        isLoading.value = false;
-        mezDbgPrint(
-            "List from view :================>${filteredRestaurants.length}");
-      });
+      _getCustomerCurrentLocation();
     });
+  }
+
+  Future<LocationData> _getCustomerCurrentLocation() async {
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
+    LocationData res = await Location().getLocation();
+    customerLocation = res;
+    isLoading.value = false;
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
+    return res;
   }
 
   void changeAlwaysOpenSwitch(bool value) {

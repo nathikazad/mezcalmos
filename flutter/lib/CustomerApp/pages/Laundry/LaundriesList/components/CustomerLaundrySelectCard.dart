@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -21,8 +21,10 @@ class CustomerLaundrySelectCard extends StatelessWidget {
   const CustomerLaundrySelectCard({
     Key? key,
     required this.laundry,
+    required this.customerLocation,
   }) : super(key: key);
   final Laundry laundry;
+  final LocationData customerLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -157,16 +159,12 @@ class CustomerLaundrySelectCard extends StatelessWidget {
   }
 
   num _getShippingPrice() {
-    return max(
-      laundry.deliveryCost.minimumCost,
-      (calculateDistance(
-                  Get.find<CustomerAuthController>()
-                      .customerCurrentLocation
-                      .value!,
-                  laundry.info.location.toLocationData())
-              .round() *
-          laundry.deliveryCost.costPerKm),
-    );
+    final num customerDistance = calculateDistance(
+            customerLocation, laundry.info.location.toLocationData()) /
+        1000;
+    final num deliveryCost =
+        ((customerDistance * laundry.deliveryCost.costPerKm) / 5).round() * 5;
+    return max(laundry.deliveryCost.minimumCost, (2 * deliveryCost));
   }
 
   String _getDollarsSign() {

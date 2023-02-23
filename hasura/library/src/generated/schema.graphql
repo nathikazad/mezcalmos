@@ -25903,42 +25903,6 @@ type service_provider_details {
 
   """An object relationship"""
   restaurant: restaurant_restaurant
-
-  """An array relationship"""
-  reviews(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): [review!]!
-
-  """An aggregate relationship"""
-  reviews_aggregate(
-    """distinct select on columns"""
-    distinct_on: [review_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [review_order_by!]
-
-    """filter the rows returned"""
-    where: review_bool_exp
-  ): review_aggregate!
   schedule(
     """JSON select path"""
     path: String
@@ -26021,8 +25985,6 @@ input service_provider_details_bool_exp {
   open_status: String_comparison_exp
   phone_number: String_comparison_exp
   restaurant: restaurant_restaurant_bool_exp
-  reviews: review_bool_exp
-  reviews_aggregate: review_aggregate_bool_exp
   schedule: jsonb_comparison_exp
   service_link: service_provider_service_link_bool_exp
   service_link_id: Int_comparison_exp
@@ -26129,7 +26091,6 @@ input service_provider_details_insert_input {
   open_status: String
   phone_number: String
   restaurant: restaurant_restaurant_obj_rel_insert_input
-  reviews: review_arr_rel_insert_input
   schedule: jsonb
   service_link: service_provider_service_link_obj_rel_insert_input
   service_link_id: Int
@@ -26219,7 +26180,6 @@ input service_provider_details_order_by {
   open_status: order_by
   phone_number: order_by
   restaurant: restaurant_restaurant_order_by
-  reviews_aggregate: review_aggregate_order_by
   schedule: order_by
   service_link: service_provider_service_link_order_by
   service_link_id: order_by

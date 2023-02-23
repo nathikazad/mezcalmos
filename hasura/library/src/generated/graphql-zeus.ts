@@ -15038,18 +15038,6 @@ language?: [{	/** JSON select path */
 	phone_number?:true,
 	/** An object relationship */
 	restaurant?:ValueTypes["restaurant_restaurant"],
-reviews?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review"]],
-reviews_aggregate?: [{	/** distinct select on columns */
-	distinct_on?:ValueTypes["review_select_column"][],	/** limit the number of rows returned */
-	limit?:number,	/** skip the first n rows. Use only with order_by */
-	offset?:number,	/** sort the rows by one or more columns */
-	order_by?:ValueTypes["review_order_by"][],	/** filter the rows returned */
-	where?:ValueTypes["review_bool_exp"]},ValueTypes["review_aggregate"]],
 schedule?: [{	/** JSON select path */
 	path?:string},true],
 	/** An object relationship */
@@ -15120,8 +15108,6 @@ count?: [{	columns?:ValueTypes["service_provider_details_select_column"][],	dist
 	open_status?:ValueTypes["String_comparison_exp"],
 	phone_number?:ValueTypes["String_comparison_exp"],
 	restaurant?:ValueTypes["restaurant_restaurant_bool_exp"],
-	reviews?:ValueTypes["review_bool_exp"],
-	reviews_aggregate?:ValueTypes["review_aggregate_bool_exp"],
 	schedule?:ValueTypes["jsonb_comparison_exp"],
 	service_link?:ValueTypes["service_provider_service_link_bool_exp"],
 	service_link_id?:ValueTypes["Int_comparison_exp"],
@@ -15181,7 +15167,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:ValueTypes["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:ValueTypes["review_arr_rel_insert_input"],
 	schedule?:ValueTypes["jsonb"],
 	service_link?:ValueTypes["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -15260,7 +15245,6 @@ end). throws an error if top level container is not an array */
 	open_status?:ValueTypes["order_by"],
 	phone_number?:ValueTypes["order_by"],
 	restaurant?:ValueTypes["restaurant_restaurant_order_by"],
-	reviews_aggregate?:ValueTypes["review_aggregate_order_by"],
 	schedule?:ValueTypes["order_by"],
 	service_link?:ValueTypes["service_provider_service_link_order_by"],
 	service_link_id?:ValueTypes["order_by"],
@@ -32650,10 +32634,6 @@ the end). throws an error if top level container is not an array */
 			phone_number?:string,
 			/** An object relationship */
 	restaurant?:PartialObjects["restaurant_restaurant"],
-			/** An array relationship */
-	reviews?:PartialObjects["review"][],
-			/** An aggregate relationship */
-	reviews_aggregate?:PartialObjects["review_aggregate"],
 			schedule?:PartialObjects["jsonb"],
 			/** An object relationship */
 	service_link?:PartialObjects["service_provider_service_link"],
@@ -32722,8 +32702,6 @@ the end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["String_comparison_exp"],
 	phone_number?:PartialObjects["String_comparison_exp"],
 	restaurant?:PartialObjects["restaurant_restaurant_bool_exp"],
-	reviews?:PartialObjects["review_bool_exp"],
-	reviews_aggregate?:PartialObjects["review_aggregate_bool_exp"],
 	schedule?:PartialObjects["jsonb_comparison_exp"],
 	service_link?:PartialObjects["service_provider_service_link_bool_exp"],
 	service_link_id?:PartialObjects["Int_comparison_exp"],
@@ -32783,7 +32761,6 @@ end). throws an error if top level container is not an array */
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:PartialObjects["restaurant_restaurant_obj_rel_insert_input"],
-	reviews?:PartialObjects["review_arr_rel_insert_input"],
 	schedule?:PartialObjects["jsonb"],
 	service_link?:PartialObjects["service_provider_service_link_obj_rel_insert_input"],
 	service_link_id?:number,
@@ -32862,7 +32839,6 @@ end). throws an error if top level container is not an array */
 	open_status?:PartialObjects["order_by"],
 	phone_number?:PartialObjects["order_by"],
 	restaurant?:PartialObjects["restaurant_restaurant_order_by"],
-	reviews_aggregate?:PartialObjects["review_aggregate_order_by"],
 	schedule?:PartialObjects["order_by"],
 	service_link?:PartialObjects["service_provider_service_link_order_by"],
 	service_link_id?:PartialObjects["order_by"],
@@ -52017,10 +51993,6 @@ export type service_provider_details = {
 	phone_number?:string,
 	/** An object relationship */
 	restaurant?:restaurant_restaurant,
-	/** An array relationship */
-	reviews:review[],
-	/** An aggregate relationship */
-	reviews_aggregate:review_aggregate,
 	schedule?:jsonb,
 	/** An object relationship */
 	service_link?:service_provider_service_link,
@@ -52094,8 +52066,6 @@ export type service_provider_details_bool_exp = {
 	open_status?:String_comparison_exp,
 	phone_number?:String_comparison_exp,
 	restaurant?:restaurant_restaurant_bool_exp,
-	reviews?:review_bool_exp,
-	reviews_aggregate?:review_aggregate_bool_exp,
 	schedule?:jsonb_comparison_exp,
 	service_link?:service_provider_service_link_bool_exp,
 	service_link_id?:Int_comparison_exp,
@@ -52167,7 +52137,6 @@ export type service_provider_details_insert_input = {
 	open_status?:string,
 	phone_number?:string,
 	restaurant?:restaurant_restaurant_obj_rel_insert_input,
-	reviews?:review_arr_rel_insert_input,
 	schedule?:jsonb,
 	service_link?:service_provider_service_link_obj_rel_insert_input,
 	service_link_id?:number,
@@ -52252,7 +52221,6 @@ export type service_provider_details_order_by = {
 	open_status?:order_by,
 	phone_number?:order_by,
 	restaurant?:restaurant_restaurant_order_by,
-	reviews_aggregate?:review_aggregate_order_by,
 	schedule?:order_by,
 	service_link?:service_provider_service_link_order_by,
 	service_link_id?:order_by,
@@ -96510,70 +96478,6 @@ export const AllTypesProps: Record<string,any> = {
 				required:false
 			}
 		},
-		reviews:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
-		reviews_aggregate:{
-			distinct_on:{
-				type:"review_select_column",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			limit:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			offset:{
-				type:"Int",
-				array:false,
-				arrayRequired:false,
-				required:false
-			},
-			order_by:{
-				type:"review_order_by",
-				array:true,
-				arrayRequired:false,
-				required:true
-			},
-			where:{
-				type:"review_bool_exp",
-				array:false,
-				arrayRequired:false,
-				required:false
-			}
-		},
 		schedule:{
 			path:{
 				type:"String",
@@ -96736,18 +96640,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews:{
-			type:"review_bool_exp",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_bool_exp",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -96985,12 +96877,6 @@ export const AllTypesProps: Record<string,any> = {
 			arrayRequired:false,
 			required:false
 		},
-		reviews:{
-			type:"review_arr_rel_insert_input",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
 		schedule:{
 			type:"jsonb",
 			array:false,
@@ -97161,12 +97047,6 @@ export const AllTypesProps: Record<string,any> = {
 		},
 		restaurant:{
 			type:"restaurant_restaurant_order_by",
-			array:false,
-			arrayRequired:false,
-			required:false
-		},
-		reviews_aggregate:{
-			type:"review_aggregate_order_by",
 			array:false,
 			arrayRequired:false,
 			required:false
@@ -111492,8 +111372,6 @@ export const ReturnTypes: Record<string,any> = {
 		open_status:"String",
 		phone_number:"String",
 		restaurant:"restaurant_restaurant",
-		reviews:"review",
-		reviews_aggregate:"review_aggregate",
 		schedule:"jsonb",
 		service_link:"service_provider_service_link",
 		service_link_id:"Int",
