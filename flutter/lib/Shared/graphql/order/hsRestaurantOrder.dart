@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -39,7 +38,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
     mezDbgPrint(
-        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver?.current_location}");
+        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.toJson()}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
       final List<RestaurantOrderItem> items = [];
@@ -301,14 +300,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     cost: orderData.delivery_cost,
     dropoffDriver: (orderData.delivery?.delivery_driver != null)
         ? DeliveryDriverUserInfo(
-            location:
-                (orderData.delivery?.delivery_driver?.current_location != null)
-                    ? LatLng(
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .latitude,
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .longitude)
-                    : null,
+            location: null,
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,

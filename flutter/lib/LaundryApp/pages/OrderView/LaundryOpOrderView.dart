@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
@@ -73,7 +74,16 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                   LaundryOrderEstTime(viewController: viewController),
 
                   LaundryOpOrderDriverCard(viewController: viewController),
-                  _getMapWidget(),
+                  if (viewController.order.inDeliveryPhase())
+                    OrderMapWidget(
+                        deliveryOrderId: viewController.order.deliveryOrderId,
+                        updateDriver: viewController.order.inDeliveryPhase(),
+                        polyline:
+                            viewController.order.routeInformation?.polyline,
+                        from: (viewController.order.inPickup)
+                            ? viewController.order.customerLocation
+                            : viewController.order.laundryLocation,
+                        to: viewController.order.to),
                   MezCard(
                     margin: const EdgeInsets.only(bottom: 20),
                     contentPadding: EdgeInsets.all(12),

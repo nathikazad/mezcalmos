@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryApp"]
@@ -85,6 +86,14 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                 ),
                 _estTimes(),
                 if (viewController.canSetDriver) _driverCard(),
+                if (viewController.order.value!.inDeliveryPhase)
+                  OrderMapWidget(
+                      deliveryOrderId: viewController.order.value!.id,
+                      updateDriver: viewController.order.value!.inDeliveryPhase,
+                      polyline: viewController
+                          .order.value!.routeInformation?.polyline,
+                      from: viewController.order.value!.pickupLocation,
+                      to: viewController.order.value!.dropoffLocation),
                 _serviceCard(),
                 Container(
                   margin: const EdgeInsets.only(top: 20),
@@ -102,6 +111,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
                       viewController.order.value!.customerInfo.name,
                       style: Get.textTheme.bodyLarge,
                     )),
+
                 Container(
                   margin: const EdgeInsets.only(top: 20),
                   child: Text(
