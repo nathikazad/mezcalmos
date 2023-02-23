@@ -43,7 +43,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
               child: Text(
                 "${_i18n()["title"]}",
-                style: Get.textTheme.headline3?.copyWith(
+                style: Get.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.start,
@@ -76,7 +76,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           viewController.laundries.value!.length,
           (int index) => CustomerLaundrySelectCard(
             laundry: viewController.laundries.value![index],
-            shippingPrice: 50,
+            customerLocation: viewController.customerCurrentLocation.value!,
           ),
         ),
       );
@@ -87,7 +87,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         child: Text(
           "${_i18n()["noLaundaryFound"]}",
           textAlign: TextAlign.center,
-          style: Get.textTheme.subtitle2,
+          style: Get.textTheme.titleSmall,
         ),
       );
     }

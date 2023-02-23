@@ -167,7 +167,30 @@ const documentNodeQuerygetLaundries = DocumentNode(definitions: [
       FieldNode(
         name: NameNode(value: 'laundry_store'),
         alias: null,
-        arguments: [],
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'where'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'details'),
+                value: ObjectValueNode(fields: [
+                  ObjectFieldNode(
+                    name: NameNode(value: 'open_status'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                        name: NameNode(value: '_neq'),
+                        value: StringValueNode(
+                          value: 'closed_indefinitely',
+                          isBlock: false,
+                        ),
+                      )
+                    ]),
+                  )
+                ]),
+              )
+            ]),
+          )
+        ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(

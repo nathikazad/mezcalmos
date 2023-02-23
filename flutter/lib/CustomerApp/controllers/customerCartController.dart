@@ -41,9 +41,8 @@ class CustomerCartController extends GetxController {
         if (event != null) {
           mezDbgPrint(
               "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.restaurant?.paymentInfo?.acceptedPayments.entries}");
-          final LocModel.MezLocation? oldLoc = cart.value?.toLocation;
-          cart.value = event;
-          cart.value?.toLocation = oldLoc;
+
+          cart.value?.cartItems = event.cartItems;
 
           cart.value?.restaurant = event.restaurant;
           _handlerRestaurantId();

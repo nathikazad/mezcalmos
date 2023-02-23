@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
+import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 
@@ -14,11 +18,13 @@ dynamic _i18n() =>
         ["LaundriesListView"]["components"]["CustomerLaundrySelectCard"];
 
 class CustomerLaundrySelectCard extends StatelessWidget {
-  const CustomerLaundrySelectCard(
-      {Key? key, required this.laundry, required this.shippingPrice})
-      : super(key: key);
+  const CustomerLaundrySelectCard({
+    Key? key,
+    required this.laundry,
+    required this.customerLocation,
+  }) : super(key: key);
   final Laundry laundry;
-  final double shippingPrice;
+  final LocationData customerLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +95,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           ),
                           Flexible(
                             child: ShippingCostComponent(
-                              shippingCost: shippingPrice,
+                              shippingCost: _getShippingPrice(),
                               alignment: MainAxisAlignment.start,
                               textStyle: Get.textTheme.subtitle2?.copyWith(
                                 color: blackColor,
@@ -157,6 +163,15 @@ class CustomerLaundrySelectCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  num _getShippingPrice() {
+    final num customerDistance = calculateDistance(
+            customerLocation, laundry.info.location.toLocationData()) /
+        1000;
+    final num deliveryCost =
+        ((customerDistance * laundry.deliveryCost.costPerKm) / 5).round() * 5;
+    return max(laundry.deliveryCost.minimumCost, (2 * deliveryCost));
   }
 
   String _getDollarsSign() {

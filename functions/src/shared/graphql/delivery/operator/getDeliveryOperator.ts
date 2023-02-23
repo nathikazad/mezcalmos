@@ -22,7 +22,6 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
                 status: true,
                 owner: true,
                 app_version: true,
-                current_gps: true,
                 notification_info: {
                     token: true,
                     turn_off_notifications: true
@@ -49,10 +48,10 @@ export async function getDeliveryOperators(deliveryCompanyId: number): Promise<D
             status: d.operator_details.status as AuthorizationStatus,
             owner: d.operator_details.owner,
             appVersion: d.operator_details.app_version,
-            currentGPS: (d.operator_details.current_gps) ? {
-                lat: d.operator_details.current_gps.coordinates[1],
-                lng: d.operator_details.current_gps.coordinates[0]
-            } : undefined,
+            // currentGPS: (d.operator_details.current_gps) ? {
+            //     lat: d.operator_details.current_gps.coordinates[1],
+            //     lng: d.operator_details.current_gps.coordinates[0]
+            // } : undefined,
             notificationInfo: (d.operator_details.notification_info) ? <NotificationInfo>{
                 appType: AppType.DeliveryAdmin,
                 token: d.operator_details.notification_info.token,
@@ -82,7 +81,6 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
                 status: true,
                 owner: true,
                 app_version: true,
-                current_gps: true,
                 notification_info: {
                     token: true,
                     turn_off_notifications: true
@@ -109,10 +107,10 @@ export async function getDeliveryOperator(deliveryOperatorId: number): Promise<D
         status: response.delivery_operator_by_pk.operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator_by_pk.operator_details.owner,
         appVersion: response.delivery_operator_by_pk.operator_details.app_version,
-        currentGPS: {
-            lat: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[1],
-            lng: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[0]
-        },
+        // currentGPS: {
+        //     lat: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[1],
+        //     lng: response.delivery_operator_by_pk.operator_details.current_gps.coordinates[0]
+        // },
         notificationInfo: (response.delivery_operator_by_pk.operator_details.notification_info) ? <NotificationInfo>{
             appType: AppType.DeliveryAdmin,
             token: response.delivery_operator_by_pk.operator_details.notification_info.token,
@@ -145,7 +143,6 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
                 status: true,
                 owner: true,
                 app_version: true,
-                current_gps: true,
                 notification_info: {
                     token: true,
                     turn_off_notifications: true
@@ -172,10 +169,10 @@ export async function getDeliveryOperatorByUserId(deliveryOperatorUserId: number
         status: response.delivery_operator[0].operator_details.status as AuthorizationStatus,
         owner: response.delivery_operator[0].operator_details.owner,
         appVersion: response.delivery_operator[0].operator_details.app_version,
-        currentGPS: {
-            lat: response.delivery_operator[0].operator_details.current_gps.coordinates[1],
-            lng: response.delivery_operator[0].operator_details.current_gps.coordinates[0]
-        },
+        // currentGPS: {
+        //     lat: response.delivery_operator[0].operator_details.current_gps.coordinates[1],
+        //     lng: response.delivery_operator[0].operator_details.current_gps.coordinates[0]
+        // },
         notificationInfo: (response.delivery_operator[0].operator_details.notification_info) ? <NotificationInfo>{
             appType: AppType.DeliveryAdmin,
             token: response.delivery_operator[0].operator_details.notification_info.token,

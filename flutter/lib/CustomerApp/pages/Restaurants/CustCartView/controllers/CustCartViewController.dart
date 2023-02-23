@@ -393,12 +393,14 @@ class CustCartViewController {
     }
   }
 
-  CartItem? incrementItem(
-      {required int itemId, required int quantity, bool saveToDb = false}) {
+  Future<CartItem?> incrementItem(
+      {required int itemId,
+      required int quantity,
+      bool saveToDb = false}) async {
     final CartItem? _item = cart.incrementItem(itemId, quantity);
     mezDbgPrint("[bb] Item -==> $_item");
     if (_item != null && saveToDb == true) {
-      cartController.updateCartItem(_item);
+      await cartController.updateCartItem(_item);
       return _item;
     }
 

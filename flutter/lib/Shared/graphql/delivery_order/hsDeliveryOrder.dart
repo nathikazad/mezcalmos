@@ -99,7 +99,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
             : null,
         packageCost: orderData.package_cost,
         pickupLocation: MezLocation(
-            orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+            orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
         dropoffLocation:
             MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
@@ -185,7 +185,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
               orderData.delivery_driver!.current_location!.longitude)
           : null,
       pickupLocation:
-          MezLocation(orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+          MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
       dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
@@ -559,7 +559,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
               orderData.delivery_driver!.current_location!.longitude)
           : null,
       pickupLocation: MezLocation(
-          orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+          orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
       dropoffLocation: MezLocation(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: 0,

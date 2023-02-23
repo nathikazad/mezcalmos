@@ -209,7 +209,7 @@
             "myCart": "Mi carrito",
             "notAvailable": "Su restaurante está cerrado",
             "orderNow": "Ordenar ahora",
-            "scheduleOrder": "programar pedido",
+            "scheduleOrder": "Programar pedido",
             "errorText": "Lo siento, todavía no apoyamos tu área",
             "notesTitle": "Notas",
             "notes": "Escribe tus notas aquí",
@@ -1067,7 +1067,7 @@
         "deliveryDetails":"Delivery details"
       },
       "OrderScheduledTimeCard": {
-        "title": "hora Programada"
+        "title": "Hora Programada"
       },
       "CreditCardInfo": {
         "creditCardInfo": "Información de la tarjeta de crédito",

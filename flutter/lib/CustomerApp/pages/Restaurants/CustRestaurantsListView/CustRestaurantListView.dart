@@ -224,6 +224,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               (int index) {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
+              customerLocation: viewController.customerLocation,
               onClick: () {
                 MezRouter.toNamed<void>(
                     getRestaurantRoute(
