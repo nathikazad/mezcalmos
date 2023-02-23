@@ -262,7 +262,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                       vertical: 10, horizontal: 6),
                                   child: Text(
                                     "${_i18n()['viewOrder']}",
-                                    style: Get.textTheme.bodyText1
+                                    style: Get.textTheme.bodyLarge
                                         ?.copyWith(color: primaryBlueColor),
                                   ),
                                 ),

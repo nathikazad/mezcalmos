@@ -71,6 +71,7 @@ select_permissions:
         - delivery_details_id
         - details_id
         - id
+        - minimum_cost
         - normal_delivery_time
         - service_provider_type
       filter: {}
@@ -88,6 +89,7 @@ select_permissions:
         - delivery_details_id
         - details_id
         - id
+        - minimum_cost
         - normal_delivery_time
         - service_provider_type
       filter:
@@ -98,9 +100,11 @@ select_permissions:
     permission:
       columns:
         - delivery_details_id
+        - details_id
         - id
-        - service_provider_type
+        - minimum_cost
         - normal_delivery_time
+        - service_provider_type
       filter:
         _exists:
           _table:
@@ -114,6 +118,7 @@ update_permissions:
     permission:
       columns:
         - delivery_details_id
+        - minimum_cost
         - normal_delivery_time
       filter:
         operators:

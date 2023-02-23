@@ -50,6 +50,7 @@ Future<Laundry?> get_laundry_store_by_id(
           nameId: element.name_id,
           storeId: data.id);
     }).toList();
+    laundryCosts.minimumCost = data.minimum_cost;
     // if (data.details!.stripe_info != null) {
     //   paymentInfo.stripe =
     //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);
@@ -317,6 +318,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
           nameId: element.name_id,
           storeId: data.id);
     }).toList();
+    laundryCosts.minimumCost = data.minimum_cost;
     // if (data.details!.stripe_info != null) {
     //   paymentInfo.stripe =
     //       paymentInfo.parseServiceStripeInfo(data.details!.stripe_info);

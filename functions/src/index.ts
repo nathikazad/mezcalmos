@@ -6,31 +6,15 @@ import * as stripeCardFunctions from './utilities/stripe/card'
 import * as restaurantStatusChange from './restaurant/adminStatusChanges'
  import { createNewRestaurant } from "./restaurant/createNewRestaurant";
 import { checkout } from "./restaurant/checkoutCart";
-// import { addReview } from "./restaurant/addReview";
  import { cancelOrderFromCustomer } from "./restaurant/cancelOrderFromCustomer";
-// import { requestRide } from "./taxi/request";
-// import * as taxiStatusChange from './taxi/taxiStatusChange'
-// import { acceptRide } from "./taxi/accept";
-// import { cancelTaxiFromCustomer } from "./taxi/cancelTaxiFromCustomer";
-// import * as adminStatusChanges from './taxi/adminStatusChanges'
 import * as laundryStatusChange from './laundry/adminStatusChanges'
-// import { createLaundry } from "./laundry/createNewLaundry";
-// import { requestLaundry } from "./laundry/laundryRequest";
-// import { cancelFromCustomer } from "./laundry/cancelLaundryFromCustomer";
-// import * as laundryDelivery from './delivery/laundryStatusChange'
-// import * as restaurantDelivery from './delivery/restaurantStatusChange'
 import { HttpsError } from "firebase-functions/v1/auth";
 
 import { getAuthUsingOTP, sendOTPForLogin } from "./utilities/otpAuth";
-// import { assignDriver } from "./delivery/assignDriver";
-// import { setEstimatedTime } from "./delivery/setEstimatedTime";
 import * as userChanges from './utilities/userChanges'
-// import { generateDriverLink,generateOperatorLink } from "./utilities/links/generate";
 import { assignDriver } from "./delivery/assignDriver";
 import { addDriver } from "./delivery/addDriver";
 import { authorizeDriver } from "./delivery/authorizeDriver";
-// import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
-// import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 import { callUser } from "./utilities/agora";
 import { requestLaundry } from "./laundry/laundryRequest";
 import { createLaundry } from "./laundry/createNewLaundry";
@@ -53,13 +37,13 @@ if (process.env.FUNCTIONS_EMULATOR === "true") {
 }
 
 
-export const user = {
+export const user2 = {
   processSignUp: userChanges.processSignUp,
   // deleteUserAccount: authenticatedCall((userId, data) => userChanges.deleteAccount(userId, data))
   addHasuraClaim: functions.https.onCall((_, context) => userChanges.addHasuraClaim(context.auth?.uid, null))
 }
 
-export const otp = {
+export const otp2 = {
   sendOTPForLogin: functions.https.onCall((data) => sendOTPForLogin(null, data)),
   getAuthUsingOTP: functions.https.onCall((data) => getAuthUsingOTP(null, data)),
 }
@@ -96,17 +80,7 @@ export const restaurant2 = {
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
-// export const taxi = {
-//   requestRide: authenticatedCall((userId, data) => requestRide(userId, data)),
-//   startScheduledRide: authenticatedCall((userId, data) => taxiStatusChange.startScheduledRide(userId, data)),
-//   acceptRide: authenticatedCall((userId, data) => acceptRide(userId, data)),
-//   startRide: authenticatedCall((userId, data) => taxiStatusChange.startRide(userId, data)),
-//   cancelFromCustomer: authenticatedCall((userId, data) => cancelTaxiFromCustomer(userId, data)),
-//   cancelFromDriver: authenticatedCall((userId, data) => taxiStatusChange.cancelTaxiFromDriver(userId, data)),
-//   finishRide: authenticatedCall((userId, data) => taxiStatusChange.finishRide(userId, data)),
-//   forwardToLocalCompany: authenticatedCall((userId, data) => adminStatusChanges.forwardToLocalCompany(userId, data)),
-//   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
-// }
+
 
 export const laundry2 = {
   createLaundry: authenticatedCall((userId, data) => createLaundry(userId, data)),
@@ -136,25 +110,6 @@ export const delivery2 = {
   // setEstimatedTime: authenticatedCall((userId, data) => setEstimatedTime(userId, data)),
 }
 
-// function adminOnlyCall(func:AuthenticatedFunction) {
-//   return functions.https.onCall(async (data, context) => {
-//     if (!context.auth?.uid) {
-//       throw new HttpsError(
-//         "unauthenticated",
-//         "Request was not authenticated.",
-//       );
-//     }
-//     let hasPermission = await isUserAdmin(context.auth?.uid);
-//     if (!hasPermission) {
-//       throw new HttpsError(
-//         "permission-denied",
-//         "Only admin users can call this function",
-//       );
-//     }
-//     return func(context.auth!.uid, data);
-//   });
-// }
-
 type AuthenticatedFunction = (userId:number, data:any) => any;
 function authenticatedCall(func:AuthenticatedFunction) {
   return functions.https.onCall(async (data, context) => {
@@ -177,3 +132,34 @@ function authenticatedCall(func:AuthenticatedFunction) {
   });
 }
 
+
+// export const taxi = {
+//   requestRide: authenticatedCall((userId, data) => requestRide(userId, data)),
+//   startScheduledRide: authenticatedCall((userId, data) => taxiStatusChange.startScheduledRide(userId, data)),
+//   acceptRide: authenticatedCall((userId, data) => acceptRide(userId, data)),
+//   startRide: authenticatedCall((userId, data) => taxiStatusChange.startRide(userId, data)),
+//   cancelFromCustomer: authenticatedCall((userId, data) => cancelTaxiFromCustomer(userId, data)),
+//   cancelFromDriver: authenticatedCall((userId, data) => taxiStatusChange.cancelTaxiFromDriver(userId, data)),
+//   finishRide: authenticatedCall((userId, data) => taxiStatusChange.finishRide(userId, data)),
+//   forwardToLocalCompany: authenticatedCall((userId, data) => adminStatusChanges.forwardToLocalCompany(userId, data)),
+//   submitForwardResult: authenticatedCall((userId, data) => adminStatusChanges.submitForwardResult(userId, data)),
+// }
+
+// function adminOnlyCall(func:AuthenticatedFunction) {
+//   return functions.https.onCall(async (data, context) => {
+//     if (!context.auth?.uid) {
+//       throw new HttpsError(
+//         "unauthenticated",
+//         "Request was not authenticated.",
+//       );
+//     }
+//     let hasPermission = await isUserAdmin(context.auth?.uid);
+//     if (!hasPermission) {
+//       throw new HttpsError(
+//         "permission-denied",
+//         "Only admin users can call this function",
+//       );
+//     }
+//     return func(context.auth!.uid, data);
+//   });
+// }

@@ -550,13 +550,6 @@ const documentNodeSubscriptionliston_on_laundry_order_by_id =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-                    name: NameNode(value: 'current_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -2999,7 +2992,6 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
 
 class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver {
   Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver({
-    this.current_location,
     required this.id,
     required this.user,
     required this.$__typename,
@@ -3007,14 +2999,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   factory Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       id: (l$id as int),
       user:
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user
@@ -3022,8 +3010,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final int id;
 
@@ -3034,9 +3020,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$user = user;
@@ -3048,12 +3031,10 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$id,
       l$user,
       l$$__typename,
@@ -3068,11 +3049,6 @@ class Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer
     if (!(other
             is Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$id = id;
@@ -3120,7 +3096,6 @@ abstract class CopyWith$Subscription$liston_on_laundry_order_by_id$laundry_order
       _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     int? id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user?
         user,
@@ -3150,16 +3125,12 @@ class _CopyWithImpl$Subscription$liston_on_laundry_order_by_id$laundry_order_by_
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined || user == null
             ? _instance.user
@@ -3188,7 +3159,6 @@ class _CopyWithStubImpl$Subscription$liston_on_laundry_order_by_id$laundry_order
   TRes _res;
 
   call({
-    Geography? current_location,
     int? id,
     Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user?
         user,
@@ -6234,13 +6204,6 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-                    name: NameNode(value: 'current_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -6341,13 +6304,6 @@ const documentNodeQueryget_laundry_order_by_id = DocumentNode(definitions: [
                 arguments: [],
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
-                  FieldNode(
-                    name: NameNode(value: 'current_location'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
                   FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
@@ -8119,7 +8075,6 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver {
   Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver({
-    this.current_location,
     required this.id,
     required this.user,
     required this.$__typename,
@@ -8127,14 +8082,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$d
 
   factory Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       id: (l$id as int),
       user:
           Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver$user
@@ -8142,8 +8093,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$d
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final int id;
 
@@ -8154,9 +8103,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$d
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$user = user;
@@ -8168,12 +8114,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$d
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$id,
       l$user,
       l$$__typename,
@@ -8188,11 +8132,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$d
     if (!(other
             is Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$id = id;
@@ -8240,7 +8179,6 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
       _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver$user?
         user,
@@ -8270,16 +8208,12 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_custo
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined || user == null
             ? _instance.user
@@ -8308,7 +8242,6 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$from_c
   TRes _res;
 
   call({
-    Geography? current_location,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$from_customer_delivery$delivery_driver$user?
         user,
@@ -8772,7 +8705,6 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_cus
 
 class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver {
   Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver({
-    this.current_location,
     required this.id,
     required this.user,
     required this.$__typename,
@@ -8780,14 +8712,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$del
 
   factory Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver.fromJson(
       Map<String, dynamic> json) {
-    final l$current_location = json['current_location'];
     final l$id = json['id'];
     final l$user = json['user'];
     final l$$__typename = json['__typename'];
     return Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver(
-      current_location: l$current_location == null
-          ? null
-          : geographyFromJson(l$current_location),
       id: (l$id as int),
       user:
           Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user
@@ -8795,8 +8723,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$del
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final Geography? current_location;
 
   final int id;
 
@@ -8807,9 +8733,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$del
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$current_location = current_location;
-    _resultData['current_location'] =
-        l$current_location == null ? null : geographyToJson(l$current_location);
     final l$id = id;
     _resultData['id'] = l$id;
     final l$user = user;
@@ -8821,12 +8744,10 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$del
 
   @override
   int get hashCode {
-    final l$current_location = current_location;
     final l$id = id;
     final l$user = user;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$current_location,
       l$id,
       l$user,
       l$$__typename,
@@ -8841,11 +8762,6 @@ class Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$del
     if (!(other
             is Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$current_location = current_location;
-    final lOther$current_location = other.current_location;
-    if (l$current_location != lOther$current_location) {
       return false;
     }
     final l$id = id;
@@ -8893,7 +8809,6 @@ abstract class CopyWith$Query$get_laundry_order_by_id$laundry_order_by_pk$to_cus
       _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver;
 
   TRes call({
-    Geography? current_location,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user?
         user,
@@ -8923,16 +8838,12 @@ class _CopyWithImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_custome
   static const _undefined = {};
 
   TRes call({
-    Object? current_location = _undefined,
     Object? id = _undefined,
     Object? user = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(
           Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver(
-        current_location: current_location == _undefined
-            ? _instance.current_location
-            : (current_location as Geography?),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         user: user == _undefined || user == null
             ? _instance.user
@@ -8961,7 +8872,6 @@ class _CopyWithStubImpl$Query$get_laundry_order_by_id$laundry_order_by_pk$to_cus
   TRes _res;
 
   call({
-    Geography? current_location,
     int? id,
     Query$get_laundry_order_by_id$laundry_order_by_pk$to_customer_delivery$delivery_driver$user?
         user,

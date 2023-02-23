@@ -121,13 +121,14 @@ Future<LaundryOrder?> get_laundry_order_by_id(
       customerDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,
       laundryDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_service_provider_id,
       laundryPickupDriverChatId: orderData.from_customer_delivery?.chat_with_service_provider_id,
-      dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: (orderData.to_customer_delivery?.delivery_driver?.current_location != null) ? LatLng(orderData.to_customer_delivery!.delivery_driver!.current_location!.latitude, orderData.to_customer_delivery!.delivery_driver!.current_location!.longitude) : null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
-      pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: (orderData.from_customer_delivery?.delivery_driver?.current_location != null) ? LatLng(orderData.from_customer_delivery!.delivery_driver!.current_location!.latitude, orderData.from_customer_delivery!.delivery_driver!.current_location!.longitude) : null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
+      dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
+      pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
       toCustomerDeliveryId: orderData.to_customer_delivery_id,
       fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
       costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Query$get_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
       cost: orderData.total_cost ?? 0,
-      to: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
+      customerLocation: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
+      laundryLocation: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address),
       orderTime: DateTime.parse(orderData.order_time),
       paymentType: orderData.payment_type.toPaymentType(),
       status: orderData.status.toLaundryOrderStatus(),
@@ -157,45 +158,99 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
-          notes: orderData.notes,
-          estimatedDropoffAtCustomerTime: DateTime.tryParse(
-              orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
-                  ""),
-          estimatedDropoffAtServiceProviderTime: DateTime.tryParse(orderData
-                  .from_customer_delivery?.estimated_arrival_at_dropoff_time ??
-              ""),
-          estimatedPickupFromCustomerTime: DateTime.tryParse(
-              orderData.from_customer_delivery?.estimated_arrival_at_pickup_time ??
-                  ""),
-          estimatedPickupFromServiceProviderTime: DateTime.tryParse(
-              orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ??
-                  ""),
-          estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
-              ? DateTime.parse(orderData.estimated_ready_time!)
-              : null,
-          cost: orderData.total_cost ?? 0,
-          toCustomerDeliveryId: orderData.to_customer_delivery_id,
-          customerPickupDriverChatId: orderData.from_customer_delivery?.chat_with_customer_id,
-          customerDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_customer_id,
-          laundryDropOffDriverChatId: orderData.to_customer_delivery?.chat_with_service_provider_id,
-          laundryPickupDriverChatId: orderData.from_customer_delivery?.chat_with_service_provider_id,
-          dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: (orderData.to_customer_delivery?.delivery_driver?.current_location != null) ? LatLng(orderData.to_customer_delivery!.delivery_driver!.current_location!.latitude, orderData.to_customer_delivery!.delivery_driver!.current_location!.longitude) : null, hasuraId: orderData.to_customer_delivery!.delivery_driver!.user.id, name: orderData.to_customer_delivery!.delivery_driver!.user.name, image: orderData.to_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
-          pickupDriver: orderData.from_customer_delivery?.delivery_driver != null ? DeliveryDriverUserInfo(location: (orderData.from_customer_delivery?.delivery_driver?.current_location != null) ? LatLng(orderData.from_customer_delivery!.delivery_driver!.current_location!.latitude, orderData.from_customer_delivery!.delivery_driver!.current_location!.longitude) : null, hasuraId: orderData.from_customer_delivery!.delivery_driver!.user.id, name: orderData.from_customer_delivery!.delivery_driver!.user.name, image: orderData.from_customer_delivery!.delivery_driver!.user.image, language: LanguageType.EN) : null,
-          fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
-          orderId: orderData.id,
-          costsByType: LaundryOrderCosts(lineItems: orderData.categories.map((Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories cat) => LaundryOrderCostLineItem(cost: cat.category.cost_by_kilo, id: cat.category_id, name: toLanguageMap(translations: cat.category.name.translations), weight: cat.weight_in_kilo!)).toList()),
-          to: MezLocation.fromHasura(orderData.customer_location_gps!, orderData.customer_address!),
-          orderTime: DateTime.parse(orderData.order_time),
-          paymentType: orderData.payment_type.toPaymentType(),
-          status: orderData.status.toLaundryOrderStatus(),
-          customer: UserInfo(
-            hasuraId: orderData.customer_id,
-            name: orderData.customer.user.name,
-            image: orderData.customer.user.image,
-          ),
-          laundry: ServiceInfo(location: MezLocation.fromHasura(orderData.store.details!.location.gps, orderData.store.details!.location.address), hasuraId: orderData.store_id, image: orderData.store.details!.image, name: orderData.store.details!.name),
-          shippingCost: orderData.delivery_cost,
-          chatId: orderData.chat_id!);
+        notes: orderData.notes,
+        estimatedDropoffAtCustomerTime: DateTime.tryParse(
+            orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
+                ""),
+        estimatedDropoffAtServiceProviderTime: DateTime.tryParse(orderData
+                .from_customer_delivery?.estimated_arrival_at_dropoff_time ??
+            ""),
+        estimatedPickupFromCustomerTime: DateTime.tryParse(orderData
+                .from_customer_delivery?.estimated_arrival_at_pickup_time ??
+            ""),
+        estimatedPickupFromServiceProviderTime: DateTime.tryParse(
+            orderData.to_customer_delivery?.estimated_arrival_at_pickup_time ??
+                ""),
+        estimatedLaundryReadyTime: (orderData.estimated_ready_time != null)
+            ? DateTime.parse(orderData.estimated_ready_time!)
+            : null,
+        cost: orderData.total_cost ?? 0,
+        toCustomerDeliveryId: orderData.to_customer_delivery_id,
+        customerPickupDriverChatId:
+            orderData.from_customer_delivery?.chat_with_customer_id,
+        customerDropOffDriverChatId:
+            orderData.to_customer_delivery?.chat_with_customer_id,
+        laundryDropOffDriverChatId:
+            orderData.to_customer_delivery?.chat_with_service_provider_id,
+        laundryPickupDriverChatId:
+            orderData.from_customer_delivery?.chat_with_service_provider_id,
+        dropoffDriver: orderData.to_customer_delivery?.delivery_driver != null
+            ? DeliveryDriverUserInfo(
+                location: null,
+                hasuraId:
+                    orderData.to_customer_delivery!.delivery_driver!.user.id,
+                name:
+                    orderData.to_customer_delivery!.delivery_driver!.user.name,
+                image:
+                    orderData.to_customer_delivery!.delivery_driver!.user.image,
+                language: LanguageType.EN)
+            : null,
+        pickupDriver: orderData.from_customer_delivery?.delivery_driver != null
+            ? DeliveryDriverUserInfo(
+                location: (orderData.from_customer_delivery?.delivery_driver
+                            ?.current_location !=
+                        null)
+                    ? LatLng(
+                        orderData.from_customer_delivery!.delivery_driver!
+                            .current_location!.latitude,
+                        orderData.from_customer_delivery!.delivery_driver!
+                            .current_location!.longitude)
+                    : null,
+                hasuraId:
+                    orderData.from_customer_delivery!.delivery_driver!.user.id,
+                name: orderData
+                    .from_customer_delivery!.delivery_driver!.user.name,
+                image: orderData
+                    .from_customer_delivery!.delivery_driver!.user.image,
+                language: LanguageType.EN)
+            : null,
+        fromCustomerDeliveryId: orderData.from_customer_delivery_id!,
+        orderId: orderData.id,
+        costsByType: LaundryOrderCosts(
+            lineItems: orderData.categories
+                .map(
+                    (Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk$categories
+                            cat) =>
+                        LaundryOrderCostLineItem(
+                            cost: cat.category.cost_by_kilo,
+                            id: cat.category_id,
+                            name: toLanguageMap(
+                                translations: cat.category.name.translations),
+                            weight: cat.weight_in_kilo!))
+                .toList()),
+        customerLocation: MezLocation.fromHasura(
+            orderData.customer_location_gps!, orderData.customer_address!),
+        laundryLocation: MezLocation.fromHasura(
+            orderData.store.details!.location.gps,
+            orderData.store.details!.location.address),
+        orderTime: DateTime.parse(orderData.order_time),
+        paymentType: orderData.payment_type.toPaymentType(),
+        status: orderData.status.toLaundryOrderStatus(),
+        customer: UserInfo(
+          hasuraId: orderData.customer_id,
+          name: orderData.customer.user.name,
+          image: orderData.customer.user.image,
+        ),
+        laundry: ServiceInfo(
+            location: MezLocation.fromHasura(
+                orderData.store.details!.location.gps,
+                orderData.store.details!.location.address),
+            hasuraId: orderData.store_id,
+            image: orderData.store.details!.image,
+            name: orderData.store.details!.name),
+        shippingCost: orderData.delivery_cost,
+        chatId: orderData.chat_id!,
+      );
     }
     return null;
   });

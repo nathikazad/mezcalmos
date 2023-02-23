@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -23,10 +24,12 @@ class CustomerAuthController extends GetxController {
       Get.find<BackgroundNotificationsController>();
 
   Customer? get customer => _customer.value;
+  Rxn<LocationData> customerCurrentLocation = Rxn();
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    customerCurrentLocation.value = await getCustomerCurrentLocation();
 
     if (_authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
@@ -112,6 +115,13 @@ class CustomerAuthController extends GetxController {
 
   void editLocation(SavedLocation savedLocation) {
     update_saved_location(savedLocation: savedLocation);
+  }
+
+  Future<LocationData> getCustomerCurrentLocation() async {
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
+    LocationData res = await Location().getLocation();
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
+    return res;
   }
 
   Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {

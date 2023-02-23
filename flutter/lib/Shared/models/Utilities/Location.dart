@@ -28,6 +28,11 @@ class MezLocation {
         <String, dynamic>{"latitude": lat, "longitude": lng});
   }
 
+  LocationData toLocationData() {
+    return LocationData.fromMap(
+        <String, dynamic>{"latitude": latitude, "longitude": longitude});
+  }
+
   LatLng? toLatLng() {
     if (position.latitude != null && position.longitude != null)
       return LatLng(position.latitude!, position.longitude!);
