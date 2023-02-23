@@ -76,6 +76,7 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
           viewController.laundries.value!.length,
           (int index) => CustomerLaundrySelectCard(
             laundry: viewController.laundries.value![index],
+            customerLocation: viewController.customerCurrentLocation.value!,
           ),
         ),
       );
