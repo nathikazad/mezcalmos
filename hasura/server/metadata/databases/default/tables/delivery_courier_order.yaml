@@ -1,0 +1,15 @@
+table:
+  name: courier_order
+  schema: delivery
+object_relationships:
+  - name: delivery_order
+    using:
+      foreign_key_constraint_on: delivery_order_id
+array_relationships:
+  - name: items
+    using:
+      foreign_key_constraint_on:
+        column: order_id
+        table:
+          name: courier_order_item
+          schema: delivery

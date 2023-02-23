@@ -118,6 +118,18 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
+  - role: delivery_operator
+    permission:
+      columns:
+        - image
+        - language_id
+        - name
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check:
+        id:
+          _eq: X-Hasura-User-Id
   - role: laundry_operator
     permission:
       columns:
