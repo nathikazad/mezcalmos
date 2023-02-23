@@ -32,7 +32,7 @@ query getRestaurantOperators($restaurantId: Int!) {
       operator_details {
         owner
         status
-        current_gps
+        
       }
       user {
         phone
