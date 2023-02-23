@@ -8,7 +8,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
 
     restaurant {
       id
-      details{ id
+      details {
+        id
         firebase_id
         image
         language
@@ -79,7 +80,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     }
 
     order_time
-   
+
     customer_app_type
     notes
     customer {
@@ -103,12 +104,11 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
       chat_with_service_provider_id
       chat_with_customer_id
       cancellation_time
-    
 
       delivery_cost
 
       delivery_driver {
-       
+        id
 
         user {
           id
@@ -129,7 +129,8 @@ query get_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
-      details{ id
+      details {
+        id
         firebase_id
         image
         language
@@ -224,11 +225,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
       estimated_arrival_at_dropoff_time
       estimated_arrival_at_pickup_time
       cancellation_time
-   
 
       delivery_cost
       delivery_driver {
-      
+        id
 
         user {
           id

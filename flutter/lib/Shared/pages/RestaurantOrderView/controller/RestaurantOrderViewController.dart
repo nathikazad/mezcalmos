@@ -35,7 +35,7 @@ class RestaurantOrderViewController {
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
       if (order.value!.routeInformation != null) {
         mezDbgPrint(
-            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.routeInformation}");
+            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.dropoffDriver?.toFirebaseFormatJson()}");
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }
@@ -52,7 +52,7 @@ class RestaurantOrderViewController {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.toFirebaseFormatJson()}");
             order.value = event;
             order.value?.dropoffDriver = event.dropoffDriver;
           }

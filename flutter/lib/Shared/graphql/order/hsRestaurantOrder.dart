@@ -450,7 +450,7 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
           image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.total_cost!);
+          totalCost: orderData.total_cost ?? 0);
     }).toList();
     return orders;
   } else {

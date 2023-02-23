@@ -39,45 +39,44 @@ class MezCard extends StatelessWidget {
         child: Row(
           children: [
             // leading //
-            leading != null
-                ? leading!
-                :
-                // first avatars//
-                Stack(
-                    alignment: Alignment.center,
-                    clipBehavior: Clip.none,
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: firstAvatarBgColor,
-                        backgroundImage: firstAvatarBgImage,
-                        child: Icon(
-                          firstAvatarIcon,
-                          color: firstAvatarIconColor,
-                          size: 25,
+            if (leading != null) leading!,
+
+            // first avatars//
+            if (firstAvatarBgImage != null || firstAvatarIcon != null)
+              Stack(
+                alignment: Alignment.center,
+                clipBehavior: Clip.none,
+                children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: firstAvatarBgColor,
+                    backgroundImage: firstAvatarBgImage,
+                    child: Icon(
+                      firstAvatarIcon,
+                      color: firstAvatarIconColor,
+                      size: 25,
+                    ),
+                  ),
+                  if (secondAvatarBgImage != null || secondAvatarIcon != null)
+                    Positioned(
+                      right: -35,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 22,
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: secondAvatarBgColor,
+                          backgroundImage: secondAvatarBgImage,
+                          child: Icon(
+                            secondAvatarIcon,
+                            size: 25,
+                            color: secondAvatarIconColor,
+                          ),
                         ),
                       ),
-                      if (secondAvatarBgImage != null ||
-                          secondAvatarIcon != null)
-                        Positioned(
-                          right: -35,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 22,
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundColor: secondAvatarBgColor,
-                              backgroundImage: secondAvatarBgImage,
-                              child: Icon(
-                                secondAvatarIcon,
-                                size: 25,
-                                color: secondAvatarIconColor,
-                              ),
-                            ),
-                          ),
-                        )
-                    ],
-                  ),
+                    )
+                ],
+              ),
             if (secondAvatarBgImage != null || secondAvatarIcon != null)
               SizedBox(
                 width: 37,
