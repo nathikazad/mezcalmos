@@ -48,6 +48,7 @@ class _CustLaundryOrderRequestViewState
           onClick: MezRouter.back,
           titleWidget: Obx(() => Text(
                 viewController.laundry.value?.info.name ?? "",
+                style: Get.textTheme.headline3,
               )),
         ),
         body: Obx(
@@ -61,19 +62,22 @@ class _CustLaundryOrderRequestViewState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CachedNetworkImage(
-                              width: double.infinity,
-                              height: 230,
-                              fit: BoxFit.cover,
-                              imageUrl:
-                                  viewController.laundry.value!.info.image),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                                width: double.infinity,
+                                height: 20.h,
+                                fit: BoxFit.cover,
+                                imageUrl:
+                                    viewController.laundry.value!.info.image),
+                          ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Text(viewController.laundry.value!.info.name,
                               style: Get.textTheme.headlineSmall),
                           SizedBox(
-                            height: 8,
+                            height: 9,
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +113,7 @@ class _CustLaundryOrderRequestViewState
                             ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 8,
                           ),
                           Obx(
                             () => viewController.authController.user != null
@@ -159,22 +163,23 @@ class _CustLaundryOrderRequestViewState
         children: <Widget>[
           Text(_i18n()["notes"], style: Theme.of(context).textTheme.bodyLarge),
           SizedBox(
-            height: 1.h,
+            height: 8,
           ),
-          TextField(
-            style: Get.textTheme.titleMedium?.copyWith(
-              color: offLightShadeGreyColor,
-            ),
-            controller: viewController.orderNote,
-            maxLines: 5,
-            minLines: 3,
-            decoration: InputDecoration(
-              hintText: "${_i18n()["noteHint"]}",
-              hintStyle: Get.textTheme.titleMedium?.copyWith(
-                color: offLightShadeGreyColor,
+          Card(
+            child: TextField(
+              style: Get.textTheme.titleMedium?.copyWith(
+                color: blackColor,
               ),
-              filled: true,
-              fillColor: Theme.of(context).primaryColor,
+              controller: viewController.orderNote,
+              maxLines: 5,
+              minLines: 3,
+              decoration: InputDecoration(
+                hintText: "${_i18n()["noteHint"]}",
+                hintStyle:
+                    Get.textTheme.titleMedium?.copyWith(color: blackColor),
+                filled: true,
+                fillColor: Theme.of(context).primaryColor,
+              ),
             ),
           )
         ],

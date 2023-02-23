@@ -22,7 +22,7 @@
           "chooseLoc": "Choose location",
           "ops": "Oops",
           "wrongAddress": "Wrong/Invalid address picked!",
-          "distanceError": "Distance between you and restaurant is more than 10km !",
+          "distanceError": "The distance between you and the service location exceeds 10km!",
           "pickLocation": "Pick from map"
         },
         "LocationPicker": {
@@ -333,6 +333,7 @@
           "ViewRestaurantScreen": {
             "CustomerRestaurantView": {
               "specials": "Specials",
+              "undefinedCategory":"Undefined Category",
               "scheduleTitle": "Only available for scheduling orders"
             },
             "components": {
@@ -387,7 +388,7 @@
             }
           },
           "SavedLocationView": {
-              "title": "Saved locations",
+              "title": "My locations",
               "addNewLoc": "Add new location",
               "location":"Location"
           }
@@ -563,7 +564,8 @@
             "LaundryCurrentOrderView": {
               "orderStatus": "Order status",
               "laundry": "Laundry",
-              "estimatedDeliveryTime": "Estimated delivery time"
+              "estimatedDeliveryTime": "Estimated delivery time",
+              "deliveryDeatils":"Delivery details"
             }
           },
           "LaundriesListView": {
@@ -583,7 +585,7 @@
           },
           "SingleLaundryScreen": {
             "startingFrom": "Starting from ",
-            "minimumCost": "Minimum cost",
+            "minimumCost": "Minimum",
             "daysReturn" :"days return",
             "description": "Description",
             "openHours": "openHours",
@@ -748,11 +750,16 @@
               "hintNameText": "Enter your name",
               "uploadImageText":"Upload your profile image",
               "nameError": "Please provide a name",
+              "descriptionError": "Please provide a description",
               "location": "Name",
               "locationError": "Please provide a name",
-              "pickLoc": "Pick location",
+              "pickLoc": "Pick restaurant’s location",
               "imageError": "Image is required",
-              "description": "Description"
+              "description": "Description",
+              "descriptionHintText": "Enter a description for your restaurant",
+              "phoneText":"Phone number",
+              "phoneTextDescription":"Enter your phone number",
+              "phoneTextError":"Enter valid phone number"
             }
           },
           "createText":"Create",

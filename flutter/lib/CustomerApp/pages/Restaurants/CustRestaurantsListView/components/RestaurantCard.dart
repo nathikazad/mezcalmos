@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
-import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -76,7 +75,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Flexible(
-                            flex: 5,
+                            flex: 4,
                             fit: FlexFit.loose,
                             child: Row(
                               children: [
@@ -91,7 +90,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                   child: ShippingCostComponent(
                                     shippingCost: _getShippingPrice(),
                                     alignment: MainAxisAlignment.start,
-                                    textStyle: txt.bodyLarge,
+                                    textStyle: txt.bodySmall,
                                   ),
                                 ),
                               ],
@@ -101,7 +100,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           //   width: 5,
                           // ),
                           Flexible(
-                            flex: 2,
+                            flex: 3,
                             fit: FlexFit.tight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -113,7 +112,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                   //  size: 18,
                                 ),
                                 SizedBox(
-                                  width: 5,
+                                  width: 1,
                                 ),
                                 if (widget.restaurant.paymentInfo?.acceptCard ==
                                     true)
@@ -130,7 +129,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           // ),
                           if (widget.restaurant.rate != null)
                             Flexible(
-                              flex: 2,
+                              flex: 3,
                               child: Row(
                                 children: [
                                   Icon(
@@ -143,7 +142,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                   ),
                                   Text(
                                     widget.restaurant.rate!.toStringAsFixed(1),
-                                    style: txt.bodyLarge,
+                                    style: txt.bodySmall,
                                   )
                                 ],
                               ),

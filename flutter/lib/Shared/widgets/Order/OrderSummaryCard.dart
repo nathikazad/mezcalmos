@@ -33,11 +33,11 @@ class OrderSummaryCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

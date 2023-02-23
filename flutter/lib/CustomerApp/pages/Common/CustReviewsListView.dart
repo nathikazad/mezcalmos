@@ -54,7 +54,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          onClick: MezRouter.back, title: "Reviews"),
+          onClick: MezRouter.back, title: '${_i18n()["reviews"]}'),
       body: Obx(
         () {
           if (hasData) {

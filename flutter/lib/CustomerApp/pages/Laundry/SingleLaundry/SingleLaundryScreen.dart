@@ -99,9 +99,9 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     height: 10,
                   ),
                   MezServiceOpenHours(schedule: laundry.value!.schedule!),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
                   ServiceLocationCard(location: laundry.value!.info.location),
                 ],
               ),
@@ -132,7 +132,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             width: 15,
           ),
           Text(
-            "${item.cost.toPriceString()}/KG",
+            "${item.cost.toPriceString()}/kg",
             style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
           )
         ],
@@ -157,11 +157,14 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   }
 
   Widget _laundryImage() {
-    return CachedNetworkImage(
-      width: double.infinity,
-      height: 20.h,
-      fit: BoxFit.cover,
-      imageUrl: laundry.value!.info.image,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: CachedNetworkImage(
+        width: double.infinity,
+        height: 20.h,
+        fit: BoxFit.cover,
+        imageUrl: laundry.value!.info.image,
+      ),
     );
   }
 
@@ -180,13 +183,20 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   laundry.value!.info.name,
                   style: Get.textTheme.headline5,
                 ),
+                SizedBox(
+                  height: 9,
+                ),
                 Wrap(
-                  spacing: 3,
+                  spacing: 5,
                   runSpacing: 5,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
+                      padding: const EdgeInsets.only(
+                        left: 6,
+                        top: 2,
+                        bottom: 6,
+                        right: 6,
+                      ),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(35),
                           color: secondaryLightBlueColor),
@@ -200,8 +210,12 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                        top: 2,
+                        bottom: 6,
+                        right: 6,
+                      ),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(35),
                           color: secondaryLightBlueColor),
@@ -232,7 +246,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.all(5),
                     child: Text(
-                      "\$${laundry.value!.getCheapestCategory}/KG",
+                      "${laundry.value!.getCheapestCategory.toPriceString()}/kg",
                       style: Get.textTheme.bodyLarge
                           ?.copyWith(color: Get.theme.primaryColorLight),
                     ),

@@ -133,7 +133,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? _i18n()["today"]
                     : (element.timestamp.isYesterday)
                         ? _i18n()['yesterday']
-                        : DateFormat('dd MMM, h:mm a')
+                        : DateFormat('dd MMM')
                             .format(element.timestamp),
                 style: Get.textTheme.bodyText1,
               ),

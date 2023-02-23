@@ -20,7 +20,6 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
@@ -155,7 +154,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage] ?? "Undefined Category",
+              category.name?[userLanguage] ?? '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
                   ? Get.theme.textTheme.headline5
                   : Get.textTheme.bodyText2?.copyWith(
@@ -193,10 +192,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 7),
             child: Text(
-              "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
-                  .inCaps,
-              style: Get.theme.textTheme.headline5
-            ),
+                "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
+                    .inCaps,
+                style: Get.theme.textTheme.headline5),
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
@@ -255,7 +253,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return Container(
       alignment: Alignment.center,
       height: 60,
-      decoration: BoxDecoration(color: Colors.grey.shade400),
+      decoration: BoxDecoration(color: Color(0xFFEDEDED)),
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +262,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyText1?.copyWith(
+                color: offLightShadeGreyColor,
+              ),
               maxLines: 2,
               textAlign: TextAlign.center,
             ),

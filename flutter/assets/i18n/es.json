@@ -21,7 +21,7 @@
       "DropDownLocationList": {
         "ops": "Oops",
         "wrongAddress": "Dirección incorrecta/inválida elegida!",
-        "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
+        "distanceError": "¡La distancia entre usted y la ubicación del servicio supera los 10 km!",
         "chooseLoc": "Elegir la ubicación",
         "pickLocation": "Elegir del mapa"
       },
@@ -335,6 +335,7 @@
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
             "specials": "especiales",
+            "undefinedCategory":"Categoría indefinida",
             "scheduleTitle": "Solo disponible para los pedidos de programación"
           },
           "components": {
@@ -389,7 +390,7 @@
           }
         },
         "SavedLocationView": {
-          "title": "Ubicación",
+          "title": "Mis ubicaciones",
           "addNewLoc": "Añadir nueva ubicación",
           "location":"Ubicación"
         }
@@ -565,13 +566,14 @@
           "LaundryCurrentOrderView": {
             "orderStatus": "Estado de la orden",
             "laundry": "Lavandería",
-            "estimatedDeliveryTime": "Tiempo de entrega estimado"
+            "estimatedDeliveryTime": "Tiempo de entrega estimado",
+            "deliveryDeatils":"Detalles de la entrega"
           }
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
           "daysReturn" : "Días de regreso",
-          "minimumCost": "Costo mínimo",
+          "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
           "sendMyLaundry": "Envía mi ropa",
@@ -750,11 +752,16 @@
             "hintNameText": "Introduzca su nombre",
             "uploadImageText":"Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
+            "descriptionError": "Proporcione una descripción",
             "location": "Nombre",
             "locationError": "Proporcione una ubicación",
             "pickLoc": "Ubicación de selección",
             "imageError": "Se requiere una imagen",
-            "description": "Descripción"
+            "description": "Descripción",
+            "descriptionHintText": "Ingrese una descripción para su restaurante",
+            "phoneText":"Número de teléfono",
+            "phoneTextDescription":"Ingrese su número telefónico",
+            "phoneTextError":"Ingrese un número de teléfono válido"
           }
         },
         "createText":"Create",

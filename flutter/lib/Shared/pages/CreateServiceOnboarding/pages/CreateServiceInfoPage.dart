@@ -65,17 +65,43 @@ class CreateServiceInfoPage extends StatelessWidget {
               height: 10,
             ),
             TextFormField(
-              controller: viewController.serviceName,
+              minLines: 2,
+              maxLines: 7,
+              controller: viewController.description,
               validator: (String? v) {
                 if (v == null || v.isEmpty) {
-                  return "${_i18n()['nameError']}";
+                  return "${_i18n()['descriptionError']}";
                 }
                 return null;
               },
               style: Get.textTheme.bodyText1,
               decoration: InputDecoration(
                   hintStyle: Get.textTheme.bodyText2,
-                  hintText: "${_i18n()['hintNameText']}"),
+                  hintText: "${_i18n()['descriptionHintText']}"),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              "${_i18n()['phoneText']}",
+              style: Get.textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: viewController.serviceName,
+              validator: (String? v) {
+                if (v == null || v.isEmpty) {
+                  //ask with montasaare for phone validation.
+                  return "${_i18n()['phoneTextError']}";
+                }
+                return null;
+              },
+              style: Get.textTheme.bodyText1,
+              decoration: InputDecoration(
+                  hintStyle: Get.textTheme.bodyText2,
+                  hintText: "${_i18n()['phoneTextDescription']}"),
             ),
             SizedBox(
               height: 15,

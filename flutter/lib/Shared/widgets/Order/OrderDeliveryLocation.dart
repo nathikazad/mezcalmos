@@ -48,7 +48,9 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: Get.textTheme.bodyLarge,
+                      style: Get.textTheme.bodyText1?.copyWith(
+                        fontSize: 12.sp,
+                      ),
                       maxLines: 1,
                     ),
                   ),
