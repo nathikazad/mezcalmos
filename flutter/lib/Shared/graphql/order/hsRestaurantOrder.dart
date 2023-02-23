@@ -38,7 +38,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
     mezDbgPrint(
-        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.toJson()}");
+        "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
       final List<RestaurantOrderItem> items = [];
@@ -209,7 +209,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
   mezDbgPrint(
-      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.total_cost}");
+      "Event from hs restaurant order from query 🚀🚀🚀 =====>driver ${orderData.delivery?.delivery_driver}");
+
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(

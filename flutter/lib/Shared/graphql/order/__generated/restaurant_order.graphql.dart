@@ -442,20 +442,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 directives: [],
                 selectionSet: SelectionSetNode(selections: [
                   FieldNode(
-                    name: NameNode(value: 'id'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
-                    name: NameNode(value: 'image'),
-                    alias: null,
-                    arguments: [],
-                    directives: [],
-                    selectionSet: null,
-                  ),
-                  FieldNode(
                     name: NameNode(value: 'item_type'),
                     alias: null,
                     arguments: [],
@@ -566,6 +552,20 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                   ),
                   FieldNode(
                     name: NameNode(value: 'available'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'image'),
                     alias: null,
                     arguments: [],
                     directives: [],
@@ -859,6 +859,34 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'tax'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'total_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'items_cost'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'chat_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: 'customer'),
             alias: null,
             arguments: [],
@@ -910,34 +938,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
             ]),
           ),
           FieldNode(
-            name: NameNode(value: 'tax'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'total_cost'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'items_cost'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
-            name: NameNode(value: 'chat_id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null,
-          ),
-          FieldNode(
             name: NameNode(value: 'delivery_cost'),
             alias: null,
             arguments: [],
@@ -972,20 +972,6 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'chat_with_service_provider_id'),
                 alias: null,
                 arguments: [],
@@ -994,6 +980,27 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
               ),
               FieldNode(
                 name: NameNode(value: 'chat_with_customer_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_dropoff_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'estimated_arrival_at_pickup_time'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -1211,11 +1218,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     this.review,
     required this.order_time,
     required this.customer_app_type,
-    required this.customer,
     required this.tax,
     this.total_cost,
     this.items_cost,
     this.chat_id,
+    required this.customer,
     required this.delivery_cost,
     this.delivery,
     required this.$__typename,
@@ -1241,11 +1248,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$review = json['review'];
     final l$order_time = json['order_time'];
     final l$customer_app_type = json['customer_app_type'];
-    final l$customer = json['customer'];
     final l$tax = json['tax'];
     final l$total_cost = json['total_cost'];
     final l$items_cost = json['items_cost'];
     final l$chat_id = json['chat_id'];
+    final l$customer = json['customer'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery = json['delivery'];
     final l$$__typename = json['__typename'];
@@ -1279,13 +1286,13 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
               .fromJson((l$review as Map<String, dynamic>)),
       order_time: (l$order_time as String),
       customer_app_type: (l$customer_app_type as String),
-      customer:
-          Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer
-              .fromJson((l$customer as Map<String, dynamic>)),
       tax: moneyFromJson(l$tax),
       total_cost: l$total_cost == null ? null : moneyFromJson(l$total_cost),
       items_cost: l$items_cost == null ? null : moneyFromJson(l$items_cost),
       chat_id: (l$chat_id as int?),
+      customer:
+          Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer
+              .fromJson((l$customer as Map<String, dynamic>)),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery: l$delivery == null
           ? null
@@ -1335,9 +1342,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
 
   final String customer_app_type;
 
-  final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer
-      customer;
-
   final double tax;
 
   final double? total_cost;
@@ -1345,6 +1349,9 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
   final double? items_cost;
 
   final int? chat_id;
+
+  final Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer
+      customer;
 
   final double delivery_cost;
 
@@ -1393,8 +1400,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     _resultData['order_time'] = l$order_time;
     final l$customer_app_type = customer_app_type;
     _resultData['customer_app_type'] = l$customer_app_type;
-    final l$customer = customer;
-    _resultData['customer'] = l$customer.toJson();
     final l$tax = tax;
     _resultData['tax'] = moneyToJson(l$tax);
     final l$total_cost = total_cost;
@@ -1405,6 +1410,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
         l$items_cost == null ? null : moneyToJson(l$items_cost);
     final l$chat_id = chat_id;
     _resultData['chat_id'] = l$chat_id;
+    final l$customer = customer;
+    _resultData['customer'] = l$customer.toJson();
     final l$delivery_cost = delivery_cost;
     _resultData['delivery_cost'] = moneyToJson(l$delivery_cost);
     final l$delivery = delivery;
@@ -1434,11 +1441,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$review = review;
     final l$order_time = order_time;
     final l$customer_app_type = customer_app_type;
-    final l$customer = customer;
     final l$tax = tax;
     final l$total_cost = total_cost;
     final l$items_cost = items_cost;
     final l$chat_id = chat_id;
+    final l$customer = customer;
     final l$delivery_cost = delivery_cost;
     final l$delivery = delivery;
     final l$$__typename = $__typename;
@@ -1461,11 +1468,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
       l$review,
       l$order_time,
       l$customer_app_type,
-      l$customer,
       l$tax,
       l$total_cost,
       l$items_cost,
       l$chat_id,
+      l$customer,
       l$delivery_cost,
       l$delivery,
       l$$__typename,
@@ -1579,11 +1586,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     if (l$customer_app_type != lOther$customer_app_type) {
       return false;
     }
-    final l$customer = customer;
-    final lOther$customer = other.customer;
-    if (l$customer != lOther$customer) {
-      return false;
-    }
     final l$tax = tax;
     final lOther$tax = other.tax;
     if (l$tax != lOther$tax) {
@@ -1602,6 +1604,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk {
     final l$chat_id = chat_id;
     final lOther$chat_id = other.chat_id;
     if (l$chat_id != lOther$chat_id) {
+      return false;
+    }
+    final l$customer = customer;
+    final lOther$customer = other.customer;
+    if (l$customer != lOther$customer) {
       return false;
     }
     final l$delivery_cost = delivery_cost;
@@ -1670,12 +1677,12 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
         review,
     String? order_time,
     String? customer_app_type,
-    Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer?
-        customer,
     double? tax,
     double? total_cost,
     double? items_cost,
     int? chat_id,
+    Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer?
+        customer,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery?
         delivery,
@@ -1735,11 +1742,11 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? review = _undefined,
     Object? order_time = _undefined,
     Object? customer_app_type = _undefined,
-    Object? customer = _undefined,
     Object? tax = _undefined,
     Object? total_cost = _undefined,
     Object? items_cost = _undefined,
     Object? chat_id = _undefined,
+    Object? customer = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery = _undefined,
     Object? $__typename = _undefined,
@@ -1799,10 +1806,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
             customer_app_type == _undefined || customer_app_type == null
                 ? _instance.customer_app_type
                 : (customer_app_type as String),
-        customer: customer == _undefined || customer == null
-            ? _instance.customer
-            : (customer
-                as Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer),
         tax: tax == _undefined || tax == null ? _instance.tax : (tax as double),
         total_cost: total_cost == _undefined
             ? _instance.total_cost
@@ -1811,6 +1814,10 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
             ? _instance.items_cost
             : (items_cost as double?),
         chat_id: chat_id == _undefined ? _instance.chat_id : (chat_id as int?),
+        customer: customer == _undefined || customer == null
+            ? _instance.customer
+            : (customer
+                as Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer),
         delivery_cost: delivery_cost == _undefined || delivery_cost == null
             ? _instance.delivery_cost
             : (delivery_cost as double),
@@ -1901,12 +1908,12 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
         review,
     String? order_time,
     String? customer_app_type,
-    Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer?
-        customer,
     double? tax,
     double? total_cost,
     double? items_cost,
     int? chat_id,
+    Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$customer?
+        customer,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery?
         delivery,
@@ -2812,14 +2819,14 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
 
 class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item {
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item({
-    required this.id,
-    this.image,
     required this.item_type,
     required this.name,
     this.description,
     required this.position,
     this.category_id,
     required this.available,
+    required this.id,
+    this.image,
     required this.restaurant_id,
     this.special_period_end,
     this.special_period_start,
@@ -2830,14 +2837,14 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   factory Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item.fromJson(
       Map<String, dynamic> json) {
-    final l$id = json['id'];
-    final l$image = json['image'];
     final l$item_type = json['item_type'];
     final l$name = json['name'];
     final l$description = json['description'];
     final l$position = json['position'];
     final l$category_id = json['category_id'];
     final l$available = json['available'];
+    final l$id = json['id'];
+    final l$image = json['image'];
     final l$restaurant_id = json['restaurant_id'];
     final l$special_period_end = json['special_period_end'];
     final l$special_period_start = json['special_period_start'];
@@ -2845,8 +2852,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$cost = json['cost'];
     final l$$__typename = json['__typename'];
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item(
-      id: (l$id as int),
-      image: (l$image as String?),
       item_type: (l$item_type as String),
       name:
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item$name
@@ -2858,6 +2863,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
       position: (l$position as int),
       category_id: (l$category_id as int?),
       available: (l$available as bool),
+      id: (l$id as int),
+      image: (l$image as String?),
       restaurant_id: (l$restaurant_id as int),
       special_period_end: (l$special_period_end as String?),
       special_period_start: (l$special_period_start as String?),
@@ -2866,10 +2873,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
-
-  final int id;
-
-  final String? image;
 
   final String item_type;
 
@@ -2885,6 +2888,10 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   final bool available;
 
+  final int id;
+
+  final String? image;
+
   final int restaurant_id;
 
   final String? special_period_end;
@@ -2899,10 +2906,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$id = id;
-    _resultData['id'] = l$id;
-    final l$image = image;
-    _resultData['image'] = l$image;
     final l$item_type = item_type;
     _resultData['item_type'] = l$item_type;
     final l$name = name;
@@ -2915,6 +2918,10 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     _resultData['category_id'] = l$category_id;
     final l$available = available;
     _resultData['available'] = l$available;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$image = image;
+    _resultData['image'] = l$image;
     final l$restaurant_id = restaurant_id;
     _resultData['restaurant_id'] = l$restaurant_id;
     final l$special_period_end = special_period_end;
@@ -2932,14 +2939,14 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
 
   @override
   int get hashCode {
-    final l$id = id;
-    final l$image = image;
     final l$item_type = item_type;
     final l$name = name;
     final l$description = description;
     final l$position = position;
     final l$category_id = category_id;
     final l$available = available;
+    final l$id = id;
+    final l$image = image;
     final l$restaurant_id = restaurant_id;
     final l$special_period_end = special_period_end;
     final l$special_period_start = special_period_start;
@@ -2947,14 +2954,14 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$cost = cost;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$id,
-      l$image,
       l$item_type,
       l$name,
       l$description,
       l$position,
       l$category_id,
       l$available,
+      l$id,
+      l$image,
       l$restaurant_id,
       l$special_period_end,
       l$special_period_start,
@@ -2972,16 +2979,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     if (!(other
             is Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item) ||
         runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$id = id;
-    final lOther$id = other.id;
-    if (l$id != lOther$id) {
-      return false;
-    }
-    final l$image = image;
-    final lOther$image = other.image;
-    if (l$image != lOther$image) {
       return false;
     }
     final l$item_type = item_type;
@@ -3012,6 +3009,16 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items
     final l$available = available;
     final lOther$available = other.available;
     if (l$available != lOther$available) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
       return false;
     }
     final l$restaurant_id = restaurant_id;
@@ -3074,8 +3081,6 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
       _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item;
 
   TRes call({
-    int? id,
-    String? image,
     String? item_type,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item$name?
         name,
@@ -3084,6 +3089,8 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? position,
     int? category_id,
     bool? available,
+    int? id,
+    String? image,
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
@@ -3117,14 +3124,14 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   static const _undefined = {};
 
   TRes call({
-    Object? id = _undefined,
-    Object? image = _undefined,
     Object? item_type = _undefined,
     Object? name = _undefined,
     Object? description = _undefined,
     Object? position = _undefined,
     Object? category_id = _undefined,
     Object? available = _undefined,
+    Object? id = _undefined,
+    Object? image = _undefined,
     Object? restaurant_id = _undefined,
     Object? special_period_end = _undefined,
     Object? special_period_start = _undefined,
@@ -3134,8 +3141,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   }) =>
       _then(
           Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item(
-        id: id == _undefined || id == null ? _instance.id : (id as int),
-        image: image == _undefined ? _instance.image : (image as String?),
         item_type: item_type == _undefined || item_type == null
             ? _instance.item_type
             : (item_type as String),
@@ -3156,6 +3161,8 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         available: available == _undefined || available == null
             ? _instance.available
             : (available as bool),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        image: image == _undefined ? _instance.image : (image as String?),
         restaurant_id: restaurant_id == _undefined || restaurant_id == null
             ? _instance.restaurant_id
             : (restaurant_id as int),
@@ -3204,8 +3211,6 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes _res;
 
   call({
-    int? id,
-    String? image,
     String? item_type,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$items$restaurant_item$name?
         name,
@@ -3214,6 +3219,8 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     int? position,
     int? category_id,
     bool? available,
+    int? id,
+    String? image,
     int? restaurant_id,
     String? special_period_end,
     String? special_period_start,
@@ -4942,10 +4949,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     this.trip_polyline,
     this.trip_distance,
     this.trip_duration,
-    this.estimated_arrival_at_dropoff_time,
-    this.estimated_arrival_at_pickup_time,
     this.chat_with_service_provider_id,
     required this.chat_with_customer_id,
+    required this.id,
+    this.estimated_arrival_at_dropoff_time,
+    this.estimated_arrival_at_pickup_time,
     this.cancellation_time,
     required this.delivery_cost,
     this.delivery_driver,
@@ -4957,13 +4965,14 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$trip_polyline = json['trip_polyline'];
     final l$trip_distance = json['trip_distance'];
     final l$trip_duration = json['trip_duration'];
+    final l$chat_with_service_provider_id =
+        json['chat_with_service_provider_id'];
+    final l$chat_with_customer_id = json['chat_with_customer_id'];
+    final l$id = json['id'];
     final l$estimated_arrival_at_dropoff_time =
         json['estimated_arrival_at_dropoff_time'];
     final l$estimated_arrival_at_pickup_time =
         json['estimated_arrival_at_pickup_time'];
-    final l$chat_with_service_provider_id =
-        json['chat_with_service_provider_id'];
-    final l$chat_with_customer_id = json['chat_with_customer_id'];
     final l$cancellation_time = json['cancellation_time'];
     final l$delivery_cost = json['delivery_cost'];
     final l$delivery_driver = json['delivery_driver'];
@@ -4972,12 +4981,13 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       trip_polyline: (l$trip_polyline as String?),
       trip_distance: (l$trip_distance as int?),
       trip_duration: (l$trip_duration as int?),
+      chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
+      chat_with_customer_id: (l$chat_with_customer_id as int),
+      id: (l$id as int),
       estimated_arrival_at_dropoff_time:
           (l$estimated_arrival_at_dropoff_time as String?),
       estimated_arrival_at_pickup_time:
           (l$estimated_arrival_at_pickup_time as String?),
-      chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
-      chat_with_customer_id: (l$chat_with_customer_id as int),
       cancellation_time: (l$cancellation_time as String?),
       delivery_cost: moneyFromJson(l$delivery_cost),
       delivery_driver: l$delivery_driver == null
@@ -4994,13 +5004,15 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
 
   final int? trip_duration;
 
-  final String? estimated_arrival_at_dropoff_time;
-
-  final String? estimated_arrival_at_pickup_time;
-
   final int? chat_with_service_provider_id;
 
   final int chat_with_customer_id;
+
+  final int id;
+
+  final String? estimated_arrival_at_dropoff_time;
+
+  final String? estimated_arrival_at_pickup_time;
 
   final String? cancellation_time;
 
@@ -5019,6 +5031,13 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     _resultData['trip_distance'] = l$trip_distance;
     final l$trip_duration = trip_duration;
     _resultData['trip_duration'] = l$trip_duration;
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    _resultData['chat_with_service_provider_id'] =
+        l$chat_with_service_provider_id;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
     final l$estimated_arrival_at_dropoff_time =
         estimated_arrival_at_dropoff_time;
     _resultData['estimated_arrival_at_dropoff_time'] =
@@ -5026,11 +5045,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
     _resultData['estimated_arrival_at_pickup_time'] =
         l$estimated_arrival_at_pickup_time;
-    final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    _resultData['chat_with_service_provider_id'] =
-        l$chat_with_service_provider_id;
-    final l$chat_with_customer_id = chat_with_customer_id;
-    _resultData['chat_with_customer_id'] = l$chat_with_customer_id;
     final l$cancellation_time = cancellation_time;
     _resultData['cancellation_time'] = l$cancellation_time;
     final l$delivery_cost = delivery_cost;
@@ -5047,11 +5061,12 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$trip_polyline = trip_polyline;
     final l$trip_distance = trip_distance;
     final l$trip_duration = trip_duration;
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final l$id = id;
     final l$estimated_arrival_at_dropoff_time =
         estimated_arrival_at_dropoff_time;
     final l$estimated_arrival_at_pickup_time = estimated_arrival_at_pickup_time;
-    final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    final l$chat_with_customer_id = chat_with_customer_id;
     final l$cancellation_time = cancellation_time;
     final l$delivery_cost = delivery_cost;
     final l$delivery_driver = delivery_driver;
@@ -5060,10 +5075,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       l$trip_polyline,
       l$trip_distance,
       l$trip_duration,
-      l$estimated_arrival_at_dropoff_time,
-      l$estimated_arrival_at_pickup_time,
       l$chat_with_service_provider_id,
       l$chat_with_customer_id,
+      l$id,
+      l$estimated_arrival_at_dropoff_time,
+      l$estimated_arrival_at_pickup_time,
       l$cancellation_time,
       l$delivery_cost,
       l$delivery_driver,
@@ -5096,6 +5112,23 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     if (l$trip_duration != lOther$trip_duration) {
       return false;
     }
+    final l$chat_with_service_provider_id = chat_with_service_provider_id;
+    final lOther$chat_with_service_provider_id =
+        other.chat_with_service_provider_id;
+    if (l$chat_with_service_provider_id !=
+        lOther$chat_with_service_provider_id) {
+      return false;
+    }
+    final l$chat_with_customer_id = chat_with_customer_id;
+    final lOther$chat_with_customer_id = other.chat_with_customer_id;
+    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
     final l$estimated_arrival_at_dropoff_time =
         estimated_arrival_at_dropoff_time;
     final lOther$estimated_arrival_at_dropoff_time =
@@ -5109,18 +5142,6 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
         other.estimated_arrival_at_pickup_time;
     if (l$estimated_arrival_at_pickup_time !=
         lOther$estimated_arrival_at_pickup_time) {
-      return false;
-    }
-    final l$chat_with_service_provider_id = chat_with_service_provider_id;
-    final lOther$chat_with_service_provider_id =
-        other.chat_with_service_provider_id;
-    if (l$chat_with_service_provider_id !=
-        lOther$chat_with_service_provider_id) {
-      return false;
-    }
-    final l$chat_with_customer_id = chat_with_customer_id;
-    final lOther$chat_with_customer_id = other.chat_with_customer_id;
-    if (l$chat_with_customer_id != lOther$chat_with_customer_id) {
       return false;
     }
     final l$cancellation_time = cancellation_time;
@@ -5176,10 +5197,11 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? trip_polyline,
     int? trip_distance,
     int? trip_duration,
-    String? estimated_arrival_at_dropoff_time,
-    String? estimated_arrival_at_pickup_time,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
+    int? id,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?
@@ -5213,10 +5235,11 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
     Object? trip_polyline = _undefined,
     Object? trip_distance = _undefined,
     Object? trip_duration = _undefined,
-    Object? estimated_arrival_at_dropoff_time = _undefined,
-    Object? estimated_arrival_at_pickup_time = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? chat_with_customer_id = _undefined,
+    Object? id = _undefined,
+    Object? estimated_arrival_at_dropoff_time = _undefined,
+    Object? estimated_arrival_at_pickup_time = _undefined,
     Object? cancellation_time = _undefined,
     Object? delivery_cost = _undefined,
     Object? delivery_driver = _undefined,
@@ -5233,14 +5256,6 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         trip_duration: trip_duration == _undefined
             ? _instance.trip_duration
             : (trip_duration as int?),
-        estimated_arrival_at_dropoff_time:
-            estimated_arrival_at_dropoff_time == _undefined
-                ? _instance.estimated_arrival_at_dropoff_time
-                : (estimated_arrival_at_dropoff_time as String?),
-        estimated_arrival_at_pickup_time:
-            estimated_arrival_at_pickup_time == _undefined
-                ? _instance.estimated_arrival_at_pickup_time
-                : (estimated_arrival_at_pickup_time as String?),
         chat_with_service_provider_id:
             chat_with_service_provider_id == _undefined
                 ? _instance.chat_with_service_provider_id
@@ -5249,6 +5264,15 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
             chat_with_customer_id == _undefined || chat_with_customer_id == null
                 ? _instance.chat_with_customer_id
                 : (chat_with_customer_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        estimated_arrival_at_dropoff_time:
+            estimated_arrival_at_dropoff_time == _undefined
+                ? _instance.estimated_arrival_at_dropoff_time
+                : (estimated_arrival_at_dropoff_time as String?),
+        estimated_arrival_at_pickup_time:
+            estimated_arrival_at_pickup_time == _undefined
+                ? _instance.estimated_arrival_at_pickup_time
+                : (estimated_arrival_at_pickup_time as String?),
         cancellation_time: cancellation_time == _undefined
             ? _instance.cancellation_time
             : (cancellation_time as String?),
@@ -5288,10 +5312,11 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
     String? trip_polyline,
     int? trip_distance,
     int? trip_duration,
-    String? estimated_arrival_at_dropoff_time,
-    String? estimated_arrival_at_pickup_time,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
+    int? id,
+    String? estimated_arrival_at_dropoff_time,
+    String? estimated_arrival_at_pickup_time,
     String? cancellation_time,
     double? delivery_cost,
     Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery$delivery_driver?

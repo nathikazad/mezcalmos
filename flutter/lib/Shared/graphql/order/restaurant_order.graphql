@@ -5,7 +5,6 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     notes
     scheduled_time
     stripe_info
-
     restaurant {
       id
       details {
@@ -23,8 +22,6 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     items {
       in_json
       restaurant_item {
-        id
-        image
         item_type
         name {
           translations {
@@ -41,6 +38,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         position
         category_id
         available
+        id
+        image
         restaurant_id
         special_period_end
         special_period_start
@@ -80,9 +79,12 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     }
 
     order_time
-
     customer_app_type
     notes
+    tax
+    total_cost
+    items_cost
+    chat_id
     customer {
       user {
         id
@@ -90,26 +92,21 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         image
       }
     }
-    tax
-    total_cost
-    items_cost
-    chat_id
     delivery_cost
     delivery {
       trip_polyline
       trip_distance
       trip_duration
-      estimated_arrival_at_dropoff_time
-      estimated_arrival_at_pickup_time
       chat_with_service_provider_id
       chat_with_customer_id
+      id
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       cancellation_time
 
       delivery_cost
-
       delivery_driver {
         id
-
         user {
           id
           image
