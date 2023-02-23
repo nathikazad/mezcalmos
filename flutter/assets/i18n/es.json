@@ -741,15 +741,23 @@
     "pages": {
       "CreateServiceView": {
         "pages": {
+          "createServiceStartPage":{
+            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales.",
+            "createText":"Crear"
+          },
           "CreateServiceInfoPage": {
-            "name": "Nombre",
+            "name": "Nombre del restaurante",
+            "hintNameText": "Introduzca su nombre",
+            "uploadImageText":"Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
             "location": "Nombre",
             "locationError": "Proporcione una ubicación",
             "pickLoc": "Ubicación de selección",
-            "imageError": "Se requiere una imagen"
+            "imageError": "Se requiere una imagen",
+            "description": "Descripción"
           }
         },
+        "createText":"Create",
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",
@@ -1970,7 +1978,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reseñas",
-        "base": "Basado en",
+        "base": "Basada en",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
         "poor": "Pobre",

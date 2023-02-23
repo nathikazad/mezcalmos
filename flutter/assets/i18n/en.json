@@ -739,15 +739,23 @@
       "pages": {
         "CreateServiceView": {
           "pages": {
+            "createServiceStartPage":{
+              "openNewRestaurantText":"Create a new restaurant and receive orders from your local customers."
+              
+            },
             "CreateServiceInfoPage": {
-              "name": "Name",
+              "name": "Restaurant name",
+              "hintNameText": "Enter your name",
+              "uploadImageText":"Upload your profile image",
               "nameError": "Please provide a name",
               "location": "Name",
               "locationError": "Please provide a name",
               "pickLoc": "Pick location",
-              "imageError": "Image is required"
+              "imageError": "Image is required",
+              "description": "Description"
             }
           },
+          "createText":"Create",
           "info": "Information",
           "schedule": "Schedule",
           "delivery": "Delivery",
@@ -1976,7 +1984,7 @@
         },
         "ROpReviewsView": {
           "reviews": "Reviews",
-          "base": "Base on",
+          "base": "Based on",
           "perfomTitle": "Your review performance is",
           "excellent": "Excellent",
           "poor": "Poor",
