@@ -278,32 +278,6 @@ class CloudFunctions {
       });
   }
 
-  static Future<void> restaurant2_addRestaurantOperator(
-      {required num serviceProviderId,
-      required ParticipantType participantType,
-      NotificationInfo? notificationInfo,
-      String? appVersion}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-addRestaurantOperator",
-      parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
-        "participantType":participantType.toFirebaseFormatString(),
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-        "appVersion":appVersion,
-      });
-  }
-
-  static Future<void> restaurant2_authorizeRestaurantOperator(
-      {required num newOperatorId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-authorizeRestaurantOperator",
-      parameters: <String, dynamic>{
-        "newOperatorId":newOperatorId,
-        "approved":approved,
-      });
-  }
-
   static Future<void> laundry2_createLaundry(
       {required String name,
       required String image,
@@ -405,32 +379,6 @@ class CloudFunctions {
         "deliveryOrderId":deliveryOrderId,
         "deliveryDriverId":deliveryDriverId,
         "changeDriver":changeDriver,
-      });
-  }
-
-  static Future<void> delivery2_addDeliveryOperator(
-      {required num serviceProviderId,
-      required ParticipantType participantType,
-      NotificationInfo? notificationInfo,
-      String? appVersion}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-addDeliveryOperator",
-      parameters: <String, dynamic>{
-        "serviceProviderId":serviceProviderId,
-        "participantType":participantType.toFirebaseFormatString(),
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-        "appVersion":appVersion,
-      });
-  }
-
-  static Future<void> delivery2_authorizeDeliveryOperator(
-      {required num newOperatorId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-authorizeDeliveryOperator",
-      parameters: <String, dynamic>{
-        "newOperatorId":newOperatorId,
-        "approved":approved,
       });
   }
 
