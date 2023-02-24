@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -100,12 +101,18 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           //   width: 5,
                           // ),
                           Flexible(
-                            flex: 3,
+                            flex: widget.restaurant.paymentInfo?.acceptCard ==
+                                    true
+                                ? 4
+                                : 3,
                             fit: FlexFit.tight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
+                                SizedBox(
+                                  width: 8
+                                ),
                                 Icon(
                                   Icons.payments_outlined,
                                   color: Colors.black,
@@ -129,13 +136,20 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           // ),
                           if (widget.restaurant.rate != null)
                             Flexible(
-                              flex: 3,
+                              flex: 4,
                               child: Row(
                                 children: [
+                                  SizedBox(
+                                    width: widget.restaurant.paymentInfo
+                                                ?.acceptCard ==
+                                            true
+                                        ? 8
+                                        : 0,
+                                  ),
                                   Icon(
                                     Icons.star,
                                     //size: 18,
-                                    color: Color(0xFF6779FE),
+                                    color: primaryBlueColor,
                                   ),
                                   SizedBox(
                                     width: 3,

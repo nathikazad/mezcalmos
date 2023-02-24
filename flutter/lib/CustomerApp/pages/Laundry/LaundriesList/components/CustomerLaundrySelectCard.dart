@@ -102,7 +102,7 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                       ),
                     ),
                     Flexible(
-                      flex: 6,
+                      flex: 5,
                       fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

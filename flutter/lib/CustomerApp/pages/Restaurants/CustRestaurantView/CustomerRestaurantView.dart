@@ -154,7 +154,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage] ?? '${_i18n()["undefinedCategory"]}',
+              category.name?[userLanguage]?.capitalizeFirst ??
+                  '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
                   ? Get.theme.textTheme.headline5
                   : Get.textTheme.bodyText2?.copyWith(
@@ -167,7 +168,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
                 style: Get.textTheme.bodyText2?.copyWith(
-                  color: Color(0xFF787878),
+                  color: offLightShadeGreyColor,
                 ),
               ),
             ),
