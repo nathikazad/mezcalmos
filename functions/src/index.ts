@@ -22,10 +22,6 @@ import { cancelLaundryFromCustomer } from "./laundry/cancelLaundryFromCustomer";
 import { changeDeliveryStatus } from "./delivery/statusChange";
 import { addOperator } from "./shared/operator/addOperator";
 import { authorizeOperator } from "./shared/operator/authorizeOperator";
-import { addRestaurantOperator } from "./restaurant/addRestaurantOperator";
-import { authorizeRestaurantOperator } from "./restaurant/authorizeOperator";
-import { addDeliveryOperator } from "./delivery/addDeliveryOperator";
-import { authorizeDeliveryOperator } from "./delivery/authorizeOperator";
 
 if (process.env.FUNCTIONS_EMULATOR === "true") {
   firebase.initializeApp({
@@ -74,8 +70,6 @@ export const restaurant2 = {
   orderPickedUpByCustomer: authenticatedCall((userId, data) => restaurantStatusChange.orderPickedUpByCustomer(userId, data)),
   cancelOrderFromAdmin: authenticatedCall((userId, data) => restaurantStatusChange.cancelOrder(userId, data)),
   cancelOrderFromCustomer: authenticatedCall((userId, data) => cancelOrderFromCustomer(userId, data)),
-  addRestaurantOperator: authenticatedCall((userId, data) => addRestaurantOperator(userId, data)),
-  authorizeRestaurantOperator: authenticatedCall((userId, data) => authorizeRestaurantOperator(userId, data)),
   // refundCustomerCustomAmount: authenticatedCall((userId, data) => restaurantStatusChange.refundCustomerCustomAmount(userId, data)),
 }
 
@@ -87,14 +81,10 @@ export const laundry2 = {
   readyForDeliveryOrder: authenticatedCall((userId, data) => laundryStatusChange.readyForDeliveryOrder(userId, data)),
   cancelFromCustomer: authenticatedCall((userId, data) => cancelLaundryFromCustomer(userId, data)),
   cancelFromAdmin: authenticatedCall((userId, data) => laundryStatusChange.cancelOrder(userId, data)),
-//   setWeight: authenticatedCall((userId, data) => laundryStatusChange.setWeight(userId, data)),
-//   setEstimatedLaundryReadyTime: authenticatedCall((userId, data) => laundryStatusChange.setEstimatedLaundryReadyTime(userId, data)),
 }
 
 export const delivery2 = {
   assignDriver: authenticatedCall((userId, data) => assignDriver(userId, data)),
-  addDeliveryOperator: authenticatedCall((userId, data) => addDeliveryOperator(userId, data)),
-  authorizeDeliveryOperator: authenticatedCall((userId, data) => authorizeDeliveryOperator(userId, data)),
   changeStatus: authenticatedCall((userId, data) => changeDeliveryStatus(userId, data)),
   
 }

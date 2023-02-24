@@ -1,4 +1,21 @@
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+class SendOtpResponse {
+  String? errorMessage;
+  num? secondsLeft;
+  ServerResponseStatus status;
+  SendOtpResponse(this.errorMessage, this.secondsLeft, this.status);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "errorMessage": errorMessage,
+      "secondsLeft": secondsLeft,
+      "status": status
+    };
+  }
+
+  factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) {
+    return SendOtpResponse(
+        json["errorMessage?"], json["secondsLeft?"], json["status"]);
+  }
+}
 
 class AuthResponse {
   String? token;
@@ -108,42 +125,53 @@ extension ParseParticipantTypeToString on ParticipantType {
   }
 }
 
-extension ParseStringToStripePaymentStatus on String {
-  ParticipantType? toCloudParticipantType() {
-    return ParticipantType.values
-        .firstWhere((ParticipantType e) => e.toFirebaseFormatString() == this);
-  }
-}
-
 class CallUserResponse {
-  num uid;
+  num id;
   String token;
   String? name;
   String? image;
   String expirationTime;
   ParticipantType participantType;
-  CallUserResponse(this.uid, this.token, this.name, this.image,
+  CallUserResponse(this.id, this.token, this.name, this.image,
       this.expirationTime, this.participantType);
   Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "uid": uid,
+      "id": id,
       "token": token,
       "name": name,
       "image": image,
       "expirationTime": expirationTime,
+      "participantType": participantType
     };
   }
 
   factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) {
-    mezDbgPrint("🥰🥰🥰🥰🥰🥰");
-    mezDbgPrint(json);
-    return CallUserResponse(
-        json["id"],
-        json["token"],
-        json["name"],
-        json["image"],
-        json["expirationTime"],
-        json["participantType"].toString().toCloudParticipantType()!);
+    return CallUserResponse(json["id"], json["token"], json["name?"],
+        json["image?"], json["expirationTime"], json["participantType"]);
+  }
+}
+
+class NotificationInfo {
+  String token;
+  bool turnOffNotifications;
+  AppType appType;
+  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
+  Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "token": token,
+      "turnOffNotifications": turnOffNotifications,
+      "appType": appType
+    };
+  }
+}
+
+enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
+
+extension ParseDeliveryServiceProviderTypeToString
+    on DeliveryServiceProviderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
@@ -228,20 +256,6 @@ class CheckoutResponse {
   }
 }
 
-class NotificationInfo {
-  String token;
-  bool turnOffNotifications;
-  AppType appType;
-  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
-  Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "token": token,
-      "turnOffNotifications": turnOffNotifications,
-      "appType": appType
-    };
-  }
-}
-
 class ReqLaundryResponse {
   num orderId;
   ReqLaundryResponse(this.orderId);
@@ -292,6 +306,15 @@ extension ParseAppTypeToString on AppType {
 enum Language { EN, ES }
 
 extension ParseLanguageToString on Language {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum ServerResponseStatus { Success, Error }
+
+extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);

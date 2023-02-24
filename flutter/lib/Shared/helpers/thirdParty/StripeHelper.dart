@@ -18,6 +18,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["Shared"]["helpers"]["StripeHelper"];
 //
@@ -132,7 +133,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
 }) async {
   try {
     cModel.PaymentIntentResponse res =
-        await CloudFunctions.stripe_getPaymentIntent(
+        await CloudFunctions.stripe2_getPaymentIntent(
             paymentAmount: paymentAmount,
             serviceProviderDetailsId: serviceProviderDetailsId);
     return res;
@@ -150,7 +151,7 @@ Future<cModel.PaymentIntentResponse?> getPaymentIntent({
 Future<String?> addCard({required String paymentMethod}) async {
   try {
     cModel.AddCardResponse res =
-        await CloudFunctions.stripe_addCard(paymentMethod: paymentMethod);
+        await CloudFunctions.stripe2_addCard(paymentMethod: paymentMethod);
     return res.cardId;
   } on FirebaseFunctionsException catch (e, stk) {
     showErrorSnackBar(errorText: e.message ?? "");
@@ -180,7 +181,7 @@ Future<String?> acceptPaymentWithSavedCard(
   mezDbgPrint("Payment with saved Card ============> ${card.toString()}");
 
   try {
-    cModel.ChargeCardResponse res = await CloudFunctions.stripe_chargeCard(
+    cModel.ChargeCardResponse res = await CloudFunctions.stripe2_chargeCard(
         serviceProviderDetailsId: serviceProviderDetailsId,
         cardId: card.cardId,
         paymentAmount: paymentAmount);
@@ -317,7 +318,7 @@ Future<cModel.SetupResponse> onboardServiceProvider(
 ) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  return await CloudFunctions.stripe_setupServiceProvider(
+  return await CloudFunctions.stripe2_setupServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
 }
@@ -328,7 +329,7 @@ Future<void> updateServiceProvider(
     Map<PaymentType, bool> acceptedPayments) async {
   mezDbgPrint("Payload ================>>> $serviceProviderDetailsId");
   mezDbgPrint("Payload ================>>> $orderType");
-  await CloudFunctions.stripe_updateServiceProvider(
+  await CloudFunctions.stripe2_updateServiceProvider(
     serviceProviderDetailsId: serviceProviderDetailsId,
   );
 

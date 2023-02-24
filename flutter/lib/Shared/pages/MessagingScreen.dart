@@ -337,7 +337,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         Get.toNamed<void>(kAgoraCallScreen, arguments: {
           "chatId": chatId,
           "talkingTo": Participant(
-              id: response.uid.toInt(),
+              id: response.id.toInt(),
               image: response.image!,
               name: response.name!,
               participantType: response.participantType

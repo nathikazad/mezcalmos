@@ -149,7 +149,7 @@ class CustLaundryOrderRequestViewController {
   Future<num?> _checkoutOrder(LaundryRequest laundryRequest) async {
     try {
       cloudFunctionModels.ReqLaundryResponse response =
-          await CloudFunctions.laundry_requestLaundry(
+          await CloudFunctions.laundry2_requestLaundry(
         storeId: laundryRequest.laundryId,
         customerAppType: cloudFunctionModels.CustomerAppType.Native,
         customerLocation: cloudFunctionModels.Location(

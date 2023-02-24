@@ -343,6 +343,7 @@ if __name__ == "__main__":
   extractFunctionNamesGroupAsDictionary()
   uniqueTypes["AppType"] = True
   uniqueTypes["Language"] = True
+  uniqueTypes["ServerResponseStatus"] = True
 
   for key in uniqueTypes:
     print(key)
