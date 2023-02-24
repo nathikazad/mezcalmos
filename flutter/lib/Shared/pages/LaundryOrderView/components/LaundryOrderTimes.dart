@@ -12,8 +12,8 @@ dynamic _i18n() =>
         ["LaundryCurrentOrderView"]["Components"]["CustomerLaundryOrderEst"];
 //
 
-class LaundryOpOrderTimes extends StatelessWidget {
-  const LaundryOpOrderTimes({Key? key, required this.order}) : super(key: key);
+class LaundryOrderTimes extends StatelessWidget {
+  const LaundryOrderTimes({Key? key, required this.order}) : super(key: key);
   final LaundryOrder order;
 
   @override

@@ -204,7 +204,7 @@ class _ROpChoiceViewState extends State<ROpChoiceView>
   }
 
   AppBar _choiceAppBar() {
-    return mezcalmosAppBar(
+    return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
         MezRouter.back(result: viewController.needToFetch.value);

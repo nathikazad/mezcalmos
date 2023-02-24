@@ -401,6 +401,35 @@ const documentNodeQuerygetOperatorByUserId = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'service_link_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_details_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -1155,20 +1184,34 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$user<TRes>
 class Query$getOperatorByUserId$delivery_operator$delivery_company {
   Query$getOperatorByUserId$delivery_operator$delivery_company({
     required this.details_id,
+    this.details,
+    required this.delivery_details_id,
     required this.$__typename,
   });
 
   factory Query$getOperatorByUserId$delivery_operator$delivery_company.fromJson(
       Map<String, dynamic> json) {
     final l$details_id = json['details_id'];
+    final l$details = json['details'];
+    final l$delivery_details_id = json['delivery_details_id'];
     final l$$__typename = json['__typename'];
     return Query$getOperatorByUserId$delivery_operator$delivery_company(
       details_id: (l$details_id as int),
+      details: l$details == null
+          ? null
+          : Query$getOperatorByUserId$delivery_operator$delivery_company$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      delivery_details_id: (l$delivery_details_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int details_id;
+
+  final Query$getOperatorByUserId$delivery_operator$delivery_company$details?
+      details;
+
+  final int delivery_details_id;
 
   final String $__typename;
 
@@ -1176,6 +1219,10 @@ class Query$getOperatorByUserId$delivery_operator$delivery_company {
     final _resultData = <String, dynamic>{};
     final l$details_id = details_id;
     _resultData['details_id'] = l$details_id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1184,9 +1231,13 @@ class Query$getOperatorByUserId$delivery_operator$delivery_company {
   @override
   int get hashCode {
     final l$details_id = details_id;
+    final l$details = details;
+    final l$delivery_details_id = delivery_details_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$details_id,
+      l$details,
+      l$delivery_details_id,
       l$$__typename,
     ]);
   }
@@ -1204,6 +1255,16 @@ class Query$getOperatorByUserId$delivery_operator$delivery_company {
     final l$details_id = details_id;
     final lOther$details_id = other.details_id;
     if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1240,8 +1301,13 @@ abstract class CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_com
 
   TRes call({
     int? details_id,
+    Query$getOperatorByUserId$delivery_operator$delivery_company$details?
+        details,
+    int? delivery_details_id,
     String? $__typename,
   });
+  CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+      TRes> get details;
 }
 
 class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$delivery_company<
@@ -1263,16 +1329,35 @@ class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$delivery_company
 
   TRes call({
     Object? details_id = _undefined,
+    Object? details = _undefined,
+    Object? delivery_details_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getOperatorByUserId$delivery_operator$delivery_company(
         details_id: details_id == _undefined || details_id == null
             ? _instance.details_id
             : (details_id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getOperatorByUserId$delivery_operator$delivery_company$details?),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+            local$details, (e) => call(details: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$delivery_company<
@@ -1287,6 +1372,159 @@ class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$delivery_com
 
   call({
     int? details_id,
+    Query$getOperatorByUserId$delivery_operator$delivery_company$details?
+        details,
+    int? delivery_details_id,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details
+              .stub(_res);
+}
+
+class Query$getOperatorByUserId$delivery_operator$delivery_company$details {
+  Query$getOperatorByUserId$delivery_operator$delivery_company$details({
+    this.service_link_id,
+    required this.$__typename,
+  });
+
+  factory Query$getOperatorByUserId$delivery_operator$delivery_company$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_link_id = json['service_link_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+      service_link_id: (l$service_link_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? service_link_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_link_id = service_link_id;
+    _resultData['service_link_id'] = l$service_link_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_link_id = service_link_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_link_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getOperatorByUserId$delivery_operator$delivery_company$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_link_id = service_link_id;
+    final lOther$service_link_id = other.service_link_id;
+    if (l$service_link_id != lOther$service_link_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getOperatorByUserId$delivery_operator$delivery_company$details
+    on Query$getOperatorByUserId$delivery_operator$delivery_company$details {
+  CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+          Query$getOperatorByUserId$delivery_operator$delivery_company$details>
+      get copyWith =>
+          CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+    TRes> {
+  factory CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+    Query$getOperatorByUserId$delivery_operator$delivery_company$details
+        instance,
+    TRes Function(
+            Query$getOperatorByUserId$delivery_operator$delivery_company$details)
+        then,
+  ) = _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details;
+
+  factory CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details;
+
+  TRes call({
+    int? service_link_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+            TRes> {
+  _CopyWithImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getOperatorByUserId$delivery_operator$delivery_company$details
+      _instance;
+
+  final TRes Function(
+          Query$getOperatorByUserId$delivery_operator$delivery_company$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_link_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(
+          Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+        service_link_id: service_link_id == _undefined
+            ? _instance.service_link_id
+            : (service_link_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getOperatorByUserId$delivery_operator$delivery_company$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getOperatorByUserId$delivery_operator$delivery_company$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? service_link_id,
     String? $__typename,
   }) =>
       _res;
@@ -2351,6 +2589,35 @@ const documentNodeQuerygetCompanyOerators = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'details'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'service_link_id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: 'delivery_details_id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: '__typename'),
                 alias: null,
                 arguments: [],
@@ -2834,20 +3101,34 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator<TRes>
 class Query$getCompanyOerators$delivery_operator$delivery_company {
   Query$getCompanyOerators$delivery_operator$delivery_company({
     required this.details_id,
+    this.details,
+    required this.delivery_details_id,
     required this.$__typename,
   });
 
   factory Query$getCompanyOerators$delivery_operator$delivery_company.fromJson(
       Map<String, dynamic> json) {
     final l$details_id = json['details_id'];
+    final l$details = json['details'];
+    final l$delivery_details_id = json['delivery_details_id'];
     final l$$__typename = json['__typename'];
     return Query$getCompanyOerators$delivery_operator$delivery_company(
       details_id: (l$details_id as int),
+      details: l$details == null
+          ? null
+          : Query$getCompanyOerators$delivery_operator$delivery_company$details
+              .fromJson((l$details as Map<String, dynamic>)),
+      delivery_details_id: (l$delivery_details_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final int details_id;
+
+  final Query$getCompanyOerators$delivery_operator$delivery_company$details?
+      details;
+
+  final int delivery_details_id;
 
   final String $__typename;
 
@@ -2855,6 +3136,10 @@ class Query$getCompanyOerators$delivery_operator$delivery_company {
     final _resultData = <String, dynamic>{};
     final l$details_id = details_id;
     _resultData['details_id'] = l$details_id;
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -2863,9 +3148,13 @@ class Query$getCompanyOerators$delivery_operator$delivery_company {
   @override
   int get hashCode {
     final l$details_id = details_id;
+    final l$details = details;
+    final l$delivery_details_id = delivery_details_id;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$details_id,
+      l$details,
+      l$delivery_details_id,
       l$$__typename,
     ]);
   }
@@ -2883,6 +3172,16 @@ class Query$getCompanyOerators$delivery_operator$delivery_company {
     final l$details_id = details_id;
     final lOther$details_id = other.details_id;
     if (l$details_id != lOther$details_id) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -2919,8 +3218,13 @@ abstract class CopyWith$Query$getCompanyOerators$delivery_operator$delivery_comp
 
   TRes call({
     int? details_id,
+    Query$getCompanyOerators$delivery_operator$delivery_company$details?
+        details,
+    int? delivery_details_id,
     String? $__typename,
   });
+  CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+      TRes> get details;
 }
 
 class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$delivery_company<
@@ -2942,16 +3246,35 @@ class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$delivery_company<
 
   TRes call({
     Object? details_id = _undefined,
+    Object? details = _undefined,
+    Object? delivery_details_id = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getCompanyOerators$delivery_operator$delivery_company(
         details_id: details_id == _undefined || details_id == null
             ? _instance.details_id
             : (details_id as int),
+        details: details == _undefined
+            ? _instance.details
+            : (details
+                as Query$getCompanyOerators$delivery_operator$delivery_company$details?),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
+  CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+      TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details
+            .stub(_then(_instance))
+        : CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details(
+            local$details, (e) => call(details: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_company<
@@ -2966,6 +3289,158 @@ class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_comp
 
   call({
     int? details_id,
+    Query$getCompanyOerators$delivery_operator$delivery_company$details?
+        details,
+    int? delivery_details_id,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+          TRes>
+      get details =>
+          CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details
+              .stub(_res);
+}
+
+class Query$getCompanyOerators$delivery_operator$delivery_company$details {
+  Query$getCompanyOerators$delivery_operator$delivery_company$details({
+    this.service_link_id,
+    required this.$__typename,
+  });
+
+  factory Query$getCompanyOerators$delivery_operator$delivery_company$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$service_link_id = json['service_link_id'];
+    final l$$__typename = json['__typename'];
+    return Query$getCompanyOerators$delivery_operator$delivery_company$details(
+      service_link_id: (l$service_link_id as int?),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int? service_link_id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$service_link_id = service_link_id;
+    _resultData['service_link_id'] = l$service_link_id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$service_link_id = service_link_id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$service_link_id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other
+            is Query$getCompanyOerators$delivery_operator$delivery_company$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$service_link_id = service_link_id;
+    final lOther$service_link_id = other.service_link_id;
+    if (l$service_link_id != lOther$service_link_id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$getCompanyOerators$delivery_operator$delivery_company$details
+    on Query$getCompanyOerators$delivery_operator$delivery_company$details {
+  CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+          Query$getCompanyOerators$delivery_operator$delivery_company$details>
+      get copyWith =>
+          CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+    TRes> {
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details(
+    Query$getCompanyOerators$delivery_operator$delivery_company$details
+        instance,
+    TRes Function(
+            Query$getCompanyOerators$delivery_operator$delivery_company$details)
+        then,
+  ) = _CopyWithImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details;
+
+  factory CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details;
+
+  TRes call({
+    int? service_link_id,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+            TRes> {
+  _CopyWithImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$getCompanyOerators$delivery_operator$delivery_company$details
+      _instance;
+
+  final TRes Function(
+          Query$getCompanyOerators$delivery_operator$delivery_company$details)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? service_link_id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$getCompanyOerators$delivery_operator$delivery_company$details(
+        service_link_id: service_link_id == _undefined
+            ? _instance.service_link_id
+            : (service_link_id as int?),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+        TRes>
+    implements
+        CopyWith$Query$getCompanyOerators$delivery_operator$delivery_company$details<
+            TRes> {
+  _CopyWithStubImpl$Query$getCompanyOerators$delivery_operator$delivery_company$details(
+      this._res);
+
+  TRes _res;
+
+  call({
+    int? service_link_id,
     String? $__typename,
   }) =>
       _res;

@@ -53,7 +53,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back, title: serviceName),
       body: Obx(() {
         if (viewController.hasData) {
@@ -80,7 +80,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
               children: [
                 Text(
                   "${_i18n()['currentOrders']}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: 20,
@@ -103,7 +103,7 @@ class _AdminServiceOrdersViewState extends State<AdminServiceOrdersView> {
                   children: [
                     Text(
                       "${_i18n()['pastOrders']}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                     SizedBox(
                       height: 20,

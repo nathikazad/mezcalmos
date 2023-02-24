@@ -1851,7 +1851,8 @@
             "days": "dias"
           },
           "MinimumCostCard": {
-            "minCost": "Costo mínimo"
+            "minCost": "Costo mínimo",
+            "save" : "Enregistrer costo mínimo"
           }
         }
       },

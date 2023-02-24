@@ -61,7 +61,7 @@ class _RestaurantOrderViewState extends State<RestaurantOrderView> {
 
     mezDbgPrint(viewController.order.value?.dropoffDriver);
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           titleWidget: Obx(() =>
               Text("${viewController.order.value?.customer.name ?? ""}"))),

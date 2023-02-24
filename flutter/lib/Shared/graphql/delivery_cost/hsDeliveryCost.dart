@@ -30,6 +30,7 @@ Future<DeliveryCost?> get_delivery_cost(
       response.parsedData!.delivery_details_by_pk!;
   return DeliveryCost(
       id: data.id,
+      selfDelivery: data.self_delivery,
       // serviceProviderType: providerType,
       // serviceProviderId: serviceProviderId,
       minimumCost: data.minimum_cost,

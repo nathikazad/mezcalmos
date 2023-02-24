@@ -40,7 +40,7 @@ class _LaundryOpPastOrdersListState extends State<LaundryOpPastOrdersList> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar:
-          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
+          MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () => Scrollbar(
           child: SingleChildScrollView(

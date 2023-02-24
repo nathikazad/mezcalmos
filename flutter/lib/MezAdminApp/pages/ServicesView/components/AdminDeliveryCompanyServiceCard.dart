@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];
@@ -57,7 +58,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         onChanged: (bool v) {
                           mezDbgPrint(v);
                           viewController.switchServiceStatus(
-                              serviceId: company.info.hasuraId,
+                              serviceDetailsId: company.serviceDetailsId,
                               providerType: ServiceProviderType.DeliveryCompany,
                               value: v);
                         },
@@ -102,14 +103,41 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         icon: Icons.person,
                         label: "${_i18n()['profile']}",
                         ontap: () {
-                          navigateToServiceInfoEdit(
-                              serviceDetailsId: company.serviceDetailsId,
+                          navigateToServiceProfile(
+                              deliveryDetailsId: company.deliveryDetailsId!,
                               serviceProviderId: company.info.hasuraId,
-                              serviceProviderType:
-                                  ServiceProviderType.DeliveryCompany);
+                              serviceDetailsId: company.serviceDetailsId);
                         }),
                   ],
                 ),
+                if (company.state.isAuthorized == false)
+                  Container(
+                    margin: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        Flexible(
+                            child: MezButton(
+                                height: 45,
+                                backgroundColor: offRedColor,
+                                textColor: Colors.red,
+                                label: "${_i18n()['reject']}",
+                                onClick: () async {})),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Flexible(
+                            child: MezButton(
+                                height: 45,
+                                backgroundColor: primaryBlueColor,
+                                textColor: Colors.white,
+                                label: "${_i18n()['accept']}",
+                                onClick: () async {
+                                  await viewController.approveService(
+                                      detailsId: company.serviceDetailsId);
+                                })),
+                      ],
+                    ),
+                  )
               ],
             ))
           ],

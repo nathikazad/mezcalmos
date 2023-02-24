@@ -44,7 +44,7 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
         return ServiceStripePaymentSetup(viewController: viewController);
       } else if (viewController.setupClicked.isTrue) {
         return Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: MezRouter.back, title: "${_i18n()['payments']}"),
           body: Container(
             alignment: Alignment.center,
@@ -60,7 +60,7 @@ class _ServicePaymentsViewState extends State<ServicePaymentsView> {
         );
       } else
         return Scaffold(
-          appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+          appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: MezRouter.back, title: "${_i18n()['payments']}"),
           body: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),

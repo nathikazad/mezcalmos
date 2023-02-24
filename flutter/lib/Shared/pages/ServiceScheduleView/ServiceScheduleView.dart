@@ -41,7 +41,7 @@ class _ServiceScheduleViewState extends State<ServiceScheduleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           title: '${_i18n()["schedule"]}',
           onClick: MezRouter.back,
           showNotifications: true),

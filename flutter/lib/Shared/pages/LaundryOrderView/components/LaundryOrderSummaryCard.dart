@@ -6,9 +6,9 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpOrderSummaryCard'];
 
-class LaundryOpOrderSummaryCard extends StatelessWidget {
+class LaundryOrderSummaryCard extends StatelessWidget {
   final LaundryOrder order;
-  const LaundryOpOrderSummaryCard({Key? key, required this.order})
+  const LaundryOrderSummaryCard({Key? key, required this.order})
       : super(key: key);
 
   // TODO FIX LANG

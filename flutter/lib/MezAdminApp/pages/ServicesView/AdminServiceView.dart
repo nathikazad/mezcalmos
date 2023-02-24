@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/controllers/AdminTabsViewController.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminDeliveryCompanyServiceCard.dart';
+import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminLaundryServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/components/AdminRestaurantServiceCard.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServicesView/controllers/AdminServiceViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -52,7 +53,9 @@ class _AdminServicesViewState extends State<AdminServicesView> {
     return Container(
       child: (viewController.currentService == ServiceProviderType.Restaurant)
           ? _buildRestaurants()
-          : _buildCompanies(),
+          : (viewController.currentService == ServiceProviderType.Laundry)
+              ? _buildLaundries()
+              : _buildCompanies(),
     );
   }
 
@@ -75,6 +78,31 @@ class _AdminServicesViewState extends State<AdminServicesView> {
             onClick: () async {
               viewController.restLimit.value += 5;
               await viewController.fetchRestaurants();
+            },
+          )
+      ],
+    );
+  }
+
+  Column _buildLaundries() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+            children: List.generate(
+                viewController.laundries!.length,
+                (int index) => AdminLaundryServiceCard(
+                    viewController: viewController,
+                    laundry: viewController.laundries![index]))),
+        if (viewController.restaurants!.length ==
+            viewController.restLimit.value)
+          MezButton(
+            label: "View more",
+            backgroundColor: secondaryLightBlueColor,
+            textColor: primaryBlueColor,
+            onClick: () async {
+              viewController.laundryLimit.value += 5;
+              await viewController.fetchLaundries();
             },
           )
       ],
@@ -110,7 +138,7 @@ class _AdminServicesViewState extends State<AdminServicesView> {
       margin: const EdgeInsets.all(8),
       child: TextFormField(
         textAlignVertical: TextAlignVertical.center,
-        style: Get.textTheme.bodyText1,
+        style: Get.textTheme.bodyLarge,
         onChanged: (String value) {
           // viewController.searchQuery.value = value;
           // viewController.filter();

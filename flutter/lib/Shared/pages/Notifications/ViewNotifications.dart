@@ -43,7 +43,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Scaffold(
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: MezRouter.back, title: _i18n()['title']),
         body: Obx(() {
           if (controller.notifications.isNotEmpty) {

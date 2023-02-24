@@ -55,7 +55,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),
@@ -97,7 +97,6 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-      
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(

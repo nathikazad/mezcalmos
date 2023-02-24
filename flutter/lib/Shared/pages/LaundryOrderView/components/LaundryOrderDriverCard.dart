@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -10,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -17,10 +17,10 @@ import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
     ["OrderView"]["Components"]["LaundryOpOrderDriverCard"];
 
-class LaundryOpOrderDriverCard extends StatelessWidget {
-  const LaundryOpOrderDriverCard({Key? key, required this.viewController})
+class LaundryOrderDriverCard extends StatelessWidget {
+  const LaundryOrderDriverCard({Key? key, required this.viewController})
       : super(key: key);
-  final LaundryOpOrderViewController viewController;
+  final LaundryOrderViewController viewController;
   @override
   Widget build(BuildContext context) {
     return Card(

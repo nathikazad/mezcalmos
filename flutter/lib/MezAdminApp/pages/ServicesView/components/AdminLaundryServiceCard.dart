@@ -6,7 +6,7 @@ import 'package:mezcalmos/MezAdminApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
+import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
@@ -16,10 +16,10 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings["MezAdmin"]["pages"]
     ["AdminServicesView"]["components"]["adminServiceCard"];
 
-class AdminRestaurantServiceCard extends StatelessWidget {
-  const AdminRestaurantServiceCard(
-      {super.key, required this.restaurant, required this.viewController});
-  final Restaurant restaurant;
+class AdminLaundryServiceCard extends StatelessWidget {
+  const AdminLaundryServiceCard(
+      {super.key, required this.laundry, required this.viewController});
+  final Laundry laundry;
   final AdminServicesViewController viewController;
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,8 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                              restaurant.info.image))),
+                          image:
+                              CachedNetworkImageProvider(laundry.info.image))),
                 ),
                 SizedBox(
                   width: 10,
@@ -55,7 +55,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                         Flexible(
                           fit: FlexFit.tight,
                           child: Text(
-                            restaurant.info.name,
+                            laundry.info.name,
                             style: Get.textTheme.bodyLarge,
                           ),
                         ),
@@ -64,12 +64,11 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                           child: Switch(
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
-                            value:
-                                restaurant.state.status == ServiceStatus.Open,
+                            value: laundry.state.status == ServiceStatus.Open,
                             onChanged: (bool v) {
                               viewController.switchServiceStatus(
-                                  serviceDetailsId: restaurant.serviceDetailsId,
-                                  providerType: ServiceProviderType.Restaurant,
+                                  serviceDetailsId: laundry.serviceDetailsId,
+                                  providerType: ServiceProviderType.Laundry,
                                   value: v);
                             },
                             activeColor: primaryBlueColor,
@@ -79,37 +78,35 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                     ),
                     Container(
                         margin: const EdgeInsets.symmetric(vertical: 5),
-                        child: Text(restaurant.info.name)),
+                        child: Text(laundry.info.name)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _smallBtn(
-                            icon: Icons.flatware,
-                            label: "${_i18n()['menu']}",
+                            icon: Icons.attach_money,
+                            label: "${_i18n()['costs']}",
                             ontap: () {
-                              MezRouter.toNamed(getRestaurantMenuRoute(
-                                  restaurantId: restaurant.info.hasuraId));
+                              MezRouter.toNamed(getLaundryAdminRoute(
+                                  laundryId: laundry.info.hasuraId));
                             }),
                         _smallBtn(
                             icon: Icons.history,
                             label: "${_i18n()['orders']}",
                             ontap: () {
                               getserviceOrdersRoute(
-                                  serviceName: restaurant.info.name,
-                                  serviceProviderId: restaurant.info.hasuraId,
+                                  serviceName: laundry.info.name,
+                                  serviceProviderId: laundry.info.hasuraId,
                                   serviceProviderType:
-                                      ServiceProviderType.Restaurant);
+                                      ServiceProviderType.Laundry);
                             }),
                         _smallBtn(
                             icon: Icons.person,
                             label: "${_i18n()['profile']}",
                             ontap: () {
                               navigateToServiceProfile(
-                                  deliveryDetailsId:
-                                      restaurant.deliveryDetailsId!,
-                                  serviceProviderId: restaurant.info.hasuraId,
-                                  serviceDetailsId:
-                                      restaurant.serviceDetailsId);
+                                deliveryDetailsId: laundry.deliveryDetailsId,
+                                  serviceProviderId: laundry.info.hasuraId,
+                                  serviceDetailsId: laundry.serviceDetailsId);
                             }),
                       ],
                     ),
@@ -117,7 +114,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                 ))
               ],
             ),
-            if (restaurant.state.isAuthorized == false)
+            if (laundry.state.isAuthorized == false)
               Container(
                 margin: const EdgeInsets.all(5),
                 child: Row(
@@ -140,7 +137,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             label: "${_i18n()['accept']}",
                             onClick: () async {
                               await viewController.approveService(
-                                  detailsId: restaurant.serviceDetailsId);
+                                  detailsId: laundry.serviceDetailsId);
                             })),
                   ],
                 ),

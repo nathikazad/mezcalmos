@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -23,9 +22,11 @@ class OperatorsListView extends StatefulWidget {
     super.key,
     this.serviceProviderType,
     this.serviceProviderId,
+    this.serviceLinkId,
     this.showAppBar,
   });
   final int? serviceProviderId;
+  final int? serviceLinkId;
   final ServiceProviderType? serviceProviderType;
   final bool? showAppBar;
 
@@ -36,6 +37,7 @@ class OperatorsListView extends StatefulWidget {
 class _OperatorsListViewState extends State<OperatorsListView> {
   late OperatorsListViewController viewController;
   int? serviceProviderId;
+  int? serviceLinkId;
   bool showAppBar = true;
   ServiceProviderType? serviceProviderType;
   @override
@@ -46,7 +48,8 @@ class _OperatorsListViewState extends State<OperatorsListView> {
     } else {
       viewController = RestaurantOperatorsListViewController();
     }
-    viewController.init(serviceProviderId: serviceProviderId!);
+    viewController.init(
+        serviceProviderId: serviceProviderId!, serviceLinkId: serviceLinkId!);
 
     super.initState();
   }
@@ -54,6 +57,8 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   void _settingVariables() {
     serviceProviderId = widget.serviceProviderId ??
         int.tryParse(Get.parameters["serviceProviderId"]!);
+    serviceProviderId =
+        widget.serviceLinkId ?? int.tryParse(Get.parameters["serviceLinkId"]!);
     showAppBar =
         widget.showAppBar ?? Get.arguments?["showAppBar"] as bool? ?? true;
     serviceProviderType = widget.serviceProviderType ??
@@ -64,7 +69,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: (showAppBar)
-            ? mezcalmosAppBar(AppBarLeftButtonType.Back,
+            ? MezcalmosAppBar(AppBarLeftButtonType.Back,
                 onClick: MezRouter.back, title: "${_i18n()['operators']}")
             : null,
         body: SingleChildScrollView(
@@ -73,9 +78,8 @@ class _OperatorsListViewState extends State<OperatorsListView> {
             children: [
               MezAddButton(
                 onClick: () async {
-                  await MezRouter.toNamed(kTabsView);
                   // await viewController.fetchServiceLinks();
-                  // await _addOperatorSheet();
+                  await _addOperatorSheet();
                 },
                 title: "${_i18n()['addOperator']}",
               ),
@@ -117,7 +121,7 @@ class _OperatorsListViewState extends State<OperatorsListView> {
                     alignment: Alignment.center,
                     child: Text(
                       "${_i18n()['title']}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),

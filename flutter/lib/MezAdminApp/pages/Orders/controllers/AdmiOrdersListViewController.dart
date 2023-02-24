@@ -14,9 +14,11 @@ class AdmiOrdersListViewController {
   // obs //
   Rxn<List<MinimalOrder>> restaurantOrders = Rxn();
   Rxn<List<MinimalOrder>> deliveryOrders = Rxn();
+  Rxn<List<MinimalOrder>> laundryOrders = Rxn();
   // streams
   StreamSubscription<List<MinimalOrder>?>? rOrdersStream;
   StreamSubscription<List<MinimalOrder>?>? dvOrdersStream;
+  StreamSubscription<List<MinimalOrder>?>? laundryOrderStream;
   String? subscriptionId;
 
 // getters //
@@ -28,12 +30,11 @@ class AdmiOrdersListViewController {
     this.adminTabsViewController = adminTabsViewController;
     restaurantOrders.value =
         await get_admin_restaurant_orders(inProcess: true, withCache: false);
-    adminTabsViewController.restOrdersCount.value =
-        restaurantOrders.value!.length;
 
     deliveryOrders.value =
         await get_admin_dv_orders(inProcess: true, withCache: false);
-    adminTabsViewController.dvOrdersCount.value = deliveryOrders.value!.length;
+    laundryOrders.value =
+        await get_admin_laundry_orders(inProcess: true, withCache: false);
 
     subscriptionId = hasuraDb.createSubscription(start: () {
       rOrdersStream = listen_on_admin_restaurant_orders(inProcess: true)
@@ -54,11 +55,22 @@ class AdmiOrdersListViewController {
           deliveryOrders.refresh();
         }
       });
+      laundryOrderStream = listen_on_admin_laundry_orders(inProcess: true)
+          .listen((List<MinimalOrder>? event) {
+        if (event != null) {
+          laundryOrders.value?.clear();
+          laundryOrders.value?.addAll(event);
+
+          laundryOrders.refresh();
+        }
+      });
     }, cancel: () {
       dvOrdersStream?.cancel();
       dvOrdersStream = null;
       rOrdersStream?.cancel();
       rOrdersStream = null;
+      laundryOrderStream?.cancel();
+      laundryOrderStream = null;
     });
   }
 }

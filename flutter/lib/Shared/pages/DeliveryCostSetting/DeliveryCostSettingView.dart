@@ -56,7 +56,7 @@ class _DeliveryCostSettingViewState extends State<DeliveryCostSettingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: asTab ? null : MezRouter.back,
           title: "${_i18n()['dvCost']}"),

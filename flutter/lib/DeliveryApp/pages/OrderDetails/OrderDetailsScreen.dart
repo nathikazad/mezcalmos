@@ -42,7 +42,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
       ),

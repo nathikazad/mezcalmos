@@ -44,7 +44,7 @@ class _CustLaundryOrderRequestViewState
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           titleWidget: Obx(() => Text(

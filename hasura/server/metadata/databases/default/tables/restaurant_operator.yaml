@@ -17,16 +17,22 @@ object_relationships:
   - name: user
     using:
       foreign_key_constraint_on: user_id
-insert_permissions:
-  - role: restaurant_operator
+select_permissions:
+  - role: mez_admin
     permission:
-      check:
-        user_id:
-          _eq: X-Hasura-User-Id
       columns:
+        - details_id
+        - id
         - restaurant_id
         - user_id
-select_permissions:
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: restaurant_operator
     permission:
       columns:

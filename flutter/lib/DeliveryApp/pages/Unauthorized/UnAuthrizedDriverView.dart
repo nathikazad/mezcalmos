@@ -32,7 +32,7 @@ class _UnAuthorizedDriverViewState extends State<UnAuthorizedDriverView> {
     return Scaffold(
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: MezSideMenu(),
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         showNotifications: true,
       ),

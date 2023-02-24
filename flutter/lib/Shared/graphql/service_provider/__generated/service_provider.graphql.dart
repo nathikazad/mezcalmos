@@ -6,9 +6,9 @@ import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 
 class Variables$Query$getServiceProviderLinks {
   factory Variables$Query$getServiceProviderLinks(
-          {required int serviceProviderId}) =>
+          {required int serviceLinkId}) =>
       Variables$Query$getServiceProviderLinks._({
-        r'serviceProviderId': serviceProviderId,
+        r'serviceLinkId': serviceLinkId,
       });
 
   Variables$Query$getServiceProviderLinks._(this._$data);
@@ -16,18 +16,18 @@ class Variables$Query$getServiceProviderLinks {
   factory Variables$Query$getServiceProviderLinks.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$serviceProviderId = data['serviceProviderId'];
-    result$data['serviceProviderId'] = (l$serviceProviderId as int);
+    final l$serviceLinkId = data['serviceLinkId'];
+    result$data['serviceLinkId'] = (l$serviceLinkId as int);
     return Variables$Query$getServiceProviderLinks._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get serviceProviderId => (_$data['serviceProviderId'] as int);
+  int get serviceLinkId => (_$data['serviceLinkId'] as int);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$serviceProviderId = serviceProviderId;
-    result$data['serviceProviderId'] = l$serviceProviderId;
+    final l$serviceLinkId = serviceLinkId;
+    result$data['serviceLinkId'] = l$serviceLinkId;
     return result$data;
   }
 
@@ -46,9 +46,9 @@ class Variables$Query$getServiceProviderLinks {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$serviceProviderId = serviceProviderId;
-    final lOther$serviceProviderId = other.serviceProviderId;
-    if (l$serviceProviderId != lOther$serviceProviderId) {
+    final l$serviceLinkId = serviceLinkId;
+    final lOther$serviceLinkId = other.serviceLinkId;
+    if (l$serviceLinkId != lOther$serviceLinkId) {
       return false;
     }
     return true;
@@ -56,8 +56,8 @@ class Variables$Query$getServiceProviderLinks {
 
   @override
   int get hashCode {
-    final l$serviceProviderId = serviceProviderId;
-    return Object.hashAll([l$serviceProviderId]);
+    final l$serviceLinkId = serviceLinkId;
+    return Object.hashAll([l$serviceLinkId]);
   }
 }
 
@@ -70,7 +70,7 @@ abstract class CopyWith$Variables$Query$getServiceProviderLinks<TRes> {
   factory CopyWith$Variables$Query$getServiceProviderLinks.stub(TRes res) =
       _CopyWithStubImpl$Variables$Query$getServiceProviderLinks;
 
-  TRes call({int? serviceProviderId});
+  TRes call({int? serviceLinkId});
 }
 
 class _CopyWithImpl$Variables$Query$getServiceProviderLinks<TRes>
@@ -86,11 +86,11 @@ class _CopyWithImpl$Variables$Query$getServiceProviderLinks<TRes>
 
   static const _undefined = {};
 
-  TRes call({Object? serviceProviderId = _undefined}) =>
+  TRes call({Object? serviceLinkId = _undefined}) =>
       _then(Variables$Query$getServiceProviderLinks._({
         ..._instance._$data,
-        if (serviceProviderId != _undefined && serviceProviderId != null)
-          'serviceProviderId': (serviceProviderId as int),
+        if (serviceLinkId != _undefined && serviceLinkId != null)
+          'serviceLinkId': (serviceLinkId as int),
       }));
 }
 
@@ -100,40 +100,41 @@ class _CopyWithStubImpl$Variables$Query$getServiceProviderLinks<TRes>
 
   TRes _res;
 
-  call({int? serviceProviderId}) => _res;
+  call({int? serviceLinkId}) => _res;
 }
 
 class Query$getServiceProviderLinks {
   Query$getServiceProviderLinks({
-    required this.service_provider_service_link,
+    this.service_provider_service_link_by_pk,
     required this.$__typename,
   });
 
   factory Query$getServiceProviderLinks.fromJson(Map<String, dynamic> json) {
-    final l$service_provider_service_link =
-        json['service_provider_service_link'];
+    final l$service_provider_service_link_by_pk =
+        json['service_provider_service_link_by_pk'];
     final l$$__typename = json['__typename'];
     return Query$getServiceProviderLinks(
-      service_provider_service_link:
-          (l$service_provider_service_link as List<dynamic>)
-              .map((e) =>
-                  Query$getServiceProviderLinks$service_provider_service_link
-                      .fromJson((e as Map<String, dynamic>)))
-              .toList(),
+      service_provider_service_link_by_pk:
+          l$service_provider_service_link_by_pk == null
+              ? null
+              : Query$getServiceProviderLinks$service_provider_service_link_by_pk
+                  .fromJson((l$service_provider_service_link_by_pk
+                      as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final List<Query$getServiceProviderLinks$service_provider_service_link>
-      service_provider_service_link;
+  final Query$getServiceProviderLinks$service_provider_service_link_by_pk?
+      service_provider_service_link_by_pk;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$service_provider_service_link = service_provider_service_link;
-    _resultData['service_provider_service_link'] =
-        l$service_provider_service_link.map((e) => e.toJson()).toList();
+    final l$service_provider_service_link_by_pk =
+        service_provider_service_link_by_pk;
+    _resultData['service_provider_service_link_by_pk'] =
+        l$service_provider_service_link_by_pk?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -141,10 +142,11 @@ class Query$getServiceProviderLinks {
 
   @override
   int get hashCode {
-    final l$service_provider_service_link = service_provider_service_link;
+    final l$service_provider_service_link_by_pk =
+        service_provider_service_link_by_pk;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      Object.hashAll(l$service_provider_service_link.map((v) => v)),
+      l$service_provider_service_link_by_pk,
       l$$__typename,
     ]);
   }
@@ -158,22 +160,13 @@ class Query$getServiceProviderLinks {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$service_provider_service_link = service_provider_service_link;
-    final lOther$service_provider_service_link =
-        other.service_provider_service_link;
-    if (l$service_provider_service_link.length !=
-        lOther$service_provider_service_link.length) {
+    final l$service_provider_service_link_by_pk =
+        service_provider_service_link_by_pk;
+    final lOther$service_provider_service_link_by_pk =
+        other.service_provider_service_link_by_pk;
+    if (l$service_provider_service_link_by_pk !=
+        lOther$service_provider_service_link_by_pk) {
       return false;
-    }
-    for (int i = 0; i < l$service_provider_service_link.length; i++) {
-      final l$service_provider_service_link$entry =
-          l$service_provider_service_link[i];
-      final lOther$service_provider_service_link$entry =
-          lOther$service_provider_service_link[i];
-      if (l$service_provider_service_link$entry !=
-          lOther$service_provider_service_link$entry) {
-        return false;
-      }
     }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
@@ -203,16 +196,12 @@ abstract class CopyWith$Query$getServiceProviderLinks<TRes> {
       _CopyWithStubImpl$Query$getServiceProviderLinks;
 
   TRes call({
-    List<Query$getServiceProviderLinks$service_provider_service_link>?
-        service_provider_service_link,
+    Query$getServiceProviderLinks$service_provider_service_link_by_pk?
+        service_provider_service_link_by_pk,
     String? $__typename,
   });
-  TRes service_provider_service_link(
-      Iterable<Query$getServiceProviderLinks$service_provider_service_link> Function(
-              Iterable<
-                  CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
-                      Query$getServiceProviderLinks$service_provider_service_link>>)
-          _fn);
+  CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
+      TRes> get service_provider_service_link_by_pk;
 }
 
 class _CopyWithImpl$Query$getServiceProviderLinks<TRes>
@@ -229,33 +218,30 @@ class _CopyWithImpl$Query$getServiceProviderLinks<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? service_provider_service_link = _undefined,
+    Object? service_provider_service_link_by_pk = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getServiceProviderLinks(
-        service_provider_service_link: service_provider_service_link ==
-                    _undefined ||
-                service_provider_service_link == null
-            ? _instance.service_provider_service_link
-            : (service_provider_service_link as List<
-                Query$getServiceProviderLinks$service_provider_service_link>),
+        service_provider_service_link_by_pk: service_provider_service_link_by_pk ==
+                _undefined
+            ? _instance.service_provider_service_link_by_pk
+            : (service_provider_service_link_by_pk
+                as Query$getServiceProviderLinks$service_provider_service_link_by_pk?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  TRes service_provider_service_link(
-          Iterable<Query$getServiceProviderLinks$service_provider_service_link> Function(
-                  Iterable<
-                      CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
-                          Query$getServiceProviderLinks$service_provider_service_link>>)
-              _fn) =>
-      call(
-          service_provider_service_link: _fn(
-              _instance.service_provider_service_link.map((e) =>
-                  CopyWith$Query$getServiceProviderLinks$service_provider_service_link(
-                    e,
-                    (i) => i,
-                  ))).toList());
+  CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
+      TRes> get service_provider_service_link_by_pk {
+    final local$service_provider_service_link_by_pk =
+        _instance.service_provider_service_link_by_pk;
+    return local$service_provider_service_link_by_pk == null
+        ? CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk
+            .stub(_then(_instance))
+        : CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk(
+            local$service_provider_service_link_by_pk,
+            (e) => call(service_provider_service_link_by_pk: e));
+  }
 }
 
 class _CopyWithStubImpl$Query$getServiceProviderLinks<TRes>
@@ -265,12 +251,16 @@ class _CopyWithStubImpl$Query$getServiceProviderLinks<TRes>
   TRes _res;
 
   call({
-    List<Query$getServiceProviderLinks$service_provider_service_link>?
-        service_provider_service_link,
+    Query$getServiceProviderLinks$service_provider_service_link_by_pk?
+        service_provider_service_link_by_pk,
     String? $__typename,
   }) =>
       _res;
-  service_provider_service_link(_fn) => _res;
+  CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
+          TRes>
+      get service_provider_service_link_by_pk =>
+          CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk
+              .stub(_res);
 }
 
 const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
@@ -279,7 +269,7 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
     name: NameNode(value: 'getServiceProviderLinks'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceProviderId')),
+        variable: VariableNode(name: NameNode(value: 'serviceLinkId')),
         type: NamedTypeNode(
           name: NameNode(value: 'Int'),
           isNonNull: true,
@@ -291,23 +281,12 @@ const documentNodeQuerygetServiceProviderLinks = DocumentNode(definitions: [
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'service_provider_service_link'),
+        name: NameNode(value: 'service_provider_service_link_by_pk'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'where'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'service_provider_id'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(
-                        name: NameNode(value: 'serviceProviderId')),
-                  )
-                ]),
-              )
-            ]),
+            name: NameNode(value: 'id'),
+            value: VariableNode(name: NameNode(value: 'id')),
           )
         ],
         directives: [],
@@ -474,8 +453,8 @@ extension ClientExtension$Query$getServiceProviderLinks
   }
 }
 
-class Query$getServiceProviderLinks$service_provider_service_link {
-  Query$getServiceProviderLinks$service_provider_service_link({
+class Query$getServiceProviderLinks$service_provider_service_link_by_pk {
+  Query$getServiceProviderLinks$service_provider_service_link_by_pk({
     required this.id,
     this.driver_deep_link,
     this.driver_qr_image_link,
@@ -484,7 +463,7 @@ class Query$getServiceProviderLinks$service_provider_service_link {
     required this.$__typename,
   });
 
-  factory Query$getServiceProviderLinks$service_provider_service_link.fromJson(
+  factory Query$getServiceProviderLinks$service_provider_service_link_by_pk.fromJson(
       Map<String, dynamic> json) {
     final l$id = json['id'];
     final l$driver_deep_link = json['driver_deep_link'];
@@ -492,7 +471,7 @@ class Query$getServiceProviderLinks$service_provider_service_link {
     final l$operator_deep_link = json['operator_deep_link'];
     final l$operator_qr_image_link = json['operator_qr_image_link'];
     final l$$__typename = json['__typename'];
-    return Query$getServiceProviderLinks$service_provider_service_link(
+    return Query$getServiceProviderLinks$service_provider_service_link_by_pk(
       id: (l$id as int),
       driver_deep_link: (l$driver_deep_link as String?),
       driver_qr_image_link: (l$driver_qr_image_link as String?),
@@ -555,7 +534,7 @@ class Query$getServiceProviderLinks$service_provider_service_link {
       return true;
     }
     if (!(other
-            is Query$getServiceProviderLinks$service_provider_service_link) ||
+            is Query$getServiceProviderLinks$service_provider_service_link_by_pk) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -593,28 +572,29 @@ class Query$getServiceProviderLinks$service_provider_service_link {
   }
 }
 
-extension UtilityExtension$Query$getServiceProviderLinks$service_provider_service_link
-    on Query$getServiceProviderLinks$service_provider_service_link {
-  CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
-          Query$getServiceProviderLinks$service_provider_service_link>
+extension UtilityExtension$Query$getServiceProviderLinks$service_provider_service_link_by_pk
+    on Query$getServiceProviderLinks$service_provider_service_link_by_pk {
+  CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
+          Query$getServiceProviderLinks$service_provider_service_link_by_pk>
       get copyWith =>
-          CopyWith$Query$getServiceProviderLinks$service_provider_service_link(
+          CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
+abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
     TRes> {
-  factory CopyWith$Query$getServiceProviderLinks$service_provider_service_link(
-    Query$getServiceProviderLinks$service_provider_service_link instance,
-    TRes Function(Query$getServiceProviderLinks$service_provider_service_link)
+  factory CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk(
+    Query$getServiceProviderLinks$service_provider_service_link_by_pk instance,
+    TRes Function(
+            Query$getServiceProviderLinks$service_provider_service_link_by_pk)
         then,
-  ) = _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link;
+  ) = _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk;
 
-  factory CopyWith$Query$getServiceProviderLinks$service_provider_service_link.stub(
+  factory CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk.stub(
           TRes res) =
-      _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link;
+      _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk;
 
   TRes call({
     int? id,
@@ -626,20 +606,21 @@ abstract class CopyWith$Query$getServiceProviderLinks$service_provider_service_l
   });
 }
 
-class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link<
+class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
         TRes>
     implements
-        CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
+        CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
             TRes> {
-  _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link(
+  _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk(
     this._instance,
     this._then,
   );
 
-  final Query$getServiceProviderLinks$service_provider_service_link _instance;
+  final Query$getServiceProviderLinks$service_provider_service_link_by_pk
+      _instance;
 
   final TRes Function(
-      Query$getServiceProviderLinks$service_provider_service_link) _then;
+      Query$getServiceProviderLinks$service_provider_service_link_by_pk) _then;
 
   static const _undefined = {};
 
@@ -651,7 +632,7 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link<
     Object? operator_qr_image_link = _undefined,
     Object? $__typename = _undefined,
   }) =>
-      _then(Query$getServiceProviderLinks$service_provider_service_link(
+      _then(Query$getServiceProviderLinks$service_provider_service_link_by_pk(
         id: id == _undefined || id == null ? _instance.id : (id as int),
         driver_deep_link: driver_deep_link == _undefined
             ? _instance.driver_deep_link
@@ -671,12 +652,12 @@ class _CopyWithImpl$Query$getServiceProviderLinks$service_provider_service_link<
       ));
 }
 
-class _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link<
+class _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
         TRes>
     implements
-        CopyWith$Query$getServiceProviderLinks$service_provider_service_link<
+        CopyWith$Query$getServiceProviderLinks$service_provider_service_link_by_pk<
             TRes> {
-  _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link(
+  _CopyWithStubImpl$Query$getServiceProviderLinks$service_provider_service_link_by_pk(
       this._res);
 
   TRes _res;

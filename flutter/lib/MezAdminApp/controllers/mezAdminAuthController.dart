@@ -40,7 +40,7 @@ class MezAdminAuthController extends GetxController {
     final String? deviceNotificationToken =
         await _notificationsController.getToken();
     final NotificationInfo? notifInfo = await get_notif_info(
-        userId: _authController.hasuraUserId!, appType: "mezAdmin");
+        userId: _authController.hasuraUserId!, appType: "mez_admin");
     mezDbgPrint("inside save notif token=====>>>😍");
     mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
     mezDbgPrint("inside save notif token=====>>>$deviceNotificationToken");

@@ -4,11 +4,13 @@ import 'package:mezcalmos/Shared/models/Utilities/AgentStatus.dart';
 class OperatorState {
   final int? serviceProviderId;
   final int? serviceProviderDetailsId;
+  final int? deliveryDetailsId;
   final AgentStatus operatorState;
   final bool owner;
   const OperatorState(
       {required this.serviceProviderId,
       required this.operatorState,
+      required this.deliveryDetailsId,
       required this.serviceProviderDetailsId,
       required this.owner});
 
@@ -17,6 +19,7 @@ class OperatorState {
     return OperatorState(
         serviceProviderId: restaurantId,
         serviceProviderDetailsId: null,
+        deliveryDetailsId: null,
         owner: false,
         operatorState: AgentStatus.Awaiting_approval);
   }

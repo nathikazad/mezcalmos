@@ -32,7 +32,7 @@ class _ROpUnauthorizedOpViewState extends State<ROpUnauthorizedOpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         showNotifications: true,
       ),

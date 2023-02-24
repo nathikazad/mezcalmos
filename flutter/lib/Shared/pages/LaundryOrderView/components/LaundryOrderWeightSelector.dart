@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:sizer/sizer.dart';
 
 class LaundryOrderWeightSelector extends StatefulWidget {
@@ -12,7 +12,7 @@ class LaundryOrderWeightSelector extends StatefulWidget {
     Key? key,
     required this.viewController,
   }) : super(key: key);
-  final LaundryOpOrderViewController viewController;
+  final LaundryOrderViewController viewController;
 
   @override
   State<LaundryOrderWeightSelector> createState() =>

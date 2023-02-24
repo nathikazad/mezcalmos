@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
@@ -16,7 +16,7 @@ dynamic _i18n() => Get.find<LanguageController>().strings["LaundryApp"]["pages"]
 class LaundryOrderEstTime extends StatefulWidget {
   const LaundryOrderEstTime({Key? key, required this.viewController})
       : super(key: key);
-  final LaundryOpOrderViewController viewController;
+  final LaundryOrderViewController viewController;
 
   @override
   State<LaundryOrderEstTime> createState() => _LaundryOrderEstTimeState();

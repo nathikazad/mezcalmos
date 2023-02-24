@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/index.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
@@ -23,10 +22,9 @@ import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpSetCategoryComponent'];
 
-class LaundryOpOrderViewController {
+class LaundryOrderViewController {
   // instances //
-  LaundryOpAuthController opAuthController =
-      Get.find<LaundryOpAuthController>();
+
   final MGoogleMapController mGoogleMapController = MGoogleMapController(
     enableMezSmartPointer: true,
   );
@@ -39,6 +37,7 @@ class LaundryOpOrderViewController {
   Rxn<LaundryCostLineItem> selectedCategory = Rxn();
   RestaurantOrderStatus? _statusSnapshot;
   LaundryOrderPhase? _phaseSnapshot;
+  late int laundryId;
 
   // getters //
   bool get hasData => _order.value != null;
@@ -58,13 +57,15 @@ class LaundryOpOrderViewController {
     try {
       _order.value =
           await get_laundry_order_by_id(orderId: orderId, withCache: false);
+      if (_order.value != null) {
+        laundryCategories.value = await get_laundry_categories(
+            storeId: _order.value!.laundry!.hasuraId);
+      }
+
       if (_order.value!.routeInformation != null) {
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: _order.value!.routeInformation!.polyline);
       }
-
-      laundryCategories.value =
-          await get_laundry_categories(storeId: opAuthController.laundryId!);
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);

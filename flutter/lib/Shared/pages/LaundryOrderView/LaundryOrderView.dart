@@ -1,19 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpDriverCard.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderStatusCard.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpOrderTimes.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/LaundryOpSetCategoryComponent.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/components/OrderEstimatedTimeComponent.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/controllers/LaundryOpOrderViewController.dart';
-import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderDriverCard.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderStatusCard.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundryOrderTimes.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/LaundrySetCategoryComponent.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/components/OrderEstimatedTimeComponent.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/controllers/LaundryOrderViewController.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
@@ -26,15 +25,15 @@ import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['LaundryOpOrderView'];
 
-class LaundryOpOrderView extends StatefulWidget {
-  const LaundryOpOrderView({Key? key}) : super(key: key);
+class LaundryOrderView extends StatefulWidget {
+  const LaundryOrderView({Key? key}) : super(key: key);
 
   @override
-  State<LaundryOpOrderView> createState() => _LaundryOpOrderViewState();
+  State<LaundryOrderView> createState() => _LaundryOrderViewState();
 }
 
-class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
-  LaundryOpOrderViewController viewController = LaundryOpOrderViewController();
+class _LaundryOrderViewState extends State<LaundryOrderView> {
+  LaundryOrderViewController viewController = LaundryOrderViewController();
   int? orderId;
 
   @override
@@ -52,10 +51,11 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          autoBack: true,
-          showNotifications: true,
-          ordersRoute: kPastOrdersListView),
+      appBar: MezcalmosAppBar(
+        AppBarLeftButtonType.Back,
+        autoBack: true,
+        showNotifications: true,
+      ),
       body: Obx(
         () {
           if (viewController.hasData) {
@@ -64,8 +64,8 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
               child: Column(
                 children: [
                   // order status
-                  LaundryOpOrderStatusCard(order: viewController.order),
-                  LaundryOpOrderTimes(
+                  LaundryOrderStatusCard(order: viewController.order),
+                  LaundryOrderTimes(
                     order: viewController.order,
                   ),
                   if (_setReadyForDeliveryButton() != null)
@@ -73,7 +73,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
 
                   LaundryOrderEstTime(viewController: viewController),
 
-                  LaundryOpOrderDriverCard(viewController: viewController),
+                  LaundryOrderDriverCard(viewController: viewController),
                   if (viewController.order.inDeliveryPhase())
                     OrderMapWidget(
                         deliveryOrderId: viewController.order.deliveryOrderId,
@@ -107,7 +107,7 @@ class _LaundryOpOrderViewState extends State<LaundryOpOrderView> {
                     ),
                   ),
                   //  if (viewController.order.afterAtLaundry())
-                  LaundyOpSetCategoryComponent(
+                  LaundrySetCategoryComponent(
                     viewController: viewController,
                   ),
                   OrderNoteCard(note: viewController.order.notes),

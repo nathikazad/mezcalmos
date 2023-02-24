@@ -63,6 +63,7 @@ Future<Laundry?> get_laundry_store_by_id(
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
+          selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
           freeDeliveryMinimumCost: data
               .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
           costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,
@@ -183,6 +184,29 @@ Future<int> update_laundry_delivery_days(
     Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
         response.parsedData!.update_laundry_store_by_pk!;
     return data.normal_delivery_time;
+  }
+}
+
+Future<double> update_laundry_min_cost(
+    {required int id, required double cost}) async {
+  final QueryResult<Mutation$updateLaundryInfo> response =
+      await _db.graphQLClient.mutate$updateLaundryInfo(
+    Options$Mutation$updateLaundryInfo(
+      fetchPolicy: FetchPolicy.networkOnly,
+      variables: Variables$Mutation$updateLaundryInfo(
+        id: id,
+        data: Input$laundry_store_set_input(minimum_cost: cost),
+      ),
+    ),
+  );
+  if (response.parsedData?.update_laundry_store_by_pk == null) {
+    throw Exception(
+        "🚨🚨🚨 Hasura days mutation exception =>${response.exception}");
+  } else {
+    mezDbgPrint("✅✅✅ Hasura mutation success => ${response.data}");
+    Mutation$updateLaundryInfo$update_laundry_store_by_pk data =
+        response.parsedData!.update_laundry_store_by_pk!;
+    return data.minimum_cost;
   }
 }
 
@@ -330,6 +354,7 @@ Future<List<Laundry>> get_laundries({bool withCache = true}) async {
         deliveryDetailsId: data.delivery_details_id,
         deliveryCost: DeliveryCost(
           id: data.delivery_details_of_deliverer!.first.id,
+          selfDelivery: data.delivery_details_of_deliverer!.first.self_delivery,
           freeDeliveryMinimumCost: data
               .delivery_details_of_deliverer!.first.free_delivery_minimum_cost,
           costPerKm: data.delivery_details_of_deliverer!.first.cost_per_km,

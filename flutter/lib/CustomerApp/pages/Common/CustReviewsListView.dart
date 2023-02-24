@@ -53,7 +53,7 @@ class _CustReviewsListViewState extends State<CustReviewsListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back, title: "Reviews"),
       body: Obx(
         () {

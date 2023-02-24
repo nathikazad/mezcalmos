@@ -43,7 +43,7 @@ class _IncomingOrdersScreenState extends State<IncomingOrdersScreen> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Color.fromRGBO(250, 250, 250, 1),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 21),
           child: Obx(

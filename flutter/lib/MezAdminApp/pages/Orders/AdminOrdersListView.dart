@@ -39,6 +39,9 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                   if (viewController.currentService ==
                       ServiceProviderType.DeliveryCompany)
                     _buildDeliveryOrders(),
+                  if (viewController.currentService ==
+                      ServiceProviderType.Laundry)
+                    _buildLaundryOrders(),
                 ],
               )),
         ],
@@ -79,6 +82,26 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
                       onTap: () {
                         MezRouter.toNamed(getDvCompanyOrderRoute(
                             viewController.deliveryOrders.value![index].id));
+                      })),
+            )
+          : Container(
+              margin: EdgeInsets.only(top: 10.h),
+              alignment: Alignment.center,
+              child: Center(child: NoOrdersComponent())),
+    );
+  }
+
+  Widget _buildLaundryOrders() {
+    return Container(
+      child: (viewController.laundryOrders.value?.isNotEmpty == true)
+          ? Column(
+              children: List.generate(
+                  viewController.laundryOrders.value!.length,
+                  (int index) => MinimalOrderCard(
+                      order: viewController.laundryOrders.value![index],
+                      onTap: () {
+                        MezRouter.toNamed(getLaundryOrderRoute(
+                            viewController.laundryOrders.value![index].id));
                       })),
             )
           : Container(

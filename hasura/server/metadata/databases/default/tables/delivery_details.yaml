@@ -90,11 +90,14 @@ select_permissions:
     permission:
       columns:
         - cost_per_km
+        - customer_pickup
+        - delivery_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - id
         - minimum_cost
         - radius
+        - self_delivery
       filter: {}
   - role: restaurant_operator
     permission:

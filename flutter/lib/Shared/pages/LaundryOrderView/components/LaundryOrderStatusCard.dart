@@ -8,8 +8,8 @@ import 'package:sizer/sizer.dart';
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
     ['OrderView']['Components']['LaundryOpOrderStatusCard'];
 
-class LaundryOpOrderStatusCard extends StatelessWidget {
-  const LaundryOpOrderStatusCard({
+class LaundryOrderStatusCard extends StatelessWidget {
+  const LaundryOrderStatusCard({
     Key? key,
     required this.order,
   }) : super(key: key);
