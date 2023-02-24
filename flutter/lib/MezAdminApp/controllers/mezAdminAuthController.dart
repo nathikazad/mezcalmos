@@ -53,7 +53,7 @@ class MezAdminAuthController extends GetxController {
         update_notif_info(
             notificationInfo: NotificationInfo(
                 userId: _authController.hasuraUserId!,
-                appType: "mez_admin",
+                appType: "mezAdmin",
                 id: notifInfo.id,
                 token: deviceNotificationToken));
       } else if (deviceNotificationToken != null && notifInfo == null) {

@@ -173,7 +173,7 @@ class LaundryOrderViewController {
 
   Future<void> cancelOrder() async {
     try {
-      await CloudFunctions.laundry_cancelFromAdmin(orderId: order.orderId);
+      await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
     } catch (e, stk) {
@@ -300,7 +300,7 @@ class LaundryOrderViewController {
 
   Future<void> sertOrderReady() async {
     try {
-      await CloudFunctions.laundry_readyForDeliveryOrder(
+      await CloudFunctions.laundry2_readyForDeliveryOrder(
           orderId: _order.value!.orderId);
     } on FirebaseFunctionsException catch (e, stk) {
       showErrorSnackBar(errorText: e.message.toString());
