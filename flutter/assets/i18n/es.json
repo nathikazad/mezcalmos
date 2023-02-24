@@ -598,6 +598,7 @@
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
             "categories" : "Categorías",
+            "summaryText":"Resumen",
             "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",

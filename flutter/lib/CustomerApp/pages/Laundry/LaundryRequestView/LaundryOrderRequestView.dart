@@ -15,7 +15,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
-import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -136,29 +135,73 @@ class _CustLaundryOrderRequestViewState
                                 : pickFromMapComponent(context),
                           ),
                           SizedBox(
-                            height: 25,
+                            height: 15,
                           ),
-                          MezCard(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 12),
-                            content: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${_i18n()['deliveryCost']}",
-                                  style: Get.textTheme.bodyLarge,
-                                ),
-                                (viewController.shippingCost.value != null)
-                                    ? Text(
-                                        "${viewController.shippingCost.value!.toPriceString()} * 2 = ${(viewController.shippingCost.value! * 2).toPriceString()}   ")
-                                    : Text("_"),
-                              ],
+                          _orderNoteComponent(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Card(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    width: Get.width,
+                                    child: Text(
+                                      "${_i18n()["summaryText"]}",
+                                      style: Get.textTheme.bodyText1,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Container(
+                                    padding: EdgeInsets.only(
+                                      bottom: 4,
+                                    ),
+                                    width: Get.width,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Container(
+                                            child: Text(
+                                                "${_i18n()["deliveryCost"]}",
+                                                style: Get.textTheme.bodyText2),
+                                          ),
+                                        ),
+                                        (viewController.shippingCost.value !=
+                                                null)
+                                            ? Text(
+                                                "${(viewController.shippingCost.value! * 2).toPriceString()}",
+                                                style: Get.textTheme.bodyText2,
+                                              )
+                                            : Text(
+                                                "_",
+                                                style: Get.textTheme.bodyText2,
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                  // SizedBox(
+                                  //   height: 8,
+                                  // ),
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(
-                            height: 25,
+                            height: 15,
                           ),
-                          _orderNoteComponent(),
                         ],
                       ),
                     ),
