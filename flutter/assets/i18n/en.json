@@ -745,7 +745,6 @@
           "pages": {
             "createServiceStartPage":{
               "openNewRestaurantText":"Create a new restaurant and receive orders from your local customers."
-              
             },
             "CreateServiceInfoPage": {
               "name": "Restaurant name",

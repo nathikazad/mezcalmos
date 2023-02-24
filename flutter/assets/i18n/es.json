@@ -744,8 +744,7 @@
       "CreateServiceView": {
         "pages": {
           "createServiceStartPage":{
-            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales.",
-            "createText":"Crear"
+            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
           },
           "CreateServiceInfoPage": {
             "name": "Nombre del restaurante",
@@ -764,7 +763,7 @@
             "phoneTextError":"Ingrese un número de teléfono válido"
           }
         },
-        "createText":"Create",
+        "createText":"Crear",
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",

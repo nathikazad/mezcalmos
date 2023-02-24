@@ -63,9 +63,16 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   SizedBox(
                     height: 20,
                   ),
+                  Text(
+                    laundry.value!.info.name,
+                    style: Get.textTheme.headline5,
+                  ),
+                  SizedBox(
+                    height: 9,
+                  ),
                   _laundryInfoHeader(),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   Text(
                     "${_i18n()["description"]}",
@@ -169,92 +176,54 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
   }
 
   Widget _laundryInfoHeader() {
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            fit: FlexFit.tight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  laundry.value!.info.name,
-                  style: Get.textTheme.headline5,
-                ),
-                SizedBox(
-                  height: 9,
-                ),
-                Wrap(
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 6,
-                        top: 2,
-                        bottom: 6,
-                        right: 6,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35),
-                          color: secondaryLightBlueColor),
-                      child: Text(
-                        "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: Get.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: primaryBlueColor),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        left: 8,
-                        top: 2,
-                        bottom: 6,
-                        right: 6,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(35),
-                          color: secondaryLightBlueColor),
-                      child: Text(
-                        "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: Get.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: primaryBlueColor),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    return Wrap(
+      spacing: 4.0,
+      runSpacing: 2.0,
+      children: [
+        Text(
+          "${_i18n()["minimumCost"]} ${laundry.value!.laundryCosts.minimumCost.toPriceString()} ",
+          //maxLines: 1,
+          textAlign: TextAlign.center,
+          style: Get.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: primaryBlueColor,
+              fontSize: 14),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          child: Icon(
+            Icons.circle,
+            size: 6,
+            color: primaryBlueColor,
           ),
-          Flexible(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "${_i18n()["startingFrom"]}",
-                    style: Get.textTheme.subtitle2,
-                  ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.all(5),
-                    child: Text(
-                      "${laundry.value!.getCheapestCategory.toPriceString()}/kg",
-                      style: Get.textTheme.bodyLarge
-                          ?.copyWith(color: Get.theme.primaryColorLight),
-                    ),
-                  ),
-                ],
-              )),
-        ],
-      ),
+        ),
+        Text(
+          "${laundry.value!.averageNumberOfDays} ${_i18n()["daysReturn"]}",
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          style: Get.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: primaryBlueColor,
+              fontSize: 14),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 8),
+          child: Icon(
+            Icons.circle,
+            size: 6,
+            color: primaryBlueColor,
+          ),
+        ),
+        Text(
+          "${_i18n()["startingFrom"]} ${laundry.value!.getCheapestCategory.toPriceString()}/kg",
+          //maxLines: 2,
+          textAlign: TextAlign.center,
+          style: Get.textTheme.bodyMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: primaryBlueColor,
+              fontSize: 14),
+        ),
+      ],
     );
   }
 }

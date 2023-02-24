@@ -163,7 +163,8 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                     ),
             ),
           ),
-          if (category.dialog?[userLanguage] != null)
+          if (category.dialog?[userLanguage] != null &&
+              category.dialog![userLanguage]!.inCaps != "")
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
