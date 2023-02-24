@@ -2,10 +2,17 @@ import { createRestaurantOperator } from "../shared/graphql/restaurant/operators
 import { getRestaurantOperators } from "../shared/graphql/restaurant/operators/getRestaurantOperators"
 import { getUser } from "../shared/graphql/user/getUser"
 import { ParticipantType } from "../shared/models/Generic/Chat"
+import { NotificationInfo } from "../shared/models/Generic/Generic"
 import { UserInfo } from "../shared/models/Generic/User"
 import { AuthorizeOperatorNotification, Notification, NotificationAction, NotificationType } from "../shared/models/Notification"
-import { AddOperatorDetails } from "../shared/operator/addOperator"
 import { pushNotification } from "../utilities/senders/notifyUser"
+
+interface AddOperatorDetails {
+  serviceProviderId: number,
+  participantType: ParticipantType
+  notificationInfo?: NotificationInfo,
+  appVersion?: string
+}
 
 export async function addRestaurantOperator(operatorUserId: number, addOpDetails: AddOperatorDetails) {
   let operatorUserInfo: UserInfo = await getUser(operatorUserId);

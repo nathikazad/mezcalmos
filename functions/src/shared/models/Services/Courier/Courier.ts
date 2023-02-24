@@ -26,7 +26,7 @@ export interface CourierItem {
     image?: string;
     estimatedCost?: number;
     notes?: string;
-    unavailable: boolean;
+    unavailable?: boolean;
     orderId?: number;
     actualCost?: number;
 }
