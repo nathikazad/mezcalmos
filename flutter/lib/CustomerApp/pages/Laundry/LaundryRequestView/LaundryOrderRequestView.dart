@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
@@ -135,7 +136,27 @@ class _CustLaundryOrderRequestViewState
                                 : pickFromMapComponent(context),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 25,
+                          ),
+                          MezCard(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 12),
+                            content: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${_i18n()['deliveryCost']}",
+                                  style: Get.textTheme.bodyLarge,
+                                ),
+                                (viewController.shippingCost.value != null)
+                                    ? Text(
+                                        "${viewController.shippingCost.value!.toPriceString()} * 2 = ${(viewController.shippingCost.value! * 2).toPriceString()}   ")
+                                    : Text("_"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
                           ),
                           _orderNoteComponent(),
                         ],

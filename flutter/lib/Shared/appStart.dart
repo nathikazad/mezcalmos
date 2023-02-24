@@ -31,6 +31,7 @@ import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/firebaseNodes/rootNodes.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PlatformOSHelper.dart';
@@ -254,14 +255,17 @@ class _StartingPointState extends State<StartingPoint> {
       await GetStorage().write(getxAppName, pInfos.appName);
       // We need appStoreId only in prod mode and ios platforms.
       if (Platform.isIOS && _launchMode == AppLaunchMode.prod) {
-        await setupIosAppStoreId(pInfos.appName);
+        // ignore: unawaited_futures
+        setupIosAppStoreId(pInfos.appName).then((value) {
+          GetStorage().write(getxAppVersion, pInfos.version);
+        });
       }
-      await GetStorage().write(getxAppVersion, pInfos.version);
-      await GetStorage().write(
+
+      unawaited(GetStorage().write(
         getxGmapBottomPaddingKey,
         // Platform.isAndroid ? 38.0.sp : Get.height / 35,
         10.0,
-      );
+      ));
     } else
       mezDbgPrint("[ GET STORAGE ] FAILED TO INITIALIZE !");
   }

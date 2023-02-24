@@ -59,7 +59,8 @@ const String sPrivacyPolicyCustomerApp =
     "https://www.mezcalmos.com/privacy-policy.html";
 const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
-const String sNetworkCheckUrl = 'google.com';
+const String sNetworkCheckUrl1 = 'google.com';
+const String sNetworkCheckUrl2 = 'facebook.com';
 
 const LanguageType sDefaultLanguage = LanguageType.ES;
 const String sDefaultTheme = "light";

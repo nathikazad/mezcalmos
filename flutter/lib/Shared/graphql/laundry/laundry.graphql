@@ -218,7 +218,7 @@ query getLaundryOperators($laundryStoreID: Int!) {
     store_id
     operator_details {
       owner
-      current_gps
+      
       status
     }
     user {

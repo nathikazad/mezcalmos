@@ -118,9 +118,10 @@ class OrderSummaryCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('${_i18n()["totalCost"]}', style: txt.headline4),
+                      Text('${_i18n()["totalCost"]}',
+                          style: txt.headlineMedium),
                       Text(order.totalCost?.toPriceString() ?? "_",
-                          style: txt.headline5),
+                          style: txt.headlineSmall),
                     ],
                   ),
                 ),
@@ -152,11 +153,7 @@ class OrderSummaryCard extends StatelessWidget {
       case OrderType.Restaurant:
         return (order as RestaurantOrder).itemsCost.toPriceString();
       case OrderType.Laundry:
-        return (order as LaundryOrder)
-                .costsByType
-                ?.weighedCost
-                .toPriceString() ??
-            '${_i18n()["toBeCalc"]}';
+        return ((order as LaundryOrder).cost).toPriceString();
 
       default:
         return "-";

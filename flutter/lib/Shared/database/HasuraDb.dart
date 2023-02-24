@@ -120,7 +120,7 @@ class HasuraDb {
         'x-hasura-role': _getRoleBasedOnApp()
       };
       mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
-      mezDbgPrint("headers ===> ${headers.toString()}");
+      logLongString("headers ===> ${headers.toString()}");
       final gqClient.AuthLink _authLink =
           gqClient.AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
       _httpLink = gqClient.HttpLink(hasuraDbLink, defaultHeaders: headers);

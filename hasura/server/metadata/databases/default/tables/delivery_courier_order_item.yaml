@@ -1,0 +1,3 @@
+table:
+  name: courier_order_item
+  schema: delivery

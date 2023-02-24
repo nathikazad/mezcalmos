@@ -11240,13 +11240,6 @@ const documentNodeQuerygetLaundryOperators = DocumentNode(definitions: [
                 selectionSet: null,
               ),
               FieldNode(
-                name: NameNode(value: 'current_gps'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
                 name: NameNode(value: 'status'),
                 alias: null,
                 arguments: [],
@@ -11653,7 +11646,6 @@ class _CopyWithStubImpl$Query$getLaundryOperators$laundry_operator<TRes>
 class Query$getLaundryOperators$laundry_operator$operator_details {
   Query$getLaundryOperators$laundry_operator$operator_details({
     required this.owner,
-    this.current_gps,
     required this.status,
     required this.$__typename,
   });
@@ -11661,21 +11653,16 @@ class Query$getLaundryOperators$laundry_operator$operator_details {
   factory Query$getLaundryOperators$laundry_operator$operator_details.fromJson(
       Map<String, dynamic> json) {
     final l$owner = json['owner'];
-    final l$current_gps = json['current_gps'];
     final l$status = json['status'];
     final l$$__typename = json['__typename'];
     return Query$getLaundryOperators$laundry_operator$operator_details(
       owner: (l$owner as bool),
-      current_gps:
-          l$current_gps == null ? null : geographyFromJson(l$current_gps),
       status: (l$status as String),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
   final bool owner;
-
-  final Geography? current_gps;
 
   final String status;
 
@@ -11685,9 +11672,6 @@ class Query$getLaundryOperators$laundry_operator$operator_details {
     final _resultData = <String, dynamic>{};
     final l$owner = owner;
     _resultData['owner'] = l$owner;
-    final l$current_gps = current_gps;
-    _resultData['current_gps'] =
-        l$current_gps == null ? null : geographyToJson(l$current_gps);
     final l$status = status;
     _resultData['status'] = l$status;
     final l$$__typename = $__typename;
@@ -11698,12 +11682,10 @@ class Query$getLaundryOperators$laundry_operator$operator_details {
   @override
   int get hashCode {
     final l$owner = owner;
-    final l$current_gps = current_gps;
     final l$status = status;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$owner,
-      l$current_gps,
       l$status,
       l$$__typename,
     ]);
@@ -11722,11 +11704,6 @@ class Query$getLaundryOperators$laundry_operator$operator_details {
     final l$owner = owner;
     final lOther$owner = other.owner;
     if (l$owner != lOther$owner) {
-      return false;
-    }
-    final l$current_gps = current_gps;
-    final lOther$current_gps = other.current_gps;
-    if (l$current_gps != lOther$current_gps) {
       return false;
     }
     final l$status = status;
@@ -11768,7 +11745,6 @@ abstract class CopyWith$Query$getLaundryOperators$laundry_operator$operator_deta
 
   TRes call({
     bool? owner,
-    Geography? current_gps,
     String? status,
     String? $__typename,
   });
@@ -11793,7 +11769,6 @@ class _CopyWithImpl$Query$getLaundryOperators$laundry_operator$operator_details<
 
   TRes call({
     Object? owner = _undefined,
-    Object? current_gps = _undefined,
     Object? status = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -11801,9 +11776,6 @@ class _CopyWithImpl$Query$getLaundryOperators$laundry_operator$operator_details<
         owner: owner == _undefined || owner == null
             ? _instance.owner
             : (owner as bool),
-        current_gps: current_gps == _undefined
-            ? _instance.current_gps
-            : (current_gps as Geography?),
         status: status == _undefined || status == null
             ? _instance.status
             : (status as String),
@@ -11825,7 +11797,6 @@ class _CopyWithStubImpl$Query$getLaundryOperators$laundry_operator$operator_deta
 
   call({
     bool? owner,
-    Geography? current_gps,
     String? status,
     String? $__typename,
   }) =>

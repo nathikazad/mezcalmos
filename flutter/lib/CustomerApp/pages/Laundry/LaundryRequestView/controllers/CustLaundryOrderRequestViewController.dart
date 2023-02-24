@@ -120,7 +120,8 @@ class CustLaundryOrderRequestViewController {
 
   Future<num?> createLaundryOrder() async {
     final LaundryRequest _laundryRequest = LaundryRequest(
-        laundryId: laundry.value!.info.hasuraId, deliveryCost: 50);
+        laundryId: laundry.value!.info.hasuraId,
+        deliveryCost: shippingCost.value!);
     mezDbgPrint(orderNote.text);
     MapHelper.Route? route = await MapHelper.getDurationAndDistance(
         laundry.value!.info.location, customerLoc.value!);
@@ -155,7 +156,7 @@ class CustLaundryOrderRequestViewController {
             laundryRequest.to!.latitude,
             laundryRequest.to!.longitude,
             laundryRequest.to!.address),
-        deliveryCost: 50,
+        deliveryCost: shippingCost.value! * 2,
         paymentType: laundryRequest.paymentType.toFirebaseFormatEnum(),
         notes: laundryRequest.notes,
         tripDistance:

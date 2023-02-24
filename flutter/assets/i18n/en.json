@@ -595,6 +595,7 @@
           "LaundryRequestView": {
             "LaundryOrderRequestView": {
               "howItWorks": "How it works",
+             
               "categories" : "Categories",
               "deliveryLocation": "Delivery location",
               "orderSummary": "Order summary",
@@ -672,6 +673,7 @@
       "helpers": {
         "DeliveryOrderHelper": {
           "status": {
+            
             "ready": "Package ready",
             "atPickUp": "At pickup",
             "otwDropOff": "On the way dropoff",
