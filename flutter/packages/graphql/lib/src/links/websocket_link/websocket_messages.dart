@@ -40,7 +40,7 @@ abstract class JsonSerializable {
   String toString() => toJson().toString();
 }
 
-void mezDbgPrint(log, {bool showMilliSeconds = false}) {
+void pprint(log, {bool showMilliSeconds = false}) {
   String d = DateFormat('HH:mm:ss').format(DateTime.now());
   String caller = StackTrace.current.toString().split('\n').lastWhere(
         (String element) => element.contains(':mezcalmos/'),
@@ -68,13 +68,18 @@ abstract class GraphQLSocketMessage extends JsonSerializable {
   Map<String, dynamic> toJson() => <String, dynamic>{"type": type};
 
   static GraphQLSocketMessage parse(dynamic message) {
-    mezDbgPrint("😇😇😇😇😇😇😇");
-    mezDbgPrint(message.toString());
     final Map<String, dynamic> map =
         json.decode(message as String) as Map<String, dynamic>;
     final String type = (map['type'] ?? 'unknown') as String;
-    final payload =
-        (map['payload'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+    Map<String, dynamic> payload;
+    try {
+      payload = (map['payload'] ?? <String, dynamic>{}) as Map<String, dynamic>;
+    } catch (e) {
+      pprint("😵😵😵😵😵😵 ${map['payload']}");
+      pprint(map);
+      payload = {"error": map['payload']};
+    }
+
     final String id = (map['id'] ?? 'none') as String;
 
     switch (type) {

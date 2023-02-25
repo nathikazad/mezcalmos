@@ -19,7 +19,7 @@ class WebSocketLink extends Link {
   });
 
   final String url;
-  final SocketClientConfig config;
+  SocketClientConfig config;
 
   // cannot be final because we're changing the instance upon a header change.
   SocketClient? _socketClient;
