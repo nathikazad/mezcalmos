@@ -7,6 +7,13 @@ ALTER TABLE app_type SET SCHEMA valid_types;
 
 ALTER TABLE service_provider_type SET SCHEMA valid_types;
 
+INSERT INTO valid_types.service_provider_type (id)
+VALUES ('restaurant');
+INSERT INTO valid_types.service_provider_type (id)
+VALUES ('delivery_company');
+INSERT INTO valid_types.service_provider_type (id)
+VALUES ('laundry');
+
 alter table "customer"."customer"
   add constraint "customer_app_type_id_fkey"
   foreign key ("app_type_id")
