@@ -9,6 +9,12 @@ import 'package:mezcalmos/CustomerApp/controllers/orderController.dart';
 import 'package:mezcalmos/CustomerApp/deepLinkHandler.dart';
 import 'package:mezcalmos/CustomerApp/notificationHandler.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/laundryListRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/savedCardRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/appLifeCycleController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -206,9 +212,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Restaurant,
-                  serviceRoute: kRestaurantsRoute,
+                  serviceRoute: RestaurantRouters.restaurants,
                   singleOrderRoute: (int orderId) {
-                    MezRouter.toNamed<void>(getRestaurantOrderRoute(orderId));
+                    MezRouter.toNamed<void>(RestaurantOrderRoutes()
+                        .getRestaurantOrderRoute(orderId));
                   });
             },
           ),
@@ -221,9 +228,10 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Laundry,
-                  serviceRoute: kLaundriesListRoute,
+                  serviceRoute: LaundryListRouters.laundryListView,
                   singleOrderRoute: (int v) {
-                    MezRouter.toNamed<void>(getLaundryOrderRoute(v));
+                    MezRouter.toNamed<void>(
+                        LaundryRouters().getLaundryOrderWithId(v));
                   });
             },
           ),
@@ -260,17 +268,17 @@ class _CustomerWrapperState extends State<CustomerWrapper>
       await _orderController!.fetchCurrentOrders();
       if (_orderController!.hasOneOrder) {
         if (_orderController!.hasOneOrderType == OrderType.Restaurant) {
-          MezRouter.popEverythingAndNavigateTo(
-              getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
+          MezRouter.popEverythingAndNavigateTo(RestaurantOrderRoutes()
+              .getRestaurantOrderRoute(_orderController!.hasOneOrderId!));
           // } else if (_orderController!.hasOneOrderType == OrderType.Taxi) {
           //   MezRouter.popEverythingAndNavigateTo(
           //       getTaxiOrderRoute(_orderController!.hasOneOrderId!));
         } else if (_orderController!.hasOneOrderType == OrderType.Laundry) {
-          MezRouter.popEverythingAndNavigateTo(
-              getLaundryOrderRoute(_orderController!.hasOneOrderId!));
+          MezRouter.popEverythingAndNavigateTo(LaundryRouters()
+              .getLaundryOrderWithId(_orderController!.hasOneOrderId!));
         }
       } else if (_orderController!.hasManyOrders) {
-        MezRouter.popEverythingAndNavigateTo(kOrdersRoute);
+        MezRouter.popEverythingAndNavigateTo(OrdersRoutes.customerOrder);
       }
     }
   }

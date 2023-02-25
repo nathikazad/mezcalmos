@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/DropDownLocationList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Laundry/LaundryRequestView/controllers/CustLaundryOrderRequestViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -187,7 +189,8 @@ class _CustLaundryOrderRequestViewState
       child: InkWell(
         onTap: () async {
           final MezLocation? currentLoc =
-              await MezRouter.toNamed(kPickLocationNotAuth) as MezLocation?;
+              await MezRouter.toNamed(PickLocationRoutes.pickLocationNotAuth)
+                  as MezLocation?;
           if (currentLoc != null) {
             viewController.switchLocation(currentLoc);
           }
@@ -235,7 +238,7 @@ class _CustLaundryOrderRequestViewState
             final num? res = await viewController.createLaundryOrder();
             if (res != null) {
               MezRouter.popEverythingAndNavigateTo(
-                getLaundryOrderRoute(
+                LaundryRouters().getLaundryOrderWithId(
                   res.toInt(),
                 ),
               );

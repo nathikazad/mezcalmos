@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantBankInfo.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantOrderView/controllers/CustRestaurantOrderViewController.dart';
+import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -41,6 +42,7 @@ class ViewRestaurantOrderScreen extends StatefulWidget {
 class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   CustRestaurantOrderViewController viewController =
       CustRestaurantOrderViewController();
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +64,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true,
-          ordersRoute: kOrdersRoute,
+          ordersRoute: OrdersRoutes.customerOrder,
           showNotifications: true,
           titleWidget: Obx(
               () => Text(viewController.order.value?.restaurant.name ?? ""))),

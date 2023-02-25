@@ -7,6 +7,7 @@ import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/models/Cart.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
 import 'package:mezcalmos/Shared/cloudFunctions/model.dart' as cModel;
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/graphql/customer/stripe_cards/hsCustomerStripeCards.dart';
@@ -38,15 +39,19 @@ class CustCartViewController {
 
   CardChoice cartPaymentChoice = CardChoice.ApplePay;
   CreditCard? savedCardChoice;
+
   // dropdown value
   Rxn<PaymentOption> pickerChoice = Rxn<PaymentOption>();
   PaymentOption cash = {PickerChoice.Cash: null};
+
   // Payment Card //
   Rxn<CreditCard> card = Rxn();
 
   final RxBool clickedCheckout = false.obs;
+
   // texts
   TextEditingController noteText = TextEditingController();
+
   // getters //
   CardChoice get getCardChoice {
     return pickerChoice.value!.entries.first.key.toCardChoice();
@@ -60,8 +65,11 @@ class CustCartViewController {
   num _orderDistanceInKm = 0;
 
   Cart get cart => cartController.cart.value ?? Cart();
+
   Rxn<Cart> get _cartRxn => cartController.cart;
+
   num get getOrderDistance => _orderDistanceInKm;
+
   // init //
   Future<void> init() async {
     orderToLocation.value =
@@ -220,7 +228,7 @@ class CustCartViewController {
 
       if (newOrderId != null) {
         MezRouter.popEverythingAndNavigateTo(
-          getRestaurantOrderRoute(
+          RestaurantOrderRoutes().getRestaurantOrderRoute(
             newOrderId.toInt(),
           ),
         );

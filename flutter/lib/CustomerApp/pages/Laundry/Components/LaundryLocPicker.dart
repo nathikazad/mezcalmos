@@ -4,6 +4,7 @@ import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
@@ -154,7 +155,8 @@ class _LaundryLocPickerState extends State<LaundryLocPicker> {
               // we will route the user back to the Map
               if (newValue?.id == "_pick_") {
                 final SavedLocation? _savedLocation =
-                    await MezRouter.toNamed<void>(kPickLocationRoute,
+                    await MezRouter.toNamed<void>(
+                        PickLocationRoutes.pickLocationRoute,
                         arguments: true) as SavedLocation?;
                 mezDbgPrint("View Got result : $_savedLocation");
                 if (_savedLocation != null) {

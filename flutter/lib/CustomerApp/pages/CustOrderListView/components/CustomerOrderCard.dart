@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/services/LaundryOrderHelper.dart';
@@ -149,7 +151,7 @@ class CustomerOrderCard extends StatelessWidget {
                       child: ShippingCostComponent(
                         shippingCost: (order as LaundryOrder).shippingCost,
                         alignment: MainAxisAlignment.start,
-                         textStyle: TextStyle(color: blackColor),
+                        textStyle: TextStyle(color: blackColor),
                       ),
                     )
                   : Text((order as LaundryOrder).shippingCost.toPriceString())
@@ -253,11 +255,13 @@ class CustomerOrderCard extends StatelessWidget {
   void handleRouting() {
     switch (order.orderType) {
       case OrderType.Restaurant:
-        MezRouter.toNamed(getRestaurantOrderRoute(order.orderId));
+        MezRouter.toNamed(
+            RestaurantOrderRoutes().getRestaurantOrderRoute(order.orderId));
 
         break;
       case OrderType.Laundry:
-        MezRouter.toNamed(getLaundryOrderRoute(order.orderId));
+        MezRouter.toNamed(
+            LaundryRouters().getLaundryOrderWithId(order.orderId));
 
         break;
       // case OrderType.Taxi:

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -136,7 +137,8 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             backgroundColor: Colors.transparent),
         child: Text("${_i18n()["sendMyLaundry"]}"),
         onPressed: () {
-          MezRouter.toNamed(kLaundryOrderRequest, arguments: laundry.value);
+          MezRouter.toNamed(LaundryRouters.laundryOrderRequest,
+              arguments: laundry.value);
         },
       ),
     );

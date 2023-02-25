@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemView.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
@@ -26,6 +27,7 @@ class RestaurantgridItemCard extends StatefulWidget {
 
 class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
   RxBool isImageExist = RxBool(false);
+
   @override
   void initState() {
     isImageExist.value =
@@ -40,7 +42,8 @@ class _RestaurantgridItemCardState extends State<RestaurantgridItemCard> {
         child: InkWell(
           onTap: () {
             MezRouter.toNamed(
-              getItemRoute(widget.restaurant.info.hasuraId, widget.item.id!),
+              RestaurantRouters().getRestaurantItemRoute(
+                  widget.restaurant.info.hasuraId, widget.item.id!),
               arguments: {
                 "mode": ViewItemScreenMode.AddItemMode,
                 "isSpecial": widget.isSpecial

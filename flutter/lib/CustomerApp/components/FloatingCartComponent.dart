@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerCartController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/cartRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -23,7 +25,7 @@ class FloatingCartComponent extends StatelessWidget {
                     0
             ? FloatingActionButton(
                 onPressed: () {
-                  MezRouter.toNamed(kCartRoute);
+                  MezRouter.toNamed(CartRoutes.cart);
                 },
                 child: badge.Badge(
                   badgeContent: Text(

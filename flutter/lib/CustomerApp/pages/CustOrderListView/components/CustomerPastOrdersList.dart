@@ -4,6 +4,8 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/controllers/CustomerOrdersListViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restautantOrderRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
@@ -71,9 +73,11 @@ class CustomerPastOrdersList extends StatelessWidget {
               forCustomer: true,
               onTap: () {
                 if (element.orderType == OrderType.Laundry) {
-                  MezRouter.toNamed(getLaundryOrderRoute(element.id));
+                  MezRouter.toNamed(
+                      LaundryRouters().getLaundryOrderWithId(element.id));
                 } else {
-                  MezRouter.toNamed(getRestaurantOrderRoute(element.id));
+                  MezRouter.toNamed(RestaurantOrderRoutes()
+                      .getRestaurantOrderRoute(element.id));
                 }
               },
             );

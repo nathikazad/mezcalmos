@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
@@ -22,7 +23,7 @@ class SearchItemCard extends StatelessWidget {
         onTap: () {
           if (item.restaurantId != null && item.id != null) {
             MezRouter.toNamed(
-              getItemRoute(
+              RestaurantRouters().getRestaurantItemRoute(
                 item.restaurantId!,
                 item.id!,
               ),

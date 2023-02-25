@@ -16,6 +16,7 @@ import 'package:mezcalmos/Shared/pages/UserProfileScreen/UserProfileScreen.dart'
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserProfileView.dart';
 import 'package:mezcalmos/Shared/pages/UserProfileViews(new)/UserWelcomeView.dart';
 import 'package:mezcalmos/Shared/pages/Wrapper.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 
 // GetX based Router (For navigating)
 class SharedRoutes {
@@ -57,6 +58,72 @@ class SharedRoutes {
   }
 
 // shared navigation methods //
+
+  static var qRoutes = [
+    QRoute(
+        path: kSomethingWentWrongScreen,
+        name: kSomethingWentWrongScreen,
+        builder: () => SomethingWentWrongScreen()),
+    QRoute(
+        path: kUserProfile, name: kUserProfile, builder: () => UserProfile()),
+    QRoute(path: kWrapperRoute, name: kWrapperRoute, builder: () => Wrapper()),
+    QRoute(
+        path: kSplashRoute, name: kSplashRoute, builder: () => SplashScreen()),
+    QRoute(
+        path: kSignInRouteRequired,
+        name: kSignInRouteRequired,
+        builder: () => SignIn(mode: SignInMode.RequiredSignIn)),
+    QRoute(
+        path: kSignInRouteOptional,
+        name: kSignInRouteOptional,
+        builder: () => SignIn(mode: SignInMode.OptionalSignIn)),
+    QRoute(
+        path: kOtpRoute, name: kOtpRoute, builder: () => PhoneNumberScreen()),
+    QRoute(
+        path: kOtpConfirmRoute,
+        name: kOtpConfirmRoute,
+        builder: () => OtpConfirmationScreen()),
+    QRoute(
+        path: kPickLocationEdit,
+        name: kPickLocationEdit,
+        builder: () => PickLocationView(PickLocationMode.EditLocation)),
+    QRoute(
+        path: kPickLocationNew,
+        name: kPickLocationNew,
+        builder: () => PickLocationView(PickLocationMode.AddNewLocation)),
+    QRoute(
+        path: kUnauthorizedRoute,
+        name: kUnauthorizedRoute,
+        builder: () => UnauthorizedScreen()),
+    QRoute(
+        path: kLocationPermissionPage,
+        name: kLocationPermissionPage,
+        builder: () => LocationPermissionScreen()),
+    QRoute(
+        path: kNoInternetConnectionPage,
+        name: kNoInternetConnectionPage,
+        builder: () => NoInternetConnectionScreen()),
+    QRoute(
+        path: kNotificationsRoute,
+        name: kNotificationsRoute,
+        builder: () => ViewNotifications()),
+    QRoute(
+        path: kPickLocationWithoutAuth,
+        name: kPickLocationWithoutAuth,
+        builder: () => PickLocationView(PickLocationMode.NonLoggedInPick)),
+    QRoute(
+        path: kUserWelcomeRoute,
+        name: kUserWelcomeRoute,
+        builder: () => UserWelcomeView()),
+    QRoute(
+        path: kUserNewProfile,
+        name: kUserNewProfile,
+        builder: () => UserProfileView()),
+    QRoute(
+        path: kNoInternetRoute,
+        name: kNoInternetRoute,
+        builder: () => NoInternetScreen()),
+  ];
 
   static List<GetPage> routes = [
     GetPage(

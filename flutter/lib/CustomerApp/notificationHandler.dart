@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
@@ -13,6 +14,7 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['notificationHandler'];
+
 Notification customerNotificationHandler(
   String key,
   value,
@@ -56,7 +58,7 @@ Notification laundryOrderStatusChangeNotificationHandler(String key, value) {
   return Notification(
     id: key,
     icon: Material.Icons.local_laundry_service,
-    linkUrl: getLaundryOrderRoute(value['orderId']),
+    linkUrl: LaundryRouters().getLaundryOrderWithId(value['orderId']),
     linkText: _i18n()['viewOrder'],
     body: dynamicFields["body"],
     imgUrl: dynamicFields["imgUrl"],

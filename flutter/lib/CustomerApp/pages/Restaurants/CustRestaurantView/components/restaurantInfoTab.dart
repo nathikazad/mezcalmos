@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/customerReviewRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -16,6 +17,7 @@ import 'package:mezcalmos/Shared/widgets/ShippingCostComponent.dart';
 import 'package:sizer/sizer.dart';
 
 final DateFormat f = new DateFormat('hh:mma');
+
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
         ["pages"]["Restaurants"]["ViewRestaurantScreen"]["components"]
     ["restaurantInfoTab"];
@@ -103,8 +105,8 @@ class RestaurantInfoTab extends StatelessWidget {
                   InkWell(
                     borderRadius: BorderRadius.circular(8),
                     onTap: () {
-                      MezRouter.toNamed(
-                          getReviewsListRoute(restaurant.restaurantId));
+                      MezRouter.toNamed(CustomerReviewRoutes()
+                          .getReviewsListRoute(restaurant.restaurantId));
                     },
                     child: Ink(
                       padding: const EdgeInsets.all(10),

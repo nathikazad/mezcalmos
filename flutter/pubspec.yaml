@@ -97,6 +97,8 @@ dependencies:
   crypto: ^3.0.0-nullsafety.0
   # Newest version of this always requires initialization on the root!
   intl: ^0.17.0
+  qlevar_router: ^1.8.0
+
 
 
   # Check if a user has the most recent version of your app installed.

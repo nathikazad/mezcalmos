@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/ordersRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
@@ -29,6 +30,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
   }) : super(key: key);
 
   final CustomerRestaurantController controller;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -366,7 +368,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(kOrdersRoute);
+          MezRouter.toNamed(OrdersRoutes.customerOrder);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),

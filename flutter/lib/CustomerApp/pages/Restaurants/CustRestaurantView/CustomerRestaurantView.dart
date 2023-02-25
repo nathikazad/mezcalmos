@@ -8,6 +8,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/compo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
@@ -50,6 +51,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,10 +195,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 7),
             child: Text(
-              "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
-                  .inCaps,
-              style: Get.theme.textTheme.headline5
-            ),
+                "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
+                    .inCaps,
+                style: Get.theme.textTheme.headline5),
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
@@ -223,7 +224,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
                 item: item,
                 function: () {
                   MezRouter.toNamed(
-                    getItemRoute(restaurantId, item.id!).replaceAll(' ', ''),
+                    RestaurantRouters()
+                        .getRestaurantItemRoute(restaurantId, item.id!)
+                        .replaceAll(' ', ''),
                     arguments: {
                       "mode": ViewItemScreenMode.AddItemMode,
                       "isSpecial": isSpecial

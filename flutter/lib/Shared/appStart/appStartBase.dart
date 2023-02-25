@@ -38,6 +38,7 @@ import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:mezcalmos/env.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart' as Sizer;
 
 final ThemeData _defaultAppTheme = ThemeData(
@@ -49,7 +50,7 @@ class StartingPointBase extends StatefulWidget {
   final ThemeData? appTheme;
   final Function signInCallback;
   final Function signOutCallback;
-  final List<GetPage<dynamic>> routes;
+  final List<QRoute> routes;
   final List<SideMenuItem>? sideMenuItems;
   final LocationPermissionType locationPermissionType;
 
@@ -262,7 +263,7 @@ class StartingPointBaseState extends State<StartingPointBase> {
 
   Widget mainApp({
     required ThemeData appTheme,
-    required List<GetPage<dynamic>> routes,
+    required List<QRoute> routes,
   }) {
     Future<void> _initializeConfig() async {
       // We will use this to Initialize anything at MaterialApp root init of app
@@ -272,25 +273,50 @@ class StartingPointBaseState extends State<StartingPointBase> {
       print("[+] InitializedConfig -- the ${MezEnv.appType.toShortString()} !");
     }
 
+    _initializeConfig();
+
     final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
     return DevicePreview(
       enabled: MezEnv.previewMode == true ? true : false,
-      builder: (BuildContext context) => GetMaterialApp(
-        navigatorObservers: [MezRouter()],
+      builder: (BuildContext context) => MaterialApp.router(
+        routeInformationParser: QRouteInformationParser(),
+
+        // navigatorObservers: [MezRouter()],
         useInheritedMediaQuery: true,
         locale:
             MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
         builder: MezEnv.previewMode == true ? DevicePreview.appBuilder : null,
         debugShowCheckedModeBanner: false,
-        onInit: () async => _initializeConfig(),
+        // onInit: () async => _initializeConfig(),
         title: MezEnv.appType.toShortString(),
         theme: appTheme,
         color: Colors.white,
-        enableLog: true,
-        getPages: routes,
-        initialRoute: SharedRoutes.kWrapperRoute,
+        routerDelegate: QRouterDelegate(
+          routes,
+          observers: [
+            // Add your observers to the main navigator
+            // to watch for all routes in all navigators use [QR.observer]
+          ],
+        ), // enableLog: true,
+        // getPages: routes,
+        // initialRoute: kWrapperRoute,
       ),
+      //     GetMaterialApp(
+      //   navigatorObservers: [MezRouter()],
+      //   useInheritedMediaQuery: true,
+      //   locale:
+      //       MezEnv.previewMode == true ? DevicePreview.locale(context) : null,
+      //   builder: MezEnv.previewMode == true ? DevicePreview.appBuilder : null,
+      //   debugShowCheckedModeBanner: false,
+      //   onInit: () async => _initializeConfig(),
+      //   title: MezEnv.appType.toShortString(),
+      //   theme: appTheme,
+      //   color: Colors.white,
+      //   enableLog: true,
+      //   getPages: routes,
+      //   initialRoute: SharedRoutes.kWrapperRoute,
+      // ),
     );
   }
 }

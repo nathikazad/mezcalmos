@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/database/FirebaseDb.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -71,9 +73,8 @@ class DeepLinkHandler {
           Future<void>.delayed(
             Duration.zero,
             () => MezRouter.toNamed<void>(
-              getRestaurantRoute(providerId),
-              arguments: _rest,
-            ),
+                RestaurantRouters().getRestaurantRoute(providerId),
+                arguments: {'id': providerId, "restaurant": _rest}),
           );
         }
         break;
@@ -82,7 +83,7 @@ class DeepLinkHandler {
         Future<void>.delayed(
           Duration.zero,
           () => MezRouter.toNamed<void>(
-            getLaundryOrderRoute(providerId),
+            LaundryRouters().getLaundryOrderWithId(providerId),
           ),
         );
 

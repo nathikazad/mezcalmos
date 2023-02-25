@@ -5,12 +5,14 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/components/ItemViewBottomBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
+import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -37,11 +39,12 @@ class _CustItemViewState extends State<CustItemView> {
 
   @override
   void initState() {
-    showViewRestaurant = Get.arguments?["showViewRestaurant"] ?? false;
+    showViewRestaurant = QR.params["showViewRestaurant"] as bool ?? false;
     final int? restaurantId =
-        int.tryParse(Get.parameters['restaurantId'] ?? "");
-    final int? itemId = int.tryParse(Get.parameters['itemId'] ?? "");
-    final int? cartItemId = int.tryParse(Get.parameters["cartItemId"] ?? "");
+        int.tryParse(QR.params['restaurantId'].toString() ?? "");
+    final int? itemId = int.tryParse(QR.params['itemId'].toString() ?? "");
+    final int? cartItemId =
+        int.tryParse(QR.params["cartItemId"].toString() ?? "");
     viewController.init(
         itemId: itemId,
         restaurantId: restaurantId,
@@ -94,7 +97,6 @@ class _CustItemViewState extends State<CustItemView> {
                                 ),
                               ),
                             ),
-                            
                           _itemNotesComponent(),
                           SizedBox(
                             height: 15.h,
@@ -175,9 +177,10 @@ class _CustItemViewState extends State<CustItemView> {
               borderRadius: BorderRadius.circular(18),
               onTap: () {
                 MezRouter.toNamed<void>(
-                    getRestaurantRoute(
+                    RestaurantRouters().getRestaurantRoute(
                         viewController.restaurant.value!.restaurantId),
                     arguments: {
+                      "id": viewController.restaurant.value!.restaurantId,
                       "restaurant": viewController.restaurant.value!
                     });
               },
