@@ -6,7 +6,8 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/CustItemVie
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/CustRestaurantListView.dart'
     deferred as restoList;
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
-    deferred as restoItemsView;
+    deferred as restoView;
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouters {
@@ -25,7 +26,8 @@ class RestaurantRouters {
   String getRestaurantRoute(
     int restaurantId,
   ) {
-    restaurantsId.replaceFirst(":id", restaurantId.toString());
+    restaurantsId = restaurantsId.replaceFirst(":id", restaurantId.toString());
+    mezDbgPrint("🤬🤬🤬🤬🤬 $restaurantsId");
     return restaurantsId;
   }
 
@@ -41,21 +43,22 @@ class RestaurantRouters {
         QRoute(
             path: '/:id',
             name: restaurantsId,
-            builder: () => CustItemView(
-                  viewItemScreenMode: ViewItemScreenMode.AddItemMode,
-                ),
+            builder: () => restoView.CustomerRestaurantView(),
+            middleware: [
+              DefferedLoader(restoView.loadLibrary)
+            ],
             children: [
               QRoute(
                   path: '/info',
                   name: restaurant_info,
                   // middleware: [DefferedLoader(restoScreenInfo.loadLibrary)],
-                  builder: () => restoItemView.CustItemView(
-                      viewItemScreenMode: ViewItemScreenMode.AddItemMode)),
+                  builder: () => restoView.CustomerRestaurantView()),
               QRoute(
                 path: '/:itemId',
                 name: item_id,
                 middleware: [DefferedLoader(restoItemView.loadLibrary)],
-                builder: () => restoItemsView.CustomerRestaurantView(),
+                builder: () => restoItemView.CustItemView(
+                    viewItemScreenMode: ViewItemScreenMode.AddItemMode),
               )
             ]),
       ]);

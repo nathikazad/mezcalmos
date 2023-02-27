@@ -39,12 +39,11 @@ class _CustItemViewState extends State<CustItemView> {
 
   @override
   void initState() {
-    showViewRestaurant = QR.params["showViewRestaurant"] as bool ?? false;
+    showViewRestaurant = QR.params["showViewRestaurant"] as bool;
     final int? restaurantId =
-        int.tryParse(QR.params['restaurantId'].toString() ?? "");
-    final int? itemId = int.tryParse(QR.params['itemId'].toString() ?? "");
-    final int? cartItemId =
-        int.tryParse(QR.params["cartItemId"].toString() ?? "");
+        int.tryParse(QR.params['restaurantId'].toString());
+    final int? itemId = int.tryParse(QR.params['itemId'].toString());
+    final int? cartItemId = int.tryParse(QR.params["cartItemId"].toString());
     viewController.init(
         itemId: itemId,
         restaurantId: restaurantId,
