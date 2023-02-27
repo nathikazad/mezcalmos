@@ -8,7 +8,6 @@ import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProfileView/components/ServiceOpenCloseSwitcher.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
@@ -167,17 +166,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     icon: Icons.copy,
                                     onTap: () {},
                                   )),
-                              ServiceOpenCloseSwitcher(
-                                  title: 'Service open',
-                                  subtitle: 'Service open subtile',
-                                  onTurnedOn: () {
-                                    _viewController.switchOpen(true);
-                                  },
-                                  onTurnedOff: () {
-                                    _viewController.switchOpen(false);
-                                  },
-                                  initialSwitcherValue:
-                                      _viewController.isAvailable),
+                                  
                               Divider(),
                               _navigationLink(
                                   onClick: () async {

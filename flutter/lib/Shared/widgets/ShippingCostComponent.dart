@@ -27,29 +27,12 @@ class ShippingCostComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: (shippingCost == 0)
-          ? Row(
-              mainAxisAlignment: alignment,
-              children: [
-                Flexible(
-                  child: Text(
-                    defaultShippingCost.toPriceString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        ?.copyWith(decoration: TextDecoration.lineThrough),
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Flexible(
-                  child: Text(
-                    "${_i18n()["free"]}",
-                    style: Get.textTheme.bodyText1
-                        ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
-                  ),
-                )
-              ],
+          ? Flexible(
+              child: Text(
+                "${_i18n()["free"]}",
+                style: Get.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
+              ),
             )
           : Text(
               shippingCost.toPriceString(),
