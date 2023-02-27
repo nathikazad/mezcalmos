@@ -248,6 +248,7 @@ class MezSideMenu extends GetWidget<AuthController> {
                 fontFamily: 'Montserrat',
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
+                color: blackColor
               ),
             ),
           ),

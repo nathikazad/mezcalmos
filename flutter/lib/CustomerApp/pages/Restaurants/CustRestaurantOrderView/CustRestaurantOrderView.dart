@@ -65,8 +65,10 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           autoBack: true,
           ordersRoute: kOrdersRoute,
           showNotifications: true,
-          titleWidget: Obx(
-              () => Text(viewController.order.value?.restaurant.name ?? ""))),
+          titleWidget: Obx(() => Text(
+                viewController.order.value?.restaurant.name ?? "",
+                style: Get.textTheme.headline3,
+              ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
           return MezButton(

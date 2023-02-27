@@ -42,6 +42,8 @@ class CreateServiceViewController {
   TextEditingController costPerKm = TextEditingController();
   TextEditingController distancePreview = TextEditingController();
   TextEditingController radius = TextEditingController();
+  TextEditingController description = TextEditingController();
+  TextEditingController phone = TextEditingController();
 
   // obs //
   RxnNum previewCost = RxnNum();
@@ -119,15 +121,21 @@ class CreateServiceViewController {
 
   String getTitle() {
     switch (currentPage.value) {
-      case 0:
-        return "${_i18n()['info']}";
       case 1:
-        return "${_i18n()['schedule']}";
+        return "${_i18n()['info']}";
       case 2:
+        return "${_i18n()['schedule']}";
+      case 3:
         return "${_i18n()['delivery']}";
 
       default:
         return "";
+      // FittedBox(
+      //         fit: BoxFit.fitWidth,
+      //         child: MezcalmosSharedWidgets.fillTitle(
+      //             actionLength: 2,
+      //             showLogo: (Get.width > 320) ? true : false),
+      //       ),
     }
   }
 
@@ -152,9 +160,12 @@ class CreateServiceViewController {
   Future<bool?> handleNext() async {
     switch (currentPage.value) {
       case 0:
-        await handleInfoPageNext();
+        goToInfoPage();
         break;
       case 1:
+        await handleInfoPageNext();
+        break;
+      case 2:
         handleScheduleNext();
         break;
 
@@ -203,6 +214,13 @@ class CreateServiceViewController {
     }
   }
 
+  void goToInfoPage() {
+    pageController
+        .animateToPage(currentPage.value + 1,
+            duration: Duration(milliseconds: 500), curve: Curves.easeIn)
+        .whenComplete(() => currentPage.value = pageController.page!.toInt());
+  }
+
   void handleScheduleNext() {
     serviceInput.value.schedule = newSchedule.value;
     pageController
@@ -214,7 +232,7 @@ class CreateServiceViewController {
   bool isFormValid() {
     switch (currentPage.value) {
       case 0:
-        return infoFromKey.currentState?.validate() == true;
+        return true;
       case 1:
         return true;
       case 2:

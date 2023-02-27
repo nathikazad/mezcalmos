@@ -168,6 +168,12 @@ class CustomerAppTheme {
           fontSize: 11.sp,
           color: Colors.black,
         ),
+        bodySmall: TextStyle(
+          fontFamily: "Montserrat",
+          fontWeight: FontWeight.w500,
+          fontSize: 13.sp,
+          color: Colors.black,
+        ),
         titleLarge: TextStyle(
           fontFamily: "Montserrat",
           fontWeight: FontWeight.w600,

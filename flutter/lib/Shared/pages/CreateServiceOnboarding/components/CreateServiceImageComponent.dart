@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
+import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["Shared"]["pages"]
     ["CreateServiceView"]["pages"]["CreateServiceInfoPage"];
@@ -35,12 +36,12 @@ class CreateServiceImageComponent extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     CircleAvatar(
-                      radius: 94,
-                      backgroundColor: primaryBlueColor,
+                      radius: 9.5.h,
+                      backgroundColor: Color(0xFFF5F5F5),
                       child: CircleAvatar(
-                        backgroundColor: secondaryLightBlueColor,
+                        backgroundColor: Color(0xFFF5F5F5),
                         backgroundImage: viewController.getRightImage,
-                        radius: 90,
+                        radius: 9.h,
                         child: (viewController.imageLoading.isTrue)
                             ? CircularProgressIndicator(
                                 color: primaryBlueColor,
@@ -50,8 +51,9 @@ class CreateServiceImageComponent extends StatelessWidget {
                                 ? Container(
                                     padding: const EdgeInsets.all(5),
                                     child: Text(
-                                      'Image',
-                                      style: Get.textTheme.bodyText2,
+                                      "${_i18n()['uploadImageText']}",
+                                      style: Get.textTheme.bodyText2?.copyWith(
+                                          color: offLightShadeGreyColor),
                                       textAlign: TextAlign.center,
                                     ),
                                   )
@@ -67,9 +69,9 @@ class CreateServiceImageComponent extends StatelessWidget {
                           child: InkWell(
                             customBorder: CircleBorder(),
                             onTap: () {
-                              viewController.newImageUrl.value =
-                                  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
-                              //  viewController.editImage(context);
+                              // viewController.newImageUrl.value =
+                              //     "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
+                               viewController.editImage(context);
                             },
                             child: Container(
                               padding: const EdgeInsets.all(8),

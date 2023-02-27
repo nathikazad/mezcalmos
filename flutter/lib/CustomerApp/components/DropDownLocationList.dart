@@ -111,45 +111,47 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: widget.bgColor,
-            // border: Border.all(
-            //   // width: 1.5,
-            //   // color: (dropDownListValue != pickLocationPlaceholder)
-            //   //     ? Theme.of(context).primaryColorLight
-            //   //     : Colors.red,
-            // ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: widget.bgColor,
+              // border: Border.all(
+              //   // width: 1.5,
+              //   // color: (dropDownListValue != pickLocationPlaceholder)
+              //   //     ? Theme.of(context).primaryColorLight
+              //   //     : Colors.red,
+              // ),
+            ),
+            child: DropdownButtonHideUnderline(
+                child: DropdownButton<SavedLocation>(
+              selectedItemBuilder: (BuildContext context) {
+                return dropDownSelectedItemBuilder(textTheme);
+              },
+              iconDisabledColor: Colors.grey.shade800,
+              iconEnabledColor: Colors.grey.shade800,
+              value: dropDownListValue,
+              dropdownColor: widget.bgColor,
+              isDense: true,
+              isExpanded: true,
+              icon: Icon(
+                Icons.expand_more,
+                color: Colors.black,
+              ),
+              hint: Text(
+                '${_i18n()["chooseLoc"]}',
+                style: Get.textTheme.bodyText1,
+              ),
+              items: listOfSavedLoacations
+                  .map<DropdownMenuItem<SavedLocation>>(
+                      (SavedLocation e) => buildItems(e, textTheme))
+                  .toList(),
+              onChanged: (SavedLocation? v) async {
+                await locationChangedHandler(v!);
+              },
+            )),
           ),
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<SavedLocation>(
-            selectedItemBuilder: (BuildContext context) {
-              return dropDownSelectedItemBuilder(textTheme);
-            },
-            iconDisabledColor: Colors.grey.shade800,
-            iconEnabledColor: Colors.grey.shade800,
-            value: dropDownListValue,
-            dropdownColor: widget.bgColor,
-            isDense: true,
-            isExpanded: true,
-            icon: Icon(
-              Icons.expand_more,
-              color: Colors.black,
-            ),
-            hint: Text(
-              '${_i18n()["chooseLoc"]}',
-              style: Get.textTheme.bodyLarge,
-            ),
-            items: listOfSavedLoacations
-                .map<DropdownMenuItem<SavedLocation>>(
-                    (SavedLocation e) => buildItems(e, textTheme))
-                .toList(),
-            onChanged: (SavedLocation? v) async {
-              await locationChangedHandler(v!);
-            },
-          )),
         ),
         Obx(() {
           if (showError.isTrue) {

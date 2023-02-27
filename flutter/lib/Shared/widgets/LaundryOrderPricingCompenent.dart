@@ -36,7 +36,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1,
             ),
             SizedBox(
-              height: 10,
+              height: 4,
             ),
             if (order.costsByType?.lineItems.isNotEmpty ?? false)
               Column(
@@ -49,7 +49,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                     }),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -75,7 +75,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 4),
                       child: Icon(
                         Icons.info_outline_rounded,
-                       color: offShadeGreyColor,
+                        color: offShadeGreyColor,
                         size: 22,
                       ),
                     ),
@@ -90,9 +90,6 @@ class LaundryOrderPricingComponent extends StatelessWidget {
                   ],
                 ),
               ),
-            SizedBox(
-              height: 4,
-            ),
           ],
         ),
       ),
@@ -101,7 +98,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
 
   Widget _itemRowCard({required LaundryOrderCostLineItem item}) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -116,7 +113,7 @@ class LaundryOrderPricingComponent extends StatelessWidget {
             width: 8,
           ),
           Text(
-            "\$${item.cost.round()} x ${item.weight}KG = \$${item.weighedCost.round()}",
+            "\$${item.cost.round()} x ${item.weight.round()}kg = \$${item.weighedCost.round()}",
           ),
         ],
       ),

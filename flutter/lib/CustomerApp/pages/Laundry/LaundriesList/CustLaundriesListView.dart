@@ -36,19 +36,19 @@ class _CustLaundriesListViewState extends State<CustLaundriesListView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 8,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-              child: Text(
-                "${_i18n()["title"]}",
-                style: Get.textTheme.displaySmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.start,
-              ),
-            ),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // Container(
+            //   margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            //   child: Text(
+            //     "${_i18n()["title"]}",
+            //     style: Get.textTheme.displaySmall?.copyWith(
+            //       fontWeight: FontWeight.w700,
+            //     ),
+            //     textAlign: TextAlign.start,
+            //   ),
+            // ),
             SizedBox(
               height: 10,
             ),
