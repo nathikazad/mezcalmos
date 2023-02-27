@@ -279,7 +279,22 @@ const documentNodeMutationinsertNotifInfo = DocumentNode(definitions: [
           ArgumentNode(
             name: NameNode(value: 'object'),
             value: VariableNode(name: NameNode(value: 'notifData')),
-          )
+          ),
+          ArgumentNode(
+            name: NameNode(value: 'on_conflict'),
+            value: ObjectValueNode(fields: [
+              ObjectFieldNode(
+                name: NameNode(value: 'constraint'),
+                value: EnumValueNode(
+                    name: NameNode(
+                        value: 'notification_info_app_type_id_user_id_key')),
+              ),
+              ObjectFieldNode(
+                name: NameNode(value: 'update_columns'),
+                value: EnumValueNode(name: NameNode(value: 'token')),
+              ),
+            ]),
+          ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [

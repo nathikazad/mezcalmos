@@ -31,7 +31,7 @@ class LaundryOpAuthController extends GetxController {
 
     setupLaundryOperator().then((value) {
       if (operator.value?.info.hasuraId != null) {
-        saveNotificationToken();
+        unawaited(_authController.saveNotificationToken());
       }
     });
 
@@ -45,40 +45,6 @@ class LaundryOpAuthController extends GetxController {
     }
 
     mezDbgPrint("👑👑 laundry Operator :: ${operator.value?.toJson()}");
-  }
-
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await _notificationsController.getToken();
-    final NotificationInfo? notifInfo = await get_notif_info(
-        userId: operator.value!.info.hasuraId, appType: "laundry");
-    mezDbgPrint("inside save notif token=====>>>😍");
-    mezDbgPrint("inside save notif token=====>>>${notifInfo?.token}");
-    mezDbgPrint("inside save notif token=====>>>$deviceNotificationToken");
-    try {
-      if (notifInfo != null &&
-          deviceNotificationToken != null &&
-          notifInfo.token != deviceNotificationToken) {
-        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
-        // ignore: unawaited_futures
-        update_notif_info(
-            notificationInfo: NotificationInfo(
-                userId: operatorUserId,
-                appType: "laundry",
-                id: notifInfo.id,
-                token: deviceNotificationToken));
-      } else if (deviceNotificationToken != null && notifInfo == null) {
-        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: operatorUserId,
-            token: deviceNotificationToken,
-            appType: "laundry");
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
   }
 
   @override

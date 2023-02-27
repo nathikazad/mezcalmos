@@ -41,7 +41,7 @@ class DeliveryAuthController extends GetxController {
     await setupDeliveryDriver();
 
     if (driver != null && driver?.driverInfo.hasuraId != null) {
-      unawaited(saveNotificationToken());
+      unawaited(_authController.saveNotificationToken());
     }
     startLocationListener();
     super.onInit();
@@ -64,38 +64,6 @@ class DeliveryAuthController extends GetxController {
     mezDbgPrint("DeliveryAuthController: handle state change user value");
     _driver.value = await get_driver_by_user_id(
         userId: _authController.hasuraUserId!, withCache: false);
-  }
-
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await _notificationsController.getToken();
-    final NotificationInfo? notifInfo = await get_notif_info(
-        userId: driver!.driverInfo.hasuraId, appType: "delivery");
-
-    try {
-      if (notifInfo != null &&
-          deviceNotificationToken != null &&
-          notifInfo.token != deviceNotificationToken) {
-        mezDbgPrint("🫡🫡 Updating notification info 🫡🫡");
-        // ignore: unawaited_futures
-        update_notif_info(
-            notificationInfo: NotificationInfo(
-                userId: driver!.driverInfo.hasuraId,
-                appType: "delivery",
-                id: notifInfo.id,
-                token: deviceNotificationToken));
-      } else if (deviceNotificationToken != null && notifInfo == null) {
-        mezDbgPrint("🫡🫡 saving notification info First Time🫡🫡");
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: driver!.driverInfo.hasuraId,
-            token: deviceNotificationToken,
-            appType: "delivery");
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
   }
 
   Timer _listenForLocation() {
