@@ -40,7 +40,7 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang),
         floatingActionButton: Obx(
           () => MezButton(
             enabled: viewController.isInfoSet,
@@ -53,7 +53,6 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
         body: Obx(
           () => Container(
             padding: const EdgeInsets.all(22),
@@ -94,7 +93,8 @@ class _UserWelcomeViewState extends State<UserWelcomeView> {
                       inputFormatters: <TextInputFormatter>[
                         UpperCaseTextFormatter()
                       ],
-                      style: Get.textTheme.bodyText2?.copyWith( color: Colors.black),
+                      style: Get.textTheme.bodyText2
+                          ?.copyWith(color: Colors.black),
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,

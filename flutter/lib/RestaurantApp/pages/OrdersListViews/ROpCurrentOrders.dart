@@ -54,7 +54,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),

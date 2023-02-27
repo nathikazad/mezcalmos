@@ -13,6 +13,7 @@ class AdminTabsViewController {
 // vars//
   List<ServiceProviderType> serviceTypes = [
     ServiceProviderType.Restaurant,
+    ServiceProviderType.Laundry,
     ServiceProviderType.DeliveryCompany
   ];
   // obs //

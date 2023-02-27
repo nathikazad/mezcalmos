@@ -2141,6 +2141,13 @@ const documentNodeQuerygetCustomerCart = DocumentNode(definitions: [
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'self_delivery'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'radius'),
                     alias: null,
                     arguments: [],
@@ -3480,6 +3487,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
+    required this.self_delivery,
     required this.radius,
     required this.$__typename,
   });
@@ -3491,6 +3499,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
+    final l$self_delivery = json['self_delivery'];
     final l$radius = json['radius'];
     final l$$__typename = json['__typename'];
     return Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliverer(
@@ -3501,6 +3510,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
+      self_delivery: (l$self_delivery as bool),
       radius: (l$radius as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -3515,6 +3525,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
   final int id;
 
   final double minimum_cost;
+
+  final bool self_delivery;
 
   final int radius;
 
@@ -3535,6 +3547,8 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$radius = radius;
     _resultData['radius'] = l$radius;
     final l$$__typename = $__typename;
@@ -3549,6 +3563,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
+    final l$self_delivery = self_delivery;
     final l$radius = radius;
     final l$$__typename = $__typename;
     return Object.hashAll([
@@ -3557,6 +3572,7 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
+      l$self_delivery,
       l$radius,
       l$$__typename,
     ]);
@@ -3595,6 +3611,11 @@ class Query$getCustomerCart$restaurant_cart$restaurant$delivery_details_of_deliv
     final l$minimum_cost = minimum_cost;
     final lOther$minimum_cost = other.minimum_cost;
     if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
     final l$radius = radius;
@@ -3642,6 +3663,7 @@ abstract class CopyWith$Query$getCustomerCart$restaurant_cart$restaurant$deliver
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? self_delivery,
     int? radius,
     String? $__typename,
   });
@@ -3672,6 +3694,7 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
+    Object? self_delivery = _undefined,
     Object? radius = _undefined,
     Object? $__typename = _undefined,
   }) =>
@@ -3690,6 +3713,9 @@ class _CopyWithImpl$Query$getCustomerCart$restaurant_cart$restaurant$delivery_de
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         radius: radius == _undefined || radius == null
             ? _instance.radius
             : (radius as int),
@@ -3715,6 +3741,7 @@ class _CopyWithStubImpl$Query$getCustomerCart$restaurant_cart$restaurant$deliver
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? self_delivery,
     int? radius,
     String? $__typename,
   }) =>
@@ -8965,6 +8992,13 @@ const documentNodeSubscriptionlisten_on_customer_cart =
                     selectionSet: null,
                   ),
                   FieldNode(
+                    name: NameNode(value: 'self_delivery'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
                     name: NameNode(value: 'id'),
                     alias: null,
                     arguments: [],
@@ -10333,6 +10367,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     required this.cost_per_km,
     this.free_delivery_km_range,
     this.free_delivery_minimum_cost,
+    required this.self_delivery,
     required this.id,
     required this.minimum_cost,
     required this.radius,
@@ -10344,6 +10379,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$cost_per_km = json['cost_per_km'];
     final l$free_delivery_km_range = json['free_delivery_km_range'];
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
+    final l$self_delivery = json['self_delivery'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
     final l$radius = json['radius'];
@@ -10354,6 +10390,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
       free_delivery_minimum_cost: l$free_delivery_minimum_cost == null
           ? null
           : moneyFromJson(l$free_delivery_minimum_cost),
+      self_delivery: (l$self_delivery as bool),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
       radius: (l$radius as int),
@@ -10366,6 +10403,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
   final double? free_delivery_km_range;
 
   final double? free_delivery_minimum_cost;
+
+  final bool self_delivery;
 
   final int id;
 
@@ -10386,6 +10425,8 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
         l$free_delivery_minimum_cost == null
             ? null
             : moneyToJson(l$free_delivery_minimum_cost);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$id = id;
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
@@ -10402,6 +10443,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$cost_per_km = cost_per_km;
     final l$free_delivery_km_range = free_delivery_km_range;
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
+    final l$self_delivery = self_delivery;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
     final l$radius = radius;
@@ -10410,6 +10452,7 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
       l$cost_per_km,
       l$free_delivery_km_range,
       l$free_delivery_minimum_cost,
+      l$self_delivery,
       l$id,
       l$minimum_cost,
       l$radius,
@@ -10440,6 +10483,11 @@ class Subscription$listen_on_customer_cart$restaurant_cart$restaurant$delivery_d
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final lOther$free_delivery_minimum_cost = other.free_delivery_minimum_cost;
     if (l$free_delivery_minimum_cost != lOther$free_delivery_minimum_cost) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
     final l$id = id;
@@ -10495,6 +10543,7 @@ abstract class CopyWith$Subscription$listen_on_customer_cart$restaurant_cart$res
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
+    bool? self_delivery,
     int? id,
     double? minimum_cost,
     int? radius,
@@ -10525,6 +10574,7 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
     Object? cost_per_km = _undefined,
     Object? free_delivery_km_range = _undefined,
     Object? free_delivery_minimum_cost = _undefined,
+    Object? self_delivery = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
     Object? radius = _undefined,
@@ -10541,6 +10591,9 @@ class _CopyWithImpl$Subscription$listen_on_customer_cart$restaurant_cart$restaur
         free_delivery_minimum_cost: free_delivery_minimum_cost == _undefined
             ? _instance.free_delivery_minimum_cost
             : (free_delivery_minimum_cost as double?),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         id: id == _undefined || id == null ? _instance.id : (id as int),
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
@@ -10568,6 +10621,7 @@ class _CopyWithStubImpl$Subscription$listen_on_customer_cart$restaurant_cart$res
     double? cost_per_km,
     double? free_delivery_km_range,
     double? free_delivery_minimum_cost,
+    bool? self_delivery,
     int? id,
     double? minimum_cost,
     int? radius,

@@ -53,7 +53,7 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back, title: "Order"),
       body: Obx(() {
         if (viewController.order.value != null) {
@@ -277,7 +277,13 @@ class _DvCompanyOrderViewState extends State<DvCompanyOrderView> {
             iconSize: 22,
           ),
           if (viewController.order.value!.driverInfo != null)
-            MessageButton(chatId: 55, onTap: () {})
+            MessageButton(
+                chatId: 55,
+                onTap: () {
+                  MezRouter.toNamed(getMessagesRoute(
+                      chatId: viewController
+                          .order.value!.chatWithServiceProviderId!));
+                })
         ],
       ),
     );

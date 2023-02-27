@@ -2,11 +2,11 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
 import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
 // const String kCurrentOrdersListRoute = '/currentOrders';
@@ -57,7 +57,7 @@ class XRouter {
           name: kCategoryView,
           page: () => LaundrOpCategoryView(),
         ),
-        GetPage(name: kOrderView, page: () => LaundryOpOrderView())
+        GetPage(name: kOrderView, page: () => LaundryOrderView())
       ] +
       SharedRouter.sharedRoutes;
 }

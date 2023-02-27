@@ -45,7 +45,7 @@ class DriversViewController {
   Future<void> fetchServiceLinks() async {
     try {
       serviceLink.value = await get_service_link_by_id(
-          serviceProviderId: serviceProviderId, withCache: false);
+          serviceLinkId: serviceProviderId, withCache: false);
     } on Exception {
       mezDbgPrint("Service dont have links");
     }

@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/DeliveryCompany/DeliveryCompany.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Services/ServiceInput.dart';
 import 'package:mezcalmos/Shared/models/Utilities/DeliveryCost.dart';
+import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 
@@ -25,26 +27,38 @@ class DeliverySettingsViewController {
   TextEditingController _distancePreview = TextEditingController();
 
   // state vars //
-  Rxn<Restaurant> restaurant = Rxn();
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   RxnInt deliveryPartnerId = RxnInt();
   RxnNum previewCost = RxnNum();
   Rxn<DeliveryCost> deliveryCost = Rxn();
+  Rxn<bool> selfDelivery = Rxn();
+  Rxn<MezLocation> serviceLocation = Rxn();
 
   Rx<ServiceDeliveryType> deliveryType = Rx(ServiceDeliveryType.Self_delivery);
+  int? deliveryDetailsId;
+  int? detailsID;
 
   // methods //
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
     int? serviceProviderId,
+    int? detailsID,
+    int? deliveryDetailsId,
     ServiceProviderType? serviceProviderType,
   }) async {
     this.createServiceViewController = createServiceViewController;
     this.serviceProviderId = serviceProviderId;
     this.serviceProviderType = serviceProviderType;
-    if (serviceProviderId != null && serviceProviderType != null) {
-      await _initEditMode(serviceProviderId, serviceProviderType);
+    this.deliveryDetailsId = deliveryDetailsId;
+    this.detailsID = detailsID;
+    if (serviceProviderId != null &&
+        serviceProviderType != null &&
+        detailsID != null &&
+        deliveryDetailsId != null) {
       await _getDeliveryCost();
+      await _getServiceLocation();
+      await _initEditMode(serviceProviderId, serviceProviderType);
+
       if (deliveryCost.value != null) {
         _assignDeliveryCost();
       }
@@ -52,21 +66,26 @@ class DeliverySettingsViewController {
   }
 
   Future<void> _initEditMode(
-      int? serviceProviderId, ServiceProviderType? serviceProviderType) async {
-    restaurant.value =
-        await get_restaurant_by_id(id: serviceProviderId!, withCache: false);
-    deliveryType.value = restaurant.value!.selfDelivery
+      int serviceProviderId, ServiceProviderType serviceProviderType) async {
+    selfDelivery.value = deliveryCost.value!.selfDelivery;
+    deliveryType.value = selfDelivery.value!
         ? ServiceDeliveryType.Self_delivery
         : ServiceDeliveryType.Delivery_Partner;
 
     deliveryPartnerId.value = await get_service_delivery_partner(
-        serviceId: serviceProviderId, providerType: serviceProviderType!);
+        serviceId: serviceProviderId, providerType: serviceProviderType);
   }
 
   Future<void> _getDeliveryCost() async {
+    mezDbgPrint("Getting deovery cost with ======>$deliveryDetailsId");
     deliveryCost.value = await get_delivery_cost(
-        deliveryDetailsId: restaurant.value!.deliveryDetailsId!,
-        withCache: false);
+        deliveryDetailsId: deliveryDetailsId!, withCache: false);
+  }
+
+  Future<void> _getServiceLocation() async {
+    mezDbgPrint("Called get location");
+    serviceLocation.value = await get_service_location(
+        serviceDetailsId: detailsID!, withCache: false);
   }
 
   void _assignDeliveryCost() {
@@ -82,7 +101,7 @@ class DeliverySettingsViewController {
         location: isCreatingNewService
             ? createServiceViewController!
                 .serviceInput.value.serviceInfo!.location
-            : restaurant.value!.info.location);
+            : serviceLocation.value!);
     deliveryCompanies.addAll(data);
   }
 
@@ -108,10 +127,15 @@ class DeliverySettingsViewController {
     if (isSelfDelivery) {
       return _handleSaveDeliveryCost();
     } else {
-      await update_service_delivery_partner(
-          serviceId: serviceProviderId!,
-          providerType: serviceProviderType!,
-          newCompanyId: deliveryPartnerId.value!);
+      if (deliveryPartnerId.value != null) {
+        await update_service_delivery_partner(
+            serviceId: serviceProviderId!,
+            providerType: serviceProviderType!,
+            newCompanyId: deliveryPartnerId.value!);
+      } else {
+        showErrorSnackBar(errorText: "Please select a company");
+        return false;
+      }
       // await update_restaurant_info(
       //     id: serviceProviderId!,
       //     restaurant: restaurant.value!.copyWith(
@@ -153,6 +177,7 @@ class DeliverySettingsViewController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
+        selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
         minimumCost: double.parse(_minCost.text),
         freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
         costPerKm: double.parse(_costPerKm.text));
@@ -186,8 +211,7 @@ class DeliverySettingsViewController {
 
   bool get hasData {
     if (serviceProviderId != null && serviceProviderType != null) {
-      return restaurant.value != null &&
-          (deliveryCost.value != null || deliveryPartnerId.value != null);
+      return (deliveryCost.value != null || deliveryPartnerId.value != null);
     } else
       return true;
   }

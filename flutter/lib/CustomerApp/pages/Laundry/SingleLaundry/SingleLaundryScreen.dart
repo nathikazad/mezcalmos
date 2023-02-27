@@ -49,7 +49,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
       () {
         if (laundry.value != null) {
           return Scaffold(
-            appBar: mezcalmosAppBar(
+            appBar: MezcalmosAppBar(
               AppBarLeftButtonType.Back,
               onClick: MezRouter.back,
               title: laundry.value?.info.name,

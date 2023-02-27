@@ -116,6 +116,7 @@ select_permissions:
         - delivery_details_id
         - details_id
         - id
+        - service_provider_type
       filter: {}
   - role: restaurant_operator
     permission:

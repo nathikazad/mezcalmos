@@ -59,7 +59,7 @@ class _IncomingOrderViewScreenState extends State<IncomingOrderViewScreen> {
             iOrderViewController.counterOffer.value == null ||
             !iOrderViewController.submittedCounterOffer.value,
         child: Scaffold(
-          appBar: mezcalmosAppBar(
+          appBar: MezcalmosAppBar(
             AppBarLeftButtonType.Back,
             onClick: iOrderViewController.counterOffer.value == null ||
                     iOrderViewController.counterOffer.value?.isValid != true ||

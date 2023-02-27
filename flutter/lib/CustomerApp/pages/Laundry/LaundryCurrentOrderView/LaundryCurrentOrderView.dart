@@ -169,7 +169,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(
+    return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       autoBack: true,
       titleWidget: Obx(

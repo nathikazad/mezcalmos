@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/DeliverySettingsView/components/DeliverySettingCostComponent.dart';
@@ -33,22 +34,31 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
   DeliverySettingsViewController viewController =
       DeliverySettingsViewController();
   int? serviceProviderId;
+  int? serviceDetailsId;
+  int? deliveryDetailsId;
   ServiceProviderType? serviceProviderType;
 
   @override
   void initState() {
+    mezDbgPrint("Delivery cost init :==========>");
     _settingVariables();
     viewController.init(
         createServiceViewController: widget.createServiceViewController,
         serviceProviderId: serviceProviderId,
+        deliveryDetailsId: deliveryDetailsId,
+        detailsID: serviceDetailsId,
         serviceProviderType: serviceProviderType);
     super.initState();
   }
 
   void _settingVariables() {
     if (Get.parameters["serviceProviderId"] != null &&
-        Get.arguments?["serviceProviderType"] != null) {
+        Get.arguments?["serviceProviderType"] != null &&
+        Get.parameters["deliveryDetailsId"] != null &&
+        Get.parameters["detailsId"] != null) {
       serviceProviderId = int.tryParse(Get.parameters["serviceProviderId"]!);
+      serviceDetailsId = int.tryParse(Get.parameters["detailsId"]!);
+      deliveryDetailsId = int.tryParse(Get.parameters["deliveryDetailsId"]!);
 
       serviceProviderType =
           Get.arguments?["serviceProviderType"] as ServiceProviderType;
@@ -60,7 +70,7 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
     return Scaffold(
       appBar: viewController.isCreatingNewService
           ? null
-          : mezcalmosAppBar(AppBarLeftButtonType.Back,
+          : MezcalmosAppBar(AppBarLeftButtonType.Back,
               onClick: MezRouter.back, title: "${_i18n()['delivery']}"),
       bottomSheet: viewController.isCreatingNewService
           ? null

@@ -123,7 +123,7 @@ class _ROpItemViewState extends State<ROpItemView>
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+    return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(result: viewController.needToRefetch.value);
     },
         title: '${_i18n()["item"]}',

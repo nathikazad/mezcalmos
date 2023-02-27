@@ -180,6 +180,7 @@ class CreateServiceViewController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
+        selfDelivery: serviceInput.value.isSelfDelivery,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: num.tryParse(freeKmRange.text)?.toDouble(),
         costPerKm: num.parse(costPerKm.text).toDouble());

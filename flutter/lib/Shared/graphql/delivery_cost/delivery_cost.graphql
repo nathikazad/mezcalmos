@@ -7,6 +7,7 @@ query getDeliveryCostById($deliveryDetailsId: Int! ) {
     free_delivery_minimum_cost
     id
     minimum_cost
+    self_delivery
    
   }
 }

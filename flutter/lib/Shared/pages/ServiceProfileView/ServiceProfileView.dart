@@ -6,6 +6,8 @@ import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/ServiceProfileController.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProfileView/components/ServiceOpenCloseSwitcher.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -15,7 +17,12 @@ import 'package:url_launcher/url_launcher.dart';
 class ServiceProfileView extends StatefulWidget {
   final int? serviceDetailsId;
   final int? serviceId;
-  const ServiceProfileView({super.key, this.serviceDetailsId, this.serviceId});
+  final int? deliveryDetailsId;
+  const ServiceProfileView(
+      {super.key,
+      this.serviceDetailsId,
+      this.serviceId,
+      this.deliveryDetailsId});
 
   @override
   State<ServiceProfileView> createState() => _ServiceProfileViewState();
@@ -26,12 +33,18 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
       Get.find<ServiceProfileController>();
   int? serviceDetailsId;
   int? serviceId;
+  int? deliveryDetailsId;
   @override
   void initState() {
+    mezDbgPrint(Get.parameters);
     _assignVars();
-    if (serviceDetailsId != null && serviceId != null) {
+    if (serviceDetailsId != null &&
+        serviceId != null &&
+        deliveryDetailsId != null) {
       _viewController.assignVars(
-          serviceDetailsId: serviceDetailsId!, serviceId: serviceId!);
+          serviceDetailsId: serviceDetailsId!,
+          serviceId: serviceId!,
+          deliveryDetailsId: deliveryDetailsId!);
       _viewController.fetchService();
     }
     super.initState();
@@ -42,10 +55,13 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         int.tryParse(Get.parameters["serviceDetailsId"] ?? "");
     serviceId =
         widget.serviceId ?? int.tryParse(Get.parameters["serviceId"] ?? "");
+    deliveryDetailsId = widget.deliveryDetailsId ??
+        int.tryParse(Get.parameters["deliveryDetailsId"] ?? "");
   }
 
   @override
   void dispose() {
+    _viewController.dispose();
     super.dispose();
   }
 
@@ -83,11 +99,20 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "Info"),
                               _navigationLink(
                                   onClick: () async {
-                                    navigateToOperators(
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
+                                    if (_viewController.service.serviceLinkId !=
+                                        null) {
+                                      navigateToOperators(
+                                          serviceLinkId: _viewController
+                                              .service.serviceLinkId!,
+                                          serviceProviderId:
+                                              _viewController.serviceId,
+                                          serviceProviderType: _viewController
+                                              .service.serviceProviderType!);
+                                    } else {
+                                      showErrorSnackBar(
+                                          errorText:
+                                              "This service have no links please add them first");
+                                    }
                                   },
                                   icon: Icons.support_agent,
                                   label: "Operators"),
@@ -110,10 +135,16 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   label: "Payments"),
                               _navigationLink(
                                   icon: Icons.star_rate_rounded,
+                                  onClick: () async {
+                                    await MezRouter.toNamed(kserviceReview);
+                                  },
                                   label: "Reviews"),
                               _navigationLink(
                                   onClick: () async {
                                     navigateToDeliverySettings(
+                                        deliveryDetailsID:
+                                            _viewController.deliveryDetailsId,
+                                        detailsId: _viewController.detailsId,
                                         serviceProviderId:
                                             _viewController.serviceId,
                                         serviceProviderType: _viewController
@@ -211,7 +242,7 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
           ? Size.fromHeight(kToolbarHeight)
           : Size.fromHeight(kToolbarHeight * 2),
       child: Obx(
-        () => mezcalmosAppBar(
+        () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           title: "Dashboard",

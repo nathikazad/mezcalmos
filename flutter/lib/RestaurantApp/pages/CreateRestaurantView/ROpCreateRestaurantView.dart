@@ -27,7 +27,7 @@ class _ROpCreateRestuarantViewState extends State<ROpCreateRestuarantView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
           title: "Create restaurant"),
       key: Get.find<SideMenuDrawerController>().getNewKey(),
       drawer: ROpDrawer(),

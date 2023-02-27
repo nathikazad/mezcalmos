@@ -60,7 +60,7 @@ class _ServiceDriversListViewState extends State<ServiceDriversListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: asTab ? null : MezRouter.back,
           title: "${_i18n()['drivers']}"),

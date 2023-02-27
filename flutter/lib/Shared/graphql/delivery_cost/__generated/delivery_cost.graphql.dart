@@ -312,6 +312,13 @@ const documentNodeQuerygetDeliveryCostById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -442,6 +449,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
+    required this.self_delivery,
     required this.$__typename,
   });
 
@@ -452,6 +460,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
+    final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCostById$delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -461,6 +470,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
+      self_delivery: (l$self_delivery as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -474,6 +484,8 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
   final int id;
 
   final double minimum_cost;
+
+  final bool self_delivery;
 
   final String $__typename;
 
@@ -492,6 +504,8 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -504,6 +518,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
+    final l$self_delivery = self_delivery;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -511,6 +526,7 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
+      l$self_delivery,
       l$$__typename,
     ]);
   }
@@ -549,6 +565,11 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     if (l$minimum_cost != lOther$minimum_cost) {
       return false;
     }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -584,6 +605,7 @@ abstract class CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? self_delivery,
     String? $__typename,
   });
 }
@@ -607,6 +629,7 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
+    Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getDeliveryCostById$delivery_details_by_pk(
@@ -623,6 +646,9 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -641,6 +667,7 @@ class _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    bool? self_delivery,
     String? $__typename,
   }) =>
       _res;

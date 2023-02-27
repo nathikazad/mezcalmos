@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
-import 'package:mezcalmos/LaundryApp/pages/ProfileView/LaundryProfileView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/TabsView/controllers/ROpTabsViewViewController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
@@ -58,8 +57,11 @@ class _LaundryTabsViewState extends State<LaundryTabsView> {
         );
       case 3:
         return ServiceProfileView(
-          serviceId: opAuthController.laundryId!,
-          serviceDetailsId: opAuthController.detailsId,
+          serviceId: opAuthController.laundryId,
+          serviceDetailsId:
+              opAuthController.operator.value!.state.serviceProviderDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
         );
 
       default:

@@ -1208,6 +1208,1165 @@ class _CopyWithStubImpl$Query$admin_get_dv_companies$delivery_company$details$lo
       _res;
 }
 
+class Variables$Query$admin_get_laundries {
+  factory Variables$Query$admin_get_laundries({required int limit}) =>
+      Variables$Query$admin_get_laundries._({
+        r'limit': limit,
+      });
+
+  Variables$Query$admin_get_laundries._(this._$data);
+
+  factory Variables$Query$admin_get_laundries.fromJson(
+      Map<String, dynamic> data) {
+    final result$data = <String, dynamic>{};
+    final l$limit = data['limit'];
+    result$data['limit'] = (l$limit as int);
+    return Variables$Query$admin_get_laundries._(result$data);
+  }
+
+  Map<String, dynamic> _$data;
+
+  int get limit => (_$data['limit'] as int);
+  Map<String, dynamic> toJson() {
+    final result$data = <String, dynamic>{};
+    final l$limit = limit;
+    result$data['limit'] = l$limit;
+    return result$data;
+  }
+
+  CopyWith$Variables$Query$admin_get_laundries<
+          Variables$Query$admin_get_laundries>
+      get copyWith => CopyWith$Variables$Query$admin_get_laundries(
+            this,
+            (i) => i,
+          );
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Variables$Query$admin_get_laundries) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$limit = limit;
+    final lOther$limit = other.limit;
+    if (l$limit != lOther$limit) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode {
+    final l$limit = limit;
+    return Object.hashAll([l$limit]);
+  }
+}
+
+abstract class CopyWith$Variables$Query$admin_get_laundries<TRes> {
+  factory CopyWith$Variables$Query$admin_get_laundries(
+    Variables$Query$admin_get_laundries instance,
+    TRes Function(Variables$Query$admin_get_laundries) then,
+  ) = _CopyWithImpl$Variables$Query$admin_get_laundries;
+
+  factory CopyWith$Variables$Query$admin_get_laundries.stub(TRes res) =
+      _CopyWithStubImpl$Variables$Query$admin_get_laundries;
+
+  TRes call({int? limit});
+}
+
+class _CopyWithImpl$Variables$Query$admin_get_laundries<TRes>
+    implements CopyWith$Variables$Query$admin_get_laundries<TRes> {
+  _CopyWithImpl$Variables$Query$admin_get_laundries(
+    this._instance,
+    this._then,
+  );
+
+  final Variables$Query$admin_get_laundries _instance;
+
+  final TRes Function(Variables$Query$admin_get_laundries) _then;
+
+  static const _undefined = {};
+
+  TRes call({Object? limit = _undefined}) =>
+      _then(Variables$Query$admin_get_laundries._({
+        ..._instance._$data,
+        if (limit != _undefined && limit != null) 'limit': (limit as int),
+      }));
+}
+
+class _CopyWithStubImpl$Variables$Query$admin_get_laundries<TRes>
+    implements CopyWith$Variables$Query$admin_get_laundries<TRes> {
+  _CopyWithStubImpl$Variables$Query$admin_get_laundries(this._res);
+
+  TRes _res;
+
+  call({int? limit}) => _res;
+}
+
+class Query$admin_get_laundries {
+  Query$admin_get_laundries({
+    required this.laundry_store,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundries.fromJson(Map<String, dynamic> json) {
+    final l$laundry_store = json['laundry_store'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundries(
+      laundry_store: (l$laundry_store as List<dynamic>)
+          .map((e) => Query$admin_get_laundries$laundry_store.fromJson(
+              (e as Map<String, dynamic>)))
+          .toList(),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final List<Query$admin_get_laundries$laundry_store> laundry_store;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$laundry_store = laundry_store;
+    _resultData['laundry_store'] =
+        l$laundry_store.map((e) => e.toJson()).toList();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$laundry_store = laundry_store;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      Object.hashAll(l$laundry_store.map((v) => v)),
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_laundries) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$laundry_store = laundry_store;
+    final lOther$laundry_store = other.laundry_store;
+    if (l$laundry_store.length != lOther$laundry_store.length) {
+      return false;
+    }
+    for (int i = 0; i < l$laundry_store.length; i++) {
+      final l$laundry_store$entry = l$laundry_store[i];
+      final lOther$laundry_store$entry = lOther$laundry_store[i];
+      if (l$laundry_store$entry != lOther$laundry_store$entry) {
+        return false;
+      }
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundries
+    on Query$admin_get_laundries {
+  CopyWith$Query$admin_get_laundries<Query$admin_get_laundries> get copyWith =>
+      CopyWith$Query$admin_get_laundries(
+        this,
+        (i) => i,
+      );
+}
+
+abstract class CopyWith$Query$admin_get_laundries<TRes> {
+  factory CopyWith$Query$admin_get_laundries(
+    Query$admin_get_laundries instance,
+    TRes Function(Query$admin_get_laundries) then,
+  ) = _CopyWithImpl$Query$admin_get_laundries;
+
+  factory CopyWith$Query$admin_get_laundries.stub(TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundries;
+
+  TRes call({
+    List<Query$admin_get_laundries$laundry_store>? laundry_store,
+    String? $__typename,
+  });
+  TRes laundry_store(
+      Iterable<Query$admin_get_laundries$laundry_store> Function(
+              Iterable<
+                  CopyWith$Query$admin_get_laundries$laundry_store<
+                      Query$admin_get_laundries$laundry_store>>)
+          _fn);
+}
+
+class _CopyWithImpl$Query$admin_get_laundries<TRes>
+    implements CopyWith$Query$admin_get_laundries<TRes> {
+  _CopyWithImpl$Query$admin_get_laundries(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundries _instance;
+
+  final TRes Function(Query$admin_get_laundries) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? laundry_store = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundries(
+        laundry_store: laundry_store == _undefined || laundry_store == null
+            ? _instance.laundry_store
+            : (laundry_store as List<Query$admin_get_laundries$laundry_store>),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  TRes laundry_store(
+          Iterable<Query$admin_get_laundries$laundry_store> Function(
+                  Iterable<
+                      CopyWith$Query$admin_get_laundries$laundry_store<
+                          Query$admin_get_laundries$laundry_store>>)
+              _fn) =>
+      call(
+          laundry_store: _fn(_instance.laundry_store
+              .map((e) => CopyWith$Query$admin_get_laundries$laundry_store(
+                    e,
+                    (i) => i,
+                  ))).toList());
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundries<TRes>
+    implements CopyWith$Query$admin_get_laundries<TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundries(this._res);
+
+  TRes _res;
+
+  call({
+    List<Query$admin_get_laundries$laundry_store>? laundry_store,
+    String? $__typename,
+  }) =>
+      _res;
+  laundry_store(_fn) => _res;
+}
+
+const documentNodeQueryadmin_get_laundries = DocumentNode(definitions: [
+  OperationDefinitionNode(
+    type: OperationType.query,
+    name: NameNode(value: 'admin_get_laundries'),
+    variableDefinitions: [
+      VariableDefinitionNode(
+        variable: VariableNode(name: NameNode(value: 'limit')),
+        type: NamedTypeNode(
+          name: NameNode(value: 'Int'),
+          isNonNull: true,
+        ),
+        defaultValue: DefaultValueNode(value: null),
+        directives: [],
+      )
+    ],
+    directives: [],
+    selectionSet: SelectionSetNode(selections: [
+      FieldNode(
+        name: NameNode(value: 'laundry_store'),
+        alias: null,
+        arguments: [
+          ArgumentNode(
+            name: NameNode(value: 'limit'),
+            value: VariableNode(name: NameNode(value: 'limit')),
+          )
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+            name: NameNode(value: 'details'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                name: NameNode(value: 'id'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'approved'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'image'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'name'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'language'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'open_status'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'creation_time'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'location'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: SelectionSetNode(selections: [
+                  FieldNode(
+                    name: NameNode(value: 'gps'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: 'address'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                  FieldNode(
+                    name: NameNode(value: '__typename'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null,
+                  ),
+                ]),
+              ),
+              FieldNode(
+                name: NameNode(value: '__typename'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+            ]),
+          ),
+          FieldNode(
+            name: NameNode(value: 'delivery_details_id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: '__typename'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+        ]),
+      ),
+      
+    ]),
+  ),
+]);
+Query$admin_get_laundries _parserFn$Query$admin_get_laundries(
+        Map<String, dynamic> data) =>
+    Query$admin_get_laundries.fromJson(data);
+
+class Options$Query$admin_get_laundries
+    extends graphql.QueryOptions<Query$admin_get_laundries> {
+  Options$Query$admin_get_laundries({
+    String? operationName,
+    required Variables$Query$admin_get_laundries variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    Duration? pollInterval,
+    graphql.Context? context,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          pollInterval: pollInterval,
+          context: context,
+          document: documentNodeQueryadmin_get_laundries,
+          parserFn: _parserFn$Query$admin_get_laundries,
+        );
+}
+
+class WatchOptions$Query$admin_get_laundries
+    extends graphql.WatchQueryOptions<Query$admin_get_laundries> {
+  WatchOptions$Query$admin_get_laundries({
+    String? operationName,
+    required Variables$Query$admin_get_laundries variables,
+    graphql.FetchPolicy? fetchPolicy,
+    graphql.ErrorPolicy? errorPolicy,
+    graphql.CacheRereadPolicy? cacheRereadPolicy,
+    Object? optimisticResult,
+    graphql.Context? context,
+    Duration? pollInterval,
+    bool? eagerlyFetchResults,
+    bool carryForwardDataOnException = true,
+    bool fetchResults = false,
+  }) : super(
+          variables: variables.toJson(),
+          operationName: operationName,
+          fetchPolicy: fetchPolicy,
+          errorPolicy: errorPolicy,
+          cacheRereadPolicy: cacheRereadPolicy,
+          optimisticResult: optimisticResult,
+          context: context,
+          document: documentNodeQueryadmin_get_laundries,
+          pollInterval: pollInterval,
+          eagerlyFetchResults: eagerlyFetchResults,
+          carryForwardDataOnException: carryForwardDataOnException,
+          fetchResults: fetchResults,
+          parserFn: _parserFn$Query$admin_get_laundries,
+        );
+}
+
+class FetchMoreOptions$Query$admin_get_laundries
+    extends graphql.FetchMoreOptions {
+  FetchMoreOptions$Query$admin_get_laundries({
+    required graphql.UpdateQuery updateQuery,
+    required Variables$Query$admin_get_laundries variables,
+  }) : super(
+          updateQuery: updateQuery,
+          variables: variables.toJson(),
+          document: documentNodeQueryadmin_get_laundries,
+        );
+}
+
+extension ClientExtension$Query$admin_get_laundries on graphql.GraphQLClient {
+  Future<graphql.QueryResult<Query$admin_get_laundries>>
+      query$admin_get_laundries(
+              Options$Query$admin_get_laundries options) async =>
+          await this.query(options);
+  graphql.ObservableQuery<Query$admin_get_laundries>
+      watchQuery$admin_get_laundries(
+              WatchOptions$Query$admin_get_laundries options) =>
+          this.watchQuery(options);
+  void writeQuery$admin_get_laundries({
+    required Query$admin_get_laundries data,
+    required Variables$Query$admin_get_laundries variables,
+    bool broadcast = true,
+  }) =>
+      this.writeQuery(
+        graphql.Request(
+          operation:
+              graphql.Operation(document: documentNodeQueryadmin_get_laundries),
+          variables: variables.toJson(),
+        ),
+        data: data.toJson(),
+        broadcast: broadcast,
+      );
+  Query$admin_get_laundries? readQuery$admin_get_laundries({
+    required Variables$Query$admin_get_laundries variables,
+    bool optimistic = true,
+  }) {
+    final result = this.readQuery(
+      graphql.Request(
+        operation:
+            graphql.Operation(document: documentNodeQueryadmin_get_laundries),
+        variables: variables.toJson(),
+      ),
+      optimistic: optimistic,
+    );
+    return result == null ? null : Query$admin_get_laundries.fromJson(result);
+  }
+}
+
+class Query$admin_get_laundries$laundry_store {
+  Query$admin_get_laundries$laundry_store({
+    this.details,
+    required this.delivery_details_id,
+    required this.id,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundries$laundry_store.fromJson(
+      Map<String, dynamic> json) {
+    final l$details = json['details'];
+    final l$delivery_details_id = json['delivery_details_id'];
+    final l$id = json['id'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundries$laundry_store(
+      details: l$details == null
+          ? null
+          : Query$admin_get_laundries$laundry_store$details.fromJson(
+              (l$details as Map<String, dynamic>)),
+      delivery_details_id: (l$delivery_details_id as int),
+      id: (l$id as int),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Query$admin_get_laundries$laundry_store$details? details;
+
+  final int delivery_details_id;
+
+  final int id;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$details = details;
+    _resultData['details'] = l$details?.toJson();
+    final l$delivery_details_id = delivery_details_id;
+    _resultData['delivery_details_id'] = l$delivery_details_id;
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$details = details;
+    final l$delivery_details_id = delivery_details_id;
+    final l$id = id;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$details,
+      l$delivery_details_id,
+      l$id,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_laundries$laundry_store) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$details = details;
+    final lOther$details = other.details;
+    if (l$details != lOther$details) {
+      return false;
+    }
+    final l$delivery_details_id = delivery_details_id;
+    final lOther$delivery_details_id = other.delivery_details_id;
+    if (l$delivery_details_id != lOther$delivery_details_id) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundries$laundry_store
+    on Query$admin_get_laundries$laundry_store {
+  CopyWith$Query$admin_get_laundries$laundry_store<
+          Query$admin_get_laundries$laundry_store>
+      get copyWith => CopyWith$Query$admin_get_laundries$laundry_store(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_laundries$laundry_store<TRes> {
+  factory CopyWith$Query$admin_get_laundries$laundry_store(
+    Query$admin_get_laundries$laundry_store instance,
+    TRes Function(Query$admin_get_laundries$laundry_store) then,
+  ) = _CopyWithImpl$Query$admin_get_laundries$laundry_store;
+
+  factory CopyWith$Query$admin_get_laundries$laundry_store.stub(TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundries$laundry_store;
+
+  TRes call({
+    Query$admin_get_laundries$laundry_store$details? details,
+    int? delivery_details_id,
+    int? id,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> get details;
+}
+
+class _CopyWithImpl$Query$admin_get_laundries$laundry_store<TRes>
+    implements CopyWith$Query$admin_get_laundries$laundry_store<TRes> {
+  _CopyWithImpl$Query$admin_get_laundries$laundry_store(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundries$laundry_store _instance;
+
+  final TRes Function(Query$admin_get_laundries$laundry_store) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? details = _undefined,
+    Object? delivery_details_id = _undefined,
+    Object? id = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundries$laundry_store(
+        details: details == _undefined
+            ? _instance.details
+            : (details as Query$admin_get_laundries$laundry_store$details?),
+        delivery_details_id:
+            delivery_details_id == _undefined || delivery_details_id == null
+                ? _instance.delivery_details_id
+                : (delivery_details_id as int),
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> get details {
+    final local$details = _instance.details;
+    return local$details == null
+        ? CopyWith$Query$admin_get_laundries$laundry_store$details.stub(
+            _then(_instance))
+        : CopyWith$Query$admin_get_laundries$laundry_store$details(
+            local$details, (e) => call(details: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store<TRes>
+    implements CopyWith$Query$admin_get_laundries$laundry_store<TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundries$laundry_store(this._res);
+
+  TRes _res;
+
+  call({
+    Query$admin_get_laundries$laundry_store$details? details,
+    int? delivery_details_id,
+    int? id,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> get details =>
+      CopyWith$Query$admin_get_laundries$laundry_store$details.stub(_res);
+}
+
+class Query$admin_get_laundries$laundry_store$details {
+  Query$admin_get_laundries$laundry_store$details({
+    required this.id,
+    required this.approved,
+    required this.image,
+    required this.name,
+    required this.language,
+    required this.open_status,
+    required this.creation_time,
+    required this.service_provider_type,
+    required this.location,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundries$laundry_store$details.fromJson(
+      Map<String, dynamic> json) {
+    final l$id = json['id'];
+    final l$approved = json['approved'];
+    final l$image = json['image'];
+    final l$name = json['name'];
+    final l$language = json['language'];
+    final l$open_status = json['open_status'];
+    final l$creation_time = json['creation_time'];
+    final l$service_provider_type = json['service_provider_type'];
+    final l$location = json['location'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundries$laundry_store$details(
+      id: (l$id as int),
+      approved: (l$approved as bool),
+      image: (l$image as String),
+      name: (l$name as String),
+      language: mapFromJson(l$language),
+      open_status: (l$open_status as String),
+      creation_time: (l$creation_time as String),
+      service_provider_type: (l$service_provider_type as String),
+      location:
+          Query$admin_get_laundries$laundry_store$details$location.fromJson(
+              (l$location as Map<String, dynamic>)),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final int id;
+
+  final bool approved;
+
+  final String image;
+
+  final String name;
+
+  final dynamic language;
+
+  final String open_status;
+
+  final String creation_time;
+
+  final String service_provider_type;
+
+  final Query$admin_get_laundries$laundry_store$details$location location;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$id = id;
+    _resultData['id'] = l$id;
+    final l$approved = approved;
+    _resultData['approved'] = l$approved;
+    final l$image = image;
+    _resultData['image'] = l$image;
+    final l$name = name;
+    _resultData['name'] = l$name;
+    final l$language = language;
+    _resultData['language'] = mapToJson(l$language);
+    final l$open_status = open_status;
+    _resultData['open_status'] = l$open_status;
+    final l$creation_time = creation_time;
+    _resultData['creation_time'] = l$creation_time;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
+    final l$location = location;
+    _resultData['location'] = l$location.toJson();
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$id = id;
+    final l$approved = approved;
+    final l$image = image;
+    final l$name = name;
+    final l$language = language;
+    final l$open_status = open_status;
+    final l$creation_time = creation_time;
+    final l$service_provider_type = service_provider_type;
+    final l$location = location;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$id,
+      l$approved,
+      l$image,
+      l$name,
+      l$language,
+      l$open_status,
+      l$creation_time,
+      l$service_provider_type,
+      l$location,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_laundries$laundry_store$details) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$id = id;
+    final lOther$id = other.id;
+    if (l$id != lOther$id) {
+      return false;
+    }
+    final l$approved = approved;
+    final lOther$approved = other.approved;
+    if (l$approved != lOther$approved) {
+      return false;
+    }
+    final l$image = image;
+    final lOther$image = other.image;
+    if (l$image != lOther$image) {
+      return false;
+    }
+    final l$name = name;
+    final lOther$name = other.name;
+    if (l$name != lOther$name) {
+      return false;
+    }
+    final l$language = language;
+    final lOther$language = other.language;
+    if (l$language != lOther$language) {
+      return false;
+    }
+    final l$open_status = open_status;
+    final lOther$open_status = other.open_status;
+    if (l$open_status != lOther$open_status) {
+      return false;
+    }
+    final l$creation_time = creation_time;
+    final lOther$creation_time = other.creation_time;
+    if (l$creation_time != lOther$creation_time) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
+      return false;
+    }
+    final l$location = location;
+    final lOther$location = other.location;
+    if (l$location != lOther$location) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundries$laundry_store$details
+    on Query$admin_get_laundries$laundry_store$details {
+  CopyWith$Query$admin_get_laundries$laundry_store$details<
+          Query$admin_get_laundries$laundry_store$details>
+      get copyWith => CopyWith$Query$admin_get_laundries$laundry_store$details(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> {
+  factory CopyWith$Query$admin_get_laundries$laundry_store$details(
+    Query$admin_get_laundries$laundry_store$details instance,
+    TRes Function(Query$admin_get_laundries$laundry_store$details) then,
+  ) = _CopyWithImpl$Query$admin_get_laundries$laundry_store$details;
+
+  factory CopyWith$Query$admin_get_laundries$laundry_store$details.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details;
+
+  TRes call({
+    int? id,
+    bool? approved,
+    String? image,
+    String? name,
+    dynamic? language,
+    String? open_status,
+    String? creation_time,
+    String? service_provider_type,
+    Query$admin_get_laundries$laundry_store$details$location? location,
+    String? $__typename,
+  });
+  CopyWith$Query$admin_get_laundries$laundry_store$details$location<TRes>
+      get location;
+}
+
+class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details<TRes>
+    implements CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> {
+  _CopyWithImpl$Query$admin_get_laundries$laundry_store$details(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundries$laundry_store$details _instance;
+
+  final TRes Function(Query$admin_get_laundries$laundry_store$details) _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? id = _undefined,
+    Object? approved = _undefined,
+    Object? image = _undefined,
+    Object? name = _undefined,
+    Object? language = _undefined,
+    Object? open_status = _undefined,
+    Object? creation_time = _undefined,
+    Object? service_provider_type = _undefined,
+    Object? location = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundries$laundry_store$details(
+        id: id == _undefined || id == null ? _instance.id : (id as int),
+        approved: approved == _undefined || approved == null
+            ? _instance.approved
+            : (approved as bool),
+        image: image == _undefined || image == null
+            ? _instance.image
+            : (image as String),
+        name: name == _undefined || name == null
+            ? _instance.name
+            : (name as String),
+        language: language == _undefined || language == null
+            ? _instance.language
+            : (language as dynamic),
+        open_status: open_status == _undefined || open_status == null
+            ? _instance.open_status
+            : (open_status as String),
+        creation_time: creation_time == _undefined || creation_time == null
+            ? _instance.creation_time
+            : (creation_time as String),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
+        location: location == _undefined || location == null
+            ? _instance.location
+            : (location
+                as Query$admin_get_laundries$laundry_store$details$location),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+  CopyWith$Query$admin_get_laundries$laundry_store$details$location<TRes>
+      get location {
+    final local$location = _instance.location;
+    return CopyWith$Query$admin_get_laundries$laundry_store$details$location(
+        local$location, (e) => call(location: e));
+  }
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details<TRes>
+    implements CopyWith$Query$admin_get_laundries$laundry_store$details<TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details(this._res);
+
+  TRes _res;
+
+  call({
+    int? id,
+    bool? approved,
+    String? image,
+    String? name,
+    dynamic? language,
+    String? open_status,
+    String? creation_time,
+    String? service_provider_type,
+    Query$admin_get_laundries$laundry_store$details$location? location,
+    String? $__typename,
+  }) =>
+      _res;
+  CopyWith$Query$admin_get_laundries$laundry_store$details$location<TRes>
+      get location =>
+          CopyWith$Query$admin_get_laundries$laundry_store$details$location
+              .stub(_res);
+}
+
+class Query$admin_get_laundries$laundry_store$details$location {
+  Query$admin_get_laundries$laundry_store$details$location({
+    required this.gps,
+    required this.address,
+    required this.$__typename,
+  });
+
+  factory Query$admin_get_laundries$laundry_store$details$location.fromJson(
+      Map<String, dynamic> json) {
+    final l$gps = json['gps'];
+    final l$address = json['address'];
+    final l$$__typename = json['__typename'];
+    return Query$admin_get_laundries$laundry_store$details$location(
+      gps: geographyFromJson(l$gps),
+      address: (l$address as String),
+      $__typename: ((l$$__typename ?? "none") as String),
+    );
+  }
+
+  final Geography gps;
+
+  final String address;
+
+  final String $__typename;
+
+  Map<String, dynamic> toJson() {
+    final _resultData = <String, dynamic>{};
+    final l$gps = gps;
+    _resultData['gps'] = geographyToJson(l$gps);
+    final l$address = address;
+    _resultData['address'] = l$address;
+    final l$$__typename = $__typename;
+    _resultData['__typename'] = l$$__typename;
+    return _resultData;
+  }
+
+  @override
+  int get hashCode {
+    final l$gps = gps;
+    final l$address = address;
+    final l$$__typename = $__typename;
+    return Object.hashAll([
+      l$gps,
+      l$address,
+      l$$__typename,
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (!(other is Query$admin_get_laundries$laundry_store$details$location) ||
+        runtimeType != other.runtimeType) {
+      return false;
+    }
+    final l$gps = gps;
+    final lOther$gps = other.gps;
+    if (l$gps != lOther$gps) {
+      return false;
+    }
+    final l$address = address;
+    final lOther$address = other.address;
+    if (l$address != lOther$address) {
+      return false;
+    }
+    final l$$__typename = $__typename;
+    final lOther$$__typename = other.$__typename;
+    if (l$$__typename != lOther$$__typename) {
+      return false;
+    }
+    return true;
+  }
+}
+
+extension UtilityExtension$Query$admin_get_laundries$laundry_store$details$location
+    on Query$admin_get_laundries$laundry_store$details$location {
+  CopyWith$Query$admin_get_laundries$laundry_store$details$location<
+          Query$admin_get_laundries$laundry_store$details$location>
+      get copyWith =>
+          CopyWith$Query$admin_get_laundries$laundry_store$details$location(
+            this,
+            (i) => i,
+          );
+}
+
+abstract class CopyWith$Query$admin_get_laundries$laundry_store$details$location<
+    TRes> {
+  factory CopyWith$Query$admin_get_laundries$laundry_store$details$location(
+    Query$admin_get_laundries$laundry_store$details$location instance,
+    TRes Function(Query$admin_get_laundries$laundry_store$details$location)
+        then,
+  ) = _CopyWithImpl$Query$admin_get_laundries$laundry_store$details$location;
+
+  factory CopyWith$Query$admin_get_laundries$laundry_store$details$location.stub(
+          TRes res) =
+      _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details$location;
+
+  TRes call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  });
+}
+
+class _CopyWithImpl$Query$admin_get_laundries$laundry_store$details$location<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundries$laundry_store$details$location<
+            TRes> {
+  _CopyWithImpl$Query$admin_get_laundries$laundry_store$details$location(
+    this._instance,
+    this._then,
+  );
+
+  final Query$admin_get_laundries$laundry_store$details$location _instance;
+
+  final TRes Function(Query$admin_get_laundries$laundry_store$details$location)
+      _then;
+
+  static const _undefined = {};
+
+  TRes call({
+    Object? gps = _undefined,
+    Object? address = _undefined,
+    Object? $__typename = _undefined,
+  }) =>
+      _then(Query$admin_get_laundries$laundry_store$details$location(
+        gps: gps == _undefined || gps == null
+            ? _instance.gps
+            : (gps as Geography),
+        address: address == _undefined || address == null
+            ? _instance.address
+            : (address as String),
+        $__typename: $__typename == _undefined || $__typename == null
+            ? _instance.$__typename
+            : ($__typename as String),
+      ));
+}
+
+class _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details$location<
+        TRes>
+    implements
+        CopyWith$Query$admin_get_laundries$laundry_store$details$location<
+            TRes> {
+  _CopyWithStubImpl$Query$admin_get_laundries$laundry_store$details$location(
+      this._res);
+
+  TRes _res;
+
+  call({
+    Geography? gps,
+    String? address,
+    String? $__typename,
+  }) =>
+      _res;
+}
+
 class Variables$Query$admin_get_restaurants {
   factory Variables$Query$admin_get_restaurants({required int limit}) =>
       Variables$Query$admin_get_restaurants._({

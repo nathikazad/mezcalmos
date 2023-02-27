@@ -60,6 +60,8 @@ Future<List<Restaurant>> fetch_restaurants({required bool withCache}) async {
             ? null
             : DeliveryCost(
                 id: data.delivery_details_of_deliverer!.first.id,
+                selfDelivery:
+                    data.delivery_details_of_deliverer!.first.self_delivery,
                 freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
                     .first.free_delivery_minimum_cost,
                 costPerKm:
@@ -172,6 +174,8 @@ Future<Restaurant?> get_restaurant_by_id(
             ? null
             : DeliveryCost(
                 id: data.delivery_details_of_deliverer!.first.id,
+                selfDelivery:
+                    data.delivery_details_of_deliverer!.first.self_delivery,
                 freeDeliveryMinimumCost: data.delivery_details_of_deliverer!
                     .first.free_delivery_minimum_cost,
                 costPerKm:

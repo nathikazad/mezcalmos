@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -33,7 +34,7 @@ class _AppNeedsUpdateScreenState extends State<AppNeedsUpdateScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButton: _floatingActionBtn(),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang, autoBack: false),
         body: Center(
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),

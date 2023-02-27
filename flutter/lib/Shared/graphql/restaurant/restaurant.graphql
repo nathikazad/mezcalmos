@@ -13,6 +13,7 @@ query getRestaurants {
       free_delivery_km_range
       free_delivery_minimum_cost
       id
+      
       minimum_cost
       radius
       self_delivery

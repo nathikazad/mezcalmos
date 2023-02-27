@@ -98,3 +98,17 @@ select_permissions:
             restaurant_operators:
               user_id:
                 _eq: X-Hasura-User-Id
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

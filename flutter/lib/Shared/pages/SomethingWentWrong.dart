@@ -32,7 +32,7 @@ class SomethingWentWrongScreen extends StatelessWidget {
         // appBar: mezcalmosAppBar(
         //   AppBarLeftButtonType.Lang,
         // ),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             onClick: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: Flex(
           direction: Axis.vertical,

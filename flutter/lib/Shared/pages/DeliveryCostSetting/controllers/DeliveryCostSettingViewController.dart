@@ -55,6 +55,7 @@ class DeliveryCostSettingViewController {
     mezDbgPrint("freeKmRange.text =====> [BBB] ===> ${freeKmRange.text}");
     return DeliveryCost(
         id: null,
+        selfDelivery: false,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: double.tryParse(freeKmRange.text),
         costPerKm: double.parse(costPerKm.text));

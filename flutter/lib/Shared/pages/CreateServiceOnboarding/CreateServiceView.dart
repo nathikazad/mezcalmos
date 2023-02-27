@@ -39,7 +39,7 @@ class _CreateServiceViewState extends State<CreateServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           titleWidget: Obx(() => Text(viewController.getTitle())),
           onClick: viewController.handleBack),
       bottomSheet: Obx(

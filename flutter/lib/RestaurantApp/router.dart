@@ -1,6 +1,5 @@
 import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/RestaurantApp/pages/CreateRestaurantView/ROpCreateRestaurantView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
@@ -130,7 +129,7 @@ String getEditOptionRoute({required int itemId}) {
 class XRouter {
   static dynamic mainRoutes = [
         GetPage(name: kHomeRoute, page: () => RestaurantWrapper()),
-        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
+       
         GetPage(name: kMenuView, page: () => ROpMenuView()),
         GetPage(
             name: kCurrentOrdersListView,

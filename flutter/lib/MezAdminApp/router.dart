@@ -1,10 +1,11 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
@@ -12,6 +13,7 @@ import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuVie
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/RestaurantOrderView.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 
@@ -27,7 +29,6 @@ const String kDeliveryCostSetter = "/deliveryCostSetter";
 const String kMenuView = '/menu/:restaurantId';
 
 const String kEditInfoView = '/editInfo/:restaurantId';
-const String kDashboardView = '/dashboard/:restaurantId';
 
 const String kCategoryView = '/categoryScreen/:restaurantId';
 const String kEditCategoryScreen = '/categoryScreen/:categoryId/:restaurantId';
@@ -37,6 +38,9 @@ const String kEditItemView = '/itemView/:restaurantId/:itemId/:categoryId';
 const String kOptionView = "/optionView/:restaurantId/:itemId/:optionId";
 const String kChoiceView = "/Choice/:restaurantId:/:optionId/:choiceId";
 const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+const String kLaundryOrderView = '/laundryOrders/:orderId';
+const String kLaundryCategoryView = '/categoryScreen/:laundryId/:categoryId';
+const String kLaundryAdminView = '/laundry/admin/:laundryId';
 
 // dv admin //
 const String kDvCompanyOrderView = "/deliveryOrders/:orderId";
@@ -56,7 +60,6 @@ class XRouter {
           name: kMenuView,
           page: () => ROpMenuView(),
         ),
-        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(
           name: kCategoryView,
           page: () => ROpCategoryView(),
@@ -80,8 +83,24 @@ class XRouter {
           name: kDvCompanyOrderView,
           page: () => DvCompanyOrderView(),
         ),
+        GetPage(
+          name: kLaundryOrderView,
+          page: () => LaundryOrderView(),
+        ),
+        GetPage(
+          name: kLaundryCategoryView,
+          page: () => LaundrOpCategoryView(),
+        ),
+        GetPage(
+          name: kLaundryAdminView,
+          page: () => LaundryOpAdminView(),
+        ),
       ] +
       SharedRouter.sharedRoutes;
+}
+
+String getLaundryAdminRoute({required int laundryId}) {
+  return kLaundryAdminView.replaceFirst(":laundryId", "$laundryId");
 }
 
 void getserviceOrdersRoute({
@@ -99,6 +118,10 @@ void getserviceOrdersRoute({
 
 String getRestaurantOrderRoute(int orderId) {
   return kRestaurantOrderView.replaceFirst(":orderId", "$orderId");
+}
+
+String getLaundryOrderRoute(int orderId) {
+  return kLaundryOrderView.replaceFirst(":orderId", "$orderId");
 }
 
 String getDvCompanyOrderRoute(int orderId) {
@@ -122,10 +145,6 @@ String pickDriverForOrderRoute(int orderId) {
 
 String getRestaurantMenuRoute({required int restaurantId}) {
   return kMenuView.replaceFirst(":restaurantId", "$restaurantId");
-}
-
-String getROpEditInfoRoute({required int restaurantId}) {
-  return kDashboardView.replaceFirst(":restaurantId", "$restaurantId");
 }
 
 String getROpChoiceRoute(

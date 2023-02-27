@@ -114,7 +114,7 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                         height: 25,
                       ),
                       LaundryOpMinimumCost(
-                        minCost: viewController.minCost,
+                        viewController: viewController,
                       )
                     ],
                   )

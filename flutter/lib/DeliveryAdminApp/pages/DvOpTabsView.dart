@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/DeliveryAdminApp/controllers/deliveryAdminAuth.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrdersListViews/DvOpCurrentOrders.dart';
-import 'package:mezcalmos/DeliveryAdminApp/pages/ServiceProfile/DvOpProfileView.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/DeliveryCostSetting/DeliveryCostSettingView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["DeliveryAdminApp"]
@@ -59,7 +59,13 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
           deliveryDetailsId: 1,
         );
       case 3:
-        return DvOpProfileView();
+        return ServiceProfileView(
+          serviceId: opAuthController.companyId,
+          serviceDetailsId:
+              opAuthController.operator.value!.state.serviceProviderDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
+        );
 
       default:
         return Scaffold(
@@ -73,8 +79,8 @@ class _DvOpTabsViewState extends State<DvOpTabsView>
 
   Widget _navBar() {
     return Obx(() => BottomNavigationBar(
-            selectedLabelStyle: Get.textTheme.bodyText1,
-            unselectedLabelStyle: Get.textTheme.bodyText2,
+            selectedLabelStyle: Get.textTheme.bodyLarge,
+            unselectedLabelStyle: Get.textTheme.bodyMedium,
             selectedItemColor: primaryBlueColor,
             currentIndex: _index.value,
             onTap: (int v) {

@@ -235,3 +235,23 @@ update_permissions:
           operators:
             user_id:
               _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

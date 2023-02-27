@@ -127,6 +127,7 @@ select_permissions:
         - to_entity_id
         - to_entity_type
       filter: {}
+      allow_aggregations: true
   - role: restaurant_operator
     permission:
       columns:

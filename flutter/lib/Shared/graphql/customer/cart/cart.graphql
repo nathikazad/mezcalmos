@@ -38,6 +38,7 @@ query getCustomerCart($customer_id: Int!) {
         free_delivery_minimum_cost
         id
         minimum_cost
+        self_delivery
         radius
       }
       delivery_details_id
@@ -168,6 +169,7 @@ subscription listen_on_customer_cart($customer_id: Int!) {
         cost_per_km
         free_delivery_km_range
         free_delivery_minimum_cost
+        self_delivery
         id
         minimum_cost
         radius

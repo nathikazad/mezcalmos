@@ -25,6 +25,8 @@ import 'package:mezcalmos/Shared/pages/ServiceDriversList/ServiceDriversListView
 import 'package:mezcalmos/Shared/pages/ServiceInfoEditView/ServiceInfoEditView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceOperatorsList/OperatorsListView.dart';
 import 'package:mezcalmos/Shared/pages/ServicePaymentsView/ServicePaymentsView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProfileView/ServiceProfileView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceReviewsView/ServiceReviewsView.dart';
 import 'package:mezcalmos/Shared/pages/ServiceScheduleView/ServiceScheduleView.dart';
 import 'package:mezcalmos/Shared/pages/SomethingWentWrong.dart';
 import 'package:mezcalmos/Shared/pages/SplashScreen.dart';
@@ -58,18 +60,23 @@ const String kPickLocationWithoutAuth = "/pick_location/noAuth";
 const String kPickDriver = "/pickDriver/:orderId";
 const String kDriversList = "/driversList/:serviceProviderId";
 const String kServicePayments = "/servicePayments/:ServiceProviderId";
-const String kOperatorsList = "/operatorsList/:serviceProviderId";
+const String kOperatorsList =
+    "/operatorsList/:serviceProviderId/:serviceLinkId";
 const String kDeliveryCost = "/deliveryCost/:deliveryDetailsId";
 const String kCreateService = "/createService";
-const String kdeliverySettingsView = "/deliverySettings/:serviceProviderId";
+const String kdeliverySettingsView =
+    "/deliverySettings/:serviceProviderId/:deliveryDetailsId/:detailsId";
 const String kPickLocationEdit = "/pick_location/edit";
 const String kPickLocationNew = "/pick_location/new";
-const String kserviceInfoEdit = "/service/:serviceProviderId/:serviceDetailsId";
+const String kserviceInfoEdit = "/info/:serviceProviderId/:serviceDetailsId";
 const String kserviceScheduleEdit = "/schedule";
+const String kserviceReview = "/reviews";
 const String kSomethingWentWrongScreen = "/SomethingWentWrongScreen";
 const String kDeliveryCostSettingScreen =
     "/costDeliverySettingScreen/:providerId/:providerType";
 const String kNoInternetRoute = '/noInternet';
+const String kServiceProfile =
+    '/service/:serviceId/:serviceDetailsId/:deliveryDetailsId';
 
 String getMessagesRoute({
   required int chatId,
@@ -134,20 +141,27 @@ void navigateToDrivers(
 
 void navigateToOperators(
     {required int serviceProviderId,
+    required int serviceLinkId,
     required ServiceProviderType serviceProviderType}) {
-  final String route =
+  String route =
       kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+  route = route.replaceFirst(":serviceLinkId", "$serviceLinkId");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
     "showAppBar": true,
   });
 }
 
-void navigateToDeliverySettings(
-    {required int serviceProviderId,
-    required ServiceProviderType serviceProviderType}) {
-  final String route = kdeliverySettingsView.replaceFirst(
+void navigateToDeliverySettings({
+  required int serviceProviderId,
+  required int detailsId,
+  required int deliveryDetailsID,
+  required ServiceProviderType serviceProviderType,
+}) {
+  String route = kdeliverySettingsView.replaceFirst(
       ":serviceProviderId", "$serviceProviderId");
+  route = route.replaceFirst(":detailsId", "$detailsId");
+  route = route.replaceFirst(":deliveryDetailsId", "$deliveryDetailsID");
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
   });
@@ -182,6 +196,20 @@ void navigateToServicePayments(
   MezRouter.toNamed(route, arguments: {
     "serviceProviderType": serviceProviderType,
   });
+}
+
+void navigateToServiceProfile({
+  required int serviceProviderId,
+  required int serviceDetailsId,
+  required int deliveryDetailsId,
+}) {
+  String route =
+      kServiceProfile.replaceFirst(":serviceId", "$serviceProviderId");
+  route = route.replaceFirst(":serviceDetailsId", "$serviceDetailsId");
+  route = route.replaceFirst(":deliveryDetailsId", "$deliveryDetailsId");
+  MezRouter.toNamed(
+    route,
+  );
 }
 
 void navigateToCreateService(
@@ -255,16 +283,18 @@ class SharedRouter {
     GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => ServiceDriversListView()),
-    // GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
+
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
     GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),
     GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
+    GetPage(name: kserviceReview, page: () => ServiceReviewsView()),
     GetPage(name: kUserWelcomeRoute, page: () => UserWelcomeView()),
     GetPage(name: kUserNewProfile, page: () => UserProfileView()),
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
     GetPage(name: kCreateService, page: () => CreateServiceView()),
     GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
     GetPage(name: kserviceScheduleEdit, page: () => ServiceScheduleView()),
+    GetPage(name: kServiceProfile, page: () => ServiceProfileView()),
     GetPage(
       name: kNoInternetRoute,
       page: () => NoInternetScreen(),

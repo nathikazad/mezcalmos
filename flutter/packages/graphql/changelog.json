@@ -1,0 +1,16 @@
+{
+  "package_name": "graphql",
+  "version": "v5.1.1",
+  "api": {
+    "name": "github",
+    "repository": "zino-hofmann/graphql-flutter",
+    "branch": "main"
+  },
+  "generation_method": {
+    "name": "header",
+    "header_filter": true
+  },
+  "serialization_method": {
+    "name": "md"
+  }
+}

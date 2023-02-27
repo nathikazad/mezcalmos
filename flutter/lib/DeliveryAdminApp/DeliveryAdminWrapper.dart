@@ -74,7 +74,7 @@ class _DeliveryAdminWrapperState extends State<DeliveryAdminWrapper> {
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
         backgroundColor: Colors.white,
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             onClick: () => Get.find<SideMenuDrawerController>().openMenu()),
         body: MezLogoAnimation(centered: true));
   }

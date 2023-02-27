@@ -68,7 +68,7 @@ class _ROpMenuViewState extends State<ROpMenuView>
                 (viewController.reOrderMode.isFalse)
                     ? kToolbarHeight * 2
                     : kToolbarHeight),
-            child: mezcalmosAppBar(
+            child: MezcalmosAppBar(
               !widget.canGoBack && viewController.reOrderMode.isFalse
                   ? AppBarLeftButtonType.Menu
                   : AppBarLeftButtonType.Back,

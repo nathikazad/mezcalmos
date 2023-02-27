@@ -55,7 +55,7 @@ class _LaundryOpCurrentOrdersListViewState
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),

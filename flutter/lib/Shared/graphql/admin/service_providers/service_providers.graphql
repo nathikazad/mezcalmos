@@ -1,6 +1,6 @@
 query admin_get_dv_companies($limit: Int!) {
   delivery_company(limit: $limit) {
-    details{ 
+    details {
       id
       approved
       image
@@ -10,26 +10,46 @@ query admin_get_dv_companies($limit: Int!) {
       open_status
       creation_time
       service_provider_type
-        location {
-      gps
-      address
+      location {
+        gps
+        address
+      }
     }
-    }
-   delivery_details_id
+    delivery_details_id
     id
-   
+  }
+}
+query admin_get_laundries($limit: Int!) {
+  laundry_store(limit: $limit) {
+    details {
+      id
+      approved
+      image
+      name
+      language
+      open_status
+      creation_time
+      service_provider_type
+      location {
+        gps
+        address
+      }
+    }
+    delivery_details_id
+    id
   }
 }
 query admin_get_restaurants($limit: Int!) {
   restaurant_restaurant(limit: $limit) {
     id
-      delivery_details_id
-    details{ id
+    delivery_details_id
+    details {
+      id
       approved
       firebase_id
 
       image
-    
+
       language
       location {
         gps
