@@ -60,7 +60,7 @@ class ConnectivityHelper {
     final Stopwatch stopwatch = Stopwatch()..start();
     final List<bool> results = await Future.wait(futures)
         .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
-    mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
+    // mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
     if (results.contains(true)) {
       if (stopwatch.elapsed.inMilliseconds < 3000)
         return InternetStatus.Online;
