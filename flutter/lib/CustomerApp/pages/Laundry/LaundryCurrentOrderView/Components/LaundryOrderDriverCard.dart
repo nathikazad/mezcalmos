@@ -11,11 +11,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
-//
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundryCurrentOrderView"]["Components"]["LaundryOrderDriverCard"];
-//
 
 class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.order})
@@ -61,17 +59,6 @@ class LaundryOrderDriverCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Positioned(
-                    //   right: -35,
-                    //   child: CircleAvatar(
-                    //     radius: 23,
-                    //     child: Icon(
-                    //       Icons.delivery_dining,
-                    //       size: 30,
-                    //       color: Colors.white,
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 ),
                 SizedBox(

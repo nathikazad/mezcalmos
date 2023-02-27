@@ -6,11 +6,9 @@ import 'package:mezcalmos/Shared/helpers/DateTimeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 
-//
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundryCurrentOrderView"]["Components"]["CustomerLaundryOrderEst"];
-//
 
 class CustomerLaundryOrderEst extends StatelessWidget {
   const CustomerLaundryOrderEst({Key? key, required this.order})
@@ -57,18 +55,6 @@ class CustomerLaundryOrderEst extends StatelessWidget {
                         ),
                       ),
                     )
-
-                    // Positioned(
-                    //   right: -35,
-                    //   child: CircleAvatar(
-                    //     radius: 23,
-                    //     child: Icon(
-                    //       _getIcon(),
-                    //       color: Colors.white,
-                    //       size: 30,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 SizedBox(
