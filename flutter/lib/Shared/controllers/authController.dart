@@ -75,9 +75,9 @@ class AuthController extends GetxController {
         mezDbgPrint('AuthController: User is currently signed out!');
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        final bool hasInternet =
-            await ConnectivityHelper.instance.pingServers();
-        if (hasInternet) {
+        final InternetStatus internetStatus =
+            await ConnectivityHelper.instance.checkForInternet();
+        if (internetStatus != InternetStatus.Offline) {
           fireAuth.IdTokenResult? tokenResult =
               await user.getIdTokenResult(true);
           mezDbgPrint(tokenResult.claims);
