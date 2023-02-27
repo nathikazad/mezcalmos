@@ -66,7 +66,7 @@ export async function createNewRestaurant(userId: number, restaurantDetails: Res
         body: `There is a new restaurant`
       }
     },
-    linkUrl: restaurantUrl(restaurant.id!)
+    linkUrl: restaurantUrl(restaurant.id)
   }
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

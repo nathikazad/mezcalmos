@@ -29,6 +29,2573 @@ input Boolean_comparison_exp {
 }
 
 """
+columns and relationships of "business.business"
+"""
+type business_business {
+  """An object relationship"""
+  details: service_provider_details!
+  details_id: Int!
+  id: Int!
+
+  """An array relationship"""
+  operators(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): [business_operator!]!
+
+  """An aggregate relationship"""
+  operators_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): business_operator_aggregate!
+  profile: String!
+  service_provider_type: String!
+}
+
+"""
+aggregated selection of "business.business"
+"""
+type business_business_aggregate {
+  aggregate: business_business_aggregate_fields
+  nodes: [business_business!]!
+}
+
+"""
+aggregate fields of "business.business"
+"""
+type business_business_aggregate_fields {
+  avg: business_business_avg_fields
+  count(columns: [business_business_select_column!], distinct: Boolean): Int!
+  max: business_business_max_fields
+  min: business_business_min_fields
+  stddev: business_business_stddev_fields
+  stddev_pop: business_business_stddev_pop_fields
+  stddev_samp: business_business_stddev_samp_fields
+  sum: business_business_sum_fields
+  var_pop: business_business_var_pop_fields
+  var_samp: business_business_var_samp_fields
+  variance: business_business_variance_fields
+}
+
+"""aggregate avg on columns"""
+type business_business_avg_fields {
+  details_id: Float
+  id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.business". All fields are combined with a logical 'AND'.
+"""
+input business_business_bool_exp {
+  _and: [business_business_bool_exp!]
+  _not: business_business_bool_exp
+  _or: [business_business_bool_exp!]
+  details: service_provider_details_bool_exp
+  details_id: Int_comparison_exp
+  id: Int_comparison_exp
+  operators: business_operator_bool_exp
+  operators_aggregate: business_operator_aggregate_bool_exp
+  profile: String_comparison_exp
+  service_provider_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.business"
+"""
+enum business_business_constraint {
+  """
+  unique or primary key constraint on columns "details_id"
+  """
+  business_details_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  business_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "business.business"
+"""
+input business_business_inc_input {
+  details_id: Int
+  id: Int
+}
+
+"""
+input type for inserting data into table "business.business"
+"""
+input business_business_insert_input {
+  details: service_provider_details_obj_rel_insert_input
+  details_id: Int
+  id: Int
+  operators: business_operator_arr_rel_insert_input
+  profile: String
+  service_provider_type: String
+}
+
+"""aggregate max on columns"""
+type business_business_max_fields {
+  details_id: Int
+  id: Int
+  profile: String
+  service_provider_type: String
+}
+
+"""aggregate min on columns"""
+type business_business_min_fields {
+  details_id: Int
+  id: Int
+  profile: String
+  service_provider_type: String
+}
+
+"""
+response of any mutation on the table "business.business"
+"""
+type business_business_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_business!]!
+}
+
+"""
+on_conflict condition type for table "business.business"
+"""
+input business_business_on_conflict {
+  constraint: business_business_constraint!
+  update_columns: [business_business_update_column!]! = []
+  where: business_business_bool_exp
+}
+
+"""Ordering options when selecting data from "business.business"."""
+input business_business_order_by {
+  details: service_provider_details_order_by
+  details_id: order_by
+  id: order_by
+  operators_aggregate: business_operator_aggregate_order_by
+  profile: order_by
+  service_provider_type: order_by
+}
+
+"""primary key columns input for table: business.business"""
+input business_business_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "business.business"
+"""
+enum business_business_select_column {
+  """column name"""
+  details_id
+
+  """column name"""
+  id
+
+  """column name"""
+  profile
+
+  """column name"""
+  service_provider_type
+}
+
+"""
+input type for updating data in table "business.business"
+"""
+input business_business_set_input {
+  details_id: Int
+  id: Int
+  profile: String
+  service_provider_type: String
+}
+
+"""aggregate stddev on columns"""
+type business_business_stddev_fields {
+  details_id: Float
+  id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_business_stddev_pop_fields {
+  details_id: Float
+  id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_business_stddev_samp_fields {
+  details_id: Float
+  id: Float
+}
+
+"""
+Streaming cursor of the table "business_business"
+"""
+input business_business_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_business_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_business_stream_cursor_value_input {
+  details_id: Int
+  id: Int
+  profile: String
+  service_provider_type: String
+}
+
+"""aggregate sum on columns"""
+type business_business_sum_fields {
+  details_id: Int
+  id: Int
+}
+
+"""
+update columns of table "business.business"
+"""
+enum business_business_update_column {
+  """column name"""
+  details_id
+
+  """column name"""
+  id
+
+  """column name"""
+  profile
+
+  """column name"""
+  service_provider_type
+}
+
+input business_business_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_business_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_business_set_input
+  where: business_business_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_business_var_pop_fields {
+  details_id: Float
+  id: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_business_var_samp_fields {
+  details_id: Float
+  id: Float
+}
+
+"""aggregate variance on columns"""
+type business_business_variance_fields {
+  details_id: Float
+  id: Float
+}
+
+"""
+columns and relationships of "business.class"
+"""
+type business_class {
+  available: Boolean!
+  business_id: Int!
+  cost: money!
+  description_id: Int
+  id: Int!
+  image: String
+  name_id: Int!
+  position: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """scheduled or onDemand"""
+  schedule_type: String!
+}
+
+"""
+aggregated selection of "business.class"
+"""
+type business_class_aggregate {
+  aggregate: business_class_aggregate_fields
+  nodes: [business_class!]!
+}
+
+"""
+aggregate fields of "business.class"
+"""
+type business_class_aggregate_fields {
+  avg: business_class_avg_fields
+  count(columns: [business_class_select_column!], distinct: Boolean): Int!
+  max: business_class_max_fields
+  min: business_class_min_fields
+  stddev: business_class_stddev_fields
+  stddev_pop: business_class_stddev_pop_fields
+  stddev_samp: business_class_stddev_samp_fields
+  sum: business_class_sum_fields
+  var_pop: business_class_var_pop_fields
+  var_samp: business_class_var_samp_fields
+  variance: business_class_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_class_append_input {
+  schedule: jsonb
+}
+
+"""aggregate avg on columns"""
+type business_class_avg_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.class". All fields are combined with a logical 'AND'.
+"""
+input business_class_bool_exp {
+  _and: [business_class_bool_exp!]
+  _not: business_class_bool_exp
+  _or: [business_class_bool_exp!]
+  available: Boolean_comparison_exp
+  business_id: Int_comparison_exp
+  cost: money_comparison_exp
+  description_id: Int_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  name_id: Int_comparison_exp
+  position: Int_comparison_exp
+  schedule: jsonb_comparison_exp
+  schedule_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.class"
+"""
+enum business_class_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  class_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_class_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_class_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_class_delete_key_input {
+  schedule: String
+}
+
+"""
+input type for incrementing numeric columns in table "business.class"
+"""
+input business_class_inc_input {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+input type for inserting data into table "business.class"
+"""
+input business_class_insert_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or onDemand"""
+  schedule_type: String
+}
+
+"""aggregate max on columns"""
+type business_class_max_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+
+  """scheduled or onDemand"""
+  schedule_type: String
+}
+
+"""aggregate min on columns"""
+type business_class_min_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+
+  """scheduled or onDemand"""
+  schedule_type: String
+}
+
+"""
+response of any mutation on the table "business.class"
+"""
+type business_class_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_class!]!
+}
+
+"""
+on_conflict condition type for table "business.class"
+"""
+input business_class_on_conflict {
+  constraint: business_class_constraint!
+  update_columns: [business_class_update_column!]! = []
+  where: business_class_bool_exp
+}
+
+"""Ordering options when selecting data from "business.class"."""
+input business_class_order_by {
+  available: order_by
+  business_id: order_by
+  cost: order_by
+  description_id: order_by
+  id: order_by
+  image: order_by
+  name_id: order_by
+  position: order_by
+  schedule: order_by
+  schedule_type: order_by
+}
+
+"""primary key columns input for table: business.class"""
+input business_class_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_class_prepend_input {
+  schedule: jsonb
+}
+
+"""
+select columns of table "business.class"
+"""
+enum business_class_select_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+
+  """column name"""
+  schedule
+
+  """column name"""
+  schedule_type
+}
+
+"""
+input type for updating data in table "business.class"
+"""
+input business_class_set_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or onDemand"""
+  schedule_type: String
+}
+
+"""aggregate stddev on columns"""
+type business_class_stddev_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_class_stddev_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_class_stddev_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Streaming cursor of the table "business_class"
+"""
+input business_class_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_class_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_class_stream_cursor_value_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or onDemand"""
+  schedule_type: String
+}
+
+"""aggregate sum on columns"""
+type business_class_sum_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+update columns of table "business.class"
+"""
+enum business_class_update_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+
+  """column name"""
+  schedule
+
+  """column name"""
+  schedule_type
+}
+
+input business_class_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_class_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_class_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_class_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_class_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_class_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_class_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_class_set_input
+  where: business_class_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_class_var_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_class_var_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate variance on columns"""
+type business_class_variance_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+columns and relationships of "business.event"
+"""
+type business_event {
+  available: Boolean!
+  business_id: Int!
+  cost: money!
+  description_id: Int
+  id: Int!
+  image: String
+  name_id: Int!
+  position: Int!
+  schedule(
+    """JSON select path"""
+    path: String
+  ): jsonb
+
+  """scheduled or OnDemand"""
+  schedule_type: String!
+}
+
+"""
+aggregated selection of "business.event"
+"""
+type business_event_aggregate {
+  aggregate: business_event_aggregate_fields
+  nodes: [business_event!]!
+}
+
+"""
+aggregate fields of "business.event"
+"""
+type business_event_aggregate_fields {
+  avg: business_event_avg_fields
+  count(columns: [business_event_select_column!], distinct: Boolean): Int!
+  max: business_event_max_fields
+  min: business_event_min_fields
+  stddev: business_event_stddev_fields
+  stddev_pop: business_event_stddev_pop_fields
+  stddev_samp: business_event_stddev_samp_fields
+  sum: business_event_sum_fields
+  var_pop: business_event_var_pop_fields
+  var_samp: business_event_var_samp_fields
+  variance: business_event_variance_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input business_event_append_input {
+  schedule: jsonb
+}
+
+"""aggregate avg on columns"""
+type business_event_avg_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.event". All fields are combined with a logical 'AND'.
+"""
+input business_event_bool_exp {
+  _and: [business_event_bool_exp!]
+  _not: business_event_bool_exp
+  _or: [business_event_bool_exp!]
+  available: Boolean_comparison_exp
+  business_id: Int_comparison_exp
+  cost: money_comparison_exp
+  description_id: Int_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  name_id: Int_comparison_exp
+  position: Int_comparison_exp
+  schedule: jsonb_comparison_exp
+  schedule_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.event"
+"""
+enum business_event_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  event_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input business_event_delete_at_path_input {
+  schedule: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the
+end). throws an error if top level container is not an array
+"""
+input business_event_delete_elem_input {
+  schedule: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input business_event_delete_key_input {
+  schedule: String
+}
+
+"""
+input type for incrementing numeric columns in table "business.event"
+"""
+input business_event_inc_input {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+input type for inserting data into table "business.event"
+"""
+input business_event_insert_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or OnDemand"""
+  schedule_type: String
+}
+
+"""aggregate max on columns"""
+type business_event_max_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+
+  """scheduled or OnDemand"""
+  schedule_type: String
+}
+
+"""aggregate min on columns"""
+type business_event_min_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+
+  """scheduled or OnDemand"""
+  schedule_type: String
+}
+
+"""
+response of any mutation on the table "business.event"
+"""
+type business_event_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_event!]!
+}
+
+"""
+on_conflict condition type for table "business.event"
+"""
+input business_event_on_conflict {
+  constraint: business_event_constraint!
+  update_columns: [business_event_update_column!]! = []
+  where: business_event_bool_exp
+}
+
+"""Ordering options when selecting data from "business.event"."""
+input business_event_order_by {
+  available: order_by
+  business_id: order_by
+  cost: order_by
+  description_id: order_by
+  id: order_by
+  image: order_by
+  name_id: order_by
+  position: order_by
+  schedule: order_by
+  schedule_type: order_by
+}
+
+"""primary key columns input for table: business.event"""
+input business_event_pk_columns_input {
+  id: Int!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input business_event_prepend_input {
+  schedule: jsonb
+}
+
+"""
+select columns of table "business.event"
+"""
+enum business_event_select_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+
+  """column name"""
+  schedule
+
+  """column name"""
+  schedule_type
+}
+
+"""
+input type for updating data in table "business.event"
+"""
+input business_event_set_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or OnDemand"""
+  schedule_type: String
+}
+
+"""aggregate stddev on columns"""
+type business_event_stddev_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_event_stddev_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_event_stddev_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Streaming cursor of the table "business_event"
+"""
+input business_event_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_event_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_event_stream_cursor_value_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+  schedule: jsonb
+
+  """scheduled or OnDemand"""
+  schedule_type: String
+}
+
+"""aggregate sum on columns"""
+type business_event_sum_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+update columns of table "business.event"
+"""
+enum business_event_update_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+
+  """column name"""
+  schedule
+
+  """column name"""
+  schedule_type
+}
+
+input business_event_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: business_event_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: business_event_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from
+  the end). throws an error if top level container is not an array
+  """
+  _delete_elem: business_event_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: business_event_delete_key_input
+
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_event_inc_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: business_event_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_event_set_input
+  where: business_event_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_event_var_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_event_var_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate variance on columns"""
+type business_event_variance_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+columns and relationships of "business.operator"
+"""
+type business_operator {
+  business_id: Int!
+  details_id: Int!
+  id: Int!
+
+  """An object relationship"""
+  operator_details: service_provider_operator_details!
+
+  """An object relationship"""
+  user: user!
+  user_id: Int!
+}
+
+"""
+aggregated selection of "business.operator"
+"""
+type business_operator_aggregate {
+  aggregate: business_operator_aggregate_fields
+  nodes: [business_operator!]!
+}
+
+input business_operator_aggregate_bool_exp {
+  count: business_operator_aggregate_bool_exp_count
+}
+
+input business_operator_aggregate_bool_exp_count {
+  arguments: [business_operator_select_column!]
+  distinct: Boolean
+  filter: business_operator_bool_exp
+  predicate: Int_comparison_exp!
+}
+
+"""
+aggregate fields of "business.operator"
+"""
+type business_operator_aggregate_fields {
+  avg: business_operator_avg_fields
+  count(columns: [business_operator_select_column!], distinct: Boolean): Int!
+  max: business_operator_max_fields
+  min: business_operator_min_fields
+  stddev: business_operator_stddev_fields
+  stddev_pop: business_operator_stddev_pop_fields
+  stddev_samp: business_operator_stddev_samp_fields
+  sum: business_operator_sum_fields
+  var_pop: business_operator_var_pop_fields
+  var_samp: business_operator_var_samp_fields
+  variance: business_operator_variance_fields
+}
+
+"""
+order by aggregate values of table "business.operator"
+"""
+input business_operator_aggregate_order_by {
+  avg: business_operator_avg_order_by
+  count: order_by
+  max: business_operator_max_order_by
+  min: business_operator_min_order_by
+  stddev: business_operator_stddev_order_by
+  stddev_pop: business_operator_stddev_pop_order_by
+  stddev_samp: business_operator_stddev_samp_order_by
+  sum: business_operator_sum_order_by
+  var_pop: business_operator_var_pop_order_by
+  var_samp: business_operator_var_samp_order_by
+  variance: business_operator_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "business.operator"
+"""
+input business_operator_arr_rel_insert_input {
+  data: [business_operator_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: business_operator_on_conflict
+}
+
+"""aggregate avg on columns"""
+type business_operator_avg_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by avg() on columns of table "business.operator"
+"""
+input business_operator_avg_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "business.operator". All fields are combined with a logical 'AND'.
+"""
+input business_operator_bool_exp {
+  _and: [business_operator_bool_exp!]
+  _not: business_operator_bool_exp
+  _or: [business_operator_bool_exp!]
+  business_id: Int_comparison_exp
+  details_id: Int_comparison_exp
+  id: Int_comparison_exp
+  operator_details: service_provider_operator_details_bool_exp
+  user: user_bool_exp
+  user_id: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.operator"
+"""
+enum business_operator_constraint {
+  """
+  unique or primary key constraint on columns "details_id"
+  """
+  operator_details_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  operator_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  operator_user_id_key
+}
+
+"""
+input type for incrementing numeric columns in table "business.operator"
+"""
+input business_operator_inc_input {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+input type for inserting data into table "business.operator"
+"""
+input business_operator_insert_input {
+  business_id: Int
+  details_id: Int
+  id: Int
+  operator_details: service_provider_operator_details_obj_rel_insert_input
+  user: user_obj_rel_insert_input
+  user_id: Int
+}
+
+"""aggregate max on columns"""
+type business_operator_max_fields {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+order by max() on columns of table "business.operator"
+"""
+input business_operator_max_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type business_operator_min_fields {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+order by min() on columns of table "business.operator"
+"""
+input business_operator_min_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "business.operator"
+"""
+type business_operator_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_operator!]!
+}
+
+"""
+on_conflict condition type for table "business.operator"
+"""
+input business_operator_on_conflict {
+  constraint: business_operator_constraint!
+  update_columns: [business_operator_update_column!]! = []
+  where: business_operator_bool_exp
+}
+
+"""Ordering options when selecting data from "business.operator"."""
+input business_operator_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  operator_details: service_provider_operator_details_order_by
+  user: user_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: business.operator"""
+input business_operator_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "business.operator"
+"""
+enum business_operator_select_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  details_id
+
+  """column name"""
+  id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "business.operator"
+"""
+input business_operator_set_input {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""aggregate stddev on columns"""
+type business_operator_stddev_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev() on columns of table "business.operator"
+"""
+input business_operator_stddev_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type business_operator_stddev_pop_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "business.operator"
+"""
+input business_operator_stddev_pop_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type business_operator_stddev_samp_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "business.operator"
+"""
+input business_operator_stddev_samp_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+Streaming cursor of the table "business_operator"
+"""
+input business_operator_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_operator_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_operator_stream_cursor_value_input {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""aggregate sum on columns"""
+type business_operator_sum_fields {
+  business_id: Int
+  details_id: Int
+  id: Int
+  user_id: Int
+}
+
+"""
+order by sum() on columns of table "business.operator"
+"""
+input business_operator_sum_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+update columns of table "business.operator"
+"""
+enum business_operator_update_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  details_id
+
+  """column name"""
+  id
+
+  """column name"""
+  user_id
+}
+
+input business_operator_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_operator_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_operator_set_input
+  where: business_operator_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_operator_var_pop_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by var_pop() on columns of table "business.operator"
+"""
+input business_operator_var_pop_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type business_operator_var_samp_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by var_samp() on columns of table "business.operator"
+"""
+input business_operator_var_samp_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""aggregate variance on columns"""
+type business_operator_variance_fields {
+  business_id: Float
+  details_id: Float
+  id: Float
+  user_id: Float
+}
+
+"""
+order by variance() on columns of table "business.operator"
+"""
+input business_operator_variance_order_by {
+  business_id: order_by
+  details_id: order_by
+  id: order_by
+  user_id: order_by
+}
+
+"""
+columns and relationships of "business.order_request"
+"""
+type business_order_request {
+  business_id: Int!
+  cancellation_time: timestamptz
+
+  """An object relationship"""
+  chat: chat
+  chat_id: Int
+  customer_app_type: String!
+  customer_id: Int!
+  id: Int!
+  notes: String
+  order_time: timestamptz!
+  review_id: Int!
+  status: String!
+}
+
+"""
+aggregated selection of "business.order_request"
+"""
+type business_order_request_aggregate {
+  aggregate: business_order_request_aggregate_fields
+  nodes: [business_order_request!]!
+}
+
+"""
+aggregate fields of "business.order_request"
+"""
+type business_order_request_aggregate_fields {
+  avg: business_order_request_avg_fields
+  count(columns: [business_order_request_select_column!], distinct: Boolean): Int!
+  max: business_order_request_max_fields
+  min: business_order_request_min_fields
+  stddev: business_order_request_stddev_fields
+  stddev_pop: business_order_request_stddev_pop_fields
+  stddev_samp: business_order_request_stddev_samp_fields
+  sum: business_order_request_sum_fields
+  var_pop: business_order_request_var_pop_fields
+  var_samp: business_order_request_var_samp_fields
+  variance: business_order_request_variance_fields
+}
+
+"""aggregate avg on columns"""
+type business_order_request_avg_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.order_request". All fields are combined with a logical 'AND'.
+"""
+input business_order_request_bool_exp {
+  _and: [business_order_request_bool_exp!]
+  _not: business_order_request_bool_exp
+  _or: [business_order_request_bool_exp!]
+  business_id: Int_comparison_exp
+  cancellation_time: timestamptz_comparison_exp
+  chat: chat_bool_exp
+  chat_id: Int_comparison_exp
+  customer_app_type: String_comparison_exp
+  customer_id: Int_comparison_exp
+  id: Int_comparison_exp
+  notes: String_comparison_exp
+  order_time: timestamptz_comparison_exp
+  review_id: Int_comparison_exp
+  status: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.order_request"
+"""
+enum business_order_request_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  order_request_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "business.order_request"
+"""
+input business_order_request_inc_input {
+  business_id: Int
+  chat_id: Int
+  customer_id: Int
+  id: Int
+  review_id: Int
+}
+
+"""
+input type for inserting data into table "business.order_request"
+"""
+input business_order_request_insert_input {
+  business_id: Int
+  cancellation_time: timestamptz
+  chat: chat_obj_rel_insert_input
+  chat_id: Int
+  customer_app_type: String
+  customer_id: Int
+  id: Int
+  notes: String
+  order_time: timestamptz
+  review_id: Int
+  status: String
+}
+
+"""
+columns and relationships of "business.order_request_item"
+"""
+type business_order_request_item {
+  available: Boolean!
+  final_cost_per_one: money
+  id: Int!
+  quantity: Int!
+  service_id: Int!
+  service_type: String!
+}
+
+"""
+aggregated selection of "business.order_request_item"
+"""
+type business_order_request_item_aggregate {
+  aggregate: business_order_request_item_aggregate_fields
+  nodes: [business_order_request_item!]!
+}
+
+"""
+aggregate fields of "business.order_request_item"
+"""
+type business_order_request_item_aggregate_fields {
+  avg: business_order_request_item_avg_fields
+  count(columns: [business_order_request_item_select_column!], distinct: Boolean): Int!
+  max: business_order_request_item_max_fields
+  min: business_order_request_item_min_fields
+  stddev: business_order_request_item_stddev_fields
+  stddev_pop: business_order_request_item_stddev_pop_fields
+  stddev_samp: business_order_request_item_stddev_samp_fields
+  sum: business_order_request_item_sum_fields
+  var_pop: business_order_request_item_var_pop_fields
+  var_samp: business_order_request_item_var_samp_fields
+  variance: business_order_request_item_variance_fields
+}
+
+"""aggregate avg on columns"""
+type business_order_request_item_avg_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.order_request_item".
+All fields are combined with a logical 'AND'.
+"""
+input business_order_request_item_bool_exp {
+  _and: [business_order_request_item_bool_exp!]
+  _not: business_order_request_item_bool_exp
+  _or: [business_order_request_item_bool_exp!]
+  available: Boolean_comparison_exp
+  final_cost_per_one: money_comparison_exp
+  id: Int_comparison_exp
+  quantity: Int_comparison_exp
+  service_id: Int_comparison_exp
+  service_type: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.order_request_item"
+"""
+enum business_order_request_item_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  order_request_item_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "business.order_request_item"
+"""
+input business_order_request_item_inc_input {
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+}
+
+"""
+input type for inserting data into table "business.order_request_item"
+"""
+input business_order_request_item_insert_input {
+  available: Boolean
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+  service_type: String
+}
+
+"""aggregate max on columns"""
+type business_order_request_item_max_fields {
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+  service_type: String
+}
+
+"""aggregate min on columns"""
+type business_order_request_item_min_fields {
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+  service_type: String
+}
+
+"""
+response of any mutation on the table "business.order_request_item"
+"""
+type business_order_request_item_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_order_request_item!]!
+}
+
+"""
+on_conflict condition type for table "business.order_request_item"
+"""
+input business_order_request_item_on_conflict {
+  constraint: business_order_request_item_constraint!
+  update_columns: [business_order_request_item_update_column!]! = []
+  where: business_order_request_item_bool_exp
+}
+
+"""
+Ordering options when selecting data from "business.order_request_item".
+"""
+input business_order_request_item_order_by {
+  available: order_by
+  final_cost_per_one: order_by
+  id: order_by
+  quantity: order_by
+  service_id: order_by
+  service_type: order_by
+}
+
+"""primary key columns input for table: business.order_request_item"""
+input business_order_request_item_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "business.order_request_item"
+"""
+enum business_order_request_item_select_column {
+  """column name"""
+  available
+
+  """column name"""
+  final_cost_per_one
+
+  """column name"""
+  id
+
+  """column name"""
+  quantity
+
+  """column name"""
+  service_id
+
+  """column name"""
+  service_type
+}
+
+"""
+input type for updating data in table "business.order_request_item"
+"""
+input business_order_request_item_set_input {
+  available: Boolean
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+  service_type: String
+}
+
+"""aggregate stddev on columns"""
+type business_order_request_item_stddev_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_order_request_item_stddev_pop_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_order_request_item_stddev_samp_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""
+Streaming cursor of the table "business_order_request_item"
+"""
+input business_order_request_item_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_order_request_item_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_order_request_item_stream_cursor_value_input {
+  available: Boolean
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+  service_type: String
+}
+
+"""aggregate sum on columns"""
+type business_order_request_item_sum_fields {
+  final_cost_per_one: money
+  id: Int
+  quantity: Int
+  service_id: Int
+}
+
+"""
+update columns of table "business.order_request_item"
+"""
+enum business_order_request_item_update_column {
+  """column name"""
+  available
+
+  """column name"""
+  final_cost_per_one
+
+  """column name"""
+  id
+
+  """column name"""
+  quantity
+
+  """column name"""
+  service_id
+
+  """column name"""
+  service_type
+}
+
+input business_order_request_item_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_order_request_item_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_order_request_item_set_input
+  where: business_order_request_item_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_order_request_item_var_pop_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_order_request_item_var_samp_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""aggregate variance on columns"""
+type business_order_request_item_variance_fields {
+  final_cost_per_one: Float
+  id: Float
+  quantity: Float
+  service_id: Float
+}
+
+"""aggregate max on columns"""
+type business_order_request_max_fields {
+  business_id: Int
+  cancellation_time: timestamptz
+  chat_id: Int
+  customer_app_type: String
+  customer_id: Int
+  id: Int
+  notes: String
+  order_time: timestamptz
+  review_id: Int
+  status: String
+}
+
+"""aggregate min on columns"""
+type business_order_request_min_fields {
+  business_id: Int
+  cancellation_time: timestamptz
+  chat_id: Int
+  customer_app_type: String
+  customer_id: Int
+  id: Int
+  notes: String
+  order_time: timestamptz
+  review_id: Int
+  status: String
+}
+
+"""
+response of any mutation on the table "business.order_request"
+"""
+type business_order_request_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_order_request!]!
+}
+
+"""
+on_conflict condition type for table "business.order_request"
+"""
+input business_order_request_on_conflict {
+  constraint: business_order_request_constraint!
+  update_columns: [business_order_request_update_column!]! = []
+  where: business_order_request_bool_exp
+}
+
+"""Ordering options when selecting data from "business.order_request"."""
+input business_order_request_order_by {
+  business_id: order_by
+  cancellation_time: order_by
+  chat: chat_order_by
+  chat_id: order_by
+  customer_app_type: order_by
+  customer_id: order_by
+  id: order_by
+  notes: order_by
+  order_time: order_by
+  review_id: order_by
+  status: order_by
+}
+
+"""primary key columns input for table: business.order_request"""
+input business_order_request_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "business.order_request"
+"""
+enum business_order_request_select_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  notes
+
+  """column name"""
+  order_time
+
+  """column name"""
+  review_id
+
+  """column name"""
+  status
+}
+
+"""
+input type for updating data in table "business.order_request"
+"""
+input business_order_request_set_input {
+  business_id: Int
+  cancellation_time: timestamptz
+  chat_id: Int
+  customer_app_type: String
+  customer_id: Int
+  id: Int
+  notes: String
+  order_time: timestamptz
+  review_id: Int
+  status: String
+}
+
+"""aggregate stddev on columns"""
+type business_order_request_stddev_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_order_request_stddev_pop_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_order_request_stddev_samp_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""
+Streaming cursor of the table "business_order_request"
+"""
+input business_order_request_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_order_request_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_order_request_stream_cursor_value_input {
+  business_id: Int
+  cancellation_time: timestamptz
+  chat_id: Int
+  customer_app_type: String
+  customer_id: Int
+  id: Int
+  notes: String
+  order_time: timestamptz
+  review_id: Int
+  status: String
+}
+
+"""aggregate sum on columns"""
+type business_order_request_sum_fields {
+  business_id: Int
+  chat_id: Int
+  customer_id: Int
+  id: Int
+  review_id: Int
+}
+
+"""
+update columns of table "business.order_request"
+"""
+enum business_order_request_update_column {
+  """column name"""
+  business_id
+
+  """column name"""
+  cancellation_time
+
+  """column name"""
+  chat_id
+
+  """column name"""
+  customer_app_type
+
+  """column name"""
+  customer_id
+
+  """column name"""
+  id
+
+  """column name"""
+  notes
+
+  """column name"""
+  order_time
+
+  """column name"""
+  review_id
+
+  """column name"""
+  status
+}
+
+input business_order_request_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_order_request_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_order_request_set_input
+  where: business_order_request_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_order_request_var_pop_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_order_request_var_samp_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""aggregate variance on columns"""
+type business_order_request_variance_fields {
+  business_id: Float
+  chat_id: Float
+  customer_id: Float
+  id: Float
+  review_id: Float
+}
+
+"""
+columns and relationships of "business.rental"
+"""
+type business_rental {
+  available: Boolean!
+  business_id: Int!
+  cost: money!
+  description_id: Int
+  id: Int!
+  image: String
+  name_id: Int!
+  position: Int!
+}
+
+"""
+aggregated selection of "business.rental"
+"""
+type business_rental_aggregate {
+  aggregate: business_rental_aggregate_fields
+  nodes: [business_rental!]!
+}
+
+"""
+aggregate fields of "business.rental"
+"""
+type business_rental_aggregate_fields {
+  avg: business_rental_avg_fields
+  count(columns: [business_rental_select_column!], distinct: Boolean): Int!
+  max: business_rental_max_fields
+  min: business_rental_min_fields
+  stddev: business_rental_stddev_fields
+  stddev_pop: business_rental_stddev_pop_fields
+  stddev_samp: business_rental_stddev_samp_fields
+  sum: business_rental_sum_fields
+  var_pop: business_rental_var_pop_fields
+  var_samp: business_rental_var_samp_fields
+  variance: business_rental_variance_fields
+}
+
+"""aggregate avg on columns"""
+type business_rental_avg_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Boolean expression to filter rows from the table "business.rental". All fields are combined with a logical 'AND'.
+"""
+input business_rental_bool_exp {
+  _and: [business_rental_bool_exp!]
+  _not: business_rental_bool_exp
+  _or: [business_rental_bool_exp!]
+  available: Boolean_comparison_exp
+  business_id: Int_comparison_exp
+  cost: money_comparison_exp
+  description_id: Int_comparison_exp
+  id: Int_comparison_exp
+  image: String_comparison_exp
+  name_id: Int_comparison_exp
+  position: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "business.rental"
+"""
+enum business_rental_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  rental_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "business.rental"
+"""
+input business_rental_inc_input {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+input type for inserting data into table "business.rental"
+"""
+input business_rental_insert_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+}
+
+"""aggregate max on columns"""
+type business_rental_max_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+}
+
+"""aggregate min on columns"""
+type business_rental_min_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+}
+
+"""
+response of any mutation on the table "business.rental"
+"""
+type business_rental_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [business_rental!]!
+}
+
+"""
+on_conflict condition type for table "business.rental"
+"""
+input business_rental_on_conflict {
+  constraint: business_rental_constraint!
+  update_columns: [business_rental_update_column!]! = []
+  where: business_rental_bool_exp
+}
+
+"""Ordering options when selecting data from "business.rental"."""
+input business_rental_order_by {
+  available: order_by
+  business_id: order_by
+  cost: order_by
+  description_id: order_by
+  id: order_by
+  image: order_by
+  name_id: order_by
+  position: order_by
+}
+
+"""primary key columns input for table: business.rental"""
+input business_rental_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "business.rental"
+"""
+enum business_rental_select_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+}
+
+"""
+input type for updating data in table "business.rental"
+"""
+input business_rental_set_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+}
+
+"""aggregate stddev on columns"""
+type business_rental_stddev_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type business_rental_stddev_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type business_rental_stddev_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
+Streaming cursor of the table "business_rental"
+"""
+input business_rental_stream_cursor_input {
+  """Stream column input with initial value"""
+  initial_value: business_rental_stream_cursor_value_input!
+
+  """cursor ordering"""
+  ordering: cursor_ordering
+}
+
+"""Initial value of the column from where the streaming should start"""
+input business_rental_stream_cursor_value_input {
+  available: Boolean
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  image: String
+  name_id: Int
+  position: Int
+}
+
+"""aggregate sum on columns"""
+type business_rental_sum_fields {
+  business_id: Int
+  cost: money
+  description_id: Int
+  id: Int
+  name_id: Int
+  position: Int
+}
+
+"""
+update columns of table "business.rental"
+"""
+enum business_rental_update_column {
+  """column name"""
+  available
+
+  """column name"""
+  business_id
+
+  """column name"""
+  cost
+
+  """column name"""
+  description_id
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  name_id
+
+  """column name"""
+  position
+}
+
+input business_rental_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: business_rental_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: business_rental_set_input
+  where: business_rental_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type business_rental_var_pop_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate var_samp on columns"""
+type business_rental_var_samp_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""aggregate variance on columns"""
+type business_rental_variance_fields {
+  business_id: Float
+  cost: Float
+  description_id: Float
+  id: Float
+  name_id: Float
+  position: Float
+}
+
+"""
 columns and relationships of "chat"
 """
 type chat {
@@ -11931,6 +14498,97 @@ input money_comparison_exp {
 """mutation root"""
 type mutation_root {
   """
+  delete data from the table: "business.business"
+  """
+  delete_business_business(
+    """filter the rows which have to be deleted"""
+    where: business_business_bool_exp!
+  ): business_business_mutation_response
+
+  """
+  delete single row from the table: "business.business"
+  """
+  delete_business_business_by_pk(id: Int!): business_business
+
+  """
+  delete data from the table: "business.class"
+  """
+  delete_business_class(
+    """filter the rows which have to be deleted"""
+    where: business_class_bool_exp!
+  ): business_class_mutation_response
+
+  """
+  delete single row from the table: "business.class"
+  """
+  delete_business_class_by_pk(id: Int!): business_class
+
+  """
+  delete data from the table: "business.event"
+  """
+  delete_business_event(
+    """filter the rows which have to be deleted"""
+    where: business_event_bool_exp!
+  ): business_event_mutation_response
+
+  """
+  delete single row from the table: "business.event"
+  """
+  delete_business_event_by_pk(id: Int!): business_event
+
+  """
+  delete data from the table: "business.operator"
+  """
+  delete_business_operator(
+    """filter the rows which have to be deleted"""
+    where: business_operator_bool_exp!
+  ): business_operator_mutation_response
+
+  """
+  delete single row from the table: "business.operator"
+  """
+  delete_business_operator_by_pk(id: Int!): business_operator
+
+  """
+  delete data from the table: "business.order_request"
+  """
+  delete_business_order_request(
+    """filter the rows which have to be deleted"""
+    where: business_order_request_bool_exp!
+  ): business_order_request_mutation_response
+
+  """
+  delete single row from the table: "business.order_request"
+  """
+  delete_business_order_request_by_pk(id: Int!): business_order_request
+
+  """
+  delete data from the table: "business.order_request_item"
+  """
+  delete_business_order_request_item(
+    """filter the rows which have to be deleted"""
+    where: business_order_request_item_bool_exp!
+  ): business_order_request_item_mutation_response
+
+  """
+  delete single row from the table: "business.order_request_item"
+  """
+  delete_business_order_request_item_by_pk(id: Int!): business_order_request_item
+
+  """
+  delete data from the table: "business.rental"
+  """
+  delete_business_rental(
+    """filter the rows which have to be deleted"""
+    where: business_rental_bool_exp!
+  ): business_rental_mutation_response
+
+  """
+  delete single row from the table: "business.rental"
+  """
+  delete_business_rental_by_pk(id: Int!): business_rental
+
+  """
   delete data from the table: "chat"
   """
   delete_chat(
@@ -12637,6 +15295,160 @@ type mutation_root {
   delete single row from the table: "valid_types.service_provider_type"
   """
   delete_valid_types_service_provider_type_by_pk(id: String!): valid_types_service_provider_type
+
+  """
+  insert data into the table: "business.business"
+  """
+  insert_business_business(
+    """the rows to be inserted"""
+    objects: [business_business_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_business_on_conflict
+  ): business_business_mutation_response
+
+  """
+  insert a single row into the table: "business.business"
+  """
+  insert_business_business_one(
+    """the row to be inserted"""
+    object: business_business_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_business_on_conflict
+  ): business_business
+
+  """
+  insert data into the table: "business.class"
+  """
+  insert_business_class(
+    """the rows to be inserted"""
+    objects: [business_class_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_class_on_conflict
+  ): business_class_mutation_response
+
+  """
+  insert a single row into the table: "business.class"
+  """
+  insert_business_class_one(
+    """the row to be inserted"""
+    object: business_class_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_class_on_conflict
+  ): business_class
+
+  """
+  insert data into the table: "business.event"
+  """
+  insert_business_event(
+    """the rows to be inserted"""
+    objects: [business_event_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_event_on_conflict
+  ): business_event_mutation_response
+
+  """
+  insert a single row into the table: "business.event"
+  """
+  insert_business_event_one(
+    """the row to be inserted"""
+    object: business_event_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_event_on_conflict
+  ): business_event
+
+  """
+  insert data into the table: "business.operator"
+  """
+  insert_business_operator(
+    """the rows to be inserted"""
+    objects: [business_operator_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_operator_on_conflict
+  ): business_operator_mutation_response
+
+  """
+  insert a single row into the table: "business.operator"
+  """
+  insert_business_operator_one(
+    """the row to be inserted"""
+    object: business_operator_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_operator_on_conflict
+  ): business_operator
+
+  """
+  insert data into the table: "business.order_request"
+  """
+  insert_business_order_request(
+    """the rows to be inserted"""
+    objects: [business_order_request_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_order_request_on_conflict
+  ): business_order_request_mutation_response
+
+  """
+  insert data into the table: "business.order_request_item"
+  """
+  insert_business_order_request_item(
+    """the rows to be inserted"""
+    objects: [business_order_request_item_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_order_request_item_on_conflict
+  ): business_order_request_item_mutation_response
+
+  """
+  insert a single row into the table: "business.order_request_item"
+  """
+  insert_business_order_request_item_one(
+    """the row to be inserted"""
+    object: business_order_request_item_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_order_request_item_on_conflict
+  ): business_order_request_item
+
+  """
+  insert a single row into the table: "business.order_request"
+  """
+  insert_business_order_request_one(
+    """the row to be inserted"""
+    object: business_order_request_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_order_request_on_conflict
+  ): business_order_request
+
+  """
+  insert data into the table: "business.rental"
+  """
+  insert_business_rental(
+    """the rows to be inserted"""
+    objects: [business_rental_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: business_rental_on_conflict
+  ): business_rental_mutation_response
+
+  """
+  insert a single row into the table: "business.rental"
+  """
+  insert_business_rental_one(
+    """the row to be inserted"""
+    object: business_rental_insert_input!
+
+    """upsert condition"""
+    on_conflict: business_rental_on_conflict
+  ): business_rental
 
   """
   insert data into the table: "chat"
@@ -13835,6 +16647,332 @@ type mutation_root {
     """upsert condition"""
     on_conflict: valid_types_service_provider_type_on_conflict
   ): valid_types_service_provider_type
+
+  """
+  update data of the table: "business.business"
+  """
+  update_business_business(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_business_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_business_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_business_bool_exp!
+  ): business_business_mutation_response
+
+  """
+  update single row of the table: "business.business"
+  """
+  update_business_business_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_business_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_business_set_input
+    pk_columns: business_business_pk_columns_input!
+  ): business_business
+
+  """
+  update multiples rows of table: "business.business"
+  """
+  update_business_business_many(
+    """updates to execute, in order"""
+    updates: [business_business_updates!]!
+  ): [business_business_mutation_response]
+
+  """
+  update data of the table: "business.class"
+  """
+  update_business_class(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_class_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_class_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_class_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_class_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_class_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_class_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_class_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_class_bool_exp!
+  ): business_class_mutation_response
+
+  """
+  update single row of the table: "business.class"
+  """
+  update_business_class_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_class_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_class_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_class_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_class_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_class_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_class_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_class_set_input
+    pk_columns: business_class_pk_columns_input!
+  ): business_class
+
+  """
+  update multiples rows of table: "business.class"
+  """
+  update_business_class_many(
+    """updates to execute, in order"""
+    updates: [business_class_updates!]!
+  ): [business_class_mutation_response]
+
+  """
+  update data of the table: "business.event"
+  """
+  update_business_event(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_event_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_event_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_event_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_event_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_event_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_event_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_event_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_event_bool_exp!
+  ): business_event_mutation_response
+
+  """
+  update single row of the table: "business.event"
+  """
+  update_business_event_by_pk(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: business_event_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: business_event_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from
+    the end). throws an error if top level container is not an array
+    """
+    _delete_elem: business_event_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: business_event_delete_key_input
+
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_event_inc_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: business_event_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_event_set_input
+    pk_columns: business_event_pk_columns_input!
+  ): business_event
+
+  """
+  update multiples rows of table: "business.event"
+  """
+  update_business_event_many(
+    """updates to execute, in order"""
+    updates: [business_event_updates!]!
+  ): [business_event_mutation_response]
+
+  """
+  update data of the table: "business.operator"
+  """
+  update_business_operator(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_operator_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_operator_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_operator_bool_exp!
+  ): business_operator_mutation_response
+
+  """
+  update single row of the table: "business.operator"
+  """
+  update_business_operator_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_operator_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_operator_set_input
+    pk_columns: business_operator_pk_columns_input!
+  ): business_operator
+
+  """
+  update multiples rows of table: "business.operator"
+  """
+  update_business_operator_many(
+    """updates to execute, in order"""
+    updates: [business_operator_updates!]!
+  ): [business_operator_mutation_response]
+
+  """
+  update data of the table: "business.order_request"
+  """
+  update_business_order_request(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_order_request_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_order_request_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_order_request_bool_exp!
+  ): business_order_request_mutation_response
+
+  """
+  update single row of the table: "business.order_request"
+  """
+  update_business_order_request_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_order_request_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_order_request_set_input
+    pk_columns: business_order_request_pk_columns_input!
+  ): business_order_request
+
+  """
+  update data of the table: "business.order_request_item"
+  """
+  update_business_order_request_item(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_order_request_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_order_request_item_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_order_request_item_bool_exp!
+  ): business_order_request_item_mutation_response
+
+  """
+  update single row of the table: "business.order_request_item"
+  """
+  update_business_order_request_item_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_order_request_item_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_order_request_item_set_input
+    pk_columns: business_order_request_item_pk_columns_input!
+  ): business_order_request_item
+
+  """
+  update multiples rows of table: "business.order_request_item"
+  """
+  update_business_order_request_item_many(
+    """updates to execute, in order"""
+    updates: [business_order_request_item_updates!]!
+  ): [business_order_request_item_mutation_response]
+
+  """
+  update multiples rows of table: "business.order_request"
+  """
+  update_business_order_request_many(
+    """updates to execute, in order"""
+    updates: [business_order_request_updates!]!
+  ): [business_order_request_mutation_response]
+
+  """
+  update data of the table: "business.rental"
+  """
+  update_business_rental(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_rental_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_rental_set_input
+
+    """filter the rows which have to be updated"""
+    where: business_rental_bool_exp!
+  ): business_rental_mutation_response
+
+  """
+  update single row of the table: "business.rental"
+  """
+  update_business_rental_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: business_rental_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: business_rental_set_input
+    pk_columns: business_rental_pk_columns_input!
+  ): business_rental
+
+  """
+  update multiples rows of table: "business.rental"
+  """
+  update_business_rental_many(
+    """updates to execute, in order"""
+    updates: [business_rental_updates!]!
+  ): [business_rental_mutation_response]
 
   """
   update data of the table: "chat"
@@ -16349,6 +19487,315 @@ enum order_by {
 }
 
 type query_root {
+  """
+  fetch data from the table: "business.business"
+  """
+  business_business(
+    """distinct select on columns"""
+    distinct_on: [business_business_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_business_order_by!]
+
+    """filter the rows returned"""
+    where: business_business_bool_exp
+  ): [business_business!]!
+
+  """
+  fetch aggregated fields from the table: "business.business"
+  """
+  business_business_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_business_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_business_order_by!]
+
+    """filter the rows returned"""
+    where: business_business_bool_exp
+  ): business_business_aggregate!
+
+  """
+  fetch data from the table: "business.business" using primary key columns
+  """
+  business_business_by_pk(id: Int!): business_business
+
+  """
+  fetch data from the table: "business.class"
+  """
+  business_class(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): [business_class!]!
+
+  """
+  fetch aggregated fields from the table: "business.class"
+  """
+  business_class_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): business_class_aggregate!
+
+  """fetch data from the table: "business.class" using primary key columns"""
+  business_class_by_pk(id: Int!): business_class
+
+  """
+  fetch data from the table: "business.event"
+  """
+  business_event(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): [business_event!]!
+
+  """
+  fetch aggregated fields from the table: "business.event"
+  """
+  business_event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): business_event_aggregate!
+
+  """fetch data from the table: "business.event" using primary key columns"""
+  business_event_by_pk(id: Int!): business_event
+
+  """
+  fetch data from the table: "business.operator"
+  """
+  business_operator(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): [business_operator!]!
+
+  """
+  fetch aggregated fields from the table: "business.operator"
+  """
+  business_operator_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): business_operator_aggregate!
+
+  """
+  fetch data from the table: "business.operator" using primary key columns
+  """
+  business_operator_by_pk(id: Int!): business_operator
+
+  """
+  fetch data from the table: "business.order_request"
+  """
+  business_order_request(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_bool_exp
+  ): [business_order_request!]!
+
+  """
+  fetch aggregated fields from the table: "business.order_request"
+  """
+  business_order_request_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_bool_exp
+  ): business_order_request_aggregate!
+
+  """
+  fetch data from the table: "business.order_request" using primary key columns
+  """
+  business_order_request_by_pk(id: Int!): business_order_request
+
+  """
+  fetch data from the table: "business.order_request_item"
+  """
+  business_order_request_item(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_item_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_item_bool_exp
+  ): [business_order_request_item!]!
+
+  """
+  fetch aggregated fields from the table: "business.order_request_item"
+  """
+  business_order_request_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_item_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_item_bool_exp
+  ): business_order_request_item_aggregate!
+
+  """
+  fetch data from the table: "business.order_request_item" using primary key columns
+  """
+  business_order_request_item_by_pk(id: Int!): business_order_request_item
+
+  """
+  fetch data from the table: "business.rental"
+  """
+  business_rental(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): [business_rental!]!
+
+  """
+  fetch aggregated fields from the table: "business.rental"
+  """
+  business_rental_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): business_rental_aggregate!
+
+  """fetch data from the table: "business.rental" using primary key columns"""
+  business_rental_by_pk(id: Int!): business_rental
+
   """
   fetch data from the table: "chat"
   """
@@ -29829,6 +33276,413 @@ input String_comparison_exp {
 }
 
 type subscription_root {
+  """
+  fetch data from the table: "business.business"
+  """
+  business_business(
+    """distinct select on columns"""
+    distinct_on: [business_business_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_business_order_by!]
+
+    """filter the rows returned"""
+    where: business_business_bool_exp
+  ): [business_business!]!
+
+  """
+  fetch aggregated fields from the table: "business.business"
+  """
+  business_business_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_business_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_business_order_by!]
+
+    """filter the rows returned"""
+    where: business_business_bool_exp
+  ): business_business_aggregate!
+
+  """
+  fetch data from the table: "business.business" using primary key columns
+  """
+  business_business_by_pk(id: Int!): business_business
+
+  """
+  fetch data from the table in a streaming manner: "business.business"
+  """
+  business_business_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_business_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_business_bool_exp
+  ): [business_business!]!
+
+  """
+  fetch data from the table: "business.class"
+  """
+  business_class(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): [business_class!]!
+
+  """
+  fetch aggregated fields from the table: "business.class"
+  """
+  business_class_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_class_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_class_order_by!]
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): business_class_aggregate!
+
+  """fetch data from the table: "business.class" using primary key columns"""
+  business_class_by_pk(id: Int!): business_class
+
+  """
+  fetch data from the table in a streaming manner: "business.class"
+  """
+  business_class_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_class_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_class_bool_exp
+  ): [business_class!]!
+
+  """
+  fetch data from the table: "business.event"
+  """
+  business_event(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): [business_event!]!
+
+  """
+  fetch aggregated fields from the table: "business.event"
+  """
+  business_event_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_event_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_event_order_by!]
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): business_event_aggregate!
+
+  """fetch data from the table: "business.event" using primary key columns"""
+  business_event_by_pk(id: Int!): business_event
+
+  """
+  fetch data from the table in a streaming manner: "business.event"
+  """
+  business_event_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_event_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_event_bool_exp
+  ): [business_event!]!
+
+  """
+  fetch data from the table: "business.operator"
+  """
+  business_operator(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): [business_operator!]!
+
+  """
+  fetch aggregated fields from the table: "business.operator"
+  """
+  business_operator_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_operator_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_operator_order_by!]
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): business_operator_aggregate!
+
+  """
+  fetch data from the table: "business.operator" using primary key columns
+  """
+  business_operator_by_pk(id: Int!): business_operator
+
+  """
+  fetch data from the table in a streaming manner: "business.operator"
+  """
+  business_operator_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_operator_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_operator_bool_exp
+  ): [business_operator!]!
+
+  """
+  fetch data from the table: "business.order_request"
+  """
+  business_order_request(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_bool_exp
+  ): [business_order_request!]!
+
+  """
+  fetch aggregated fields from the table: "business.order_request"
+  """
+  business_order_request_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_bool_exp
+  ): business_order_request_aggregate!
+
+  """
+  fetch data from the table: "business.order_request" using primary key columns
+  """
+  business_order_request_by_pk(id: Int!): business_order_request
+
+  """
+  fetch data from the table: "business.order_request_item"
+  """
+  business_order_request_item(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_item_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_item_bool_exp
+  ): [business_order_request_item!]!
+
+  """
+  fetch aggregated fields from the table: "business.order_request_item"
+  """
+  business_order_request_item_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_order_request_item_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_order_request_item_order_by!]
+
+    """filter the rows returned"""
+    where: business_order_request_item_bool_exp
+  ): business_order_request_item_aggregate!
+
+  """
+  fetch data from the table: "business.order_request_item" using primary key columns
+  """
+  business_order_request_item_by_pk(id: Int!): business_order_request_item
+
+  """
+  fetch data from the table in a streaming manner: "business.order_request_item"
+  """
+  business_order_request_item_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_order_request_item_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_order_request_item_bool_exp
+  ): [business_order_request_item!]!
+
+  """
+  fetch data from the table in a streaming manner: "business.order_request"
+  """
+  business_order_request_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_order_request_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_order_request_bool_exp
+  ): [business_order_request!]!
+
+  """
+  fetch data from the table: "business.rental"
+  """
+  business_rental(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): [business_rental!]!
+
+  """
+  fetch aggregated fields from the table: "business.rental"
+  """
+  business_rental_aggregate(
+    """distinct select on columns"""
+    distinct_on: [business_rental_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [business_rental_order_by!]
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): business_rental_aggregate!
+
+  """fetch data from the table: "business.rental" using primary key columns"""
+  business_rental_by_pk(id: Int!): business_rental
+
+  """
+  fetch data from the table in a streaming manner: "business.rental"
+  """
+  business_rental_stream(
+    """maximum number of rows returned in a single batch"""
+    batch_size: Int!
+
+    """cursor to stream the results returned by the query"""
+    cursor: [business_rental_stream_cursor_input]!
+
+    """filter the rows returned"""
+    where: business_rental_bool_exp
+  ): [business_rental!]!
+
   """
   fetch data from the table: "chat"
   """

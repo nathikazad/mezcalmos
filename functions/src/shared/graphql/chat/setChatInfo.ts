@@ -4,6 +4,8 @@ import { ParticipantType } from "../../models/Generic/Chat";
 import { DeliveryDriver, DeliveryOrder } from "../../models/Generic/Delivery";
 import { DeliveryType, OrderType } from "../../models/Generic/Order";
 import { CustomerInfo } from "../../models/Generic/User";
+import { Business } from "../../models/Services/Business/Business";
+import { BusinessOrder } from "../../models/Services/Business/BusinessOrder";
 import { CourierOrder } from "../../models/Services/Courier/Courier";
 import { LaundryOrder } from "../../models/Services/Laundry/LaundryOrder";
 import { RestaurantOrder } from "../../models/Services/Restaurant/RestaurantOrder";
@@ -430,4 +432,54 @@ export async function setCourierChatInfo(courierOrder: CourierOrder, customer: C
     },]
   });
   
+}
+
+export async function setBusinessOrderRequestChatInfo(
+  order: BusinessOrder,
+  business: Business,
+  customer: CustomerInfo
+) {
+  if(order.chatId == undefined) {
+    throw new HttpsError(
+      "internal",
+      "No chat id"
+    );
+  }
+  
+  let chain = getHasura();
+  
+  chain.mutation({
+    update_chat_by_pk: [{
+      pk_columns: {
+        id: order.chatId,
+      },
+      _set: {
+        chat_info: JSON.stringify({
+          CustomerApp: {
+            chatTitle: business.name,
+            chatImage: business.image,
+            phoneNumber: business.phoneNumber,
+            participantType: ParticipantType.BusinessOperator,
+            parentLink: `/laundryOrders/${order.orderId}`,
+          },
+          LaundryApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/laundryOrders/${order.orderId}`,
+          },
+          MezAdminApp: {
+            chatTitle: customer.name ?? "Customer",
+            chatImage: customer.image,
+            phoneNumber: customer.phoneNumber,
+            participantType: ParticipantType.Customer,
+            parentLink: `/laundryOrders/${order.orderId}`
+          }
+        }),
+      }
+    }, {
+      id: true
+    }]
+  });
 }

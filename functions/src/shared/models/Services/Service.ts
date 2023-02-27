@@ -81,7 +81,8 @@ export interface ServiceLink{
 export enum ServiceProviderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
-  Taxi = "taxi"
+  Taxi = "taxi",
+  Business = "business"
 }
 
 export interface OperatorApprovedNotification extends ForegroundNotification {

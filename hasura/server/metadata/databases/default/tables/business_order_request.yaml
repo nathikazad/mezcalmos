@@ -1,0 +1,7 @@
+table:
+  name: order_request
+  schema: business
+object_relationships:
+  - name: chat
+    using:
+      foreign_key_constraint_on: chat_id

@@ -120,9 +120,9 @@ async function notify(laundryOrder: LaundryOrder, laundryStore: ServiceProvider,
             orderId: laundryOrder.orderId,
             notificationAction: NotificationAction.ShowSnackBarAlways,
             laundryStore: {
-            name: laundryStore.name,
-            image: laundryStore.image,
-            id: laundryStore.id
+                name: laundryStore.name,
+                image: laundryStore.image,
+                id: laundryStore.id
             }
         },
         background: {

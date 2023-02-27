@@ -40,6 +40,7 @@ export enum OrderType {
   Restaurant = "restaurant",
   Laundry = "laundry",
   Courier = "courier",
+  Business = "business",
   Water = "water"
 }
 //TODO
@@ -54,6 +55,8 @@ export const pluralizeOrderType = function (orderType: OrderType): string {
       return "laundries";
     case OrderType.Courier:
       return "couriers";
+    case OrderType.Business:
+      return "businesses";
     case OrderType.Water:
       return "waters";
 

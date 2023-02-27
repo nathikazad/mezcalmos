@@ -47,20 +47,6 @@ export async function createLaundry(userId: number, laundryDetails: LaundryDetai
   let promiseResponse = await Promise.all([userPromise, mezAdminsPromise]);
   let mezAdmins: MezAdmin[] = promiseResponse[1];
 
-  // let laundryStore: ServiceProvider = {
-  //   name: laundryDetails.name,
-  //   image: laundryDetails.image,
-  //   location: laundryDetails.location,
-  //   schedule: laundryDetails.schedule,
-  //   selfDelivery: laundryDetails.selfDelivery ?? false,
-  //   customerPickup: laundryDetails.customerPickup,
-  //   delivery: laundryDetails.delivery,
-  //   deliveryPartnerId: laundryDetails.deliveryPartnerId,
-  //   deliveryDetails: laundryDetails.deliveryDetails,
-  //   language: laundryDetails.language,
-  //   firebaseId: laundryDetails.firebaseId
-  // }
-
   let laundryStore: ServiceProvider = await createLaundryStore(laundryDetails, userId);
 
   notifyAdmins(laundryStore, mezAdmins);
@@ -71,7 +57,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
   let notification: Notification = {
     foreground: <NewLaundryNotification>{
       time: (new Date()).toISOString(),
-      notificationType: NotificationType.NewOrder,
+      notificationType: NotificationType.NewLaundry,
       notificationAction: NotificationAction.ShowSnackBarAlways,
       name: laundryStore.name,
       image: laundryStore.image,
@@ -87,7 +73,7 @@ function notifyAdmins(laundryStore: ServiceProvider, mezAdmins: MezAdmin[]) {
         body: `There is a new Laundry Store`
       }
     },
-    linkUrl: laundryUrl(laundryStore.id!)
+    linkUrl: laundryUrl(laundryStore.id)
   };
   mezAdmins.forEach((m) => {
     pushNotification(m.firebaseId!, notification, m.notificationInfo, ParticipantType.MezAdmin);

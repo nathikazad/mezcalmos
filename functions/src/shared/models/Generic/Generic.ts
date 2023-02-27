@@ -25,6 +25,7 @@ export enum AppType {
   DeliveryAdmin = "deliveryAdmin",
   MezAdmin = "mezAdmin",
   LaundryApp = "laundry",
+  BusinessApp = "business",
 }
 export enum CustomerAppType {
   Native = "native",

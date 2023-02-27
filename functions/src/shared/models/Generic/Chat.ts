@@ -17,7 +17,8 @@ export enum ChatInfoAppName {
   DeliveryApp = "DeliveryApp",
   MezAdminApp = "MezAdminApp",
   RestaurantApp = "RestaurantApp",
-  LaundryApp = "LaundryApp"
+  LaundryApp = "LaundryApp",
+  BusinessApp = "BusinessApp"
 }
 
 export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
@@ -27,6 +28,7 @@ export const AppTypeToChatInfoAppName: Record<AppType, ChatInfoAppName> = {
   [AppType.MezAdmin]: ChatInfoAppName.MezAdminApp,
   [AppType.RestaurantApp]: ChatInfoAppName.RestaurantApp,
   [AppType.LaundryApp]: ChatInfoAppName.LaundryApp,
+  [AppType.BusinessApp]: ChatInfoAppName.BusinessApp,
 }
 
 export interface ChatInfo {
@@ -44,7 +46,8 @@ export enum ParticipantType {
   DeliveryDriver = "deliveryDriver",
   LaundryOperator = "laundryOperator",
   RestaurantOperator = "restaurantOperator",
-  MezAdmin = "mezAdmin"
+  MezAdmin = "mezAdmin",
+  BusinessOperator = "businessOperator",
 }
 
 
@@ -54,7 +57,8 @@ export const AppParticipant: Record<AppType, ParticipantType> = {
   [AppType.DeliveryApp]: ParticipantType.DeliveryDriver,
   [AppType.MezAdmin]: ParticipantType.MezAdmin,
   [AppType.RestaurantApp]: ParticipantType.RestaurantOperator,
-  [AppType.LaundryApp]: ParticipantType.LaundryOperator
+  [AppType.LaundryApp]: ParticipantType.LaundryOperator,
+  [AppType.BusinessApp]: ParticipantType.BusinessOperator,
 }
 
 
