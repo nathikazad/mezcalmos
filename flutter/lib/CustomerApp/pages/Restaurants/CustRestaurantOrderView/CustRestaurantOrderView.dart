@@ -67,7 +67,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
           showNotifications: true,
           titleWidget: Obx(() => Text(
                 viewController.order.value?.restaurant.name ?? "",
-                style: Get.textTheme.headline3,
+                style: Get.textTheme.displaySmall,
               ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
@@ -152,14 +152,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 4)),
+                                margin: const EdgeInsets.only(top: 8)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
-                              margin: EdgeInsets.zero,
+                              margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 4),
+                              margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:
