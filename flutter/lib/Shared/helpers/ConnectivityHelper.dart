@@ -1,12 +1,13 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/sharedRouter.dart';
+
+enum InternetStatus { Online, Slow, Offline }
 
 class ConnectivityHelper {
   ConnectivityHelper._privateConstructor();
@@ -22,51 +23,52 @@ class ConnectivityHelper {
     ConnectivityResult.ethernet,
   ];
 
-  Timer? _internetIsBackTimer;
+  static late StreamController<InternetStatus> _internetStatusStreamController;
+
+  static Stream<InternetStatus> get internetStatusStream =>
+      _internetStatusStreamController.stream;
+
+  AppLaunchMode _appLaunchMode = AppLaunchMode.prod;
 
   Future<void> networkCheck() async {
+    _internetStatusStreamController =
+        StreamController<InternetStatus>.broadcast();
     mezDbgPrint("NETWORK CHECKER");
-    checkForInternet();
-    final Connectivity connectivity = Connectivity();
-    final ConnectivityResult result = await connectivity.checkConnectivity();
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    _appLaunchMode = _tmpLmode.toLaunchMode();
+    _internetStatusStreamController.add(await checkForInternet());
+    Timer.periodic(const Duration(seconds: 10), (timer) async {
+      try {
+        _internetStatusStreamController.add(await checkForInternet());
+      } catch (e) {
+        _internetStatusStreamController.add(InternetStatus.Offline);
+      }
+    });
     Connectivity().onConnectivityChanged.listen(checkForInternet);
   }
 
-  void checkForInternet([ConnectivityResult? event]) async {
-    bool _hasInternet = await pingServers();
-    mezDbgPrint("Has Internet $_hasInternet");
-
-    if (!_hasInternet) {
-      if (!isCurrentRoute(kNoInternetRoute)) {
-        mezDbgPrint("No internet going so going to no internet page");
-        unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
-      }
-      if (_internetIsBackTimer == null) {
-        mezDbgPrint("Starting timer");
-        _internetIsBackTimer =
-            Timer.periodic(const Duration(seconds: 5), (timer) {
-          checkForInternet();
-        });
-      }
-    } else {
-      if (isCurrentRoute(kNoInternetRoute)) {
-        mezDbgPrint("Internet is back so going to back");
-        MezRouter.back<Null>();
-      }
-      if (_internetIsBackTimer != null) {
-        mezDbgPrint("Cancelling timer");
-        _internetIsBackTimer?.cancel();
-        _internetIsBackTimer = null;
-      }
-    }
-  }
-
-  Future<bool> pingServers() async {
+  Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
     List<Future<bool>> futures = <Future<bool>>[];
     futures.add(_pingServer(sNetworkCheckUrl1));
-    futures.add(_pingServer(sNetworkCheckUrl2));
-    final List<bool> results = await Future.wait(futures);
-    return results.contains(true);
+    futures.add(_pingServer(firebaseDbUrl));
+    futures.add(_pingServer(hasuraDbUrl));
+    if (_appLaunchMode == AppLaunchMode.prod)
+      futures.add(_pingServer(firebaseFunctionsProdUrl));
+    else if (_appLaunchMode == AppLaunchMode.stage)
+      futures.add(_pingServer(firebaseFunctionsStageUrl));
+    final Stopwatch stopwatch = Stopwatch()..start();
+    final List<bool> results = await Future.wait(futures)
+        .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
+    mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
+    if (results.contains(true)) {
+      if (stopwatch.elapsed.inMilliseconds < 3000)
+        return InternetStatus.Online;
+      else
+        return InternetStatus.Slow;
+    } else {
+      return InternetStatus.Offline;
+    }
   }
 
   Future<bool> _pingServer(String pingUrl) async {

@@ -61,7 +61,12 @@ const String sPrivacyPolicyCustomerApp =
 const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
 const String sNetworkCheckUrl1 = 'google.com';
-const String sNetworkCheckUrl2 = 'facebook.com';
+const String firebaseDbUrl = 'www.firebaseio.com';
+const String firebaseFunctionsProdUrl =
+    'www.us-central1-mezcalmos-31f1c.cloudfunctions.net';
+const String firebaseFunctionsStageUrl =
+    'www.us-central1-mezcalmos-staging.cloudfunctions.net';
+const String hasuraDbUrl = 'www.hasura.app';
 
 const LanguageType sDefaultLanguage = LanguageType.ES;
 const String sDefaultTheme = "light";
