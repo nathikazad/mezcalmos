@@ -40,15 +40,16 @@ select_permissions:
   - role: customer
     permission:
       columns:
-        - cost_per_km
         - customer_pickup
         - delivery_available
-        - free_delivery_km_range
-        - free_delivery_minimum_cost
-        - id
-        - minimum_cost
-        - radius
         - self_delivery
+        - id
+        - cost_per_km
+        - cost_per_km_from_base
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - radius
       filter: {}
   - role: delivery_driver
     permission:
@@ -89,15 +90,16 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - cost_per_km
         - customer_pickup
         - delivery_available
-        - free_delivery_km_range
-        - free_delivery_minimum_cost
-        - id
-        - minimum_cost
-        - radius
         - self_delivery
+        - id
+        - cost_per_km
+        - cost_per_km_from_base
+        - free_delivery_minimum_cost
+        - minimum_cost
+        - free_delivery_km_range
+        - radius
       filter: {}
   - role: restaurant_operator
     permission:
@@ -127,10 +129,14 @@ update_permissions:
     permission:
       columns:
         - cost_per_km
+        - cost_per_km_from_base
+        - customer_pickup
+        - delivery_available
         - free_delivery_km_range
         - free_delivery_minimum_cost
         - minimum_cost
         - radius
+        - self_delivery
       filter:
         delivery_company:
           delivery_operators:
@@ -157,10 +163,15 @@ update_permissions:
   - role: mez_admin
     permission:
       columns:
+        - customer_pickup
+        - delivery_available
+        - self_delivery
+        - id
         - cost_per_km
-        - free_delivery_km_range
+        - cost_per_km_from_base
         - free_delivery_minimum_cost
         - minimum_cost
+        - free_delivery_km_range
         - radius
       filter:
         _exists:
