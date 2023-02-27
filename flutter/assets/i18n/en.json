@@ -768,7 +768,9 @@
           "preview": "Preview",
           "custDistance": "Customer distance",
           "save": "Save",
-          "cost": "Cost"
+          "cost": "Cost",
+          "radius": "Delivery range",
+          "costPerKmFromBase" : "Cost per km from base"
         },
         "DeliverySettingsView": {
           "DeliverySettingsView": {
@@ -781,7 +783,7 @@
               "title": "Delivery partner next to you",
               "notFoundTitle": "No delivery partners found",
               "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
-              "joinded": "Joined"
+              "joined": "Joined"
             }
           }
         },

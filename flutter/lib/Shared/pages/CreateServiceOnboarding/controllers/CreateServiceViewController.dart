@@ -41,6 +41,7 @@ class CreateServiceViewController {
   TextEditingController minCost = TextEditingController();
   TextEditingController costPerKm = TextEditingController();
   TextEditingController distancePreview = TextEditingController();
+  TextEditingController radius = TextEditingController();
 
   // obs //
   RxnNum previewCost = RxnNum();

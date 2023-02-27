@@ -54,7 +54,7 @@ class ServiceProfileController extends GetxController {
   Future<void> switchOpen(bool value) async {
     mezDbgPrint(value);
     bool res = await update_service_state(
-        status: value ? ServiceStatus.Open : ServiceStatus.Closed_temporarily,
+        status: value ? ServiceStatus.Open : ServiceStatus.ClosedIndefinitely,
         approved: null,
         detailsId: detailsId);
     if (res) {

@@ -7,7 +7,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpDriverCard.dart';
+import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/RestaurantOrderDriverCard.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpEstDeliveryTime.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderCustomer.dart';
 import 'package:mezcalmos/Shared/pages/RestaurantOrderView/components/ROpOrderEstTime.dart';

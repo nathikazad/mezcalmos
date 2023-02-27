@@ -768,7 +768,10 @@
         "preview": "Avance",
         "custDistance": "Distancia del cliente",
         "save": "Guardar",
-        "cost": "Costo"
+        "cost": "Costo",
+        "radius": "Rango de entrega",
+       
+        "costPerKmFromBase" : "Costo por km de la base"
       },
       "DeliverySettingsView": {
         "DeliverySettingsView": {
@@ -781,7 +784,7 @@
             "title": "Compañero de entrega a su lado",
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-            "joinded": "Unida"
+            "joined": "Unida"
           }
         }
       },

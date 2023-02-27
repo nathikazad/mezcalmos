@@ -58,7 +58,7 @@ class AdminServicesViewController {
       required ServiceProviderType providerType,
       required bool value}) async {
     await update_service_state(
-        status: value ? ServiceStatus.Open : ServiceStatus.Closed_temporarily,
+        status: value ? ServiceStatus.Open : ServiceStatus.ClosedTemporarily,
         detailsId: serviceDetailsId,
         approved: null);
     _fetchCurrent();

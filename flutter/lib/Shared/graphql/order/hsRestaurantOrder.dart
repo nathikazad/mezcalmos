@@ -94,6 +94,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
+        deliveryProviderType:
+            orderData.delivery!.service_provider_type.toServiceProviderType(),
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
         chatId: orderData.chat_id!,
         orderId: orderData.id,
@@ -260,6 +262,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
+    deliveryProviderType:
+        orderData.delivery!.service_provider_type.toServiceProviderType(),
     chatId: orderData.chat_id!,
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)

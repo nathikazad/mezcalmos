@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
@@ -24,19 +22,6 @@ class ROpDriverCard extends StatefulWidget {
 }
 
 class _ROpDriverCardState extends State<ROpDriverCard> {
-  RxBool showSet = RxBool(false);
-  Rxn<Restaurant> restaurant = Rxn();
-  @override
-  void initState() {
-    _checkSelfDelivery();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +31,7 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
         children: [
           Text(
             '${_i18n()["driver"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
           SizedBox(
             height: 10,
@@ -92,14 +77,14 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
                             children: [
                               Text(
                                 widget.order.dropoffDriver!.name,
-                                style: Get.textTheme.bodyText1,
+                                style: Get.textTheme.bodyLarge,
                               ),
                             ],
                           ),
                         ),
                         if (widget.order.inProcess() &&
                             widget.order.dropoffDriver != null &&
-                            showSet == true)
+                            widget.order.isSelfDelivery())
                           MezIconButton(
                             onTap: () async {
                               navigateToPickDriver(
@@ -127,84 +112,6 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           ),
         ],
       ),
-    );
-  }
-
-  Future<void> _checkSelfDelivery() async {
-    restaurant.value =
-        await get_restaurant_by_id(id: widget.order.restaurantId);
-
-    showSet.value = restaurant.value!.selfDelivery;
-  }
-
-  Widget _selfDeliveryWidget() {
-    return Obx(
-      () {
-        if (restaurant.value != null) {
-          return Row(children: [
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: [
-                CircleAvatar(
-                    radius: 25,
-                    backgroundImage: CachedNetworkImageProvider(
-                        restaurant.value!.info.image)),
-                Positioned(
-                  right: -30,
-                  bottom: 0,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                        color: primaryBlueColor, shape: BoxShape.circle),
-                    child: Icon(
-                      Icons.delivery_dining,
-                      size: 32,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: 40,
-            ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    restaurant.value!.info.name,
-                    style: Get.textTheme.bodyText1,
-                  ),
-                  Text(
-                    '${_i18n()["selfDelivery"]}',
-                    style: Get.textTheme.bodyText2,
-                  ),
-                ],
-              ),
-            ),
-            if (widget.order.inProcess() &&
-                (widget.order.dropoffDriver != null))
-              MezIconButton(
-                onTap: () async {
-                  // final bool? forwardToMezCalmos = await MezRouter.toNamed(
-                  //         getROpPickDriverRoute(orderId: widget.order.orderId))
-                  //     as bool?;
-                  // if (forwardToMezCalmos != null &&
-                  //     forwardToMezCalmos == false) {
-                  //   showSet.value = false;
-                  // }
-                },
-                icon: Icons.edit,
-              ),
-          ]);
-        } else {
-          return SizedBox();
-        }
-      },
     );
   }
 
@@ -242,39 +149,34 @@ class _ROpDriverCardState extends State<ROpDriverCard> {
           fit: FlexFit.tight,
           child: Text(
             '${_i18n()["noDriver"]}',
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
-        Obx(() {
-          if (showSet.isTrue && widget.order.inProcess()) {
-            return InkWell(
-                onTap: () async {
-                  navigateToPickDriver(
-                      deliveryOrderId: widget.order.deliveryOrderId!,
-                      showForwardButton: true);
-                },
-                child: Ink(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: (widget.order.estimatedFoodReadyTime != null)
-                          ? Colors.grey.shade300
-                          : Colors.transparent),
-                  child: (widget.order.estimatedFoodReadyTime != null)
-                      ? Icon(
-                          Icons.edit_outlined,
-                          size: 18,
-                        )
-                      : Text(
-                          '${_i18n()["set"]}',
-                          style: Get.textTheme.bodyText1
-                              ?.copyWith(color: primaryBlueColor),
-                        ),
-                ));
-          } else {
-            return SizedBox();
-          }
-        })
+        if (widget.order.isSelfDelivery() && widget.order.inProcess())
+          InkWell(
+              onTap: () async {
+                navigateToPickDriver(
+                    deliveryOrderId: widget.order.deliveryOrderId!,
+                    showForwardButton: true);
+              },
+              child: Ink(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (widget.order.estimatedFoodReadyTime != null)
+                        ? Colors.grey.shade300
+                        : Colors.transparent),
+                child: (widget.order.estimatedFoodReadyTime != null)
+                    ? Icon(
+                        Icons.edit_outlined,
+                        size: 18,
+                      )
+                    : Text(
+                        '${_i18n()["set"]}',
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(color: primaryBlueColor),
+                      ),
+              ))
       ],
     );
   }

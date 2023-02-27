@@ -187,5 +187,4 @@ class _SetOrderWeightBottomSheetState extends State<SetOrderWeightBottomSheet> {
     });
   }
 
-  Future<void> deleteItem(LaundryOrderCostLineItem item) async {}
 }

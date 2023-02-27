@@ -113,15 +113,16 @@ class LaundryOrderDriverCard extends StatelessWidget {
                         style: Get.textTheme.bodyLarge,
                       ),
                     ),
-                    MezIconButton(
-                      icon: Icons.add,
-                      onTap: () {
-                        navigateToPickDriver(
-                            deliveryOrderId:
-                                viewController.order.deliveryOrderId,
-                            showForwardButton: false);
-                      },
-                    )
+                    if (viewController.order.isSelfDelivery())
+                      MezIconButton(
+                        icon: Icons.add,
+                        onTap: () {
+                          navigateToPickDriver(
+                              deliveryOrderId:
+                                  viewController.order.deliveryOrderId,
+                              showForwardButton: false);
+                        },
+                      )
                   ],
                 )),
     );

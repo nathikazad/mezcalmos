@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_company/hsDeliveryCompany.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_cost/hsDeliveryCost.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/hsDeliveryPartner.dart';
@@ -17,16 +18,16 @@ class DeliverySettingsViewController {
   CreateServiceViewController? createServiceViewController;
   int? serviceProviderId;
   ServiceProviderType? serviceProviderType;
-  // vars //
+
   GlobalKey<FormState> costFormKey = GlobalKey();
-  // text inputs //
 
   TextEditingController _freeKmRange = TextEditingController();
   TextEditingController _minCost = TextEditingController();
   TextEditingController _costPerKm = TextEditingController();
+  TextEditingController costPerKmFromBase = TextEditingController();
+  TextEditingController _radius = TextEditingController();
   TextEditingController _distancePreview = TextEditingController();
 
-  // state vars //
   RxList<DeliveryCompany> deliveryCompanies = RxList.empty();
   RxnInt deliveryPartnerId = RxnInt();
   RxnNum previewCost = RxnNum();
@@ -38,7 +39,9 @@ class DeliverySettingsViewController {
   int? deliveryDetailsId;
   int? detailsID;
 
-  // methods //
+  bool get isDeliveryCompany =>
+      serviceProviderType == ServiceProviderType.DeliveryCompany;
+
   Future<void> init({
     CreateServiceViewController? createServiceViewController,
     int? serviceProviderId,
@@ -78,8 +81,12 @@ class DeliverySettingsViewController {
 
   Future<void> _getDeliveryCost() async {
     mezDbgPrint("Getting deovery cost with ======>$deliveryDetailsId");
-    deliveryCost.value = await get_delivery_cost(
-        deliveryDetailsId: deliveryDetailsId!, withCache: false);
+    try {
+      deliveryCost.value = await get_delivery_cost(
+          deliveryDetailsId: deliveryDetailsId!, withCache: false);
+    } on OperationException catch (e) {
+      showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+    }
   }
 
   Future<void> _getServiceLocation() async {
@@ -93,6 +100,10 @@ class DeliverySettingsViewController {
         deliveryCost.value!.freeDeliveryKmRange?.toString() ?? "";
     _minCost.text = deliveryCost.value!.minimumCost.toString();
     _costPerKm.text = deliveryCost.value!.costPerKm.toString();
+    costPerKmFromBase.text = deliveryCost.value!.costPerKmFromBase.toString();
+    _radius.text = (deliveryCost.value?.radius != null)
+        ? (deliveryCost.value!.radius! / 1000).toString()
+        : "";
   }
 
   Future<void> getDeliveryCompanies() async {
@@ -123,64 +134,65 @@ class DeliverySettingsViewController {
     }
   }
 
-  Future<bool> handleSave() async {
+  Future<void> handleSave() async {
     if (isSelfDelivery) {
       return _handleSaveDeliveryCost();
     } else {
       if (deliveryPartnerId.value != null) {
-        await update_service_delivery_partner(
-            serviceId: serviceProviderId!,
-            providerType: serviceProviderType!,
-            newCompanyId: deliveryPartnerId.value!);
+        try {
+          int? newId = await update_service_delivery_partner(
+              serviceId: serviceProviderId!,
+              providerType: serviceProviderType!,
+              newCompanyId: deliveryPartnerId.value!);
+          if (newId != null) {
+            mezDbgPrint(_constructDeliveryCost().toJson());
+            await update_delivery_cost(
+                deliveryCostId: deliveryCost.value!.id!,
+                deliveryCost: _constructDeliveryCost());
+          }
+          showSavedSnackBar();
+        } on OperationException catch (e) {
+          showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+        } catch (e, stk) {
+          mezDbgPrint(e);
+          mezDbgPrint(stk);
+        }
       } else {
         showErrorSnackBar(errorText: "Please select a company");
-        return false;
       }
-      // await update_restaurant_info(
-      //     id: serviceProviderId!,
-      //     restaurant: restaurant.value!.copyWith(
-      //       selfDelivery: false,
-      //     ));
-      return true;
     }
   }
 
-  Future<bool> _handleSaveDeliveryCost() async {
+  Future<void> _handleSaveDeliveryCost() async {
     if (costFormKey.currentState?.validate() == true) {
       if (deliveryCost.value == null) {
         final int? newId =
             await add_delivery_cost(deliveryCost: _constructDeliveryCost());
         if (newId != null) {
-          // await update_restaurant_info(
-          //     id: serviceProviderId!,
-          //     restaurant: restaurant.value!
-          //         .copyWith(selfDelivery: true, deliveryDetailsId: newId));
-          return true;
+          // mutate the service table
         }
       } else {
-        await update_delivery_cost(
-            deliveryCostId: deliveryCost.value!.id!,
-            deliveryCost: _constructDeliveryCost());
-        // await update_restaurant_info(
-        //     id: serviceProviderId!,
-        //     restaurant: restaurant.value!.copyWith(
-        //       selfDelivery: true,
-        //     ));
+        try {
+          await update_delivery_cost(
+              deliveryCostId: deliveryCost.value!.id!,
+              deliveryCost: _constructDeliveryCost());
+        } on OperationException catch (e) {
+          showErrorSnackBar(errorText: e.graphqlErrors.first.message);
+        }
       }
-      return true;
     }
-    return false;
   }
-  // TODO @m66are RFC
 
-  // getters //
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
-        id: null,
-        selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
-        minimumCost: double.parse(_minCost.text),
-        freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
-        costPerKm: double.parse(_costPerKm.text));
+      id: null,
+      selfDelivery: deliveryType.value == ServiceDeliveryType.Self_delivery,
+      minimumCost: double.parse(_minCost.text),
+      freeDeliveryKmRange: double.tryParse(_freeKmRange.text),
+      costPerKm: double.parse(_costPerKm.text),
+      radius: double.parse(radius.text) * 1000,
+      costPerKmFromBase: double.tryParse(costPerKmFromBase.text ?? ""),
+    );
   }
 
   bool get isCreatingNewService => createServiceViewController != null;
@@ -198,7 +210,6 @@ class DeliverySettingsViewController {
         double.tryParse(_costPerKm.text) != null;
   }
 
-  //
   ServiceDeliveryType get getDeliveryType => isCreatingNewService
       ? createServiceViewController!.serviceInput.value.deliveryType!
       : deliveryType.value;
@@ -229,4 +240,6 @@ class DeliverySettingsViewController {
   TextEditingController get distancePreview => (isCreatingNewService)
       ? createServiceViewController!.distancePreview
       : _distancePreview;
+  TextEditingController get radius =>
+      (isCreatingNewService) ? createServiceViewController!.radius : _radius;
 }

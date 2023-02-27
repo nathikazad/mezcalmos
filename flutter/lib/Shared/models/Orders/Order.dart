@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'as mat;
+import 'package:flutter/material.dart' as mat;
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/StripeHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
@@ -8,12 +8,14 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/TaxiOrder.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 abstract class Order {
   int orderId;
   OrderType orderType;
   int? serviceProviderId;
   PaymentType paymentType;
+  ServiceProviderType deliveryProviderType;
   DateTime orderTime;
   UserInfo customer;
   UserInfo? serviceProvider;
@@ -35,6 +37,7 @@ abstract class Order {
     required this.paymentType,
     required this.orderTime,
     required this.cost,
+    required this.deliveryProviderType,
     required this.customer,
     this.serviceProvider,
     required this.to,
@@ -100,6 +103,7 @@ extension ParseOrderTypeToString on OrderType {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
   }
+
   mat.IconData toIcon() {
     switch (this) {
       case OrderType.Restaurant:
@@ -113,7 +117,7 @@ extension ParseOrderTypeToString on OrderType {
       default:
         return mat.Icons.watch_later;
     }
-    }
+  }
   // cloudFunctionModels.OrderType toCloudFunctionsModel() {
   //   switch (this) {
   //     case OrderType.Laundry:
@@ -164,6 +168,7 @@ abstract class DeliverableOrder extends Order {
       required super.paymentType,
       required super.orderTime,
       required super.cost,
+      required super.deliveryProviderType,
       super.serviceProvider,
       required super.customer,
       required super.to,
@@ -196,6 +201,7 @@ abstract class TwoWayDeliverableOrder extends DeliverableOrder {
       super.serviceProviderId,
       required super.paymentType,
       required super.orderTime,
+      required super.deliveryProviderType,
       required super.cost,
       super.serviceProvider,
       required super.customer,

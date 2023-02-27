@@ -15,6 +15,7 @@ import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 Stream<List<MinimalOrder>?> listen_on_laundry_orders(
@@ -99,6 +100,8 @@ Future<LaundryOrder?> get_laundry_order_by_id(
   Query$get_laundry_order_by_id$laundry_order_by_pk orderData =
       res.parsedData!.laundry_order_by_pk!;
   return LaundryOrder(
+        deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
+
       estimatedDropoffAtCustomerTime: DateTime.tryParse(
           orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??
               ""),
@@ -159,6 +162,8 @@ Stream<LaundryOrder?> listen_on_laundry_order_by_id({
       Subscription$liston_on_laundry_order_by_id$laundry_order_by_pk orderData =
           event.parsedData!.laundry_order_by_pk!;
       return LaundryOrder(
+                deliveryProviderType:  orderData.to_customer_delivery?.service_provider_type.toServiceProviderType() ?? orderData.from_customer_delivery!.service_provider_type.toServiceProviderType() ,
+
         notes: orderData.notes,
         estimatedDropoffAtCustomerTime: DateTime.tryParse(
             orderData.to_customer_delivery?.estimated_arrival_at_dropoff_time ??

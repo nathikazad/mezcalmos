@@ -54424,7 +54424,8 @@ export type service_provider_delivery_partner_bool_exp = {
 
 /** unique or primary key constraints on table "service_provider.delivery_partner" */
 export enum service_provider_delivery_partner_constraint {
-	delivery_partner_pkey = "delivery_partner_pkey"
+	delivery_partner_pkey = "delivery_partner_pkey",
+	delivery_partner_service_provider_id_service_provider_type_key = "delivery_partner_service_provider_id_service_provider_type_key"
 }
 
 /** input type for incrementing numeric columns in table "service_provider.delivery_partner" */
