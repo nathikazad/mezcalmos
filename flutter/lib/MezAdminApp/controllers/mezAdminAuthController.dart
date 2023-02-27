@@ -62,7 +62,7 @@ class MezAdminAuthController extends GetxController {
         insert_notif_info(
             userId: _authController.hasuraUserId!,
             token: deviceNotificationToken,
-            appType: "mez_admin");
+            appType: "mezAdmin");
       }
     } catch (e, stk) {
       mezDbgPrint(e);
