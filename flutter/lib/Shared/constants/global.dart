@@ -26,6 +26,7 @@ const String stripePubProdKey =
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
 const String hasuraProdLink = "https://mez-production.hasura.app/v1/graphql";
 const String hasuraStageLink = "https://mez-staging.hasura.app/v1/graphql";
+
 const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 // can be dev / prod
 
@@ -148,6 +149,11 @@ extension ParseOrderTypeToString on AppType {
   String toShortString() {
     final String str = toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
+  }
+
+  String toHasuraString() {
+    final String str = toString().split('.').last;
+    return (str[0].toLowerCase() + str.substring(1)).replaceFirst('App', '');
   }
 
   String toNormalString() {
