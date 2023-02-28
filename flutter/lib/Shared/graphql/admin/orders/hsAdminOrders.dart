@@ -193,15 +193,15 @@ Future<List<MinimalOrder>?> get_admin_laundry_orders({
         .map((Query$admin_get_laundry_orders$laundry_order orderData) {
       return MinimalOrder(
           id: orderData.id,
-          orderType: OrderType.Restaurant,
+          orderType: OrderType.Laundry,
           serviceProviderId: orderData.store_id,
-          serviceProviderType: ServiceProviderType.Restaurant,
+          serviceProviderType: ServiceProviderType.Laundry,
           toAdress: orderData.customer_address,
           orderTime: DateTime.parse(orderData.order_time),
           title: orderData.customer.user.name!,
           image: orderData.customer.user.image,
           status:
-              orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
+              orderData.status.toLaundryOrderStatus().toMinimalOrderStatus(),
           totalCost: orderData.total_cost!);
     }).toList();
     return orders;

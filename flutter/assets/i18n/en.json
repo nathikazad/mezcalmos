@@ -22,7 +22,7 @@
           "chooseLoc": "Choose location",
           "ops": "Oops",
           "wrongAddress": "Wrong/Invalid address picked!",
-          "distanceError": "Distance between you and restaurant is more than 10km !",
+          "distanceError": "The distance between you and the service location exceeds 10km!",
           "pickLocation": "Pick from map"
         },
         "LocationPicker": {
@@ -193,11 +193,12 @@
                 "toBeCalc": "Calculating..."
               },
               "SaveLocationDailog": {
-                "addLocationDialogTitle": "Enter location name, if you want to save for future use, else you may skip",
+                "addLocationDialogTitle": "Enter location name",
                 "editLocationDialogTitle": "Enter location name",
-                "addLocationDialogButton": "OK",
+                "pickLocationHintText":"Enter name",
+                "addLocationDialogButton": "Save",
                 "editLocationDialogButton": "EDIT",
-                "addLocationDialogSkip": "Skip"
+                "addLocationDialogSkip": "Close"
               }
             },
             "ViewCartScreen": {
@@ -227,7 +228,8 @@
                 "title": "Warning",
                 "leftBtn": "Checkout first",
                 "rightBtn": "Overwrite",
-                "subtitle": "You already have some items in your cart from another restaurant, do you want to check them out first or overwrite them?",
+                "subtitle": "You already have items in your cart from",
+                "overwriteText":"\nDo you want to overwrite?",
                 "specialSubtitle": "You already have some special items in your cart with different availibility time, do you want to check them out first or overwrite them?",
                 "addToCart": "Add item",
                 "modifyItem": "Modify item"
@@ -331,6 +333,7 @@
           "ViewRestaurantScreen": {
             "CustomerRestaurantView": {
               "specials": "Specials",
+              "undefinedCategory":"Undefined Category",
               "scheduleTitle": "Only available for scheduling orders"
             },
             "components": {
@@ -342,7 +345,10 @@
               "restaurantInfoTab": {
                 "description": "Description",
                 "location": "Location",
+                "codText": "Cash on delivery",
+                "debitCreditText": "Credit/Debit Card",
                 "reviews": "Reviews",
+                "paymentMethod": "Payment Method",
                 "workingHours": "Working hours",
                 "weekDays": {
                   "monday": "Monday",
@@ -382,7 +388,7 @@
             }
           },
           "SavedLocationView": {
-              "title": "Saved locations",
+              "title": "My locations",
               "addNewLoc": "Add new location",
               "location":"Location"
           }
@@ -558,8 +564,8 @@
             "LaundryCurrentOrderView": {
               "orderStatus": "Order status",
               "laundry": "Laundry",
-              "deliveryDetails" : "Delivery details",
-              "estimatedDeliveryTime": "Estimated delivery time"
+              "estimatedDeliveryTime": "Estimated delivery time",
+              "deliveryDeatils":"Delivery details"
             }
           },
           "LaundriesListView": {
@@ -579,7 +585,7 @@
           },
           "SingleLaundryScreen": {
             "startingFrom": "Starting from ",
-            "minimumCost": "Minimum cost",
+            "minimumCost": "Minimum",
             "daysReturn" :"days return",
             "description": "Description",
             "openHours": "openHours",
@@ -589,7 +595,7 @@
           "LaundryRequestView": {
             "LaundryOrderRequestView": {
               "howItWorks": "How it works",
-             
+              "summaryText":"Summary",
               "categories" : "Categories",
               "deliveryLocation": "Delivery location",
               "orderSummary": "Order summary",
@@ -698,7 +704,7 @@
           "yesCancel": "Yes, cancel order",
           "no": "No",
           "cancelOrder": "Cancel Order",
-          "cancelConfirmationText": "Are you sure you would like to cancel ?",
+          "cancelConfirmationText": "Are you sure you’d like to cancel?",
           "subtitle": "This action cannot be undone.",
           "ok": "Ok",
           "viewOrder": "View Order",
@@ -737,15 +743,27 @@
       "pages": {
         "CreateServiceView": {
           "pages": {
+            "createServiceStartPage":{
+              "openNewRestaurantText":"Create a new restaurant and receive orders from your local customers."
+            },
             "CreateServiceInfoPage": {
-              "name": "Name",
+              "name": "Restaurant name",
+              "hintNameText": "Enter your name",
+              "uploadImageText":"Upload your profile image",
               "nameError": "Please provide a name",
+              "descriptionError": "Please provide a description",
               "location": "Name",
               "locationError": "Please provide a name",
-              "pickLoc": "Pick location",
-              "imageError": "Image is required"
+              "pickLoc": "Pick restaurant’s location",
+              "imageError": "Image is required",
+              "description": "Description",
+              "descriptionHintText": "Enter a description for your restaurant",
+              "phoneText":"Phone number",
+              "phoneTextDescription":"Enter your phone number",
+              "phoneTextError":"Enter valid phone number"
             }
           },
+          "createText":"Create",
           "info": "Information",
           "schedule": "Schedule",
           "delivery": "Delivery",
@@ -768,7 +786,9 @@
           "preview": "Preview",
           "custDistance": "Customer distance",
           "save": "Save",
-          "cost": "Cost"
+          "cost": "Cost",
+          "radius": "Delivery range",
+          "costPerKmFromBase" : "Cost per km from base"
         },
         "DeliverySettingsView": {
           "DeliverySettingsView": {
@@ -781,7 +801,7 @@
               "title": "Delivery partner next to you",
               "notFoundTitle": "No delivery partners found",
               "notFoundBody": "Unfortunately, there are no delivery companies next to you but if you know of any delivery company you can share this link with them and when they register you can make them your delivery partner.",
-              "joinded": "Joined"
+              "joined": "Joined"
             }
           }
         },
@@ -1029,11 +1049,11 @@
         },
         "OrderSummaryCard": {
           "orderSummary": "Summary",
-          "orderCost": "Order Cost",
-          "deliveryCost": "Delivery Cost",
+          "orderCost": "Order cost",
+          "deliveryCost": "Delivery cost",
           "stripeFees": "Card fees",
-          "totalCost": "Total Cost",
-          "deliveryLocation": "Delivery Location",
+          "totalCost": "Total cost",
+          "deliveryLocation": "Delivery location",
           "refundAmount": "Refund amount",
           "toBeCalc": "To be calculated"
         },
@@ -1046,7 +1066,8 @@
           "banktransfer": "Bank Transfer"
         },
         "OrderDeliveryLocation": {
-          "title": "Delivery location"
+          "title": "Delivery location",
+          "deliveryDetails":"Delivery details"
         },
         "OrderScheduledTimeCard": {
           "title": "Scheduled time"
@@ -1057,8 +1078,8 @@
           "last4": "Last 4 digits"
         },
         "ContactUsPopUp": {
-          "contactEmail": "Contact us with Email",
-          "contactWhatsapp": "Contact us with WhatsApp",
+          "contactEmail": "Contact us with email",
+          "contactWhatsapp": "Contact us with whatsApp",
           "hello": "Hello",
           "team": "Team",
           "help": "Help"
@@ -1429,11 +1450,11 @@
                 "delivered": "Order Delivered"
               },
               "LaundryOrderSummary": {
-                "orderSummary": "Order Summary",
-                "orderWeight": "Order Weight",
-                "orderCost": "Order Cost",
-                "totalCost": "Total Cost",
-                "deliveryCost": "Shipping Cost",
+                "orderSummary": "Summary",
+                "orderWeight": "Order weight",
+                "orderCost": "Order cost",
+                "totalCost": "Total cost",
+                "deliveryCost": "Shipping cost",
                 "free": "Free"
               }
             },
@@ -1536,7 +1557,7 @@
                 "readBy": "Read by : ",
                 "from": "From :",
                 "to": "To :",
-                "distance": "Distance : ",
+                "distance": "Distance",
                 "at": "at : ",
                 "orderExpired": "Order Expired",
                 "orderStatus": {
@@ -1809,7 +1830,7 @@
               "components": {
                 "LaundryOpOrderCard": {
                   "date": "Date : ",
-                  "totalCost": "Total Cost : ",
+                  "totalCost": "Total cost",
                   "waiting": "Waiting",
                   "delivered": "Delivered",
                   "canceled": "Cancelled"
@@ -1974,7 +1995,7 @@
         },
         "ROpReviewsView": {
           "reviews": "Reviews",
-          "base": "Base on",
+          "base": "Based on",
           "perfomTitle": "Your review performance is",
           "excellent": "Excellent",
           "poor": "Poor",
@@ -2042,10 +2063,10 @@
             },
             "ROpOrderSummaryCard": {
               "orderSummary": "Summary",
-              "orderCost": "Order Cost",
-              "deliveryCost": "Delivery Cost",
-              "totalCost": "Total Cost",
-              "deliveryLocation": "Delivery Location"
+              "orderCost": "Order cost",
+              "deliveryCost": "Delivery cost",
+              "totalCost": "Total cost",
+              "deliveryLocation": "Delivery location"
             },
             "ROpOrderNote": {
               "notes": "Notes"
@@ -2116,8 +2137,8 @@
         "ROpPastOrdersList": {
           "components": {
             "ROpOrderCard": {
-              "date": "Date : ",
-              "totalCost": "Total Cost : ",
+              "date": "Date",
+              "totalCost": "Total cost",
               "waiting": "Waiting",
               "delivered": "Delivered",
               "canceled": "Cancelled"

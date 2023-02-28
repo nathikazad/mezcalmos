@@ -2,7 +2,7 @@
 
 import 'package:collection/collection.dart';
 
-enum ServiceStatus { Open, Closed_temporarily, Closed_indefinitely }
+enum ServiceStatus { Open, ClosedTemporarily, ClosedIndefinitely }
 
 extension ParseServiceStatusToString on ServiceStatus {
   String toFirebaseFormatString() {
@@ -15,7 +15,7 @@ extension ParseStringToServiceStatusStatus on String {
   ServiceStatus toServiceStatus() {
     return ServiceStatus.values.firstWhere(
         (ServiceStatus e) => e.toFirebaseFormatString() == this,
-        orElse: () => ServiceStatus.Closed_indefinitely);
+        orElse: () => ServiceStatus.ClosedIndefinitely);
   }
 }
 
@@ -23,8 +23,6 @@ enum LanguageType {
   EN,
   ES,
 }
-
-
 
 extension ParseLanugaugeTypeToString on LanguageType {
   String toLanguageCode() {

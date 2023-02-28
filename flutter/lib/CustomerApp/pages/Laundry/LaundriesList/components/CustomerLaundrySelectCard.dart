@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/NumHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -43,21 +42,21 @@ class CustomerLaundrySelectCard extends StatelessWidget {
 
   Widget _laundryInfoHeader() {
     return Container(
-      padding: const EdgeInsets.only(top: 10, right: 5, left: 5, bottom: 10),
+      padding: const EdgeInsets.only(top: 10, right: 5, left: 10, bottom: 10),
       alignment: Alignment.center,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 23,
+            radius: 25,
             backgroundImage: CachedNetworkImageProvider(laundry.info.image),
           ),
           SizedBox(
             width: 8,
           ),
           Flexible(
-            flex: 5,
+            flex: 4,
             fit: FlexFit.loose,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,13 +72,13 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 8,
+                  height: 4,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                      flex: 6,
+                      flex: 4,
                       fit: FlexFit.tight,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -95,22 +94,22 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           ),
                           Flexible(
                             child: ShippingCostComponent(
-                              shippingCost: _getShippingPrice(),
-                              alignment: MainAxisAlignment.start,
-                              textStyle: Get.textTheme.bodyMedium?.copyWith(
-                                color: blackColor,
-                              ),
-                            ),
+                                shippingCost: _getShippingPrice(),
+                                alignment: MainAxisAlignment.start,
+                                textStyle: Get.textTheme.bodySmall),
                           ),
                         ],
                       ),
                     ),
                     Flexible(
-                      flex: 6,
+                      flex: 5,
                       fit: FlexFit.tight,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            width: 4,
+                          ),
                           Icon(
                             Icons.watch_later,
                             size: 20,
@@ -118,33 +117,34 @@ class CustomerLaundrySelectCard extends StatelessWidget {
                           ),
                           Flexible(
                               child: Text(
-                            ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
-                            style: Get.textTheme.bodyMedium?.copyWith(
-                              color: blackColor,
-                            ),
-                          )),
+                                  ' ${laundry.averageNumberOfDays} ${_i18n()["days"]}${(laundry.averageNumberOfDays > 1) ? "s" : ""}',
+                                  style: Get.textTheme.bodySmall)),
                         ],
                       ),
                     ),
                     if (laundry.getCheapestCategory != null)
                       Flexible(
-                        flex: 6,
+                        flex: 5,
                         fit: FlexFit.tight,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            // SizedBox(
+                            //   width: 8,
+                            // ),
                             Icon(
                               Icons.north_east,
                               size: 20,
                               color: Colors.black,
                             ),
+                            SizedBox(
+                              width: 4,
+                            ),
                             Flexible(
-                                child: Text(
-                              "${laundry.getCheapestCategory.toPriceString()}/Kg",
-                              style: Get.textTheme.bodyMedium?.copyWith(
-                                color: blackColor,
-                              ),
-                            )),
+                              child: Text(
+                                  "${laundry.getCheapestCategory.toPriceString()}/kg",
+                                  style: Get.textTheme.bodySmall),
+                            ),
                           ],
                         ),
                       ),

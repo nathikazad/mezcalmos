@@ -965,6 +965,13 @@ const documentNodeSubscriptionlisten_on_restaurant_order_by_id =
                 selectionSet: null,
               ),
               FieldNode(
+                name: NameNode(value: 'service_provider_type'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
                 name: NameNode(value: 'trip_duration'),
                 alias: null,
                 arguments: [],
@@ -4948,6 +4955,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
   Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery({
     this.trip_polyline,
     this.trip_distance,
+    required this.service_provider_type,
     this.trip_duration,
     this.chat_with_service_provider_id,
     required this.chat_with_customer_id,
@@ -4964,6 +4972,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
       Map<String, dynamic> json) {
     final l$trip_polyline = json['trip_polyline'];
     final l$trip_distance = json['trip_distance'];
+    final l$service_provider_type = json['service_provider_type'];
     final l$trip_duration = json['trip_duration'];
     final l$chat_with_service_provider_id =
         json['chat_with_service_provider_id'];
@@ -4980,6 +4989,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     return Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$delivery(
       trip_polyline: (l$trip_polyline as String?),
       trip_distance: (l$trip_distance as int?),
+      service_provider_type: (l$service_provider_type as String),
       trip_duration: (l$trip_duration as int?),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
       chat_with_customer_id: (l$chat_with_customer_id as int),
@@ -5001,6 +5011,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
   final String? trip_polyline;
 
   final int? trip_distance;
+
+  final String service_provider_type;
 
   final int? trip_duration;
 
@@ -5029,6 +5041,8 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     _resultData['trip_polyline'] = l$trip_polyline;
     final l$trip_distance = trip_distance;
     _resultData['trip_distance'] = l$trip_distance;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
     final l$trip_duration = trip_duration;
     _resultData['trip_duration'] = l$trip_duration;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -5060,6 +5074,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
   int get hashCode {
     final l$trip_polyline = trip_polyline;
     final l$trip_distance = trip_distance;
+    final l$service_provider_type = service_provider_type;
     final l$trip_duration = trip_duration;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
     final l$chat_with_customer_id = chat_with_customer_id;
@@ -5074,6 +5089,7 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     return Object.hashAll([
       l$trip_polyline,
       l$trip_distance,
+      l$service_provider_type,
       l$trip_duration,
       l$chat_with_service_provider_id,
       l$chat_with_customer_id,
@@ -5105,6 +5121,11 @@ class Subscription$listen_on_restaurant_order_by_id$restaurant_order_by_pk$deliv
     final l$trip_distance = trip_distance;
     final lOther$trip_distance = other.trip_distance;
     if (l$trip_distance != lOther$trip_distance) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
       return false;
     }
     final l$trip_duration = trip_duration;
@@ -5196,6 +5217,7 @@ abstract class CopyWith$Subscription$listen_on_restaurant_order_by_id$restaurant
   TRes call({
     String? trip_polyline,
     int? trip_distance,
+    String? service_provider_type,
     int? trip_duration,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
@@ -5234,6 +5256,7 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
   TRes call({
     Object? trip_polyline = _undefined,
     Object? trip_distance = _undefined,
+    Object? service_provider_type = _undefined,
     Object? trip_duration = _undefined,
     Object? chat_with_service_provider_id = _undefined,
     Object? chat_with_customer_id = _undefined,
@@ -5253,6 +5276,10 @@ class _CopyWithImpl$Subscription$listen_on_restaurant_order_by_id$restaurant_ord
         trip_distance: trip_distance == _undefined
             ? _instance.trip_distance
             : (trip_distance as int?),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
         trip_duration: trip_duration == _undefined
             ? _instance.trip_duration
             : (trip_duration as int?),
@@ -5311,6 +5338,7 @@ class _CopyWithStubImpl$Subscription$listen_on_restaurant_order_by_id$restaurant
   call({
     String? trip_polyline,
     int? trip_distance,
+    String? service_provider_type,
     int? trip_duration,
     int? chat_with_service_provider_id,
     int? chat_with_customer_id,
@@ -6665,6 +6693,13 @@ const documentNodeQueryget_restaurant_order_by_id = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
                 name: NameNode(value: 'trip_polyline'),
+                alias: null,
+                arguments: [],
+                directives: [],
+                selectionSet: null,
+              ),
+              FieldNode(
+                name: NameNode(value: 'service_provider_type'),
                 alias: null,
                 arguments: [],
                 directives: [],
@@ -10653,6 +10688,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery({
     this.trip_polyline,
+    required this.service_provider_type,
     this.trip_distance,
     this.trip_duration,
     this.chat_with_service_provider_id,
@@ -10669,6 +10705,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   factory Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery.fromJson(
       Map<String, dynamic> json) {
     final l$trip_polyline = json['trip_polyline'];
+    final l$service_provider_type = json['service_provider_type'];
     final l$trip_distance = json['trip_distance'];
     final l$trip_duration = json['trip_duration'];
     final l$chat_with_service_provider_id =
@@ -10685,6 +10722,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$$__typename = json['__typename'];
     return Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery(
       trip_polyline: (l$trip_polyline as String?),
+      service_provider_type: (l$service_provider_type as String),
       trip_distance: (l$trip_distance as int?),
       trip_duration: (l$trip_duration as int?),
       chat_with_service_provider_id: (l$chat_with_service_provider_id as int?),
@@ -10705,6 +10743,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   }
 
   final String? trip_polyline;
+
+  final String service_provider_type;
 
   final int? trip_distance;
 
@@ -10733,6 +10773,8 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final _resultData = <String, dynamic>{};
     final l$trip_polyline = trip_polyline;
     _resultData['trip_polyline'] = l$trip_polyline;
+    final l$service_provider_type = service_provider_type;
+    _resultData['service_provider_type'] = l$service_provider_type;
     final l$trip_distance = trip_distance;
     _resultData['trip_distance'] = l$trip_distance;
     final l$trip_duration = trip_duration;
@@ -10765,6 +10807,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
   @override
   int get hashCode {
     final l$trip_polyline = trip_polyline;
+    final l$service_provider_type = service_provider_type;
     final l$trip_distance = trip_distance;
     final l$trip_duration = trip_duration;
     final l$chat_with_service_provider_id = chat_with_service_provider_id;
@@ -10779,6 +10822,7 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$trip_polyline,
+      l$service_provider_type,
       l$trip_distance,
       l$trip_duration,
       l$chat_with_service_provider_id,
@@ -10806,6 +10850,11 @@ class Query$get_restaurant_order_by_id$restaurant_order_by_pk$delivery {
     final l$trip_polyline = trip_polyline;
     final lOther$trip_polyline = other.trip_polyline;
     if (l$trip_polyline != lOther$trip_polyline) {
+      return false;
+    }
+    final l$service_provider_type = service_provider_type;
+    final lOther$service_provider_type = other.service_provider_type;
+    if (l$service_provider_type != lOther$service_provider_type) {
       return false;
     }
     final l$trip_distance = trip_distance;
@@ -10900,6 +10949,7 @@ abstract class CopyWith$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
   TRes call({
     String? trip_polyline,
+    String? service_provider_type,
     int? trip_distance,
     int? trip_duration,
     int? chat_with_service_provider_id,
@@ -10937,6 +10987,7 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
 
   TRes call({
     Object? trip_polyline = _undefined,
+    Object? service_provider_type = _undefined,
     Object? trip_distance = _undefined,
     Object? trip_duration = _undefined,
     Object? chat_with_service_provider_id = _undefined,
@@ -10953,6 +11004,10 @@ class _CopyWithImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$deli
         trip_polyline: trip_polyline == _undefined
             ? _instance.trip_polyline
             : (trip_polyline as String?),
+        service_provider_type:
+            service_provider_type == _undefined || service_provider_type == null
+                ? _instance.service_provider_type
+                : (service_provider_type as String),
         trip_distance: trip_distance == _undefined
             ? _instance.trip_distance
             : (trip_distance as int?),
@@ -11013,6 +11068,7 @@ class _CopyWithStubImpl$Query$get_restaurant_order_by_id$restaurant_order_by_pk$
 
   call({
     String? trip_polyline,
+    String? service_provider_type,
     int? trip_distance,
     int? trip_duration,
     int? chat_with_service_provider_id,

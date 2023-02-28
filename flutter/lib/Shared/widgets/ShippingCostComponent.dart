@@ -53,6 +53,12 @@ class ShippingCostComponent extends StatelessWidget {
                   ),
                 )
               ],
+          ? Flexible(
+              child: Text(
+                "${_i18n()["free"]}",
+                style: Get.textTheme.bodyLarge
+                    ?.copyWith(color: primaryBlueColor, fontSize: 11.sp),
+              ),
             )
           : Text(
               shippingCost.toPriceString() + "${(showPerKm) ? "/km" : ""}",

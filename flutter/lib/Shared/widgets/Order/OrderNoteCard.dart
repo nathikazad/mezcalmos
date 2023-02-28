@@ -25,13 +25,14 @@ class OrderNoteCard extends StatelessWidget {
                 style: Get.textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               Container(
                 child: Text(
                   note!,
-                  style: Get.textTheme.titleSmall,
+                //  style: Get.textTheme.titleSmall,
                 ),
               ),
+              const SizedBox(height: 4),
             ],
           ),
         ),

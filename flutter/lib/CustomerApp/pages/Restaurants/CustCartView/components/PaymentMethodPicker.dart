@@ -52,82 +52,84 @@ class _PaymentMethodPickerState extends State<PaymentMethodPicker> {
                 ),
                 Obx(
                   () {
-                    return DropdownButtonFormField<PaymentOption>(
-                      decoration: InputDecoration(
-                        filled: true,
-                        isDense: false,
+                    return Card(
+                      child: DropdownButtonFormField<PaymentOption>(
+                        decoration: InputDecoration(
+                          filled: true,
+                          isDense: false,
 
-                        fillColor: Colors.white,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 3),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5),
-                            borderSide: BorderSide.none),
-                        // label: Text("${_i18n()["none"]}"),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                          fillColor: Colors.white,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 3),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide.none),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide.none),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide.none),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                              borderSide: BorderSide.none),
+                          // label: Text("${_i18n()["none"]}"),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        ),
+                        value: widget.viewCartController.pickerChoice.value ??
+                            widget.viewCartController.options.first,
+                        onChanged: (PaymentOption? newValue) async {
+                          if (newValue != null) {
+                            mezDbgPrint(newValue);
+                            await widget.viewCartController
+                                .switchPicker(newValue);
+                          }
+                        },
+                        items: widget.viewCartController.options
+                            .map<DropdownMenuItem<PaymentOption>>(
+                                (PaymentOption value) {
+                          return DropdownMenuItem<PaymentOption>(
+                              value: value,
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: _getIcon(
+                                        paymentType: value.entries.first.key,
+                                        card: value.entries.first.value,
+                                        iconColor: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    (value.entries.first.key ==
+                                            PickerChoice.SavedCard)
+                                        ? value.entries.first.value!.brand.name
+                                        : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
+                                    style: Get.textTheme.bodyText1?.copyWith(
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                  if (value.entries.first.value != null)
+                                    Container(
+                                      margin: EdgeInsets.only(left: 5),
+                                      child: Text(
+                                        "*" * 12 +
+                                            value.entries.first.value!.last4
+                                                .toString(),
+                                        style: Get.textTheme.subtitle1,
+                                      ),
+                                    ),
+                                ],
+                              ));
+                        }).toList(),
                       ),
-                      value: widget.viewCartController.pickerChoice.value ??
-                          widget.viewCartController.options.first,
-                      onChanged: (PaymentOption? newValue) async {
-                        if (newValue != null) {
-                          mezDbgPrint(newValue);
-                          await widget.viewCartController
-                              .switchPicker(newValue);
-                        }
-                      },
-                      items: widget.viewCartController.options
-                          .map<DropdownMenuItem<PaymentOption>>(
-                              (PaymentOption value) {
-                        return DropdownMenuItem<PaymentOption>(
-                            value: value,
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 30,
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: _getIcon(
-                                      paymentType: value.entries.first.key,
-                                      card: value.entries.first.value,
-                                      iconColor: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  (value.entries.first.key ==
-                                          PickerChoice.SavedCard)
-                                      ? value.entries.first.value!.brand.name
-                                      : '${_i18n()[value.entries.first.key.toNormalString().toLowerCase()]}',
-                                  style: Get.textTheme.bodyText1?.copyWith(
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                                if (value.entries.first.value != null)
-                                  Container(
-                                    margin: EdgeInsets.only(left: 5),
-                                    child: Text(
-                                      "*" * 12 +
-                                          value.entries.first.value!.last4
-                                              .toString(),
-                                      style: Get.textTheme.subtitle1,
-                                    ),
-                                  ),
-                              ],
-                            ));
-                      }).toList(),
                     );
                   },
                 ),

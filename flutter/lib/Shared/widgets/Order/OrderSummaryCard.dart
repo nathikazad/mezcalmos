@@ -28,7 +28,8 @@ class OrderSummaryCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.only(left: 10, top: 8),
+            //  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
@@ -36,7 +37,7 @@ class OrderSummaryCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -49,8 +50,8 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["orderCost"]}',
                         style: txt.bodyMedium,
                       ),
-                      Text(_getOrderCost(),
-                          style: txt.bodyMedium?.copyWith(
+                      Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
+                          style: txt.bodyText2?.copyWith(
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&
                                           (order as LaundryOrder)

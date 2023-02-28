@@ -26,6 +26,7 @@ const String stripePubProdKey =
 const String agoraAppId = "6def50fdd2804ffaaa70d807ee445d28";
 const String hasuraProdLink = "https://mez-production.hasura.app/v1/graphql";
 const String hasuraStageLink = "https://mez-staging.hasura.app/v1/graphql";
+
 const String hasuraDevLink = "http://127.0.0.1:8080/v1/graphql";
 // can be dev / prod
 
@@ -60,7 +61,12 @@ const String sPrivacyPolicyCustomerApp =
 const String sPrivacyPolicyTaxiApp = "https://meztaxi.com/privacy-policy.html";
 
 const String sNetworkCheckUrl1 = 'google.com';
-const String sNetworkCheckUrl2 = 'facebook.com';
+const String firebaseDbUrl = 'www.firebaseio.com';
+const String firebaseFunctionsProdUrl =
+    'www.us-central1-mezcalmos-31f1c.cloudfunctions.net';
+const String firebaseFunctionsStageUrl =
+    'www.us-central1-mezcalmos-staging.cloudfunctions.net';
+const String hasuraDbUrl = 'www.hasura.app';
 
 const LanguageType sDefaultLanguage = LanguageType.ES;
 const String sDefaultTheme = "light";
@@ -150,6 +156,11 @@ extension ParseOrderTypeToString on AppType {
     return str[0].toLowerCase() + str.substring(1);
   }
 
+  String toHasuraString() {
+    final String str = toString().split('.').last;
+    return (str[0].toLowerCase() + str.substring(1)).replaceFirst('App', '');
+  }
+
   String toNormalString() {
     final String str = toString().split('.').last;
     return str;
@@ -184,10 +195,13 @@ const Color purpleColor = Color(0xFFAC59FC);
 const Color primaryBlueColor = Color(0xFF6779FE);
 const Color cancelledBackgroundColor = Color(0XFFFDECEF);
 const Color deliveredBackgroundColor = Color(0xFFEAECFF);
+const Color pickLocationTextFieldColor = Color(0xFFF5F5F5);
+const Color pickLocationHintTextFieldColor = Color(0xFFC4C4C4);
 const Color waitingBackgroundColor = Color(0xFFFFF0CB);
 const Color onGoingBackgroundColor = Color(0xFFE4F2E5);
 const Color backgroundShadeColor = Color(0xFFEDEDED);
 const Color secondaryLightBlueColor = Color(0xFFE1E4FF);
+const Color laundaryChipContainerColor = Color(0xFFF0F1FF);
 const Color offRedColor = Color(0xffF9D8D6);
 const Color offShadeGreyColor = Color(0xFF494949);
 const Color offLightShadeGreyColor = Color(0xFF787878);

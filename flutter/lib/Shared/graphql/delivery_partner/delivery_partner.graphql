@@ -11,20 +11,35 @@ query getDeliveryPartner($serviceId: Int!, $serviceType: String) {
     service_provider_type
   }
 }
+# mutation updateDeliveryPartner(
+#   $serviceId: Int!
+#   $serviceType: String
+#   $newCompanyId: Int!
+# ) {
+#   update_service_provider_delivery_partner(
+#     where: {
+#       service_provider_id: { _eq: $serviceId }
+#       service_provider_type: { _eq: $serviceType }
+#     }
+#     _set: { delivery_company_id: $newCompanyId }
+#   ) {
+#     returning {
+#       delivery_company_id
+#     }
+#   }
+# }
+
+
 mutation updateDeliveryPartner(
-  $serviceId: Int!
-  $serviceType: String
-  $newCompanyId: Int!
+  $data: service_provider_delivery_partner_insert_input!
 ) {
-  update_service_provider_delivery_partner(
-    where: {
-      service_provider_id: { _eq: $serviceId }
-      service_provider_type: { _eq: $serviceType }
+  insert_service_provider_delivery_partner_one(
+    on_conflict: {
+      constraint: delivery_partner_service_provider_id_service_provider_type_key
+      update_columns: delivery_company_id
     }
-    _set: { delivery_company_id: $newCompanyId }
+    object: $data
   ) {
-    returning {
-      delivery_company_id
-    }
+    delivery_company_id
   }
 }

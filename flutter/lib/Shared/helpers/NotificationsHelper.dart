@@ -104,7 +104,12 @@ void notificationSnackBar(notifs.Notification notification) {
     borderRadius: 12,
     messageText: Text(
       notification.body,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(
+        fontFamily: "Nunito",
+        fontWeight: FontWeight.w400,
+        fontSize: 15,
+        color: Colors.white,
+      ),
     ),
     titleText: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,12 +118,22 @@ void notificationSnackBar(notifs.Notification notification) {
         Flexible(
           child: Text(
             notification.title,
-            style: TextStyle(fontFamily: 'psb', color: Colors.white),
+            style: TextStyle(
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              color: Colors.white,
+            ),
           ),
         ),
         Text(
           notification.formattedTime,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+            color: Color(0xFFC4C4C4),
+          ),
         ),
       ],
     ),

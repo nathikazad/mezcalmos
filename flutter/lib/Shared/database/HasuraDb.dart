@@ -149,7 +149,7 @@ class HasuraDb {
       _wsLink!.config = gqClient.SocketClientConfig(
         autoReconnect: true,
         parser: MyParser(),
-        inactivityTimeout: Duration(seconds: 300),
+        inactivityTimeout: Duration(seconds: 30),
         initialPayload: () async {
           return {
             'headers': headers,
@@ -196,7 +196,7 @@ class HasuraDb {
     mezDbgPrint("startJWTExpirationCheckTimer");
     expirationCheckTimer?.cancel();
     expirationCheckTimer =
-        Timer.periodic(new Duration(seconds: 60), (Timer timer) async {
+        Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
       if (expirationTime != null && checkIfJWTExpired()) {
         expirationCheckTimer?.cancel();
         expirationCheckTimer = null;

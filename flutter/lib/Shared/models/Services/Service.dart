@@ -35,7 +35,7 @@ abstract class Service {
 }
 
 class ServiceState {
-  ServiceStatus status = ServiceStatus.Closed_indefinitely;
+  ServiceStatus status = ServiceStatus.ClosedIndefinitely;
   // bool available = false;
   bool approved = false;
   ServiceState(this.status, this.approved);
@@ -56,7 +56,7 @@ class ServiceState {
     });
     return ServiceState(
       stateData?["status"]?.toString().toServiceStatus() ??
-          ServiceStatus.Closed_temporarily,
+          ServiceStatus.ClosedTemporarily,
       stateData?["approved"] ?? false,
     );
   }
@@ -69,7 +69,7 @@ class ServiceState {
   bool get isAuthorized => approved;
   bool get available => approved && status == ServiceStatus.Open;
   bool get isOpen => status == ServiceStatus.Open;
-  bool get isClosedIndef => status == ServiceStatus.Closed_indefinitely;
+  bool get isClosedIndef => status == ServiceStatus.ClosedIndefinitely;
 }
 
 class MainService extends Service {

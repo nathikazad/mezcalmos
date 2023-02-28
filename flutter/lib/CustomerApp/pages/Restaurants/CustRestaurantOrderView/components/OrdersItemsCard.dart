@@ -34,16 +34,23 @@ class OrderItemsCard extends StatelessWidget {
             style: txt.bodyText1,
           ),
         ),
-        SizedBox(
-          height: 4,
-        ),
         Column(
           children: List.generate(
-              order.items.length,
-              (int index) => OrderItemsItemCard(
-                    item: order.items[index],
-                    order: order,
-                  )),
+            order.items.length,
+            (int index) => Column(
+              children: [
+                OrderItemsItemCard(
+                  item: order.items[index],
+                  order: order,
+                ),
+                index != order.items.length - 1
+                    ? SizedBox(
+                        height: 8,
+                      )
+                    : SizedBox(),
+              ],
+            ),
+          ),
         )
       ],
     );

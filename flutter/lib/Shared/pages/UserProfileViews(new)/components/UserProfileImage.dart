@@ -17,7 +17,7 @@ class UserProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField(
-         // validator: (Object? value) {
+      // validator: (Object? value) {
       //   if (viewController.newImageFile.value == null &&
       //       viewController.newImageUrl.value == null) {
       //     return "Image is required";
@@ -51,7 +51,7 @@ class UserProfileImage extends StatelessWidget {
                                     padding: const EdgeInsets.all(5),
                                     child: Text(
                                       'Your face, your profile',
-                                      style: Get.textTheme.bodyText2,
+                                      style: Get.textTheme.bodyMedium,
                                       textAlign: TextAlign.center,
                                     ),
                                   )
@@ -68,9 +68,7 @@ class UserProfileImage extends StatelessWidget {
                             child: InkWell(
                               customBorder: CircleBorder(),
                               onTap: () {
-                                //  viewController.editImage(context);
-                                viewController.newImageUrl.value =
-                                    "https://pm1.narvii.com/7153/e8bbf2c5f5214e36a4c05cc247b54819b1ddc5c4r1-720-1280v2_hq.jpg";
+                                viewController.editImage(context);
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(8),
@@ -87,7 +85,7 @@ class UserProfileImage extends StatelessWidget {
                   ],
                 ),
               ),
-    // if (!state.isValid)
+              // if (!state.isValid)
               //   Container(
               //       margin: const EdgeInsets.only(top: 5),
               //       child: Text(
@@ -95,7 +93,7 @@ class UserProfileImage extends StatelessWidget {
               //         style:
               //             Get.textTheme.subtitle1?.copyWith(color: Colors.red),
               //       ))
-                          ],
+            ],
           ),
         );
       },

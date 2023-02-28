@@ -242,7 +242,7 @@ class _StartingPointState extends State<StartingPoint> {
       mezDbgPrint("[ GET STORAGE ] INITIALIZED !");
       await GetStorage().write(getxLmodeKey, _launchMode.toShortString());
       // previewMode
-      const bool _isPreviewMode = true; //bool.hasEnvironment('PREVIEW');
+      const bool _isPreviewMode = bool.hasEnvironment('PREVIEW');
       await GetStorage().write('previewMode', _isPreviewMode);
       mezDbgPrint('previewMode  -> $_isPreviewMode');
       mezDbgPrint(

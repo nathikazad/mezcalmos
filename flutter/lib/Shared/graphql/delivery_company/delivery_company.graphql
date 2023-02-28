@@ -21,7 +21,6 @@ query getDeliveryCompanyById($id: Int!) {
       location_id
       name
       language
-schedule
       open_status
       creation_time
       service_provider_type
@@ -122,6 +121,12 @@ query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
       minimum_cost
       self_delivery
     }
+  }
+}
+
+query getNearByCompanies($args: delivery_get_delivery_companies_args!) {
+  delivery_get_delivery_companies(args: $args) {
+    id
     details {
       id
       approved

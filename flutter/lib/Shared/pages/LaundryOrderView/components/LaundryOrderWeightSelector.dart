@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/LaundryApp/controllers/laundryOpAuthController.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
@@ -21,9 +20,6 @@ class LaundryOrderWeightSelector extends StatefulWidget {
 
 class _LaundryOrderWeightSelectorState
     extends State<LaundryOrderWeightSelector> {
-  LaundryOpAuthController opAuthController =
-      Get.find<LaundryOpAuthController>();
-
   @override
   void initState() {
     super.initState();
