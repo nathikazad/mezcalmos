@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
@@ -187,5 +188,44 @@ class Item {
         category.hashCode ^
         linkUrl.hashCode ^
         position.hashCode;
+  }
+
+  Item copyWith({
+    int? id,
+    int? nameId,
+    int? descriptionId,
+    int? restaurantId,
+    int? categoryId,
+    bool? available,
+    String? restaurantName,
+    LanguageMap? description,
+    String? image,
+    Map<LanguageType, String>? name,
+    num? cost,
+    List<Option>? options,
+    Category? category,
+    String? linkUrl,
+    DateTime? startsAt,
+    DateTime? endsAt,
+    int? position,
+  }) {
+    return Item(
+      id: id ?? this.id,
+      nameId: nameId ?? this.nameId,
+      descriptionId: descriptionId ?? this.descriptionId,
+      restaurantId: restaurantId ?? this.restaurantId,
+      categoryId: categoryId ?? this.categoryId,
+      available: available ?? this.available,
+      restaurantName: restaurantName ?? this.restaurantName,
+      description: description ?? this.description,
+      image: image ?? this.image,
+      name: name ?? this.name,
+      cost: cost ?? this.cost,
+      newOptions: options ?? this.options,
+      startsAt: startsAt ?? this.startsAt,
+      endsAt: endsAt ?? this.endsAt,
+      position: position ?? this.position,
+      itemType: itemType ?? itemType,
+    );
   }
 }

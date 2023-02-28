@@ -56,7 +56,7 @@ class AdminDeliveryCompanyServiceCard extends StatelessWidget {
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         value: company.state.status == ServiceStatus.Open,
                         onChanged: (bool v) {
-                          mezDbgPrint(v);
+                          
                           viewController.switchServiceStatus(
                               serviceDetailsId: company.serviceDetailsId,
                               providerType: ServiceProviderType.DeliveryCompany,

@@ -13,7 +13,7 @@ class ServiceProfileController extends GetxController {
   late int deliveryDetailsId;
   // state vars //
   Rxn<MainService> _service = Rxn();
-  RxBool _isAprroved = RxBool(false);
+  RxBool _isAprroved = RxBool(true);
   // getters //
   MainService get service => _service.value!;
   bool get isApproved => _isAprroved.value;

@@ -157,16 +157,15 @@ class ROpMenuViewController {
       mezDbgPrint(stk);
       return false;
     }
-    // for (int i = 0; i < rOcategories.length; i++) {
-    //   // await restaurantInfoController!.editCategoryPosition(
-    //   //     position: rOcategories[i].position, categoryId: rOcategories[i].id!);
-    //   // for (int j = 0; j < rOcategories[i].items.length; j++) {
-    //   //   await restaurantInfoController!.editItemPosition(
-    //   //       position: rOcategories[i].items[j].position,
-    //   //       categoryId: rOcategories[i].id!,
-    //   //       itemId: rOcategories[i].items[j].id!);
-    //   // }
-    // }
+  }
+
+  void switchItemAv({
+    required Item item,
+    required bool value,
+  }) {
+    update_item_by_id(itemId: item.id!, item: item.copyWith(available: value))
+        .then((bool value) =>
+            item.isSpecial ? fetchSpecials() : fetchCategories());
   }
 
   // when user clicks on the back button on reorder mode
@@ -179,21 +178,4 @@ class ROpMenuViewController {
   }
 
   // ----------------------------------------------------- Specials ----------------------------------------------------- //
-  Future<void> removeFromSpecials({required Item item}) async {
-    //  await restaurantInfoController!.removeSpecial(item: item);
-  }
-
-  Future<void> addToSpecials({
-    required Item item,
-  }) async {
-    //  await restaurantInfoController!.addToSpecials(item: item);
-  }
-
-  Future<void> switchSpecialItemAv(
-      {required bool v,
-      required String itemId,
-      required bool isCurrent}) async {
-    //  await restaurantInfoController!
-    //      .switchSpecialItemAv(itemId: itemId, value: v, isCurrent: isCurrent);
-  }
 }
