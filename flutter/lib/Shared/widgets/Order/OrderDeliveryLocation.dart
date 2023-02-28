@@ -30,6 +30,7 @@ class OrderDeliveryLocation extends StatelessWidget {
             height: 4,
           ),
           Card(
+            elevation: 1,
             margin: EdgeInsets.zero,
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -47,7 +48,9 @@ class OrderDeliveryLocation extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       address,
-                      style: Get.textTheme.bodyLarge,
+                      style: Get.textTheme.bodyText1?.copyWith(
+                        fontSize: 12.sp,
+                      ),
                       maxLines: 1,
                     ),
                   ),

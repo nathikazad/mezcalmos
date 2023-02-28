@@ -18,9 +18,10 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
     from_customer_delivery_id
     id
     notes
-     from_customer_delivery {
-       estimated_arrival_at_pickup_time
+    from_customer_delivery {
+      estimated_arrival_at_pickup_time
       chat_with_customer_id
+      service_provider_type
       estimated_arrival_at_dropoff_time
       delivery_driver {
         current_location
@@ -34,11 +35,11 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
       chat_with_service_provider_id
     }
     to_customer_delivery {
-        estimated_arrival_at_pickup_time
+      estimated_arrival_at_pickup_time
       chat_with_customer_id
+      service_provider_type
       estimated_arrival_at_dropoff_time
       delivery_driver {
-       
         id
         user {
           id
@@ -56,7 +57,8 @@ subscription liston_on_laundry_order_by_id($orderId: Int!) {
 
     store_id
     store {
-      details{ id
+      details {
+        id
         name
         image
         location {
@@ -121,7 +123,7 @@ query get_laundry_order_by_id($orderId: Int!) {
     customer_address
     customer_app_type
     customer_id
-     total_cost
+    total_cost
     items_cost
     customer_location_gps
     delivery_cost
@@ -139,11 +141,11 @@ query get_laundry_order_by_id($orderId: Int!) {
     scheduled_time
     status
     from_customer_delivery {
-          estimated_arrival_at_pickup_time
+      estimated_arrival_at_pickup_time
       chat_with_customer_id
       estimated_arrival_at_dropoff_time
+      service_provider_type
       delivery_driver {
-       
         id
         user {
           id
@@ -154,11 +156,11 @@ query get_laundry_order_by_id($orderId: Int!) {
       chat_with_service_provider_id
     }
     to_customer_delivery {
-          estimated_arrival_at_pickup_time
+      estimated_arrival_at_pickup_time
       chat_with_customer_id
+      service_provider_type
       estimated_arrival_at_dropoff_time
       delivery_driver {
-       
         id
         user {
           id
@@ -170,7 +172,8 @@ query get_laundry_order_by_id($orderId: Int!) {
     }
     store_id
     store {
-      details{ id
+      details {
+        id
         name
         image
         location {
@@ -313,7 +316,10 @@ mutation setLaundryOrderEstReadyTime(
   ) {
     estimated_ready_time
   }
-   update_delivery_order_by_pk(pk_columns: {id: $deliveryOrderId}, _set: {estimated_package_ready_time: $time}){
+  update_delivery_order_by_pk(
+    pk_columns: { id: $deliveryOrderId }
+    _set: { estimated_package_ready_time: $time }
+  ) {
     estimated_package_ready_time
-   }
+  }
 }

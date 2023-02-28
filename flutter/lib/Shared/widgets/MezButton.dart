@@ -102,7 +102,7 @@ class _MezButtonState extends State<MezButton> {
                             ),
                           Flexible(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5),
+                              padding: const EdgeInsets.only(bottom: 2),
                               child: Text(
                                 widget.label,
                                 style: widget.textStyle ??

@@ -55,9 +55,35 @@ class _WrapperState extends State<Wrapper> {
         Future<void>.delayed(Duration(seconds: 2), _appVersionController!.init);
       }
     });
-    Future.delayed(
-        Duration.zero, () => ConnectivityHelper.instance.networkCheck());
+    Future.delayed(Duration.zero, checkConnectivity);
     super.initState();
+  }
+
+  void checkConnectivity() {
+    ConnectivityHelper.instance.networkCheck();
+    ConnectivityHelper.internetStatusStream
+        .listen((InternetStatus internetStatus) {
+      // mezDbgPrint(internetStatus);
+      if (internetStatus == InternetStatus.Offline) {
+        if (!isCurrentRoute(kNoInternetRoute)) {
+          mezDbgPrint("No internet going so going to no internet page");
+          unawaited(MezRouter.toNamed<void>(kNoInternetRoute));
+        }
+      } else {
+        if (isCurrentRoute(kNoInternetRoute)) {
+          mezDbgPrint("Internet is back so going to back");
+          MezRouter.back<Null>();
+        }
+      }
+
+      if (internetStatus == InternetStatus.Slow) {
+        mezDbgPrint("Slow Internet");
+        // @montasarre
+        // show temporary slow internet bar
+      } else {
+        // unshow temporary slow internet bar
+      }
+    });
   }
 
   void startListeningOnLocationPermission() {

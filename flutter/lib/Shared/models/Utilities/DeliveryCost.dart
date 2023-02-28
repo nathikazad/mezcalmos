@@ -10,6 +10,8 @@ class DeliveryCost {
   double costPerKm;
   double? freeDeliveryMinimumCost;
   double? freeDeliveryKmRange;
+  double? radius;
+  double? costPerKmFromBase;
   DeliveryCost({
     required this.id,
     required this.minimumCost,
@@ -17,6 +19,8 @@ class DeliveryCost {
     required this.costPerKm,
     this.freeDeliveryMinimumCost,
     this.freeDeliveryKmRange,
+    this.radius,
+    this.costPerKmFromBase,
   });
 
   DeliveryCost copyWith({

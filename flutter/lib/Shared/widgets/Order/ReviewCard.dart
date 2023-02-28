@@ -27,10 +27,11 @@ class _ReviewCardState extends State<ReviewCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0.3,
-      margin: const EdgeInsets.only(top: 20),
+      elevation: 0.5,
+      margin: const EdgeInsets.only(bottom: 15),
       child: Container(
-        padding: const EdgeInsets.all(8),
+        //  color: Get.theme.scaffoldBackgroundColor,
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -57,7 +58,7 @@ class _ReviewCardState extends State<ReviewCard> {
                           height: 2,
                         ),
                         Text(
-                          widget.review.reviewTime.timeAgo().toLowerCase(),
+                          widget.review.reviewTime.timeAgo().capitalizeFirst!,
                           style: Get.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w500,
                               color: Color(0XFF494949)),

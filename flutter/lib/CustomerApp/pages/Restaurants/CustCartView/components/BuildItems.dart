@@ -34,49 +34,51 @@ class CartItemsBuilder extends StatelessWidget {
             viewController: viewController,
           ),
           SizedBox(height: 9),
-          Column(
-            children: viewController.cart.cartItems.fold<List<Widget>>(
-                <Widget>[], (List<Widget> children, CartItem cartItem) {
-              // final Rx<num> counter = cartItem.totalCost().obs;
-              children.add(Container(
-                child: MyExpansionPanelComponent(
-                  child: Flexible(
-                      child: ItemInformationCart(
-                    item: cartItem,
-                    showImage: viewController.showItemsImages,
-                    imageUrl: cartItem.item.image,
-                    itemName:
-                        cartItem.item.name[userLanguage]![0].toUpperCase() +
-                            cartItem.item.name[userLanguage]!.substring(1),
-                    itemsPrice: cartItem.totalCost().toStringAsFixed(0),
-                    viewController: viewController,
-                  )),
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 9),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: buildChoices(cartItem),
+          Card(
+            child: Column(
+              children: viewController.cart.cartItems.fold<List<Widget>>(
+                  <Widget>[], (List<Widget> children, CartItem cartItem) {
+                // final Rx<num> counter = cartItem.totalCost().obs;
+                children.add(Container(
+                  child: MyExpansionPanelComponent(
+                    child: Flexible(
+                        child: ItemInformationCart(
+                      item: cartItem,
+                      showImage: viewController.showItemsImages,
+                      imageUrl: cartItem.item.image,
+                      itemName:
+                          cartItem.item.name[userLanguage]![0].toUpperCase() +
+                              cartItem.item.name[userLanguage]!.substring(1),
+                      itemsPrice: cartItem.totalCost().toStringAsFixed(0),
+                      viewController: viewController,
+                    )),
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 9),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: buildChoices(cartItem),
+                        ),
                       ),
-                    ),
-                    if (cartItem.notes != null && cartItem.notes != "")
-                      _itemNotesComponent(cartItem, context),
-                    SizedBox(
-                      height: 9,
-                    ),
-                  ],
-                  onEdit: () {
-                    mezDbgPrint(
-                        " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
-                    if (cartItem.idInCart != null)
-                      MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
-                  },
-                ),
-              ));
-              return children;
-            }),
+                      if (cartItem.notes != null && cartItem.notes != "")
+                        _itemNotesComponent(cartItem, context),
+                      SizedBox(
+                        height: 9,
+                      ),
+                    ],
+                    onEdit: () {
+                      mezDbgPrint(
+                          " the data inside the expansion ${cartItem.toFirebaseFunctionFormattedJson()}");
+                      if (cartItem.idInCart != null)
+                        MezRouter.toNamed(editCartItemRoute(cartItem.idInCart!));
+                    },
+                  ),
+                ));
+                return children;
+              }),
+            ),
           ),
-          SizedBox(height: 15),
+         // SizedBox(height: 15),
         ],
       ),
     );

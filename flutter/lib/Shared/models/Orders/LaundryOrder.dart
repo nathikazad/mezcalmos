@@ -7,6 +7,7 @@ import 'package:mezcalmos/Shared/models/Services/Laundry.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 enum LaundryOrderStatus {
   OrderReceived,
@@ -64,6 +65,7 @@ class LaundryOrder extends TwoWayDeliverableOrder {
       required super.paymentType,
       required this.status,
       required super.customer,
+      required super.deliveryProviderType,
       required this.laundry,
       required this.fromCustomerDeliveryId,
       required this.toCustomerDeliveryId,
@@ -245,6 +247,10 @@ class LaundryOrder extends TwoWayDeliverableOrder {
         status == LaundryOrderStatus.OtwPickupFromLaundry ||
         status == LaundryOrderStatus.PickedUpFromCustomer ||
         status == LaundryOrderStatus.PickedUpFromLaundry;
+  }
+
+  bool isSelfDelivery() {
+    return deliveryProviderType == ServiceProviderType.Laundry;
   }
 
   bool isAtLaundry() {

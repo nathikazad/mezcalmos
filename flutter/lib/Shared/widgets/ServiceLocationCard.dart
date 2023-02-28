@@ -41,7 +41,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 5,
+            height: 14,
           ),
           Container(
             child: Text(
@@ -56,7 +56,7 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 8,
           ),
           IgnorePointer(
             ignoring: true,
@@ -70,9 +70,9 @@ class _ServiceLocationCardState extends State<ServiceLocationCard> {
               ),
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          // SizedBox(
+          //   height: 10,
+          // ),
         ],
       );
     } else {

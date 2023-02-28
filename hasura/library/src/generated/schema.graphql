@@ -30419,6 +30419,11 @@ enum service_provider_delivery_partner_constraint {
   unique or primary key constraint on columns "id"
   """
   delivery_partner_pkey
+
+  """
+  unique or primary key constraint on columns "service_provider_type", "service_provider_id"
+  """
+  delivery_partner_service_provider_id_service_provider_type_key
 }
 
 """

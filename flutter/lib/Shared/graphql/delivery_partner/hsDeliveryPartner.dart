@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql/src/core/query_result.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
+import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_partner/__generated/delivery_partner.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
@@ -32,13 +33,15 @@ Future<int?> update_service_delivery_partner(
       .graphQLClient
       .mutate$updateDeliveryPartner(Options$Mutation$updateDeliveryPartner(
           variables: Variables$Mutation$updateDeliveryPartner(
-              serviceId: serviceId,
-              newCompanyId: newCompanyId,
-              serviceType: providerType.toFirebaseFormatString())));
-  if (res.parsedData?.update_service_provider_delivery_partner?.returning ==
-      null) {
+              data: Input$service_provider_delivery_partner_insert_input(
+    delivery_company_id: newCompanyId,
+    service_provider_id: serviceId,
+    service_provider_type: providerType.toFirebaseFormatString(),
+  ))));
+  mezDbgPrint(res.data);
+  if (res.parsedData?.insert_service_provider_delivery_partner_one == null) {
     throwError(res.exception);
   }
-  return res.parsedData!.update_service_provider_delivery_partner!.returning
-      .first.delivery_company_id;
+  return res.parsedData!.insert_service_provider_delivery_partner_one!
+      .delivery_company_id;
 }

@@ -35,7 +35,7 @@ insert_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
           - app_type_id:
-              _eq: delivery_admin
+              _eq: deliveryAdmin
       columns:
         - app_type_id
         - token
@@ -59,7 +59,7 @@ insert_permissions:
       check:
         _and:
           - app_type_id:
-              _eq: mez_admin
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
       columns:
@@ -119,7 +119,7 @@ select_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
           - app_type_id:
-              _eq: delivery_admin
+              _eq: deliveryAdmin
   - role: laundry_operator
     permission:
       columns:
@@ -146,7 +146,7 @@ select_permissions:
       filter:
         _and:
           - app_type_id:
-              _eq: mez_admin
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
   - role: restaurant_operator
@@ -198,13 +198,13 @@ update_permissions:
           - user_id:
               _eq: X-Hasura-User-Id
           - app_type_id:
-              _eq: delivery_admin
+              _eq: deliveryAdmin
       check:
         _and:
           - user_id:
               _eq: X-Hasura-User-Id
           - app_type_id:
-              _eq: delivery_admin
+              _eq: deliveryAdmin
   - role: laundry_operator
     permission:
       columns:
@@ -230,7 +230,7 @@ update_permissions:
       filter:
         _and:
           - app_type_id:
-              _eq: mez_admin
+              _eq: mezAdmin
           - user_id:
               _eq: X-Hasura-User-Id
       check: null

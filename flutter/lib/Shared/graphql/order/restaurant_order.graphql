@@ -7,6 +7,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     stripe_info
     restaurant {
       id
+      
       details {
         id
         firebase_id
@@ -96,6 +97,7 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     delivery {
       trip_polyline
       trip_distance
+      service_provider_type
       trip_duration
       chat_with_service_provider_id
       chat_with_customer_id
@@ -122,10 +124,12 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    
     scheduled_time
     stripe_info
     restaurant {
       id
+      
       details {
         id
         firebase_id
@@ -214,6 +218,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     delivery_cost
     delivery {
       trip_polyline
+      service_provider_type
       trip_distance
       trip_duration
       chat_with_service_provider_id

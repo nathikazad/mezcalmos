@@ -1,3 +1,4 @@
+import '../../__generated/schema.graphql.dart';
 import 'dart:async';
 import 'package:gql/ast.dart';
 import 'package:graphql/client.dart' as graphql;
@@ -719,15 +720,11 @@ class _CopyWithStubImpl$Query$getDeliveryPartner$service_provider_delivery_partn
 }
 
 class Variables$Mutation$updateDeliveryPartner {
-  factory Variables$Mutation$updateDeliveryPartner({
-    required int serviceId,
-    String? serviceType,
-    required int newCompanyId,
-  }) =>
+  factory Variables$Mutation$updateDeliveryPartner(
+          {required Input$service_provider_delivery_partner_insert_input
+              data}) =>
       Variables$Mutation$updateDeliveryPartner._({
-        r'serviceId': serviceId,
-        if (serviceType != null) r'serviceType': serviceType,
-        r'newCompanyId': newCompanyId,
+        r'data': data,
       });
 
   Variables$Mutation$updateDeliveryPartner._(this._$data);
@@ -735,32 +732,21 @@ class Variables$Mutation$updateDeliveryPartner {
   factory Variables$Mutation$updateDeliveryPartner.fromJson(
       Map<String, dynamic> data) {
     final result$data = <String, dynamic>{};
-    final l$serviceId = data['serviceId'];
-    result$data['serviceId'] = (l$serviceId as int);
-    if (data.containsKey('serviceType')) {
-      final l$serviceType = data['serviceType'];
-      result$data['serviceType'] = (l$serviceType as String?);
-    }
-    final l$newCompanyId = data['newCompanyId'];
-    result$data['newCompanyId'] = (l$newCompanyId as int);
+    final l$data = data['data'];
+    result$data['data'] =
+        Input$service_provider_delivery_partner_insert_input.fromJson(
+            (l$data as Map<String, dynamic>));
     return Variables$Mutation$updateDeliveryPartner._(result$data);
   }
 
   Map<String, dynamic> _$data;
 
-  int get serviceId => (_$data['serviceId'] as int);
-  String? get serviceType => (_$data['serviceType'] as String?);
-  int get newCompanyId => (_$data['newCompanyId'] as int);
+  Input$service_provider_delivery_partner_insert_input get data =>
+      (_$data['data'] as Input$service_provider_delivery_partner_insert_input);
   Map<String, dynamic> toJson() {
     final result$data = <String, dynamic>{};
-    final l$serviceId = serviceId;
-    result$data['serviceId'] = l$serviceId;
-    if (_$data.containsKey('serviceType')) {
-      final l$serviceType = serviceType;
-      result$data['serviceType'] = l$serviceType;
-    }
-    final l$newCompanyId = newCompanyId;
-    result$data['newCompanyId'] = l$newCompanyId;
+    final l$data = data;
+    result$data['data'] = l$data.toJson();
     return result$data;
   }
 
@@ -779,23 +765,9 @@ class Variables$Mutation$updateDeliveryPartner {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$serviceId = serviceId;
-    final lOther$serviceId = other.serviceId;
-    if (l$serviceId != lOther$serviceId) {
-      return false;
-    }
-    final l$serviceType = serviceType;
-    final lOther$serviceType = other.serviceType;
-    if (_$data.containsKey('serviceType') !=
-        other._$data.containsKey('serviceType')) {
-      return false;
-    }
-    if (l$serviceType != lOther$serviceType) {
-      return false;
-    }
-    final l$newCompanyId = newCompanyId;
-    final lOther$newCompanyId = other.newCompanyId;
-    if (l$newCompanyId != lOther$newCompanyId) {
+    final l$data = data;
+    final lOther$data = other.data;
+    if (l$data != lOther$data) {
       return false;
     }
     return true;
@@ -803,14 +775,8 @@ class Variables$Mutation$updateDeliveryPartner {
 
   @override
   int get hashCode {
-    final l$serviceId = serviceId;
-    final l$serviceType = serviceType;
-    final l$newCompanyId = newCompanyId;
-    return Object.hashAll([
-      l$serviceId,
-      _$data.containsKey('serviceType') ? l$serviceType : const {},
-      l$newCompanyId,
-    ]);
+    final l$data = data;
+    return Object.hashAll([l$data]);
   }
 }
 
@@ -823,11 +789,7 @@ abstract class CopyWith$Variables$Mutation$updateDeliveryPartner<TRes> {
   factory CopyWith$Variables$Mutation$updateDeliveryPartner.stub(TRes res) =
       _CopyWithStubImpl$Variables$Mutation$updateDeliveryPartner;
 
-  TRes call({
-    int? serviceId,
-    String? serviceType,
-    int? newCompanyId,
-  });
+  TRes call({Input$service_provider_delivery_partner_insert_input? data});
 }
 
 class _CopyWithImpl$Variables$Mutation$updateDeliveryPartner<TRes>
@@ -843,18 +805,12 @@ class _CopyWithImpl$Variables$Mutation$updateDeliveryPartner<TRes>
 
   static const _undefined = {};
 
-  TRes call({
-    Object? serviceId = _undefined,
-    Object? serviceType = _undefined,
-    Object? newCompanyId = _undefined,
-  }) =>
+  TRes call({Object? data = _undefined}) =>
       _then(Variables$Mutation$updateDeliveryPartner._({
         ..._instance._$data,
-        if (serviceId != _undefined && serviceId != null)
-          'serviceId': (serviceId as int),
-        if (serviceType != _undefined) 'serviceType': (serviceType as String?),
-        if (newCompanyId != _undefined && newCompanyId != null)
-          'newCompanyId': (newCompanyId as int),
+        if (data != _undefined && data != null)
+          'data':
+              (data as Input$service_provider_delivery_partner_insert_input),
       }));
 }
 
@@ -864,46 +820,41 @@ class _CopyWithStubImpl$Variables$Mutation$updateDeliveryPartner<TRes>
 
   TRes _res;
 
-  call({
-    int? serviceId,
-    String? serviceType,
-    int? newCompanyId,
-  }) =>
-      _res;
+  call({Input$service_provider_delivery_partner_insert_input? data}) => _res;
 }
 
 class Mutation$updateDeliveryPartner {
   Mutation$updateDeliveryPartner({
-    this.update_service_provider_delivery_partner,
+    this.insert_service_provider_delivery_partner_one,
     required this.$__typename,
   });
 
   factory Mutation$updateDeliveryPartner.fromJson(Map<String, dynamic> json) {
-    final l$update_service_provider_delivery_partner =
-        json['update_service_provider_delivery_partner'];
+    final l$insert_service_provider_delivery_partner_one =
+        json['insert_service_provider_delivery_partner_one'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryPartner(
-      update_service_provider_delivery_partner:
-          l$update_service_provider_delivery_partner == null
+      insert_service_provider_delivery_partner_one:
+          l$insert_service_provider_delivery_partner_one == null
               ? null
-              : Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
-                  .fromJson((l$update_service_provider_delivery_partner
+              : Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
+                  .fromJson((l$insert_service_provider_delivery_partner_one
                       as Map<String, dynamic>)),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
 
-  final Mutation$updateDeliveryPartner$update_service_provider_delivery_partner?
-      update_service_provider_delivery_partner;
+  final Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one?
+      insert_service_provider_delivery_partner_one;
 
   final String $__typename;
 
   Map<String, dynamic> toJson() {
     final _resultData = <String, dynamic>{};
-    final l$update_service_provider_delivery_partner =
-        update_service_provider_delivery_partner;
-    _resultData['update_service_provider_delivery_partner'] =
-        l$update_service_provider_delivery_partner?.toJson();
+    final l$insert_service_provider_delivery_partner_one =
+        insert_service_provider_delivery_partner_one;
+    _resultData['insert_service_provider_delivery_partner_one'] =
+        l$insert_service_provider_delivery_partner_one?.toJson();
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -911,11 +862,11 @@ class Mutation$updateDeliveryPartner {
 
   @override
   int get hashCode {
-    final l$update_service_provider_delivery_partner =
-        update_service_provider_delivery_partner;
+    final l$insert_service_provider_delivery_partner_one =
+        insert_service_provider_delivery_partner_one;
     final l$$__typename = $__typename;
     return Object.hashAll([
-      l$update_service_provider_delivery_partner,
+      l$insert_service_provider_delivery_partner_one,
       l$$__typename,
     ]);
   }
@@ -929,12 +880,12 @@ class Mutation$updateDeliveryPartner {
         runtimeType != other.runtimeType) {
       return false;
     }
-    final l$update_service_provider_delivery_partner =
-        update_service_provider_delivery_partner;
-    final lOther$update_service_provider_delivery_partner =
-        other.update_service_provider_delivery_partner;
-    if (l$update_service_provider_delivery_partner !=
-        lOther$update_service_provider_delivery_partner) {
+    final l$insert_service_provider_delivery_partner_one =
+        insert_service_provider_delivery_partner_one;
+    final lOther$insert_service_provider_delivery_partner_one =
+        other.insert_service_provider_delivery_partner_one;
+    if (l$insert_service_provider_delivery_partner_one !=
+        lOther$insert_service_provider_delivery_partner_one) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -965,12 +916,12 @@ abstract class CopyWith$Mutation$updateDeliveryPartner<TRes> {
       _CopyWithStubImpl$Mutation$updateDeliveryPartner;
 
   TRes call({
-    Mutation$updateDeliveryPartner$update_service_provider_delivery_partner?
-        update_service_provider_delivery_partner,
+    Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one?
+        insert_service_provider_delivery_partner_one,
     String? $__typename,
   });
-  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-      TRes> get update_service_provider_delivery_partner;
+  CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
+      TRes> get insert_service_provider_delivery_partner_one;
 }
 
 class _CopyWithImpl$Mutation$updateDeliveryPartner<TRes>
@@ -987,29 +938,29 @@ class _CopyWithImpl$Mutation$updateDeliveryPartner<TRes>
   static const _undefined = {};
 
   TRes call({
-    Object? update_service_provider_delivery_partner = _undefined,
+    Object? insert_service_provider_delivery_partner_one = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryPartner(
-        update_service_provider_delivery_partner:
-            update_service_provider_delivery_partner == _undefined
-                ? _instance.update_service_provider_delivery_partner
-                : (update_service_provider_delivery_partner
-                    as Mutation$updateDeliveryPartner$update_service_provider_delivery_partner?),
+        insert_service_provider_delivery_partner_one:
+            insert_service_provider_delivery_partner_one == _undefined
+                ? _instance.insert_service_provider_delivery_partner_one
+                : (insert_service_provider_delivery_partner_one
+                    as Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one?),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
       ));
-  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-      TRes> get update_service_provider_delivery_partner {
-    final local$update_service_provider_delivery_partner =
-        _instance.update_service_provider_delivery_partner;
-    return local$update_service_provider_delivery_partner == null
-        ? CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
+  CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
+      TRes> get insert_service_provider_delivery_partner_one {
+    final local$insert_service_provider_delivery_partner_one =
+        _instance.insert_service_provider_delivery_partner_one;
+    return local$insert_service_provider_delivery_partner_one == null
+        ? CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
             .stub(_then(_instance))
-        : CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-            local$update_service_provider_delivery_partner,
-            (e) => call(update_service_provider_delivery_partner: e));
+        : CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
+            local$insert_service_provider_delivery_partner_one,
+            (e) => call(insert_service_provider_delivery_partner_one: e));
   }
 }
 
@@ -1020,15 +971,15 @@ class _CopyWithStubImpl$Mutation$updateDeliveryPartner<TRes>
   TRes _res;
 
   call({
-    Mutation$updateDeliveryPartner$update_service_provider_delivery_partner?
-        update_service_provider_delivery_partner,
+    Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one?
+        insert_service_provider_delivery_partner_one,
     String? $__typename,
   }) =>
       _res;
-  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
+  CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
           TRes>
-      get update_service_provider_delivery_partner =>
-          CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
+      get insert_service_provider_delivery_partner_one =>
+          CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
               .stub(_res);
 }
 
@@ -1038,95 +989,52 @@ const documentNodeMutationupdateDeliveryPartner = DocumentNode(definitions: [
     name: NameNode(value: 'updateDeliveryPartner'),
     variableDefinitions: [
       VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceId')),
+        variable: VariableNode(name: NameNode(value: 'data')),
         type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
+          name:
+              NameNode(value: 'service_provider_delivery_partner_insert_input'),
           isNonNull: true,
         ),
         defaultValue: DefaultValueNode(value: null),
         directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'serviceType')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'String'),
-          isNonNull: false,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
-      VariableDefinitionNode(
-        variable: VariableNode(name: NameNode(value: 'newCompanyId')),
-        type: NamedTypeNode(
-          name: NameNode(value: 'Int'),
-          isNonNull: true,
-        ),
-        defaultValue: DefaultValueNode(value: null),
-        directives: [],
-      ),
+      )
     ],
     directives: [],
     selectionSet: SelectionSetNode(selections: [
       FieldNode(
-        name: NameNode(value: 'update_service_provider_delivery_partner'),
+        name: NameNode(value: 'insert_service_provider_delivery_partner_one'),
         alias: null,
         arguments: [
           ArgumentNode(
-            name: NameNode(value: 'where'),
+            name: NameNode(value: 'on_conflict'),
             value: ObjectValueNode(fields: [
               ObjectFieldNode(
-                name: NameNode(value: 'service_provider_id'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'serviceId')),
-                  )
-                ]),
+                name: NameNode(value: 'constraint'),
+                value: EnumValueNode(
+                    name: NameNode(
+                        value:
+                            'delivery_partner_service_provider_id_service_provider_type_key')),
               ),
               ObjectFieldNode(
-                name: NameNode(value: 'service_provider_type'),
-                value: ObjectValueNode(fields: [
-                  ObjectFieldNode(
-                    name: NameNode(value: '_eq'),
-                    value: VariableNode(name: NameNode(value: 'serviceType')),
-                  )
-                ]),
+                name: NameNode(value: 'update_columns'),
+                value:
+                    EnumValueNode(name: NameNode(value: 'delivery_company_id')),
               ),
             ]),
           ),
           ArgumentNode(
-            name: NameNode(value: '_set'),
-            value: ObjectValueNode(fields: [
-              ObjectFieldNode(
-                name: NameNode(value: 'delivery_company_id'),
-                value: VariableNode(name: NameNode(value: 'newCompanyId')),
-              )
-            ]),
+            name: NameNode(value: 'object'),
+            value: VariableNode(name: NameNode(value: 'data')),
           ),
         ],
         directives: [],
         selectionSet: SelectionSetNode(selections: [
           FieldNode(
-            name: NameNode(value: 'returning'),
+            name: NameNode(value: 'delivery_company_id'),
             alias: null,
             arguments: [],
             directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                name: NameNode(value: 'delivery_company_id'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-              FieldNode(
-                name: NameNode(value: '__typename'),
-                alias: null,
-                arguments: [],
-                directives: [],
-                selectionSet: null,
-              ),
-            ]),
+            selectionSet: null,
           ),
           FieldNode(
             name: NameNode(value: '__typename'),
@@ -1241,197 +1149,17 @@ extension ClientExtension$Mutation$updateDeliveryPartner
           this.watchMutation(options);
 }
 
-class Mutation$updateDeliveryPartner$update_service_provider_delivery_partner {
-  Mutation$updateDeliveryPartner$update_service_provider_delivery_partner({
-    required this.returning,
-    required this.$__typename,
-  });
-
-  factory Mutation$updateDeliveryPartner$update_service_provider_delivery_partner.fromJson(
-      Map<String, dynamic> json) {
-    final l$returning = json['returning'];
-    final l$$__typename = json['__typename'];
-    return Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-      returning: (l$returning as List<dynamic>)
-          .map((e) =>
-              Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning
-                  .fromJson((e as Map<String, dynamic>)))
-          .toList(),
-      $__typename: ((l$$__typename ?? "none") as String),
-    );
-  }
-
-  final List<
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>
-      returning;
-
-  final String $__typename;
-
-  Map<String, dynamic> toJson() {
-    final _resultData = <String, dynamic>{};
-    final l$returning = returning;
-    _resultData['returning'] = l$returning.map((e) => e.toJson()).toList();
-    final l$$__typename = $__typename;
-    _resultData['__typename'] = l$$__typename;
-    return _resultData;
-  }
-
-  @override
-  int get hashCode {
-    final l$returning = returning;
-    final l$$__typename = $__typename;
-    return Object.hashAll([
-      Object.hashAll(l$returning.map((v) => v)),
-      l$$__typename,
-    ]);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (!(other
-            is Mutation$updateDeliveryPartner$update_service_provider_delivery_partner) ||
-        runtimeType != other.runtimeType) {
-      return false;
-    }
-    final l$returning = returning;
-    final lOther$returning = other.returning;
-    if (l$returning.length != lOther$returning.length) {
-      return false;
-    }
-    for (int i = 0; i < l$returning.length; i++) {
-      final l$returning$entry = l$returning[i];
-      final lOther$returning$entry = lOther$returning[i];
-      if (l$returning$entry != lOther$returning$entry) {
-        return false;
-      }
-    }
-    final l$$__typename = $__typename;
-    final lOther$$__typename = other.$__typename;
-    if (l$$__typename != lOther$$__typename) {
-      return false;
-    }
-    return true;
-  }
-}
-
-extension UtilityExtension$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
-    on Mutation$updateDeliveryPartner$update_service_provider_delivery_partner {
-  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner>
-      get copyWith =>
-          CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-            this,
-            (i) => i,
-          );
-}
-
-abstract class CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-    TRes> {
-  factory CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-    Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
-        instance,
-    TRes Function(
-            Mutation$updateDeliveryPartner$update_service_provider_delivery_partner)
-        then,
-  ) = _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner;
-
-  factory CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner.stub(
-          TRes res) =
-      _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner;
-
-  TRes call({
-    List<Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>?
-        returning,
-    String? $__typename,
-  });
-  TRes returning(
-      Iterable<Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning> Function(
-              Iterable<
-                  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
-                      Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>>)
-          _fn);
-}
-
-class _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-        TRes>
-    implements
-        CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-            TRes> {
-  _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-    this._instance,
-    this._then,
-  );
-
-  final Mutation$updateDeliveryPartner$update_service_provider_delivery_partner
-      _instance;
-
-  final TRes Function(
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner)
-      _then;
-
-  static const _undefined = {};
-
-  TRes call({
-    Object? returning = _undefined,
-    Object? $__typename = _undefined,
-  }) =>
-      _then(
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-        returning: returning == _undefined || returning == null
-            ? _instance.returning
-            : (returning as List<
-                Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>),
-        $__typename: $__typename == _undefined || $__typename == null
-            ? _instance.$__typename
-            : ($__typename as String),
-      ));
-  TRes returning(
-          Iterable<Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning> Function(
-                  Iterable<
-                      CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
-                          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>>)
-              _fn) =>
-      call(
-          returning: _fn(_instance.returning.map((e) =>
-              CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
-                e,
-                (i) => i,
-              ))).toList());
-}
-
-class _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-        TRes>
-    implements
-        CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner<
-            TRes> {
-  _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner(
-      this._res);
-
-  TRes _res;
-
-  call({
-    List<Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>?
-        returning,
-    String? $__typename,
-  }) =>
-      _res;
-  returning(_fn) => _res;
-}
-
-class Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning {
-  Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning({
+class Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one {
+  Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one({
     required this.delivery_company_id,
     required this.$__typename,
   });
 
-  factory Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning.fromJson(
+  factory Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one.fromJson(
       Map<String, dynamic> json) {
     final l$delivery_company_id = json['delivery_company_id'];
     final l$$__typename = json['__typename'];
-    return Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
+    return Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
       delivery_company_id: (l$delivery_company_id as int),
       $__typename: ((l$$__typename ?? "none") as String),
     );
@@ -1466,7 +1194,7 @@ class Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$re
       return true;
     }
     if (!(other
-            is Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning) ||
+            is Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one) ||
         runtimeType != other.runtimeType) {
       return false;
     }
@@ -1484,30 +1212,30 @@ class Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$re
   }
 }
 
-extension UtilityExtension$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning
-    on Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning {
-  CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning>
+extension UtilityExtension$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
+    on Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one {
+  CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
+          Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one>
       get copyWith =>
-          CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
+          CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
             this,
             (i) => i,
           );
 }
 
-abstract class CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
+abstract class CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
     TRes> {
-  factory CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
-    Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning
+  factory CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
+    Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
         instance,
     TRes Function(
-            Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning)
+            Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one)
         then,
-  ) = _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning;
+  ) = _CopyWithImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one;
 
-  factory CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning.stub(
+  factory CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one.stub(
           TRes res) =
-      _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning;
+      _CopyWithStubImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one;
 
   TRes call({
     int? delivery_company_id,
@@ -1515,21 +1243,21 @@ abstract class CopyWith$Mutation$updateDeliveryPartner$update_service_provider_d
   });
 }
 
-class _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
+class _CopyWithImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
         TRes>
     implements
-        CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
+        CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
             TRes> {
-  _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
+  _CopyWithImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
     this._instance,
     this._then,
   );
 
-  final Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning
+  final Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one
       _instance;
 
   final TRes Function(
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning)
+          Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one)
       _then;
 
   static const _undefined = {};
@@ -1539,7 +1267,7 @@ class _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_deliv
     Object? $__typename = _undefined,
   }) =>
       _then(
-          Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
+          Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
         delivery_company_id:
             delivery_company_id == _undefined || delivery_company_id == null
                 ? _instance.delivery_company_id
@@ -1550,12 +1278,12 @@ class _CopyWithImpl$Mutation$updateDeliveryPartner$update_service_provider_deliv
       ));
 }
 
-class _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
+class _CopyWithStubImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
         TRes>
     implements
-        CopyWith$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning<
+        CopyWith$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one<
             TRes> {
-  _CopyWithStubImpl$Mutation$updateDeliveryPartner$update_service_provider_delivery_partner$returning(
+  _CopyWithStubImpl$Mutation$updateDeliveryPartner$insert_service_provider_delivery_partner_one(
       this._res);
 
   TRes _res;

@@ -190,28 +190,27 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,
-      // padding: EdgeInsets.only(top: 0.2.h),
+      padding: EdgeInsets.only(bottom: 7),
       child: Obx(
         () {
           if (controller.showMenuTabs || controller.showSpecialTabs) {
             return TabBar(
-              padding: EdgeInsets.only(left: 6),
+              padding: EdgeInsets.only(left: 6, top: 7),
               isScrollable: true,
               controller: controller.getTabController,
               labelColor: primaryBlueColor,
-              labelStyle: Get.textTheme.bodyText2
-                  ?.copyWith(fontWeight: FontWeight.w600),
-              unselectedLabelStyle: Get.textTheme.bodyText2?.copyWith(
+              labelStyle: Get.textTheme.bodyLarge,
+              unselectedLabelStyle: Get.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade800,
               ),
               unselectedLabelColor: Colors.grey.shade700,
               indicatorPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                  const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: Colors.transparent,
               indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(45),
                 shape: BoxShape.rectangle,
                 color: secondaryLightBlueColor,
               ),

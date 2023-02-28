@@ -7,15 +7,19 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
+import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/ImageHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
+import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -71,9 +75,9 @@ class AuthController extends GetxController {
         mezDbgPrint('AuthController: User is currently signed out!');
       } else {
         mezDbgPrint('AuthController: User is currently signed in!');
-        final bool hasInternet =
-            await ConnectivityHelper.instance.pingServers();
-        if (hasInternet) {
+        final InternetStatus internetStatus =
+            await ConnectivityHelper.instance.checkForInternet();
+        if (internetStatus != InternetStatus.Offline) {
           fireAuth.IdTokenResult? tokenResult =
               await user.getIdTokenResult(true);
           mezDbgPrint(tokenResult.claims);
@@ -125,6 +129,24 @@ class AuthController extends GetxController {
         expectedRoles.toSet().difference(actualRoles.toSet()).toList();
     // return false;
     return difference.length > 0;
+  }
+
+  Future<void> saveNotificationToken() async {
+    final String? deviceNotificationToken =
+        await Get.find<BackgroundNotificationsController>().getToken();
+    try {
+      if (deviceNotificationToken != null) {
+        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
+        // ignore: unawaited_futures
+        insert_notif_info(
+            userId: hasuraUserId!,
+            token: deviceNotificationToken,
+            appType: Get.find<SettingsController>().appType.toHasuraString());
+      }
+    } catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+    }
   }
 
   Future<void> fetchUserInfoFromHasura() async {

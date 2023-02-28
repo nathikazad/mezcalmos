@@ -38,10 +38,14 @@ class _OrderItemsItemCardState extends State<OrderItemsItemCard> {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return Card(
+      margin: EdgeInsets.only(top: 4),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: (widget.item.chosenChoices.isEmpty && widget.item.notes == null)
-            ? _itemHeader(userLanguage, txt)
+            ? Container(
+                margin: EdgeInsets.only(top: 4.5, bottom: 4.5),
+                child: _itemHeader(userLanguage, txt),
+              )
             : _itemExpandableComponent(context, userLanguage, txt),
       ),
     );

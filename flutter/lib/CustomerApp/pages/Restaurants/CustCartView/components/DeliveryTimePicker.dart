@@ -54,6 +54,9 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 15,
+          ),
           Text(
             '${_i18n()["dvTime"]}',
             style: Get.textTheme.bodyLarge,
@@ -100,9 +103,12 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
                   : () async {
                       await _pickDeliveryTime(context);
                     },
-              borderRadius: BorderRadius.circular(10),
+              //  borderRadius: BorderRadius.circular(10),
               child: Obx(
                 () => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [

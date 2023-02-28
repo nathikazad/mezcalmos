@@ -28,7 +28,6 @@ class CustomerAuthController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-   
 
     if (_authController.fireAuthUser?.uid != null) {
       // ignore: unawaited_futures
@@ -67,43 +66,13 @@ class CustomerAuthController extends GetxController {
         await _notificationsController.getToken();
     if (deviceNotificationToken != null) {
       mezDbgPrint("😉😉😉😉😉😉 setting notif token 😉😉😉😉😉");
-      unawaited(saveNotificationToken());
+      unawaited(_authController.saveNotificationToken());
     }
   }
 
   Future<void> fetchSavedLocations() async {
     _customer.value?.savedLocations = await get_customer_locations(
         customer_id: _authController.hasuraUserId!, withCache: false);
-  }
-
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await _notificationsController.getToken();
-    final NotificationInfo? notifInfo = await get_notif_info(
-        userId: _authController.hasuraUserId!, appType: "customer");
-
-    try {
-      if (notifInfo != null &&
-          deviceNotificationToken != null &&
-          notifInfo.token != deviceNotificationToken) {
-        // ignore: unawaited_futures
-        update_notif_info(
-            notificationInfo: NotificationInfo(
-                userId: _authController.hasuraUserId!,
-                appType: "customer",
-                id: notifInfo.id,
-                token: deviceNotificationToken));
-      } else if (deviceNotificationToken != null && notifInfo == null) {
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: _authController.hasuraUserId!,
-            token: deviceNotificationToken,
-            appType: "customer");
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
   }
 
   void saveNewLocation(SavedLocation savedLocation) {
@@ -115,8 +84,6 @@ class CustomerAuthController extends GetxController {
   void editLocation(SavedLocation savedLocation) {
     update_saved_location(savedLocation: savedLocation);
   }
-
-
 
   Future<void> setAsDefaultLocation(SavedLocation newDefaultLocation) async {
     await set_default_location(

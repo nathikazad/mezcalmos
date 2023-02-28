@@ -86,11 +86,11 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
                       style: Get.textTheme.bodyLarge),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: 8,
                 ),
                 _notesComponent(context),
                 SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 CardSummaryCard(
                   controller: viewController,
@@ -144,19 +144,23 @@ class _ViewCartScreenState extends State<ViewCartScreen> {
   }
 
   Widget _notesComponent(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom / 5,
-      ),
-      child: TextFormField(
-        style: Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
-        controller: viewController.noteText,
-        maxLines: 7,
-        minLines: 2,
-        decoration: InputDecoration(
-          hintText: "${_i18n()["notes"]}",
-          fillColor: Colors.white,
-          hintStyle: Get.textTheme.titleMedium,
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: TextFormField(
+          style:
+              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+          controller: viewController.noteText,
+          maxLines: 7,
+          minLines: 2,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom / 5,
+            ),
+            hintText: "${_i18n()["notes"]}",
+            fillColor: Colors.white,
+            hintStyle: Get.textTheme.titleMedium,
+          ),
         ),
       ),
     );

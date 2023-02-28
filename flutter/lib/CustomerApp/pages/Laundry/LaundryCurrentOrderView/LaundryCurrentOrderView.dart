@@ -21,7 +21,6 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -123,28 +122,31 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
 
                             LaundryOrderPricingComponent(
                                 order: viewController.order.value!),
-                            OrderNoteCard(
-                                margin: const EdgeInsets.only(top: 25),
-                                note: viewController.order.value!.notes),
+
                             Container(
                               alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(top: 25),
+                              margin: const EdgeInsets.only(top: 15),
                               child: Text(
-                                "${_i18n()['deliveryDetails']}",
+                                '${_i18n()["deliveryDeatils"]}',
                                 style: Get.textTheme.bodyLarge,
                               ),
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 10),
+                              margin: const EdgeInsets.only(top: 8),
                             ),
-
+                            OrderNoteCard(
+                                margin: const EdgeInsets.only(top: 15),
+                                note: viewController.order.value!.notes),
                             OrderSummaryCard(
-                              margin: const EdgeInsets.only(top: 25),
+                              margin: const EdgeInsets.only(top: 15),
                               order: viewController.order.value!,
                             ),
 
-                            Spacer(),
+                            //Spacer(),
+                            SizedBox(
+                              height: 10,
+                            ),
                             Flexible(
                               child: LaundryOrderFooterCard(
                                 viewController: viewController,
@@ -175,12 +177,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       titleWidget: Obx(
         () => Text(
           '${viewController.order.value?.laundry?.name ?? ""}',
-          style: TextStyle(
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w600,
-            fontSize: 15.sp,
-            color: Colors.black,
-          ),
+          style: Get.textTheme.headline3,
         ),
       ),
       showNotifications: true,
@@ -198,8 +195,5 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
             // rerenderDuration: Duration(seconds: 10),
           ),
         ),
-        SizedBox(
-          height: 10,
-        )
       ];
 }

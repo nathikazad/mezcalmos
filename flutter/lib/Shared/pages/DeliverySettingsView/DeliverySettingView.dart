@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
@@ -79,10 +78,7 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
               height: 75,
               label: "${_i18n()['save']}",
               onClick: () async {
-                final bool res = await viewController.handleSave();
-                if (res) {
-                  showSavedSnackBar();
-                }
+                await viewController.handleSave();
               },
             ),
       body: Obx(() {
@@ -96,9 +92,10 @@ class _DeliverySettingsViewState extends State<DeliverySettingsView> {
                 SizedBox(
                   height: 10,
                 ),
-                ServiceDeliveryTypePicker(
-                  viewController: viewController,
-                ),
+                if (serviceProviderType != ServiceProviderType.DeliveryCompany)
+                  ServiceDeliveryTypePicker(
+                    viewController: viewController,
+                  ),
                 (viewController.isSelfDelivery)
                     ? DeliverySettingCostComponent(
                         viewController: viewController)

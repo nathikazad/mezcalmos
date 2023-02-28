@@ -72,7 +72,8 @@ dependencies:
   
 
   # GraphQL APIs
-  graphql: ^5.1.1
+  graphql:
+    path: ./packages/graphql
 
 
   # Animations
