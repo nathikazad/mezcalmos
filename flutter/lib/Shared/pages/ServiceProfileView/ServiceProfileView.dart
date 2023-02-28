@@ -139,26 +139,19 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   label: "Reviews"),
                               _navigationLink(
-                                  onClick: () async {
-                                    navigateToDeliverySettings(
-                                        deliveryDetailsID:
-                                            _viewController.deliveryDetailsId,
-                                        detailsId: _viewController.detailsId,
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
-                                  },
-                                  label: "",
-                                  icon: Icons.delivery_dining,
-                                  labelWidget: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Delivery',
-                                          style: Get.textTheme.bodyLarge),
-                                    ],
-                                  )),
+                                onClick: () async {
+                                  navigateToDeliverySettings(
+                                      deliveryDetailsID:
+                                          _viewController.deliveryDetailsId,
+                                      detailsId: _viewController.detailsId,
+                                      serviceProviderId:
+                                          _viewController.serviceId,
+                                      serviceProviderType: _viewController
+                                          .service.serviceProviderType!);
+                                },
+                                label: "Delivery",
+                                icon: Icons.delivery_dining,
+                              ),
                               _navigationLink(
                                   icon: Icons.share,
                                   label: "Share",
@@ -166,8 +159,6 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     icon: Icons.copy,
                                     onTap: () {},
                                   )),
-                                  
-                              Divider(),
                               _navigationLink(
                                   onClick: () async {
                                     await launch(GetStorage()

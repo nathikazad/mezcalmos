@@ -58,6 +58,8 @@ class DeliverySettingsViewController {
         serviceProviderType != null &&
         detailsID != null &&
         deliveryDetailsId != null) {
+      mezDbgPrint(
+          "Service provider type ===============>>>$serviceProviderType");
       await _getDeliveryCost();
       await _getServiceLocation();
       await _initEditMode(serviceProviderId, serviceProviderType);
@@ -77,6 +79,9 @@ class DeliverySettingsViewController {
 
     deliveryPartnerId.value = await get_service_delivery_partner(
         serviceId: serviceProviderId, providerType: serviceProviderType);
+
+    mezDbgPrint(
+        "👋 Delivery patner id ==================>>>>${deliveryPartnerId.value}");
   }
 
   Future<void> _getDeliveryCost() async {

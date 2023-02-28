@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
+import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['LaundryApp']['pages']
@@ -111,10 +112,11 @@ class _LaundryOrderViewState extends State<LaundryOrderView> {
                     viewController: viewController,
                   ),
                   OrderNoteCard(note: viewController.order.notes),
-                  SizedBox(
-                    height: 20,
+
+                  OrderSummaryCard(
+                    margin: const EdgeInsets.only(top: 20),
+                    order: viewController.order,
                   ),
-                  _totalCostcomponent(context),
 
                   SizedBox(
                     height: 35,

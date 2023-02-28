@@ -51,7 +51,7 @@ class OrderSummaryCard extends StatelessWidget {
                         style: txt.bodyMedium,
                       ),
                       Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
-                          style: txt.bodyText2?.copyWith(
+                          style: txt.bodyMedium?.copyWith(
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&
                                           (order as LaundryOrder)
@@ -89,10 +89,9 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["deliveryCost"]}',
                         style: txt.bodyMedium,
                       ),
-                      Flexible(
-                          child: ShippingCostComponent(
+                      ShippingCostComponent(
                         shippingCost: _getShippingCost(),
-                      ))
+                      )
                     ],
                   ),
                 ),

@@ -42,7 +42,9 @@ class MezCard extends StatelessWidget {
             if (leading != null) leading!,
 
             // first avatars//
-            if (firstAvatarBgImage != null || firstAvatarIcon != null)
+            if (firstAvatarBgImage != null ||
+                firstAvatarIcon != null ||
+                firstAvatarBgImage != null)
               Stack(
                 alignment: Alignment.center,
                 clipBehavior: Clip.none,
@@ -57,7 +59,9 @@ class MezCard extends StatelessWidget {
                       size: 25,
                     ),
                   ),
-                  if (secondAvatarBgImage != null || secondAvatarIcon != null)
+                  if (secondAvatarBgImage != null ||
+                      secondAvatarIcon != null ||
+                      secondAvatarBgColor != null)
                     Positioned(
                       right: -35,
                       child: CircleAvatar(
