@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/components/FloatingCartComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustItemView/controllers/CustItemViewController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestauSliverAppBar.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
@@ -90,7 +90,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               alignment: Alignment.center,
               child: Text(
                 "Some magic is happening ...",
-                style: Get.textTheme.bodyText1?.copyWith(
+                style: Get.textTheme.bodyLarge?.copyWith(
                     color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),
             ));
@@ -102,7 +102,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget _buildItemsList() {
     return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+        padding: const EdgeInsets.only(right: 8, left: 8, bottom: 70),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(
@@ -154,11 +154,11 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage]?.capitalizeFirst ??
+              category.name?[userLanguage]?.inCaps ??
                   '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
-                  ? Get.theme.textTheme.headline5
-                  : Get.textTheme.bodyText2?.copyWith(
+                  ? Get.theme.textTheme.headlineSmall
+                  : Get.textTheme.bodyMedium?.copyWith(
                       color: Color(0xFF787878),
                     ),
             ),
@@ -168,7 +168,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
-                style: Get.textTheme.bodyText2?.copyWith(
+                style: Get.textTheme.bodyMedium?.copyWith(
                   color: offLightShadeGreyColor,
                 ),
               ),
@@ -196,7 +196,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             child: Text(
                 "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
                     .inCaps,
-                style: Get.theme.textTheme.headline5),
+                style: Get.theme.textTheme.headlineSmall),
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
@@ -264,7 +264,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
-              style: Get.textTheme.bodyText1?.copyWith(
+              style: Get.textTheme.bodyLarge?.copyWith(
                 color: offLightShadeGreyColor,
               ),
               maxLines: 2,
