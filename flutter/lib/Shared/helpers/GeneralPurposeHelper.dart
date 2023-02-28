@@ -574,7 +574,7 @@ Future<int?> showReviewDialog(
               ),
               const SizedBox(height: 18),
               MezButton(
-                textStyle: Get.textTheme.headline4?.copyWith(
+                textStyle: Get.textTheme.headlineMedium?.copyWith(
                   color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
@@ -614,7 +614,7 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headline4?.copyWith(
+                    style: Get.textTheme.headlineMedium?.copyWith(
                       color: offShadeGreyColor,
                     ),
                   ),
@@ -693,7 +693,7 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
     );
   } else {
     return Icon(
-      Icons.local_taxi_rounded,
+      Icons.flatware,
       color: Colors.white,
       size: 33,
     );

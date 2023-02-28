@@ -187,7 +187,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
-
+        await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
         await MezRouter.offNamed<void>(kCartRoute);
       },

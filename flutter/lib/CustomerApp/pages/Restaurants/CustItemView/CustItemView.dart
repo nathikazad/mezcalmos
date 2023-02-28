@@ -219,7 +219,7 @@ class _CustItemViewState extends State<CustItemView> {
 
   Widget _itemNotesComponent() {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
