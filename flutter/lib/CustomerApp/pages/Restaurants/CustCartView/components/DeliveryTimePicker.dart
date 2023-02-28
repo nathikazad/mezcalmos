@@ -204,7 +204,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           isDismissible: true,
           builder: (BuildContext ctx) {
             return MezDateTimePicker(
-              fixed7days: true,
+              fixed7days: !widget.viewCartController.cart.isSpecial,
               startDate: widget.viewCartController.cart.deliveryTime?.toLocal(),
               periodOfTime: widget.viewCartController.cart.cartPeriod,
               numberOfDaysInterval:
