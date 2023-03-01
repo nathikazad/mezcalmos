@@ -19,6 +19,7 @@ import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:sizer/sizer.dart';
@@ -34,13 +35,11 @@ class CustomerRestaurantView extends StatefulWidget {
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     with TickerProviderStateMixin {
   CustomerRestaurantController _viewController = CustomerRestaurantController();
-  late Restaurant restaurant;
 
   @override
   void initState() {
-    restaurant = Get.arguments["restaurant"] as Restaurant;
-    mezDbgPrint(restaurant.info.hasuraId.toString().toString());
-    _viewController.init(restaurant: restaurant, vsync: this);
+    final int restaurantId = int.parse(QR.params["id"] as String);
+    _viewController.init(restaurantId: restaurantId, vsync: this);
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
-      bottomSheet: (restaurant.isOpen() == false)
+      bottomSheet: (_viewController.restaurant.value?.isOpen() == false)
           ? _schedulingOrdersBottomWidget()
           : null,
       body: RectGetter(

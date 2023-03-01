@@ -9,7 +9,7 @@ import 'package:qlevar_router/qlevar_router.dart';
 class MRoute {
   String name;
   dynamic args;
-  Map<String, String>? params;
+  Map<String, dynamic>? params;
 
   MRoute({required this.name, this.args, this.params});
 }
@@ -41,53 +41,58 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   /// Shortcut to [MezRouter.toNamed]
   static Future<void>? toNamed<Q>(
     String page, {
-    arguments,
-    // int? id, later on for nested routes
     bool preventDuplicates = true,
-    Map<String, String>? parameters,
+    Map<String, dynamic>? arguments,
   }) {
     mezDbgPrint("Trynig to go to ======>>>>>>>$page");
     try {
-      bool _shouldRoute = false;
-      mezDbgPrint("[_] $page");
-      if (!preventDuplicates) {
-        _shouldRoute = true;
-        _navigationStack
-            .add(MRoute(name: page, args: arguments, params: parameters));
-      } else {
-        if (_navigationStack.isNotEmpty) {
-          if (_navigationStack.last.name != page) {
-            _shouldRoute = true;
-            _navigationStack
-                .add(MRoute(name: page, args: arguments, params: parameters));
-          }
-        } else {
-          _shouldRoute = true;
-          _navigationStack
-              .add(MRoute(name: page, args: arguments, params: parameters));
-        }
-      }
-      printRoutes();
-      // return Navigator.of(QR.context!).pushNamed(page);
-      // return QR.navigator.push(page);
+      addToStack(page, preventDuplicates, arguments);
       return QR.toName(page, params: arguments, ignoreSamePath: false);
-
-      /*return QR.toName(page,
-          params: parameters, ignoreSamePath: preventDuplicates);*/
-
-      /*
-        return Get.toNamed<Q>(
-        page,
-        arguments: arguments,
-        parameters: parameters,
-        preventDuplicates: preventDuplicates,
-      );
-      return null;*/
     } catch (e, s) {
       mezDbgPrint("Error => $e");
       mezDbgPrint("Stack => $s");
     }
     return null;
+  }
+
+  static Future<void>? toPath<Q>(
+    String page, {
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+  }) {
+    mezDbgPrint("Trynig to go to ======>>>>>>>$page");
+    try {
+      addToStack(page, preventDuplicates, parameters);
+      return QR.to(page, ignoreSamePath: false);
+    } catch (e, s) {
+      mezDbgPrint("Error => $e");
+      mezDbgPrint("Stack => $s");
+    }
+    return null;
+  }
+
+  static void addToStack(
+      String page, bool preventDuplicates, Map<String, dynamic>? arguments) {
+    bool _shouldRoute = false;
+    mezDbgPrint("[_] $page");
+    if (!preventDuplicates) {
+      _shouldRoute = true;
+      _navigationStack
+          .add(MRoute(name: page, args: arguments, params: arguments));
+    } else {
+      if (_navigationStack.isNotEmpty) {
+        if (_navigationStack.last.name != page) {
+          _shouldRoute = true;
+          _navigationStack
+              .add(MRoute(name: page, args: arguments, params: arguments));
+        }
+      } else {
+        _shouldRoute = true;
+        _navigationStack
+            .add(MRoute(name: page, args: arguments, params: arguments));
+      }
+    }
+    printRoutes();
   }
 
   /// USE THIS ONLY FOR ACTUAL VIEW THAT ARE ON STACK!

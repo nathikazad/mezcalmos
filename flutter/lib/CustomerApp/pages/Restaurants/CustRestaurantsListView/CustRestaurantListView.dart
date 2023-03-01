@@ -224,9 +224,9 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               shippingPrice: viewController
                   .filteredRestaurants[index].deliveryCost!.minimumCost,
               onClick: () {
-                MezRouter.toNamed<void>(RestaurantRouters().getRestaurantRoute(
+                RestaurantRouters.navigateToRestaurantRoute(
                   viewController.filteredRestaurants[index].info.hasuraId,
-                ));
+                );
               },
             );
           }),

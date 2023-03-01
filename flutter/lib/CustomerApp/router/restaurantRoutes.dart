@@ -8,32 +8,32 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/CustomerRestaurantView.dart'
     deferred as restoView;
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 
 class RestaurantRouters {
-  static const String restaurantItemRouteName = '/restaurantItemRoute';
-  static const String customerRestaurantView = '/customerRestaurantView';
-
-  static const String restaurants = "/restaurants";
-  static const String restaurantitems = "items";
-  static String restaurantsId = "/restaurants/:id";
-  static const String restaurant_info = "info";
-  static const String item_id = "item_id";
+  static const String restaurantsListRoute = "/restaurants";
+  static const String restaurantViewRoute = "/restaurants/:id";
+  static const String restaurantViewItemRoute = "/restaurants/:id/:itemId";
+  static const String restaurantInfoRoute = "/restaurants/:id/info";
 
   String getRestaurantItemRoute(int restaurantId, int itemId) =>
       'items/$restaurantId/$itemId';
 
-  String getRestaurantRoute(
+  static void navigateToRestaurantRoute(
     int restaurantId,
   ) {
-    restaurantsId = restaurantsId.replaceFirst(":id", restaurantId.toString());
-    mezDbgPrint("🤬🤬🤬🤬🤬 $restaurantsId");
-    return restaurantsId;
+    // MezRouter.toNamed<void>(restaurantViewRoute,
+    //     arguments: {"id": restaurantViewRoute});
+    final String restaurantRoute =
+        restaurantViewRoute.replaceFirst(":id", restaurantId.toString());
+    mezDbgPrint("🤬🤬🤬🤬🤬 $restaurantRoute");
+    MezRouter.toPath<void>(restaurantRoute);
   }
 
   final routes = QRoute(
       path: '/restaurants',
-      name: restaurants,
+      name: restaurantsListRoute,
       // The page to show when this route is called
       builder: () => restoList.CustRestaurantListView(),
       middleware: [
@@ -42,7 +42,7 @@ class RestaurantRouters {
       children: [
         QRoute(
             path: '/:id',
-            name: restaurantsId,
+            name: restaurantViewRoute,
             builder: () => restoView.CustomerRestaurantView(),
             middleware: [
               DefferedLoader(restoView.loadLibrary)
@@ -50,12 +50,12 @@ class RestaurantRouters {
             children: [
               QRoute(
                   path: '/info',
-                  name: restaurant_info,
+                  name: restaurantInfoRoute,
                   // middleware: [DefferedLoader(restoScreenInfo.loadLibrary)],
                   builder: () => restoView.CustomerRestaurantView()),
               QRoute(
                 path: '/:itemId',
-                name: item_id,
+                name: restaurantViewItemRoute,
                 middleware: [DefferedLoader(restoItemView.loadLibrary)],
                 builder: () => restoItemView.CustItemView(
                     viewItemScreenMode: ViewItemScreenMode.AddItemMode),

@@ -212,7 +212,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
             onTap: () {
               getServiceRoute(
                   orderType: OrderType.Restaurant,
-                  serviceRoute: RestaurantRouters.restaurants,
+                  serviceRoute: RestaurantRouters.restaurantsListRoute,
                   singleOrderRoute: (int orderId) {
                     MezRouter.toNamed<void>(RestaurantOrderRoutes()
                         .getRestaurantOrderRoute(orderId));
