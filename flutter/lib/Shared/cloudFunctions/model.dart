@@ -10,7 +10,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "status": status};
   }
 factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SendOtpResponse(json["errorMessage?"], json["secondsLeft?"], json["status"]);
+   return SendOtpResponse(json["errorMessage"], json["secondsLeft"], json["status"]);
   }
 }
 
@@ -42,7 +42,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "stripeAccountId": stripeAccountId};
   }
 factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey?"], json["customer?"], json["publishableKey"], json["stripeAccountId"]);
+   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -102,6 +102,14 @@ extension ParseParticipantTypeToString on ParticipantType {
   }
 }
 
+extension ParseStringToParticipantType on String {
+  ParticipantType toHasuraParticipantType() {
+    return ParticipantType.values.firstWhere(
+        (ParticipantType participantType) =>
+            participantType.toFirebaseFormatString() == this);
+  }
+}
+
 class CallUserResponse {
   num id;
   String token;
@@ -120,7 +128,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "participantType": participantType};
   }
 factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["id"], json["token"], json["name?"], json["image?"], json["expirationTime"], json["participantType"]);
+   return CallUserResponse(json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toHasuraParticipantType());
   }
 }
 
