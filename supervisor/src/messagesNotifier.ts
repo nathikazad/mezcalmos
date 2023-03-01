@@ -16,7 +16,7 @@ import {
   RestaurantOperatorApprovedNotification
 } from "../../functions/src/shared/models/Services/Restaurant/Restaurant";
 import { getRestaurantOperator, getRestaurantOperators } from "../../functions/src/shared/graphql/restaurant/operators/getRestaurantOperators"
-import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmins"
+import { getMezAdmins } from "../../functions/src/shared/graphql/user/mezAdmin/getMezAdmin"
 import { getDeliveryOperators } from "../../functions/src/shared/graphql/delivery/operator/getDeliveryOperator"
 import { AssignDeliveryCompanyNotificationForQueue, AssignDeliveryCompanyNotification } from "../../functions/src/shared/models/Generic/Delivery";
 import { getChat } from "../../functions/src/shared/graphql/chat/getChat"
