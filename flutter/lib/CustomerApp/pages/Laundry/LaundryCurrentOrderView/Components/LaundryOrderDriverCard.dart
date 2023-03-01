@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Drivers/DeliveryDriver.dart';
 import 'package:mezcalmos/Shared/models/Orders/LaundryOrder.dart';
 import 'package:mezcalmos/Shared/models/Orders/Order.dart';
@@ -10,11 +11,9 @@ import 'package:mezcalmos/Shared/models/Utilities/Chat.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MessageButton.dart';
 
-//
 dynamic _i18n() =>
     Get.find<LanguageController>().strings["CustomerApp"]["pages"]["Laundry"]
         ["LaundryCurrentOrderView"]["Components"]["LaundryOrderDriverCard"];
-//
 
 class LaundryOrderDriverCard extends StatelessWidget {
   const LaundryOrderDriverCard({Key? key, required this.order})
@@ -23,6 +22,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    mezDbgPrint("Calling ======================>>>>>${_getRightDriver()}");
     if (_getRightDriver() != null && order.inProcess()) {
       return Card(
           margin: const EdgeInsets.only(top: 15),
@@ -40,15 +40,25 @@ class LaundryOrderDriverCard extends StatelessWidget {
                             _getRightDriver()!.image)),
                     Positioned(
                       right: -35,
-                      child: CircleAvatar(
-                        radius: 23,
-                        child: Icon(
-                          Icons.delivery_dining,
-                          size: 30,
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: CircleAvatar(
+                              radius: 23,
+                              child: Icon(
+                                Icons.delivery_dining,
+                                size: 30,
+                                color: Colors.white,
+                              )),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -58,7 +68,7 @@ class LaundryOrderDriverCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     _getRightDriver()!.name,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 if (_getRightChatId() != null)

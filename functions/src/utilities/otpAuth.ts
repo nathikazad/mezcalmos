@@ -1,19 +1,26 @@
 import * as firebase from "firebase-admin";
 import * as functions from "firebase-functions";
 import { HttpsError } from "firebase-functions/v1/auth";
+import { ServerResponseStatus } from "../shared/models/Generic/Generic";
 import * as sms from "./senders/sms";
 
-interface sendOtpInterface {
+interface SendOtpInterface {
   language: string,
   phoneNumber: string
 }
 
-interface verifyOtpInterface {
+interface VerifyOtpInterface {
   phoneNumber: string,
   OTPCode: string
 }
 
-export async function sendOTPForLogin(_:any, data: sendOtpInterface) {
+interface SendOtpResponse {
+  errorMessage?: string,
+  secondsLeft?: number,
+  status: ServerResponseStatus
+}
+
+export async function sendOTPForLogin(_:any, data: SendOtpInterface):Promise<SendOtpResponse> {
   if (!data.phoneNumber) {
     // return {
     //   status: ServerResponseStatus.Error,
@@ -59,19 +66,20 @@ export async function sendOTPForLogin(_:any, data: sendOtpInterface) {
     }
   }
 
-  // let response = 
-  await sendOTP(data, user.uid)
-
-  // if (response != undefined) {
-  //   return response
-  // }
-  // return
+  let response = await sendOTP(data, user.uid);
+  if (response != undefined) {
+    return response
+  } else {
+    return <SendOtpResponse>{
+      status: ServerResponseStatus.Error
+    }
+  }
 }
 
 export interface AuthResponse {
   token: string | undefined
 }
-export async function getAuthUsingOTP(_:any, data: verifyOtpInterface): Promise<AuthResponse> {
+export async function getAuthUsingOTP(_:any, data: VerifyOtpInterface): Promise<AuthResponse> {
   if (!data.phoneNumber || !data.OTPCode) {
     // return {
     //   status: "Error",
@@ -140,22 +148,20 @@ export async function getAuthUsingOTP(_:any, data: verifyOtpInterface): Promise<
   }
 }
 
-async function sendOTP(data: sendOtpInterface, userId: string) {
+
+
+async function sendOTP(data: SendOtpInterface, userId: string): Promise<SendOtpResponse|undefined> {
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (auth && auth.codeGeneratedTime) {
     let lastCodeGeneratedTime = new Date(auth.codeGeneratedTime);
     let validTimeForNextCodeGeneration = new Date(lastCodeGeneratedTime.getTime() + 60 * 1000);
     if (new Date() < validTimeForNextCodeGeneration) {
       let secondsLeft = (validTimeForNextCodeGeneration.getTime() - Date.now()) / 1000;
-      // return {
-      //   status: ServerResponseStatus.Error,
-      //   errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
-      //   secondsLeft: secondsLeft
-      // }
-      throw new HttpsError(
-        "internal",
-        `Cannot generate another code for ${secondsLeft} seconds`
-      );
+      return {
+        errorMessage: (data.language == "es") ? `No puedes generar otro codigo para ${secondsLeft} segundos` : `Cannot generate another code for ${secondsLeft} seconds`,
+        secondsLeft: secondsLeft,
+        status: ServerResponseStatus.Error
+      }
     }
   }
   let randomNumber: number = Math.trunc(Math.random() * 1000000)
@@ -187,10 +193,13 @@ async function sendOTP(data: sendOtpInterface, userId: string) {
     attempts: 0
   }
   firebase.database().ref(`users/${userId}/auth`).set(newCodeEntry)
+  return {
+    status: ServerResponseStatus.Success
+  }
 }
 
 
-async function confirmOTP(data: verifyOtpInterface, userId: string) {
+async function confirmOTP(data: VerifyOtpInterface, userId: string) {
 
   let auth = (await firebase.database().ref(`users/${userId}/auth`).once('value')).val();
   if (!auth || !auth.OTPCode || !auth.codeGeneratedTime) {

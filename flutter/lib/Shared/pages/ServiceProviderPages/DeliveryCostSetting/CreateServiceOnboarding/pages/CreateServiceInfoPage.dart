@@ -32,11 +32,11 @@ class CreateServiceInfoPage extends StatelessWidget {
           children: [
             CreateServiceImageComponent(viewController: viewController),
             SizedBox(
-              height: 25,
+              height: 15,
             ),
             Text(
               "${_i18n()['name']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -49,17 +49,66 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyText2,
-                  hintText: "${_i18n()['name']}"),
+                  hintStyle: Get.textTheme.bodyMedium,
+                  hintText: "${_i18n()['hintNameText']}"),
             ),
             SizedBox(
-              height: 25,
+              height: 15,
+            ),
+            Text(
+              "${_i18n()['description']}",
+              style: Get.textTheme.bodyLarge,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              minLines: 2,
+              maxLines: 7,
+              controller: viewController.description,
+              validator: (String? v) {
+                if (v == null || v.isEmpty) {
+                  return "${_i18n()['descriptionError']}";
+                }
+                return null;
+              },
+              style: Get.textTheme.bodyLarge,
+              decoration: InputDecoration(
+                  hintStyle: Get.textTheme.bodyMedium,
+                  hintText: "${_i18n()['descriptionHintText']}"),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              "${_i18n()['phoneText']}",
+              style: Get.textTheme.bodyLarge,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: viewController.phone,
+              validator: (String? v) {
+                if (v == null || v.isEmpty) {
+                  //ask with montasaare for phone validation.
+                  return "${_i18n()['phoneTextError']}";
+                }
+                return null;
+              },
+              style: Get.textTheme.bodyLarge,
+              decoration: InputDecoration(
+                  hintStyle: Get.textTheme.bodyMedium,
+                  hintText: "${_i18n()['phoneTextDescription']}"),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Text(
               "${_i18n()['location']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -131,7 +180,8 @@ class CreateServiceInfoPage extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5),
                   child: Text(
                     state.errorText ?? "",
-                    style: Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+                    style:
+                        Get.textTheme.titleMedium?.copyWith(color: Colors.red),
                   ))
           ],
         ),

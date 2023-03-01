@@ -1,3 +1,19 @@
+class SendOtpResponse {
+  String? errorMessage;
+  num? secondsLeft;
+  ServerResponseStatus status;
+  SendOtpResponse(this.errorMessage, this.secondsLeft, this.status);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "errorMessage": errorMessage,
+      "secondsLeft": secondsLeft,
+      "status": status};
+  }
+factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
+   return SendOtpResponse(json["errorMessage"], json["secondsLeft"], json["status"]);
+  }
+}
+
 class AuthResponse {
   String? token;
   AuthResponse(this.token);
@@ -26,7 +42,7 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "stripeAccountId": stripeAccountId};
   }
 factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey?"], json["customer?"], json["publishableKey"], json["stripeAccountId"]);
+   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -86,27 +102,55 @@ extension ParseParticipantTypeToString on ParticipantType {
   }
 }
 
+extension ParseStringToParticipantType on String {
+  ParticipantType toHasuraParticipantType() {
+    return ParticipantType.values.firstWhere(
+        (ParticipantType participantType) =>
+            participantType.toFirebaseFormatString() == this);
+  }
+}
+
 class CallUserResponse {
-  num uid;
+  num id;
   String token;
   String? name;
   String? image;
   String expirationTime;
   ParticipantType participantType;
-  NotificationInfo? notificationInfo;
-  CallUserResponse(this.uid, this.token, this.name, this.image, this.expirationTime, this.participantType, this.notificationInfo);
+  CallUserResponse(this.id, this.token, this.name, this.image, this.expirationTime, this.participantType);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "uid": uid,
+      "id": id,
       "token": token,
       "name": name,
       "image": image,
       "expirationTime": expirationTime,
-      "participantType": participantType,
-      "notificationInfo": notificationInfo};
+      "participantType": participantType};
   }
 factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["uid"], json["token"], json["name?"], json["image?"], json["expirationTime"], json["participantType"], json["notificationInfo"]);
+   return CallUserResponse(json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toHasuraParticipantType());
+  }
+}
+
+class NotificationInfo {
+  String token;
+  bool turnOffNotifications;
+  AppType appType;
+  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
+Map<String, dynamic> toFirebaseFormattedJson() {
+    return <String, dynamic>{
+      "token": token,
+      "turnOffNotifications": turnOffNotifications,
+      "appType": appType};
+  }
+
+}
+
+enum DeliveryServiceProviderType { Restaurant, DeliveryCompany, Laundry }
+extension ParseDeliveryServiceProviderTypeToString on DeliveryServiceProviderType {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
   }
 }
 
@@ -184,20 +228,6 @@ factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) {
   }
 }
 
-class NotificationInfo {
-  String token;
-  bool turnOffNotifications;
-  AppType appType;
-  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
-Map<String, dynamic> toFirebaseFormattedJson() {
-    return <String, dynamic>{
-      "token": token,
-      "turnOffNotifications": turnOffNotifications,
-      "appType": appType};
-  }
-
-}
-
 class ReqLaundryResponse {
   num orderId;
   ReqLaundryResponse(this.orderId);
@@ -228,6 +258,14 @@ extension ParseAppTypeToString on AppType {
 
 enum Language { EN, ES }
 extension ParseLanguageToString on Language {
+  String toFirebaseFormatString() {
+    String str = this.toString().split('.').last;
+    return str[0].toLowerCase() + str.substring(1);
+  }
+}
+
+enum ServerResponseStatus { Success, Error }
+extension ParseServerResponseStatusToString on ServerResponseStatus {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);

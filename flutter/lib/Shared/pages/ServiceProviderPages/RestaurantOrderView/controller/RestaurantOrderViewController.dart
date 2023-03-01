@@ -2,17 +2,12 @@ import 'dart:async';
 
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/MGoogleMapController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/RestaurantOrder.dart';
-import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as LocModel;
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
-import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 
 class RestaurantOrderViewController {
   // instances //
@@ -40,7 +35,7 @@ class RestaurantOrderViewController {
           await get_restaurant_order_by_id(orderId: orderId, withCache: false);
       if (order.value!.routeInformation != null) {
         mezDbgPrint(
-            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.routeInformation}");
+            "Order route informations ====🥸🥸🥸🥸===== => ${order.value!.dropoffDriver?.toFirebaseFormatJson()}");
         mGoogleMapController.decodeAndAddPolyline(
             encodedPolylineString: order.value!.routeInformation!.polyline);
       }
@@ -57,10 +52,9 @@ class RestaurantOrderViewController {
           mezDbgPrint(event);
           if (event != null) {
             mezDbgPrint(
-                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.location?.toJson()}");
+                "Stream triggred from order controller ✅✅✅✅✅✅✅✅✅ =====> ${event.dropoffDriver?.toFirebaseFormatJson()}");
             order.value = event;
             order.value?.dropoffDriver = event.dropoffDriver;
-            _updateMapByPhaseAndStatus();
           }
         });
       }, cancel: () {
@@ -70,97 +64,97 @@ class RestaurantOrderViewController {
     }
     // first time init map
     //mGoogleMapController.animateMarkersPolyLinesBounds(true);
-    if (order.value != null) {
-      await _initMap();
-    }
+    // if (order.value != null) {
+    //   await _initMap();
+    // }
   }
 
-  Future<void> _initMap() async {
-    // first time init map
-    mGoogleMapController.minMaxZoomPrefs =
-        MinMaxZoomPreference.unbounded; // LEZEM
-    mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
-    mGoogleMapController.periodicRerendering.value = true;
+//   Future<void> _initMap() async {
+//     // first time init map
+//     mGoogleMapController.minMaxZoomPrefs =
+//         MinMaxZoomPreference.unbounded; // LEZEM
+//     mGoogleMapController.animateMarkersPolyLinesBounds.value = true;
+//     mGoogleMapController.periodicRerendering.value = true;
 
-    // mGoogleMapController.periodicRerendering.value = true;
-    if (order.value?.routeInformation?.polyline != null)
-      mGoogleMapController.decodeAndAddPolyline(
-        encodedPolylineString: order.value!.routeInformation!.polyline,
-      );
+//     // mGoogleMapController.periodicRerendering.value = true;
+//     if (order.value?.routeInformation?.polyline != null)
+//       mGoogleMapController.decodeAndAddPolyline(
+//         encodedPolylineString: order.value!.routeInformation!.polyline,
+//       );
 
-    _updateMapByPhaseAndStatus();
+//     _updateMapByPhaseAndStatus();
 
-    await waitForOrderIfNotLoaded().then((void value) {
-      if (order.value == null) {
-        // ignore: inference_failure_on_function_invocation
-        Future<Null>.delayed(Duration.zero, () {
-          MezRouter.back<Null>();
-          MezSnackbar("Error", "Order does not exist");
-        });
-      } else {
-        // controller.setNotifiedAsTrue(order.value!);
-      }
-    });
-  }
+//     await waitForOrderIfNotLoaded().then((void value) {
+//       if (order.value == null) {
+//         // ignore: inference_failure_on_function_invocation
+//         Future<Null>.delayed(Duration.zero, () {
+//           MezRouter.back<Null>();
+//           MezSnackbar("Error", "Order does not exist");
+//         });
+//       } else {
+//         // controller.setNotifiedAsTrue(order.value!);
+//       }
+//     });
+//   }
 
-// Map methods //
-  void _updateMapByPhaseAndStatus() {
-    if (order.value!.inDeliveryPhase()) {
-      mezDbgPrint(
-          "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
-      if (_statusSnapshot != order.value!.status) {
-        if (order.value?.restaurant.location != null) {
-          mGoogleMapController.setLocation(
-            LocModel.MezLocation(
-              "_",
-              LocationData.fromMap(
-                <String, dynamic>{
-                  "latitude": order.value!.restaurant.location.latitude,
-                  "longitude": order.value!.restaurant.location.longitude
-                },
-              ),
-            ),
-          );
-        }
+// // Map methods //
+//   void _updateMapByPhaseAndStatus() {
+//     if (order.value!.inDeliveryPhase()) {
+//       mezDbgPrint(
+//           "PICK UP PHASE snapshot [$_statusSnapshot] - [${order.value!.status}]");
+//       if (_statusSnapshot != order.value!.status) {
+//         if (order.value?.restaurant.location != null) {
+//           mGoogleMapController.setLocation(
+//             LocModel.MezLocation(
+//               "_",
+//               LocationData.fromMap(
+//                 <String, dynamic>{
+//                   "latitude": order.value!.restaurant.location.latitude,
+//                   "longitude": order.value!.restaurant.location.longitude
+//                 },
+//               ),
+//             ),
+//           );
+//         }
 
-        _statusSnapshot = order.value?.status;
-        // add laundry marker
-        mGoogleMapController.addOrUpdateUserMarker(
-          latLng: order.value?.restaurant.location.toLatLng(),
-          customImgHttpUrl: order.value?.restaurant.image,
-          fitWithinBounds: true,
-          markerId: order.value?.restaurant.firebaseId,
-        );
-        // add customer's marker - destination
-        mGoogleMapController.addOrUpdatePurpleDestinationMarker(
-          latLng: order.value?.to.toLatLng(),
-          fitWithinBounds: true,
-        );
-      }
-      // keep updating driver's marker
-      mezDbgPrint("Updating driver location");
-      mGoogleMapController.addOrUpdateUserMarker(
-        latLng: order.value?.dropoffDriver?.location,
-        customImgHttpUrl: order.value?.dropoffDriver?.image,
-        fitWithinBounds: true,
-        markerId: "dropOff_driver",
-      );
+//         _statusSnapshot = order.value?.status;
+//         // add laundry marker
+//         mGoogleMapController.addOrUpdateUserMarker(
+//           latLng: order.value?.restaurant.location.toLatLng(),
+//           customImgHttpUrl: order.value?.restaurant.image,
+//           fitWithinBounds: true,
+//           markerId: order.value?.restaurant.firebaseId,
+//         );
+//         // add customer's marker - destination
+//         mGoogleMapController.addOrUpdatePurpleDestinationMarker(
+//           latLng: order.value?.to.toLatLng(),
+//           fitWithinBounds: true,
+//         );
+//       }
+//       // keep updating driver's marker
+//       mezDbgPrint("Updating driver location");
+//       mGoogleMapController.addOrUpdateUserMarker(
+//         latLng: order.value?.dropoffDriver?.location,
+//         customImgHttpUrl: order.value?.dropoffDriver?.image,
+//         fitWithinBounds: true,
+//         markerId: "dropOff_driver",
+//       );
 
-      mGoogleMapController.animateAndUpdateBounds();
-    }
-  }
+//       mGoogleMapController.animateAndUpdateBounds();
+//     }
+//   }
 
-  Future<void> waitForOrderIfNotLoaded() {
-    if (order.value != null) {
-      return Future<void>.value(null);
-    } else {
-      final Completer<void> completer = Completer<void>();
-      Timer(Duration(seconds: 5), () {
-        completer.complete();
-      });
-      return completer.future;
-    }
-  }
+//   Future<void> waitForOrderIfNotLoaded() {
+//     if (order.value != null) {
+//       return Future<void>.value(null);
+//     } else {
+//       final Completer<void> completer = Completer<void>();
+//       Timer(Duration(seconds: 5), () {
+//         completer.complete();
+//       });
+//       return completer.future;
+//     }
+//   }
 
 // Order status change methods
 

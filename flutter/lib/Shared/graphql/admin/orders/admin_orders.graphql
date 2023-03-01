@@ -1,12 +1,9 @@
 # For mez admin only
 
-subscription admin_listen_on_dv_orders(
- 
-  $inProccess: Boolean!
-) {
+subscription admin_listen_on_dv_orders($inProccess: Boolean!) {
   delivery_order(
     where: {
-    service_provider_type : {_eq: "deliveryCompany"},
+      service_provider_type: { _eq: "deliveryCompany" }
       in_process: { _eq: $inProccess }
     }
   ) {
@@ -15,6 +12,7 @@ subscription admin_listen_on_dv_orders(
     status
     package_cost
     package_ready
+    delivery_cost
     order_type
     dropoff_address
     dropoff_gps
@@ -28,10 +26,10 @@ subscription admin_listen_on_dv_orders(
     service_provider_type
   }
 }
-query admin_get_dv_orders( $inProccess: Boolean!) {
+query admin_get_dv_orders($inProccess: Boolean!) {
   delivery_order(
     where: {
-      service_provider_type : {_eq: "deliveryCompany"},
+      service_provider_type: { _eq: "deliveryCompany" }
       in_process: { _eq: $inProccess }
     }
   ) {
@@ -39,6 +37,7 @@ query admin_get_dv_orders( $inProccess: Boolean!) {
     order_time
     status
     package_cost
+    delivery_cost
     package_ready
     dropoff_address
     dropoff_gps
@@ -54,19 +53,13 @@ query admin_get_dv_orders( $inProccess: Boolean!) {
   }
 }
 
+subscription admin_listen_on_restaurant_orders($inProccess: Boolean!) {
+  restaurant_order(where: { in_process: { _eq: $inProccess } }) {
+    id
+    restaurant_id
+    order_time
+    status
 
-subscription admin_listen_on_restaurant_orders(
- 
-  $inProccess: Boolean!
-) {
-  restaurant_order(
-    where: {  in_process: { _eq: $inProccess } }
-  ) {
-    id
-    restaurant_id
-    order_time
-    status
-    
     total_cost
     to_location_address
     customer {
@@ -77,15 +70,13 @@ subscription admin_listen_on_restaurant_orders(
     }
   }
 }
-query admin_get_restaurant_orders( $inProccess: Boolean!) {
-   restaurant_order(
-    where: {  in_process: { _eq: $inProccess } }
-  ) {
+query admin_get_restaurant_orders($inProccess: Boolean!) {
+  restaurant_order(where: { in_process: { _eq: $inProccess } }) {
     id
     restaurant_id
     order_time
     status
-    
+
     total_cost
     to_location_address
     customer {
@@ -96,6 +87,41 @@ query admin_get_restaurant_orders( $inProccess: Boolean!) {
     }
   }
 }
+subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
+  laundry_order(where: { in_process: { _eq: $inProccess } }) {
+    id
+    store_id
+    order_time
+    status
+
+    total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+query admin_get_laundry_orders($inProccess: Boolean!,) {
+  laundry_order(where: { in_process: { _eq: $inProccess } }) {
+    id
+    store_id
+    order_time
+    status
+
+    total_cost
+    customer_address
+    customer {
+      user {
+        name
+        image
+      }
+    }
+  }
+}
+
 query admin_get_service__orders(
   $serviceProviderType: String!
   $serviceProviderId: Int!
@@ -107,7 +133,7 @@ query admin_get_service__orders(
       service_provider_type: { _eq: $serviceProviderType }
       service_provider_id: { _eq: $serviceProviderId }
       in_process: { _eq: $inProccess }
-    },
+    }
     limit: $limit
   ) {
     id

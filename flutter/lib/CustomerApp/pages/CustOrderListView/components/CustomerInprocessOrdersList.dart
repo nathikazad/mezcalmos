@@ -36,7 +36,7 @@ class CustomerInprocessOrdersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 _i18n()['orders']["onGoingOrders"],
-                style: txt.displaySmall,
+                style: txt.bodyText1,
               ),
             ),
             ListView.builder(

@@ -1,46 +1,54 @@
 query getOperatorByUserId($userId: Int!) {
-  delivery_operator(where: {user_id: {_eq: $userId}}) {
+  delivery_operator(where: { user_id: { _eq: $userId } }) {
     id
-     operator_details {
-  owner
-    status
+    operator_details {
+      owner
+      status
     }
     user_id
     user {
       firebase_id
-  
+
       image
       language_id
       name
-   
     }
     delivery_company_id
-       delivery_company{details_id}
-   
-   
-  
+    delivery_company {
+       details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id
+    }
   }
 }
 subscription dvOperatorStatusStream($userId: Int!) {
-  delivery_operator(where: {user_id: {_eq: $userId}}) {
-      operator_details {
-  owner
-    status
+  delivery_operator(where: { user_id: { _eq: $userId } }) {
+    operator_details {
+      owner
+      status
     }
   }
 }
 query getCompanyOerators($companyId: Int!) {
-  delivery_operator(where: {delivery_company_id: {_eq: $companyId}}) {
-   
+  delivery_operator(where: { delivery_company_id: { _eq: $companyId } }) {
     delivery_company_id
-       delivery_company{details_id}
-    delivery_driver_type
+    delivery_company {
+      details_id
+      details {
+        service_link_id
+      }
+
+      delivery_details_id
+    }
     id
-     operator_details {
-  owner
-   app_version
-    current_gps
-    status
+    operator_details {
+      owner
+      app_version
+
+      status
     }
     user {
       id

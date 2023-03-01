@@ -6,7 +6,6 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/controllers/themeContoller.dart';
-import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:soundpool/soundpool.dart';
@@ -46,9 +45,6 @@ class SettingsController extends GetxController {
     _appLanguage = Get.put(LanguageController(), permanent: true);
     Get.put(SideMenuDrawerController(), permanent: false).sideMenuItems =
         sideMenuItems;
-
-    Timer(Duration(seconds: 10),
-        () => ConnectivityHelper.instance.networkCheck());
 
     // NOTIFICATION SOUND SETUP
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -56,13 +57,15 @@ class PickDriverViewController {
       );
       MezRouter.back();
       screenLoading.value = false;
+    } on FirebaseFunctionsException catch (e, stk) {
+      showErrorSnackBar(errorText: e.message.toString());
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      screenLoading.value = false;
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
       screenLoading.value = false;
-      showErrorSnackBar(
-        errorText: e.toString(),
-      );
     }
 
     // final HttpsCallable cloudFunction =

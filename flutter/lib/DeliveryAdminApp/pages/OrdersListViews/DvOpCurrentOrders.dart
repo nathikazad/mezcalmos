@@ -7,8 +7,6 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/StringHelper.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
-import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/IncomingOrders/IncomingOrdersStatus.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
@@ -54,7 +52,7 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),
@@ -96,13 +94,6 @@ class _DvOpCurrentOrdersListViewState extends State<DvOpCurrentOrdersListView> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          MezButton(
-            label: "Create",
-            onClick: () async {
-              SharedServiceProviderRoutes.navigateToCreateService(
-                  serviceProviderType: ServiceProviderType.Restaurant);
-            },
-          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(

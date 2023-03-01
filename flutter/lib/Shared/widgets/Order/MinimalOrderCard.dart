@@ -44,27 +44,72 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
+                  Flexible(
+                    fit: FlexFit.tight,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           widget.order.title.inCaps,
-                          style: Get.textTheme.bodyLarge,
+                          style: Get.textTheme.headlineMedium,
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 8,
                         ),
-                        if (widget.forCustomer &&
-                            widget.order.deliveryCost != null)
-                          Row(
-                            children: [
-                              Icon(Icons.delivery_dining),
-                              Text(widget.order.deliveryCost!.toPriceString())
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            if (widget.forCustomer &&
+                                widget.order.totalCost != null)
+                              Row(
+                                children: <Widget>[
+                                  Icon(
+                                    widget.order.orderType == OrderType.Laundry
+                                        ? Icons.local_laundry_service_sharp
+                                        : Icons.flatware,
+                                    color: blackColor,
+                                    size: 27,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    widget.order.totalCost!.toPriceString(),
+                                    style: Get.textTheme.titleSmall?.copyWith(
+                                      color: blackColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            if (widget.forCustomer &&
+                                widget.order.deliveryCost != null)
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    color: blackColor,
+                                    size: 27,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    widget.order.deliveryCost!.toPriceString(),
+                                    style: Get.textTheme.titleSmall?.copyWith(
+                                      color: blackColor,
+                                    ),
+                                  )
+                                ],
+                              ),
+                          ],
+                        ),
                         if (widget.order.toAdress != null &&
                             widget.forCustomer == false)
                           Text(
@@ -76,38 +121,65 @@ class _MinimalOrderCardState extends State<MinimalOrderCard> {
                       ],
                     ),
                   ),
+
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(widget.order.orderTime.toDayAmPm()),
+                      Text(
+                        widget.order.orderTime.toDayAmPm(),
+                        style: Get.textTheme.bodyMedium?.copyWith(
+                          color: blackColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       if (widget.order.image != null &&
                           widget.order.image!.isURL &&
-                          showImage)
+                          showImage &&
+                          !widget.forCustomer)
                         Stack(
                           alignment: Alignment.center,
                           clipBehavior: Clip.none,
                           children: [
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundImage: CachedNetworkImageProvider(
-                                  widget.order.image!),
-                              onBackgroundImageError:
-                                  (Object e, StackTrace? stk) {
-                                setState(() {
-                                  showImage = false;
-                                });
-                              },
-                            ),
+                            Container(
+                                margin: EdgeInsets.only(
+                                    right: widget.forCustomer ? 28 : 0),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 26,
+                                  child: CircleAvatar(
+                                    radius: 23,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        widget.order.image!),
+                                    onBackgroundImageError:
+                                        (Object e, StackTrace? stk) {
+                                      setState(() {
+                                        showImage = false;
+                                      });
+                                    },
+                                  ),
+                                )),
                             if (widget.forCustomer)
                               Positioned(
-                                left: -35,
-                                child: CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: primaryBlueColor,
-                                  child: Icon(
-                                    widget.order.orderType.toIcon(),
-                                    size: 25,
+                                right: -8,
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
                                     color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: CircleAvatar(
+                                        radius: 23,
+                                        backgroundColor: primaryBlueColor,
+                                        child: Icon(
+                                          widget.order.orderType.toIcon(),
+                                          size: 30,
+                                          color: Colors.white,
+                                        )),
                                   ),
                                 ),
                               ),

@@ -64,27 +64,98 @@ class RestaurantInfoTab extends StatelessWidget {
             ],
           ),
         if (restaurant.schedule != null)
-          MezServiceOpenHours(schedule: restaurant.schedule!),
+          Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              MezServiceOpenHours(schedule: restaurant.schedule!),
+            ],
+          ),
         if (restaurant.info.location != null)
           ServiceLocationCard(
             location: restaurant.info.location,
           ),
-        if (restaurant.showReviews)
+        if (restaurant.paymentInfo != null)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 15,
               ),
+              Text(
+                '${_i18n()["paymentMethod"]}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.payments,
+                    color: offShadeGreyColor,
+                    size: 23,
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    '${_i18n()["codText"]}',
+                    style: Get.textTheme.bodyText1
+                        ?.copyWith(color: offShadeGreyColor),
+                  ),
+                ],
+              ),
+              if (restaurant.paymentInfo?.acceptCard == false)
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.payment,
+                          color: offShadeGreyColor,
+                          size: 23,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          '${_i18n()["debitCreditText"]}',
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: offShadeGreyColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+            ],
+          ),
+        if (restaurant.showReviews)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 5,
+              ),
               Row(
                 children: [
                   Text(
                     '${_i18n()["reviews"]}',
-                    style: Get.textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(
+                    width: 5,
                   ),
                   Icon(
-                    Icons.star_border_outlined,
+                    Icons.star,
                     color: primaryBlueColor,
+                  ),
+                  const SizedBox(
+                    width: 2,
                   ),
                   Text(
                     restaurant.rate!.toStringAsFixed(1),
@@ -92,27 +163,29 @@ class RestaurantInfoTab extends StatelessWidget {
                         ?.copyWith(color: primaryBlueColor),
                   ),
                   const SizedBox(
-                    width: 3,
+                    width: 5,
                   ),
                   Container(
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
                       "(${restaurant.reviews.length.toString()})",
-                      style: Get.textTheme.bodyMedium,
+                      style: Get.textTheme.subtitle2
+                          ?.copyWith(color: offLightShadeGreyColor),
                     ),
                   ),
                   Spacer(),
                   InkWell(
-                    borderRadius: BorderRadius.circular(8),
+                    // borderRadius: BorderRadius.circular(8),
                     onTap: () {
                       MezRouter.toNamed(CustomerReviewRoutes()
                           .getReviewsListRoute(restaurant.restaurantId));
                     },
                     child: Ink(
+                      color: Colors.transparent,
                       padding: const EdgeInsets.all(10),
                       child: Text(
                         "View all",
-                        style: Get.textTheme.bodyLarge
+                        style: Get.textTheme.bodyText1
                             ?.copyWith(color: primaryBlueColor),
                       ),
                     ),
@@ -126,10 +199,13 @@ class RestaurantInfoTab extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: restaurant.reviews.length,
+                  itemCount: restaurant.reviews.length >= 3
+                      ? 3
+                      : restaurant.reviews.length,
                   itemBuilder: (BuildContext ctx, int index) {
                     return ReviewCard(
                       review: restaurant.reviews[index],
+                      showUserImage: false,
                     );
                   }),
             ],
@@ -165,23 +241,55 @@ class RestaurantInfoTab extends StatelessWidget {
                   width: 4.w,
                 ),
                 Icon(
-                  Icons.payments_sharp,
+                  Icons.payments_outlined,
                   size: 3.4.h,
                   color: Colors.black,
                 ),
-                SizedBox(
-                  width: 2.w,
-                ),
-                if (restaurant.paymentInfo?.acceptCard == false)
-                  Icon(
-                    Icons.credit_card,
-                    size: 3.4.h,
-                    color: Colors.black,
-                  )
+                if (restaurant.paymentInfo?.acceptCard == true)
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 2.w,
+                      ),
+                      Icon(
+                        Icons.credit_card,
+                        size: 3.4.h,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                if (restaurant.showReviews)
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 4.w,
+                      ),
+                      Icon(
+                        Icons.star_rate_rounded,
+                        color: primaryBlueColor,
+                        size: 3.4.h,
+                      ),
+                      Text(
+                        restaurant.rate!.toStringAsFixed(1),
+                        style: Get.textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 2),
+                        child: Text(
+                          "(${restaurant.reviews.length.toString()})",
+                          style: Get.textTheme.bodyLarge
+                              ?.copyWith(color: blackColor.withOpacity(0.7)),
+                        ),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
-          if (restaurant.showReviews) _reviewsChip(),
+          // if (restaurant.showReviews) _reviewsChip(),
         ],
       ),
     );

@@ -99,6 +99,7 @@ Future<List<DeliveryCompany>> get_nearby_companies(
   if (res.parsedData?.delivery_get_delivery_companies == null) {
     throwError(res.exception);
   }
+  mezDbgPrint("Nearby companies ================>>>>${res.data}");
   List<DeliveryCompany> returnedList = [];
   final List<Query$getNearByCompanies$delivery_get_delivery_companies>
       dataList = res.parsedData!.delivery_get_delivery_companies;

@@ -46,7 +46,10 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
+        - service_provider_type
       filter:
         delivery_operators:
           user_id:
@@ -61,7 +64,10 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
+        - delivery_details_id
+        - details_id
         - id
+        - service_provider_type
       filter:
         _exists:
           _table:

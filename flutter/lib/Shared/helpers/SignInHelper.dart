@@ -63,7 +63,7 @@ Future<void> signOut() async {
 
 Future<ServerResponse> sendOTPForLogin(String phoneNumber) async {
   final HttpsCallable sendOTPForLoginFunction =
-      FirebaseFunctions.instance.httpsCallable('otp-sendOTPForLogin');
+      FirebaseFunctions.instance.httpsCallable('otp2-sendOTPForLogin');
   HttpsCallableResult? response;
   try {
     // _waitingResponse.value = true;
@@ -96,7 +96,7 @@ Future<ServerResponse?> signInUsingOTP(
     String phoneNumber, String otpCode) async {
   mezDbgPrint("$phoneNumber  < phone ------ otp > $otpCode");
   final HttpsCallable getAuthUsingOTPFunction =
-      FirebaseFunctions.instance.httpsCallable('otp-getAuthUsingOTP');
+      FirebaseFunctions.instance.httpsCallable('otp2-getAuthUsingOTP');
   HttpsCallableResult? response;
   ServerResponse? serverResponse;
 

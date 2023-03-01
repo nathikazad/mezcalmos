@@ -43,7 +43,7 @@ class _UnauthorizedScreenState extends State<UnauthorizedScreen> {
             key: Get.find<SideMenuDrawerController>().getNewKey(),
             drawer: MezSideMenu(),
             backgroundColor: Colors.white,
-            appBar: mezcalmosAppBar(
+            appBar: MezcalmosAppBar(
               AppBarLeftButtonType.Menu,
             ),
             body: Column(

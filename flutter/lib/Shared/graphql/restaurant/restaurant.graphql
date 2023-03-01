@@ -1,5 +1,5 @@
 query getRestaurants {
-  restaurant_restaurant {
+  restaurant_restaurant(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
     id
     reviews_aggregate {
       aggregate {
@@ -13,6 +13,7 @@ query getRestaurants {
       free_delivery_km_range
       free_delivery_minimum_cost
       id
+      
       minimum_cost
       radius
       self_delivery

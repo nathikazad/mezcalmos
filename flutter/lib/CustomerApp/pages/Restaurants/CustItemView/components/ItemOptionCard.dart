@@ -50,13 +50,13 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.option.name[userLanguage].toString().inCaps,
-              style: Get.theme.textTheme.bodyText1),
+              style: Get.theme.textTheme.bodyLarge),
           if (widget.option.optionType == OptionType.Custom)
             Container(
               child: Text(
                 "${widget.option.freeChoice} ${_i18n()["included"]} (${_i18n()["extra"]} ${widget.option.costPerExtra.toPriceString()})",
-                style: Get.textTheme.headline6?.copyWith(
-                    fontStyle: FontStyle.italic),
+                style: Get.textTheme.titleLarge
+                    ?.copyWith(fontStyle: FontStyle.italic),
               ),
             ),
           Column(
@@ -76,79 +76,84 @@ class _ItemOptionCardState extends State<ItemOptionCard> {
   Widget optionChoiceCard({
     required Choice choice,
   }) {
-    return Container(
-      child: Row(
-        children: [
-          Flexible(
-            flex: 3,
-            fit: FlexFit.tight,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  choice.name[userLanguage].toString().inCaps,
-                  style: Get.theme.textTheme.bodyText2?.copyWith(
-                    color: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? primaryBlueColor
-                        : null,
-                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? FontWeight.w700
-                        : null,
+    if (choice.available) {
+      return Container(
+        child: Row(
+          children: [
+            Flexible(
+              flex: 3,
+              fit: FlexFit.tight,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    choice.name[userLanguage].toString().inCaps,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: (widget.cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? primaryBlueColor
+                          : null,
+                      fontWeight: (widget
+                                  .cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? FontWeight.w700
+                          : null,
+                    ),
+                    maxLines: 2,
                   ),
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
-                  style: Get.theme.textTheme.bodyText2!.copyWith(
-                    color: Get.theme.primaryColorLight,
-                    fontWeight: (widget.cartItem.value!.chosenChoices[optionId]
-                                ?.contains(choice) ??
-                            false)
-                        ? FontWeight.w700
-                        : null,
+                  SizedBox(
+                    width: 5,
                   ),
-                ),
-              ],
+                  Text(
+                    (choice.cost > 0) ? " + \$${choice.cost.round()}  " : "",
+                    style: Get.theme.textTheme.bodyMedium!.copyWith(
+                      color: Get.theme.primaryColorLight,
+                      fontWeight: (widget
+                                  .cartItem.value!.chosenChoices[optionId]
+                                  ?.contains(choice) ??
+                              false)
+                          ? FontWeight.w700
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          //  Spacer(),
-          if (widget.option.optionType == OptionType.ChooseMany)
-            _selectCircle(
-                value: widget.cartItem.value!.chosenChoices[optionId]
-                        ?.contains(choice) ??
-                    false,
-                onTap: (bool? v) {
-                  handleChoiceCheckBox(choice);
-                }),
-          if (widget.option.optionType == OptionType.ChooseOne)
-            _radioCircle(
-              value: widget.cartItem.value!.chosenChoices[optionId]
-                      ?.contains(choice) ??
-                  false,
-              onTap: (bool? v) {
-                handleChoiceCheckBox(choice);
-              },
-            ),
-          if (widget.option.optionType == OptionType.Custom)
-            Container(
-              child: _selectCircle(
+            //  Spacer(),
+            if (widget.option.optionType == OptionType.ChooseMany)
+              _selectCircle(
                   value: widget.cartItem.value!.chosenChoices[optionId]
                           ?.contains(choice) ??
                       false,
                   onTap: (bool? v) {
                     handleChoiceCheckBox(choice);
                   }),
-            ),
-        ],
-      ),
-    );
+            if (widget.option.optionType == OptionType.ChooseOne)
+              _radioCircle(
+                value: widget.cartItem.value!.chosenChoices[optionId]
+                        ?.contains(choice) ??
+                    false,
+                onTap: (bool? v) {
+                  handleChoiceCheckBox(choice);
+                },
+              ),
+            if (widget.option.optionType == OptionType.Custom)
+              Container(
+                child: _selectCircle(
+                    value: widget.cartItem.value!.chosenChoices[optionId]
+                            ?.contains(choice) ??
+                        false,
+                    onTap: (bool? v) {
+                      handleChoiceCheckBox(choice);
+                    }),
+              ),
+          ],
+        ),
+      );
+    } else
+      return SizedBox();
   }
 
   Widget _selectCircle(

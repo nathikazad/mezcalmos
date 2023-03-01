@@ -18,25 +18,23 @@ HasuraDb _db = Get.find<HasuraDb>();
 
 // querries //
 Future<ServiceLink?> get_service_link_by_id(
-    {required int serviceProviderId, bool withCache = true}) async {
+    {required int serviceLinkId, bool withCache = true}) async {
   final QueryResult<Query$getServiceProviderLinks> response =
       await _db.graphQLClient.query$getServiceProviderLinks(
     Options$Query$getServiceProviderLinks(
       fetchPolicy:
           withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
-      variables: Variables$Query$getServiceProviderLinks(
-          serviceProviderId: serviceProviderId),
+      variables:
+          Variables$Query$getServiceProviderLinks(serviceLinkId: serviceLinkId),
     ),
   );
 
-  if (response.parsedData?.service_provider_service_link == null) {
+  if (response.parsedData == null) {
     mezDbgPrint(
         "🚨🚨🚨 hasura query service links faild \n  Data from response \n ${response.data} \n Exceptions from hasura \n ${response.exception}");
-  } else if (response.parsedData!.service_provider_service_link.isEmpty) {
-    throw Exception("No service links found for this service provider");
-  } else {
-    final Query$getServiceProviderLinks$service_provider_service_link data =
-        response.parsedData!.service_provider_service_link.first;
+  } else if (response.parsedData!.service_provider_service_link_by_pk != null) {
+    Query$getServiceProviderLinks$service_provider_service_link_by_pk data =
+        response.parsedData!.service_provider_service_link_by_pk!;
     mezDbgPrint("✅ Getting service links done ✅ \n ${data.toJson()}");
     return ServiceLink(
         id: data.id,
@@ -111,6 +109,7 @@ Future<ServiceInfo?> get_service_info(
 
   return ServiceInfo(
       descriptionId: data.description_id,
+      phoneNumber: data.phone_number,
       description: (data.description?.translations != null)
           ? toLanguageMap(translations: data.description!.translations)
           : null,
@@ -144,6 +143,30 @@ Future<PaymentInfo?> get_service_payment_info(
   return paymentInfo;
 }
 
+Future<MezLocation?> get_service_location(
+    {required int serviceDetailsId, bool withCache = true}) async {
+  QueryResult<Query$getServiceInfo> res =
+      await _db.graphQLClient.query$getServiceInfo(
+    Options$Query$getServiceInfo(
+      fetchPolicy:
+          withCache ? FetchPolicy.cacheAndNetwork : FetchPolicy.noCache,
+      variables:
+          Variables$Query$getServiceInfo(serviceDetailsId: serviceDetailsId),
+    ),
+  );
+  if (res.parsedData?.service_provider_details_by_pk == null) {
+    throwError(res.exception);
+  }
+  mezDbgPrint("👋 called get location ===========>${res.data}");
+  Query$getServiceInfo$service_provider_details_by_pk data =
+      res.parsedData!.service_provider_details_by_pk!;
+
+  MezLocation mezLocation =
+      MezLocation.fromHasura(data.location.gps, data.location.address);
+
+  return mezLocation;
+}
+
 Future<Schedule?> get_service_schedule(
     {required int serviceDetailsId, bool withCache = true}) async {
   QueryResult<Query$getServiceSchedule> res =
@@ -172,6 +195,7 @@ Future<ServiceInfo> update_service_info(
   QueryResult<Mutation$updateServiceDetails> res =
       await _db.graphQLClient.mutate$updateServiceDetails(
     Options$Mutation$updateServiceDetails(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Mutation$updateServiceDetails(
         detailsId: detailsId,
         data: Input$service_provider_details_set_input(
@@ -217,6 +241,30 @@ Future<Schedule?> update_service_schedule(
   Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
       res.parsedData!.update_service_provider_details_by_pk;
   return Schedule.fromData(data!.schedule);
+}
+
+Future<bool> update_service_state({
+  required ServiceStatus? status,
+  required bool? approved,
+  required int detailsId,
+}) async {
+  QueryResult<Mutation$updateServiceDetails> res =
+      await _db.graphQLClient.mutate$updateServiceDetails(
+    Options$Mutation$updateServiceDetails(
+      variables: Variables$Mutation$updateServiceDetails(
+        detailsId: detailsId,
+        data: Input$service_provider_details_set_input(
+            approved: approved, open_status: status?.toFirebaseFormatString()),
+      ),
+    ),
+  );
+  if (res.parsedData?.update_service_provider_details_by_pk == null) {
+    mezDbgPrint("Error =======>${res.data}");
+    throwError(res.exception);
+  }
+  Mutation$updateServiceDetails$update_service_provider_details_by_pk? data =
+      res.parsedData!.update_service_provider_details_by_pk;
+  return data != null;
 }
 
 Future<bool> update_service_accepted_payments(

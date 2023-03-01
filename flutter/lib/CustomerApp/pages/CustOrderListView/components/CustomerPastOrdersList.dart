@@ -60,7 +60,7 @@ class CustomerPastOrdersList extends StatelessWidget {
                     : (calculateDifference(element.orderTime) == -1)
                         ? _i18n()["shared"]["notification"]["yesterday"]
                         : DateFormat('dd MMM yyyy').format(element.orderTime),
-                style: txt.displaySmall,
+                style: txt.bodyText1,
               ),
             );
           },

@@ -1,5 +1,9 @@
 mutation insertNotifInfo($notifData: notification_info_insert_input!) {
-  insert_notification_info_one(object: $notifData) {
+  insert_notification_info_one(
+    object: $notifData, 
+    on_conflict: {
+      constraint: notification_info_app_type_id_user_id_key, 
+      update_columns: token}) {
     id
   }
 }

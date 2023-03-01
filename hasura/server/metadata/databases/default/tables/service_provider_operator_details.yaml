@@ -43,7 +43,6 @@ select_permissions:
   - role: delivery_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -58,7 +57,6 @@ select_permissions:
   - role: laundry_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -73,7 +71,6 @@ select_permissions:
   - role: mez_admin
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -90,7 +87,6 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - current_gps
         - id
         - online
         - owner
@@ -102,3 +98,17 @@ select_permissions:
             restaurant_operators:
               user_id:
                 _eq: X-Hasura-User-Id
+update_permissions:
+  - role: mez_admin
+    permission:
+      columns:
+        - status
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check: null

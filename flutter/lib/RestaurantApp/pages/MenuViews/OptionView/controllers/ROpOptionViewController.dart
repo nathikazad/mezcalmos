@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart' as fd;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+
+import 'package:mezcalmos/Shared/graphql/item/option/choice/hsChoice.dart';
 import 'package:mezcalmos/Shared/graphql/item/option/hsOption.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/translation/hsTranslation.dart';
@@ -11,6 +12,7 @@ import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Choice.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Option.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 enum FormValid { Valid, PrimaryNotValid, SecondaryNotValid }
 
@@ -62,7 +64,6 @@ class ROpOptionViewController {
       await _initEditMode(int.parse(optionId));
     } else {
       // add new option mode //
-
     }
     initDone.value = true;
   }
@@ -251,5 +252,11 @@ class ROpOptionViewController {
       default:
         return 1;
     }
+  }
+
+  void switchChoiceAvailble({required Choice choice, required bool value}) {
+    update_choice_by_id(
+            choice: choice.copyWith(available: value), choiceId: choice.id)
+        .then((bool value) => fetchOption());
   }
 }

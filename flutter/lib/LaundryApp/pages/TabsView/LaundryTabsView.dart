@@ -57,8 +57,11 @@ class _LaundryTabsViewState extends State<LaundryTabsView> {
         );
       case 3:
         return ServiceProfileView(
-          serviceId: opAuthController.laundryId!,
-          serviceDetailsId: opAuthController.detailsId,
+          serviceId: opAuthController.laundryId,
+          serviceDetailsId:
+              opAuthController.operator.value!.state.serviceProviderDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
         );
 
       default:

@@ -8,9 +8,9 @@ import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart'
     as MapHelper;
-import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart' as locModel;
 import 'package:mezcalmos/Shared/widgets/MezSnackbar.dart';
 import 'package:sizer/sizer.dart';
@@ -81,7 +81,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
       });
     }
 
-    if (dropDownListValue?.location != null) {
+    if (dropDownListValue?.location != null && dropDownListValue!.id != -1) {
       validateFirstDistance();
     }
 
@@ -113,45 +113,47 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: widget.bgColor,
-            // border: Border.all(
-            //   // width: 1.5,
-            //   // color: (dropDownListValue != pickLocationPlaceholder)
-            //   //     ? Theme.of(context).primaryColorLight
-            //   //     : Colors.red,
-            // ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: widget.bgColor,
+              // border: Border.all(
+              //   // width: 1.5,
+              //   // color: (dropDownListValue != pickLocationPlaceholder)
+              //   //     ? Theme.of(context).primaryColorLight
+              //   //     : Colors.red,
+              // ),
+            ),
+            child: DropdownButtonHideUnderline(
+                child: DropdownButton<SavedLocation>(
+              selectedItemBuilder: (BuildContext context) {
+                return dropDownSelectedItemBuilder(textTheme);
+              },
+              iconDisabledColor: Colors.grey.shade800,
+              iconEnabledColor: Colors.grey.shade800,
+              value: dropDownListValue,
+              dropdownColor: widget.bgColor,
+              isDense: true,
+              isExpanded: true,
+              icon: Icon(
+                Icons.expand_more,
+                color: Colors.black,
+              ),
+              hint: Text(
+                '${_i18n()["chooseLoc"]}',
+                style: Get.textTheme.bodyText1,
+              ),
+              items: listOfSavedLoacations
+                  .map<DropdownMenuItem<SavedLocation>>(
+                      (SavedLocation e) => buildItems(e, textTheme))
+                  .toList(),
+              onChanged: (SavedLocation? v) async {
+                await locationChangedHandler(v!);
+              },
+            )),
           ),
-          child: DropdownButtonHideUnderline(
-              child: DropdownButton<SavedLocation>(
-            selectedItemBuilder: (BuildContext context) {
-              return dropDownSelectedItemBuilder(textTheme);
-            },
-            iconDisabledColor: Colors.grey.shade800,
-            iconEnabledColor: Colors.grey.shade800,
-            value: dropDownListValue,
-            dropdownColor: widget.bgColor,
-            isDense: true,
-            isExpanded: true,
-            icon: Icon(
-              Icons.expand_more,
-              color: Colors.black,
-            ),
-            hint: Text(
-              '${_i18n()["chooseLoc"]}',
-              style: Get.textTheme.bodyText1,
-            ),
-            items: listOfSavedLoacations
-                .map<DropdownMenuItem<SavedLocation>>(
-                    (SavedLocation e) => buildItems(e, textTheme))
-                .toList(),
-            onChanged: (SavedLocation? v) async {
-              await locationChangedHandler(v!);
-            },
-          )),
         ),
         Obx(() {
           if (showError.isTrue) {
@@ -273,7 +275,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
               child: Text(
                 e.name.capitalizeFirst.toString(),
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.bodyText1?.copyWith(
+                style: Get.textTheme.bodyLarge?.copyWith(
                   fontSize: 12.sp,
                 ), //for dropdownItems
               ),
@@ -308,7 +310,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
                     child: Text(
                       item.name.capitalizeFirst.toString(),
                       overflow: TextOverflow.ellipsis,
-                      style: Get.textTheme.bodyText1?.copyWith(
+                      style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 12.sp,
                       ), //for dropDownShownValue
                     ),
@@ -337,7 +339,7 @@ class _DropDownLocationListState extends State<DropDownLocationList> {
           Flexible(
             child: Text(
               '${_i18n()["distanceError"]}',
-              style: Get.textTheme.bodyText1
+              style: Get.textTheme.bodyLarge
                   ?.copyWith(color: Colors.red, fontSize: 10.sp),
             ),
           ),

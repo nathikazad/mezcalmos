@@ -34,6 +34,20 @@ insert_permissions:
         - delivery_company_id
         - service_provider_id
         - service_provider_type
+  - role: mez_admin
+    permission:
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - delivery_company_id
+        - service_provider_id
+        - service_provider_type
   - role: restaurant_operator
     permission:
       check:
@@ -60,13 +74,18 @@ select_permissions:
         - id
         - service_provider_id
         - service_provider_type
-      filter: {}
+      filter:
+        laundry_store:
+          operators:
+            user_id:
+              _eq: X-Hasura-User-Id
   - role: mez_admin
     permission:
       columns:
         - delivery_company_id
         - id
         - service_provider_id
+        - service_provider_type
       filter:
         _exists:
           _table:
@@ -78,9 +97,10 @@ select_permissions:
   - role: restaurant_operator
     permission:
       columns:
-        - id
         - delivery_company_id
+        - id
         - service_provider_id
+        - service_provider_type
       filter:
         restaurant:
           restaurant_operators:
@@ -101,7 +121,6 @@ update_permissions:
     permission:
       columns:
         - delivery_company_id
-        - id
         - service_provider_id
       filter:
         _exists:

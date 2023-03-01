@@ -18,7 +18,21 @@ select_permissions:
         - delivery_company_id
         - id
         - user_id
-        - delivery_driver_type
       filter:
         user_id:
           _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - delivery_company_id
+        - details_id
+        - id
+        - user_id
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

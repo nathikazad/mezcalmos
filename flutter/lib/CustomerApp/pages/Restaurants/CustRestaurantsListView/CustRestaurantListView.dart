@@ -60,7 +60,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               Obx(() {
                 if (viewController.byRestaurants)
                   return Padding(
-                    padding: EdgeInsets.only(top: 2.h),
+                    padding: EdgeInsets.only(top: 4),
                     child: _restaurantList(),
                   );
                 else
@@ -100,7 +100,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noItemTitle"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -143,16 +143,19 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                           color: !viewController.byRestaurants
                               ? Colors.grey.shade700
                               : Colors.white,
+                          size: 20,
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 2,
                         ),
-                        Text(
-                          "Restaurants",
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            color: !viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
+                        Flexible(
+                          child: Text(
+                            "${_i18n()["restaurants"]}",
+                            style: Get.textTheme.bodyText1?.copyWith(
+                              color: !viewController.byRestaurants
+                                  ? Colors.grey.shade700
+                                  : Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -161,7 +164,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                 ),
               ),
               SizedBox(
-                width: 15,
+                width: 8,
               ),
               Flexible(
                 child: InkWell(
@@ -186,16 +189,19 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
                           color: viewController.byRestaurants
                               ? Colors.grey.shade700
                               : Colors.white,
+                          size: 20,
                         ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          '${_i18n()["meal"]}',
-                          style: Get.textTheme.bodyText1?.copyWith(
-                            color: viewController.byRestaurants
-                                ? Colors.grey.shade700
-                                : Colors.white,
+                        Flexible(
+                          child: Text(
+                            '${_i18n()["meal"]}',
+                            style: Get.textTheme.bodyText1?.copyWith(
+                              color: viewController.byRestaurants
+                                  ? Colors.grey.shade700
+                                  : Colors.white,
+                            ),
                           ),
                         ),
                       ],
@@ -221,8 +227,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
               (int index) {
             return RestaurantCard(
               restaurant: viewController.filteredRestaurants[index],
-              shippingPrice: viewController
-                  .filteredRestaurants[index].deliveryCost!.minimumCost,
+              customerLocation: viewController.customerLocation,
               onClick: () {
                 RestaurantRouters.navigateToRestaurantRoute(
                   viewController.filteredRestaurants[index].info.hasuraId,
@@ -247,7 +252,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
             ),
             Text(
               '${_i18n()["noOpenRestaurant"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             )
           ],
         );
@@ -267,7 +272,8 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 5),
         title: Text(
           "${_i18n()["showOnlyOpen"]}",
-          style: Get.textTheme.bodyText2?.copyWith(fontWeight: FontWeight.w700),
+          style:
+              Get.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
       ),
     );
@@ -276,7 +282,7 @@ class _CustRestaurantListViewState extends State<CustRestaurantListView> {
   Widget _searchInput() {
     return TextFormField(
       textAlignVertical: TextAlignVertical.center,
-      style: Get.textTheme.bodyText1,
+      style: Get.textTheme.bodyLarge,
       onChanged: (String value) {
         viewController.searchQuery.value = value;
         viewController.filter();

@@ -76,6 +76,8 @@ select_permissions:
         - scheduled_time
       computed_fields:
         - in_process
+        - items_cost
+        - total_cost
       filter:
         customer_id:
           _eq: X-Hasura-User-Id
@@ -94,6 +96,51 @@ select_permissions:
               delivery_driver:
                 user_id:
                   _eq: X-Hasura-User-Id
+  - role: delivery_operator
+    permission:
+      columns:
+        - customer_location_gps
+        - chat_id
+        - customer_id
+        - from_customer_delivery_id
+        - id
+        - review_id
+        - store_id
+        - to_customer_delivery_id
+        - stripe_info
+        - delivery_cost
+        - discount_value
+        - refund_amount
+        - stripe_fees
+        - tax
+        - customer_address
+        - customer_app_type
+        - delivery_type
+        - firebase_id
+        - notes
+        - payment_type
+        - status
+        - actual_ready_time
+        - cancellation_time
+        - estimated_ready_time
+        - order_time
+        - scheduled_time
+      computed_fields:
+        - in_process
+        - items_cost
+        - total_cost
+      filter:
+        _or:
+          - from_customer_delivery:
+              delivery_company:
+                delivery_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+          - to_customer_delivery:
+              delivery_company:
+                delivery_operators:
+                  user_id:
+                    _eq: X-Hasura-User-Id
   - role: laundry_operator
     permission:
       columns:
@@ -125,6 +172,8 @@ select_permissions:
         - discount_value
       computed_fields:
         - in_process
+        - items_cost
+        - total_cost
       filter:
         store:
           operators:
@@ -184,5 +233,25 @@ update_permissions:
       check:
         store:
           operators:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - estimated_ready_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
             user_id:
               _eq: X-Hasura-User-Id

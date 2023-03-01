@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,54 +154,13 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                 ? ThreeDotsLoading()
                 : Text(
                     controller.chat.value!.chatInfo.chatTite,
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                    style: Get.textTheme.displaySmall,
                   );
           },
         ),
         actions: <Widget>[
-          // Obx(
-          //   () =>
-          Obx(
-            () => Container(
-              child: controller.chat.value?.chatInfo.phoneNumber != null
-                  ? InkWell(
-                      // onTap: () async => _onCallPress(),
-                      onTap: () async {
-                        final Uri launchUri = Uri(
-                          scheme: 'tel',
-                          path: controller.chat.value?.chatInfo.phoneNumber,
-                        );
-                        mezDbgPrint(await canLaunchUrl(launchUri));
-                        if (await canLaunchUrl(launchUri)) {
-                          await launchUrl(launchUri);
-                        } else {
-                          callAgora();
-                        }
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        padding: EdgeInsets.all(5),
-                        margin: EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: secondaryLightBlueColor,
-                        ),
-                        child: Center(
-                          child: FittedBox(
-                            child: Icon(
-                              Icons.call,
-                              color: primaryBlueColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
-            ),
-          ),
+          _callButton(context),
+
           // )
         ],
       ),
@@ -242,7 +200,7 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
                                       vertical: 10, horizontal: 6),
                                   child: Text(
                                     "${_i18n()['viewOrder']}",
-                                    style: Get.textTheme.bodyText1
+                                    style: Get.textTheme.bodyLarge
                                         ?.copyWith(color: primaryBlueColor),
                                   ),
                                 ),
@@ -279,6 +237,125 @@ class BaseMessagingScreenState extends State<BaseMessagingScreen> {
   }
 
   void callAgora() {}
+  Container _callButton(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: () {
+          if (controller.chat.value?.chatInfo.phoneNumber != null) {
+            _callBottomSheet(context);
+          } else {
+            callAgora();
+          }
+        },
+        child: Container(
+          width: 30,
+          height: 30,
+          padding: EdgeInsets.all(5),
+          margin: EdgeInsets.only(right: 12),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: secondaryLightBlueColor,
+          ),
+          child: Center(
+            child: FittedBox(
+              child: Icon(
+                Icons.call,
+                color: primaryBlueColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> _callBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ), //for giving border to datePickerSheet
+      ),
+      context: context,
+      isDismissible: true,
+      builder: (BuildContext context) {
+        return Container(
+          margin: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InkWell(
+                onTap: () {
+                  callAgora();
+                  MezRouter.popDialog();
+                },
+                child: Ink(
+                    padding: const EdgeInsets.all(6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.phone_android_sharp,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("${_i18n()['callApp']}",
+                            style: Get.textTheme.bodyLarge)
+                      ],
+                    )),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () async {
+                  final Uri launchUri = Uri(
+                    scheme: 'tel',
+                    path: controller.chat.value?.chatInfo.phoneNumber,
+                  );
+                  mezDbgPrint(await canLaunchUrl(launchUri));
+                  if (await canLaunchUrl(launchUri)) {
+                    await launchUrl(launchUri);
+                    MezRouter.popDialog();
+                  }
+                },
+                child: Ink(
+                    padding: const EdgeInsets.all(6),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.phone,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("${_i18n()['callPhone']}",
+                            style: Get.textTheme.bodyLarge)
+                      ],
+                    )),
+              ),
+              Divider(),
+              InkWell(
+                onTap: () {
+                  MezRouter.popDialog();
+                },
+                child: Ink(
+                    padding: const EdgeInsets.all(6),
+                    width: double.infinity,
+                    child: Text(
+                      "${_i18n()['cancel']}",
+                      textAlign: TextAlign.center,
+                      style:
+                          Get.textTheme.bodyLarge?.copyWith(color: Colors.red),
+                    )),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   Widget singleChatComponent({
     required String message,
@@ -474,14 +551,11 @@ class SendMessageBox extends StatelessWidget {
                     color:
                         secondaryLightBlueColor //Color.fromRGBO(240, 241, 255, 1),
                     ),
-                child: Transform.rotate(
-                  angle: -math.pi / 5.0,
-                  child: Center(
-                    child: Icon(
-                      Icons.send,
-                      size: 28,
-                      color: Color.fromRGBO(103, 121, 254, 1),
-                    ),
+                child: Center(
+                  child: Icon(
+                    Icons.near_me,
+                    size: 28,
+                    color: Color.fromRGBO(103, 121, 254, 1),
                   ),
                 ),
               ),

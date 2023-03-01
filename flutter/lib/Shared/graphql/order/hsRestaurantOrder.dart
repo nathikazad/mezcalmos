@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
@@ -39,7 +38,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       .map<RestaurantOrder?>(
           (QueryResult<Subscription$listen_on_restaurant_order_by_id> event) {
     mezDbgPrint(
-        "Event from hs restaurant order 🚀🚀🚀 ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver?.current_location}");
+        "Event from hs restaurant order 🚀🚀🚀 =====>driver ${event.parsedData?.restaurant_order_by_pk?.delivery?.delivery_driver}");
 
     if (event.parsedData?.restaurant_order_by_pk != null) {
       final List<RestaurantOrderItem> items = [];
@@ -95,6 +94,8 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
       }
 
       final RestaurantOrder res = RestaurantOrder(
+        deliveryProviderType:
+            orderData.delivery!.service_provider_type.toServiceProviderType(),
         dropOffDriverChatId: orderData.delivery?.chat_with_service_provider_id,
         chatId: orderData.chat_id!,
         orderId: orderData.id,
@@ -161,15 +162,7 @@ Stream<RestaurantOrder?> listen_on_restaurant_order_by_id(
         ),
         dropoffDriver: (orderData.delivery?.delivery_driver != null)
             ? DeliveryDriverUserInfo(
-                location:
-                    (orderData.delivery?.delivery_driver?.current_location !=
-                            null)
-                        ? LatLng(
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.latitude,
-                            orderData.delivery!.delivery_driver!
-                                .current_location!.longitude)
-                        : null,
+                location: null,
                 hasuraId: orderData.delivery!.delivery_driver!.user.id,
                 name: orderData.delivery!.delivery_driver!.user.name,
                 image: orderData.delivery!.delivery_driver!.user.image,
@@ -218,7 +211,8 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   final Query$get_restaurant_order_by_id$restaurant_order_by_pk orderData =
       response.parsedData!.restaurant_order_by_pk!;
   mezDbgPrint(
-      "🥹🥹🥹🥹====  $orderId get_restaurant_order_by_id::SUCCESS ====>${orderData.total_cost}");
+      "Event from hs restaurant order from query 🚀🚀🚀 =====>driver ${orderData.delivery?.delivery_driver}");
+
   final List<RestaurantOrderItem> items = [];
 
   orderData.items.forEach(
@@ -265,12 +259,12 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
   });
   StripeOrderPaymentInfo? _paymentInfo;
   if (orderData.stripe_info != null) {
-    
     _paymentInfo = StripeOrderPaymentInfo.fromJson(orderData.stripe_info);
   }
   final RestaurantOrder res = RestaurantOrder(
+    deliveryProviderType:
+        orderData.delivery!.service_provider_type.toServiceProviderType(),
     chatId: orderData.chat_id!,
-    
     customerDropOffDriverChatId: orderData.delivery?.chat_with_customer_id,
     scheduledTime: (orderData.scheduled_time != null)
         ? DateTime.tryParse(orderData.scheduled_time!)
@@ -311,14 +305,7 @@ Future<RestaurantOrder?> get_restaurant_order_by_id(
     cost: orderData.delivery_cost,
     dropoffDriver: (orderData.delivery?.delivery_driver != null)
         ? DeliveryDriverUserInfo(
-            location:
-                (orderData.delivery?.delivery_driver?.current_location != null)
-                    ? LatLng(
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .latitude,
-                        orderData.delivery!.delivery_driver!.current_location!
-                            .longitude)
-                    : null,
+            location: null,
             hasuraId: orderData.delivery!.delivery_driver!.user.id,
             name: orderData.delivery!.delivery_driver!.user.name,
             image: orderData.delivery!.delivery_driver!.user.image,
@@ -468,7 +455,7 @@ Future<List<MinimalOrder>?> get_past_restaurant_orders(
           image: orderData.customer.user.image,
           status:
               orderData.status.toRestaurantOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.total_cost!);
+          totalCost: orderData.total_cost ?? 0);
     }).toList();
     return orders;
   } else {

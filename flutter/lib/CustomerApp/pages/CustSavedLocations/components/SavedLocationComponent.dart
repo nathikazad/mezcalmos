@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/controllers/customerAuthController.dart';
 import 'package:mezcalmos/CustomerApp/models/Customer.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/pickLocationRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:sizer/sizer.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["SavedLocations"]["components"]["SavedLocationComponent"];
@@ -58,13 +56,13 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   //borderRadius: BorderRadius.circular(16),
                   child: Ink(
-                    // height: 25,
+                    height: 3.2.h,
+                    //width: 59.sp,
                     // width: Get.find<LanguageController>().userLanguageKey ==
                     //         LanguageType.EN
                     //     ? 20.w
                     //     : 28.w,
-                    padding:
-                        EdgeInsets.only(bottom: 2.5, right: 8, left: 8, top: 1),
+                    padding: EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                         color: (savelocation.defaultLocation)
                             ? primaryBlueColor
@@ -99,8 +97,8 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      // height: 3.h,
-                      // width: 3.h,
+                      height: 3.h,
+                      width: 3.h,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: backgroundShadeColor,
@@ -110,7 +108,7 @@ class SavedLocationComponent extends StatelessWidget {
                         child: Icon(
                           Icons.edit_outlined,
                           color: Color(0xFF787878),
-                          size: 15,
+                          size: 2.h,
                         ),
                       )),
                 ),
@@ -123,8 +121,8 @@ class SavedLocationComponent extends StatelessWidget {
                   },
                   customBorder: CircleBorder(),
                   child: Ink(
-                      // height: 18,
-                      // width: 3.h,
+                      height: 3.h,
+                      width: 3.h,
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
                         color: offRedColor,
@@ -134,7 +132,7 @@ class SavedLocationComponent extends StatelessWidget {
                         child: Icon(
                           Icons.delete_outline,
                           color: Color(0xFFE21132),
-                          size: 15,
+                          size: 2.h,
                         ),
                       )),
                 ),

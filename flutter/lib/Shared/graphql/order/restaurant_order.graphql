@@ -5,10 +5,11 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     notes
     scheduled_time
     stripe_info
-
     restaurant {
       id
-      details{ id
+      
+      details {
+        id
         firebase_id
         image
         language
@@ -22,8 +23,6 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     items {
       in_json
       restaurant_item {
-        id
-        image
         item_type
         name {
           translations {
@@ -40,6 +39,8 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         position
         category_id
         available
+        id
+        image
         restaurant_id
         special_period_end
         special_period_start
@@ -79,9 +80,12 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
     }
 
     order_time
-   
     customer_app_type
     notes
+    tax
+    total_cost
+    items_cost
+    chat_id
     customer {
       user {
         id
@@ -89,27 +93,22 @@ subscription listen_on_restaurant_order_by_id($order_id: Int!) {
         image
       }
     }
-    tax
-    total_cost
-    items_cost
-    chat_id
     delivery_cost
     delivery {
       trip_polyline
       trip_distance
+      service_provider_type
       trip_duration
-      estimated_arrival_at_dropoff_time
-      estimated_arrival_at_pickup_time
       chat_with_service_provider_id
       chat_with_customer_id
+      id
+      estimated_arrival_at_dropoff_time
+      estimated_arrival_at_pickup_time
       cancellation_time
-      current_gps
 
       delivery_cost
-
       delivery_driver {
-        current_location
-
+        id
         user {
           id
           image
@@ -125,11 +124,14 @@ query get_restaurant_order_by_id($order_id: Int!) {
   restaurant_order_by_pk(id: $order_id) {
     id
     notes
+    
     scheduled_time
     stripe_info
     restaurant {
       id
-      details{ id
+      
+      details {
+        id
         firebase_id
         image
         language
@@ -216,6 +218,7 @@ query get_restaurant_order_by_id($order_id: Int!) {
     delivery_cost
     delivery {
       trip_polyline
+      service_provider_type
       trip_distance
       trip_duration
       chat_with_service_provider_id
@@ -224,11 +227,10 @@ query get_restaurant_order_by_id($order_id: Int!) {
       estimated_arrival_at_dropoff_time
       estimated_arrival_at_pickup_time
       cancellation_time
-      current_gps
 
       delivery_cost
       delivery_driver {
-        current_location
+        id
 
         user {
           id

@@ -110,17 +110,17 @@ class HasuraDb {
         MezEnv.appLaunchMode == AppLaunchMode.dev,
       );
       tokenSnapshot = hasuraAuthToken;
-      logToken(hasuraAuthToken);
+      // logToken(hasuraAuthToken);
 
-      mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
-      mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
+      // mezDbgPrint("ROLE ${_getRoleBasedOnApp()}");
+      // mezDbgPrint("✅ TOKKEN ✅: \n $hasuraAuthToken");
 
       headers = <String, String>{
         'Authorization': 'Bearer $hasuraAuthToken',
         'x-hasura-role': _getRoleBasedOnApp()
       };
-      mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
-      mezDbgPrint("headers ===> ${headers.toString()}");
+      // mezDbgPrint("[AAA] TOKEN ==> $hasuraAuthToken");
+      // logLongString("headers ===> ${headers.toString()}");
       final gqClient.AuthLink _authLink =
           gqClient.AuthLink(getToken: () async => 'Bearer $hasuraAuthToken');
       _httpLink = gqClient.HttpLink(hasuraDbLink, defaultHeaders: headers);
@@ -132,17 +132,33 @@ class HasuraDb {
       expirationTime = null;
       cancelJWTExpirationCheckTimer();
     }
-    _wsLink = gqClient.WebSocketLink(hasuraDbSocketLink,
-        config: gqClient.SocketClientConfig(
-          autoReconnect: true,
-          parser: MyParser(),
-          inactivityTimeout: Duration(seconds: 30),
-          initialPayload: () async {
-            return {
-              'headers': headers,
-            };
-          },
-        ));
+
+    if (_wsLink == null) {
+      _wsLink = gqClient.WebSocketLink(hasuraDbSocketLink,
+          config: gqClient.SocketClientConfig(
+            autoReconnect: true,
+            parser: MyParser(),
+            inactivityTimeout: Duration(seconds: 30),
+            initialPayload: () async {
+              return {
+                'headers': headers,
+              };
+            },
+          ));
+    } else {
+      _wsLink!.config = gqClient.SocketClientConfig(
+        autoReconnect: true,
+        parser: MyParser(),
+        inactivityTimeout: Duration(seconds: 30),
+        initialPayload: () async {
+          return {
+            'headers': headers,
+          };
+        },
+      );
+      // _wsLink?.config.connect(uri: hasuraDbSocketLink, headers: headers);
+      _wsLink?.connectOrReconnect();
+    }
 
     _link = gqClient.Link.split(
         (gqClient.Request request) => request.isSubscription, _wsLink!, _link);
@@ -151,12 +167,25 @@ class HasuraDb {
       cache: gqClient.GraphQLCache(),
       link: _link,
     );
+
+    // final DateTime dateTime = new DateTime.fromMillisecondsSinceEpoch(
+    //     JwtDecoder.decode(headers['Authorization']!.split(" ")[1])['exp'] *
+    //         1000);
+    // mezDbgPrint(
+    //     "🤬🤬🤬🤬🤬🤬 hashcode of gql client from hasuradb link:${_graphQLClient?.link.hashCode} client:${_graphQLClient.hashCode}");
+
+    // mezDbgPrint("🌭🌭🌭🌭🌭🌭");
+    // mezDbgPrint(dateTime.toLocal().toString());
+    // mezDbgPrint((graphQLClient.link as WebSocketLink ).config.headers)
   }
 
   Future<String> _getAuthorizationToken(User user, bool testMode) async {
     final String token = await user.getIdToken(true);
     if (testMode) {
       final Map<String, dynamic> decoded = JwtDecoder.decode(token);
+      // mezDbgPrint(decoded);
+      // decoded["exp"] = decoded["exp"] - 3580;
+      // mezDbgPrint(decoded);
       final JwtClaim claims = JwtClaim.fromMap(decoded, defaultIatExp: false);
       return issueJwtHS256(claims, 'secret-for-testing-locally-with-emulator');
     }
@@ -164,6 +193,7 @@ class HasuraDb {
   }
 
   void startJWTExpirationCheckTimer() {
+    mezDbgPrint("startJWTExpirationCheckTimer");
     expirationCheckTimer?.cancel();
     expirationCheckTimer =
         Timer.periodic(new Duration(seconds: 300), (Timer timer) async {
@@ -185,7 +215,7 @@ class HasuraDb {
   bool checkIfJWTExpired() {
     final num timeToExpire =
         expirationTime! - (DateTime.now().millisecondsSinceEpoch / 1000).ceil();
-    mezDbgPrint("♥️♥️♥️♥️♥️♥️♥️ $timeToExpire");
+    mezDbgPrint("♥️♥️♥️♥️♥️♥️♥️ Time left: $timeToExpire");
     return timeToExpire < 600;
   }
 

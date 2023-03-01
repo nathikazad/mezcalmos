@@ -285,7 +285,7 @@ class _ROpOptionViewState extends State<ROpOptionView>
   }
 
   AppBar _appBar() {
-    return mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+    return MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
       MezRouter.back(result: _viewController.needToFetch.value);
     },
         titleWidget: Obx(

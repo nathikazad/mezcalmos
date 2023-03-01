@@ -37,7 +37,7 @@ export function pastOrders(orderType: OrderType, orderId?: string) {
 }
 
 export function notificationsQueueNode(notificationId?: string) {
-  let dbNode: string = `notificationQueue`
+  let dbNode: string = `notificationQueue2`
   if (notificationId != undefined) {
     dbNode += `/${notificationId}`
   }

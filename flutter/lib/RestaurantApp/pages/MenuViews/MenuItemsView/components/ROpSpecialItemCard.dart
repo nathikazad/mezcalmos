@@ -61,7 +61,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   children: [
                     Text(
                       item.name[userLanguage] ?? "",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                     SizedBox(
                       height: 5,
@@ -78,7 +78,7 @@ class ROpSpecialItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(item.cost.toPriceString(),
-                        style: Get.textTheme.bodyText1),
+                        style: Get.textTheme.bodyLarge),
                     SizedBox(
                       height: 5,
                     ),
@@ -90,10 +90,8 @@ class ROpSpecialItemCard extends StatelessWidget {
                         Switch(
                           value: item.available,
                           onChanged: (bool v) {
-                            viewController.switchSpecialItemAv(
-                                v: v,
-                                itemId: item.id!.toString(),
-                                isCurrent: isCurrent);
+                            viewController.switchItemAv(
+                                item: item, value: v,);
                           },
                           activeColor: primaryBlueColor,
                           activeTrackColor: secondaryLightBlueColor,

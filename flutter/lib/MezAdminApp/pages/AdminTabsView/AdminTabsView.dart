@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/MezAdminApp/controllers/mezAdminAuthController.dart';
@@ -95,7 +94,7 @@ class _AdminTabsViewState extends State<AdminTabsView>
   PreferredSizeWidget _appBar() {
     return PreferredSize(
       preferredSize: Size.fromHeight(viewController.getAppbarHeight),
-      child: mezcalmosAppBar(
+      child: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         title: viewController.getTitle(),
         showNotifications: true,

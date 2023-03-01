@@ -61,7 +61,7 @@ class _RequestTaxiScreenState extends State<RequestTaxiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
       ),

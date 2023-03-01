@@ -12,6 +12,7 @@ import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Review.dart';
 import 'package:mezcalmos/Shared/models/Utilities/SelfDeliveryDetails.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 //ignore_for_file:constant_identifier_names
 enum RestaurantOrderStatus {
@@ -79,6 +80,7 @@ class RestaurantOrder extends DeliverableOrder {
       int? dropOffDriverChatId,
       required this.itemsCost,
       required this.shippingCost,
+      required super.deliveryProviderType,
       super.customerDropOffDriverChatId,
       super.estimatedPickupFromServiceProviderTime,
       super.estimatedDropoffAtCustomerTime,
@@ -109,6 +111,7 @@ class RestaurantOrder extends DeliverableOrder {
     }
     final RestaurantOrder restaurantOrder = RestaurantOrder(
         orderId: id,
+        deliveryProviderType: ServiceProviderType.Restaurant,
         chatId: 1,
         status: data["status"].toString().toRestaurantOrderStatus(),
         quantity: data["quantity"],
@@ -237,16 +240,20 @@ class RestaurantOrder extends DeliverableOrder {
         status == RestaurantOrderStatus.OnTheWay;
   }
 
+  bool isSelfDelivery() {
+    return deliveryProviderType == ServiceProviderType.Restaurant;
+  }
+
   bool inDeliveryPhase() {
     return status == RestaurantOrderStatus.OnTheWay;
   }
 
-  bool inSelfDelivery() {
-    return (status == RestaurantOrderStatus.Ready ||
-            status == RestaurantOrderStatus.OnTheWay) &&
-        (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
-            deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
-  }
+  // bool inSelfDelivery() {
+  //   return (status == RestaurantOrderStatus.Ready ||
+  //           status == RestaurantOrderStatus.OnTheWay) &&
+  //       (deliveryMode == DeliveryMode.SelfDeliveryByDriver ||
+  //           deliveryMode == DeliveryMode.SelfDeliveryByRestaurant);
+  // }
 
   bool get selfDelivery {
     return deliveryMode == DeliveryMode.SelfDeliveryByDriver ||

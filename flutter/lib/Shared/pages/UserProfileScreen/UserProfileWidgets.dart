@@ -155,14 +155,14 @@ class UserProfileWidgetsClass {
         !isImageBeingUploaded) {
       mezDbgPrint("CheckIfUserHasAllInfosSet -[ True ]- !!!");
       // return popable button
-      return mezcalmosAppBar(
+      return MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
       );
     } else {
       mezDbgPrint("CheckIfUserHasAllInfosSet -[ False ]- !!!");
       // none popable buttom
-      return mezcalmosAppBar(
+      return MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         onClick: () {
           Get.closeAllSnackbars();

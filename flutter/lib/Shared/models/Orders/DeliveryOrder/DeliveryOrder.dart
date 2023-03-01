@@ -193,4 +193,11 @@ class DeliveryOrder {
         DeliveryOrderStatus.OnTheWayToDropoff
       ].contains(status);
   num get totalCost => packageCost + deliveryCost;
+
+  bool get inDeliveryPhase {
+    return status == DeliveryOrderStatus.OnTheWayToDropoff ||
+        status == DeliveryOrderStatus.OnTheWayToPickup ||
+        status == DeliveryOrderStatus.AtDropoff ||
+        status == DeliveryOrderStatus.AtPickup;
+  }
 }

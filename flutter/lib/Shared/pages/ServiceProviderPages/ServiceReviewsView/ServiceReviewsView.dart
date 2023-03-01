@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceNoReviews.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewCard.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/components/ServiceReviewsFilters.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/ServiceReviewsView/controllers/ServiceReviewsViewController.dart';
+import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+import 'package:mezcalmos/Shared/constants/global.dart';
+import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -40,6 +42,8 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
+          title: "Reviews", onClick: MezRouter.back),
       body: Obx(() {
         if (viewController.hasReviews && viewController.hasRating) {
           return SingleChildScrollView(
@@ -123,12 +127,15 @@ class _ServiceReviewsViewState extends State<ServiceReviewsView> {
       decoration: BoxDecoration(
           color: viewController.performColor(),
           borderRadius: BorderRadius.circular(8)),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             "${_i18n()["perfomTitle"]}",
             style: Get.textTheme.bodyLarge,
+          ),
+          SizedBox(
+            height: 5,
           ),
           Text(
             " ${_i18n()[viewController.performanceString()]} !",

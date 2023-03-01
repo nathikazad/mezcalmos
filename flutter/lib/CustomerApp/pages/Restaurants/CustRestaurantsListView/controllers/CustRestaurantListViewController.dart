@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
@@ -22,24 +23,31 @@ class CustRestaurantListViewController {
   RxBool isLoading = RxBool(false);
   RxBool showOnlyOpen = RxBool(true);
   RxString searchQuery = RxString("");
+  late LocationData customerLocation;
 
   final LanguageType userLanguage =
       Get.find<LanguageController>().userLanguageKey;
 
   void init() {
     isLoading.value = true;
-    // get_delivery_cost(serviceProviderId: 1,withCache: false)
-    //     .then((DeliveryCost? value) => _mezDeliveryCost.value = value);
+
     fetch_restaurants(withCache: false).then((List<Restaurant> list) {
       _restaurants = list;
 
       _assignServiceIds();
       filter();
     }).whenComplete(() {
-      isLoading.value = false;
-      mezDbgPrint(
-          "List from view :================>${filteredRestaurants.length}");
+      _getCustomerCurrentLocation();
     });
+  }
+
+  Future<LocationData> _getCustomerCurrentLocation() async {
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀");
+    LocationData res = await Location().getLocation();
+    customerLocation = res;
+    isLoading.value = false;
+    mezDbgPrint("Getting user current location 😕😀😕😀😕😀😕😀 =====>$res");
+    return res;
   }
 
   void changeAlwaysOpenSwitch(bool value) {

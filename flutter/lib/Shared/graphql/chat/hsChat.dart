@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/chat/__generated/hsChat.graphql.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -10,32 +9,31 @@ import 'package:mezcalmos/env.dart';
 
 HasuraDb _hasuraDb = Get.find<HasuraDb>();
 
+List<Message> _get_messages(List<Object?>? msgs) {
+  final List<Message> RetMsgs = [];
+  mezDbgPrint(
+      "[log] Called :: get_chat_info :: chat_id :: type :: ${msgs.runtimeType}");
+  if (msgs == null) return [];
+  msgs.forEach((Object? jsonString) {
+    mezDbgPrint("$jsonString :: type :: ${jsonString.runtimeType}");
+    // I use the timestamp as key
+    if (jsonString != null) {
+      final Map<String, dynamic> msg = jsonString
+          as Map<String, dynamic>; //mapFromJson(jsonString as String);
+      RetMsgs.add(
+        Message(
+          message: msg['message'],
+          timestamp: DateTime.parse(msg['timestamp']).toLocal(),
+          userId: msg['userId'],
+        ),
+      );
+    }
+  });
+
+  return RetMsgs;
+}
+
 Future<HasuraChat?> get_chat_info({required int chat_id}) async {
-  mezDbgPrint("[log] Called :: get_chat_info :: chat_id :: $chat_id ");
-  List<Message> _get_messages(List<Object?> msgs) {
-    final List<Message> RetMsgs = [];
-    mezDbgPrint(
-        "[log] Called :: get_chat_info :: chat_id :: type :: ${msgs.runtimeType}");
-
-    msgs.forEach((Object? jsonString) {
-      mezDbgPrint("$jsonString :: type :: ${jsonString.runtimeType}");
-      // I use the timestamp as key
-      if (jsonString != null) {
-        final Map<String, dynamic> msg = jsonString
-            as Map<String, dynamic>; //mapFromJson(jsonString as String);
-        RetMsgs.add(
-          Message(
-            message: msg['message'],
-            timestamp: DateTime.parse(msg['timestamp']).toLocal(),
-            userId: msg['userId'],
-          ),
-        );
-      }
-    });
-
-    return RetMsgs;
-  }
-
   final QueryResult<Query$get_chat_info> _chat =
       await _hasuraDb.graphQLClient.query$get_chat_info(
     Options$Query$get_chat_info(
@@ -48,6 +46,8 @@ Future<HasuraChat?> get_chat_info({required int chat_id}) async {
     throwError(_chat.exception);
   } else {
     mezDbgPrint("[+] called get_chat_info :: SUCCESS.");
+    mezDbgPrint(_chat.parsedData!.chat_by_pk?.messages);
+
     final HasuraChat RetChat = HasuraChat(
       chatInfo: HasuraChatInfo(
         chatTite: _chat.parsedData!.chat_by_pk!

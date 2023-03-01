@@ -91,7 +91,7 @@ class _PickLocationViewState extends State<PickLocationView> {
           () => pickButton(),
         ),
         resizeToAvoidBottomInset: false,
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Back,
           autoBack: true,
           title: "${_i18n()["pickLocation"]}",

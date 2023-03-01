@@ -312,6 +312,27 @@ const documentNodeQuerygetDeliveryCostById = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'radius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cost_per_km_from_base'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -442,6 +463,9 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
+    required this.radius,
+    this.cost_per_km_from_base,
+    required this.self_delivery,
     required this.$__typename,
   });
 
@@ -452,6 +476,9 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
+    final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
     return Query$getDeliveryCostById$delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -461,6 +488,11 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      cost_per_km_from_base: l$cost_per_km_from_base == null
+          ? null
+          : moneyFromJson(l$cost_per_km_from_base),
+      self_delivery: (l$self_delivery as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -474,6 +506,12 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
   final int id;
 
   final double minimum_cost;
+
+  final int radius;
+
+  final double? cost_per_km_from_base;
+
+  final bool self_delivery;
 
   final String $__typename;
 
@@ -492,6 +530,14 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = l$cost_per_km_from_base == null
+        ? null
+        : moneyToJson(l$cost_per_km_from_base);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -504,6 +550,9 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final l$self_delivery = self_delivery;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -511,6 +560,9 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
+      l$radius,
+      l$cost_per_km_from_base,
+      l$self_delivery,
       l$$__typename,
     ]);
   }
@@ -549,6 +601,21 @@ class Query$getDeliveryCostById$delivery_details_by_pk {
     if (l$minimum_cost != lOther$minimum_cost) {
       return false;
     }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
+      return false;
+    }
     final l$$__typename = $__typename;
     final lOther$$__typename = other.$__typename;
     if (l$$__typename != lOther$$__typename) {
@@ -584,6 +651,9 @@ abstract class CopyWith$Query$getDeliveryCostById$delivery_details_by_pk<TRes> {
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    int? radius,
+    double? cost_per_km_from_base,
+    bool? self_delivery,
     String? $__typename,
   });
 }
@@ -607,6 +677,9 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? cost_per_km_from_base = _undefined,
+    Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Query$getDeliveryCostById$delivery_details_by_pk(
@@ -623,6 +696,15 @@ class _CopyWithImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        cost_per_km_from_base: cost_per_km_from_base == _undefined
+            ? _instance.cost_per_km_from_base
+            : (cost_per_km_from_base as double?),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -641,6 +723,9 @@ class _CopyWithStubImpl$Query$getDeliveryCostById$delivery_details_by_pk<TRes>
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    int? radius,
+    double? cost_per_km_from_base,
+    bool? self_delivery,
     String? $__typename,
   }) =>
       _res;
@@ -1549,6 +1634,27 @@ const documentNodeMutationupdateDeliveryCost = DocumentNode(definitions: [
             selectionSet: null,
           ),
           FieldNode(
+            name: NameNode(value: 'radius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'cost_per_km_from_base'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
+            name: NameNode(value: 'self_delivery'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null,
+          ),
+          FieldNode(
             name: NameNode(value: '__typename'),
             alias: null,
             arguments: [],
@@ -1666,6 +1772,9 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     this.free_delivery_minimum_cost,
     required this.id,
     required this.minimum_cost,
+    required this.radius,
+    this.cost_per_km_from_base,
+    required this.self_delivery,
     required this.$__typename,
   });
 
@@ -1676,6 +1785,9 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$free_delivery_minimum_cost = json['free_delivery_minimum_cost'];
     final l$id = json['id'];
     final l$minimum_cost = json['minimum_cost'];
+    final l$radius = json['radius'];
+    final l$cost_per_km_from_base = json['cost_per_km_from_base'];
+    final l$self_delivery = json['self_delivery'];
     final l$$__typename = json['__typename'];
     return Mutation$updateDeliveryCost$update_delivery_details_by_pk(
       cost_per_km: moneyFromJson(l$cost_per_km),
@@ -1685,6 +1797,11 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
           : moneyFromJson(l$free_delivery_minimum_cost),
       id: (l$id as int),
       minimum_cost: moneyFromJson(l$minimum_cost),
+      radius: (l$radius as int),
+      cost_per_km_from_base: l$cost_per_km_from_base == null
+          ? null
+          : moneyFromJson(l$cost_per_km_from_base),
+      self_delivery: (l$self_delivery as bool),
       $__typename: ((l$$__typename ?? "none") as String),
     );
   }
@@ -1698,6 +1815,12 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
   final int id;
 
   final double minimum_cost;
+
+  final int radius;
+
+  final double? cost_per_km_from_base;
+
+  final bool self_delivery;
 
   final String $__typename;
 
@@ -1716,6 +1839,14 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     _resultData['id'] = l$id;
     final l$minimum_cost = minimum_cost;
     _resultData['minimum_cost'] = moneyToJson(l$minimum_cost);
+    final l$radius = radius;
+    _resultData['radius'] = l$radius;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    _resultData['cost_per_km_from_base'] = l$cost_per_km_from_base == null
+        ? null
+        : moneyToJson(l$cost_per_km_from_base);
+    final l$self_delivery = self_delivery;
+    _resultData['self_delivery'] = l$self_delivery;
     final l$$__typename = $__typename;
     _resultData['__typename'] = l$$__typename;
     return _resultData;
@@ -1728,6 +1859,9 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$free_delivery_minimum_cost = free_delivery_minimum_cost;
     final l$id = id;
     final l$minimum_cost = minimum_cost;
+    final l$radius = radius;
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final l$self_delivery = self_delivery;
     final l$$__typename = $__typename;
     return Object.hashAll([
       l$cost_per_km,
@@ -1735,6 +1869,9 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
       l$free_delivery_minimum_cost,
       l$id,
       l$minimum_cost,
+      l$radius,
+      l$cost_per_km_from_base,
+      l$self_delivery,
       l$$__typename,
     ]);
   }
@@ -1771,6 +1908,21 @@ class Mutation$updateDeliveryCost$update_delivery_details_by_pk {
     final l$minimum_cost = minimum_cost;
     final lOther$minimum_cost = other.minimum_cost;
     if (l$minimum_cost != lOther$minimum_cost) {
+      return false;
+    }
+    final l$radius = radius;
+    final lOther$radius = other.radius;
+    if (l$radius != lOther$radius) {
+      return false;
+    }
+    final l$cost_per_km_from_base = cost_per_km_from_base;
+    final lOther$cost_per_km_from_base = other.cost_per_km_from_base;
+    if (l$cost_per_km_from_base != lOther$cost_per_km_from_base) {
+      return false;
+    }
+    final l$self_delivery = self_delivery;
+    final lOther$self_delivery = other.self_delivery;
+    if (l$self_delivery != lOther$self_delivery) {
       return false;
     }
     final l$$__typename = $__typename;
@@ -1811,6 +1963,9 @@ abstract class CopyWith$Mutation$updateDeliveryCost$update_delivery_details_by_p
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    int? radius,
+    double? cost_per_km_from_base,
+    bool? self_delivery,
     String? $__typename,
   });
 }
@@ -1838,6 +1993,9 @@ class _CopyWithImpl$Mutation$updateDeliveryCost$update_delivery_details_by_pk<
     Object? free_delivery_minimum_cost = _undefined,
     Object? id = _undefined,
     Object? minimum_cost = _undefined,
+    Object? radius = _undefined,
+    Object? cost_per_km_from_base = _undefined,
+    Object? self_delivery = _undefined,
     Object? $__typename = _undefined,
   }) =>
       _then(Mutation$updateDeliveryCost$update_delivery_details_by_pk(
@@ -1854,6 +2012,15 @@ class _CopyWithImpl$Mutation$updateDeliveryCost$update_delivery_details_by_pk<
         minimum_cost: minimum_cost == _undefined || minimum_cost == null
             ? _instance.minimum_cost
             : (minimum_cost as double),
+        radius: radius == _undefined || radius == null
+            ? _instance.radius
+            : (radius as int),
+        cost_per_km_from_base: cost_per_km_from_base == _undefined
+            ? _instance.cost_per_km_from_base
+            : (cost_per_km_from_base as double?),
+        self_delivery: self_delivery == _undefined || self_delivery == null
+            ? _instance.self_delivery
+            : (self_delivery as bool),
         $__typename: $__typename == _undefined || $__typename == null
             ? _instance.$__typename
             : ($__typename as String),
@@ -1876,6 +2043,9 @@ class _CopyWithStubImpl$Mutation$updateDeliveryCost$update_delivery_details_by_p
     double? free_delivery_minimum_cost,
     int? id,
     double? minimum_cost,
+    int? radius,
+    double? cost_per_km_from_base,
+    bool? self_delivery,
     String? $__typename,
   }) =>
       _res;

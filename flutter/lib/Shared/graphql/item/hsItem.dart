@@ -256,6 +256,7 @@ List<Choice> _convertChoices(
     return Choice(
         id: oneChoice.id,
         nameId: oneChoice.name.id,
+        available: oneChoice.available,
         name: toLanguageMap(translations: oneChoice.name.translations),
         cost: oneChoice.cost);
   }).toList();

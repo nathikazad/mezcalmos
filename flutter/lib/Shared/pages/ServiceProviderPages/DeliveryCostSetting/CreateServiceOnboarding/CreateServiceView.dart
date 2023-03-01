@@ -3,15 +3,20 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
+import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/controllers/CreateServiceViewController.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceInfoPage.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceSchedulePage.dart';
-import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliverySettingsView/DeliverySettingView.dart';
+import 'package:mezcalmos/Shared/pages/ServiceProviderPages/DeliveryCostSetting/CreateServiceOnboarding/pages/CreateServiceStartPage.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
+
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
+import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
+
+import '../../DeliverySettingsView/DeliverySettingView.dart';
 
 //
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']['pages']
@@ -39,25 +44,40 @@ class _CreateServiceViewState extends State<CreateServiceView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
-          titleWidget: Obx(() => Text(viewController.getTitle())),
-          onClick: viewController.handleBack),
-      bottomSheet: Obx(
-        () => MezButton(
-          height: 75,
-          label: viewController.getSaveButtonTitle(),
-          borderRadius: 0,
-          onClick: () async {
-            if (viewController.isFormValid()) {
-              await _handleButton();
-            }
-          },
+      resizeToAvoidBottomInset: false,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kTextTabBarHeight + 5),
+        child: Obx(
+          () => MezcalmosAppBar(
+              (viewController.currentPage.value != 0)
+                  ? AppBarLeftButtonType.Back
+                  : AppBarLeftButtonType.Menu,
+              showNotifications: true,
+              title: viewController.getTitle(),
+              onClick: viewController.handleBack),
         ),
+      ),
+      key: Get.find<SideMenuDrawerController>().getNewKey(),
+      drawer: MezSideMenu(),
+      bottomSheet: Obx(
+        () => (viewController.currentPage.value != 0)
+            ? MezButton(
+                height: 75,
+                label: viewController.getSaveButtonTitle(),
+                borderRadius: 0,
+                onClick: () async {
+                  if (viewController.isFormValid()) {
+                    await _handleButton();
+                  }
+                },
+              )
+            : SizedBox(),
       ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: viewController.pageController,
         children: [
+          CreateServiceStartPage(viewController: viewController),
           CreateServiceInfoPage(viewController: viewController),
           CreateServiceSchedulePage(
             viewController: viewController,

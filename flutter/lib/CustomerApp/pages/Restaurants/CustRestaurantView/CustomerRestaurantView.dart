@@ -6,9 +6,7 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/compo
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantGridItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/RestaurantListItemComponent.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/components/restaurantInfoTab.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/Controllers/CustomerRestaurantController.dart';
-import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers/CustomerRestaurantController.dart'
-    as customerController2;
+import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantView/controllers2/CustomerRestaurantController.dart';
 import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -24,7 +22,6 @@ import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:qlevar_router/qlevar_router.dart';
 import 'package:rect_getter/rect_getter.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
     ["pages"]["Restaurants"]["ViewRestaurantScreen"]["CustomerRestaurantView"];
@@ -37,8 +34,6 @@ class CustomerRestaurantView extends StatefulWidget {
 class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     with TickerProviderStateMixin {
   CustomerRestaurantController _viewController = CustomerRestaurantController();
-  customerController2.CustomerRestaurantController _viewController2 =
-      customerController2.CustomerRestaurantController();
 
   @override
   void initState() {
@@ -78,7 +73,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return CustomScrollView(
       controller: _viewController.scrollController,
       slivers: [
-        RestaurantSliverAppBar(controller: _viewController2),
+        RestaurantSliverAppBar(controller: _viewController),
         Obx(() {
           if (_viewController.showInfo.value)
             return SliverPadding(
@@ -86,7 +81,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               sliver: SliverToBoxAdapter(
                   child: RestaurantInfoTab(
                 restaurant: _viewController.restaurant.value!,
-                controller: _viewController2,
+                controller: _viewController,
               )),
             );
           else if (_viewController.isInitialzed) {
@@ -97,7 +92,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
               alignment: Alignment.center,
               child: Text(
                 "Some magic is happening ...",
-                style: Get.textTheme.bodyText1?.copyWith(
+                style: Get.textTheme.bodyLarge?.copyWith(
                     color: primaryBlueColor, fontStyle: FontStyle.italic),
               ),
             ));
@@ -109,7 +104,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   Widget _buildItemsList() {
     return SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+        padding: const EdgeInsets.only(right: 8, left: 8, bottom: 70),
         sliver: SliverList(
           delegate: SliverChildListDelegate(
             List.generate(
@@ -161,20 +156,22 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Container(
             margin: const EdgeInsets.only(top: 10, bottom: 0),
             child: Text(
-              category.name?[userLanguage] ?? "Undefined Category",
+              category.name?[userLanguage]?.inCaps ??
+                  '${_i18n()["undefinedCategory"]}',
               style: category.name?[userLanguage] != null
-                  ? Get.theme.textTheme.headline5
-                  : Get.textTheme.bodyText2?.copyWith(
+                  ? Get.theme.textTheme.headlineSmall
+                  : Get.textTheme.bodyMedium?.copyWith(
                       color: Color(0xFF787878),
                     ),
             ),
           ),
-          if (category.dialog?[userLanguage] != null)
+          if (category.dialog?[userLanguage] != null &&
+              category.dialog![userLanguage]!.inCaps != "")
             Container(
               child: Text(
                 category.dialog![userLanguage]!.inCaps,
-                style: Get.textTheme.bodyText2?.copyWith(
-                  color: Color(0xFF787878),
+                style: Get.textTheme.bodyMedium?.copyWith(
+                  color: offLightShadeGreyColor,
                 ),
               ),
             ),
@@ -201,7 +198,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
             child: Text(
                 "${specItems.keys.toList()[index]!.toDayName(withDateNumber: true)}${(specItems.keys.toList()[index]!.isToday || specItems.keys.toList()[index]!.isTomorrow) ? "'s" : ""} ${_i18n()["specials"]}"
                     .inCaps,
-                style: Get.theme.textTheme.headline5),
+                style: Get.theme.textTheme.headlineSmall),
           ),
           _buildResturantItems(
             items: specItems.values.toList()[index],
@@ -266,7 +263,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
     return Container(
       alignment: Alignment.center,
       height: 60,
-      decoration: BoxDecoration(color: Colors.grey.shade400),
+      decoration: BoxDecoration(color: Color(0xFFEDEDED)),
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -275,7 +272,9 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
           Flexible(
             child: Text(
               '${_i18n()["scheduleTitle"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge?.copyWith(
+                color: offLightShadeGreyColor,
+              ),
               maxLines: 2,
               textAlign: TextAlign.center,
             ),

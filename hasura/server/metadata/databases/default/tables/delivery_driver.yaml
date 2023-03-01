@@ -60,17 +60,11 @@ select_permissions:
         - current_location
         - delivery_company_id
         - delivery_company_type
-        - delivery_driver_type
         - id
         - online
         - status
         - user_id
-      filter:
-        restaurant:
-          orders:
-            customer:
-              user_id:
-                _eq: X-Hasura-User-Id
+      filter: {}
   - role: delivery_driver
     permission:
       columns:
@@ -80,7 +74,6 @@ select_permissions:
         - id
         - user_id
         - app_version
-        - delivery_driver_type
         - status
         - delivery_company_type
       filter:
@@ -95,7 +88,6 @@ select_permissions:
         - id
         - user_id
         - app_version
-        - delivery_driver_type
         - status
         - delivery_company_type
       filter:
@@ -110,16 +102,11 @@ select_permissions:
         - current_location
         - delivery_company_id
         - delivery_company_type
-        - delivery_driver_type
         - id
         - online
         - status
         - user_id
-      filter:
-        laundry:
-          operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
   - role: mez_admin
     permission:
       columns:
@@ -129,7 +116,6 @@ select_permissions:
         - id
         - user_id
         - app_version
-        - delivery_driver_type
         - status
         - delivery_company_type
       filter:
@@ -147,16 +133,11 @@ select_permissions:
         - current_location
         - delivery_company_id
         - delivery_company_type
-        - delivery_driver_type
         - id
         - online
         - status
         - user_id
-      filter:
-        restaurant:
-          restaurant_operators:
-            user_id:
-              _eq: X-Hasura-User-Id
+      filter: {}
 update_permissions:
   - role: delivery_driver
     permission:

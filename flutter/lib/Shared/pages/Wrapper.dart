@@ -8,6 +8,8 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/controllers/authController.dart';
 import 'package:mezcalmos/Shared/controllers/locationController.dart';
 import 'package:mezcalmos/Shared/controllers/settingsController.dart';
+import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/LocationPermissionHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
@@ -39,8 +41,35 @@ class _WrapperState extends State<Wrapper> {
         startListeningOnLocationPermission();
       }
     });
-
+    Future.delayed(Duration.zero, checkConnectivity);
     super.initState();
+  }
+
+  void checkConnectivity() {
+    ConnectivityHelper.instance.networkCheck();
+    ConnectivityHelper.internetStatusStream
+        .listen((InternetStatus internetStatus) {
+      // mezDbgPrint(internetStatus);
+      if (internetStatus == InternetStatus.Offline) {
+        if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
+          mezDbgPrint("No internet going so going to no internet page");
+          unawaited(MezRouter.toNamed<void>(SharedRoutes.kNoInternetRoute));
+        }
+      } else {
+        if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
+          mezDbgPrint("Internet is back so going to back");
+          MezRouter.back<Null>();
+        }
+      }
+
+      if (internetStatus == InternetStatus.Slow) {
+        mezDbgPrint("Slow Internet");
+        // @montasarre
+        // show temporary slow internet bar
+      } else {
+        // unshow temporary slow internet bar
+      }
+    });
   }
 
   void startListeningOnLocationPermission() {

@@ -30,8 +30,9 @@ Future<DeliveryCost?> get_delivery_cost(
       response.parsedData!.delivery_details_by_pk!;
   return DeliveryCost(
       id: data.id,
-      // serviceProviderType: providerType,
-      // serviceProviderId: serviceProviderId,
+      selfDelivery: data.self_delivery,
+      radius: data.radius.toDouble(),
+      costPerKmFromBase: data.cost_per_km_from_base?.toDouble(),
       minimumCost: data.minimum_cost,
       costPerKm: data.cost_per_km,
       freeDeliveryMinimumCost: data.free_delivery_minimum_cost,
@@ -47,7 +48,10 @@ Future<bool?> update_delivery_cost(
               id: deliveryCostId,
               data: Input$delivery_details_set_input(
                   cost_per_km: deliveryCost.costPerKm,
+                  self_delivery: deliveryCost.selfDelivery,
                   minimum_cost: deliveryCost.minimumCost,
+                  radius: deliveryCost.radius?.round(),
+                  cost_per_km_from_base: deliveryCost.costPerKmFromBase,
                   free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
                   free_delivery_minimum_cost:
                       deliveryCost.freeDeliveryMinimumCost))));
@@ -65,11 +69,13 @@ Future<int?> add_delivery_cost({required DeliveryCost deliveryCost}) async {
       .mutate$addDeliveryCost(Options$Mutation$addDeliveryCost(
           variables: Variables$Mutation$addDeliveryCost(
               deliveryCost: Input$delivery_details_insert_input(
-    free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
-    free_delivery_minimum_cost: deliveryCost.freeDeliveryMinimumCost,
-    minimum_cost: deliveryCost.minimumCost,
-    cost_per_km: deliveryCost.costPerKm,
-  ))));
+                  free_delivery_km_range: deliveryCost.freeDeliveryKmRange,
+                  free_delivery_minimum_cost:
+                      deliveryCost.freeDeliveryMinimumCost,
+                  minimum_cost: deliveryCost.minimumCost,
+                  cost_per_km: deliveryCost.costPerKm,
+                  radius: deliveryCost.radius?.round(),
+                  cost_per_km_from_base: deliveryCost.costPerKmFromBase))));
 
   if (response.parsedData?.insert_delivery_details_one == null) {
     throw Exception("🚨🚨 add_delivery_cost exceptions ${response.exception}");

@@ -28,6 +28,7 @@ import 'package:mezcalmos/Shared/widgets/Order/OrderPaymentMethod.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderScheduledTime.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/ReviewCard.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 import 'package:mezcalmos/Shared/widgets/RestaurantOrderDeliveryTimeCard.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings["CustomerApp"]
@@ -62,12 +63,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true,
           ordersRoute: OrdersRoutes.customerOrder,
           showNotifications: true,
-          titleWidget: Obx(
-              () => Text(viewController.order.value?.restaurant.name ?? ""))),
+          titleWidget: Obx(() => Text(
+                viewController.order.value?.restaurant.name ?? "",
+                style: Get.textTheme.displaySmall,
+              ))),
       bottomNavigationBar: Obx(() {
         if (showReviewBtn() && viewController.order.value != null) {
           return MezButton(
@@ -127,8 +130,16 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                               order: viewController.order.value!,
                             ),
                             if (viewController.order.value!.inDeliveryPhase())
-                              ..._mapWidget,
-
+                              OrderMapWidget(
+                                  deliveryOrderId: viewController
+                                      .order.value!.deliveryOrderId!,
+                                  updateDriver: viewController.order.value!
+                                      .inDeliveryPhase(),
+                                  polyline: viewController
+                                      .order.value!.routeInformation?.polyline,
+                                  from: viewController
+                                      .order.value!.restaurant.location,
+                                  to: viewController.order.value!.to),
                             OrderRestaurantCard(
                                 order: viewController.order.value!),
                             OrderItemsCard(
@@ -143,14 +154,14 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
                             ),
                             OrderScheduledTimeCard(
                                 time: viewController.order.value!.scheduledTime,
-                                margin: const EdgeInsets.only(top: 4)),
+                                margin: const EdgeInsets.only(top: 8)),
                             RestaurantOrderDeliveryTimeCard(
                               order: viewController.order.value!,
-                              margin: EdgeInsets.zero,
+                              margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderDeliveryLocation(
                               address: viewController.order.value!.to.address,
-                              margin: const EdgeInsets.only(top: 4),
+                              margin: const EdgeInsets.only(top: 8),
                             ),
                             OrderPaymentMethod(
                               stripeOrderPaymentInfo:

@@ -246,19 +246,20 @@ Future<void> showConfirmationDialog(
                                 '${_i18n()["cancelConfirmationText"]}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Color(0xFF494949)),
                           ),
                         ],
                       )
                     : SizedBox(),
-                SizedBox(height: 8),
+                SizedBox(height: 2),
                 Text('${_i18n()["subtitle"]}',
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headlineLarge),
-                SizedBox(height: 8),
+                    style: Get.textTheme.headlineLarge
+                        ?.copyWith(color: Color(0xFF494949))),
+                SizedBox(height: 4),
                 GestureDetector(
                   onTap: () {
                     _clickedYes.value = true;
@@ -408,10 +409,10 @@ Future<void> showStatusInfoDialog(
                 description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Nunito',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
-                ),
+                    fontFamily: 'Nunito',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    color: offShadeGreyColor),
               ),
               SizedBox(height: 18),
               GestureDetector(
@@ -443,7 +444,7 @@ Future<void> showStatusInfoDialog(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(
-                      height: 10,
+                      height: 4,
                     ),
                     InkWell(
                       onTap: secondaryCallBack,
@@ -455,7 +456,7 @@ Future<void> showStatusInfoDialog(
                             secondaryClickTitle ?? "${_i18n()["viewOrder"]}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color.fromRGBO(120, 120, 120, 1),
+                              color: offShadeGreyColor,
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: 16.34,
@@ -486,10 +487,13 @@ Future<int?> showReviewDialog(
       barrierDismissible: false,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          //  color: Colors.transparent,
           scrollable: true,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          contentPadding: const EdgeInsets.only(
+            left: 20,
+            right: 20,
+            top: 18,
+            bottom: 10,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -553,12 +557,19 @@ Future<int?> showReviewDialog(
                   fontWeight: FontWeight.w600,
                 ),
                 decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     fillColor: unratedStarColor,
                     hintText: "${_i18n()["review"]["hintText"]}"),
               ),
               const SizedBox(height: 18),
               MezButton(
-                textStyle: Get.textTheme.headline4?.copyWith(
+                textStyle: Get.textTheme.headlineMedium?.copyWith(
                   color: primaryBlueColor,
                 ),
                 label: "${_i18n()["review"]["send"]}",
@@ -598,7 +609,7 @@ Future<int?> showReviewDialog(
                   child: Text(
                     "${_i18n()["review"]["close"]}",
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.headline4?.copyWith(
+                    style: Get.textTheme.headlineMedium?.copyWith(
                       color: offShadeGreyColor,
                     ),
                   ),
@@ -677,7 +688,7 @@ Widget getRightNotifIcon(String? imageUrl, IconData? icon) {
     );
   } else {
     return Icon(
-      Icons.local_taxi_rounded,
+      Icons.flatware,
       color: Colors.white,
       size: 33,
     );

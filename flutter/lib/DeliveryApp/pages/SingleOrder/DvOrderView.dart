@@ -52,7 +52,7 @@ class _DvOrderViewState extends State<DvOrderView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,

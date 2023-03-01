@@ -9,7 +9,7 @@ query get_driver_order($orderId: Int!) {
     order_type
     direction
     chat_with_service_provider_id
-    current_gps
+    
     delivery_company {
       id
       details {
@@ -187,7 +187,6 @@ subscription listen_on_driver_order($orderId: Int!) {
     order_type
     direction
     chat_with_service_provider_id
-    current_gps
     delivery_company {
       id
       details {
@@ -352,6 +351,37 @@ subscription listen_on_driver_order($orderId: Int!) {
       }
     }
   }
+  }
+
+subscription listen_on_order_driver_location($orderId: Int!) {
+   delivery_order_by_pk(id: $orderId) {
+  
+    delivery_driver {
+      current_location
+
+      user {
+        name
+        image
+        id
+      }
+    }
+   
+}
+}
+query get_order_driver_info($orderId: Int!) {
+   delivery_order_by_pk(id: $orderId) {
+  
+    delivery_driver {
+    
+
+      user {
+        name
+        image
+        id
+      }
+    }
+   
+}
 }
 
 subscription listen_on_inprocess_driver_orders($driverId: Int!) {
@@ -587,7 +617,7 @@ query get_pick_driver_order($orderId: Int!) {
   delivery_order_by_pk(id: $orderId) {
     order_type
 
-    current_gps
+    
     delivery_company {
       id
       details {

@@ -37,7 +37,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                     fit: FlexFit.tight,
                     child: Text(
                       choice.name[userLanguage] ?? "Choice name error",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
                   ),
                   MezIconButton(
@@ -66,7 +66,7 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: Text(
                     choice.cost.toPriceString(),
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                 ),
                 Text("Available"),
@@ -78,7 +78,12 @@ class ROpOptionChoiceCard extends StatelessWidget {
                   width: 30,
                   child: Switch(
                     value: choice.available,
-                    onChanged: (bool v) {},
+                    onChanged: (bool v) {
+                      viewController.switchChoiceAvailble(
+                        choice: choice,
+                        value: v,
+                      );
+                    },
                     activeColor: primaryBlueColor,
                     activeTrackColor: secondaryLightBlueColor,
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

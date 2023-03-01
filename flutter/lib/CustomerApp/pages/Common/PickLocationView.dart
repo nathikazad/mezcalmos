@@ -78,7 +78,7 @@ class _PickLocationViewState extends State<PickLocationView> {
         if (error.runtimeType == TimeoutException) {
           locationPickerController.location.value =
               MezLocation.fromFirebaseData({
-            "address": savedLocation!.location.address,
+            "address": "Puerto Escondido",
             "lat": 15.872141,
             "lng": -97.076737,
           });

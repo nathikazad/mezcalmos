@@ -14,7 +14,7 @@ class MezButton extends StatefulWidget {
     this.withGradient = false,
     this.backgroundColor,
     this.textColor,
-    this.borderRadius = 10,
+    this.borderRadius = 8,
     this.textStyle,
     this.height = 55,
     this.width,
@@ -102,7 +102,7 @@ class _MezButtonState extends State<MezButton> {
                             ),
                           Flexible(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 5),
+                              padding: const EdgeInsets.only(bottom: 2),
                               child: Text(
                                 widget.label,
                                 style: widget.textStyle ??

@@ -1,6 +1,7 @@
 extension ParseNumber on num {
   String toPriceString({bool rounded = true}) {
-    final String str = "\$${(rounded) ? round() : toStringAsFixed(2)}";
+    final String str =
+        "\$${(rounded) ? round().toStringAsFixed(0) : toStringAsFixed(2)}";
     return str;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/UnauthrizedOpView/controllers/ROpUnauthorizedOpViewController.dart';
 import 'package:mezcalmos/Shared/controllers/sideMenuDrawerController.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
@@ -32,7 +32,7 @@ class _ROpUnauthorizedOpViewState extends State<ROpUnauthorizedOpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Menu,
         showNotifications: true,
       ),
@@ -40,7 +40,7 @@ class _ROpUnauthorizedOpViewState extends State<ROpUnauthorizedOpView> {
       drawer: ROpDrawer(),
       body: Container(
         margin: const EdgeInsets.all(20),
-        child: ROpWaitingForApproval(),
+        child: ServiceWaitingForApproval(),
       ),
     );
   }

@@ -7,6 +7,10 @@ query getDeliveryCostById($deliveryDetailsId: Int! ) {
     free_delivery_minimum_cost
     id
     minimum_cost
+    radius
+    cost_per_km_from_base
+
+    self_delivery
    
   }
 }
@@ -15,11 +19,15 @@ mutation addDeliveryCost($deliveryCost :  delivery_details_insert_input!) {
 }
 mutation updateDeliveryCost($id: Int!,$data : delivery_details_set_input) {
   update_delivery_details_by_pk(pk_columns: {id:$id},_set: $data ) {
-    cost_per_km
+      cost_per_km
     free_delivery_km_range
     free_delivery_minimum_cost
     id
     minimum_cost
+    radius
+    cost_per_km_from_base
+
+    self_delivery
    
   }
 }

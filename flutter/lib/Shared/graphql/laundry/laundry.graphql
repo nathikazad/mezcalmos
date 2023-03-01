@@ -1,7 +1,7 @@
 query getLaundries {
-  laundry_store {
+  laundry_store(where: {details: {open_status: {_neq: "closed_indefinitely"}}}) {
     id
-    normal_delivery_time
+    minimum_cost
     delivery_details_id
     normal_delivery_time
     categories {
@@ -73,6 +73,7 @@ query getLaundryStoreById($id: Int!) {
 
     delivery_details_id
     normal_delivery_time
+    minimum_cost
  categories {
         cost_by_kilo
     id
@@ -163,6 +164,7 @@ mutation updateLaundryInfo($id: Int!, $data: laundry_store_set_input!) {
     id
 
     normal_delivery_time
+    minimum_cost
     delivery_details_id
     delivery_details_of_deliverer {
       cost_per_km
@@ -216,7 +218,7 @@ query getLaundryOperators($laundryStoreID: Int!) {
     store_id
     operator_details {
       owner
-      current_gps
+      
       status
     }
     user {

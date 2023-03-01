@@ -168,7 +168,8 @@ class _CustItemViewState extends State<CustItemView> {
             fit: FlexFit.tight,
             child: Text(
               viewController.getItem!.cost.toPriceString(),
-              style: Get.textTheme.headline3?.copyWith(color: primaryBlueColor),
+              style:
+                  Get.textTheme.displaySmall?.copyWith(color: primaryBlueColor),
             ),
           ),
           if (showViewRestaurant)
@@ -194,7 +195,7 @@ class _CustItemViewState extends State<CustItemView> {
                     borderRadius: BorderRadius.circular(18)),
                 child: Text(
                   '${_i18n()["viewRestaurant"]}',
-                  style: Get.textTheme.bodyText1
+                  style: Get.textTheme.bodyLarge
                       ?.copyWith(color: primaryBlueColor),
                 ),
               ),
@@ -210,12 +211,12 @@ class _CustItemViewState extends State<CustItemView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyText1),
+          Text("${_i18n()["itemDescription"]}", style: Get.textTheme.bodyLarge),
           SizedBox(height: 5),
           Text(
             "${item.description![userLanguage]?.inCaps}",
             textAlign: TextAlign.left,
-            style: Get.textTheme.bodyText2,
+            style: Get.textTheme.bodyMedium,
           ),
         ],
       ),
@@ -224,13 +225,14 @@ class _CustItemViewState extends State<CustItemView> {
 
   Widget _itemNotesComponent() {
     return Container(
+      margin: const EdgeInsets.only(top: 25),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
               child: Text(
             "${_i18n()["itemNotes"]}",
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           )),
           SizedBox(height: 2),
           Container(
@@ -239,7 +241,7 @@ class _CustItemViewState extends State<CustItemView> {
               controller: viewController.notesController,
               minLines: 3,
               maxLines: 7,
-              style: Get.textTheme.subtitle1?.copyWith(
+              style: Get.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
               decoration: InputDecoration(

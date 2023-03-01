@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/models/Orders/TaxiOrder/CounterOffer.dart';
 import 'package:mezcalmos/Shared/models/User.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Location.dart';
 import 'package:mezcalmos/Shared/models/Utilities/PaymentInfo.dart';
+import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 
 enum TaxiOrdersStatus {
   LookingForTaxiScheduled,
@@ -108,6 +109,7 @@ class TaxiOrder extends Order {
     required super.chatId,
   }) : super(
             orderTime: orderTime,
+            deliveryProviderType: ServiceProviderType.DeliveryCompany,
             orderId: orderId,
             paymentType: paymentType,
             orderType: OrderType.Taxi,

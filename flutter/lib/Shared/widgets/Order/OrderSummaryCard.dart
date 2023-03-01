@@ -28,15 +28,16 @@ class OrderSummaryCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: EdgeInsets.only(left: 10, top: 8),
+            //  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             alignment: Alignment.centerLeft,
             child: Text(
               '${_i18n()["orderSummary"]}',
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -49,7 +50,7 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["orderCost"]}',
                         style: txt.bodyMedium,
                       ),
-                      Text(_getOrderCost(),
+                      Text(_getOrderCost() == "\$0" ? "_" : _getOrderCost(),
                           style: txt.bodyMedium?.copyWith(
                               fontStyle:
                                   (order.orderType == OrderType.Laundry &&
@@ -88,10 +89,9 @@ class OrderSummaryCard extends StatelessWidget {
                         '${_i18n()["deliveryCost"]}',
                         style: txt.bodyMedium,
                       ),
-                      Flexible(
-                          child: ShippingCostComponent(
+                      ShippingCostComponent(
                         shippingCost: _getShippingCost(),
-                      ))
+                      )
                     ],
                   ),
                 ),
@@ -117,9 +117,10 @@ class OrderSummaryCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text('${_i18n()["totalCost"]}', style: txt.headline4),
+                      Text('${_i18n()["totalCost"]}',
+                          style: txt.headlineMedium),
                       Text(order.totalCost?.toPriceString() ?? "_",
-                          style: txt.headline5),
+                          style: txt.headlineSmall),
                     ],
                   ),
                 ),
@@ -151,11 +152,7 @@ class OrderSummaryCard extends StatelessWidget {
       case OrderType.Restaurant:
         return (order as RestaurantOrder).itemsCost.toPriceString();
       case OrderType.Laundry:
-        return (order as LaundryOrder)
-                .costsByType
-                ?.weighedCost
-                .toPriceString() ??
-            '${_i18n()["toBeCalc"]}';
+        return ((order as LaundryOrder).cost).toPriceString();
 
       default:
         return "-";

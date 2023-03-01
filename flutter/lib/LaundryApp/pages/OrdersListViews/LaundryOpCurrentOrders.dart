@@ -15,6 +15,8 @@ import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/MezSideMenu.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -54,7 +56,7 @@ class _LaundryOpCurrentOrdersListViewState
         return widget.canGoBack;
       },
       child: Scaffold(
-        appBar: mezcalmosAppBar(
+        appBar: MezcalmosAppBar(
           AppBarLeftButtonType.Menu,
           showNotifications: true,
         ),
@@ -66,7 +68,11 @@ class _LaundryOpCurrentOrdersListViewState
               centered: true,
             );
           } else if (viewController.isAproved == false) {
-            return Container();
+            return ServiceWaitingForApproval();
+          } else if (viewController.isClosedIdf) {
+            return ClosedServiceProviderWidget(
+              openCallBack: viewController.turnOnOrders,
+            );
           } else {
             return Column(
               children: [

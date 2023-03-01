@@ -31,25 +31,26 @@ class _DeliverySettingCostComponentState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _costComponent(
-                        controller: widget.viewController.freeKmRange,
-                        suffixTitle: 'Km',
-                        title: "${_i18n()['freeKmRange']}"),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "${_i18n()['freeKmRangeText']}",
-                      style: Get.textTheme.bodyText2,
-                    ),
-                    Divider(
-                      height: 35,
-                    ),
-                  ],
-                ),
+                if (!widget.viewController.isDeliveryCompany)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _costComponent(
+                          controller: widget.viewController.freeKmRange,
+                          suffixTitle: 'Km',
+                          title: "${_i18n()['freeKmRange']}"),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "${_i18n()['freeKmRangeText']}",
+                        style: Get.textTheme.bodyMedium,
+                      ),
+                      Divider(
+                        height: 35,
+                      ),
+                    ],
+                  ),
                 _costComponent(
                     controller: widget.viewController.minCost,
                     suffixTitle: '\$',
@@ -61,6 +62,22 @@ class _DeliverySettingCostComponentState
                     controller: widget.viewController.costPerKm,
                     suffixTitle: '\$/Km',
                     title: "${_i18n()['costPerKm']}"),
+                const SizedBox(
+                  height: 15,
+                ),
+                _costComponent(
+                    controller: widget.viewController.radius,
+                    suffixTitle: 'KM',
+                    title: "${_i18n()['radius']}"),
+                const SizedBox(
+                  height: 15,
+                ),
+                if (widget.viewController.isDeliveryCompany &&
+                    widget.viewController.isCreatingNewService == false)
+                  _costComponent(
+                      controller: widget.viewController.costPerKmFromBase,
+                      suffixTitle: '\$/Km',
+                      title: "${_i18n()['costPerKmFromBase']}"),
               ],
             ),
           ),
@@ -92,7 +109,7 @@ class _DeliverySettingCostComponentState
                 fit: FlexFit.tight,
                 child: Text(
                   "${_i18n()['custDistance']}",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
               ),
               SizedBox(
@@ -110,7 +127,7 @@ class _DeliverySettingCostComponentState
                     },
                     controller: widget.viewController.distancePreview,
                     textAlignVertical: TextAlignVertical.center,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                     inputFormatters: [
@@ -124,7 +141,7 @@ class _DeliverySettingCostComponentState
                           child: Text(
                             "Km",
                             textAlign: TextAlign.center,
-                            style: Get.textTheme.bodyText2,
+                            style: Get.textTheme.bodyMedium,
                           ),
                         ),
                         fillColor: Colors.white),
@@ -139,14 +156,14 @@ class _DeliverySettingCostComponentState
             children: [
               Text(
                 "${_i18n()['cost']}",
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               Obx(
                 () => Text(
                   widget.viewController.previewCost.value
                           ?.toPriceString(rounded: false) ??
                       "_",
-                  style: Get.textTheme.bodyText1,
+                  style: Get.textTheme.bodyLarge,
                 ),
               )
             ],
@@ -166,7 +183,7 @@ class _DeliverySettingCostComponentState
           fit: FlexFit.tight,
           child: Text(
             title,
-            style: Get.textTheme.bodyText1,
+            style: Get.textTheme.bodyLarge,
           ),
         ),
         SizedBox(
@@ -183,7 +200,7 @@ class _DeliverySettingCostComponentState
                 }
                 return null;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               textAlignVertical: TextAlignVertical.center,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
@@ -197,7 +214,7 @@ class _DeliverySettingCostComponentState
                   suffixIcon: Text(
                     suffixTitle,
                     textAlign: TextAlign.center,
-                    style: Get.textTheme.bodyText2,
+                    style: Get.textTheme.bodyMedium,
                   ),
                   fillColor: secondaryLightBlueColor),
             ))

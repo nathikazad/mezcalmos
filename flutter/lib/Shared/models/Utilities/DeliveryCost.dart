@@ -6,20 +6,27 @@ class DeliveryCost {
   int? id;
 
   double minimumCost;
+  bool selfDelivery;
   double costPerKm;
   double? freeDeliveryMinimumCost;
   double? freeDeliveryKmRange;
+  double? radius;
+  double? costPerKmFromBase;
   DeliveryCost({
     required this.id,
     required this.minimumCost,
+    required this.selfDelivery,
     required this.costPerKm,
     this.freeDeliveryMinimumCost,
     this.freeDeliveryKmRange,
+    this.radius,
+    this.costPerKmFromBase,
   });
 
   DeliveryCost copyWith({
     ServiceProviderType? serviceProviderType,
     int? serviceProviderId,
+    bool? selfDelivery,
     double? minimumCost,
     double? costPerKm,
     double? freeDeliveryMinimumCost,
@@ -27,6 +34,7 @@ class DeliveryCost {
   }) {
     return DeliveryCost(
       minimumCost: minimumCost ?? this.minimumCost,
+      selfDelivery: selfDelivery ?? this.selfDelivery,
       costPerKm: costPerKm ?? this.costPerKm,
       id: id ?? id,
       freeDeliveryMinimumCost:
@@ -47,6 +55,7 @@ class DeliveryCost {
   factory DeliveryCost.fromMap(Map<String, dynamic> map) {
     return DeliveryCost(
       id: map["id"],
+      selfDelivery: map["selfDelivery"],
       minimumCost: map['minimumCost']?.toDouble() ?? 0.0,
       costPerKm: map['costPerKm']?.toDouble() ?? 0.0,
       freeDeliveryMinimumCost:

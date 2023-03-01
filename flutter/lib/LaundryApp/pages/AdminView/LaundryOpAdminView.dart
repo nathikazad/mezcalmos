@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mezcalmos/LaundryApp/components/LaundryAppAppBar.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/CategoryGridCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/components/LaundryOpNormalDeliveryTime.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/components/MinmumCostCard.dart';
 import 'package:mezcalmos/LaundryApp/pages/AdminView/controllers/LaundryOpAdminViewController.dart';
 import 'package:mezcalmos/LaundryApp/router.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
@@ -112,6 +113,9 @@ class _LaundryOpAdminViewState extends State<LaundryOpAdminView> {
                       SizedBox(
                         height: 25,
                       ),
+                      LaundryOpMinimumCost(
+                        viewController: viewController,
+                      )
                     ],
                   )
                 ],

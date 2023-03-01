@@ -41,6 +41,9 @@ class CreateServiceViewController {
   TextEditingController minCost = TextEditingController();
   TextEditingController costPerKm = TextEditingController();
   TextEditingController distancePreview = TextEditingController();
+  TextEditingController radius = TextEditingController();
+  TextEditingController description = TextEditingController();
+  TextEditingController phone = TextEditingController();
 
   // obs //
   RxnNum previewCost = RxnNum();
@@ -116,17 +119,23 @@ class CreateServiceViewController {
     serviceInput.refresh();
   }
 
-  String getTitle() {
+  String? getTitle() {
     switch (currentPage.value) {
-      case 0:
-        return "${_i18n()['info']}";
       case 1:
-        return "${_i18n()['schedule']}";
+        return "${_i18n()['info']}";
       case 2:
+        return "${_i18n()['schedule']}";
+      case 3:
         return "${_i18n()['delivery']}";
 
       default:
-        return "";
+        return null;
+      // FittedBox(
+      //         fit: BoxFit.fitWidth,
+      //         child: MezcalmosSharedWidgets.fillTitle(
+      //             actionLength: 2,
+      //             showLogo: (Get.width > 320) ? true : false),
+      //       ),
     }
   }
 
@@ -151,9 +160,12 @@ class CreateServiceViewController {
   Future<bool?> handleNext() async {
     switch (currentPage.value) {
       case 0:
-        await handleInfoPageNext();
+        goToInfoPage();
         break;
       case 1:
+        await handleInfoPageNext();
+        break;
+      case 2:
         handleScheduleNext();
         break;
 
@@ -180,6 +192,7 @@ class CreateServiceViewController {
   DeliveryCost _constructDeliveryCost() {
     return DeliveryCost(
         id: null,
+        selfDelivery: serviceInput.value.isSelfDelivery,
         minimumCost: double.parse(minCost.text),
         freeDeliveryKmRange: num.tryParse(freeKmRange.text)?.toDouble(),
         costPerKm: num.parse(costPerKm.text).toDouble());
@@ -201,6 +214,13 @@ class CreateServiceViewController {
     }
   }
 
+  void goToInfoPage() {
+    pageController
+        .animateToPage(currentPage.value + 1,
+            duration: Duration(milliseconds: 500), curve: Curves.easeIn)
+        .whenComplete(() => currentPage.value = pageController.page!.toInt());
+  }
+
   void handleScheduleNext() {
     serviceInput.value.schedule = newSchedule.value;
     pageController
@@ -212,7 +232,7 @@ class CreateServiceViewController {
   bool isFormValid() {
     switch (currentPage.value) {
       case 0:
-        return infoFromKey.currentState?.validate() == true;
+        return true;
       case 1:
         return true;
       case 2:

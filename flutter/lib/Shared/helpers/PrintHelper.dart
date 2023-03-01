@@ -32,7 +32,7 @@ void mezDbgPrint(log, {bool showMilliSeconds = false}) {
 
 void logLongString(String s) {
   if (s.length <= 0) return;
-  const int n = 1000;
+  const int n = 700;
   int startIndex = 0;
   int endIndex = n;
   while (startIndex < s.length) {

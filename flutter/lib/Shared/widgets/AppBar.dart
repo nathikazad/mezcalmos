@@ -12,7 +12,7 @@ import 'package:mezcalmos/Shared/widgets/UsefulWidgets.dart';
 
 enum AppBarLeftButtonType { Back, Menu, Lang }
 
-AppBar mezcalmosAppBar(AppBarLeftButtonType leftBtnType,
+AppBar MezcalmosAppBar(AppBarLeftButtonType leftBtnType,
     {Color bgColor = Colors.white,
     bool autoBack = false,
     VoidCallback? onClick,
@@ -168,7 +168,7 @@ Widget _MenuButtonAppBar() {
               color: Color.fromARGB(255, 216, 225, 249),
               spreadRadius: 0,
               blurRadius: 7,
-              offset: Offset(0, 7), 
+              offset: Offset(0, 7),
             ),
           ],
           gradient: LinearGradient(colors: [

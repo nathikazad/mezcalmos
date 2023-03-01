@@ -1,12 +1,13 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:async';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
-import 'package:mezcalmos/Shared/controllers/authController.dart';
+import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
+
+enum InternetStatus { Online, Slow, Offline }
 
 class ConnectivityHelper {
   ConnectivityHelper._privateConstructor();
@@ -22,39 +23,63 @@ class ConnectivityHelper {
     ConnectivityResult.ethernet,
   ];
 
-  bool _hasInternet = false;
-  bool _pingedConnection = false;
+  static late StreamController<InternetStatus> _internetStatusStreamController;
 
-  bool get hasInternet => _hasInternet;
+  static Stream<InternetStatus> get internetStatusStream =>
+      _internetStatusStreamController.stream;
+
+  AppLaunchMode _appLaunchMode = AppLaunchMode.prod;
 
   Future<void> networkCheck() async {
-    final Connectivity connectivity = Connectivity();
-    final ConnectivityResult result = await connectivity.checkConnectivity();
-    _hasInternet = _hasInternetOptions.contains(result);
-    Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult event) async {
-      _hasInternet = _hasInternetOptions.contains(event);
-      if (_hasInternet) {
-        try {
-          final List<InternetAddress> result =
-              await InternetAddress.lookup(sNetworkCheckUrl);
-          _pingedConnection = result.isNotEmpty;
-        } on SocketException catch (_) {
-          _pingedConnection = false;
-        }
-        _hasInternet = _pingedConnection;
-      }
-
-      if (!_hasInternet) {
-        if (!MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-          unawaited(MezRouter.toNamed<void>(SharedRoutes.kNoInternetRoute));
-        }
-      } else {
-        if (MezRouter.isCurrentRoute(SharedRoutes.kNoInternetRoute)) {
-          MezRouter.back<Null>();
-        }
+    _internetStatusStreamController =
+        StreamController<InternetStatus>.broadcast();
+    mezDbgPrint("NETWORK CHECKER");
+    const String _tmpLmode =
+        String.fromEnvironment('LMODE', defaultValue: "prod");
+    _appLaunchMode = _tmpLmode.toLaunchMode();
+    _internetStatusStreamController.add(await checkForInternet());
+    Timer.periodic(const Duration(seconds: 10), (timer) async {
+      try {
+        _internetStatusStreamController.add(await checkForInternet());
+      } catch (e) {
+        _internetStatusStreamController.add(InternetStatus.Offline);
       }
     });
+    Connectivity().onConnectivityChanged.listen((c) async {
+      _internetStatusStreamController.add(await checkForInternet());
+    });
+  }
+
+  Future<InternetStatus> checkForInternet([ConnectivityResult? event]) async {
+    List<Future<bool>> futures = <Future<bool>>[];
+    futures.add(_pingServer(sNetworkCheckUrl1));
+    futures.add(_pingServer(firebaseDbUrl));
+    futures.add(_pingServer(hasuraDbUrl));
+    if (_appLaunchMode == AppLaunchMode.prod)
+      futures.add(_pingServer(firebaseFunctionsProdUrl));
+    else if (_appLaunchMode == AppLaunchMode.stage)
+      futures.add(_pingServer(firebaseFunctionsStageUrl));
+    final Stopwatch stopwatch = Stopwatch()..start();
+    final List<bool> results = await Future.wait(futures)
+        .timeout(Duration(seconds: 5), onTimeout: () => <bool>[false]);
+    // mezDbgPrint('ping() executed in ${stopwatch.elapsed.inMilliseconds}');
+    if (results.contains(true)) {
+      if (stopwatch.elapsed.inMilliseconds < 3000)
+        return InternetStatus.Online;
+      else
+        return InternetStatus.Slow;
+    } else {
+      return InternetStatus.Offline;
+    }
+  }
+
+  Future<bool> _pingServer(String pingUrl) async {
+    try {
+      final List<InternetAddress> result =
+          await InternetAddress.lookup(pingUrl);
+      return result.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
   }
 }

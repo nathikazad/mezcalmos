@@ -43,7 +43,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
     final TextTheme txt = Theme.of(context).textTheme;
     return Obx(
       () => Scaffold(
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
             onClick: MezRouter.back, title: _i18n()['title']),
         body: Obx(() {
           if (controller.notifications.isNotEmpty) {
@@ -124,7 +124,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
         indexNotification++;
         mezDbgPrint(indexNotification);
         return Container(
-          margin: EdgeInsets.only(top: 10, left: 8, bottom: 10),
+          margin: EdgeInsets.only(top: 10, left: 0, bottom: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -133,9 +133,9 @@ class _ViewNotificationsState extends State<ViewNotifications> {
                     ? _i18n()["today"]
                     : (element.timestamp.isYesterday)
                         ? _i18n()['yesterday']
-                        : DateFormat('dd MMM, h:mm a')
+                        : DateFormat('dd MMM')
                             .format(element.timestamp),
-                style: Theme.of(context).textTheme.headline3,
+                style: Get.textTheme.bodyText1,
               ),
               indexNotification == 1 ? _deleteButton() : SizedBox()
             ],
@@ -225,7 +225,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
 
   Container _deleteButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      // padding: const EdgeInsets.symmetric(vertical: 5),
       child: InkWell(
           customBorder: CircleBorder(),
           onTap: () async {
@@ -248,6 +248,7 @@ class _ViewNotificationsState extends State<ViewNotifications> {
               child: Icon(
                 Icons.delete_outline_rounded,
                 color: Colors.black,
+                size: 22,
               ),
             ),
           )),

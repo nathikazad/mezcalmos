@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
 
 class IncrementalComponent extends StatefulWidget {
-  final VoidCallback incrementCallback;
-  final VoidCallback decrementCallback;
+  final Future<void> Function() incrementCallback;
+  final Future<void> Function() decrementCallback;
 
   final Color btnColors;
   final Color minusIconColor;
@@ -13,7 +13,7 @@ class IncrementalComponent extends StatefulWidget {
   double size;
   final int maxVal;
   final int minVal;
-  final Function? onChangedToZero;
+  final Future<void> Function()? onChangedToZero;
   final MainAxisAlignment alignment;
   IncrementalComponent(
       {Key? key,
@@ -36,6 +36,7 @@ class IncrementalComponent extends StatefulWidget {
 }
 
 class _IncrementalComponentState extends State<IncrementalComponent> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -46,28 +47,43 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: widget.btnColors,
+                  color: (isLoading) ? Colors.grey.shade300 : widget.btnColors,
                 ),
                 child: Icon(
                   Icons.remove,
-                  color:widget.minusIconColor,
+                  color: (isLoading) ? Colors.white : widget.minusIconColor,
                   size: widget.size,
                 )),
-            onTap: () {
-              if (widget.value > widget.minVal) {
-                widget.decrementCallback();
-              } else if (widget.value == widget.minVal) {
-                widget.onChangedToZero?.call();
-              }
-            }),
+            onTap: (isLoading)
+                ? null
+                : () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    if (widget.value > widget.minVal) {
+                      await widget.decrementCallback().whenComplete(() {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      });
+                    } else if (widget.value == widget.minVal) {
+                      await widget.onChangedToZero
+                          ?.call()
+                          .whenComplete(() => setState(() {
+                                isLoading = false;
+                              }));
+                    }
+                  }),
         SizedBox(
           width: 5,
         ),
         Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(),
-          child: Text("${widget.value}",
-              style: Theme.of(context).textTheme.bodyText1),
+          child: (isLoading)
+              ? Transform.scale(scale: 0.5, child: CircularProgressIndicator())
+              : Text("${widget.value}",
+                  style: Theme.of(context).textTheme.bodyLarge),
         ),
         SizedBox(
           width: 5,
@@ -77,20 +93,31 @@ class _IncrementalComponentState extends State<IncrementalComponent> {
               padding: const EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: widget.btnColors,
+                color: (isLoading) ? Colors.grey.shade300 : widget.btnColors,
               ),
               child: Icon(
                 Icons.add,
                 size: widget.size,
-                color: (widget.btnColors == primaryBlueColor)
+                color: (isLoading)
                     ? Colors.white
-                    : primaryBlueColor,
+                    : (widget.btnColors == primaryBlueColor)
+                        ? Colors.white
+                        : primaryBlueColor,
               )),
-          onTap: () {
-            if (widget.value < widget.maxVal) {
-              widget.incrementCallback();
-            }
-          },
+          onTap: (isLoading)
+              ? null
+              : () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  if (widget.value < widget.maxVal) {
+                    await widget
+                        .incrementCallback()
+                        .whenComplete(() => setState(() {
+                              isLoading = false;
+                            }));
+                  }
+                },
         ),
       ],
     );

@@ -53,7 +53,7 @@ class _CurrentOrdersListScreenState extends State<CurrentOrdersListScreen> {
       child: Scaffold(
         key: Get.find<SideMenuDrawerController>().getNewKey(),
         drawer: MezSideMenu(),
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Menu,
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Menu,
             showNotifications: true,
             ordersRoute: DeliveryAppRoutes.kPastOrdersView),
         body: SingleChildScrollView(

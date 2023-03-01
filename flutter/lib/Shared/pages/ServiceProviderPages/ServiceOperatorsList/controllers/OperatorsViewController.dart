@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_operator/hsDeliveryOperator.dart';
+import 'package:mezcalmos/Shared/graphql/laundry_operator/hsLaundryOperator.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant_operator/hsRestaurantOperator.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -31,7 +32,11 @@ abstract class OperatorsListViewController {
   // late variables //
 
   late int serviceProviderId;
-  Future<void> init({required int serviceProviderId}) async {
+  late int serviceLinkId;
+  Future<void> init({
+    required int serviceProviderId,
+    required int serviceLinkId,
+  }) async {
     this.serviceProviderId = serviceProviderId;
     await fetchOperators();
     await fetchServiceLinks();
@@ -42,7 +47,7 @@ abstract class OperatorsListViewController {
   Future<void> fetchServiceLinks() async {
     try {
       serviceLink.value = await get_service_link_by_id(
-          serviceProviderId: serviceProviderId, withCache: false);
+          serviceLinkId: serviceLinkId, withCache: false);
     } on Exception {
       mezDbgPrint("Service dont have links");
     }
@@ -117,6 +122,36 @@ class RestaurantOperatorsListViewController
     operators.clear();
     operators.value = await get_restaurant_operators(
             restaurantId: serviceProviderId, withCache: false) ??
+        [];
+  }
+
+  @override
+  Future<ServerResponse> approveOperator(
+      {required bool approved, required int opId}) async {
+    final HttpsCallable cloudFunction = FirebaseFunctions.instance
+        .httpsCallable('restaurant2-authorizeRestaurantOperator');
+    try {
+      final HttpsCallableResult response = await cloudFunction
+          .call({"newOperatorId": opId, "approved": approved});
+      mezDbgPrint("Response : ${response.data}");
+      await fetchOperators();
+      return ServerResponse(ResponseStatus.Success);
+    } catch (e, stk) {
+      mezDbgPrint("Errrooooooooor =======> $e");
+      mezDbgPrint("Errrooooooooor =======> $stk");
+      return ServerResponse(ResponseStatus.Error,
+          errorMessage: "Server Error", errorCode: "serverError");
+    }
+  }
+  // todo delete //
+}
+
+class LaundryOperatorsListViewController extends OperatorsListViewController {
+  @override
+  Future<void> fetchOperators() async {
+    operators.clear();
+    operators.value = await get_laundry_operators(
+            laundryId: serviceProviderId, withCache: false) ??
         [];
   }
 

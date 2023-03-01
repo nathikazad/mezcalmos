@@ -44,11 +44,11 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
           IncrementalComponent(
             btnColors: primaryBlueColor,
             onMinValueBtnColor: Colors.grey.shade300,
-            incrementCallback: () {
+            incrementCallback: () async {
               widget.viewController.cartItem.value!.quantity++;
               widget.viewController.cartItem.refresh();
             },
-            decrementCallback: () {
+            decrementCallback: () async {
               widget.viewController.cartItem.value!.quantity--;
               widget.viewController.cartItem.refresh();
             },
@@ -86,8 +86,8 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
                     ? _i18n()['addToCart']
                     : _i18n()['modifyItem'],
                 textAlign: TextAlign.center,
-                style:
-                    Get.textTheme.headlineLarge?.copyWith(color: Colors.white),
+                style: Get.textTheme.headlineLarge
+                    ?.copyWith(color: Colors.white, fontSize: 18),
               ),
             ),
           ),
@@ -114,9 +114,6 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
   }
 
   Future<void> _handleAddButton() async {
-    mezDbgPrint(
-        "YES EDIT CLICKEDDDD =========>>>>>>${widget.viewController.currentMode}");
-    widget.viewController.differentRestaurantIds();
     if (auth.fireAuthUser == null) {
       dialogRequiredSignIn();
     } else {
@@ -155,10 +152,11 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       btnRightIconBgColor: secondaryLightBlueColor,
       primaryImageUrl: widget.viewController.cart.value?.restaurant?.info.image,
       btnRightIconColor: primaryBlueColor,
-      status: widget.viewController.cart.value?.restaurant?.info.name ?? "",
+      status: "${_i18n()["rightBtn"]}?",
       primaryClickTitle: _i18n()["rightBtn"],
       secondaryClickTitle: _i18n()["leftBtn"],
-      description: _i18n()["subtitle"],
+      description:
+          '${_i18n()["subtitle"]} ${widget.viewController.cart.value?.restaurant?.info.name ?? ""} ${_i18n()["overwriteText"]} ',
       secondaryCallBack: () async {
         MezRouter.popDialog<void>();
         await MezRouter.toNamed<void>(CartRoutes.cart);
@@ -190,7 +188,7 @@ class _ItemViewBottomBarState extends State<ItemViewBottomBar> {
       },
       primaryCallBack: () async {
         mezDbgPrint("OVERIDDDING CART WITH NEW SPECIAL");
-
+        await widget.viewController.cartController?.clearCart();
         await widget.viewController.handleAddItem();
         await MezRouter.offNamed<void>(CartRoutes.cart);
       },

@@ -1,21 +1,21 @@
 // GetX based Router (For navigating)
 import 'package:get/route_manager.dart';
 import 'package:mezcalmos/DeliveryAdminApp/pages/OrderView/DvCompanyOrderView.dart';
+import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
+import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/MezAdminApp/MezAdminWrapper.dart';
 import 'package:mezcalmos/MezAdminApp/pages/AdminTabsView/AdminTabsView.dart';
 import 'package:mezcalmos/MezAdminApp/pages/ServiceOrdersView/AdminServiceOrdersView.dart';
-import 'package:mezcalmos/RestaurantApp/pages/DashboardView/ROpDashboardView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/CategoryView/CategoryView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ChoiceView/ROpChoiceView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/ItemView/ROpItemView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/MenuItemsView/ROpMenuView.dart';
 import 'package:mezcalmos/RestaurantApp/pages/MenuViews/OptionView/ROpOptionView.dart';
-import 'package:mezcalmos/Shared/routes/MezRouter.dart';
-import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
 import 'package:mezcalmos/Shared/pages/ServiceProviderPages/RestaurantOrderView/RestaurantOrderView.dart';
-import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+// import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 
 class MezAdminRoutes {
   static const String kTabsView = '/deliveryOpHomeScreen';
@@ -46,6 +46,12 @@ class MezAdminRoutes {
   static const String kChoiceView =
       "/Choice/:restaurantId:/:optionId/:choiceId";
   static const String kRestaurantOrderView = '/restaurantOrders/:orderId';
+
+  static const String kLaundryOrderView = '/laundryOrders/:orderId';
+  static const String kLaundryCategoryView =
+      '/categoryScreen/:laundryId/:categoryId';
+  static const String kLaundryAdminView = '/laundry/admin/:laundryId';
+  static const String kDvCompanyOrderView = "/deliveryOrders/:orderId";
 
   static String getserviceOrdersRoute({required int serviceProviderId}) {
     return kServiceOrders.replaceFirst(
@@ -96,7 +102,14 @@ class MezAdminRoutes {
     return route;
   }
 
-  static const String kDvCompanyOrderView = "/deliveryOrders/:orderId";
+  static String getLaundryAdminRoute({required int laundryId}) {
+    return kLaundryAdminView.replaceFirst(":laundryId", "$laundryId");
+  }
+
+  static String getLaundryOrderRoute(int orderId) {
+    return kLaundryOrderView.replaceFirst(":orderId", "$orderId");
+  }
+
   static List<GetPage<dynamic>> mainRoutes = [
         GetPage(name: kTabsView, page: () => AdminTabsView()),
         GetPage(
@@ -108,7 +121,6 @@ class MezAdminRoutes {
           name: kMenuView,
           page: () => ROpMenuView(),
         ),
-        GetPage(name: kDashboardView, page: () => ROpDashboardView()),
         GetPage(
           name: kCategoryView,
           page: () => ROpCategoryView(),
@@ -132,8 +144,21 @@ class MezAdminRoutes {
           name: kDvCompanyOrderView,
           page: () => DvCompanyOrderView(),
         ),
+        GetPage(
+          name: kLaundryOrderView,
+          page: () => LaundryOrderView(),
+        ),
+        GetPage(
+          name: kLaundryCategoryView,
+          page: () => LaundrOpCategoryView(),
+        ),
+        GetPage(
+          name: kLaundryAdminView,
+          page: () => LaundryOpAdminView(),
+        ),
       ] +
       SharedRoutes.routes +
-      SharedServiceProviderRoutes.routes +
-      NativeOnlyRoutes.routes;
+      SharedServiceProviderRoutes.routes;
+  //  +
+  // NativeOnlyRoutes.routes;
 }

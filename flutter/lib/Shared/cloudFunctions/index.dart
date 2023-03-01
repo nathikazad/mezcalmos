@@ -15,61 +15,61 @@ class CloudFunctions {
     return response.data;
   }
 
-  static Future<void> user_addHasuraClaim(
+  static Future<void> user2_addHasuraClaim(
   ) async {
     return await callCloudFunction(
-      functionName: "user-addHasuraClaim",
+      functionName: "user2-addHasuraClaim",
       parameters: <String, dynamic>{});
   }
 
-  static Future<void> otp_sendOTPForLogin(
+  static Future<SendOtpResponse> otp2_sendOTPForLogin(
       {required String language,
       required String phoneNumber}  ) async {
-    return await callCloudFunction(
-      functionName: "otp-sendOTPForLogin",
+    return SendOtpResponse.fromFirebaseFormattedJson(await callCloudFunction(
+      functionName: "otp2-sendOTPForLogin",
       parameters: <String, dynamic>{
         "language":language,
         "phoneNumber":phoneNumber,
-      });
+      }));
   }
 
-  static Future<AuthResponse> otp_getAuthUsingOTP(
+  static Future<AuthResponse> otp2_getAuthUsingOTP(
       {required String phoneNumber,
       required String OTPCode}  ) async {
     return AuthResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "otp-getAuthUsingOTP",
+      functionName: "otp2-getAuthUsingOTP",
       parameters: <String, dynamic>{
         "phoneNumber":phoneNumber,
         "OTPCode":OTPCode,
       }));
   }
 
-  static Future<PaymentIntentResponse> stripe_getPaymentIntent(
+  static Future<PaymentIntentResponse> stripe2_getPaymentIntent(
       {required num serviceProviderDetailsId,
       required num paymentAmount}  ) async {
     return PaymentIntentResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-getPaymentIntent",
+      functionName: "stripe2-getPaymentIntent",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
         "paymentAmount":paymentAmount,
       }));
   }
 
-  static Future<AddCardResponse> stripe_addCard(
+  static Future<AddCardResponse> stripe2_addCard(
       {required String paymentMethod}  ) async {
     return AddCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-addCard",
+      functionName: "stripe2-addCard",
       parameters: <String, dynamic>{
         "paymentMethod":paymentMethod,
       }));
   }
 
-  static Future<ChargeCardResponse> stripe_chargeCard(
+  static Future<ChargeCardResponse> stripe2_chargeCard(
       {required num serviceProviderDetailsId,
       required String cardId,
       required num paymentAmount}  ) async {
     return ChargeCardResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-chargeCard",
+      functionName: "stripe2-chargeCard",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
         "cardId":cardId,
@@ -77,28 +77,28 @@ class CloudFunctions {
       }));
   }
 
-  static Future<void> stripe_removeCard(
+  static Future<void> stripe2_removeCard(
       {required String cardId}  ) async {
     return await callCloudFunction(
-      functionName: "stripe-removeCard",
+      functionName: "stripe2-removeCard",
       parameters: <String, dynamic>{
         "cardId":cardId,
       });
   }
 
-  static Future<SetupResponse> stripe_setupServiceProvider(
+  static Future<SetupResponse> stripe2_setupServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return SetupResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "stripe-setupServiceProvider",
+      functionName: "stripe2-setupServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
       }));
   }
 
-  static Future<void> stripe_updateServiceProvider(
+  static Future<void> stripe2_updateServiceProvider(
       {required num serviceProviderDetailsId}  ) async {
     return await callCloudFunction(
-      functionName: "stripe-updateServiceProvider",
+      functionName: "stripe2-updateServiceProvider",
       parameters: <String, dynamic>{
         "serviceProviderDetailsId":serviceProviderDetailsId,
       });
@@ -113,6 +113,60 @@ class CloudFunctions {
         "chatId":chatId,
         "callerParticipantType":callerParticipantType.toFirebaseFormatString(),
       }));
+  }
+
+  static Future<void> serviceProvider_addOperator(
+      {required num serviceProviderId,
+      required ParticipantType participantType,
+      NotificationInfo? notificationInfo,
+      String? appVersion}  ) async {
+    return await callCloudFunction(
+      functionName: "serviceProvider-addOperator",
+      parameters: <String, dynamic>{
+        "serviceProviderId":serviceProviderId,
+        "participantType":participantType.toFirebaseFormatString(),
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
+        "appVersion":appVersion,
+      });
+  }
+
+  static Future<void> serviceProvider_authorizeOperator(
+      {required num newOperatorId,
+      required bool approved,
+      required ParticipantType participantType}  ) async {
+    return await callCloudFunction(
+      functionName: "serviceProvider-authorizeOperator",
+      parameters: <String, dynamic>{
+        "newOperatorId":newOperatorId,
+        "approved":approved,
+        "participantType":participantType.toFirebaseFormatString(),
+      });
+  }
+
+  static Future<void> serviceProvider_addDriver(
+      {required num deliveryCompanyId,
+      NotificationInfo? notificationInfo,
+      required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
+    return await callCloudFunction(
+      functionName: "serviceProvider-addDriver",
+      parameters: <String, dynamic>{
+        "deliveryCompanyId":deliveryCompanyId,
+        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
+        "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
+      });
+  }
+
+  static Future<void> serviceProvider_authorizeDriver(
+      {required num deliveryDriverId,
+      required bool approved,
+      required DeliveryServiceProviderType deliveryServiceProviderType}  ) async {
+    return await callCloudFunction(
+      functionName: "serviceProvider-authorizeDriver",
+      parameters: <String, dynamic>{
+        "deliveryDriverId":deliveryDriverId,
+        "approved":approved,
+        "deliveryServiceProviderType":deliveryServiceProviderType.toFirebaseFormatString(),
+      });
   }
 
   static Future<void> restaurant2_createRestaurant(
@@ -153,7 +207,9 @@ class CloudFunctions {
       required String tripPolyline,
       String? scheduledTime,
       String? stripePaymentId,
-      num? stripeFees}  ) async {
+      num? stripeFees,
+      num? tax,
+      num? discountValue}  ) async {
     return CheckoutResponse.fromFirebaseFormattedJson(await callCloudFunction(
       functionName: "restaurant2-checkoutCart",
       parameters: <String, dynamic>{
@@ -170,6 +226,8 @@ class CloudFunctions {
         "scheduledTime":scheduledTime,
         "stripePaymentId":stripePaymentId,
         "stripeFees":stripeFees,
+        "tax":tax,
+        "discountValue":discountValue,
       }));
   }
 
@@ -218,53 +276,7 @@ class CloudFunctions {
       });
   }
 
-  static Future<void> restaurant2_addRestaurantOperator(
-      {required num restaurantId,
-      NotificationInfo? notificationInfo,
-      String? appVersion}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-addRestaurantOperator",
-      parameters: <String, dynamic>{
-        "restaurantId":restaurantId,
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-        "appVersion":appVersion,
-      });
-  }
-
-  static Future<void> restaurant2_authorizeRestaurantOperator(
-      {required num newOperatorId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-authorizeRestaurantOperator",
-      parameters: <String, dynamic>{
-        "newOperatorId":newOperatorId,
-        "approved":approved,
-      });
-  }
-
-  static Future<void> restaurant2_addRestaurantDriver(
-      {required num deliveryCompanyId,
-      NotificationInfo? notificationInfo}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-addRestaurantDriver",
-      parameters: <String, dynamic>{
-        "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-      });
-  }
-
-  static Future<void> restaurant2_authorizeRestaurantDriver(
-      {required num deliveryDriverId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "restaurant2-authorizeRestaurantDriver",
-      parameters: <String, dynamic>{
-        "deliveryDriverId":deliveryDriverId,
-        "approved":approved,
-      });
-  }
-
-  static Future<void> laundry_createLaundry(
+  static Future<void> laundry2_createLaundry(
       {required String name,
       required String image,
       required Location location,
@@ -275,7 +287,7 @@ class CloudFunctions {
       required DeliveryDetails deliveryDetails,
       required Map<Language,bool> language}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-createLaundry",
+      functionName: "laundry2-createLaundry",
       parameters: <String, dynamic>{
         "name":name,
         "image":image,
@@ -289,7 +301,7 @@ class CloudFunctions {
       });
   }
 
-  static Future<ReqLaundryResponse> laundry_requestLaundry(
+  static Future<ReqLaundryResponse> laundry2_requestLaundry(
       {required num storeId,
       required PaymentType paymentType,
       required DeliveryType deliveryType,
@@ -306,7 +318,7 @@ class CloudFunctions {
       required num tripDuration,
       required String tripPolyline}  ) async {
     return ReqLaundryResponse.fromFirebaseFormattedJson(await callCloudFunction(
-      functionName: "laundry-requestLaundry",
+      functionName: "laundry2-requestLaundry",
       parameters: <String, dynamic>{
         "storeId":storeId,
         "paymentType":paymentType.toFirebaseFormatString(),
@@ -326,28 +338,28 @@ class CloudFunctions {
       }));
   }
 
-  static Future<void> laundry_readyForDeliveryOrder(
+  static Future<void> laundry2_readyForDeliveryOrder(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-readyForDeliveryOrder",
+      functionName: "laundry2-readyForDeliveryOrder",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });
   }
 
-  static Future<void> laundry_cancelFromCustomer(
+  static Future<void> laundry2_cancelFromCustomer(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-cancelFromCustomer",
+      functionName: "laundry2-cancelFromCustomer",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });
   }
 
-  static Future<void> laundry_cancelFromAdmin(
+  static Future<void> laundry2_cancelFromAdmin(
       {required num orderId}  ) async {
     return await callCloudFunction(
-      functionName: "laundry-cancelFromAdmin",
+      functionName: "laundry2-cancelFromAdmin",
       parameters: <String, dynamic>{
         "orderId":orderId,
       });
@@ -363,50 +375,6 @@ class CloudFunctions {
         "deliveryOrderId":deliveryOrderId,
         "deliveryDriverId":deliveryDriverId,
         "changeDriver":changeDriver,
-      });
-  }
-
-  static Future<void> delivery2_addDeliveryOperator(
-      {required num deliveryCompanyId,
-      NotificationInfo? notificationInfo}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-addDeliveryOperator",
-      parameters: <String, dynamic>{
-        "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-      });
-  }
-
-  static Future<void> delivery2_authorizeDeliveryOperator(
-      {required num newOperatorId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-authorizeDeliveryOperator",
-      parameters: <String, dynamic>{
-        "newOperatorId":newOperatorId,
-        "approved":approved,
-      });
-  }
-
-  static Future<void> delivery2_addDeliveryDriver(
-      {required num deliveryCompanyId,
-      NotificationInfo? notificationInfo}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-addDeliveryDriver",
-      parameters: <String, dynamic>{
-        "deliveryCompanyId":deliveryCompanyId,
-        "notificationInfo":notificationInfo?.toFirebaseFormattedJson(),
-      });
-  }
-
-  static Future<void> delivery2_authorizeDeliveryDriver(
-      {required num deliveryDriverId,
-      required bool approved}  ) async {
-    return await callCloudFunction(
-      functionName: "delivery2-authorizeDeliveryDriver",
-      parameters: <String, dynamic>{
-        "deliveryDriverId":deliveryDriverId,
-        "approved":approved,
       });
   }
 

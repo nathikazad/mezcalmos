@@ -60,7 +60,10 @@ class _ROpTabsViewViewState extends State<ROpTabsViewView> {
       case 2:
         return ServiceProfileView(
           serviceId: opAuthController.restaurantId,
-          serviceDetailsId: opAuthController.detailsId,
+          serviceDetailsId:
+              opAuthController.operator.value!.state.serviceProviderDetailsId,
+          deliveryDetailsId:
+              opAuthController.operator.value!.state.deliveryDetailsId,
         );
 
       default:

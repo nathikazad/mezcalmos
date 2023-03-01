@@ -50,6 +50,12 @@ class LaundryAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         fillColor: Colors.grey.shade200,
+        errorStyle: TextStyle(
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
+            color: Colors.red,
+          ),
         filled: true,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),

@@ -108,6 +108,7 @@ class ServiceInfoEditViewController {
 
   Future<void> updateServiceInfo() async {
     try {
+      mezDbgPrint(_constructServiceInfo().phoneNumber);
       service.value = await update_service_info(
           serviceInfo: _constructServiceInfo(), detailsId: detailsId);
       showSavedSnackBar();
@@ -204,5 +205,12 @@ class ServiceInfoEditViewController {
       primaryLang.value: primaryServiceDesc.text,
       secondaryLang.value: secondayServiceDesc.text
     };
+  }
+
+  void dispose() {
+    secondayServiceDesc.dispose();
+    primaryServiceDesc.dispose();
+    phoneNumber.dispose();
+    serviceNameTxt.dispose();
   }
 }

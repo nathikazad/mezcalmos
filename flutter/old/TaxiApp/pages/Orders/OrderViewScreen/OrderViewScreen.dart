@@ -490,13 +490,13 @@ class _ViewCurrentOrderScreenState extends State<CurrentOrderScreen> {
 
   PreferredSizeWidget getRightAppBar(TaxiOrdersStatus status) {
     if (order!.isPastOrder() || order!.status == TaxiOrdersStatus.Scheduled) {
-      return mezcalmosAppBar(AppBarLeftButtonType.Back,
+      return MezcalmosAppBar(AppBarLeftButtonType.Back,
           //   onClick: MezRouter.back,
           // );
           onClick: () => MezRouter.offNamedUntil<void>(
               kIncomingOrdersListRoute, ModalRoute.withName(kHomeRoute)));
     } else {
-      return mezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {
+      return MezcalmosAppBar(AppBarLeftButtonType.Menu, onClick: () async {
         Get.find<SideMenuDrawerController>().openMenu();
       });
     }

@@ -71,7 +71,7 @@ class _LaundrOpCategoryViewState extends State<LaundrOpCategoryView> {
   }
 
   PreferredSizeWidget _addCategoryAppBar() {
-    return mezcalmosAppBar(
+    return MezcalmosAppBar(
       AppBarLeftButtonType.Back,
       onClick: () {
         MezRouter.back(result: _viewController.shouldRefetch);

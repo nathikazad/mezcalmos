@@ -81,7 +81,7 @@ class _RestaurantOrderEstTimeState extends State<RestaurantOrderEstTime> {
               ),
             ),
             Spacer(),
-            _editSetButton(context)
+            if (widget.order.inProcess()) _editSetButton(context)
           ],
         ),
       ),

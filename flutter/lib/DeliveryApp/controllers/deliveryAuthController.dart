@@ -31,11 +31,21 @@ class DeliveryAuthController extends GetxController {
         "DeliveryAuthController: calling handle state change first time");
     await setupDeliveryDriver();
 
-    if (driver?.deliveryDriverId != null) {
+    startLocationListener();
+    super.onInit();
+  }
+
+  void startLocationListener() {
+    if (driver?.deliveryDriverId != null &&
+        driver!.deliveryDriverState.isOnline) {
       _locationListener?.cancel();
       _locationListener = _listenForLocation();
     }
-    super.onInit();
+  }
+
+  void cancelLocationListener() {
+    _locationListener?.cancel();
+    _locationListener = null;
   }
 
   Future<void> setupDeliveryDriver() async {

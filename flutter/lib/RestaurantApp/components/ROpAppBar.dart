@@ -25,7 +25,7 @@ class ROpAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size preferredSize;
   @override
   Widget build(BuildContext context) {
-    return mezcalmosAppBar(leftBtnType,
+    return MezcalmosAppBar(leftBtnType,
         title: title,
         showLeftBtn: canGoBack,
         tabBar: bottom,

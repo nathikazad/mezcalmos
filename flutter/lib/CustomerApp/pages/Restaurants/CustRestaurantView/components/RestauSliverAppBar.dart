@@ -35,67 +35,70 @@ class RestaurantSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => SliverAppBar(
-          backgroundColor: Theme.of(context).primaryColorLight,
-          elevation: 0.4,
+        backgroundColor: Theme.of(context).primaryColorLight,
+        elevation: 0.4,
+        centerTitle: true,
+        expandedHeight: 270,
+        leadingWidth: 35,
+        automaticallyImplyLeading: false,
+        bottom: getBottom,
+        leading: _BackButtonAppBar(),
+        actions: <Widget>[
+          getAppbarIconsButton(),
+        ],
+        pinned: true,
+        flexibleSpace: FlexibleSpaceBar(
+          expandedTitleScale: 1.6,
+          titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
           centerTitle: true,
-          expandedHeight: (controller.showInfo.isFalse) ? 350 : 270,
-          leadingWidth: 35,
-          automaticallyImplyLeading: false,
-          bottom: getBottom,
-          leading: _BackButtonAppBar(),
-          actions: <Widget>[
-            getAppbarIconsButton(),
-          ],
-          pinned: true,
-          flexibleSpace: FlexibleSpaceBar(
-            expandedTitleScale: 1.6,
-            titlePadding: EdgeInsets.only(bottom: _getBottomPadding()),
-            centerTitle: true,
-            title: Container(
-              alignment: Alignment.bottomCenter,
-              width: 55.w,
-              padding: const EdgeInsets.only(bottom: 5, left: 5, right: 5),
-              child: FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        alignment: Alignment.bottomCenter,
-                        //  margin: const EdgeInsets.only(bottom: 3),
-                        child: Text(
-                          (controller.showInfo.value)
-                              ? "${_i18n()["info"]}"
-                              : controller.restaurant.value!.info.name,
-                          style: Get.textTheme.displaySmall
-                              ?.copyWith(color: Colors.white, fontSize: 14.sp),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                        ),
+          collapseMode: CollapseMode.pin,
+          title: Container(
+            alignment: Alignment.bottomCenter,
+            width: 55.w,
+            padding: EdgeInsets.only(
+                bottom: controller.showInfo.isTrue ? 5 : 12, left: 5, right: 5),
+            child: FittedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: Container(
+                      alignment: Alignment.bottomCenter,
+                      //  margin: const EdgeInsets.only(bottom: 3),
+                      child: Text(
+                        (controller.showInfo.value)
+                            ? "${_i18n()["info"]}"
+                            : controller.restaurant.value!.info.name,
+                        style: Get.textTheme.displaySmall
+                            ?.copyWith(color: Colors.white, fontSize: 14.sp),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    if (!controller.showInfo.value)
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        margin:
-                            const EdgeInsets.only(left: 5, right: 5, bottom: 0),
-                        child: InkWell(
-                            onTap: controller.onInfoTap,
-                            child: Icon(
-                              Icons.info_outline_rounded,
-                              size: 15.sp,
-                              color: Colors.white,
-                            )),
-                      )
-                  ],
-                ),
+                  ),
+                  if (!controller.showInfo.value)
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      margin:
+                          const EdgeInsets.only(left: 5, right: 5, bottom: 0),
+                      child: InkWell(
+                          onTap: controller.onInfoTap,
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            size: 15.sp,
+                            color: Colors.white,
+                          )),
+                    )
+                ],
               ),
             ),
-            background: _backgroundImageComponent(),
-          )),
+          ),
+          background: _backgroundImageComponent(),
+        ),
+      ),
     );
   }
 
@@ -175,7 +178,7 @@ class RestaurantSliverAppBar extends StatelessWidget {
     final LanguageType userLanguage =
         Get.find<LanguageController>().userLanguageKey;
     return PreferredSize(
-      preferredSize: const Size.fromHeight(100),
+      preferredSize: const Size.fromHeight(60),
       child: Theme(
         data: Get.theme.copyWith(dividerColor: Colors.transparent),
         child: Column(
@@ -192,28 +195,27 @@ class RestaurantSliverAppBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Get.theme.scaffoldBackgroundColor,
-      // padding: EdgeInsets.only(top: 0.2.h),
+      padding: EdgeInsets.only(bottom: 7),
       child: Obx(
         () {
           if (controller.showMenuTabs || controller.showSpecialTabs) {
             return TabBar(
-              padding: EdgeInsets.only(left: 6),
+              padding: EdgeInsets.only(left: 6, top: 7),
               isScrollable: true,
               controller: controller.getTabController,
               labelColor: primaryBlueColor,
-              labelStyle: Get.textTheme.bodyText2
-                  ?.copyWith(fontWeight: FontWeight.w600),
-              unselectedLabelStyle: Get.textTheme.bodyText2?.copyWith(
+              labelStyle: Get.textTheme.bodyLarge,
+              unselectedLabelStyle: Get.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade800,
               ),
               unselectedLabelColor: Colors.grey.shade700,
               indicatorPadding:
-                  const EdgeInsets.symmetric(vertical: 8, horizontal: 2),
+                  const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: Colors.transparent,
               indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(45),
                 shape: BoxShape.rectangle,
                 color: secondaryLightBlueColor,
               ),
@@ -286,10 +288,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["menu"]}',
                       style: controller.isOnMenuView
-                          ? Get.textTheme.headline4?.copyWith(
+                          ? Get.textTheme.headlineMedium?.copyWith(
                               color: primaryBlueColor,
                             )
-                          : Get.textTheme.subtitle2,
+                          : Get.textTheme.titleSmall,
                     ),
                   ),
                 ),
@@ -315,10 +317,10 @@ class RestaurantSliverAppBar extends StatelessWidget {
                     child: Text(
                       '${_i18n()["specials"]}',
                       style: controller.isOnSpecialView
-                          ? Get.textTheme.headline4?.copyWith(
+                          ? Get.textTheme.headlineMedium?.copyWith(
                               color: primaryBlueColor,
                             )
-                          : Get.textTheme.subtitle2,
+                          : Get.textTheme.titleSmall,
                     ),
                   ),
                 ),

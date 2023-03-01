@@ -83,7 +83,7 @@ Future<int?> add_choice(
   return null;
 }
 
-Future<bool> update_choice_by_id(int choiceId, Choice choice) async {
+Future<bool> update_choice_by_id({required int choiceId,required  Choice choice}) async {
   final QueryResult<Mutation$updateChoiceById> response = await _db
       .graphQLClient
       .mutate$updateChoiceById(Options$Mutation$updateChoiceById(

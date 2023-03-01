@@ -9,6 +9,7 @@ import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServiceProviderType.dart';
+import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
 import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:sizer/sizer.dart';
 
@@ -55,7 +56,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                           fit: FlexFit.tight,
                           child: Text(
                             restaurant.info.name,
-                            style: Get.textTheme.bodyText1,
+                            style: Get.textTheme.bodyLarge,
                           ),
                         ),
                         SizedBox(
@@ -67,7 +68,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                                 restaurant.state.status == ServiceStatus.Open,
                             onChanged: (bool v) {
                               viewController.switchServiceStatus(
-                                  serviceId: restaurant.info.hasuraId,
+                                  serviceDetailsId: restaurant.serviceDetailsId,
                                   providerType: ServiceProviderType.Restaurant,
                                   value: v);
                             },
@@ -105,12 +106,17 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                                   });
                             }),
                         _smallBtn(
-                            icon: Icons.food_bank,
+                            icon: Icons.person,
                             label: "${_i18n()['profile']}",
                             ontap: () {
-                              MezRouter.toNamed(
-                                  MezAdminRoutes.getROpEditInfoRoute(
-                                      restaurantId: restaurant.info.hasuraId));
+                              SharedServiceProviderRoutes
+                                  .navigateToServiceProfile(
+                                      deliveryDetailsId:
+                                          restaurant.deliveryDetailsId!,
+                                      serviceProviderId:
+                                          restaurant.info.hasuraId,
+                                      serviceDetailsId:
+                                          restaurant.serviceDetailsId);
                             }),
                       ],
                     ),
@@ -141,7 +147,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
                             label: "${_i18n()['accept']}",
                             onClick: () async {
                               await viewController.approveService(
-                                  restaurant: restaurant);
+                                  detailsId: restaurant.serviceDetailsId);
                             })),
                   ],
                 ),
@@ -173,7 +179,7 @@ class AdminRestaurantServiceCard extends StatelessWidget {
             ),
             Text(
               label,
-              style: Get.textTheme.bodyText1?.copyWith(color: primaryBlueColor),
+              style: Get.textTheme.bodyLarge?.copyWith(color: primaryBlueColor),
             )
           ],
         ),

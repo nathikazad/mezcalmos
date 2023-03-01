@@ -85,7 +85,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       fit: FlexFit.tight,
                       child: Text(
                         widget.item.name[userLanguage] ?? "",
-                        style: Get.textTheme.bodyText1,
+                        style: Get.textTheme.bodyLarge,
                         maxLines: 2,
                       ),
                     ),
@@ -93,7 +93,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                         ? ROpRerorderIcon()
                         : Text(
                             widget.item.cost.toPriceString(),
-                            style: Get.textTheme.bodyText1,
+                            style: Get.textTheme.bodyLarge,
                           ),
                     SizedBox(
                       width: 10,
@@ -119,7 +119,7 @@ class _ROpItemCardState extends State<ROpItemCard> {
                                 Text(
                                   widget.category?.name![userLanguage] ??
                                       "Error",
-                                  style: Get.textTheme.bodyText2,
+                                  style: Get.textTheme.bodyMedium,
                                 ),
                               ],
                             ),
@@ -134,12 +134,8 @@ class _ROpItemCardState extends State<ROpItemCard> {
                       onChanged: (widget.viewController.reOrderMode.isTrue)
                           ? null
                           : (bool v) {
-                              // _restaurantInfoController.switchItemAvailable(
-                              //     itemId: widget.item.id!,
-                              //     value: v,
-                              //     caytegoryId: (widget.category != null)
-                              //         ? widget.category!.id
-                              //         : null);
+                              widget.viewController
+                                  .switchItemAv(item: widget.item, value: v);
                             },
                       activeColor: primaryBlueColor,
                       activeTrackColor: secondaryLightBlueColor,

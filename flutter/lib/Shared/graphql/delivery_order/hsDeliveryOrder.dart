@@ -4,6 +4,7 @@ import 'package:graphql/client.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/__generated/schema.graphql.dart';
 import 'package:mezcalmos/Shared/graphql/delivery_order/__generated/delivery_order.graphql.dart';
+import 'package:mezcalmos/Shared/graphql/hasuraTypes.dart';
 import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/helpers/thirdParty/MapHelper.dart';
@@ -98,7 +99,7 @@ Stream<DeliveryOrder?> listen_on_driver_order_by_id({required int orderId}) {
             : null,
         packageCost: orderData.package_cost,
         pickupLocation: MezLocation(
-            orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+            orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
         dropoffLocation:
             MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
         chatWithCustomerId: orderData.chat_with_customer_id,
@@ -184,7 +185,7 @@ Future<DeliveryOrder?> get_driver_order_by_id({required int orderId}) async {
               orderData.delivery_driver!.current_location!.longitude)
           : null,
       pickupLocation:
-          MezLocation(orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+          MezLocation(orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
       dropoffLocation: MezLocation(orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: orderData.chat_with_customer_id,
       chatWithServiceProviderId: orderData.chat_with_service_provider_id,
@@ -500,6 +501,7 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
   final QueryResult<Query$get_pick_driver_order> response =
       await _hasuraDb.graphQLClient.query$get_pick_driver_order(
     Options$Query$get_pick_driver_order(
+      fetchPolicy: FetchPolicy.noCache,
       variables: Variables$Query$get_pick_driver_order(orderId: orderId),
     ),
   );
@@ -558,10 +560,48 @@ Future<DeliveryOrder?> get_pick_driver_order_by_id(
               orderData.delivery_driver!.current_location!.longitude)
           : null,
       pickupLocation: MezLocation(
-          orderData.pickup_address, orderData.pickup_gps.toLocationData()),
+          orderData.pickup_address!, orderData.pickup_gps!.toLocationData()),
       dropoffLocation: MezLocation(
           orderData.dropoff_address, orderData.dropoff_gps.toLocationData()),
       chatWithCustomerId: 0,
       paymentType: orderData.payment_type.toPaymentType(),
       chatWithServiceProviderId: null);
+}
+
+Future<UserInfo?> get_order_driver_info({required int orderId}) async {
+  QueryResult<Query$get_order_driver_info> res =
+      await _hasuraDb.graphQLClient.query$get_order_driver_info(
+    Options$Query$get_order_driver_info(
+      variables: Variables$Query$get_order_driver_info(orderId: orderId),
+    ),
+  );
+  if (res.parsedData?.delivery_order_by_pk == null) {
+    throwError(res.exception);
+  }
+  if (res.parsedData!.delivery_order_by_pk!.delivery_driver != null) {
+    Query$get_order_driver_info$delivery_order_by_pk$delivery_driver data =
+        res.parsedData!.delivery_order_by_pk!.delivery_driver!;
+    return UserInfo(
+        hasuraId: data.user.id, name: data.user.name, image: data.user.image);
+  }
+  return null;
+}
+
+Stream<LatLng?> listen_order_driver_location({required int orderId}) {
+  return _hasuraDb.graphQLClient
+      .subscribe$listen_on_order_driver_location(
+          Options$Subscription$listen_on_order_driver_location(
+              variables: Variables$Subscription$listen_on_order_driver_location(
+                  orderId: orderId)))
+      .map<LatLng?>(
+          (QueryResult<Subscription$listen_on_order_driver_location> event) {
+    if (event.parsedData?.delivery_order_by_pk?.delivery_driver
+            ?.current_location !=
+        null) {
+      Geography data = event
+          .parsedData!.delivery_order_by_pk!.delivery_driver!.current_location!;
+      return LatLng(data.latitude, data.longitude);
+    }
+    return null;
+  });
 }

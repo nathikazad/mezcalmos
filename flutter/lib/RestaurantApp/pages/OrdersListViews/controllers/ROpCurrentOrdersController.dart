@@ -5,6 +5,7 @@ import 'package:mezcalmos/RestaurantApp/controllers/restaurantOpAuthController.d
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/order/hsRestaurantOrder.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
+import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Orders/Minimal/MinimalOrder.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
@@ -17,7 +18,6 @@ class ROpCurrentOrdersController {
 
   // vars
   RxList<MinimalOrder> currentOrders = <MinimalOrder>[].obs;
-  RxList<MinimalOrder> pastOrders = <MinimalOrder>[].obs;
   RxBool initalized = RxBool(false);
   late int restaurantId;
   // Rxn<Restaurant> restaurant = Rxn();
@@ -29,6 +29,7 @@ class ROpCurrentOrdersController {
 
 // getters
   bool get isOpen => _serviceStatus == ServiceStatus.Open;
+  bool get isClosedIdf => _serviceStatus == ServiceStatus.ClosedIndefinitely;
   bool get isAproved => _isApproved.value;
 
   Future<void> init() async {
@@ -48,8 +49,7 @@ class ROpCurrentOrdersController {
   Future<void> _initOrders() async {
     currentOrders.value =
         await get_current_restaurant_orders(restaurantId: restaurantId) ?? [];
-    pastOrders.value =
-        await get_past_restaurant_orders(restaurantId: restaurantId) ?? [];
+
     subscriptionId = hasuraDb.createSubscription(start: () {
       currentOrdersListener =
           listen_on_current_restaurant_orders(restaurantId: restaurantId)
@@ -72,13 +72,21 @@ class ROpCurrentOrdersController {
   }
 
   Future<void> turnOffOrders() async {
-    // _serviceStatus.value = await update_restaurant_status(
-    //     id: restaurantId, status: ServiceStatus.Closed_temporarily);
+    await update_service_state(
+        status: ServiceStatus.ClosedTemporarily,
+        detailsId:
+            opAuthController.operator.value!.state.serviceProviderDetailsId!,
+        approved: null);
+    await _fetchServiceStatus(restaurantId);
   }
 
   Future<void> turnOnOrders() async {
-    // _serviceStatus.value = await update_restaurant_status(
-    //     id: restaurantId, status: ServiceStatus.Open);
+    await update_service_state(
+        status: ServiceStatus.Open,
+        detailsId:
+            opAuthController.operator.value!.state.serviceProviderDetailsId!,
+        approved: null);
+    await _fetchServiceStatus(restaurantId);
   }
 
   void dispose() {

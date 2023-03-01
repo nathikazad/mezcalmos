@@ -156,7 +156,7 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        appBar: mezcalmosAppBar(AppBarLeftButtonType.Lang),
+        appBar: MezcalmosAppBar(AppBarLeftButtonType.Lang),
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(

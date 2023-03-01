@@ -109,8 +109,8 @@ class ROpChoiceViewController {
             langType: key, value: value, translationId: choice.value!.nameId!);
       });
     }
-    final bool response =
-        await update_choice_by_id(choice.value!.id, _contructChoice());
+    final bool response = await update_choice_by_id(
+        choiceId: choice.value!.id, choice: _contructChoice());
     if (response) {
       Get.snackbar("${_i18n()['saved']}", "${_i18n()['savedText']}",
           backgroundColor: Colors.black,

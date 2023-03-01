@@ -59,11 +59,12 @@ select_permissions:
   - role: anonymous
     permission:
       columns:
-        - delivery_details_id
-        - details_id
         - id
         - service_provider_type
         - normal_delivery_time
+        - details_id
+        - delivery_details_id
+        - minimum_cost
       filter: {}
   - role: customer
     permission:
@@ -71,6 +72,7 @@ select_permissions:
         - delivery_details_id
         - details_id
         - id
+        - minimum_cost
         - normal_delivery_time
         - service_provider_type
       filter: {}
@@ -82,12 +84,23 @@ select_permissions:
         - service_provider_type
         - normal_delivery_time
       filter: {}
+  - role: delivery_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - minimum_cost
+        - service_provider_type
+        - normal_delivery_time
+      filter: {}
   - role: laundry_operator
     permission:
       columns:
         - delivery_details_id
         - details_id
         - id
+        - minimum_cost
         - normal_delivery_time
         - service_provider_type
       filter:
@@ -98,7 +111,26 @@ select_permissions:
     permission:
       columns:
         - delivery_details_id
+        - details_id
         - id
+        - minimum_cost
+        - normal_delivery_time
+        - service_provider_type
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - delivery_details_id
+        - details_id
+        - id
+        - minimum_cost
         - service_provider_type
         - normal_delivery_time
       filter:
@@ -114,6 +146,7 @@ update_permissions:
     permission:
       columns:
         - delivery_details_id
+        - minimum_cost
         - normal_delivery_time
       filter:
         operators:
@@ -123,3 +156,45 @@ update_permissions:
         operators:
           user_id:
             _eq: X-Hasura-User-Id
+  - role: mez_admin
+    permission:
+      columns:
+        - minimum_cost
+        - normal_delivery_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+  - role: restaurant_operator
+    permission:
+      columns:
+        - minimum_cost
+        - normal_delivery_time
+      filter:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id
+      check:
+        _exists:
+          _table:
+            name: mez_admin
+            schema: public
+          _where:
+            user_id:
+              _eq: X-Hasura-User-Id

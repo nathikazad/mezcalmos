@@ -46,37 +46,22 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
   }
 
   @override
+  void dispose() {
+    viewController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           onClick: MezRouter.back, title: "${_i18n()['info']}"),
       bottomSheet: MezButton(
         label: "${_i18n()['save']}",
         borderRadius: 0,
         onClick: () async {
           if (viewController.formKey.currentState?.validate() == true) {
-            await viewController.saveInfo().then((bool value) {
-              if (value) {
-                Get.snackbar(
-                    "${_i18n()['saved']}", "${_i18n()['savedSuccess']}",
-                    backgroundColor: Colors.black,
-                    colorText: Colors.white,
-                    shouldIconPulse: false,
-                    icon: Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ));
-              } else {
-                Get.snackbar("${_i18n()['error']}", "${_i18n()['error']}",
-                    backgroundColor: Colors.black,
-                    colorText: Colors.white,
-                    shouldIconPulse: false,
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.red,
-                    ));
-              }
-            });
+            await viewController.saveInfo();
           }
         },
       ),
@@ -124,7 +109,9 @@ class _ServiceInfoEditViewState extends State<ServiceInfoEditView> {
                         style: Get.textTheme.bodyLarge,
                         keyboardType: TextInputType.phone,
                         validator: (String? v) {
-                          if (v.toString().isPhoneNumber == false) {
+                          if (v == null || v.isEmpty) {
+                            return null;
+                          } else if (v.toString().isPhoneNumber == false) {
                             return "${_i18n()['phoneErrorText']}";
                           }
                           return null;

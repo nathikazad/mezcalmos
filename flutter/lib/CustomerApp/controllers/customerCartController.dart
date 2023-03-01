@@ -40,13 +40,19 @@ class CustomerCartController extends GetxController {
           .listen((Cart? event) {
         if (event != null) {
           mezDbgPrint(
-              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ =====> ${event.restaurant?.paymentInfo?.acceptedPayments.entries}");
-          final LocModel.MezLocation? oldLoc = cart.value?.toLocation;
-          cart.value = event;
-          cart.value?.toLocation = oldLoc;
+              "Stream triggred from cart controller ${_auth.hasuraUserId!} ✅✅✅✅✅✅✅✅✅ \n items length =====> ${event.cartItems.length}");
+          if (cart.value != null) {
+            cart.value?.cartItems.clear();
+            cart.value?.cartItems.addAll(event.cartItems);
 
-          cart.value?.restaurant = event.restaurant;
+            cart.value?.restaurant = event.restaurant;
+          } else {
+            cart.value = event;
+          }
+
           _handlerRestaurantId();
+          mezDbgPrint(
+              "Cart items lenght in object ===========>${cart.value?.cartItems.length}");
           cart.refresh();
         } else {
           cart.value = null;

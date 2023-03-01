@@ -33,7 +33,8 @@ class _UserProfileViewState extends State<UserProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
+      resizeToAvoidBottomInset: false,
+      appBar: MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: () {
         _handleBackClick();
       }, title: "${_i18n()["profile"]}"),
       bottomSheet: Obx(
@@ -64,7 +65,7 @@ class _UserProfileViewState extends State<UserProfileView> {
               if (!viewController.isEditingInfo)
                 Text(
                   viewController.user?.name ?? "",
-                  style: Get.textTheme.headline3,
+                  style: Get.textTheme.displaySmall,
                 ),
               SizedBox(
                 height: 25,
@@ -142,8 +143,7 @@ class _UserProfileViewState extends State<UserProfileView> {
             onChanged: (String v) {
               viewController.name.value = v;
             },
-            style: Get.textTheme.bodyText2
-                ?.copyWith(color: blackColor),
+            style: Get.textTheme.bodyMedium?.copyWith(color: blackColor),
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,

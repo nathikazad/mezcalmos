@@ -46,7 +46,7 @@ class _DeliverySettingsCompaniesListState
                     margin: const EdgeInsets.all(5),
                     child: Text(
                       "${_i18n()['title']}",
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     )),
                 SizedBox(
                   height: 15,
@@ -105,7 +105,7 @@ class _DeliverySettingsCompaniesListState
                   ),
                   Text(
                     "${_i18n()['notFoundTitle']}",
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -163,10 +163,10 @@ class _DeliverySettingsCompaniesListState
                 children: [
                   Text(
                     company.info.name,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
-                  Text(
-                      "${_i18n()["joined"]} ${DateFormat.yMMMEd().format(company.creationTime)}")
+                  Text("${_i18n()['joined']} " +
+                      "${DateFormat.yMMMEd().format(company.creationTime)}")
                 ],
               ),
             ),

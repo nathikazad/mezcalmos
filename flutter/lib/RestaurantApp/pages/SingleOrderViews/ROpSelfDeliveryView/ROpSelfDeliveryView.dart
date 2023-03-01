@@ -149,7 +149,7 @@ class _ROpSelfDeliveryViewState extends State<ROpSelfDeliveryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         autoBack: true,
         showNotifications: true,

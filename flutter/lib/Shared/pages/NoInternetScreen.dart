@@ -50,9 +50,7 @@ class NoInternetScreen extends StatelessWidget {
             width: 50.w,
             borderRadius: 20.0,
             onTap: () {
-              if (ConnectivityHelper.instance.hasInternet) {
-                MezRouter.back<Null>();
-              }
+              ConnectivityHelper.instance.checkForInternet(null);
             },
             textAlignement: Alignment.center,
             text: Text(

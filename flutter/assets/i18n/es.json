@@ -21,7 +21,7 @@
       "DropDownLocationList": {
         "ops": "Oops",
         "wrongAddress": "Dirección incorrecta/inválida elegida!",
-        "distanceError": "¡La distancia entre usted y el restaurante es de más de 10 km!",
+        "distanceError": "¡La distancia entre usted y la ubicación del servicio supera los 10 km!",
         "chooseLoc": "Elegir la ubicación",
         "pickLocation": "Elegir del mapa"
       },
@@ -194,11 +194,12 @@
               "toBeCalc": "Calculando ..."
             },
             "SaveLocationDailog": {
-              "addLocationDialogTitle": "ingrese el nombre de la ubicación, si desea guardar para uso futuro, de lo contrario, puede omitir",
+              "addLocationDialogTitle": "ingrese el nombre de la ubicación",
               "editLocationDialogTitle": "Ingrese el nombre de la ubicación",
-              "addLocationDialogButton": "OK",
+              "pickLocationHintText":"Ingrese su nombre",
+              "addLocationDialogButton": "Ahorrar",
               "editLocationDialogButton": "EDITAR",
-              "addLocationDialogSkip": "Omitir"
+              "addLocationDialogSkip": "Cerca"
             }
           },
           "ViewCartScreen": {
@@ -208,7 +209,7 @@
             "myCart": "Mi carrito",
             "notAvailable": "Su restaurante está cerrado",
             "orderNow": "Ordenar ahora",
-            "scheduleOrder": "programar pedido",
+            "scheduleOrder": "Programar pedido",
             "errorText": "Lo siento, todavía no apoyamos tu área",
             "notesTitle": "Notas",
             "notes": "Escribe tus notas aquí",
@@ -228,7 +229,8 @@
               "title": "Advertencia",
               "leftBtn": "Primero de pago",
               "rightBtn": "Sobrescribir",
-              "subtitle": "Ya tiene algunos artículos en su carrito de otro restaurante, ¿quiere revisarlos primero o sobrescribirlos?",
+              "subtitle": "Ya tienes algunos artículos en tu carrito de",
+              "overwriteText":"\n¿Quieres sobrescribir?",
               "specialSubtitle": "Ya tiene algunos artículos especiales en su carrito con un tiempo de disponibilidad diferente, ¿desea verlos primero o sobrescribirlos?",
               "addToCart": "Añadir artículo",
               "modifyItem": "Modificar"
@@ -306,7 +308,7 @@
               "helperText-onTheWay": "Tu pedido está en camino",
               "helperText-readyForPickUp": "Su pedido está preparado y listo para ser recogido por el conductor de la entrega.",
               "helperText-delivered": "Su pedido ha sido entregado con éxito.",
-              "itemNotes": "Nota :"
+              "itemNotes": "Nota"
             },
             "OrderSummaryCard": {
               "totalCost": "Costo total",
@@ -333,6 +335,7 @@
         "ViewRestaurantScreen": {
           "CustomerRestaurantView": {
             "specials": "especiales",
+            "undefinedCategory":"Categoría indefinida",
             "scheduleTitle": "Solo disponible para los pedidos de programación"
           },
           "components": {
@@ -344,7 +347,10 @@
             "restaurantInfoTab": {
               "description": "Descripción",
               "location": "Dirección",
+              "codText": "Efectivo en la entrega",
+              "debitCreditText": "Tarjeta de crédito/débito",
               "reviews": "Reseñas",
+              "paymentMethod": "Método de pago",
               "workingHours": "Horas laborales",
               "weekDays": {
                 "monday": "Lun",
@@ -376,7 +382,7 @@
           "SavedLocationComponent": {
             "editLocation": "Editar ubicación",
             "deleteLocation": "Eliminar ubicación",
-            "defaultAddressText":"Por defecto"
+            "defaultAddressText":"Defecto"
           },
           "SavedLocationIsEmpty": {
             "savedLocationsListEmpty": "Tu lista de ubicaciones guardadas está vacía",
@@ -384,7 +390,7 @@
           }
         },
         "SavedLocationView": {
-          "title": "Ubicación",
+          "title": "Mis ubicaciones",
           "addNewLoc": "Añadir nueva ubicación",
           "location":"Ubicación"
         }
@@ -560,12 +566,14 @@
           "LaundryCurrentOrderView": {
             "orderStatus": "Estado de la orden",
             "laundry": "Lavandería",
-            "estimatedDeliveryTime": "Tiempo de entrega estimado"
+            "estimatedDeliveryTime": "Tiempo de entrega estimado",
+            "deliveryDeatils":"Detalles de la entrega"
           }
         },
         "SingleLaundryScreen": {
           "startingFrom": "Empezando ",
-          "minimumCost": "Costo mínimo",
+          "daysReturn" : "Días de regreso",
+          "minimumCost": "mínimo",
           "description": "Descripción",
           "openHours": "Horas laborales",
           "sendMyLaundry": "Envía mi ropa",
@@ -590,6 +598,7 @@
           "LaundryOrderRequestView": {
             "howItWorks": "Cómo funciona",
             "categories" : "Categorías",
+            "summaryText":"Resumen",
             "deliveryLocation": "Lugar de entrega",
             "orderSummary": "Resumen de la orden",
             "orderCost": "Costo de la orden",
@@ -735,15 +744,27 @@
     "pages": {
       "CreateServiceView": {
         "pages": {
+          "createServiceStartPage":{
+            "openNewRestaurantText":"Cree un nuevo restaurante y reciba pedidos de sus clientes locales."
+          },
           "CreateServiceInfoPage": {
-            "name": "Nombre",
+            "name": "Nombre del restaurante",
+            "hintNameText": "Introduzca su nombre",
+            "uploadImageText":"Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
-            "location": "Nombre",
+            "descriptionError": "Proporcione una descripción",
+            "location": "Ubicación",
             "locationError": "Proporcione una ubicación",
             "pickLoc": "Ubicación de selección",
-            "imageError": "Se requiere una imagen"
+            "imageError": "Se requiere una imagen",
+            "description": "Descripción",
+            "descriptionHintText": "Ingrese una descripción para su restaurante",
+            "phoneText":"Número de teléfono",
+            "phoneTextDescription":"Ingrese su número telefónico",
+            "phoneTextError":"Ingrese un número de teléfono válido"
           }
         },
+        "createText":"Crear",
         "info": "Información",
         "schedule": "Calendario",
         "delivery": "Entrega",
@@ -766,7 +787,10 @@
         "preview": "Avance",
         "custDistance": "Distancia del cliente",
         "save": "Guardar",
-        "cost": "Costo"
+        "cost": "Costo",
+        "radius": "Rango de entrega",
+       
+        "costPerKmFromBase" : "Costo por km de la base"
       },
       "DeliverySettingsView": {
         "DeliverySettingsView": {
@@ -779,7 +803,7 @@
             "title": "Compañero de entrega a su lado",
             "notFoundTitle": "No se encontraron socios de entrega",
             "notFoundBody": "Desafortunadamente, no hay compañías de entrega a su lado, pero si conoce cualquier compañía de entrega, puede compartir este enlace con ellas y cuando se registren, puede hacerlas su socio de entrega.",
-            "joinded": "Unida"
+            "joined": "Unida"
           }
         }
       },
@@ -961,7 +985,10 @@
       "MessagingScreen": {
         "viewOrder": "Ver detalles de la orden",
         "order": "Orden",
-        "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
+        "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
+        "cancel" : "Cancelar",
+        "callApp" : "Llamar a través de la aplicación",
+        "callPhone" : "Llame con el número de teléfono"
       },
       "ViewNotifications": {
         "title": "Notificaciones",
@@ -1049,10 +1076,11 @@
         "banktransfer": "Transferencia bancaria"
       },
       "OrderDeliveryLocation": {
-        "title": "Lugar de entrega"
+        "title": "Lugar de entrega",
+        "deliveryDetails":"Delivery details"
       },
       "OrderScheduledTimeCard": {
-        "title": "hora Programada"
+        "title": "Hora Programada"
       },
       "CreditCardInfo": {
         "creditCardInfo": "Información de la tarjeta de crédito",
@@ -1069,6 +1097,11 @@
       "NoOrdersComponent": {
         "title": "No hay pedidos en este momento",
         "subtitle": "Inténtalo de nuevo más tarde"
+      },
+      "ClosedServiceProviderWidget": {
+        "title": "¡Servicio cerrado!",
+        "btnTitle" : "Servicio abierto",
+        "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
       },
       "FreeShippingComponent": {
         "free": "Gratis"
@@ -1422,7 +1455,7 @@
               "orderWeight": "Peso de pedido",
               "orderCost": "Costo de la orden",
               "deliveryCost": "Costo de envío",
-              "totalCost": "Costo Total",
+              "totalCost": "Costo total",
               "free": "Gratis"
             }
           },
@@ -1489,7 +1522,7 @@
               "notes": "Notas"
             },
             "OrderTotalCostCard": {
-              "totalCost": "Costo Total",
+              "totalCost": "Costo total",
               "deliveryCost": "Costo de envío",
               "total": "Total",
               "free": "Gratis"
@@ -1799,7 +1832,7 @@
             "components": {
               "LaundryOpOrderCard": {
                 "date": "Fecha :",
-                "totalCost": "Coste total :",
+                "totalCost": "Coste total",
                 "waiting": "Esperando",
                 "delivered": "Entregada",
                 "canceled": "Cancelada"
@@ -1849,7 +1882,8 @@
             "days": "dias"
           },
           "MinimumCostCard": {
-            "minCost": "Costo mínimo"
+            "minCost": "Costo mínimo",
+            "save" : "Enregistrer costo mínimo"
           }
         }
       },
@@ -1963,7 +1997,7 @@
       },
       "ROpReviewsView": {
         "reviews": "Reseñas",
-        "base": "Basado en",
+        "base": "Basada en",
         "perfomTitle": "Su rendimiento de revisión es",
         "excellent": "Excelente",
         "poor": "Pobre",
@@ -2106,7 +2140,7 @@
         "components": {
           "ROpOrderCard": {
             "date": "Fecha :",
-            "totalCost": "Coste total :",
+            "totalCost": "Coste total",
             "waiting": "Esperando",
             "delivered": "Entregada",
             "canceled": "Cancelada"

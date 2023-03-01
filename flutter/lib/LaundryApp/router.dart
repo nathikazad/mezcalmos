@@ -2,14 +2,14 @@ import 'package:get/get.dart'; // getX
 import 'package:mezcalmos/LaundryApp/pages/AdminView/LaundryOpAdminView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryCategoryView/LaundrOpCategoryView.dart';
 import 'package:mezcalmos/LaundryApp/pages/LaundryWrapper.dart';
-import 'package:mezcalmos/LaundryApp/pages/OrderView/LaundryOpOrderView.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpCurrentOrders.dart';
 import 'package:mezcalmos/LaundryApp/pages/OrdersListViews/LaundryOpPastOrdersList.dart';
 import 'package:mezcalmos/LaundryApp/pages/TabsView/LaundryTabsView.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
-import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
+// import 'package:mezcalmos/Shared/routes/nativeOnlyRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedRoutes.dart';
 import 'package:mezcalmos/Shared/routes/sharedSPRoutes.dart';
+import 'package:mezcalmos/Shared/pages/LaundryOrderView/LaundryOrderView.dart';
 
 class LaundryAppRoutes {
   static const String kCurrentOrdersListView = '/orders';
@@ -57,9 +57,10 @@ class LaundryAppRoutes {
           name: kCategoryView,
           page: () => LaundrOpCategoryView(),
         ),
-        GetPage(name: kOrderView, page: () => LaundryOpOrderView())
+        GetPage(name: kOrderView, page: () => LaundryOrderView())
       ] +
       SharedRoutes.routes +
-      SharedServiceProviderRoutes.routes +
-      NativeOnlyRoutes.routes;
+      SharedServiceProviderRoutes.routes;
+  //  +
+  // NativeOnlyRoutes.routes;
 }
