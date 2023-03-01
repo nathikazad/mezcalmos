@@ -219,7 +219,7 @@ class Sagora extends GetxController {
                 participantType: event.body['extra']['callerType']
                     .toString()
                     .toParticipantType(),
-                id: event.body['extra']['callerId'],
+                id: int.parse(event.body['extra']['callerId']),
               ),
             );
           }
