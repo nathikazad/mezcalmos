@@ -73,7 +73,7 @@ class MessagingScreenStateForApps extends BaseMessagingScreenState {
         Get.toNamed<void>(NativeOnlyRoutes.kAgoraCallScreen, arguments: {
           "chatId": chatId,
           "talkingTo": Participant(
-              id: response.uid.toInt(),
+              id: response.id.toInt(),
               image: response.image!,
               name: response.name!,
               participantType:

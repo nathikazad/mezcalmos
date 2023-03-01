@@ -6,7 +6,8 @@ import 'package:qlevar_router/qlevar_router.dart';
 class SingleLaundryRoutes {
   static const String singleLaundryRoute = '/laundriesList';
 
-  String getSingleLaundryRoute(int laundryId) => '/laundriesList/$laundryId';
+  static String getSingleLaundryRoute(int laundryId) =>
+      '/laundriesList/$laundryId';
 
   final routes = QRoute(
       name: singleLaundryRoute,

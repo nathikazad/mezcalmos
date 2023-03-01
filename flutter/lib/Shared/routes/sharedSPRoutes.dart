@@ -16,16 +16,21 @@ class SharedServiceProviderRoutes {
   static const String kPickDriver = "/pickDriver/:orderId";
   static const String kDriversList = "/driversList/:serviceProviderId";
   static const String kServicePayments = "/servicePayments/:ServiceProviderId";
-  static const String kOperatorsList = "/operatorsList/:serviceProviderId";
   static const String kDeliveryCost = "/deliveryCost/:deliveryDetailsId";
   static const String kCreateService = "/createService";
+  static const String kOperatorsList =
+      "/operatorsList/:serviceProviderId/:serviceLinkId";
+
   static const String kdeliverySettingsView =
       "/deliverySettings/:serviceProviderId";
   static const String kserviceInfoEdit =
-      "/service/:serviceProviderId/:serviceDetailsId";
+      "/info/:serviceProviderId/:serviceDetailsId";
   static const String kserviceScheduleEdit = "/schedule";
   static const String kDeliveryCostSettingScreen =
       "/costDeliverySettingScreen/:providerId/:providerType";
+  static const String kserviceReview = "/reviews";
+  static const String kServiceProfile =
+      '/service/:serviceId/:serviceDetailsId/:deliveryDetailsId';
 
 // shared navigation methods //
   static void navigateToPickDriver(
@@ -48,25 +53,18 @@ class SharedServiceProviderRoutes {
     });
   }
 
-  static void navigateToOperators(
-      {required int serviceProviderId,
-      required ServiceProviderType serviceProviderType}) {
-    final String route =
-        kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
-    MezRouter.toNamed(route, arguments: {
-      "serviceProviderType": serviceProviderType,
-      "showAppBar": true,
-    });
-  }
-
-  static void navigateToDeliverySettings(
-      {required int serviceProviderId,
-      required ServiceProviderType serviceProviderType}) {
-    final String route = kdeliverySettingsView.replaceFirst(
-        ":serviceProviderId", "$serviceProviderId");
-    MezRouter.toNamed(route, arguments: {
-      "serviceProviderType": serviceProviderType,
-    });
+  static void navigateToServiceProfile({
+    required int serviceProviderId,
+    required int serviceDetailsId,
+    required int deliveryDetailsId,
+  }) {
+    String route =
+        kServiceProfile.replaceFirst(":serviceId", "$serviceProviderId");
+    route = route.replaceFirst(":serviceDetailsId", "$serviceDetailsId");
+    route = route.replaceFirst(":deliveryDetailsId", "$deliveryDetailsId");
+    MezRouter.toNamed(
+      route,
+    );
   }
 
   static void navigateToDeliveryCost({
@@ -107,18 +105,43 @@ class SharedServiceProviderRoutes {
     });
   }
 
+  static void navigateToOperators(
+      {required int serviceProviderId,
+      required int serviceLinkId,
+      required ServiceProviderType serviceProviderType}) {
+    String route =
+        kOperatorsList.replaceFirst(":serviceProviderId", "$serviceProviderId");
+    route = route.replaceFirst(":serviceLinkId", "$serviceLinkId");
+    MezRouter.toNamed(route, arguments: {
+      "serviceProviderType": serviceProviderType,
+      "showAppBar": true,
+    });
+  }
+
+  static void navigateToDeliverySettings({
+    required int serviceProviderId,
+    required int detailsId,
+    required int deliveryDetailsID,
+    required ServiceProviderType serviceProviderType,
+  }) {
+    String route = kdeliverySettingsView.replaceFirst(
+        ":serviceProviderId", "$serviceProviderId");
+    route = route.replaceFirst(":detailsId", "$detailsId");
+    route = route.replaceFirst(":deliveryDetailsId", "$deliveryDetailsID");
+    MezRouter.toNamed(route, arguments: {
+      "serviceProviderType": serviceProviderType,
+    });
+  }
+
   static List<GetPage> routes = [
     GetPage(
         name: kDeliveryCostSettingScreen,
         page: () => DeliveryCostSettingView()),
-    // GetPage(name: kAgoraCallScreen, page: () => AgoraCall()),
     GetPage(name: kPickDriver, page: () => PickDriverView()),
     GetPage(name: kDriversList, page: () => ServiceDriversListView()),
-    // GetPage(name: kHomeRoute, page: () => CustomerWrapper()),
     GetPage(name: kOperatorsList, page: () => OperatorsListView()),
     GetPage(name: kDeliveryCost, page: () => DeliveryCostSettingView()),
     GetPage(name: kServicePayments, page: () => ServicePaymentsView()),
-
     GetPage(name: kserviceInfoEdit, page: () => ServiceInfoEditView()),
     GetPage(name: kCreateService, page: () => CreateServiceView()),
     GetPage(name: kdeliverySettingsView, page: () => DeliverySettingsView()),
