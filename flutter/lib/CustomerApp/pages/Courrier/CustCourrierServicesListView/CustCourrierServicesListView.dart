@@ -50,7 +50,7 @@ class _CustCourierServicesListViewState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          mezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
+          MezcalmosAppBar(AppBarLeftButtonType.Back, onClick: MezRouter.back),
       body: Obx(
         () {
           if (companies.value != null) {

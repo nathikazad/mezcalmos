@@ -164,9 +164,9 @@ class CustomerCartController extends GetxController {
           await CloudFunctions.restaurant2_checkoutCart(
               customerAppType: cloudFunctionModels.CustomerAppType.Native,
               customerLocation: cloudFunctionModels.Location(
-                  cart.value?.toLocation!.latitude,
-                  cart.value?.toLocation!.longitude,
-                  cart.value?.toLocation!.address),
+                  lat: cart.value?.toLocation!.latitude,
+                  lng: cart.value?.toLocation!.longitude,
+                  address: cart.value?.toLocation!.address),
               deliveryCost: cart.value!.shippingCost!,
               paymentType: cart.value!.paymentType.toFirebaseFormatEnum(),
               notes: cart.value?.notes,

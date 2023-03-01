@@ -281,19 +281,21 @@ class CreateServiceViewController {
           name: serviceInput.value.serviceInfo!.name,
           image: serviceInput.value.serviceInfo!.image,
           location: cModel.Location(
-              serviceInput.value.serviceInfo!.location.latitude,
-              serviceInput.value.serviceInfo!.location.longitude,
-              serviceInput.value.serviceInfo!.location.address),
+              lat: serviceInput.value.serviceInfo!.location.latitude,
+              lng: serviceInput.value.serviceInfo!.location.longitude,
+              address: serviceInput.value.serviceInfo!.location.address),
           schedule: serviceInput.value.schedule!.toFirebaseFormattedJson(),
           deliveryDetails: cModel.DeliveryDetails(
-            serviceInput.value.selfDeliveryCost!.minimumCost,
-            serviceInput.value.selfDeliveryCost!.costPerKm,
-            10,
-            serviceInput.value.selfDeliveryCost!.freeDeliveryMinimumCost,
-            serviceInput.value.selfDeliveryCost!.freeDeliveryKmRange,
-            true,
-            false,
-            serviceInput.value.isSelfDelivery,
+            minimumCost: serviceInput.value.selfDeliveryCost!.minimumCost,
+            costPerKm: serviceInput.value.selfDeliveryCost!.costPerKm,
+            radius: int.parse(radius.text) * 1000,
+            freeDeliveryMinimumCost:
+                serviceInput.value.selfDeliveryCost!.freeDeliveryMinimumCost,
+            freeDeliveryKmRange:
+                serviceInput.value.selfDeliveryCost!.freeDeliveryKmRange,
+            deliveryAvailable: true,
+            customerPickup: false,
+            selfDelivery: serviceInput.value.isSelfDelivery,
           ),
           language: {cModel.Language.EN: true});
       return true;

@@ -89,15 +89,14 @@ class MezCard extends StatelessWidget {
               SizedBox(
                 width: 8,
               ),
-              Flexible(fit: FlexFit.tight, child: content),
+            Flexible(fit: FlexFit.tight, child: content),
 
-              // buttons //
-              SizedBox(
-                width: 5,
-              ),
-              if (action != null) action!,
-            ],
-          ),
+            // buttons //
+            SizedBox(
+              width: 5,
+            ),
+            if (action != null) action!,
+          ],
         ),
       ),
     );

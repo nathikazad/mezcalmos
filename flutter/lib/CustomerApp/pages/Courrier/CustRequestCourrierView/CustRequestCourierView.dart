@@ -38,7 +38,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: mezcalmosAppBar(
+      appBar: MezcalmosAppBar(
         AppBarLeftButtonType.Back,
         ordersRoute: kOrdersRoute,
         onClick: viewController.handleBack,
@@ -76,6 +76,7 @@ class _CustRequestCourierViewState extends State<CustRequestCourierView> {
                           height: 15,
                         ),
                         DeliveryTimePicker(
+                          fixed7days: true,
                           deliveryTime: viewController.deliveryTime.value,
                           isServiceOpen:
                               viewController.company.value?.isOpen() ?? true,

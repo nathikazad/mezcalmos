@@ -75,8 +75,10 @@ class CustRequestCourierViewController {
       try {
         cModel.CreateCourierResponse res =
             await CloudFunctions.delivery2_createCourierOrder(
-                toLocation: cModel.Location(toLoc.value!.position.latitude!,
-                    toLoc.value!.position.latitude!, toLoc.value!.address),
+                toLocation: cModel.Location(
+                    lat: toLoc.value!.position.latitude!,
+                    lng: toLoc.value!.position.latitude!,
+                    address: toLoc.value!.address),
                 items: items
                     .map((CourierItem element) => cModel.CourierItem(
                         name: element.name,

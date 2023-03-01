@@ -239,7 +239,9 @@ class DvOrderViewcontroller {
     mezDbgPrint("😇 Status called ==========>$status");
     try {
       await CloudFunctions.delivery2_changeStatus(
-          deliveryOrderId: order.id, newStatus: status);
+        deliveryId: order.id,
+        newStatus: status,
+      );
     } on FirebaseFunctionsException catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
