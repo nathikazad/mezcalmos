@@ -7,10 +7,11 @@ Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "errorMessage": errorMessage,
       "secondsLeft": secondsLeft,
-      "status": status};
+      "status": status,
+    };
   }
 factory SendOtpResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return SendOtpResponse(json["errorMessage"], json["secondsLeft"], json["status"]);
+   return SendOtpResponse(json["errorMessage?"], json["secondsLeft?"], json["status"]);
   }
 }
 
@@ -19,7 +20,8 @@ class AuthResponse {
   AuthResponse(this.token);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "token": token};
+      "token": token,
+    };
   }
 factory AuthResponse.fromFirebaseFormattedJson(dynamic json) { 
    return AuthResponse(json["token"]);
@@ -39,10 +41,11 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "ephemeralKey": ephemeralKey,
       "customer": customer,
       "publishableKey": publishableKey,
-      "stripeAccountId": stripeAccountId};
+      "stripeAccountId": stripeAccountId,
+    };
   }
 factory PaymentIntentResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
+   return PaymentIntentResponse(json["paymentIntent"], json["ephemeralKey?"], json["customer?"], json["publishableKey"], json["stripeAccountId"]);
   }
 }
 
@@ -51,7 +54,8 @@ class AddCardResponse {
   AddCardResponse(this.cardId);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "cardId": cardId};
+      "cardId": cardId,
+    };
   }
 factory AddCardResponse.fromFirebaseFormattedJson(dynamic json) { 
    return AddCardResponse(json["cardId"]);
@@ -69,7 +73,8 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "paymentIntent": paymentIntent,
       "customer": customer,
       "publishableKey": publishableKey,
-      "stripeAccountId": stripeAccountId};
+      "stripeAccountId": stripeAccountId,
+    };
   }
 factory ChargeCardResponse.fromFirebaseFormattedJson(dynamic json) { 
    return ChargeCardResponse(json["paymentIntent"], json["customer"], json["publishableKey"], json["stripeAccountId"]);
@@ -87,7 +92,8 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "object": object,
       "created": created,
       "expires_at": expires_at,
-      "url": url};
+      "url": url,
+    };
   }
 factory SetupResponse.fromFirebaseFormattedJson(dynamic json) { 
    return SetupResponse(json["object"], json["created"], json["expires_at"], json["url"]);
@@ -99,14 +105,6 @@ extension ParseParticipantTypeToString on ParticipantType {
   String toFirebaseFormatString() {
     String str = this.toString().split('.').last;
     return str[0].toLowerCase() + str.substring(1);
-  }
-}
-
-extension ParseStringToParticipantType on String {
-  ParticipantType toHasuraParticipantType() {
-    return ParticipantType.values.firstWhere(
-        (ParticipantType participantType) =>
-            participantType.toFirebaseFormatString() == this);
   }
 }
 
@@ -125,10 +123,11 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "name": name,
       "image": image,
       "expirationTime": expirationTime,
-      "participantType": participantType};
+      "participantType": participantType,
+    };
   }
 factory CallUserResponse.fromFirebaseFormattedJson(dynamic json) { 
-   return CallUserResponse(json["id"], json["token"], json["name"], json["image"], json["expirationTime"], json["participantType"].toString().toHasuraParticipantType());
+   return CallUserResponse(json["id"], json["token"], json["name?"], json["image?"], json["expirationTime"], json["participantType"]);
   }
 }
 
@@ -136,12 +135,14 @@ class NotificationInfo {
   String token;
   bool turnOffNotifications;
   AppType appType;
-  NotificationInfo(this.token, this.turnOffNotifications, this.appType);
+  NotificationInfo({
+    required this.token, required this.turnOffNotifications, required this.appType});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "token": token,
       "turnOffNotifications": turnOffNotifications,
-      "appType": appType};
+      "appType": appType,
+    };
   }
 
 }
@@ -158,12 +159,14 @@ class Location {
   num lat;
   num lng;
   String? address;
-  Location(this.lat, this.lng, this.address);
+  Location({
+    required this.lat, required this.lng, this.address});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "lat": lat,
       "lng": lng,
-      "address": address};
+      "address": address,
+    };
   }
 
 }
@@ -177,7 +180,8 @@ class DeliveryDetails {
   bool deliveryAvailable;
   bool customerPickup;
   bool selfDelivery;
-  DeliveryDetails(this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange, this.deliveryAvailable, this.customerPickup, this.selfDelivery);
+  DeliveryDetails({
+    this.minimumCost, this.costPerKm, this.radius, this.freeDeliveryMinimumCost, this.freeDeliveryKmRange, required this.deliveryAvailable, required this.customerPickup, required this.selfDelivery});
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
       "minimumCost": minimumCost,
@@ -187,7 +191,8 @@ Map<String, dynamic> toFirebaseFormattedJson() {
       "freeDeliveryKmRange": freeDeliveryKmRange,
       "deliveryAvailable": deliveryAvailable,
       "customerPickup": customerPickup,
-      "selfDelivery": selfDelivery};
+      "selfDelivery": selfDelivery,
+    };
   }
 
 }
@@ -221,7 +226,8 @@ class CheckoutResponse {
   CheckoutResponse(this.orderId);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "orderId": orderId};
+      "orderId": orderId,
+    };
   }
 factory CheckoutResponse.fromFirebaseFormattedJson(dynamic json) { 
    return CheckoutResponse(json["orderId"]);
@@ -233,7 +239,8 @@ class ReqLaundryResponse {
   ReqLaundryResponse(this.orderId);
 Map<String, dynamic> toFirebaseFormattedJson() {
     return <String, dynamic>{
-      "orderId": orderId};
+      "orderId": orderId,
+    };
   }
 factory ReqLaundryResponse.fromFirebaseFormattedJson(dynamic json) { 
    return ReqLaundryResponse(json["orderId"]);

@@ -19,10 +19,10 @@ export async function createRestaurant(
       object: {
         delivery_details: {
           data: {
-            minimum_cost: restaurantDetails.deliveryDetails.minimumCost,
-            cost_per_km: restaurantDetails.deliveryDetails.costPerKm,
-            radius: restaurantDetails.deliveryDetails.radius,
-            free_delivery_minimum_cost: restaurantDetails.deliveryDetails.freeDeliveryMinimumCost,
+            minimum_cost: restaurantDetails.deliveryDetails.minimumCost ?? 0,
+            cost_per_km: restaurantDetails.deliveryDetails.costPerKm ?? 0,
+            radius: restaurantDetails.deliveryDetails.radius ?? 0,
+            free_delivery_minimum_cost: restaurantDetails.deliveryDetails.freeDeliveryMinimumCost ,
             free_delivery_km_range: restaurantDetails.deliveryDetails.freeDeliveryKmRange,
             delivery_available: restaurantDetails.deliveryDetails.deliveryAvailable,
             customer_pickup: restaurantDetails.deliveryDetails.customerPickup,

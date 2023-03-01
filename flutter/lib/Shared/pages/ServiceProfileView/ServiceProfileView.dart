@@ -235,7 +235,9 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   PreferredSize _getAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(_viewController.getAppbarHeight),
+      preferredSize: _viewController.hasData
+          ? Size.fromHeight(_viewController.getAppbarHeight)
+          : Size.fromHeight(kTextTabBarHeight),
       child: Obx(
         () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
