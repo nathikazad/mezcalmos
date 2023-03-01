@@ -39,6 +39,12 @@ class RestaurantAppTheme {
       inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.grey.shade200,
+          errorStyle: TextStyle(
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
+            color: Colors.red,
+          ),
           //isDense: true,
 
           focusColor: Color(0xFF6779FE),

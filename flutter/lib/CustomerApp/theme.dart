@@ -40,7 +40,12 @@ class CustomerAppTheme {
           filled: true,
           fillColor: Colors.grey.shade200,
           //isDense: true,
-
+          errorStyle: TextStyle(
+            fontFamily: "Nunito",
+            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
+            color: Colors.red,
+          ),
           focusColor: Color(0xFF6779FE),
           prefixIconColor: Color(0xFF6779FE),
           alignLabelWithHint: true,

@@ -753,7 +753,7 @@
             "uploadImageText":"Sube tu imagen de perfil",
             "nameError": "Proporcione un nombre",
             "descriptionError": "Proporcione una descripción",
-            "location": "Nombre",
+            "location": "Ubicación",
             "locationError": "Proporcione una ubicación",
             "pickLoc": "Ubicación de selección",
             "imageError": "Se requiere una imagen",
