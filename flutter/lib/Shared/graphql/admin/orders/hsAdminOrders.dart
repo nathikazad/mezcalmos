@@ -44,7 +44,7 @@ Future<List<MinimalOrder>?> get_admin_dv_orders({
           image: orderData.customer.user.image,
           status:
               orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-          totalCost: orderData.package_cost);
+          totalCost: orderData.delivery_cost);
     }).toList();
     return orders;
   } else {
@@ -85,7 +85,7 @@ Stream<List<MinimalOrder>?> listen_on_admin_dv_orders({
             image: orderData.customer.user.image,
             status:
                 orderData.status.toDeliveryOrderStatus().toMinimalOrderStatus(),
-            totalCost: orderData.package_cost);
+            totalCost: orderData.delivery_cost);
       }).toList();
       return orders;
     }

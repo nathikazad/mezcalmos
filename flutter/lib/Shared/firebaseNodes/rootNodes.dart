@@ -3,7 +3,7 @@ String userLanguageNode(String userId) {
 }
 
 String notificationQueueNode([String? notificationId]) {
-  String address = 'notificationQueue';
+  String address = 'notificationQueue2';
   if (notificationId != null) address += '/$notificationId';
   return address;
 }

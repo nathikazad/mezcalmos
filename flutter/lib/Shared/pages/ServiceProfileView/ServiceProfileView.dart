@@ -10,6 +10,7 @@ import 'package:mezcalmos/Shared/helpers/GeneralPurposeHelper.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/sharedRouter.dart';
 import 'package:mezcalmos/Shared/widgets/AppBar.dart';
+import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezIconButton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -56,12 +57,6 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
         widget.serviceId ?? int.tryParse(Get.parameters["serviceId"] ?? "");
     deliveryDetailsId = widget.deliveryDetailsId ??
         int.tryParse(Get.parameters["deliveryDetailsId"] ?? "");
-  }
-
-  @override
-  void dispose() {
-    _viewController.dispose();
-    super.dispose();
   }
 
   bool get asTab => widget.serviceDetailsId != null;
@@ -139,26 +134,19 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                   },
                                   label: "Reviews"),
                               _navigationLink(
-                                  onClick: () async {
-                                    navigateToDeliverySettings(
-                                        deliveryDetailsID:
-                                            _viewController.deliveryDetailsId,
-                                        detailsId: _viewController.detailsId,
-                                        serviceProviderId:
-                                            _viewController.serviceId,
-                                        serviceProviderType: _viewController
-                                            .service.serviceProviderType!);
-                                  },
-                                  label: "",
-                                  icon: Icons.delivery_dining,
-                                  labelWidget: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text('Delivery',
-                                          style: Get.textTheme.bodyLarge),
-                                    ],
-                                  )),
+                                onClick: () async {
+                                  navigateToDeliverySettings(
+                                      deliveryDetailsID:
+                                          _viewController.deliveryDetailsId,
+                                      detailsId: _viewController.detailsId,
+                                      serviceProviderId:
+                                          _viewController.serviceId,
+                                      serviceProviderType: _viewController
+                                          .service.serviceProviderType!);
+                                },
+                                label: "Delivery",
+                                icon: Icons.delivery_dining,
+                              ),
                               _navigationLink(
                                   icon: Icons.share,
                                   label: "Share",
@@ -166,8 +154,6 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                                     icon: Icons.copy,
                                     onTap: () {},
                                   )),
-                                  
-                              Divider(),
                               _navigationLink(
                                   onClick: () async {
                                     await launch(GetStorage()
@@ -191,6 +177,28 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
                             ],
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      MezButton(
+                        label: _viewController.service.state.isClosedIndef
+                            ? "Open service"
+                            : "Close Service",
+                        icon: _viewController.service.state.isClosedIndef
+                            ? Icons.lock_open
+                            : Icons.lock,
+                        textColor: !_viewController.service.state.isClosedIndef
+                            ? Colors.red
+                            : null,
+                        backgroundColor:
+                            _viewController.service.state.isClosedIndef
+                                ? Colors.green
+                                : offRedColor,
+                        onClick: () async {
+                          await _viewController.switchOpen(
+                              _viewController.service.state.isClosedIndef);
+                        },
                       )
                     ],
                   ),
@@ -227,25 +235,55 @@ class _ServiceProfileViewState extends State<ServiceProfileView> {
 
   PreferredSize _getAppBar() {
     return PreferredSize(
-      preferredSize: (_viewController.isApproved)
-          ? Size.fromHeight(kToolbarHeight)
-          : Size.fromHeight(kToolbarHeight * 2),
+      preferredSize: Size.fromHeight(_viewController.getAppbarHeight),
       child: Obx(
         () => MezcalmosAppBar(
           asTab ? AppBarLeftButtonType.Menu : AppBarLeftButtonType.Back,
           onClick: MezRouter.back,
           title: "Dashboard",
-          tabBar: (!_viewController.isApproved)
+          tabBar: (!_viewController.isApproved ||
+                  _viewController.service.state.isClosedIndef)
               ? PreferredSize(
                   preferredSize: Size(double.infinity, kToolbarHeight),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    color: secondaryLightBlueColor,
-                    child: Text(
-                      "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
-                      style: Get.textTheme.bodyLarge
-                          ?.copyWith(color: primaryBlueColor),
-                    ),
+                  child: Column(
+                    children: [
+                      if (_viewController.service.state.isClosedIndef)
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          width: double.infinity,
+                          color: offRedColor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.lock,
+                                color: Colors.redAccent,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  "Service is closed indefinitely",
+                                  textAlign: TextAlign.center,
+                                  style: Get.textTheme.bodyLarge
+                                      ?.copyWith(color: Colors.redAccent),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      if (!_viewController.isApproved)
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          color: secondaryLightBlueColor,
+                          child: Text(
+                            "Your restaurant is under review, you’ll be notifiedonce it’s approved.",
+                            style: Get.textTheme.bodyLarge
+                                ?.copyWith(color: primaryBlueColor),
+                          ),
+                        ),
+                    ],
                   ),
                 )
               : null,

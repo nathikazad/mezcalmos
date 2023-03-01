@@ -104,6 +104,7 @@ const String aMoney = "assets/images/shared/money.png";
 const String aGpay = "assets/images/customer/gPay.png";
 
 const String noOrdersAsset = "assets/images/shared/noOrderIllustration.png";
+const String closedServiceAsset = "assets/images/shared/closedService.png";
 const String aRequestWaiting = "assets/images/shared/requestPerson.png";
 const String aDefaultDbUserImgAsset =
     "assets/images/shared/defaultUserLogo.png";

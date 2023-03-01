@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/RestaurantApp/components/RestaurantOpDrawer.dart';
 import 'package:mezcalmos/RestaurantApp/constants/assets.dart';
-import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/components/ROpWaitingForApproval.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ServiceWaitingForApproval.dart';
 import 'package:mezcalmos/RestaurantApp/pages/OrdersListViews/controllers/ROpCurrentOrdersController.dart';
 import 'package:mezcalmos/RestaurantApp/router.dart';
 import 'package:mezcalmos/Shared/MezRouter.dart';
@@ -17,6 +17,7 @@ import 'package:mezcalmos/Shared/widgets/MezButton.dart';
 import 'package:mezcalmos/Shared/widgets/MezLogoAnimation.dart';
 import 'package:mezcalmos/Shared/widgets/NoOrdersComponent.dart';
 import 'package:mezcalmos/Shared/widgets/Order/MinimalOrderCard.dart';
+import 'package:mezcalmos/Shared/widgets/ServiceProviders/ClosedServiceProviderWidget.dart';
 import 'package:sizer/sizer.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['RestaurantApp']
@@ -66,7 +67,11 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
               centered: true,
             );
           } else if (viewController.isAproved == false) {
-            return ROpWaitingForApproval();
+            return ServiceWaitingForApproval();
+          } else if (viewController.isClosedIdf) {
+            return ClosedServiceProviderWidget(
+              openCallBack: viewController.turnOnOrders,
+            );
           } else {
             return Column(
               children: [
@@ -126,7 +131,7 @@ class _ROpCurrentOrdersListViewState extends State<ROpCurrentOrdersListView> {
                 Flexible(
                     fit: FlexFit.tight,
                     child: Text('${_i18n()["currentOrders"]}'.inCaps,
-                        style: Get.textTheme.bodyText1)),
+                        style: Get.textTheme.bodyLarge)),
                 Flexible(
                   child: MezButton(
                     backgroundColor: secondaryLightBlueColor,

@@ -72,12 +72,12 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           widget.restaurant.info.description!.length > 1)
                         const Spacer(),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Flexible(
-                            flex: 4,
-                            fit: FlexFit.loose,
+                            //    flex: 4,
+                            //  fit: FlexFit.loose,
                             child: Row(
                               children: [
                                 Icon(
@@ -87,7 +87,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                 ),
                                 SizedBox(width: 3),
                                 Flexible(
-                                  flex: 5,
+                                  //  flex: 5,
                                   child: ShippingCostComponent(
                                     shippingCost: _getShippingPrice(),
                                     alignment: MainAxisAlignment.start,
@@ -101,18 +101,16 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           //   width: 5,
                           // ),
                           Flexible(
-                            flex: widget.restaurant.paymentInfo?.acceptCard ==
-                                    true
-                                ? 4
-                                : 3,
-                            fit: FlexFit.tight,
+                            // flex: widget.restaurant.paymentInfo?.acceptCard ==
+                            //         true
+                            //     ? 4
+                            //     : 3,
+                            // fit: FlexFit.tight,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                SizedBox(
-                                  width: 8
-                                ),
+                                SizedBox(width: 8),
                                 Icon(
                                   Icons.payments_outlined,
                                   color: Colors.black,
@@ -136,7 +134,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           // ),
                           if (widget.restaurant.rate != null)
                             Flexible(
-                              flex: 4,
+                              // flex: 4,
                               child: Row(
                                 children: [
                                   SizedBox(

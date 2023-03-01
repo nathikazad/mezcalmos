@@ -29,6 +29,7 @@ class _AdmiOrdersListViewState extends State<AdmiOrdersListView> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(15),
       child: Column(
         children: [
           Obx(() => Column(

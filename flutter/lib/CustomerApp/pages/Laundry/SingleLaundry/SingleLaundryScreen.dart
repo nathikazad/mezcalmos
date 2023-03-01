@@ -65,26 +65,33 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
                   ),
                   Text(
                     laundry.value!.info.name,
-                    style: Get.textTheme.headline5,
+                    style: Get.textTheme.headlineSmall,
                   ),
                   SizedBox(
                     height: 9,
                   ),
                   _laundryInfoHeader(),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "${_i18n()["description"]}",
-                    style: Get.textTheme.bodyLarge,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "${laundry.value!.info.description!.values.first}",
-                    style: Get.textTheme.subtitle2,
-                  ),
+                  if (laundry.value?.info.description != null &&
+                      laundry.value!.info.description!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          "${_i18n()["description"]}",
+                          style: Get.textTheme.bodyLarge,
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "${laundry.value!.info.description![userLanguage]}",
+                          style: Get.textTheme.titleSmall,
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 15,
                   ),
@@ -131,7 +138,7 @@ class _SingleLaundryScreenState extends State<SingleLaundryScreen> {
             flex: 1,
             child: Text(
               item.name[userLanguage]?.toString().inCaps ?? "",
-              style: Get.textTheme.subtitle2,
+              style: Get.textTheme.titleSmall,
               maxLines: 1,
             ),
           ),

@@ -12,6 +12,7 @@ subscription admin_listen_on_dv_orders($inProccess: Boolean!) {
     status
     package_cost
     package_ready
+    delivery_cost
     order_type
     dropoff_address
     dropoff_gps
@@ -36,6 +37,7 @@ query admin_get_dv_orders($inProccess: Boolean!) {
     order_time
     status
     package_cost
+    delivery_cost
     package_ready
     dropoff_address
     dropoff_gps
@@ -102,7 +104,7 @@ subscription admin_listen_on_laundry_orders($inProccess: Boolean!) {
     }
   }
 }
-query admin_get_laundry_orders($inProccess: Boolean!) {
+query admin_get_laundry_orders($inProccess: Boolean!,) {
   laundry_order(where: { in_process: { _eq: $inProccess } }) {
     id
     store_id
@@ -119,6 +121,7 @@ query admin_get_laundry_orders($inProccess: Boolean!) {
     }
   }
 }
+
 query admin_get_service__orders(
   $serviceProviderType: String!
   $serviceProviderId: Int!

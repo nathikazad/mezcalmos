@@ -119,7 +119,7 @@ class CreateServiceViewController {
     serviceInput.refresh();
   }
 
-  String getTitle() {
+  String? getTitle() {
     switch (currentPage.value) {
       case 1:
         return "${_i18n()['info']}";
@@ -129,7 +129,7 @@ class CreateServiceViewController {
         return "${_i18n()['delivery']}";
 
       default:
-        return "";
+        return null;
       // FittedBox(
       //         fit: BoxFit.fitWidth,
       //         child: MezcalmosSharedWidgets.fillTitle(

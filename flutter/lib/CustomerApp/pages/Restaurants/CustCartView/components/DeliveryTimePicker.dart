@@ -21,6 +21,7 @@ class DeliveryTimePicker extends StatefulWidget {
       required this.deliveryTime,
       required this.periodOfTime,
       required this.isServiceOpen,
+      required this.fixed7days,
       required this.numberOfDays,
       required this.onValue,
       required this.schedule})
@@ -30,6 +31,7 @@ class DeliveryTimePicker extends StatefulWidget {
   final DateTime? deliveryTime;
   final Schedule? schedule;
   final bool isServiceOpen;
+  final bool fixed7days;
   final int numberOfDays;
   final Function(DateTime?) onValue;
 
@@ -209,7 +211,7 @@ class _DeliveryTimePickerState extends State<DeliveryTimePicker> {
           isDismissible: true,
           builder: (BuildContext ctx) {
             return MezDateTimePicker(
-              fixed7days: true,
+              fixed7days: widget.fixed7days,
               startDate: widget.deliveryTime?.toLocal(),
               periodOfTime: widget.periodOfTime,
               numberOfDaysInterval: widget.numberOfDays,

@@ -36,7 +36,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['name']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -49,9 +49,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyText2,
+                  hintStyle: Get.textTheme.bodyMedium,
                   hintText: "${_i18n()['hintNameText']}"),
             ),
             SizedBox(
@@ -59,7 +59,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['description']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -74,9 +74,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyText2,
+                  hintStyle: Get.textTheme.bodyMedium,
                   hintText: "${_i18n()['descriptionHintText']}"),
             ),
             SizedBox(
@@ -84,13 +84,13 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['phoneText']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
             ),
             TextFormField(
-              controller: viewController.serviceName,
+              controller: viewController.phone,
               validator: (String? v) {
                 if (v == null || v.isEmpty) {
                   //ask with montasaare for phone validation.
@@ -98,9 +98,9 @@ class CreateServiceInfoPage extends StatelessWidget {
                 }
                 return null;
               },
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
               decoration: InputDecoration(
-                  hintStyle: Get.textTheme.bodyText2,
+                  hintStyle: Get.textTheme.bodyMedium,
                   hintText: "${_i18n()['phoneTextDescription']}"),
             ),
             SizedBox(
@@ -108,7 +108,7 @@ class CreateServiceInfoPage extends StatelessWidget {
             ),
             Text(
               "${_i18n()['location']}",
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
             SizedBox(
               height: 10,
@@ -179,7 +179,8 @@ class CreateServiceInfoPage extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 5),
                   child: Text(
                     state.errorText ?? "",
-                    style: Get.textTheme.subtitle1?.copyWith(color: Colors.red),
+                    style:
+                        Get.textTheme.titleMedium?.copyWith(color: Colors.red),
                   ))
           ],
         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/Shared/graphql/service_provider/hsServiceProvider.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
@@ -13,7 +14,7 @@ class ServiceProfileController extends GetxController {
   late int deliveryDetailsId;
   // state vars //
   Rxn<MainService> _service = Rxn();
-  RxBool _isAprroved = RxBool(false);
+  RxBool _isAprroved = RxBool(true);
   // getters //
   MainService get service => _service.value!;
   bool get isApproved => _isAprroved.value;
@@ -49,6 +50,17 @@ class ServiceProfileController extends GetxController {
       _isAprroved.value = _service.value!.state.approved;
       _service.refresh();
     }
+  }
+
+  double get getAppbarHeight {
+    double height = kToolbarHeight;
+    if (!isApproved) {
+      height += kToolbarHeight;
+    }
+    if (service.state.isClosedIndef) {
+      height += kToolbarHeight;
+    }
+    return height;
   }
 
   Future<void> switchOpen(bool value) async {

@@ -28,7 +28,7 @@ class MezSideMenu extends GetWidget<AuthController> {
   final String appName = getAppName();
   static final AppLaunchMode lmd = getAppLaunchMode();
 
-  final String version = GetStorage().read<String>(getxAppVersion) as String;
+  final String? version = GetStorage().read<String>(getxAppVersion);
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +60,16 @@ class MezSideMenu extends GetWidget<AuthController> {
                   ),
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  version +
-                      (lmd != AppLaunchMode.prod
-                          ? " ${lmd.toShortString()}"
-                          : ""),
+              if (version != null)
+                Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    version! +
+                        (lmd != AppLaunchMode.prod
+                            ? " ${lmd.toShortString()}"
+                            : ""),
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -245,11 +246,10 @@ class MezSideMenu extends GetWidget<AuthController> {
               controller.user?.name ?? "",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: blackColor
-              ),
+                  fontFamily: 'Montserrat',
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: blackColor),
             ),
           ),
           const SizedBox(height: 30),

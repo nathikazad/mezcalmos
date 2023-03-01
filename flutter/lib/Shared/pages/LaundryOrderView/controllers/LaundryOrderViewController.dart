@@ -176,10 +176,13 @@ class LaundryOrderViewController {
       await CloudFunctions.laundry2_cancelFromAdmin(orderId: order.orderId);
       showSavedSnackBar(
           title: "Cancelled", subtitle: "Order cancelled successfuly");
+    } on FirebaseFunctionsException catch (e, stk) {
+      mezDbgPrint(e);
+      mezDbgPrint(stk);
+      showErrorSnackBar(errorText: e.message.toString());
     } catch (e, stk) {
       mezDbgPrint(e);
       mezDbgPrint(stk);
-      showErrorSnackBar(errorText: e.toString());
     }
   }
 

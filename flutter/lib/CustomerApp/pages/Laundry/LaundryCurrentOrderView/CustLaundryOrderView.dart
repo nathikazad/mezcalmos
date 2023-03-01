@@ -21,6 +21,7 @@ import 'package:mezcalmos/Shared/widgets/MGoogleMap.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderDeliveryLocation.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderNoteCard.dart';
 import 'package:mezcalmos/Shared/widgets/Order/OrderSummaryCard.dart';
+import 'package:mezcalmos/Shared/widgets/OrderMap/OrderMapWidget.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['CustomerApp']
     ['pages']['Laundry']['LaundryCurrentOrderView']['LaundryCurrentOrderView'];
@@ -105,16 +106,17 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
                             ),
                             LaundryOrderDriverCard(
                                 order: viewController.order.value!),
-                            // @ here
                             if (viewController.order.value!.inDeliveryPhase())
-                              Column(
-                                children: [
-                                  const SizedBox(height: 15),
-                                  Column(
-                                    children: _mapWidget,
-                                  ),
-                                ],
-                              ),
+                              OrderMapWidget(
+                                  deliveryOrderId: viewController
+                                      .order.value!.deliveryOrderId,
+                                  updateDriver: viewController.order.value!
+                                      .inDeliveryPhase(),
+                                  polyline: viewController
+                                      .order.value!.routeInformation?.polyline,
+                                  from: viewController
+                                      .order.value!.laundry!.location,
+                                  to: viewController.order.value!.to),
 
                             if (viewController.order.value!.laundry != null)
                               OrderLaundryCard(
@@ -177,7 +179,7 @@ class _CustLaundryOrderViewState extends State<CustLaundryOrderView> {
       titleWidget: Obx(
         () => Text(
           '${viewController.order.value?.laundry?.name ?? ""}',
-          style: Get.textTheme.headline3,
+          style: Get.textTheme.displaySmall,
         ),
       ),
       showNotifications: true,
