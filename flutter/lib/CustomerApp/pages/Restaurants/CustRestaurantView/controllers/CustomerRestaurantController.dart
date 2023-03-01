@@ -8,6 +8,7 @@ import 'package:mezcalmos/Shared/graphql/category/hsCategory.dart';
 import 'package:mezcalmos/Shared/graphql/item/hsItem.dart';
 import 'package:mezcalmos/Shared/graphql/restaurant/hsRestaurant.dart';
 import 'package:mezcalmos/Shared/graphql/review/hsReview.dart';
+import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Category.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Item.dart';
 import 'package:mezcalmos/Shared/models/Services/Restaurant/Restaurant.dart';
@@ -44,6 +45,7 @@ class CustomerRestaurantController {
   Future<void> init(
       {required int restaurantId, required TickerProvider vsync}) async {
     scrollController = AutoScrollController();
+    restaurant.value = await get_restaurant_by_id(id: restaurantId);
     unawaited(get_service_reviews(serviceId: restaurantId)
         .then((List<Review>? value) {
       if (value != null) {
@@ -56,7 +58,6 @@ class CustomerRestaurantController {
         restaurant.value!.rate = value;
       }
     }));
-    restaurant.value = await get_restaurant_by_id(id: restaurantId);
     await _getShippingPrice();
 
     final List<Category>? _cats =
@@ -181,7 +182,10 @@ class CustomerRestaurantController {
   }
 
   bool get showMenuTabs {
-    return isOnMenuView && showCategoriesChips && showInfo.isFalse;
+    return restaurant.value != null &&
+        isOnMenuView &&
+        showCategoriesChips &&
+        showInfo.isFalse;
   }
 
   bool get showSpecialTabs {

@@ -51,8 +51,7 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
 
   @override
   Widget build(BuildContext context) {
-    return Text('Test');
-    Scaffold(
+    return Scaffold(
       extendBodyBehindAppBar: true,
       floatingActionButton: FloatingCartComponent(),
       bottomSheet: (_viewController.restaurant.value?.isOpen() == false)
@@ -69,36 +68,50 @@ class _CustomerRestaurantViewState extends State<CustomerRestaurantView>
   }
 
   Widget buildSliverScrollView() {
-    return CustomScrollView(
-      controller: _viewController.scrollController,
-      slivers: [
-        RestaurantSliverAppBar(controller: _viewController),
-        Obx(() {
-          if (_viewController.showInfo.value)
-            return SliverPadding(
-              padding: const EdgeInsets.all(12),
-              sliver: SliverToBoxAdapter(
-                  child: RestaurantInfoTab(
-                restaurant: _viewController.restaurant.value!,
-                controller: _viewController,
-              )),
-            );
-          else if (_viewController.isInitialzed) {
-            return _buildItemsList();
-          } else {
-            return SliverFillRemaining(
-                child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                "Some magic is happening ...",
-                style: Get.textTheme.bodyLarge?.copyWith(
-                    color: primaryBlueColor, fontStyle: FontStyle.italic),
-              ),
-            ));
-          }
-        })
-      ],
-    );
+    return Obx(() {
+      if (_viewController.isInitialzed) {
+        return CustomScrollView(
+          controller: _viewController.scrollController,
+          slivers: [
+            RestaurantSliverAppBar(controller: _viewController),
+            // Obx(() {
+            if (_viewController.showInfo.value)
+              SliverPadding(
+                padding: const EdgeInsets.all(12),
+                sliver: SliverToBoxAdapter(
+                    child: RestaurantInfoTab(
+                  restaurant: _viewController.restaurant.value!,
+                  controller: _viewController,
+                )),
+              )
+            else
+              _buildItemsList()
+            // else {
+            // // return
+            // SliverFillRemaining(
+            //     child: Container(
+            //   alignment: Alignment.center,
+            //   child: Text(
+            //     "Some magic is happening ...",
+            //     style: Get.textTheme.bodyLarge?.copyWith(
+            //         color: primaryBlueColor, fontStyle: FontStyle.italic),
+            //   ),
+            // ))
+            //   }
+            // })
+          ],
+        );
+      } else {
+        return Container(
+          alignment: Alignment.center,
+          child: Text(
+            "Some magic is happening ...",
+            style: Get.textTheme.bodyLarge?.copyWith(
+                color: primaryBlueColor, fontStyle: FontStyle.italic),
+          ),
+        );
+      }
+    });
   }
 
   Widget _buildItemsList() {
