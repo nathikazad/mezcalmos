@@ -11,15 +11,17 @@ export async function pushNotification(
   notificationInfo?: NotificationInfo | null,
   participantType: ParticipantType = ParticipantType.Customer,
   language: Language = Language.ES,
+  notifyForeground: boolean = true,
   fcmThroughApi: boolean = false,
 ) {
-  // console.log("subscription: ", subscription)
-  foreground.push({
-    participantType,
-    firebaseUserId,
-    notification: { ...notification.foreground, linkUrl: notification.linkUrl },
-    linkUrl: notification.linkUrl
-  });
+  if(notifyForeground) {
+    foreground.push({
+      participantType,
+      firebaseUserId,
+      notification: { ...notification.foreground, linkUrl: notification.linkUrl },
+      linkUrl: notification.linkUrl
+    });
+  }
   if(notificationInfo == null) {
     return;
   }
