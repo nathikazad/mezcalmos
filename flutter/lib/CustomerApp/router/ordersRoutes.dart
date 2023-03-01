@@ -3,10 +3,10 @@ import 'package:mezcalmos/CustomerApp/pages/CustOrderListView/CustomerOrdersList
 import 'package:qlevar_router/qlevar_router.dart';
 
 class OrdersRoutes {
-  static const String customerOrder = '/orders';
+  static const String customerOrdersRoute = '/orders';
 
   final routes = QRoute(
-      path: customerOrder,
-      name: customerOrder,
+      path: customerOrdersRoute,
+      name: customerOrdersRoute,
       builder: () => customerOrders.CustomerOrdersListView());
 }

@@ -133,7 +133,7 @@ class ItemSliverAppBar extends StatelessWidget {
       child: InkWell(
         customBorder: CircleBorder(),
         onTap: () {
-          MezRouter.toNamed(OrdersRoutes.customerOrder);
+          MezRouter.toNamed(OrdersRoutes.customerOrdersRoute);
         },
         child: Ink(
           padding: const EdgeInsets.all(5),

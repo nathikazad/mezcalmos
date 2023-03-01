@@ -20,6 +20,7 @@ import 'package:mezcalmos/Shared/constants/global.dart';
 import 'package:mezcalmos/Shared/models/Utilities/Generic.dart';
 import 'package:mezcalmos/Shared/models/Utilities/ServerResponse.dart';
 import 'package:mezcalmos/Shared/graphql/notifications/hsNotificationInfo.dart';
+import 'package:mezcalmos/env.dart';
 
 dynamic _i18n() => Get.find<LanguageController>().strings['Shared']
     ['controllers']['authController'];
@@ -141,7 +142,7 @@ class AuthController extends GetxController {
         insert_notif_info(
             userId: hasuraUserId!,
             token: deviceNotificationToken,
-            appType: Get.find<SettingsController>().appType.toHasuraString());
+            appType: MezEnv.appType.toHasuraString());
       }
     } catch (e, stk) {
       mezDbgPrint(e);

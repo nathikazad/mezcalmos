@@ -65,7 +65,7 @@ class _ViewRestaurantOrderScreenState extends State<ViewRestaurantOrderScreen> {
     return Scaffold(
       appBar: MezcalmosAppBar(AppBarLeftButtonType.Back,
           autoBack: true,
-          ordersRoute: OrdersRoutes.customerOrder,
+          ordersRoute: OrdersRoutes.customerOrdersRoute,
           showNotifications: true,
           titleWidget: Obx(() => Text(
                 viewController.order.value?.restaurant.name ?? "",

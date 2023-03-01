@@ -278,7 +278,7 @@ class _CustomerWrapperState extends State<CustomerWrapper>
               .getLaundryOrderWithId(_orderController!.hasOneOrderId!));
         }
       } else if (_orderController!.hasManyOrders) {
-        MezRouter.popEverythingAndNavigateTo(OrdersRoutes.customerOrder);
+        MezRouter.popEverythingAndNavigateTo(OrdersRoutes.customerOrdersRoute);
       }
     }
   }

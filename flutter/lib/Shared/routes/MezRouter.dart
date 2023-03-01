@@ -17,7 +17,8 @@ class MRoute {
 /// This does not support NestedNavigation yet.
 class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static final List<MRoute> _navigationStack = <MRoute>[];
-
+  static dynamic _arguments;
+  static dynamic get arguments => _arguments;
   // This will act as a lock, basically if there's any push/pop happening, we lock other functionalities to avoid race conditions
   // static bool _isBusy = false;
   static final List<Function> _delegates = [];
@@ -42,12 +43,13 @@ class MezRouter extends RouteObserver<PageRoute<dynamic>> {
   static Future<void>? toNamed<Q>(
     String page, {
     bool preventDuplicates = true,
-    Map<String, dynamic>? arguments,
+    arguments,
   }) {
     mezDbgPrint("Trynig to go to ======>>>>>>>$page");
     try {
       addToStack(page, preventDuplicates, arguments);
-      return QR.toName(page, params: arguments, ignoreSamePath: false);
+      _arguments = arguments;
+      return QR.toName(page, ignoreSamePath: false);
     } catch (e, s) {
       mezDbgPrint("Error => $e");
       mezDbgPrint("Stack => $s");
