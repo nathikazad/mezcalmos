@@ -985,7 +985,10 @@
       "MessagingScreen": {
         "viewOrder": "Ver detalles de la orden",
         "order": "Orden",
-        "writeMsgPlaceholder": "Escribe tu mensaje aqui ..."
+        "writeMsgPlaceholder": "Escribe tu mensaje aqui ...",
+        "cancel" : "Cancelar",
+        "callApp" : "Llamar a través de la aplicación",
+        "callPhone" : "Llame con el número de teléfono"
       },
       "ViewNotifications": {
         "title": "Notificaciones",

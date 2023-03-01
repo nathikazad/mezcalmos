@@ -976,7 +976,10 @@
       "MessagingScreen": {
         "viewOrder": "View order details",
         "order": "Order",
-        "writeMsgPlaceholder": "Write your message here ..."
+        "writeMsgPlaceholder": "Write your message here ...",
+        "cancel" : "Cancel",
+        "callApp" : "Call through app",
+        "callPhone" : "Call with phone number"
       },
       "ViewNotifications": {
         "title": "Notifications",

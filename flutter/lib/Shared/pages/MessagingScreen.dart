@@ -178,47 +178,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 ? ThreeDotsLoading()
                 : Text(
                     controller.chat.value!.chatInfo.chatTite,
-                    style: Get.textTheme.headline3,
+                    style: Get.textTheme.displaySmall,
                   );
           },
         ),
         actions: <Widget>[
-          Container(
-            child: InkWell(
-              // onTap: () async => _onCallPress(),
-              onTap: () async {
-                final Uri launchUri = Uri(
-                  scheme: 'tel',
-                  path: controller.chat.value?.chatInfo.phoneNumber,
-                );
-                mezDbgPrint(await canLaunchUrl(launchUri));
-                if (await canLaunchUrl(launchUri)) {
-                  await launchUrl(launchUri);
-                } else {
-                  unawaited(_onCallPress());
-                  // throw 'Could not launch $launchUri';
-                }
-              },
-              child: Container(
-                width: 30,
-                height: 30,
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.only(right: 12),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: secondaryLightBlueColor,
-                ),
-                child: Center(
-                  child: FittedBox(
-                    child: Icon(
-                      Icons.call,
-                      color: primaryBlueColor,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          _callButton(context),
 
           // )
         ],
@@ -292,6 +257,118 @@ class _MessagingScreenState extends State<MessagingScreen> {
           : MezLogoAnimation(
               centered: true,
             ),
+    );
+  }
+
+  Container _callButton(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: () {
+          showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ), //for giving border to datePickerSheet
+            ),
+            context: context,
+            isDismissible: true,
+            builder: (BuildContext context) {
+              return Container(
+                margin: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        unawaited(_onCallPress()
+                            .whenComplete(() => MezRouter.popDialog()));
+                      },
+                      child: Ink(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.phone_android_sharp,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("${_i18n()['callApp']}",
+                                  style: Get.textTheme.bodyLarge)
+                            ],
+                          )),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () async {
+                        final Uri launchUri = Uri(
+                          scheme: 'tel',
+                          path: controller.chat.value?.chatInfo.phoneNumber,
+                        );
+                        mezDbgPrint(await canLaunchUrl(launchUri));
+                        if (await canLaunchUrl(launchUri)) {
+                          await launchUrl(launchUri);
+                          MezRouter.popDialog();
+                        }
+                      },
+                      child: Ink(
+                          padding: const EdgeInsets.all(6),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.phone,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("${_i18n()['callPhone']}",
+                                  style: Get.textTheme.bodyLarge)
+                            ],
+                          )),
+                    ),
+                    Divider(),
+                    InkWell(
+                      onTap: () {
+                        MezRouter.popDialog();
+                      },
+                      child: Ink(
+                          padding: const EdgeInsets.all(6),
+                          width: double.infinity,
+                          child: Text(
+                            "${_i18n()['cancel']}",
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.bodyLarge
+                                ?.copyWith(color: Colors.red),
+                          )),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        child: Container(
+          width: 30,
+          height: 30,
+          padding: EdgeInsets.all(5),
+          margin: EdgeInsets.only(right: 12),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: secondaryLightBlueColor,
+          ),
+          child: Center(
+            child: FittedBox(
+              child: Icon(
+                Icons.call,
+                color: primaryBlueColor,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
