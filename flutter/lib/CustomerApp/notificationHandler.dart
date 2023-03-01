@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' as Material;
 import 'package:get/get.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/laundaryRoutes.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
 import 'package:mezcalmos/Shared/helpers/PrintHelper.dart';

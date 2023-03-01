@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksBase.dart';
 import 'package:mezcalmos/CustomerApp/authHooks/customerAuthHooksNative.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/router.dart';
 import 'package:mezcalmos/CustomerApp/theme.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';

@@ -7,9 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fireAuth;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:get/get.dart';
-import 'package:mezcalmos/Shared/controllers/backgroundNotificationsController.dart';
 import 'package:mezcalmos/Shared/controllers/languageController.dart';
-import 'package:mezcalmos/Shared/controllers/settingsController.dart';
 import 'package:mezcalmos/Shared/database/HasuraDb.dart';
 import 'package:mezcalmos/Shared/graphql/user/hsUser.dart';
 import 'package:mezcalmos/Shared/helpers/ConnectivityHelper.dart';
@@ -130,24 +128,6 @@ class AuthController extends GetxController {
         expectedRoles.toSet().difference(actualRoles.toSet()).toList();
     // return false;
     return difference.length > 0;
-  }
-
-  Future<void> saveNotificationToken() async {
-    final String? deviceNotificationToken =
-        await Get.find<BackgroundNotificationsController>().getToken();
-    try {
-      if (deviceNotificationToken != null) {
-        mezDbgPrint("🫡🫡 Saving notification info for the first time 🫡🫡");
-        // ignore: unawaited_futures
-        insert_notif_info(
-            userId: hasuraUserId!,
-            token: deviceNotificationToken,
-            appType: MezEnv.appType.toHasuraString());
-      }
-    } catch (e, stk) {
-      mezDbgPrint(e);
-      mezDbgPrint(stk);
-    }
   }
 
   Future<void> fetchUserInfoFromHasura() async {

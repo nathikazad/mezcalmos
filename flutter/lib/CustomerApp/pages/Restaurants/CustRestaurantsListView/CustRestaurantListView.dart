@@ -6,7 +6,6 @@ import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/RestaurantShimmerList.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/components/SearchItemCard.dart';
 import 'package:mezcalmos/CustomerApp/pages/Restaurants/CustRestaurantsListView/controllers/CustRestaurantListViewController.dart';
-import 'package:mezcalmos/CustomerApp/router.dart';
 import 'package:mezcalmos/CustomerApp/router/restaurantRoutes.dart';
 import 'package:mezcalmos/Shared/routes/MezRouter.dart';
 import 'package:mezcalmos/Shared/constants/global.dart';
