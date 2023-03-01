@@ -85,7 +85,9 @@ export async function createOrderRequest(
         notes: orderRequestDetails.notes,
         deliveryCost: 0,
         status: BusinessOrderRequestStatus.RequestReceived,
-        chatId: response.insert_business_order_request_one.chat_id
+        chatId: response.insert_business_order_request_one.chat_id,
+        estimatedCost: cart.cost,
+        items: cart.items
     }
     return businessOrder
 }

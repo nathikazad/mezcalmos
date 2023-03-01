@@ -7,7 +7,7 @@ export interface BusinessOrder extends Order {
     status: BusinessOrderRequestStatus;
     // categories?: Array<OrderCategory>;
     business?: Business;
-    items?: BusinessOrderRequestItem[];
+    items: BusinessOrderRequestItem[];
     estimatedCost: number;
     finalCost?: number;
 }
@@ -37,3 +37,6 @@ export interface NewBusinessOrderRequestNotification extends OrderNotification {
         id: number
     }
 }
+export interface BusinessStatusChangeNotification extends OrderNotification {
+    status: BusinessOrderRequestStatus
+  }
