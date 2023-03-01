@@ -212,7 +212,7 @@ class Sagora extends GetxController {
           mezDbgPrint("CallEvent.ACTION_CALL_ENDED!");
           if (event!.body?['extra']?['chatId'] != null) {
             await endCall(
-              chatId: event.body?['extra']['chatId'],
+              chatId: int.parse(event.body?['extra']['chatId']),
               callee: Participant(
                 image: event.body['avatar'],
                 name: event.body['nameCaller'],
