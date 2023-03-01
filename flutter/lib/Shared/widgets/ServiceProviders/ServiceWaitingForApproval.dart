@@ -6,8 +6,8 @@ import 'package:sizer/sizer.dart';
 /// UI widget used to inform restaurant operator
 ///
 /// that he is not approved yet
-class ROpWaitingForApproval extends StatelessWidget {
-  const ROpWaitingForApproval({super.key});
+class ServiceWaitingForApproval extends StatelessWidget {
+  const ServiceWaitingForApproval({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ROpWaitingForApproval extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "YOUR REQUEST IS BEING PROCESSED",
-              style: Get.textTheme.headline3,
+              style: Get.textTheme.displaySmall,
               textAlign: TextAlign.center,
             ),
           ),

@@ -1095,6 +1095,11 @@
         "title": "No hay pedidos en este momento",
         "subtitle": "Inténtalo de nuevo más tarde"
       },
+      "ClosedServiceProviderWidget": {
+        "title": "¡Servicio cerrado!",
+        "btnTitle" : "Servicio abierto",
+        "subtitle": "Su servicio está cerrado indefinidamente, no recibirá ningún pedido.¿Te gustaría abrirlo?"
+      },
       "FreeShippingComponent": {
         "free": "Gratis"
       },
