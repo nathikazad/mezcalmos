@@ -1,7 +1,7 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import { getBusinessOperatorByUserId } from "../shared/graphql/business/operator/getBusinessOperator";
 import { getBusinessOrderRequest } from "../shared/graphql/business/order/getOrderRequest";
-import { cancelBusinessOrderFromOperator, confirmBusinessOrderFromOperator } from "../shared/graphql/business/order/updateOrderRequest";
+import { confirmBusinessOrderFromOperator, updateBusinessOrderRequest } from "../shared/graphql/business/order/updateOrderRequest";
 import { getCustomer } from "../shared/graphql/user/customer/getCustomer";
 import { isMezAdmin } from "../shared/helper";
 import { ParticipantType } from "../shared/models/Generic/Chat";
@@ -10,6 +10,7 @@ import { OrderType } from "../shared/models/Generic/Order";
 import { CustomerInfo } from "../shared/models/Generic/User";
 import { Notification, NotificationAction, NotificationType } from "../shared/models/Notification";
 import { BusinessOrder, BusinessOrderRequestItem, BusinessOrderRequestStatus, BusinessStatusChangeNotification } from "../shared/models/Services/Business/BusinessOrder";
+import { Operator } from "../shared/models/Services/Service";
 import { orderUrl } from "../utilities/senders/appRoutes";
 import { pushNotification } from "../utilities/senders/notifyUser";
 
@@ -24,17 +25,12 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
     let order: BusinessOrder = await getBusinessOrderRequest(handleRequestDetails.orderRequestId);
     let customer: CustomerInfo = await getCustomer(order.customerId);
 
-    await errorChecks(userId, order)
+    await errorChecks(userId, order, handleRequestDetails)
 
-
-    if (order.status != BusinessOrderRequestStatus.RequestReceived) {
-        throw new HttpsError(
-            "internal",
-            "request already confirmed or cancelled"
-        );
-    } 
     if(handleRequestDetails.requestConfirmed) {
+         
         order.status = BusinessOrderRequestStatus.RequestApprovedByBusiness;
+
         handleRequestDetails.items?.forEach((i) => {
             let itemIdx = order.items.findIndex((j) => (i.serviceId == j.serviceId && i.serviceType == j.serviceType));
             order.items[itemIdx].finalCostPerOne = i.finalCostPerOne;
@@ -42,7 +38,7 @@ export async function handleOrderRequestByAdmin(userId: number, handleRequestDet
         confirmBusinessOrderFromOperator(order);
     } else {
         order.status = BusinessOrderRequestStatus.RequestRejectedByBusiness;
-        cancelBusinessOrderFromOperator(order)
+        updateBusinessOrderRequest(order)
     }
 
     notifyCustomer(order, customer);
@@ -90,22 +86,25 @@ function notifyCustomer(order: BusinessOrder, customer: CustomerInfo) {
     );
 }
 
-async function errorChecks(userId: number, order: BusinessOrder) {
+async function errorChecks(userId: number, order: BusinessOrder, handleRequestDetails: HandleRequestDetails) {
 
     if((await isMezAdmin(userId)) == false) {
-        let operator = await getBusinessOperatorByUserId(userId);
+        let operator: Operator = await getBusinessOperatorByUserId(userId);
 
-        if (response.business_operator.length == 0) {
-            throw new HttpsError(
-                "internal",
-                "Only authorized business operators or MezAdmin can run this operation"
-            );
-        }
-        if(response.business_operator[0].business_id != order.businessId) {
+        if(operator.serviceProviderId != order.businessId) {
             throw new HttpsError(
                 "internal",
                 "Only authorized business operators can run this operation"
             );
         }
+    }
+    if(handleRequestDetails.requestConfirmed) {
+
+        if (order.status != BusinessOrderRequestStatus.RequestReceived) {
+            throw new HttpsError(
+                "internal",
+                "request already confirmed or cancelled"
+            );
+        } 
     }
 }

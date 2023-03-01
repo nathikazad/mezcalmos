@@ -48,7 +48,7 @@ export async function confirmBusinessOrderFromOperator(order: BusinessOrder) {
       }
 }
 
-export async function cancelBusinessOrderFromOperator(order: BusinessOrder) {
+export async function updateBusinessOrderRequest(order: BusinessOrder) {
     let chain = getHasura();
 
     let response = await chain.mutation({
